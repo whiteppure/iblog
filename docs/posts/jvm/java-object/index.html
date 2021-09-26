@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="zh" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="whitepure" />
+	
+	
+	
+	<title>Java对象 ｜ whitepure</title>
+	
+    
+    
+    <meta name="description" content="" />
+    
+
+    
+    
+    <meta name="keywords" content="whitepure博客, whiteppure, whitepure" />
+    
+
+	
+    
+    <link rel="shortcut icon" href="https://whiteppure.github.io/myblog/images/favicon.ico" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/myblog/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/myblog/css/zozo.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/myblog/css/highlight.css" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/myblog/css/toc.css" />
+
+    
+    
+</head>
+
+<body>
+    
+    
+    
+
+
+
+
+
+
+
+
+
+<div class="toc">
+
+    <div class="page-header"><strong>- CATALOG -</strong></div>
+
+    <div id="page-scrollspy" class="toc-nav">
+
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%af%b9%e8%b1%a1%e5%ae%9e%e4%be%8b%e5%8c%96">
+                    对象实例化
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%af%b9%e8%b1%a1%e7%9a%84%e5%88%9b%e5%bb%ba%e6%96%b9%e5%bc%8f">
+                    对象的创建方式
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%af%b9%e8%b1%a1%e7%9a%84%e5%88%9b%e5%bb%ba%e6%ad%a5%e9%aa%a4">
+                    对象的创建步骤
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%af%b9%e8%b1%a1%e7%9a%84%e5%88%9b%e5%bb%ba%e8%bf%87%e7%a8%8b">
+                    对象的创建过程
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%af%b9%e8%b1%a1%e7%bb%84%e6%88%90">
+                    对象组成
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%9f%a5%e7%9c%8b%e5%af%b9%e8%b1%a1%e7%9a%84%e7%bb%84%e6%88%90">
+                    查看对象的组成
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%af%b9%e8%b1%a1%e5%a4%b4">
+                    对象头
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%ae%9e%e4%be%8b%e6%95%b0%e6%8d%ae">
+                    实例数据
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%af%b9%e9%bd%90%e5%a1%ab%e5%85%85%e6%95%b0%e6%8d%ae">
+                    对齐填充数据
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%af%b9%e8%b1%a1%e7%9a%84%e8%ae%bf%e9%97%ae%e5%ae%9a%e4%bd%8d">
+                    对象的访问定位
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%8f%a5%e6%9f%84%e8%ae%bf%e9%97%ae">
+                    句柄访问
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e7%9b%b4%e6%8e%a5%e8%ae%bf%e9%97%ae">
+                    直接访问
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%af%b9%e8%b1%a1%e7%9a%84%e7%bb%88%e6%ad%a2%e6%9c%ba%e5%88%b6">
+                    对象的终止机制
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+
+    </div>
+
+</div>
+
+
+
+    
+    <div class="main animate__animated animate__fadeInDown" id="pdf_content">
+        <div class="nav_container animated fadeInDown">
+    <div class="site_nav" id="site_nav">
+        <ul><li class="">
+                <a href="https://whiteppure.github.io/myblog/">首页</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/myblog/posts/">归档</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/myblog/tags/">标签</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/myblog/about/">关于</a>
+            </li>
+        </ul>
+    </div>
+    <div class="menu_icon">
+        <a id="menu_icon"><i class="ri-menu-line"></i></a>
+    </div>
+</div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="content">
+            <div class="post_page">
+                <div class="post animate__animated animate__fadeInDown">
+                    <div class="post_title post_detail_title">
+                        <h2><a href='/myblog/posts/jvm/java-object/'>Java对象</a></h2>
+                        <span class="date">2021.04.12</span>
+                    </div>
+                    <div class="post_content markdown"><h2 id="对象实例化">对象实例化</h2>
+<p><img src="/myblog/posts/images/essays/%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%E6%AD%A5%E9%AA%A4.png" alt="对象创建步骤"></p>
+<h3 id="对象的创建方式">对象的创建方式</h3>
+<ul>
+<li>使用new关键字创建：最常见的方式、单例类中调用<code>getInstance</code>的静态类方法，<code>XXXFactory</code>的静态方法；</li>
+<li>使用反射方式创建：
+<ul>
+<li>使用<code>Class</code>的<code>newInstance</code>方法：在JDK9里面被标记为过时的方法，因为只能调用空参构造器；</li>
+<li>使用<code>Constructor</code>的<code>newInstance(XXX)</code>：反射的方式，可以调用空参的，或者带参的构造器；</li>
+<li>使用<code>clone()</code>：不调用任何的构造器，要求当前的类需要实现<code>Cloneable</code>接口中的<code>clone</code>接口；</li>
+<li>使用序列化：序列化一般用于<code>Socket</code>的网络传输；</li>
+</ul>
+</li>
+<li>使用第三方库 <code>Objenesis</code>；</li>
+</ul>
+<h3 id="对象的创建步骤">对象的创建步骤</h3>
+<p>创建对象代码演示及字节码指令</p>
+<pre><code>public class MainTest {
+    public static void main(String[] args) {
+        Object obj = new Object();
+    }
+}
+</code></pre><p><img src="/myblog/posts/images/essays/%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4.png" alt="创建对象字节码指令"></p>
+<p>创建对象步骤：</p>
+<ol>
+<li>加载类元信息</li>
+<li>为对象分配内存</li>
+<li>处理并发问题</li>
+<li>属性的默认初始化（零值初始化）</li>
+<li>设置对象头信息</li>
+<li>属性的显示初始化、代码块中初始化、构造器中初始化</li>
+</ol>
+<h3 id="对象的创建过程">对象的创建过程</h3>
+<p><strong>判断对象对应的类是否加载、链接、初始化</strong></p>
+<p>虚拟机遇到一条<code>new</code>指令，首先去检查这个指令的参数能否在 <code>Metaspace</code> 的常量池中定位到一个类的符号引用，并且检查这个符号引用代表的类是否已经被加载，解析和初始化。（即判断类元信息是否存在）。</p>
+<p>如果没有，那么在双亲委派模式下，使用当前类加载器以 <code>ClassLoader + 包名 + 类名</code> 为key进行查找对应的 <code>.class </code>文件，如果没有找到文件，则抛出 <code>ClassNotFoundException</code> 异常，如果找到，则进行类加载，并生成对应的Class对象。</p>
+<p><strong>为对象分配内存</strong></p>
+<p>首先计算对象占用空间的大小，接着在堆中划分一块内存给新对象。
+如果实例成员变量是引用类型，仅分配引用变量空间即可，即4个字节大小.</p>
+<p>如果内存规整：指针碰撞；如果内存不规整：虚拟表需要维护一个列表，即空闲列表分配</p>
+<blockquote>
+<p>指针碰撞:
+所有用过的内存在一边，空闲的内存放另外一边，中间放着一个指针作为分界点的指示器，分配内存就仅仅是把指针指向空闲那边挪动一段与对象大小相等的距离罢了。
+如果垃圾收集器选择的是Serial ，ParNew这种基于压缩算法的，虚拟机采用这种分配方式。一般使用带Compact（整理）过程的收集器时，使用指针碰撞。</p>
+</blockquote>
+<blockquote>
+<p>空闲列表分配:
+虚拟机维护了一个列表，记录上那些内存块是可用的，再分配的时候从列表中找到一块足够大的空间划分给对象实例，并更新列表上的内容。
+这种分配方式成为了 “空闲列表（Free List）”。</p>
+</blockquote>
+<p>选择哪种分配方式由Java堆是否规整所决定，而Java堆是否规整又由所采用的垃圾收集器是否带有压缩整理功能决定。</p>
+<p><strong>处理并发问题</strong></p>
+<ul>
+<li>采用CAS配上失败重试保证更新的原子性</li>
+<li>每个线程预先分配TLAB - 通过设置 <code>-XX:+UseTLAB</code>参数来设置,在Java8是默认开启的</li>
+</ul>
+<p><strong>初始化分配到的内存</strong></p>
+<p>就是给对象属性赋值的操作</p>
+<ul>
+<li>属性的默认初始化</li>
+<li>显示初始化</li>
+<li>代码块中的初始化</li>
+<li>构造器初始化</li>
+</ul>
+<p>给所有属性设置默认值，保证对象实例字段在不赋值时可以直接使用。</p>
+<p><strong>设置对象的对象头</strong></p>
+<p>将对象的所属类（即类的元数据信息）、对象的 <code>HashCode</code> 和对象的GC信息、锁信息等数据存储在对象的对象头中。这个过程的具体设置方式取决于JVM实现。</p>
+<p><strong>执行init方法进行初始化</strong></p>
+<p>初始化成员变量，执行实例化代码块，调用类的构造方法，并把堆内对象的首地址赋值给引用变量。
+因此一般来说（由字节码中跟随 <code>invokespecial</code> 指令所决定），new指令之后会接着执行方法，把对象按照程序员的意愿进行初始化，这样一个真正可用的对象才算完成创建出来。</p>
+<h2 id="对象组成">对象组成</h2>
+<p><img src="/myblog/posts/images/essays/Java%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B8%83%E5%B1%80.png" alt="Java对象的布局"></p>
+<h3 id="查看对象的组成">查看对象的组成</h3>
+<p><strong>引入依赖</strong></p>
+<pre><code>&lt;!-- 引入查看对象布局的依赖 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.openjdk.jol&lt;/groupId&gt;
+    &lt;artifactId&gt;jol-core&lt;/artifactId&gt;
+    &lt;version&gt;0.9&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre><p><strong>测试代码</strong></p>
+<pre><code>public class MainTest {
+    public static void main(String[] args) {
+        //这个对象里面是空的什么都没有
+        T t = new T();
+        System.out.println(ClassLayout.parseInstance(t).toPrintable());
+    }
+}
+class T{}
+</code></pre><p><strong>测试结果</strong></p>
+<pre><code> OFFSET  SIZE   TYPE DESCRIPTION                               VALUE
+      0     4        (object header)                           01 00 00 00 (00000001 00000000 00000000 00000000) (1)
+      4     4        (object header)                           00 00 00 00 (00000000 00000000 00000000 00000000) (0)
+      8     4        (object header)                           a1 2c 01 20 (10100001 00101100 00000001 00100000) (536947873)
+     12     4        (loss due to the next object alignment)
+Instance size: 16 bytes
+Space losses: 0 bytes internal + 4 bytes external = 4 bytes total
+</code></pre><p>在64位JVM下,通过测试的结果我们可以看到Java对象的布局对象头占12byte,因为Jvm规定内存分配的字节必须是8的倍数,否则无法分配内存，所以就出现了，4byte的对齐数据。</p>
+<p>通过测试发现，Java的对象布局包括：</p>
+<ul>
+<li>必定存在一个对象头</li>
+<li>如果分配的JVM分配的字节不是8的倍数的话，还要存在对齐数据</li>
+<li>当该类里边有变量时,还包含实例变量</li>
+</ul>
+<h3 id="对象头">对象头</h3>
+<p><a href="http://openjdk.java.net/groups/hotspot/docs/HotSpotGlossary.html">官方文档</a>对于对象头的解释</p>
+<blockquote>
+<p>object header
+Common structure at the beginning of every GC-managed heap object.
+(Every oop points to an object header.) Includes fundamental information about the heap object&rsquo;s layout, type, GC state, synchronization state, and identity hash code.
+Consists of two words. In arrays it is immediately followed by a length field.
+Note that both Java objects and VM-internal objects have a common object header format.</p>
+</blockquote>
+<p>大意：每个GC管理堆对象开始处的公共结构。(每个oop都指向一个对象头。)包括关于堆对象布局、类型、GC状态、同步状态和标识散列代码的基本信息。
+<strong>由两个词组成</strong>。在数组中，它后面紧跟着一个长度字段。注意，Java对象和vm内部对象都有一个共同的对象头格式。</p>
+<p>其中上面的<strong>两个词</strong>指的是</p>
+<blockquote>
+<p>mark word
+The first word of every object header. Usually a set of bitfields including synchronization state and identity hash code.
+May also be a pointer (with characteristic low bit encoding) to synchronization related information.
+During GC, may contain GC state bits.</p>
+</blockquote>
+<p>大意：每个对象头文件的第一个字。通常是一组位域，包括同步状态和身份散列码。也可以是一个用于同步相关信息的指针(具有特征的低位编码)。在GC期间，可能包含GC状态位。</p>
+<blockquote>
+<p>klass pointer
+The second word of every object header. Points to another object (a metaobject) which describes the layout and behavior of the original object.
+For Java objects, the &ldquo;klass&rdquo; contains a C++ style &ldquo;vtable&rdquo;.</p>
+</blockquote>
+<p>大意：每个对象头文件的第二个字。指向另一个对象(元对象)，它描述了原始对象的布局和行为。对于Java对象，“klass”包含一个c++风格的“vtable”。</p>
+<p>简单来说，对象头包含了包括两部分，分别是标志词(mark word)和类型指针(klass pointer)；如果是数组，还需要记录数组的长度。</p>
+<blockquote>
+<p>类型指针，是对象指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例。</p>
+</blockquote>
+<p>引用上面在64位虚拟机下的测试结果，对象头中的这些二进制数字代表什么呢？</p>
+<pre><code> OFFSET  SIZE   TYPE DESCRIPTION                               VALUE
+      0     4        (object header)                           01 00 00 00 (00000001 00000000 00000000 00000000) (1)
+      4     4        (object header)                           00 00 00 00 (00000000 00000000 00000000 00000000) (0)
+      8     4        (object header)                           a1 2c 01 20 (10100001 00101100 00000001 00100000) (536947873)
+</code></pre><p>在<code>openjdk8-master</code>中<code>markOop.hpp</code>，有对<code>mark word</code>的描述</p>
+<pre><code>//  32 bits:
+//  --------
+//             hash:25 ------------&gt;| age:4    biased_lock:1 lock:2 (normal object)
+//             JavaThread*:23 epoch:2 age:4    biased_lock:1 lock:2 (biased object)
+//             size:32 ------------------------------------------&gt;| (CMS free block)
+//             PromotedObject*:29 ----------&gt;| promo_bits:3 -----&gt;| (CMS promoted object)
+//
+//  64 bits:
+//  --------
+//  unused:25 hash:31 --&gt;| unused:1   age:4    biased_lock:1 lock:2 (normal object)
+//  JavaThread*:54 epoch:2 unused:1   age:4    biased_lock:1 lock:2 (biased object)
+//  PromotedObject*:61 ---------------------&gt;| promo_bits:3 -----&gt;| (CMS promoted object)
+//  size:64 -----------------------------------------------------&gt;| (CMS free block)
+</code></pre><ul>
+<li>在32位虚拟机下，正常的对象对象头的<code>mark word</code>，从前到后的顺序，25个位表示hash值，4位表示GC分代的年龄，1位偏向锁的信息，2位锁的状态；</li>
+<li>在64位虚拟机下，正常的对象对象头的<code>mark word</code>，从前到后的顺序，25个未使用，31个位表示hash值，未使用1位，4位表示GC分代的年龄，1位偏向锁的信息，2位锁的状态；</li>
+</ul>
+<p>64位虚拟机下对象头共12个字节(96bit)，<code>mark word</code>占8字节(64位)，所以<code>klass pointer</code>占4字节(32位)；</p>
+<blockquote>
+<p>有些资料上显示: <code>mark word</code>占8字节(64位)，<code>klass pointer</code>也占8字节(64位)；
+其实这种说法也正确，因为虚拟机默认开启了指针压缩，所以默认情况下<code>klass pointer</code>占4字节(32位)。</p>
+</blockquote>
+<p><strong>那么<code>mark word</code>64位中存放什么呢？</strong></p>
+<p>从上面可以看出，标志词（mark word）主要存放:</p>
+<ul>
+<li>哈希值</li>
+<li>GC分代年龄</li>
+<li>锁标志位</li>
+<li>分代年龄</li>
+<li>线程ID</li>
+</ul>
+<p>当然<code>mark word</code>会根据对象的不同状态存放的也不相同；</p>
+<blockquote>
+<p>对象的状态</p>
+<ul>
+<li>无状态：对象刚被new出来</li>
+<li>偏向锁状态: 一个线程持有对象</li>
+<li>轻量级锁状态</li>
+<li>重量级锁状态</li>
+<li>被垃圾回收器标记的状态</li>
+</ul>
+</blockquote>
+<p>目前32位虚拟机已经几乎没人用了，所以只介绍64位JVM</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">对象状态</th>
+<th>对象头-markword</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">无锁状态状态</td>
+<td>unused:25｜hash:31｜ unused:1 ｜age:4 ｜ biased_lock:1｜lock:2</td>
+</tr>
+<tr>
+<td style="text-align:center">偏向锁状态</td>
+<td>JavaThread:54｜ epoch:2｜ unused:1 ｜  age:4｜ biased_lock:1｜lock:2</td>
+</tr>
+<tr>
+<td style="text-align:center">轻量级锁状态</td>
+<td>ptr_to_lock_record:62(指向栈中锁记录的指针)｜lock：2</td>
+</tr>
+<tr>
+<td style="text-align:center">重量级锁状态</td>
+<td>Ptr_to_heavyweight_monitor:62（指向重量级锁的指针）｜lock：2</td>
+</tr>
+<tr>
+<td style="text-align:center">被GC标记状态</td>
+<td>lock：2</td>
+</tr>
+</tbody>
+</table>
+<p>对象的状态是5种，但是在<code>markword</code>中表示对象状态的<code>lock</code>却是2bit，2bit最多能表示4种状态，那么对象的5种状态是怎么表示的？</p>
+<blockquote>
+<p>2bit 排列组合：00、11、01、10，最多四种</p>
+</blockquote>
+<p>对象锁的状态是联合用<code>biased_lock: 1</code> 和 <code>lock: 2</code> 表示的：</p>
+<ul>
+<li><code>biased_lock</code> ：0 <code>lock</code>： 01： 表示无锁状态</li>
+<li><code>biased_lock</code> ：1 <code>lock</code>： 01： 表示偏向锁状态</li>
+<li><code>lock</code>： 00： 表示轻量级锁状态</li>
+<li><code>lock</code>： 10： 表示重量级锁状态</li>
+<li><code>lock</code>： 11： 表示被垃圾回收器标记的状态</li>
+</ul>
+<p><code>markword</code>中存储的内容：</p>
+<ul>
+<li><code>lock</code>：锁标志位;区分锁状态，11时表示对象待GC回收状态, 只有最后2位锁标识(11)有效。</li>
+<li><code>biased_lock</code>：是否偏向锁；由于正常锁和偏向锁的锁标识都是 01，没办法区分，这里引入一位的偏向锁标识位。</li>
+<li><code>age</code>：分代年龄；表示对象被GC的次数，当该次数到达阈值的时候，对象就会转移到老年代。</li>
+<li><code>hash</code>: 对象的 <code>hashcode</code> ;运行期间调用<code>System.identityHashCode()</code>来计算，延迟计算，并把结果赋值到这里。当对象加锁后，计算的结果31位不够表示，在偏向锁，轻量锁，重量锁，<code>hashcode</code>会被转移到<code>Monitor</code>中。</li>
+<li><code>JavaThread</code>：偏向锁的线程ID，偏向模式的时候，当某个线程持有对象的时候，对象这里就会被置为该线程的ID。 在后面的操作中，就无需再进行尝试获取锁的动作。</li>
+<li><code>epoch</code>：时间戳，代表偏向锁的有效性；偏向锁在CAS锁操作过程中，偏向性标识，表示对象更偏向哪个锁。</li>
+<li><code>ptr_to_lock_record</code>：轻量级锁状态下，指向栈中锁记录的指针。当锁获取是无竞争的时，JVM使用原子操作而不是OS互斥。这种技术称为轻量级锁定。在轻量级锁定的情况下，JVM通过CAS操作在对象的标题字中设置指向锁记录的指针。</li>
+<li><code>ptr_to_heavyweight_monitor</code>：重量级锁状态下，指向对象监视器<code>Monitor</code>的指针。如果两个不同的线程同时在同一个对象上竞争，则必须将轻量级锁定升级到Monitor以管理等待的线程。在重量级锁定的情况下，JVM在对象的<code>ptr_to_heavyweight_monitor</code>设置指向<code>Monitor</code>的指针。</li>
+</ul>
+<p><code>mark word</code>在对象的不同状态下会有不同的表现形式，主要有三种状态，无锁状态、加锁状态、GC标记状态。</p>
+<p>那么可以理解为Java当中的取锁其实可以理解是给对象上锁，也就是改变对象头中<code>markword&gt;lock</code>的状态，如果上锁成功则进入同步代码块。
+但是Java当中的锁有分为很多种，从上面可以看出大体分为偏向锁、轻量锁、重量锁三种锁状态.</p>
+<h3 id="实例数据">实例数据</h3>
+<p>独立于方法之外的变量,在类里定义的变量无 <code>static</code> 修饰；包括从父类继承下来的变量和本身拥有的字段。</p>
+<p>一些规则：</p>
+<ul>
+<li>相同宽度的字段总是被分配到一起（比如都是8个字节的，会放到一起）；</li>
+<li>父类中定义的变量会出现在子类之前；</li>
+<li>如果JVM参数<code>CompactFields</code>设置为true，子类的窄变量可能插入到父类的间隙；</li>
+</ul>
+<h3 id="对齐填充数据">对齐填充数据</h3>
+<p>不是必须的，也没有特别的含义，仅仅起到占位符的作用。
+因为Jvm规定内存分配的字节必须是8的倍数,否则无法分配内存.如果对象头占得字节 + 实例变量占得字节刚好为8的倍数,对齐填充数据则不存在。</p>
+<h2 id="对象的访问定位">对象的访问定位</h2>
+<p>JVM是如何通过栈帧中的对象引用访问到其内部的对象实例呢？
+<img src="/myblog/posts/images/essays/%E5%AF%B9%E8%B1%A1%E6%8C%87%E9%92%88%E8%AE%BF%E9%97%AE.png" alt="对象指针访问"></p>
+<p>hotspot使用的是直接访问。因为句柄访问开辟了句柄池，所以直接访问相较于句柄访问效率稍高一点。</p>
+<h3 id="句柄访问">句柄访问</h3>
+<p>句柄访问是在栈的局部变量表中，记录的对象的引用，然后在堆空间中开辟了一块空间，也就是句柄池。指向的是方法区中的对象类型数据。</p>
+<p>优点：<code>reference</code> 中存储稳定句柄地址，对象被移动（垃圾收集时移动对象很普遍）时只会改变句柄中实例数据指针即可，<code>reference</code> 本身不需要被修改</p>
+<p><img src="/myblog/posts/images/essays/%E5%8F%A5%E6%9F%84%E8%AE%BF%E9%97%AE.png" alt="句柄访问"></p>
+<h3 id="直接访问">直接访问</h3>
+<p>直接指针是局部变量表中的引用，直接指向堆中的实例，在对象实例中有类型指针，指向的是方法区中的对象类型数据。</p>
+<p><img src="/myblog/posts/images/essays/%E7%9B%B4%E6%8E%A5%E8%AE%BF%E9%97%AE.png" alt="直接访问"></p>
+<h2 id="对象的终止机制">对象的终止机制</h2>
+<p><code>finalize()</code>方法是Java提供的对象终止机制，允许开发人员提供对象被销毁之前的自定义处理逻辑。
+当垃圾回收器发现没有引用指向一个对象，即：垃圾回收此对象之前，总会先调用这个对象的<code>finalize()</code>方法。</p>
+<p><code>finalize()</code> 方法允许在子类中被重写，用于在对象被回收时进行资源释放。
+通常在这个方法中进行一些资源释放和清理的工作，比如关闭文件、套接字和数据库连接等。</p>
+<p>文档注释大意：当GC确定不再有对对象的引用时，由垃圾收集器在对象上调用。子类重写<code>finalize</code>方法来释放系统资源或执行其他清理。</p>
+<pre><code>   /**
+     * Called by the garbage collector on an object when garbage collection
+     * determines that there are no more references to the object.
+     * A subclass overrides the {@code finalize} method to dispose of
+     * system resources or to perform other cleanup.
+     */
+    protected void finalize() throws Throwable { }
+</code></pre><p>简而言之，<code>finalize</code>方法是与Java中的垃圾回收器有关系。即：当一个对象变成一个垃圾对象的时候，如果此对象的内存被回收，那么就会调用该类中定义的<code>finalize</code>方法。</p>
+<p>当一个对象可被回收时，就需要执行该对象的 <code>finalize()</code> 方法，那么就有可能在该方法中让对象重新被引用，从而实现自救。自救只能进行一次，如果回收的对象之前调用了 <code>finalize()</code> 方法自救，后面回收时不会再调用该方法。</p>
+<p><strong>永远不要主动调用某个对象的<code>finalize</code>方法应该交给垃圾回收机制调用的原因：</strong></p>
+<ul>
+<li>在调用<code>finalize</code>方法时时可能会导致对象复活；</li>
+<li><code>finalize</code>方法的执行时间是没有保障的，它完全由GC线程决定，极端情况下，若不发生GC，则<code>finalize</code>方法将没有执行机会;因为优先级比较低，即使主动调用该方法，也不会因此就直接进行回收；</li>
+<li>一个糟糕的<code>finalize</code>方法会严重影响GC的性能;</li>
+</ul>
+<p><strong>由于<code>finalize</code>方法的存在,虚拟机中的对象一般可能处于三种状态：</strong></p>
+<p>如果从所有的根节点都无法访问到某个对象，说明对象己经不再使用了。一般来说，此对象需要被回收。
+但事实上，也并非是“非死不可”的，这时候它们暂时处于“缓刑”阶段。一个无法触及的对象有可能在某一个条件下“复活”自己，如果这样，那么对它的回收就是不合理的，为此，虚拟机中定义了的对象可能的三种状态：</p>
+<ul>
+<li>可触及的：从根节点开始，可以到达这个对象；对象存活被使用；</li>
+<li>可复活的：对象的所有引用都被释放，但是对象有可能在<code>finalize</code>中复活；对象被复活，对象在<code>finalize</code>方法中被重新使用；</li>
+<li>不可触及的：对象的<code>finalize</code>方法被调用，并且没有复活，那么就会进入不可触及状态；对象死亡，对象没有被使用；</li>
+</ul>
+<p>只有在对象不可触及时才可以被回收。不可触及的对象不可能被复活，因为<code>finalize()</code>只会被调用一次。</p>
+<p><strong><code>finalize</code>对象终止机制判定一个对象能否被回收过程：</strong></p>
+<p>判定一个对象是否可回收，至少要经历两次标记过程：</p>
+<ul>
+<li>如果对象没有没有引用链，则进行第一次标记</li>
+<li>进行筛选，判断此对象是否有必要执行<code>finalize</code>方法
+<ol>
+<li>如果对象没有重写<code>finalize</code>方法，或者<code>finalize</code>方法已经被虚拟机调用过，则虚拟机视为“没有必要执行”，对象被判定为不可触及的。</li>
+<li>如果对象重写了<code>finalize</code>方法，且还未执行过，那么会被插入到<code>F-Queue</code>队列中，由一个虚拟机自动创建的、低优先级的<code>Finalizer</code>线程触发其<code>finalize</code>方法执行。</li>
+<li><code>finalize</code>方法是对象逃脱死亡的最后机会，稍后GC会对<code>F-Queue</code>队列中的对象进行第二次标记。如果对象在<code>finalize</code>方法中与引用链上的任何一个对象建立了联系，那么在第二次标记时，该对象会被移出“即将回收”集合。
+之后，对象会再次出现没有引用存在的情况。在这个情况下，<code>finalize</code>方法不会被再次调用，对象会直接变成不可触及的状态，也就是说，一个对象的<code>finalize</code>方法只会被调用一次。</li>
+</ol>
+</li>
+</ul>
+<p>代码演示对象能否被回收：</p>
+<pre><code>public class MainTest {
+
+    public static MainTest var;
+
+    /**
+     * 此方法只能被调用一次
+     * 可对该方法进行注释，来测试finalize方法是否能复活对象
+     */
+    @Override
+    protected void finalize() throws Throwable {
+        System.out.println(&quot;调用当前类重写的finalize()方法&quot;);
+        // 复活对象 让当前带回收对象重新与引用链中的对象建立联系
+        var = this;
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        var = new MainTest();
+        var = null;
+        System.gc();
+        System.out.println(&quot;-----------------第一次gc操作------------&quot;);
+        // 因为Finalizer线程的优先级比较低，暂停2秒，以等待它
+        Thread.sleep(2000);
+        if (var == null) {
+            System.out.println(&quot;对象已经死了&quot;);
+            // 如果第一次对象就死亡了 就终止
+            return;
+        } else {
+            System.out.println(&quot;对象还活着&quot;);
+        }
+
+        System.out.println(&quot;-----------------第二次gc操作------------&quot;);
+        var = null;
+        System.gc();
+        // 下面代码和上面代码是一样的，但是 对象却自救失败了
+        Thread.sleep(2000);
+        if (var == null) {
+            System.out.println(&quot;对象已经死了&quot;);
+        } else {
+            System.out.println(&quot;对象还活着&quot;);
+        }
+    }
+
+}
+</code></pre></div>
+                    <div class="post_footer">
+                        
+                        <div class="meta">
+                            <div class="info">
+                                <span class="field tags">
+                                    <i class="ri-stack-line"></i>
+                                    
+                                    <a href="https://whiteppure.github.io/myblog/tags/java/">Java</a>
+                                    
+                                    <a href="https://whiteppure.github.io/myblog/tags/jvm/">JVM</a>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                
+                <div class="doc_comments"></div>
+                
+            </div>
+        </div>
+    </div>
+    <a id="back_to_top" href="#" class="back_to_top"><i class="ri-arrow-up-s-line"></i></a>
+    <footer class="footer">
+    <div class="powered_by">
+        <a href="https://varkai.com">Designed by VarKai,</a>
+        <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+    </div>
+
+    <div class="footer_slogan">
+        <span>whitepure@2021</span>
+    </div>
+</footer>
+    <script src="https://whiteppure.github.io/myblog/js/jquery-3.5.1.min.js"></script>
+<link href="https://whiteppure.github.io/myblog/css/fancybox.min.css" rel="stylesheet">
+<script src="https://whiteppure.github.io/myblog/js/fancybox.min.js"></script>
+<script src="https://whiteppure.github.io/myblog/js/zozo.js"></script>
+
+
+<script type="text/javascript" async
+    src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\[\[', '\]\]']],
+                processEscapes: true,
+                processEnvironments: true,
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+                TeX: {
+                    equationNumbers: { autoNumber: "AMS" },
+                    extensions: ["AMSmath.js", "AMSsymbols.js"]
+                }
+            }
+        });
+
+        MathJax.Hub.Queue(function () {
+            
+            
+            
+            var all = MathJax.Hub.getAllJax(), i;
+            for (i = 0; i < all.length; i += 1) {
+                all[i].SourceElement().parentNode.className += ' has-jax';
+            }
+        });
+    </script>
+
+<style>
+    code.has-jax {
+        font: inherit;
+        font-size: 100%;
+        background: inherit;
+        border: inherit;
+        color: #515151;
+    }
+</style>
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jspdf/1.0.106/jspdf.debug.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+
+<script type="text/javascript">
+    var downPdf = document.getElementById("export_pdf");
+    var pdfContent = document.getElementById('pdf_content');
+    downPdf.onclick = () => {
+        html2canvas(pdfContent, {
+            onrendered:function(canvas) {
+
+                var contentWidth = canvas.width;
+                var contentHeight = canvas.height;
+
+                
+                
+
+                var pageHeight = contentWidth / 592.28 * 841.89;
+                
+                var leftHeight = contentHeight;
+                
+                var position = 0;
+                
+                
+                
+
+                var imgWidth = 595.28;
+                var imgHeight = 585.28/contentWidth * contentHeight;
+
+                var pageData = canvas.toDataURL('image/jpeg', 1.0);
+
+                var pdf = new jsPDF('', 'pt', 'a4');
+
+                
+                
+
+                
+                
+                if (leftHeight < pageHeight) {
+                    pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
+                } else {
+                    while(leftHeight > 0) {
+                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                        leftHeight -= pageHeight;
+                        position -= 841.89;
+                        
+                        if(leftHeight > 0) {
+                            pdf.addPage();
+                        }
+                    }
+                }
+
+                pdf.save('whitepure_blog.pdf');
+            }
+        })
+    }
+</script>
+</body>
+
+</html>

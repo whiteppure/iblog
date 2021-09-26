@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="zh" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="whitepure" />
+	
+	
+	
+	<title>垃圾回收 ｜ whitepure</title>
+	
+    
+    
+    <meta name="description" content="" />
+    
+
+    
+    
+    <meta name="keywords" content="whitepure博客, whiteppure, whitepure" />
+    
+
+	
+    
+    <link rel="shortcut icon" href="https://whiteppure.github.io/myblog/images/favicon.ico" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/myblog/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/myblog/css/zozo.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/myblog/css/highlight.css" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/myblog/css/toc.css" />
+
+    
+    
+</head>
+
+<body>
+    
+    
+    
+
+
+
+
+
+
+
+
+
+<div class="toc">
+
+    <div class="page-header"><strong>- CATALOG -</strong></div>
+
+    <div id="page-scrollspy" class="toc-nav">
+
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%9e%83%e5%9c%be%e5%9b%9e%e6%94%b6">
+                    垃圾回收
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%bb%80%e4%b9%88%e6%98%af%e5%9e%83%e5%9c%be">
+                    什么是垃圾
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e9%9c%80%e8%a6%81%e5%9e%83%e5%9c%be%e5%9b%9e%e6%94%b6">
+                    为什么需要垃圾回收
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%97%a9%e6%9c%9f%e5%9e%83%e5%9c%be%e5%9b%9e%e6%94%b6">
+                    早期垃圾回收
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#java%e5%9e%83%e5%9c%be%e5%9b%9e%e6%94%b6%e6%9c%ba%e5%88%b6httpsdocsoraclecomjavase8docstechnotesguidesvmgctuningtochtml">
+                    Java垃圾回收机制
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%9e%83%e5%9c%be%e5%9b%9e%e6%94%b6%e4%b8%bb%e8%a6%81%e5%85%b3%e6%b3%a8%e7%9a%84%e5%8c%ba%e5%9f%9f">
+                    垃圾回收主要关注的区域
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%9e%83%e5%9c%be%e5%9b%9e%e6%94%b6%e7%9b%b8%e5%85%b3%e7%ae%97%e6%b3%95%e6%80%9d%e6%83%b3">
+                    垃圾回收相关算法思想
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%a0%87%e8%ae%b0%e9%98%b6%e6%ae%b5">
+                    标记阶段
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%bc%95%e7%94%a8%e8%ae%a1%e6%95%b0%e7%ae%97%e6%b3%95">
+                    引用计数算法
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%8f%af%e8%be%be%e6%80%a7%e5%88%86%e6%9e%90%e7%ae%97%e6%b3%95">
+                    可达性分析算法
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%b8%85%e9%99%a4%e9%98%b6%e6%ae%b5">
+                    清除阶段
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%a0%87%e8%ae%b0%e6%b8%85%e9%99%a4%e7%ae%97%e6%b3%95">
+                    标记清除算法
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%a4%8d%e5%88%b6%e7%ae%97%e6%b3%95">
+                    复制算法
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%a0%87%e8%ae%b0%e6%95%b4%e7%90%86%e7%ae%97%e6%b3%95">
+                    标记整理算法
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%b0%8f%e7%bb%93">
+                    小结
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%88%86%e4%bb%a3%e6%94%b6%e9%9b%86%e6%80%9d%e6%83%b3">
+                    分代收集思想
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%a2%9e%e9%87%8f%e6%94%b6%e9%9b%86%e7%ae%97%e6%b3%95">
+                    增量收集算法
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%88%86%e5%8c%ba%e7%ae%97%e6%b3%95">
+                    分区算法
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+
+    </div>
+
+</div>
+
+
+
+    
+    <div class="main animate__animated animate__fadeInDown" id="pdf_content">
+        <div class="nav_container animated fadeInDown">
+    <div class="site_nav" id="site_nav">
+        <ul><li class="">
+                <a href="https://whiteppure.github.io/myblog/">首页</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/myblog/posts/">归档</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/myblog/tags/">标签</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/myblog/about/">关于</a>
+            </li>
+        </ul>
+    </div>
+    <div class="menu_icon">
+        <a id="menu_icon"><i class="ri-menu-line"></i></a>
+    </div>
+</div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="content">
+            <div class="post_page">
+                <div class="post animate__animated animate__fadeInDown">
+                    <div class="post_title post_detail_title">
+                        <h2><a href='/myblog/posts/jvm/java-garbage-collection/'>垃圾回收</a></h2>
+                        <span class="date">2021.04.21</span>
+                    </div>
+                    <div class="post_content markdown"><h2 id="垃圾回收">垃圾回收</h2>
+<p>垃圾收集，不是Java语言的伴生产物。早在1960年，第一门开始使用内存动态分配和垃圾收集技术的Lisp语言诞生。</p>
+<p>垃圾收集机制是Java的招牌能力，极大地提高了开发效率。
+如今，垃圾收集几乎成为现代语言的标配，即使经过如此长时间的发展，Java的垃圾收集机制仍然在不断的演进中，不同大小的设备、不同特征的应用场景，对垃圾收集提出了新的挑战，这当然也是面试的热点。</p>
+<h3 id="什么是垃圾">什么是垃圾</h3>
+<blockquote>
+<p>垃圾是指在运行程序中没有任何指针指向的对象，这个对象就是需要被回收的垃圾。</p>
+</blockquote>
+<p>如果不及时对内存中的垃圾进行清理，那么，这些垃圾对象所占的内存空间会一直保留到应用程序的结束，被保留的空间无法被其它对象使用，甚至可能导致<strong>内存溢出</strong>。</p>
+<h3 id="为什么需要垃圾回收">为什么需要垃圾回收</h3>
+<p>对于高级语言来说，一个基本认知是如果不进行垃圾回收，内存迟早都会被消耗完，因为不断地分配内存空间而不进行回收，就好像不停地生产生活垃圾而从来不打扫一样。</p>
+<p>除了释放没用的对象，垃圾回收也可以清除内存里的记录碎片。碎片整理将所占用的堆内存移到堆的一端，以便JVM将整理出的内存分配给新的对象。</p>
+<p>随着应用程序所应付的业务越来越庞大、复杂，用户越来越多，没有GC就不能保证应用程序的正常进行。而经常造成STW的GC又跟不上实际的需求，所以才会不断地尝试对GC进行优化。</p>
+<h3 id="早期垃圾回收">早期垃圾回收</h3>
+<p>在早期的C/C++时代，垃圾回收基本上是手工进行的。
+开发人员可以使用 <code>new</code> 关键字进行内存申请，并使用 <code>delete</code> 关键字进行内存释放。比如以下代码：</p>
+<pre><code>MibBridge *pBridge= new cmBaseGroupBridge();
+//如果注册失败，使用Delete释放该对象所占内存区域
+if(pBridge-&gt;Register (kDestroy) != NO ERROR）
+	delete pBridge;
+</code></pre><p>这种方式可以灵活控制内存释放的时间，但是会给开发人员带来频繁申请和释放内存的管理负担。</p>
+<p>倘若有一处内存区间由于程序员编码的问题忘记被回收，那么就会产生<strong>内存泄漏</strong>;
+垃圾对象永远无法被清除，随着系统运行时间的不断增长，垃圾对象所耗内存可能持续上升，直到出现内存溢出并造成应用程序崩溃。</p>
+<p>有了垃圾回收机制后，上述代码极有可能变成这样</p>
+<pre><code>MibBridge *pBridge=new cmBaseGroupBridge(); 
+pBridge-&gt;Register(kDestroy);
+</code></pre><p>现在，除了Java以外，C#、Python、Ruby等语言都使用了自动垃圾回收的思想，也是未来发展趋势，可以说这种自动化的内存分配和来及回收方式已经成为了线代开发语言必备的标准。</p>
+<h3 id="java垃圾回收机制httpsdocsoraclecomjavase8docstechnotesguidesvmgctuningtochtml"><a href="https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/toc.html">Java垃圾回收机制</a></h3>
+<p>自动内存管理，无需开发人员手动参与内存的分配与回收，这样降低<strong>内存泄漏</strong>和<strong>内存溢出</strong>的风险;
+没有垃圾回收器，java也会和c++一样，各种悬垂指针，野指针，泄露问题让你头疼不已。</p>
+<p>自动内存管理机制，将程序员从繁重的内存管理中释放出来，可以更专心地专注于业务开发.</p>
+<p>对于Java开发人员而言，自动内存管理就像是一个黑匣子，如果过度依赖于“自动”，那么这将会是一场灾难，最严重的就会弱化Java开发人员在程序出现内存溢出时定位问题和解决问题的能力。</p>
+<p>此时，了解JVM的自动内存分配和内存回收原理就显得非常重要，只有在真正了解JVM是如何管理内存后，我们才能够在遇见<code>outOfMemoryError</code>时，快速地根据错误异常日志定位问题和解决问题。</p>
+<p>当需要排查各种内存溢出、内存泄漏问题时，当垃圾收集成为系统达到更高并发量的瓶颈时，我们就必须对这些“自动化”的技术实施必要的监控和调节。</p>
+<h3 id="垃圾回收主要关注的区域">垃圾回收主要关注的区域</h3>
+<p>垃圾收集器主要对 方法区 、堆中的垃圾收集
+<img src="/myblog/posts/images/essays/GC%E4%BD%9C%E7%94%A8%E5%8C%BA%E5%9F%9F.png" alt="GC作用区域"></p>
+<p>垃圾收集器可以对年轻代回收，也可以对老年代回收，甚至是全栈和方法区的回收；
+其中，Java堆是垃圾收集器的工作重点。</p>
+<p>从次数上讲：频繁收集新生代 &gt; 较少收集老年代 &raquo; 基本不收集方法区</p>
+<h2 id="垃圾回收相关算法思想">垃圾回收相关算法思想</h2>
+<h3 id="标记阶段">标记阶段</h3>
+<p>在堆里存放着几乎所有的Java对象实例，在GC执行垃圾回收之前，首先需要区分出内存中哪些是存活对象，哪些是已经死亡的对象。
+只有被标记为己经死亡的对象，GC才会在执行垃圾回收时，释放掉其所占用的内存空间，因此这个过程我们可以称为<strong>垃圾标记阶段</strong>。</p>
+<p>在运行程序中，当一个对象已经不再被任何存活的对象引用时，就可以就可以判定该对象已经死亡了；
+判定对象是否存活在有两种算法，应用技术算法、可达性分析算法。</p>
+<h4 id="引用计数算法">引用计数算法</h4>
+<p>对每个对象保存一个整型的引用计数器属性。用于记录对象被引用的情况。
+在堆中判定新生代中的幸存者区是否可以进老年代，会有一个年龄计数器，这里用的就是引用计数算法。</p>
+<ul>
+<li>优点：实现简单，垃圾对象便于辨识；判定效率高，回收垃圾没有延迟性。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>它需要单独的字段存储计数器，这样的做法增加了存储空间的开销。</li>
+<li>每次赋值都需要更新计数器，伴随着加法和减法操作，这增加了时间开销。</li>
+<li>无法处理循环引用的情况。这是一条致命缺陷，导致在Java的垃圾回收器中没有使用这类算法。</li>
+</ul>
+<p><strong>循环引用</strong></p>
+<p>当p的指针断开的时候，内部的引用形成一个循环，从而造成内存泄漏。</p>
+<p><img src="/myblog/posts/images/essays/%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8.png" alt="循环引用"></p>
+<p>Java并没有选择引用计数算法，是因为其存在一个基本的难题，也就是很难处理循环引用关系。
+虽然引用计数算法存在循环引用的问题，但是很多语言的资源回收选择，例如：因人工智能而更加火热的Python，它更是同时支持引用计数和垃圾收集机制；
+具体哪种最优是要看场景的，业界有大规模实践中仅保留引用计数机制，以提高吞吐量的尝试。</p>
+<p><strong>Python如何解决循环引用？</strong></p>
+<ul>
+<li>手动解除：很好理解，就是在合适的时机，将引用计数器中的计数属性置为零，解除引用关系。</li>
+<li>使用弱引用<code>weakref</code>，<code>weakref</code>是Python提供的标准库，旨在解决循环引用。</li>
+</ul>
+<h4 id="可达性分析算法">可达性分析算法</h4>
+<p>可达性分析算法是以根对象集合（GCRoots）为起始点，按照从上至下的方式搜索被根对象集合所连接的目标对象是否可达。
+所谓根集合&quot;GCRoots”就是一组必须活跃的引用，即有在栈中有指针指向堆中的地址；
+可达性分析算法：也可以称为 根搜索算法、追踪性垃圾收集。</p>
+<p>相对于引用计数算法而言，可达性分析算法不仅同样具备实现简单和执行高效等特点，更重要的是该算法可以有效地解决在引用计数算法中循环引用的问题，防止内存泄漏的发生。</p>
+<p>在可达性分析算法中，只有能够被根对象集合直接或者间接连接的对象才是存活对象；
+使用可达性分析算法后，内存中的存活对象都会被根对象集合直接或间接连接着，搜索所走过的路径称为引用链；
+如果目标对象没有任何引用链相连，则是不可达的，就意味着该对象己经死亡，可以标记为垃圾对象。
+<img src="/myblog/posts/images/essays/%E5%8F%AF%E8%BE%BE%E6%80%A7%E5%88%86%E6%9E%90%E7%AE%97%E6%B3%95.png" alt="可达性分析算法"></p>
+<p><strong>对象集合（GC Roots）可以是哪些？</strong></p>
+<ol>
+<li>虚拟机栈中引用的对象；例如：各个线程被调用的方法中使用到的参数、局部变量等</li>
+<li>本地方法栈内,本地方法引用对象方法区中类静态属性引用的对象;例如：Java类的引用类型静态变量</li>
+<li>方法区中常量引用的对象；例如：字符串常量池里的引用</li>
+<li>所有被同步锁<code>synchronized</code>持有的对象；例如：</li>
+<li>Java虚拟机内部的引用；例如：一些常驻的异常对象、系统类加载器等</li>
+<li>反映java虚拟机内部情况的<code>JMXBean、JVMTI</code>中注册的回调、本地代码缓存等</li>
+<li>除了这些固定的GC Roots集合以外，根据用户所选用的垃圾收集器以及当前回收的内存区域不同，还可以有其他对象“临时性”地加入，共同构成完整GC Roots集合;比如：分代收集和局部回收</li>
+</ol>
+<p>除了堆空间产生对象的一些结构外，比如：虚拟机栈、本地方法栈、方法区、字符串常量池等地方对堆空间的对象的引用，都可以作为GC Roots进行可达性分析。
+<img src="/myblog/posts/images/essays/%E5%AF%B9%E8%B1%A1%E9%9B%86%E5%90%88GCroots.png" alt="对象集合GCroots"></p>
+<blockquote>
+<p>如何判定是否为<code>GC root</code>?
+由于Root采用栈方式存放变量和指针，所以如果一个指针，保存了堆内存里面的对象，但是自己又不存放在堆内存里面，那它就是一个Root</p>
+</blockquote>
+<p><strong>使用注意</strong></p>
+<p>如果要使用可达性分析算法来判断内存是否可回收，那么分析工作必须在一个能保障一致性的快照中进行。这点不满足的话分析结果的准确性就无法保证。
+简单来说就是执行这个算法的时候，要停止程序标记对象，不能一边改变对象的引用一边判定对象是不是垃圾。</p>
+<p>这点也是导致GC进行时必须<code>stop The World</code>的一个重要原因。即使是号称几乎不会发生停顿的CMS收集器中，枚举根节点时也是必须要停顿的。</p>
+<h3 id="清除阶段">清除阶段</h3>
+<p>当成功区分出内存中存活对象和死亡对象后，GC接下来的任务就是执行垃圾回收，释放掉无用对象所占用的内存空间，以便有足够的可用内存空间为新对象分配内存。
+目前在JVM中比较常见的三种垃圾收集算法是:</p>
+<ul>
+<li>标记清除算法（Mark-Sweep）</li>
+<li>复制算法（Copying）</li>
+<li>标记压缩算法（Mark-Compact）</li>
+</ul>
+<h4 id="标记清除算法">标记清除算法</h4>
+<p>标记清除算法是一种非常基础和常见的垃圾收集算法，该算法被J.McCarthy等人在1960年提出并并应用于<code>Lisp</code>语言。</p>
+<p><strong>执行过程</strong></p>
+<p>当堆中的有效内存空间被耗尽的时候，就会停止整个程序（stop the world），然后进行两项工作，第一项则是标记，第二项则是清除；</p>
+<ul>
+<li>标记：垃圾收集器从引用根节点（GCRoots）开始遍历，标记所有被引用的对象。一般是在对象的Header中记录为可达对象。</li>
+<li>清除：垃圾收集器对堆内存从头到尾进行线性的遍历，如果发现某个对象在其Header中没有标记为可达对象，则将其回收。</li>
+</ul>
+<p>标记的是可达对象，不是垃圾对象；清除回收的是垃圾对象。</p>
+<blockquote>
+<p>什么是清除？
+上面所谓的清除并不是真的置空，而是把需要清除的对象地址保存在<a href="https://whiteppure.github.io/myblog/posts/jvm/java-object/#%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%BF%87%E7%A8%8B%E5%8F%8A%E6%AD%A5%E9%AA%A4">空闲的地址列表</a>里。
+下次有新对象需要加载时，判断垃圾的位置空间是否够，如果够，就存放覆盖原有的地址。</p>
+</blockquote>
+<p><strong>缺点</strong></p>
+<ul>
+<li>标记清除算法的效率不算高；</li>
+<li>在进行GC的时候，需要停止整个应用程序，用户体验较差；</li>
+<li>这种方式清理出来的空闲内存是不连续的，会产生内碎片，需要维护一个空闲列表；存放大对象可能会存不下；</li>
+</ul>
+<h4 id="复制算法">复制算法</h4>
+<p>为了解决标记-清除算法在垃圾收集效率方面的缺陷，M.L.Minsky于1963年发表了著名的论文：“使用双存储区的Lisp语言垃圾收集器（<code>CA LISP Garbage Collector Algorithm Using Serial Secondary Storage</code>）”。
+M.L.Minsky在该论文中描述的算法被人们称为复制算法，它也被M.L.Minsky本人成功地引入到了Lisp语言的一个实现版本中。</p>
+<p><strong>执行过程</strong></p>
+<p>将分配内存空间分为两块，每次只使用其中一块，在垃圾回收时将正在使用的内存中存活对象复制到未被使用的内存块中去，
+之后清除正在使用的内存块中的所有对象，交换两个内存的角色，最后完成垃圾回收。</p>
+<p><strong>缺点</strong></p>
+<ul>
+<li>因为用复制的形式，需要两倍的内存空间，或者说只能用分配内存的一半。</li>
+<li>对于G1这种分拆成为大量region的GC，复制而不是移动，意味着GC需要维护region之间对象引用关系，不管是内存占用或者时间开销也不小；
+简单来说，从From区被复制到To区的可达对象，需要改变之前对象的指针引用，需要内存和时间的开销。</li>
+</ul>
+<p><strong>优点</strong>
+解决了标记清除算法带来的问题；</p>
+<ul>
+<li>没有标记和清除过程，实现简单，运行高效</li>
+<li>复制过去以后保证空间的连续性，不会出现“碎片”问题。</li>
+</ul>
+<p>复制算法最坏情况，如果系统中的垃圾对象很少，复制算法需要复制的存活对象数量就会很多，那么大部分对象从一个区域移动到另一个区域，GCRoots需要改变了对象的地址，加大了维护成本；
+所以复制算法适合，系统中的垃圾对象很多，可复制的存活的对象很少的情况。利用这个特点，在新生代中的幸存者区里面就用到了复制算法的思想。</p>
+<h4 id="标记整理算法">标记整理算法</h4>
+<p>复制算法的高效性是建立在存活对象少、垃圾对象多的前提下的。这种情况在新生代经常发生，但是在老年代，更常见的情况是大部分对象都是存活对象。
+如果依然使用复制算法，由于存活对象较多，复制的成本也将很高。因此，基于老年代垃圾回收的特性，需要使用其他的算法。标记整理算法应运而生。</p>
+<p>标记一清除算法的确可以应用在老年代中，但是该算法不仅执行效率低下，而且在执行完内存回收后还会产生内存碎片，所以JvM的设计者需要在此基础之上进行改进。
+1970年前后，<code>G.L.Steele、C.J.Chene</code>和<code>D.s.Wise</code>等研究者发布标记-压缩算法。在许多现代的垃圾收集器中，人们都使用了标记-压缩算法或其改进版本。</p>
+<p><strong>执行过程</strong></p>
+<ul>
+<li>标记：垃圾收集器从引用根节点（GCRoots）开始遍历，标记所有被引用的对象。一般是在对象的Header中记录为可达对象。</li>
+<li>压缩：将所有的存活对象压缩到内存的一端，按顺序排放，之后执行清除的步骤。</li>
+<li>清除：垃圾收集器对堆内存从头到尾进行线性的遍历，如果发现某个对象在其Header中没有标记为可达对象，则将其回收。</li>
+</ul>
+<p>与标记清理算法相比，多了一个步骤&quot;压缩（整理）&quot;，也就是移动对象的步骤；
+是否移动回收后的存活对象是一项优缺点并存的风险决策。标记的存活对象将会被整理，按照内存地址依次排列，而未被标记的内存会被清理掉。
+如此一来，当我们需要给新对象分配内存时，JVM只需要持有一个内存的起始地址即可，这比维护一个空闲列表显然少了许多开销。</p>
+<p><strong>优点</strong></p>
+<ul>
+<li>消除了标记-清除算法当中，内存区域分散的缺点，我们需要给新对象分配内存时，JVM只需要持有一个内存的起始地址即可。</li>
+<li>消除了复制算法当中，内存减半的高额代价。</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>从效率上来说，标记-整理算法要低于复制算法。</li>
+<li>移动对象的同时，如果对象被其他对象引用，则还需要调整引用的地址</li>
+<li>移动过程中，需要全程暂停用户应用程序。即：STW</li>
+</ul>
+<h3 id="小结">小结</h3>
+<p>标记-整理算法相对来说更平滑一些，但是效率上不尽如人意，它比复制算法多了一个标记的阶段，比标记-清除多了一个整理内存的阶段。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>标记清除算法</th>
+<th>标记整理算法</th>
+<th>复制算法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>时间开销</td>
+<td>中等</td>
+<td>最慢</td>
+<td>最快</td>
+</tr>
+<tr>
+<td>空间开销</td>
+<td>少（会堆积碎片）</td>
+<td>少（不堆积碎片）</td>
+<td>通常需要存活对象的两倍空间（不堆积碎片）</td>
+</tr>
+<tr>
+<td>移动对象</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+</tr>
+</tbody>
+</table>
+<p>这些算法中，并没有一种算法可以完全替代其他算法，它们都具有自己独特的优势和特点。分代收集算法思想应运而生。</p>
+<h3 id="分代收集思想">分代收集思想</h3>
+<p>分代收集算法，是基于这样一个事实：不同的对象的生命周期是不一样的。因此，不同生命周期的对象可以采取不同的收集方式，以便提高回收效率。
+一般是把Java堆分为新生代和老年代，这样就可以根据各个年代的特点使用不同的回收算法，以提高垃圾回收的效率。</p>
+<p>在Java程序运行的过程中，会产生大量的对象，其中有些对象是与业务信息相关，比如Http请求中的Session对象、线程、Socket连接，这类对象跟业务直接挂钩，因此生命周期比较长。
+但是还有一些对象，主要是程序运行过程中生成的临时变量，这些对象生命周期会比较短，比如：string对象，由于其不变类的特性，系统会产生大量的这些对象，有些对象甚至只用一次即可回收。</p>
+<p>分代的思想被现有的虚拟机广泛使用。几乎所有的垃圾回收器都区分新生代和老年代。
+在HotSpot中，基于分代的概念，GC所使用的内存回收算法必须结合年轻代和老年代各自的特点。</p>
+<ul>
+<li>
+<p>年轻代：区域相对老年代较小，对象生命周期短、存活率低，回收频繁。
+适合复制算法；复制算法内存利用率不高的问题，通过Hotspot中的两个幸存者区的设计得到缓解。</p>
+</li>
+<li>
+<p>老年代：区域较大，对象生命周期长、存活率高，回收不及年轻代频繁。
+不适合复制算法，一般是由标记-清除或者是标记-清除与标记-整理的混合实现。</p>
+</li>
+</ul>
+<h3 id="增量收集算法">增量收集算法</h3>
+<p>在垃圾回收过程中，应用软件将处于一种stop the World的状态。
+在STW状态下，应用程序所有的线程都会挂起，暂停一切正常的工作，等待垃圾回收的完成。
+如果垃圾回收时间过长，应用程序会被挂起很久，将严重影响用户体验或者系统的稳定性。
+为了解决这个问题，即对实时垃圾收集算法的研究直接导致了增量收集算法的诞生。</p>
+<p>如果一次性将所有的垃圾进行处理，需要造成系统长时间的停顿，那么就可以让垃圾收集线程和应用程序线程交替执行。
+每次，垃圾收集线程只收集一小片区域的内存空间，接着切换到应用程序线程。依次反复，直到垃圾收集完成。</p>
+<p>总的来说，增量收集算法的基础仍是传统的标记-清除和复制算法。
+增量收集算法通过对线程间冲突的妥善处理，允许垃圾收集线程以分阶段的方式完成标记、清理或复制工作</p>
+<p>使用这种方式，由于在垃圾回收过程中，间断性地还执行了应用程序代码，所以能减少系统的停顿时间。
+但是，因为线程切换和上下文转换的消耗，会使得垃圾回收的总体成本上升，造成系统吞吐量的下降。</p>
+<h3 id="分区算法">分区算法</h3>
+<p>一般来说，在相同条件下，堆空间越大，一次GC时所需要的时间就越长，有关GC产生的停顿也越长。
+为了更好地控制GC产生的停顿时间，将一块大的内存区域分割成多个小块，根据目标的停顿时间，每次合理地回收若干个小区间，而不是整个堆空间，从而减少一次GC所产生的停顿。</p>
+<p>分代算法将按照对象的生命周期长短划分成两个部分，分区算法将整个堆空间划分成连续的不同小区间。
+每一个小区间都独立使用，独立回收。这种算法的好处是可以控制一次回收多少个小区间。</p>
+</div>
+                    <div class="post_footer">
+                        
+                        <div class="meta">
+                            <div class="info">
+                                <span class="field tags">
+                                    <i class="ri-stack-line"></i>
+                                    
+                                    <a href="https://whiteppure.github.io/myblog/tags/java/">Java</a>
+                                    
+                                    <a href="https://whiteppure.github.io/myblog/tags/jvm/">JVM</a>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                
+                <div class="doc_comments"></div>
+                
+            </div>
+        </div>
+    </div>
+    <a id="back_to_top" href="#" class="back_to_top"><i class="ri-arrow-up-s-line"></i></a>
+    <footer class="footer">
+    <div class="powered_by">
+        <a href="https://varkai.com">Designed by VarKai,</a>
+        <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+    </div>
+
+    <div class="footer_slogan">
+        <span>whitepure@2021</span>
+    </div>
+</footer>
+    <script src="https://whiteppure.github.io/myblog/js/jquery-3.5.1.min.js"></script>
+<link href="https://whiteppure.github.io/myblog/css/fancybox.min.css" rel="stylesheet">
+<script src="https://whiteppure.github.io/myblog/js/fancybox.min.js"></script>
+<script src="https://whiteppure.github.io/myblog/js/zozo.js"></script>
+
+
+<script type="text/javascript" async
+    src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\[\[', '\]\]']],
+                processEscapes: true,
+                processEnvironments: true,
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+                TeX: {
+                    equationNumbers: { autoNumber: "AMS" },
+                    extensions: ["AMSmath.js", "AMSsymbols.js"]
+                }
+            }
+        });
+
+        MathJax.Hub.Queue(function () {
+            
+            
+            
+            var all = MathJax.Hub.getAllJax(), i;
+            for (i = 0; i < all.length; i += 1) {
+                all[i].SourceElement().parentNode.className += ' has-jax';
+            }
+        });
+    </script>
+
+<style>
+    code.has-jax {
+        font: inherit;
+        font-size: 100%;
+        background: inherit;
+        border: inherit;
+        color: #515151;
+    }
+</style>
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jspdf/1.0.106/jspdf.debug.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+
+<script type="text/javascript">
+    var downPdf = document.getElementById("export_pdf");
+    var pdfContent = document.getElementById('pdf_content');
+    downPdf.onclick = () => {
+        html2canvas(pdfContent, {
+            onrendered:function(canvas) {
+
+                var contentWidth = canvas.width;
+                var contentHeight = canvas.height;
+
+                
+                
+
+                var pageHeight = contentWidth / 592.28 * 841.89;
+                
+                var leftHeight = contentHeight;
+                
+                var position = 0;
+                
+                
+                
+
+                var imgWidth = 595.28;
+                var imgHeight = 585.28/contentWidth * contentHeight;
+
+                var pageData = canvas.toDataURL('image/jpeg', 1.0);
+
+                var pdf = new jsPDF('', 'pt', 'a4');
+
+                
+                
+
+                
+                
+                if (leftHeight < pageHeight) {
+                    pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
+                } else {
+                    while(leftHeight > 0) {
+                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                        leftHeight -= pageHeight;
+                        position -= 841.89;
+                        
+                        if(leftHeight > 0) {
+                            pdf.addPage();
+                        }
+                    }
+                }
+
+                pdf.save('whitepure_blog.pdf');
+            }
+        })
+    }
+</script>
+</body>
+
+</html>

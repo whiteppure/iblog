@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="whitepure" />
+	
+	
+	
+	<title>CAS原理 ｜ whitepure</title>
+	
+    
+    
+    <meta name="description" content="" />
+    
+
+    
+    
+    <meta name="keywords" content="whitepure博客, whiteppure, whitepure" />
+    
+
+	
+    
+    <link rel="shortcut icon" href="https://whiteppure.github.io/myblog/images/favicon.ico" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/myblog/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/myblog/css/zozo.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/myblog/css/highlight.css" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/myblog/css/toc.css" />
+
+    
+    
+</head>
+
+<body>
+    
+    
+    
+
+
+
+
+
+
+
+
+
+<div class="toc">
+
+    <div class="page-header"><strong>- CATALOG -</strong></div>
+
+    <div id="page-scrollspy" class="toc-nav">
+
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#cas">
+                    CAS
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%a6%82%e4%bd%95%e4%bf%9d%e8%af%81%e6%95%b0%e6%8d%ae%e4%b8%80%e8%87%b4%e6%80%a7">
+                    如何保证数据一致性
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#cas%e4%b8%8eunsafe%e5%85%b3%e7%b3%bb">
+                    CAS与Unsafe关系
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e7%bc%ba%e7%82%b9">
+                    缺点
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+
+    </div>
+
+</div>
+
+
+
+    
+    <div class="main animate__animated animate__fadeInDown" id="pdf_content">
+        <div class="nav_container animated fadeInDown">
+    <div class="site_nav" id="site_nav">
+        <ul><li class="">
+                <a href="https://whiteppure.github.io/myblog/">首页</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/myblog/posts/">归档</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/myblog/tags/">标签</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/myblog/about/">关于</a>
+            </li>
+        </ul>
+    </div>
+    <div class="menu_icon">
+        <a id="menu_icon"><i class="ri-menu-line"></i></a>
+    </div>
+</div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="content">
+            <div class="post_page">
+                <div class="post animate__animated animate__fadeInDown">
+                    <div class="post_title post_detail_title">
+                        <h2><a href='/myblog/posts/essays/cas-principle/'>CAS原理</a></h2>
+                        <span class="date">2020.04.04</span>
+                    </div>
+                    <div class="post_content markdown"><h2 id="cas">CAS</h2>
+<p>CAS全称为<code>Compare and Swap</code>被译为比较并交换。是一种无锁算法。在不使用锁（没有线程被阻塞）的情况下实现多线程之间的变量同步。
+<code>java.util.concurrent.atomic</code> 并发包下的所有原子类都是基于 <code>CAS</code> 来实现的。</p>
+<p>以 <code>AtomicInteger</code> 原子整型类为例。</p>
+<pre><code>public class MainTest {
+    public static void main(String[] args) {
+        new AtomicInteger().compareAndSet(1,2);
+    }
+}
+</code></pre><p>以上面的代码为例，调用栈如下：</p>
+<pre><code>compareAndSet --&gt; unsafe.compareAndSwapInt ---&gt; unsafe.compareAndSwapInt --&gt; (C++) cmpxchg
+</code></pre><p><code>AtomicInteger</code> 内部方法都是基于 <code>Unsafe</code> 类实现的。</p>
+<pre><code>public final boolean compareAndSet(int expect, int update) {
+    return unsafe.compareAndSwapInt(this, valueOffset, expect, update);
+}
+</code></pre><p>参数:</p>
+<ul>
+<li><code>this</code>: <code>Unsafe</code> 对象本身，需要通过这个类来获取 <code>value</code> 的内存偏移地址;</li>
+<li><code>valueOffset</code>: <code>value</code> 变量的内存偏移地址;</li>
+<li><code>expect</code>: 期望更新的值;</li>
+<li><code>update</code>: 要更新的最新值;</li>
+</ul>
+<p>偏移量<code>valueOffset</code></p>
+<pre><code>// setup to use Unsafe.compareAndSwapInt for updates
+    private static final Unsafe unsafe = Unsafe.getUnsafe();
+    private static final long valueOffset;
+
+    static {
+        try {
+            valueOffset = unsafe.objectFieldOffset
+                (AtomicInteger.class.getDeclaredField(&quot;value&quot;));
+        } catch (Exception ex) { throw new Error(ex); }
+    }
+
+    private volatile int value;
+</code></pre><ol>
+<li><code>Unsafe</code> 是CAS的核心类，Java无法直接访问底层操作系统，而是通过 <code>native</code> 方法来访问。不过尽管如此，JVM还是开了一个后门，JDK中有一个类 <code>Unsafe</code>，它提供了硬件级别的原子操作。</li>
+<li><code>valueOffset</code> 表示的是变量值在内存中的偏移地址，因为 <code>Unsafe</code> 就是根据内存偏移地址获取数据的原值的。</li>
+<li><code>value</code> 是用 <code>volatile</code> 修饰的，保证了多线程之间看到的 <code>value</code> 值是同一份。</li>
+</ol>
+<p>继续向底层深入，就会看到<code>Unsafe</code>类中的一些方法，同时也是CAS的核心方法：</p>
+<pre><code>public final class Unsafe {
+
+    // ...
+
+    public final native boolean compareAndSwapObject(Object var1, long var2, Object var4, Object var5);
+
+    public final native boolean compareAndSwapInt(Object var1, long var2, int var4, int var5);
+
+    public final native boolean compareAndSwapLong(Object var1, long var2, long var4, long var6);
+    
+    // ...
+}
+</code></pre><p>上面的三个方法可以对应去查看 <code>openjdk</code> 的 <code>hotspot</code>源码：<code>src/share/vm/prims/unsafe.cpp</code></p>
+<pre><code>#define FN_PTR(f) CAST_FROM_FN_PTR(void*, &amp;f)
+
+{CC&quot;compareAndSwapObject&quot;, CC&quot;(&quot;OBJ&quot;J&quot;OBJ&quot;&quot;OBJ&quot;)Z&quot;,  FN_PTR(Unsafe_CompareAndSwapObject)},
+
+{CC&quot;compareAndSwapInt&quot;,  CC&quot;(&quot;OBJ&quot;J&quot;&quot;I&quot;&quot;I&quot;&quot;)Z&quot;,      FN_PTR(Unsafe_CompareAndSwapInt)},
+
+{CC&quot;compareAndSwapLong&quot;, CC&quot;(&quot;OBJ&quot;J&quot;&quot;J&quot;&quot;J&quot;&quot;)Z&quot;,      FN_PTR(Unsafe_CompareAndSwapLong)},
+</code></pre><p>最终在 <code>hotspot</code> 源码实现中都会调用统一的 <code>cmpxchg</code> 函数，<code>/src/share/vm/runtime/Atomic.cpp</code></p>
+<pre><code>jbyte Atomic::cmpxchg(jbyte exchange_value, volatile jbyte*dest, jbyte compare_value) {
+         assert (sizeof(jbyte) == 1,&quot;assumption.&quot;);
+         uintptr_t dest_addr = (uintptr_t) dest;
+         uintptr_t offset = dest_addr % sizeof(jint);
+         volatile jint*dest_int = ( volatile jint*)(dest_addr - offset);
+         // 对象当前值
+         jint cur = *dest_int;
+         // 当前值cur的地址
+         jbyte * cur_as_bytes = (jbyte *) ( &amp; cur);
+         // new_val地址
+         jint new_val = cur;
+         jbyte * new_val_as_bytes = (jbyte *) ( &amp; new_val);
+          // new_val存exchange_value，后面修改则直接从new_val中取值
+         new_val_as_bytes[offset] = exchange_value;
+         // 比较当前值与期望值，如果相同则更新，不同则直接返回
+         while (cur_as_bytes[offset] == compare_value) {
+          // 调用汇编指令cmpxchg执行CAS操作，期望值为cur，更新值为new_val
+             jint res = cmpxchg(new_val, dest_int, cur);
+             if (res == cur) break;
+             cur = res;
+             new_val = cur;
+             new_val_as_bytes[offset] = exchange_value;
+         }
+         // 返回当前值
+         return cur_as_bytes[offset];
+}
+</code></pre><p>从上述源码可以看出CAS的原理就是调用了汇编指令 <code>cmpxchg</code> ,最终其实也就调用了CPU的某些指令。</p>
+<p>CAS作用也一目了然，在多线程环境中，就是比较当前线程工作内存中的值和主内存中的值，如果相同则执行规定操作，否则继续比较，直到主内存和工作内存中的值一直为止。例如代码：</p>
+<pre><code>public final int getAndAddInt(Object var1, long var2, int var4) {
+        int var5;
+        do {
+            var5 = this.getIntVolatile(var1, var2);
+        } while(!this.compareAndSwapInt(var1, var2, var5, var5 + var4));
+        return var5;
+}
+</code></pre><h3 id="如何保证数据一致性">如何保证数据一致性</h3>
+<p>从源码可以看出，是通过CPU指令进行调用,当CPU中某个处理器对缓存中的共享变量进行了操作，其他处理器会有个嗅探机制，将其他处理器的该共享变量的缓存失效，待其他线程读取时会重新从主内存中读取最新的数据，基于 <code>MESI</code> 缓存一致性协议来实现的。</p>
+<p>简述，就是通过CPU的缓存一致性协议来保证线程之间的数据一致性的。</p>
+<blockquote>
+<p>CPU 处理器速度远远大于在主内存中的，为了解决速度差异，在他们之间架设了多级缓存，如 L1、L2、L3 级别的缓存，这些缓存离CPU越近就越快，将频繁操作的数据缓存到这里，加快访问速度。</p>
+</blockquote>
+<p><img src="/myblog/posts/images/essays/JMM.jpg" alt="JMM"></p>
+<h3 id="cas与unsafe关系">CAS与Unsafe关系</h3>
+<p>CAS的作用是比较并交换,就是先拿这个期望值,与主内存的值比较,判断主内存中该位置是否存在期望值,
+如果存在,则改为新的值,这个修改的过程是具有原子性的.
+因为CAS是cpu并发源语,并发源语体现在Java sun.misc.Unsafa类上.
+调用Unsafe类中的CAS方法，JVM会帮我们实现CAS汇编指令。这是一种完全依赖于硬件的功能，通过他实现了原子操作。
+由于CAS是一种系统原语，原语属于操作系统用语范畴，是由若干条指令组成的，用于完成某个功能的一个过程，并且原语的执行必须是连续的，在执行过程中不允许被中断，也就是说CAS是一条CPU的原子指令，不会造成数据不一致问题。</p>
+<blockquote>
+<p>PS Unsafe类
+CAS其实是调用了 <code>Unsafe</code> 类的方法 <code>Unsafa</code> 类是CAS核心类，由于Java方法无法直接访问底层系统，需要通过本地（<code>native</code>）方法来访问，<code>Unsafe</code> 相当于一个后门，基于该类可以直接操作特定内存数据。
+Unsafe类存在于sun.misc包中，其内部方法操作可以像C的指针(内存地址)一样直接操作内存，因此Java中CAS操作的执行依赖于Unsafe类的方法。
+Unsafe类中的所有方法都是<strong>native</strong>修饰的，也就是说Unsafe类中的方法都直接<strong>调用操作系统底层资源执行相应任务</strong>。</p>
+</blockquote>
+<h3 id="缺点">缺点</h3>
+<ol>
+<li>
+<p>因为是采用自旋锁的方式来实现所以，自然有自旋锁的缺点，循环时间长开销大,例如：<code>getAndAddInt</code> 方法执行，有个<code>do while</code>循环，如果CAS失败，一直会进行尝试，如果CAS长时间不成功，可能会给CPU带来很大的开销。</p>
+<pre><code>public final int getAndAddInt(Object var1, long var2, int var4) {
+        int var5;
+        do {
+            var5 = this.getIntVolatile(var1, var2);
+        } while(!this.compareAndSwapInt(var1, var2, var5, var5 + var4));
+        return var5;
+}
+</code></pre></li>
+<li>
+<p>只能保证一个共享变量的原子操作，对多个共享变量操作时，循环CAS就无法保证操作的原子性，这个时候就可以用锁来保证原子性。</p>
+</li>
+<li>
+<p>ABA问题。</p>
+<p>ABA问题示例代码:</p>
+<pre><code>public class MainTest {
+    static AtomicReference&lt;Integer&gt; atomicReference = new AtomicReference&lt;&gt;(100);
+    public static void main(String[] args) {
+        new Thread(() -&gt; {
+            // 先改到101在改回来，CAS会认为value没有被修改过
+            atomicReference.compareAndSet(100, 101);
+            atomicReference.compareAndSet(101, 100);
+        }, &quot;Thread 1&quot;).start();
+   
+        new Thread(() -&gt; {
+            try {
+                //保证线程1完成一次ABA操作
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(atomicReference.compareAndSet(100, 2019) + &quot;\t&quot; + atomicReference.get());
+        }, &quot;Thread 2&quot;).start();
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre><p>CAS算法实现一个重要前提是，需要去除内存中某个时刻的数据并在当下时刻比较并替换，那么在这个时间差类会导致数据的变化。</p>
+<p>比如，线程1从内存位置V取出A，线程2同时也从内存取出A，并且线程2进行一些操作将值改为B，然后线程2又将V位置数据改成A，这时候线程1进行CAS操作发现内存中的值依然时A，然后线程1操作成功。
+尽管线程1的CAS操作成功，但是不代表这个过程没有问题。</p>
+<p>简单说，如果一个线程改了一个值，最后又改回到初始值了，这时候CAS会认为它没有被修改过。简而言之就是只比较结果,不比较过程。</p>
+<p>3.1 <strong>ABA问题解决</strong></p>
+<p>3.1.1 利用 <code>AtomicReference</code> 类进行原子引用</p>
+<pre><code>public class AtomicRefrenceDemo {
+    public static void main(String[] args) {
+        User z3 = new User(&quot;张三&quot;, 22);
+        User l4 = new User(&quot;李四&quot;, 23);
+        AtomicReference&lt;User&gt; atomicReference = new AtomicReference&lt;&gt;();
+        atomicReference.set(z3);
+        System.out.println(atomicReference.compareAndSet(z3, l4) + &quot;\t&quot; + atomicReference.get().toString());
+        System.out.println(atomicReference.compareAndSet(z3, l4) + &quot;\t&quot; + atomicReference.get().toString());
+    }
+}
+   
+@Getter
+@ToString
+@AllArgsConstructor
+class User {
+    String userName;
+    int age;
+}
+</code></pre><pre><code>// 输出结果
+true	User(userName=李四, age=23)
+false	User(userName=李四, age=23)
+</code></pre><p>3.1.2 使用时间戳的原子引用<code>AtomicStampedReference</code>修改版本号。主要是在对象中额外再增加一个标记来标识对象是否有过变更</p>
+<pre><code>static AtomicStampedReference&lt;Integer&gt; atomicStampedReference = new AtomicStampedReference&lt;&gt;(100, 1);
+   
+public static void main(String[] args) {
+    new Thread(() -&gt; {
+            int stamp = atomicStampedReference.getStamp();
+            System.out.println(Thread.currentThread().getName() + &quot;\t第1次版本号&quot; + stamp);
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            atomicStampedReference.compareAndSet(100, 101, atomicStampedReference.getStamp(), atomicStampedReference.getStamp() + 1);
+            System.out.println(Thread.currentThread().getName() + &quot;\t第2次版本号&quot; + atomicStampedReference.getStamp());
+            atomicStampedReference.compareAndSet(101, 100, atomicStampedReference.getStamp(), atomicStampedReference.getStamp() + 1);
+            System.out.println(Thread.currentThread().getName() + &quot;\t第3次版本号&quot; + atomicStampedReference.getStamp());
+        }, &quot;Thread 3&quot;).start();
+   
+        new Thread(() -&gt; {
+            int stamp = atomicStampedReference.getStamp();
+            System.out.println(Thread.currentThread().getName() + &quot;\t第1次版本号&quot; + stamp);
+            try {
+                TimeUnit.SECONDS.sleep(4);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            boolean result = atomicStampedReference.compareAndSet(100, 2019, stamp, stamp + 1);
+   
+            System.out.println(Thread.currentThread().getName() + &quot;\t修改是否成功&quot; + result + &quot;\t当前最新实际版本号：&quot; + atomicStampedReference.getStamp());
+            System.out.println(Thread.currentThread().getName() + &quot;\t当前最新实际值：&quot; + atomicStampedReference.getReference());
+        }, &quot;Thread 4&quot;).start();
+}
+</code></pre><pre><code>Thread 3	第1次版本号1
+Thread 4	第1次版本号1
+Thread 3	第2次版本号2
+Thread 3	第3次版本号3
+Thread 4	修改是否成功false	当前最新实际版本号：3
+Thread 4	当前最新实际值：100
+</code></pre></li>
+</ol>
+</div>
+                    <div class="post_footer">
+                        
+                        <div class="meta">
+                            <div class="info">
+                                <span class="field tags">
+                                    <i class="ri-stack-line"></i>
+                                    
+                                    <a href="https://whiteppure.github.io/myblog/tags/%E7%BA%BF%E7%A8%8B/">线程</a>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                
+                <div class="doc_comments"></div>
+                
+            </div>
+        </div>
+    </div>
+    <a id="back_to_top" href="#" class="back_to_top"><i class="ri-arrow-up-s-line"></i></a>
+    <footer class="footer">
+    <div class="powered_by">
+        <a href="https://varkai.com">Designed by VarKai,</a>
+        <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+    </div>
+
+    <div class="footer_slogan">
+        <span>whitepure@2021</span>
+    </div>
+</footer>
+    <script src="https://whiteppure.github.io/myblog/js/jquery-3.5.1.min.js"></script>
+<link href="https://whiteppure.github.io/myblog/css/fancybox.min.css" rel="stylesheet">
+<script src="https://whiteppure.github.io/myblog/js/fancybox.min.js"></script>
+<script src="https://whiteppure.github.io/myblog/js/zozo.js"></script>
+
+
+<script type="text/javascript" async
+    src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\[\[', '\]\]']],
+                processEscapes: true,
+                processEnvironments: true,
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+                TeX: {
+                    equationNumbers: { autoNumber: "AMS" },
+                    extensions: ["AMSmath.js", "AMSsymbols.js"]
+                }
+            }
+        });
+
+        MathJax.Hub.Queue(function () {
+            
+            
+            
+            var all = MathJax.Hub.getAllJax(), i;
+            for (i = 0; i < all.length; i += 1) {
+                all[i].SourceElement().parentNode.className += ' has-jax';
+            }
+        });
+    </script>
+
+<style>
+    code.has-jax {
+        font: inherit;
+        font-size: 100%;
+        background: inherit;
+        border: inherit;
+        color: #515151;
+    }
+</style>
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jspdf/1.0.106/jspdf.debug.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+
+<script type="text/javascript">
+    var downPdf = document.getElementById("export_pdf");
+    var pdfContent = document.getElementById('pdf_content');
+    downPdf.onclick = () => {
+        html2canvas(pdfContent, {
+            onrendered:function(canvas) {
+
+                var contentWidth = canvas.width;
+                var contentHeight = canvas.height;
+
+                
+                
+
+                var pageHeight = contentWidth / 592.28 * 841.89;
+                
+                var leftHeight = contentHeight;
+                
+                var position = 0;
+                
+                
+                
+
+                var imgWidth = 595.28;
+                var imgHeight = 585.28/contentWidth * contentHeight;
+
+                var pageData = canvas.toDataURL('image/jpeg', 1.0);
+
+                var pdf = new jsPDF('', 'pt', 'a4');
+
+                
+                
+
+                
+                
+                if (leftHeight < pageHeight) {
+                    pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
+                } else {
+                    while(leftHeight > 0) {
+                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                        leftHeight -= pageHeight;
+                        position -= 841.89;
+                        
+                        if(leftHeight > 0) {
+                            pdf.addPage();
+                        }
+                    }
+                }
+
+                pdf.save('whitepure_blog.pdf');
+            }
+        })
+    }
+</script>
+</body>
+
+</html>

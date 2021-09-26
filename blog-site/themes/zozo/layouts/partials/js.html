@@ -1,0 +1,67 @@
+<script src="{{ "js/jquery-3.5.1.min.js" | absURL }}"></script>
+<link href="{{ "css/fancybox.min.css" | absURL }}" rel="stylesheet">
+<script src="{{ "js/fancybox.min.js" | absURL }}"></script>
+<script src="{{ "js/zozo.js" | absURL }}"></script>
+
+{{ if .Site.Params.enableMathJax }}
+{{ partial "mathjax.html" . }}
+{{ end }}
+
+{{ template "_internal/google_analytics_async.html" . }}
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jspdf/1.0.106/jspdf.debug.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+
+<script type="text/javascript">
+    var downPdf = document.getElementById("export_pdf");
+    var pdfContent = document.getElementById('pdf_content');
+    downPdf.onclick = () => {
+        html2canvas(pdfContent, {
+            onrendered:function(canvas) {
+
+                var contentWidth = canvas.width;
+                var contentHeight = canvas.height;
+
+                //一页pdf显示html页面生成的canvas高度;
+                // var pageHeight = contentWidth / 592.28 * 841.89;
+
+                var pageHeight = contentWidth / 592.28 * 841.89;
+                //未生成pdf的html页面高度
+                var leftHeight = contentHeight;
+                //页面偏移
+                var position = 0;
+                //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
+                // var imgWidth = 595.28;
+                // var imgHeight = 592.28/contentWidth * contentHeight;
+
+                var imgWidth = 595.28;
+                var imgHeight = 585.28/contentWidth * contentHeight;
+
+                var pageData = canvas.toDataURL('image/jpeg', 1.0);
+
+                var pdf = new jsPDF('', 'pt', 'a4');
+
+                // pdf.addImage(pageData, 'JPEG', 20, 100, imgWidth, imgHeight );
+                // pdf.addImage(pageData, 'JPEG', 20, position, imgWidth, imgHeight);
+
+                //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+                //当内容未超过pdf一页显示的范围，无需分页
+                if (leftHeight < pageHeight) {
+                    pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
+                } else {
+                    while(leftHeight > 0) {
+                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                        leftHeight -= pageHeight;
+                        position -= 841.89;
+                        //避免添加空白页
+                        if(leftHeight > 0) {
+                            pdf.addPage();
+                        }
+                    }
+                }
+
+                pdf.save('whitepure_blog.pdf');
+            }
+        })
+    }
+</script>
