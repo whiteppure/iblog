@@ -7,7 +7,7 @@ slug: "springboot-elasticsearch"
 ---
 ## 安装elasticsearch
 要注意导入依赖的版本和安装`elasticsearch`的版本与`springboot`的兼容问题
-![springbootelasticsearch.jpg](/myblog/posts/images/application/Springboot对应elasticseach版本.jpg)
+![springbootelasticsearch.jpg](/iblog/posts/images/application/Springboot对应elasticseach版本.jpg)
 
 ### 用 docker 安装 elasticsearch
 

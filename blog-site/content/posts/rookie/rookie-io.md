@@ -25,7 +25,7 @@ Java IO通过数据流、序列化和文件系统提供系统输入和输出。
 在一个数据传输通道中，如果既要写入数据，又要读取数据，则要分别提供两个流。
 
 ## 流的分类
-![JavaIO流分类](/myblog/posts/images/essays/JavaIO流分类.png)
+![JavaIO流分类](/iblog/posts/images/essays/JavaIO流分类.png)
 
 根据数据传输特性将流抽象为各种类，方便更直观的进行数据操作。
 
@@ -121,7 +121,7 @@ File对象代表磁盘中实际存在的文件和目录。
 ```
 
 ### 操作字节流
-![字节流](/myblog/posts/images/essays/字节流.png)
+![字节流](/iblog/posts/images/essays/字节流.png)
 
 操作byte类型数据，主要操作类是`OutputStream、InputStream`的子类；不用缓冲区，直接对文件本身操作。
 
@@ -203,7 +203,7 @@ public static void main(String[] args) throws IOException {
 ```
 
 ### 操作字符流
-![字符流](/myblog/posts/images/essays/字符流.png)
+![字符流](/iblog/posts/images/essays/字符流.png)
 
 操作字符类型数据，主要操作类是`Reader、Writer`的子类；使用缓冲区缓冲字符，不关闭流就不会输出任何内容。
 
@@ -687,9 +687,9 @@ public long getSerialVersionUID() {
 - 根据类名、接口名、成员方法及属性等来生成一个64位的哈希字段，比如： `private static final  long   serialVersionUID = xxxxL;`
 
 第二种方式可通过编译器进行配置：
-![idea检查serialVersionUID](/myblog/posts/images/essays/idea检查serialVersionUID.png)
+![idea检查serialVersionUID](/iblog/posts/images/essays/idea检查serialVersionUID.png)
 
-![idea自动生成serialVersionUID](/myblog/posts/images/essays/idea自动生成serialVersionUID.png)
+![idea自动生成serialVersionUID](/iblog/posts/images/essays/idea自动生成serialVersionUID.png)
 
 ### [序列化底层原理](http://hollischuang.gitee.io/tobetopjavaer/#/basics/java-basic/serialize-principle?id=序列化底层原理)
 
@@ -875,7 +875,7 @@ ArrayList把元素数组设置为transient。
 ```
 public class MainTest {
     public static void main(String[] args) throws Exception {
-        String path = "/Users/whitepure/github/myblog/blog-site/content/posts/rookie/singleton.txt";
+        String path = "/Users/whitepure/github/iblog/blog-site/content/posts/rookie/singleton.txt";
 
         //Write Obj to file
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path));
@@ -1029,7 +1029,7 @@ IO复用模型: 一个线程不断去轮询多个socket的状态，只有当sock
 
 [Java NIO](#nio)实际上就是多路复用IO。
 通过`selector.select()`查询每个通道是否有到达事件，如果没有事件，则一直阻塞在那里，因此这种方式会导致用户线程的阻塞。所以，多路复用IO比较适合连接数比较多的情况。
-![IO多路复用模型](/myblog/posts/images/essays/IO多路复用模型.png)
+![IO多路复用模型](/iblog/posts/images/essays/IO多路复用模型.png)
 
 特点：
 - 专一进程解决多个进程IO的阻塞问题，性能好;
@@ -1081,9 +1081,9 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
 | 其他    | 无                   | 选择器，可以解决阻塞问题  |
 
 
-![IO](/myblog/posts/images/essays/IO与NIO-1.png)
+![IO](/iblog/posts/images/essays/IO与NIO-1.png)
 
-![NIO](/myblog/posts/images/essays/IO与NIO-2.png)
+![NIO](/iblog/posts/images/essays/IO与NIO-2.png)
 
 ### 通道与缓冲区
 通道负责传输，缓冲区负责存储。
@@ -1222,14 +1222,14 @@ public class MainTest {
 ##### 非直接缓冲区与直接缓冲区
 直接缓冲区：通过 `allocateDirect()` 方法分配直接缓冲区，将缓冲区建立在物理内存中。可以提高读写效率。
 
-![直接缓冲区](/myblog/posts/images/essays/直接缓冲区.png)
+![直接缓冲区](/iblog/posts/images/essays/直接缓冲区.png)
 
 非直接缓冲区：通过 `allocate()` 方法分配缓冲区，将缓冲区建立在JVM的内存中。
 
 `allocate()`方法返回的缓冲区进行分配和取消分配所需成本通常高于非直接缓冲区 。
 直接缓冲区的内容可以驻留在常规的垃圾回收堆之外.
 
-![非直接缓冲区](/myblog/posts/images/essays/非直接缓冲区.png)
+![非直接缓冲区](/iblog/posts/images/essays/非直接缓冲区.png)
 
 ```
 public class MainTest {
@@ -1692,7 +1692,7 @@ public class MainTest {
 
 Netty 主要基于主从 Reactor 多线程模型做了一定的改进。
 #### 传统 IO 模型
-![传统IO模型](/myblog/posts/images/essays/传统IO模型.png)
+![传统IO模型](/iblog/posts/images/essays/传统IO模型.png)
 
 采用阻塞 IO 模式获取输入的数据，每个连接都需要独立的线程完成数据的输入，业务处理，数据返回。
 当并发数很大，就会创建大量的线程，占用很大系统资源，连接创建后，如果当前线程暂时没有数据可读，该线程会阻塞在 read 操作，造成线程资源浪费。
@@ -1701,7 +1701,7 @@ Netty 主要基于主从 Reactor 多线程模型做了一定的改进。
 基于 I/O 复用模型，多个连接共用一个阻塞对象，应用程序只需要在一个阻塞对象等待，无需阻塞等待所有连接。
 当某个连接有新的数据可以处理时，操作系统通知应用程序，线程从阻塞状态返回，开始进行业务处理。
 
-![Reactor模式](/myblog/posts/images/essays/Reactor模式.png)
+![Reactor模式](/iblog/posts/images/essays/Reactor模式.png)
 
 为了避免浪费可以创建一个线程池，当客户端发起请求时，通过`DispatcherHandler`进行分发请求处理到线程池，线程池中在使用具体的线程进行事件处理。
 服务器端程序处理传入的多个请求,并将它们同步分派到相应的处理线程，因此 Reactor 模式也叫 Dispatcher 模式。
@@ -1709,7 +1709,7 @@ Netty 主要基于主从 Reactor 多线程模型做了一定的改进。
 Reactor 模式使用 IO 复用监听事件，收到事件后，分发给某个线程（进程），这点就是网络服务器高并发处理关键。
 
 ##### 单 Reactor 单线程
-![单Reactor单线程](/myblog/posts/images/essays/单Reactor单线程.png)
+![单Reactor单线程](/iblog/posts/images/essays/单Reactor单线程.png)
 
 步骤：
 - Reactor 对象通过 Select 监控客户端请求事件，收到事件后通过 Dispatch 进行分发
@@ -1728,7 +1728,7 @@ Reactor 模式使用 IO 复用监听事件，收到事件后，分发给某个�
 - 客户端的数量有限，业务处理非常快速的情况
 
 ##### 单 Reactor 多线程
-![单Reactor多线程](/myblog/posts/images/essays/单Reactor多线程.png)
+![单Reactor多线程](/iblog/posts/images/essays/单Reactor多线程.png)
 
 步骤：
 - Reactor 对象通过对 select 监听请求事件，收到请求事件后交给 dispath 进行转发
@@ -1745,7 +1745,7 @@ Reactor 模式使用 IO 复用监听事件，收到事件后，分发给某个�
 优点：
 - 可以充分利用CPU资源
 ##### 主从 Reactor 多线程
-![主从Reactor线程](/myblog/posts/images/essays/主从Reactor线程.png)
+![主从Reactor线程](/iblog/posts/images/essays/主从Reactor线程.png)
 
 Reactor 主线程可以对应多个 Reactor 子线程，即 MainRecator 可以关联多个 SubReactor，从而解决了Reactor 在单线程中运行，高并发场景下容易成为性能瓶颈。
 步骤：
@@ -1768,9 +1768,9 @@ Reactor 主线程可以对应多个 Reactor 子线程，即 MainRecator 可以�
 
 
 #### Netty 模型 
-![Netty模型](/myblog/posts/images/essays/Netty模型.png)
+![Netty模型](/iblog/posts/images/essays/Netty模型.png)
 
-![netty结构](/myblog/posts/images/essays/netty结构.png)
+![netty结构](/iblog/posts/images/essays/netty结构.png)
 
 - Netty 抽象出两组线程池 `BossGroup` 专门负责接收客户端的连接，`WorkerGroup` 专门负责网络的读写；`BossGroup` 和 `WorkerGroup` 类型都是 `NioEventLoopGroup`
 - `NioEventLoopGroup` 相当于一个事件循环组，这个组中含有多个事件循环，每一个事件循环是 `NioEventLoop`，每个 `NioEventLoop` 都有一个 `Selector`，用于监听绑定在其上的 `socket` 的网络通讯

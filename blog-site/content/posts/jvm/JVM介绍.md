@@ -38,7 +38,7 @@ slug: "jvm-start"
 
 ## JVM整体结构
 HotSpot VM是目前市面上高性能虚拟机的代表作之一。下图就是 HotSport 虚拟机结构图
-![Jvm内存模型](/myblog/posts/images/essays/Jvm内存模型.png)
+![Jvm内存模型](/iblog/posts/images/essays/Jvm内存模型.png)
 
 - 类加载子系统：将字节码文件加载到内存当中生成一个class文件。具体分为三部分：装载，链接，初始化。
 - 运行时数据区：方法区、堆、Java栈（虚拟机栈）、本地方法栈、程序计数器。其中线程共享，堆和方法区；Java栈、本地方法栈和程序计数器为每个线程独有一份的。
@@ -46,7 +46,7 @@ HotSpot VM是目前市面上高性能虚拟机的代表作之一。下图就是 
 
 ## Java代码执行流程
 Java代码通过编译器生成字节码文件，字节码通过Java虚拟机跟操作系统交互。
-![Java代码执行流程](/myblog/posts/images/essays/Java代码执行流程.png)
+![Java代码执行流程](/iblog/posts/images/essays/Java代码执行流程.png)
 
 ## JVM架构模型
 Java编译器输入的指令流基本上是一种 **基于栈的指令集架构** ，另外一种指令集架构则是 **基于寄存器的指令集架构** 。

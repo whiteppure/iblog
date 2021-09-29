@@ -6,7 +6,7 @@ tags: ["spring"]
 slug: "spring-mvc"
 ---
 
-![springmvc原理图](/myblog/posts/images/application/springmvc原理.jpg)
+![springmvc原理图](/iblog/posts/images/application/springmvc原理.jpg)
 
 流程描述:
 - 用户发送请求至前端控制器 `DispatcherServlet`;

@@ -1061,7 +1061,7 @@
                     <div class="post_content markdown"><h2 id="mysql逻辑架构">MySql逻辑架构</h2>
 <p>主要分为：连接层，服务层，引擎层，存储层。</p>
 <p>客户端执行一条select命令的流程如下：</p>
-<p><img src="/myblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-001.png" alt="MySqlSQL优化及锁机制-001"></p>
+<p><img src="/iblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-001.png" alt="MySqlSQL优化及锁机制-001"></p>
 <ul>
 <li>
 <p>连接层：最上层是一些客户端和连接服务，包含本地sock通信和大多数基于客户端/服务端工具实现的类似于tcplip的通信。主要完成一些类似于连接处理、授权认证、及相关的安全方案。在该层上引入了线程池的概念，为通过认证安全接入的客户端提供线程。同样在该层上可以实现基于SSL的安全链接。服务器也会为安全接入的每个客户端验证它所具有的操作权限。</p>
@@ -1910,19 +1910,19 @@ select * from mysql.general_log;
  show status like 'table_locks%';
 </code></pre><hr>
 <p>给表添加<strong>读锁</strong>及测试读操作：</p>
-<p><img src="/myblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-002.png" alt="MySqlSQL优化及锁机制-002"></p>
-<p><img src="/myblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-004.png" alt="MySqlSQL优化及锁机制-004"></p>
+<p><img src="/iblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-002.png" alt="MySqlSQL优化及锁机制-002"></p>
+<p><img src="/iblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-004.png" alt="MySqlSQL优化及锁机制-004"></p>
 <p>给表添加<strong>读锁</strong>及测试写操作：</p>
-<p><img src="/myblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-003.png" alt="MySqlSQL优化及锁机制-003"></p>
-<p><img src="/myblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-005.png" alt="MySqlSQL优化及锁机制-005"></p>
+<p><img src="/iblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-003.png" alt="MySqlSQL优化及锁机制-003"></p>
+<p><img src="/iblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-005.png" alt="MySqlSQL优化及锁机制-005"></p>
 <p>给某个表添加读锁之后，所有会话都能对这个表进行读操作，但是当前会话不能对该表进行写操作，对其他表进行读、写操作；其他会话能需要等持有锁的会话释放该表的锁后，才能进行写操作，期间将会一直处于等待状态，可以对其他表进行读写操作。</p>
 <hr>
 <p>给表添加<strong>写锁</strong>及测试读操作：</p>
-<p><img src="/myblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-006.png" alt="MySqlSQL优化及锁机制-006"></p>
-<p><img src="/myblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-007.png" alt="MySqlSQL优化及锁机制-007"></p>
+<p><img src="/iblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-006.png" alt="MySqlSQL优化及锁机制-006"></p>
+<p><img src="/iblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-007.png" alt="MySqlSQL优化及锁机制-007"></p>
 <p>给表添加<strong>写锁</strong>及测试写操作：</p>
-<p><img src="/myblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-008.png" alt="MySqlSQL优化及锁机制-008"></p>
-<p><img src="/myblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-009.png" alt="MySqlSQL优化及锁机制-009"></p>
+<p><img src="/iblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-008.png" alt="MySqlSQL优化及锁机制-008"></p>
+<p><img src="/iblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-009.png" alt="MySqlSQL优化及锁机制-009"></p>
 <p>给某个表添加写锁之后，当前会话可以对该表进行写操作、读操作，其他会话要想对该表进行读写操作需要等持有锁的会话释放锁，否则期间将会一直等待该锁释放；但是当前持有锁的会话是不能对其他表进行读写操作，其他会话能够对其他表进行读写操作。</p>
 <p>对于表锁MyISAM在执行查询语句前，会自动给涉及的所有表加读锁，在执行增删改操作前，会自动给涉及的表加写锁。</p>
 <ul>
@@ -1960,8 +1960,8 @@ select * from mysql.general_log;
 <pre><code> -- 关闭自动提交；0关闭，1打开
  set autocommit = 0;
 </code></pre><p>测试行锁读写操作：</p>
-<p><img src="/myblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-010.png" alt="MySqlSQL优化及锁机制-010"></p>
-<p><img src="/myblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-011.png" alt="MySqlSQL优化及锁机制-011"></p>
+<p><img src="/iblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-010.png" alt="MySqlSQL优化及锁机制-010"></p>
+<p><img src="/iblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-011.png" alt="MySqlSQL优化及锁机制-011"></p>
 <p>当前会话当关闭MySql自动提交后，修改表中的某一行数据，未提交前其他会话是不可见该修改的数据的；如果当前会话和修改某一行数据其他会话也修改该行数据则其他会话会一直等待，直到持有锁的会话commit后才会执行。
 如果当前会话和其他会话操作同一张表的不同行数据时，则相互不影响。</p>
 <p><strong>使用行锁时注意，无索引行或索引失效都会导致行锁变为表锁。</strong></p>
@@ -1973,7 +1973,7 @@ InnoDB也会对这个“间隙”加锁，这种锁机制就是所谓的间隙�
 <p><strong>如何锁定一行？</strong></p>
 <p>在查询语句使用<code>for update</code>关键字：</p>
 <pre><code> select * from test_innodb_lock where a=8 for update;
-</code></pre><p><img src="/myblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-012.png" alt="MySqlSQL优化及锁机制-012"></p>
+</code></pre><p><img src="/iblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-012.png" alt="MySqlSQL优化及锁机制-012"></p>
 <p>Innodb存储引擎由于实现了行级锁定，虽然在锁定机制的实现方面所带来的性能损耗可能比表级锁定会要更高一些，但是在整体并发处理能力方面要远远优于MyISAM的表级锁定的。当系统并发量较高的时候，Innodb的整体性能和MylISAM相比就会有比较明显的优势了。
 但是，Innodb的行级锁定同样也有其脆弱的一面，当我们使用不当的时候，可能会让Innodb的整体性能表现不仅不能比MyISAM高，甚至可能会更差。</p>
 <p>总结：</p>

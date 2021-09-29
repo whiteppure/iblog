@@ -64,10 +64,10 @@ brew install kafka
 
 在生产者终端输入信息，在消费者终端就能看的见
 <div style="width: 50%;display: inline-block">
-    <img src="/myblog/posts/images/application/kafka生产者.jpg" alt="生产者">
+    <img src="/iblog/posts/images/application/kafka生产者.jpg" alt="生产者">
 </div>
 <div style="width: 45%;display: inline-block">
-    <img src="/myblog/posts/images/application/kafka消费者.jpg" alt="消费者">
+    <img src="/iblog/posts/images/application/kafka消费者.jpg" alt="消费者">
 </div>
 
 ## Springboot整合kafka

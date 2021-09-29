@@ -130,7 +130,7 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
 
 > CPU 处理器速度远远大于在主内存中的，为了解决速度差异，在他们之间架设了多级缓存，如 L1、L2、L3 级别的缓存，这些缓存离CPU越近就越快，将频繁操作的数据缓存到这里，加快访问速度。
 
-![JMM](/myblog/posts/images/essays/JMM.jpg)
+![JMM](/iblog/posts/images/essays/JMM.jpg)
 
 
 ### CAS与Unsafe关系

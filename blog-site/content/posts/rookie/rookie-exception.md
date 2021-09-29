@@ -6,7 +6,7 @@ tags: ["Java", "面向菜鸟编程"]
 slug: "rookie-exception"
 ---
 
-![Java异常分类](/myblog/posts/images/essays/Java异常分类.png)
+![Java异常分类](/iblog/posts/images/essays/Java异常分类.png)
 ## 异常类型
 
 `Throwable` 可以用来表示任何可以作为异常抛出的类，分为两种：`Error` 和 `Exception`。

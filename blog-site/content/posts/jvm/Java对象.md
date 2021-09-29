@@ -7,7 +7,7 @@ slug: "java-object"
 ---
 
 ## 对象实例化
-![对象创建步骤](/myblog/posts/images/essays/对象创建步骤.png)
+![对象创建步骤](/iblog/posts/images/essays/对象创建步骤.png)
 
 ### 对象的创建方式
 - 使用new关键字创建：最常见的方式、单例类中调用`getInstance`的静态类方法，`XXXFactory`的静态方法；
@@ -27,7 +27,7 @@ public class MainTest {
     }
 }
 ```
-![创建对象字节码指令](/myblog/posts/images/essays/创建对象字节码指令.png)
+![创建对象字节码指令](/iblog/posts/images/essays/创建对象字节码指令.png)
 
 创建对象步骤：
 1. 加载类元信息
@@ -87,7 +87,7 @@ public class MainTest {
 因此一般来说（由字节码中跟随 `invokespecial` 指令所决定），new指令之后会接着执行方法，把对象按照程序员的意愿进行初始化，这样一个真正可用的对象才算完成创建出来。
 
 ## 对象组成
-![Java对象的布局](/myblog/posts/images/essays/Java对象的布局.png)
+![Java对象的布局](/iblog/posts/images/essays/Java对象的布局.png)
 
 ### 查看对象的组成
 **引入依赖**
@@ -257,7 +257,7 @@ For Java objects, the "klass" contains a C++ style "vtable".
 
 ## 对象的访问定位
 JVM是如何通过栈帧中的对象引用访问到其内部的对象实例呢？
-![对象指针访问](/myblog/posts/images/essays/对象指针访问.png)
+![对象指针访问](/iblog/posts/images/essays/对象指针访问.png)
 
 hotspot使用的是直接访问。因为句柄访问开辟了句柄池，所以直接访问相较于句柄访问效率稍高一点。
 
@@ -266,12 +266,12 @@ hotspot使用的是直接访问。因为句柄访问开辟了句柄池，所以�
 
 优点：`reference` 中存储稳定句柄地址，对象被移动（垃圾收集时移动对象很普遍）时只会改变句柄中实例数据指针即可，`reference` 本身不需要被修改
 
-![句柄访问](/myblog/posts/images/essays/句柄访问.png)
+![句柄访问](/iblog/posts/images/essays/句柄访问.png)
 
 ### 直接访问
 直接指针是局部变量表中的引用，直接指向堆中的实例，在对象实例中有类型指针，指向的是方法区中的对象类型数据。
 
-![直接访问](/myblog/posts/images/essays/直接访问.png)
+![直接访问](/iblog/posts/images/essays/直接访问.png)
 
 ## 对象的终止机制
 `finalize()`方法是Java提供的对象终止机制，允许开发人员提供对象被销毁之前的自定义处理逻辑。

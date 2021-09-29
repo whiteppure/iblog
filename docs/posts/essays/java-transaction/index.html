@@ -982,7 +982,7 @@ commit transation;
 <p>CAP是Consistency、Availability、Partition tolerance三个词语的缩写，分别表示一致性、可用性、分区容忍性。</p>
 <h4 id="理解cap">理解CAP</h4>
 <p>为了方便对CAP理论的理解，结合电商系统中的一些业务场景来理解CAP；如下图是商品信息管理的执行流程：</p>
-<p><img src="/myblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-001.png" alt="分布式事务-001"></p>
+<p><img src="/iblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-001.png" alt="分布式事务-001"></p>
 <p>整体执行流程：</p>
 <ul>
 <li>商品服务请求主数据库写入商品信息（增、删、改）</li>
@@ -1043,7 +1043,7 @@ commit transation;
 <h4 id="cap组合方式">CAP组合方式</h4>
 <p>在所有分布式事务场景中不会同时具备CAP三个特征，因为在具备了P的前提下C和A是不能共存的。</p>
 <p>例如，下图满足了P分区容忍性</p>
-<p><img src="/myblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-001.png" alt="分布式事务-001"></p>
+<p><img src="/iblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-001.png" alt="分布式事务-001"></p>
 <p>上图分区容忍性含义：</p>
 <ul>
 <li>主数据库通过网络向从数据库同步数据，可以认为是主从数据库部署在不同的网络分区，通过网络进行交互</li>
@@ -1103,9 +1103,9 @@ BASE理论是对于CAP中AP的一个扩展，通过牺牲强一致性来获得�
 <p>注意：必须在最后释放锁资源</p>
 </blockquote>
 <p>成功情况：
-<img src="/myblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-002.png" alt="分布式事务-002"></p>
+<img src="/iblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-002.png" alt="分布式事务-002"></p>
 <p>失败情况：
-<img src="/myblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-003.png" alt="分布式事务-003"></p>
+<img src="/iblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-003.png" alt="分布式事务-003"></p>
 <h3 id="解决方案">解决方案</h3>
 <p>2PC具体解决方案.</p>
 <h4 id="xa方案">XA方案</h4>
@@ -1120,7 +1120,7 @@ BASE理论是对于CAP中AP的一个扩展，通过牺牲强一致性来获得�
 <p>全局事务是指分布式处理事务环境中，需要操作多个数据库共同完成一个动作，这个工作即是一个全局事务。</p>
 </blockquote>
 <p>以新用户注册送积分为例：
-<img src="/myblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-004.png" alt="分布式事务-004"></p>
+<img src="/iblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-004.png" alt="分布式事务-004"></p>
 <p>执行流程如下：</p>
 <ol>
 <li>
@@ -1152,16 +1152,16 @@ BASE理论是对于CAP中AP的一个扩展，通过牺牲强一致性来获得�
 <p><strong>Seata的设计思想:</strong></p>
 <p>Seata的设计目标其一是对业务零侵入，因此从业务无侵入的2PC入手，在传统方案2PC的基础上演进，并解决2PC方案面临的问题。</p>
 <p>Seata把一个分布式的事务理解为一个包含了若干分支事务的全局事务。全局事务的职责是协调其下管辖的分支事务达成一致，要么一起成功提交事务，要么一起回滚失败。此外，通常分支事务本身就是一个关系型数据库的本地事务。</p>
-<p><img src="/myblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-005.png" alt="分布式事务-005"></p>
+<p><img src="/iblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-005.png" alt="分布式事务-005"></p>
 <p>与传统2PC的模型类似，Seata定义了3个组件来协调分布式事务的处理过程：</p>
-<p><img src="/myblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-006.png" alt="分布式事务-006"></p>
+<p><img src="/iblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-006.png" alt="分布式事务-006"></p>
 <ul>
 <li>TM：<code>Transaction Manager</code>事务管理器，需要嵌入（jar包）应用程序中工作，负责开启一个全局事务，并最终向TC发起全局提交或全局回滚的指令。</li>
 <li>RM：<code>Resource Manager</code>资源管理器，控制分支事务，负责分支事务注册，状态回报，并接收事务调节器的指令，驱动分支事务的提交和回滚。</li>
 <li>TC：<code>Transaction Coordinator</code>事务协调器，它是独立的中间件，需要独立运行部署，它维护全局事务的运行状态，接收TM指令发起全局事务的提交与回滚，负责与RM通信协调各个分支事务的提交回滚。</li>
 </ul>
 <p>以新用户注册送积分举例：
-<img src="/myblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-007.png" alt="分布式事务-007"></p>
+<img src="/iblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-007.png" alt="分布式事务-007"></p>
 <p>具体执行流程：</p>
 <ol>
 <li>用户服务器的事务管理器向事务协调器申请开启一个全局事务，全局事务的创建成功并生成一个全局唯一XID。</li>
@@ -1202,20 +1202,20 @@ BASE理论是对于CAP中AP的一个扩展，通过牺牲强一致性来获得�
 </blockquote>
 <p>一阶段：seata会拦截,解析SQL语义,找到SQL要更新的数据,在业务员数据更新前,将其保存为before image,随后执行业务SQL,在业务数据更新后,将其保存为after image,插入UNDO LOG回滚日志；提交前，向 TC 注册分支生成行锁。
 随后本地事务提交，将本地事务提交的结果上报给 TC，由TC协调。</p>
-<p><img src="/myblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-008.png" alt="分布式事务-008"></p>
+<p><img src="/iblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-008.png" alt="分布式事务-008"></p>
 <p>二阶段-提交：执行提交操作，说明SQL执行顺利，因业务SQL在一阶段已经提交至数据库，所以Seata框架只需将一阶段保存的快照数据和行锁删掉，完成数据清理即可。</p>
-<p><img src="/myblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-009.png" alt="分布式事务-009"></p>
+<p><img src="/iblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-009.png" alt="分布式事务-009"></p>
 <p>二阶段-回滚：要执行回滚操作，说明SQL执行不顺利，Seata需要回滚一阶段已经执行的业务SQL还原数据。回滚方式是用before image还原数据，但是在还原前还要校验脏写，对比数据库当前业务数据和after image。
 对比数据库当前业务数据和after image。</p>
-<p><img src="/myblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-010.png" alt="分布式事务-010"></p>
+<p><img src="/iblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-010.png" alt="分布式事务-010"></p>
 <h2 id="分布式事务解决方案-tcc">分布式事务解决方案-TCC</h2>
 <p>针对不同的分布式场景常见的解决方案有2PC、TCC、可靠消息最终一致性、最大努力通知这几种。</p>
 <h3 id="什么是tcc">什么是TCC</h3>
 <p>TCC是Try、Confirm、Cancel三个词语的缩写，TCC要求每个分支事务实现三个操作：预处理Try、确认Confirm、撤销Cancel。
 Try操作做业务检查及资源预留，Confirm做业务确认操作，Cancel实现一个与Try相反的操作，即回滚操作。TM首先发起所有分支事务的try操作，任何一个分支事务的try操作执行失败，TM将会发起所有分支事务的Cancel操作，若try操作全部成功，TM将发起所有分支事务的Confirm操作，其中Confirm或Cancel操作失败，TM会重试。</p>
-<p><img src="/myblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-011.png" alt="分布式事务-011"></p>
+<p><img src="/iblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-011.png" alt="分布式事务-011"></p>
 <p>分布式事务执行失败情况：</p>
-<p><img src="/myblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-012.png" alt="分布式事务-012"></p>
+<p><img src="/iblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-012.png" alt="分布式事务-012"></p>
 <p>TCC的三个阶段：</p>
 <ul>
 <li>Try阶段是做业务检查一致性及资源预留，此阶段仅是一个初步操作，它和后续的Confirm一起才能真正的构成一个完整的业务逻辑；</li>
@@ -1269,7 +1269,7 @@ Try操作做业务检查及资源预留，Confirm做业务确认操作，Cancel�
 <h3 id="什么是可靠消息最终一致性">什么是可靠消息最终一致性</h3>
 <p>可靠消息最终一致性是指当事务发起方执行完本地事务后并发出一条消息，事务参与方（消息消费者）一定能接收到消息并成功处理事务，此方案强调的是只要消息发给事务参与方最终事务要达到一致。</p>
 <p>此方案利用消息中间件完成，事务发起方将消息发送给消息中间件，事务参与方从消息中间件接收消息，事务发起方和消息中间件之间，事务参与方和消息中间件之间都是通过网络进行通信，由于网络通信的不稳定会导致分布式事务问题。</p>
-<p><img src="/myblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-013.png" alt="分布式事务-013"></p>
+<p><img src="/iblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-013.png" alt="分布式事务-013"></p>
 <p>因此可靠消息最终一致性方案要解决几个问题：</p>
 <ul>
 <li><strong>本地事务与消息发送的原子性</strong> 即：事务发起方在本地事务执行成功后消息必须发出去，否则就丢弃消息。即实现本地事务和消息发送的原子性，要么都成功，要么都失败。本地事务与消息发送的原子性问题是实现可靠消息最终一致性方案的关键。</li>
@@ -1280,7 +1280,7 @@ Try操作做业务检查及资源预留，Confirm做业务确认操作，Cancel�
 <h4 id="本地消息表方案">本地消息表方案</h4>
 <p>本地消息表该方案最初是eBay提出，此方案的核心是通过本地事务保证数据业务操作和消息的一致性，然后通过定时任务将消息发送至消息中间件，待确认消息发送给消费方成功后在将消息删除。</p>
 <p>以用户注册送积分举例：用户服务负责添加用户，积分服务负责添加积分</p>
-<p><img src="/myblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-014.png" alt="分布式事务-014"></p>
+<p><img src="/iblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-014.png" alt="分布式事务-014"></p>
 <p>执行流程：</p>
 <ul>
 <li>用户注册，用户服务在本地新增用户和增加积分消息日志。用户表和消息表本地事务保持一致，这种情况下本地数据库操作与存储积分消息日志处于同一个事务中，本地数据库操作记录与记录消息日志操作具备原子性。</li>
@@ -1297,7 +1297,7 @@ Try操作做业务检查及资源预留，Confirm做业务确认操作，Cancel�
 <h4 id="rocketmq事务消息方案">RocketMQ事务消息方案</h4>
 <p>RocketMQ是阿里巴巴的分布式消息中间件，于2012年开源并在2017年正式称为apache的项目。ApacheRocketMQ4.3之后的版本正式支持事务消息，并为分布式事务提供了便利性支持。</p>
 <p>RocketMQ事务消息设计则主要是为了解决生产者端的消息发送与本地事务执行的原子性问题，RockerMQ设计中broker与生产者端的双向通信能力，使得broker天生可以作为一个事务协调者存在；RockerMQ的高可用机制以及可靠消息设计原则则为事务消息在系统发生异常时依然能够保证达成事务的最终一致性。</p>
-<p><img src="/myblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-015.png" alt="分布式事务-015"></p>
+<p><img src="/iblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-015.png" alt="分布式事务-015"></p>
 <p>执行流程：</p>
 <ol>
 <li>MQ的发起方会向MQ发送一条消息，MQ发起方会监听MQ是否响应；</li>
@@ -1311,7 +1311,7 @@ Try操作做业务检查及资源预留，Confirm做业务确认操作，Cancel�
 <h3 id="什么是最大努力通知">什么是最大努力通知</h3>
 <p>顾名思义，发起通知方通过一定机制最大努力的将业务处理结果通知到接收方。</p>
 <p>举个例子：</p>
-<p><img src="/myblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-016.png" alt="分布式事务-016"></p>
+<p><img src="/iblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-016.png" alt="分布式事务-016"></p>
 <p>账户系统调用充值系统接口，充值系统完成处理后向账户账户接口发起充值结果通知，如果通知失败则充值充值系统则按策略进行重复通知；账户系统接收到充值系统的通知后修改充值状态。如果账户系统未接受到通知，账户系统会主动调用充值系统接口进行结果查询。</p>
 <p>最大努力通知特点：</p>
 <ul>
@@ -1342,7 +1342,7 @@ Try操作做业务检查及资源预留，Confirm做业务确认操作，Cancel�
 <h3 id="解决方案-3">解决方案</h3>
 <p>通过对最大努力通知的理解，采用MQ的ack机制可以实现最大努力通知。</p>
 <h4 id="方案1">方案1</h4>
-<p><img src="/myblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-017.png" alt="分布式事务-017"></p>
+<p><img src="/iblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-017.png" alt="分布式事务-017"></p>
 <p>执行流程：</p>
 <ul>
 <li>发起通知方将通知发送给MQ；</li>
@@ -1352,7 +1352,7 @@ Try操作做业务检查及资源预留，Confirm做业务确认操作，Cancel�
 </ul>
 <p>方案1中接收通知方MQ接口，即接收通知方监听MQ，此方案主要应用于应用与内部应用之间的通知。</p>
 <h4 id="方案2">方案2</h4>
-<p><img src="/myblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-018.png" alt="分布式事务-018"></p>
+<p><img src="/iblog/posts/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1-018.png" alt="分布式事务-018"></p>
 <p>交互流程：</p>
 <ul>
 <li>发起通知方将消息通知给MQ。使用可靠消息一致方案中的事务消息保证本地事务与消息的原子性，最终将通知先发给MQ；</li>

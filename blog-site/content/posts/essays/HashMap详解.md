@@ -12,7 +12,7 @@ slug: "java-hashmap"
 - hash碰撞（hash冲突）：，两个不同的输入值，根据同一散列函数计算出的散列值相同的现象叫做碰撞。hash碰撞就是用同一hash散列函数计算出相同的散列值；当插入hashmap中元素的key出现重复时，这个时候就发生了hash碰撞；
 
 ## 结构
-![HashMap结构](/myblog/posts/images/essays/HashMap结构.png)
+![HashMap结构](/iblog/posts/images/essays/HashMap结构.png)
 
 - JDK1.7：数组 + 单向链表；
 - JDK1.8: 数组 + 单向链表/红黑树；

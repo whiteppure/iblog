@@ -690,10 +690,10 @@ public class MainTest {
 }
 ```
 不使用`intern`方法
-![不用intern方法测试](/myblog/posts/images/essays/不用intern方法测试.png)
+![不用intern方法测试](/iblog/posts/images/essays/不用intern方法测试.png)
 
 使用`intern`方法后
-![使用intern方法测试](/myblog/posts/images/essays/使用intern方法测试.png)
+![使用intern方法测试](/iblog/posts/images/essays/使用intern方法测试.png)
 
 
 ##### 经典案例
@@ -802,13 +802,13 @@ JDK1.6中，将这个字符串对象尝试放入串池。
 - 如果串池中有，则并不会放入。返回已有的串池中的对象的地址
 - 如果没有，会把此**对象复制一份，放入串池**，并返回串池中的对象地址
 
-![JDK6字符串常量池案例解析](/myblog/posts/images/essays/JDK6字符串常量池案例解析.png)
+![JDK6字符串常量池案例解析](/iblog/posts/images/essays/JDK6字符串常量池案例解析.png)
 
 JDK1.7起，将这个字符串对象尝试放入串池。
 - 如果串池中有，则并不会放入。返回已有的串池中的对象的地址
 - 如果没有，则会把**对象的引用地址复制一份，放入串池**，并返回串池中的引用地址
 
-![JDK78字符串常量池案例解析](/myblog/posts/images/essays/JDK78字符串常量池案例解析.png)
+![JDK78字符串常量池案例解析](/iblog/posts/images/essays/JDK78字符串常量池案例解析.png)
 
 ##### 注意
 字符串常量池是不会存储相同内容的字符串的。

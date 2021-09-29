@@ -11,7 +11,7 @@ slug: "sql-select-fast"
 
 客户端执行一条select命令的流程如下：
 
-![MySqlSQL优化及锁机制-001](/myblog/posts/images/essays/MySqlSQL优化及锁机制-001.png)
+![MySqlSQL优化及锁机制-001](/iblog/posts/images/essays/MySqlSQL优化及锁机制-001.png)
 
 - 连接层：最上层是一些客户端和连接服务，包含本地sock通信和大多数基于客户端/服务端工具实现的类似于tcplip的通信。主要完成一些类似于连接处理、授权认证、及相关的安全方案。在该层上引入了线程池的概念，为通过认证安全接入的客户端提供线程。同样在该层上可以实现基于SSL的安全链接。服务器也会为安全接入的每个客户端验证它所具有的操作权限。
 
@@ -963,15 +963,15 @@ MySql中的锁按照对数据操作的类型分为：读锁即共享锁，写锁
 
 给表添加**读锁**及测试读操作：
 
-![MySqlSQL优化及锁机制-002](/myblog/posts/images/essays/MySqlSQL优化及锁机制-002.png)
+![MySqlSQL优化及锁机制-002](/iblog/posts/images/essays/MySqlSQL优化及锁机制-002.png)
 
-![MySqlSQL优化及锁机制-004](/myblog/posts/images/essays/MySqlSQL优化及锁机制-004.png)
+![MySqlSQL优化及锁机制-004](/iblog/posts/images/essays/MySqlSQL优化及锁机制-004.png)
 
 给表添加**读锁**及测试写操作：
 
-![MySqlSQL优化及锁机制-003](/myblog/posts/images/essays/MySqlSQL优化及锁机制-003.png)
+![MySqlSQL优化及锁机制-003](/iblog/posts/images/essays/MySqlSQL优化及锁机制-003.png)
 
-![MySqlSQL优化及锁机制-005](/myblog/posts/images/essays/MySqlSQL优化及锁机制-005.png)
+![MySqlSQL优化及锁机制-005](/iblog/posts/images/essays/MySqlSQL优化及锁机制-005.png)
 
 给某个表添加读锁之后，所有会话都能对这个表进行读操作，但是当前会话不能对该表进行写操作，对其他表进行读、写操作；其他会话能需要等持有锁的会话释放该表的锁后，才能进行写操作，期间将会一直处于等待状态，可以对其他表进行读写操作。
 
@@ -979,15 +979,15 @@ MySql中的锁按照对数据操作的类型分为：读锁即共享锁，写锁
 
 给表添加**写锁**及测试读操作：
 
-![MySqlSQL优化及锁机制-006](/myblog/posts/images/essays/MySqlSQL优化及锁机制-006.png)
+![MySqlSQL优化及锁机制-006](/iblog/posts/images/essays/MySqlSQL优化及锁机制-006.png)
 
-![MySqlSQL优化及锁机制-007](/myblog/posts/images/essays/MySqlSQL优化及锁机制-007.png)
+![MySqlSQL优化及锁机制-007](/iblog/posts/images/essays/MySqlSQL优化及锁机制-007.png)
 
 给表添加**写锁**及测试写操作：
 
-![MySqlSQL优化及锁机制-008](/myblog/posts/images/essays/MySqlSQL优化及锁机制-008.png)
+![MySqlSQL优化及锁机制-008](/iblog/posts/images/essays/MySqlSQL优化及锁机制-008.png)
 
-![MySqlSQL优化及锁机制-009](/myblog/posts/images/essays/MySqlSQL优化及锁机制-009.png)
+![MySqlSQL优化及锁机制-009](/iblog/posts/images/essays/MySqlSQL优化及锁机制-009.png)
 
 给某个表添加写锁之后，当前会话可以对该表进行写操作、读操作，其他会话要想对该表进行读写操作需要等持有锁的会话释放锁，否则期间将会一直等待该锁释放；但是当前持有锁的会话是不能对其他表进行读写操作，其他会话能够对其他表进行读写操作。
 
@@ -1037,9 +1037,9 @@ MySql中的锁按照对数据操作的类型分为：读锁即共享锁，写锁
 
 测试行锁读写操作：
 
-![MySqlSQL优化及锁机制-010](/myblog/posts/images/essays/MySqlSQL优化及锁机制-010.png)
+![MySqlSQL优化及锁机制-010](/iblog/posts/images/essays/MySqlSQL优化及锁机制-010.png)
 
-![MySqlSQL优化及锁机制-011](/myblog/posts/images/essays/MySqlSQL优化及锁机制-011.png)
+![MySqlSQL优化及锁机制-011](/iblog/posts/images/essays/MySqlSQL优化及锁机制-011.png)
 
 当前会话当关闭MySql自动提交后，修改表中的某一行数据，未提交前其他会话是不可见该修改的数据的；如果当前会话和修改某一行数据其他会话也修改该行数据则其他会话会一直等待，直到持有锁的会话commit后才会执行。
 如果当前会话和其他会话操作同一张表的不同行数据时，则相互不影响。
@@ -1063,7 +1063,7 @@ InnoDB也会对这个“间隙”加锁，这种锁机制就是所谓的间隙�
  select * from test_innodb_lock where a=8 for update;
 ```
 
-![MySqlSQL优化及锁机制-012](/myblog/posts/images/essays/MySqlSQL优化及锁机制-012.png)
+![MySqlSQL优化及锁机制-012](/iblog/posts/images/essays/MySqlSQL优化及锁机制-012.png)
 
 
 Innodb存储引擎由于实现了行级锁定，虽然在锁定机制的实现方面所带来的性能损耗可能比表级锁定会要更高一些，但是在整体并发处理能力方面要远远优于MyISAM的表级锁定的。当系统并发量较高的时候，Innodb的整体性能和MylISAM相比就会有比较明显的优势了。

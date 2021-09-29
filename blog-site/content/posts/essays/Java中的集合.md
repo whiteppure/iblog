@@ -11,7 +11,7 @@ Java中的集合主要包括 `Collection` 和 `Map` 两种，
 `Collection` 存储着对象的集合，而 `Map` 存储着键值对（两个对象）的映射表。
 
 ## Collection
-![集合框架](/myblog/posts/images/essays/集合框架.jpg)
+![集合框架](/iblog/posts/images/essays/集合框架.jpg)
 
 ### Set
 - TreeSet：基于红黑树实现，支持有序性操作，例如根据一个范围查找元素的操作。但是查找效率不如 HashSet，HashSet 查找的时间复杂度为 O(1)，TreeSet 则为 O(logN)。
@@ -62,7 +62,7 @@ Java中的集合主要包括 `Collection` 和 `Map` 两种，
 ### ConcurrentHashMap
 线程安全的HashMap
 
-![ConcurrentHashMap](/myblog/posts/images/essays/ConcurrentHashMap.png)
+![ConcurrentHashMap](/iblog/posts/images/essays/ConcurrentHashMap.png)
 
 在多线程中，每一个Segment对象守护了一个HashEntry数组，
 当对ConcurrentHashMap中的元素修改时，
