@@ -359,30 +359,32 @@
 </blockquote>
 <h2 id="易错">易错</h2>
 <ul>
-<li>数组是Java的引用数据类型</li>
-<li>数组也是对象,能够向下或者向上转型,能使用<code>instanceof</code>关键字</li>
+<li>数组是Java的引用数据类型；</li>
+<li>数组也是对象,能够向下或者向上转型,能使用<code>instanceof</code>关键字；</li>
 </ul>
-<pre><code>int[] a = new int[8];  
-Object obj = a ; //数组的父类也是Object,可以将a向上转型到Object  
+<pre><code>// 数组的父类也是Object,可以将a向上转型到Object  
+int[] a = new int[8];  
+Object obj = a ; 
 
-int[] b = (int[])obj;  //可以进行向下转型 
+// 可以进行向下转型 
+int[] b = (int[])obj;  
 
 if(obj instanceof int[]){ 
-    //可以用instanceof关键字进行类型判定 
+    // 可以用instanceof关键字进行类型判定 
 }
 </code></pre><h2 id="优缺点">优缺点</h2>
 <p>数组优点:</p>
 <ul>
-<li>通过下标访问元素的效率很高，指定下标为n的元素的地址(和链表相比较)</li>
-<li>数组可以保存若干个元素的值</li>
+<li>通过下标访问元素的效率很高，指定下标为n的元素的地址(和链表相比较)；</li>
+<li>数组可以保存若干个元素的值；</li>
 </ul>
 <p>数组缺点:</p>
 <ul>
-<li>数组长度是固定的不能变的</li>
-<li>数组进行元素的删除和插入操作的时候，效率比较低,需要移动大量的元素(这里可以举例: ArrayList 和LinkedList区别)</li>
-<li>数组元素的类型只能是一种</li>
-<li>数组元素的内存地址是连续分配的,对内存要求高一些;(相对于链表结构比较,链表的内存是连续不连续都可以)</li>
-<li>数组没有提供任何的封装，所有对元素的操作，都是通过自定义的方法实现的，对数组元素的操作比较麻烦</li>
+<li>数组长度是固定的不能变的；</li>
+<li>数组进行元素的删除和插入操作的时候，效率比较低,需要移动大量的元素(这里可以举例: ArrayList 和LinkedList区别)；</li>
+<li>数组元素的类型只能是一种；</li>
+<li>数组元素的内存地址是连续分配的,对内存要求高一些;(相对于链表结构比较,链表的内存是连续不连续都可以)；</li>
+<li>数组没有提供任何的封装，所有对元素的操作，都是通过自定义的方法实现的，对数组元素的操作比较麻烦；</li>
 </ul>
 <h2 id="常见处理数组的操作">常见处理数组的操作</h2>
 <h3 id="遍历数组">遍历数组</h3>
@@ -390,38 +392,41 @@ if(obj instanceof int[]){
        System.out.println(array1[i]);
 }
 </code></pre><h3 id="数组去重">数组去重</h3>
-<pre><code>//利用 hashSet 集合去重
+<pre><code>// 利用 hashSet 集合去重
 Set&lt;Integer&gt; set2 = new HashSet&lt;Integer&gt;();
 for (int i = 0; i &lt; arr11.length; i++) {
     set2.add(arr11[i]);
 }
 </code></pre><h3 id="数组与集合转换">数组与集合转换</h3>
-<pre><code>Set&lt;String&gt; set=new HashSet&lt;String&gt;(Arrays.asList(array2));//将数组转成set集合
-//将数组转化成 list  集合
+<pre><code>// 将数组转成set集合
+Set&lt;String&gt; set=new HashSet&lt;String&gt;(Arrays.asList(array2));
+
+// 将数组转化成 list  集合
 String[] array={&quot;1&quot;,&quot;2&quot;,&quot;3&quot;};
 List&lt;String&gt; list=new ArrayList&lt;String&gt;();
 for (int i = 0; i &lt; array.length; i++) {
     list.add(array2[i]);
 }
-//第二种 数组 转 list 
+
+// 第二种 数组 转 list 
 List&lt;String &gt; list2=java.util.Arrays.asList(array);
 </code></pre><h3 id="数组排序">数组排序</h3>
-<pre><code> //原生方法
+<pre><code> // 原生方法 或 8种排序算法
  Arrays.sort(arr);
- // 或8种排序算法
 </code></pre><h3 id="复制数组">复制数组</h3>
-<pre><code>int[] arr = {1, 2, 3, 4}; //待复制的数组
-int[] arr2 = Arrays.copyOf(arr, 10);  //指定新数组的长度
-int[] arr3 = Arrays.copyOfRange(arr, 1, 3); //只复制从索引[1]到索引[3]之间的元素（不包括索引[3]的元素）
+<pre><code>// 待复制的数组
+int[] arr = {1, 2, 3, 4};
+
+// 指定新数组的长度
+int[] arr2 = Arrays.copyOf(arr, 10);
+
+// 只复制从索引[1]到索引[3]之间的元素（不包括索引[3]的元素）
+int[] arr3 = Arrays.copyOfRange(arr, 1, 3);
 for (int i = 0; i &lt; arr3.length; i++) {
     System.out.println(arr3[i]);
 }
 </code></pre><h2 id="相关延伸">相关延伸</h2>
-<ul>
-<li><code>void  method_name(int ... value)</code>变参就是当数组处理的，优先使用定参的，编译后就是数组</li>
-<li>一个方法只能有一个变参!即使是不同的类型也不行。</li>
-<li>变参参数只能在形参列表的末尾，如果传入的是数组，则只能传一个</li>
-</ul>
+<p><code>void  method_name(int ... value)</code>中变参就是当数组处理的，参数为定参的，编译后就是数组。一个方法只能有一个变参，即使是不同的类型也不行，变参参数只能在形参列表的末尾，如果传入的是数组，则只能传一个。</p>
 </div>
                     <div class="post_footer">
                         
