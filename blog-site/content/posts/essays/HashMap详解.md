@@ -5,6 +5,7 @@ draft: false
 tags: ["Java", "集合"]
 slug: "java-hashmap"
 ---
+
 ## 相关概念
 - `capacity`： 容量，默认16；
 - `loadFactor`： 负载因子，表示HashMap满的程度，默认值为0.75f，也就是说默认情况下，当HashMap中元素个数达到了容量的3/4的时候就会进行自动扩容；

@@ -32,11 +32,10 @@ Java中的集合主要包括 `Collection` 和 `Map` 两种，`Collection` 存储
 - LinkedHashMap：使用双向链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序；
 
 ### HashMap
-
-- 存贮: 通过key的hashcode方法找到在hashMap 存贮的位置,如果该位置有元素,则通过equals方法进行比较,equals返回值为true,则覆盖value,equals返回值为false则,在该数组元素的头部追加该元素,形成一个链表结构
-- 读取:通过key的hashcode方法获取元素存在该数组的位置,然后通过equals拿到该值
-- 结构: hashMap是一个散列数据结构,HashMap底层就是一个数组结构，数组中的每一项又是一个链表
-- 归纳: 总的来说hashMap底层将key-value(键值对)当成一个整体来处理,hashMap底层采用一个 Entry 数组保存所有的键值对,当存储一个entry对象时,会根据key的hash算法来决定存放在数组中的位置,在根据equals方法来确定在链表中的位置,读取一个entry对象,先根据hash算法确定在数组中的位置,再根据equals来获取该值,equals和equals在hashMap中就像一个坐标一样,来确定hashMap中的值
+- 存贮: 通过key的hashcode方法找到在hashMap 存贮的位置,如果该位置有元素,则通过equals方法进行比较,equals返回值为true,则覆盖value,equals返回值为false则,在该数组元素的头部追加该元素,形成一个链表结构；
+- 读取:通过key的hashcode方法获取元素存在该数组的位置,然后通过equals拿到该值；
+- 结构: hashMap是一个散列数据结构,HashMap底层就是一个数组结构，数组中的每一项又是一个链表；
+- 归纳: 总的来说hashMap底层将key-value(键值对)当成一个整体来处理,hashMap底层采用一个 Entry 数组保存所有的键值对,当存储一个entry对象时,会根据key的hash算法来决定存放在数组中的位置,在根据equals方法来确定在链表中的位置,读取一个entry对象,先根据hash算法确定在数组中的位置,再根据equals来获取该值,equals和equals在hashMap中就像一个坐标一样,来确定hashMap中的值；
 
 ### HashMap1.8与1.7区别
 - 结构 :  数组+链表+红黑树(链表长度>8时使用)；
