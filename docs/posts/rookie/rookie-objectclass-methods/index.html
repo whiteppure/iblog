@@ -1032,9 +1032,9 @@ try {
 } catch (CloneNotSupportedException e) {
     e.printStackTrace();
 }
-</code></pre><p>以上抛出了 <code>java.lang.CloneNotSupportedException: CloneExample</code>，这是因为 <code>CloneExample </code>没有实现 <code>Cloneable</code> 接口。</p>
-<p>应该注意的是，<code>clone()</code> 方法并不是 <code>Cloneable</code> 接口的方法，而是 <code>Object</code> 的一个 <code>protected</code> 方法。
-<code>Cloneable</code> 接口只是规定，如果一个类没有实现 <code>Cloneable </code>接口又调用了 <code>clone()</code> 方法，就会抛出 <code>CloneNotSupportedException</code>。</p>
+</code></pre><p>以上抛出了 <code>java.lang.CloneNotSupportedException: CloneExample</code>，这是因为 <code>CloneExample</code> 没有实现 <code>Cloneable</code> 接口。</p>
+<p>应该注意的是，<code>clone()</code> 方法并不是 <code>Cloneable</code> 接口的方法，而是 <code>Object</code> 的一个 <code>protected</code> 方法。</p>
+<p><code>Cloneable</code> 接口只是规定，如果一个类没有实现 <code>Cloneable</code> 接口又调用了 <code>clone()</code> 方法，就会抛出 <code>CloneNotSupportedException</code>。</p>
 <pre><code>public class CloneExample implements Cloneable {
     private int a;
     private int b;
@@ -1160,10 +1160,8 @@ CloneConstructorExample e2 = new CloneConstructorExample(e1);
 e1.set(2, 222);
 System.out.println(e2.get(2)); // 2
 </code></pre><h2 id="finalize">finalize</h2>
-<p><code>finalize()</code>方法是Java提供的对象终止机制，允许开发人员提供对象被销毁之前的自定义处理逻辑。
-当垃圾回收器发现没有引用指向一个对象，即：垃圾回收此对象之前，总会先调用这个对象的<code>finalize()</code>方法。</p>
-<p><code>finalize()</code> 方法允许在子类中被重写，用于在对象被回收时进行资源释放。
-通常在这个方法中进行一些资源释放和清理的工作，比如关闭文件、套接字和数据库连接等。</p>
+<p><code>finalize()</code>方法是Java提供的对象终止机制，允许开发人员提供对象被销毁之前的自定义处理逻辑。当垃圾回收器发现没有引用指向一个对象，即：垃圾回收此对象之前，总会先调用这个对象的<code>finalize()</code>方法。</p>
+<p><code>finalize()</code> 方法允许在子类中被重写，用于在对象被回收时进行资源释放。通常在这个方法中进行一些资源释放和清理的工作，比如关闭文件、套接字和数据库连接等。</p>
 <p>文档注释大意：当GC确定不再有对对象的引用时，由垃圾收集器在对象上调用。子类重写<code>finalize</code>方法来释放系统资源或执行其他清理。</p>
 <pre><code>   /**
      * Called by the garbage collector on an object when garbage collection
@@ -1181,8 +1179,7 @@ System.out.println(e2.get(2)); // 2
 <li>一个糟糕的<code>finalize</code>方法会严重影响GC的性能;</li>
 </ul>
 <p><strong>由于<code>finalize</code>方法的存在,虚拟机中的对象一般可能处于三种状态：</strong></p>
-<p>如果从所有的根节点都无法访问到某个对象，说明对象己经不再使用了。一般来说，此对象需要被回收。
-但事实上，也并非是“非死不可”的，这时候它们暂时处于“缓刑”阶段。一个无法触及的对象有可能在某一个条件下“复活”自己，如果这样，那么对它的回收就是不合理的，为此，虚拟机中定义了的对象可能的三种状态：</p>
+<p>如果从所有的根节点都无法访问到某个对象，说明对象己经不再使用了。一般来说，此对象需要被回收。但事实上，也并非是“非死不可”的，这时候它们暂时处于“缓刑”阶段。一个无法触及的对象有可能在某一个条件下“复活”自己，如果这样，那么对它的回收就是不合理的，为此，虚拟机中定义了的对象可能的三种状态：</p>
 <ul>
 <li>可触及的：从根节点开始，可以到达这个对象；对象存活被使用；</li>
 <li>可复活的：对象的所有引用都被释放，但是对象有可能在<code>finalize</code>中复活；对象被复活，对象在<code>finalize</code>方法中被重新使用；</li>
@@ -1197,8 +1194,7 @@ System.out.println(e2.get(2)); // 2
 <ol>
 <li>如果对象没有重写<code>finalize</code>方法，或者<code>finalize</code>方法已经被虚拟机调用过，则虚拟机视为“没有必要执行”，对象被判定为不可触及的。</li>
 <li>如果对象重写了<code>finalize</code>方法，且还未执行过，那么会被插入到<code>F-Queue</code>队列中，由一个虚拟机自动创建的、低优先级的<code>Finalizer</code>线程触发其<code>finalize</code>方法执行。</li>
-<li><code>finalize</code>方法是对象逃脱死亡的最后机会，稍后GC会对<code>F-Queue</code>队列中的对象进行第二次标记。如果对象在<code>finalize</code>方法中与引用链上的任何一个对象建立了联系，那么在第二次标记时，该对象会被移出“即将回收”集合。
-之后，对象会再次出现没有引用存在的情况。在这个情况下，<code>finalize</code>方法不会被再次调用，对象会直接变成不可触及的状态，也就是说，一个对象的<code>finalize</code>方法只会被调用一次。</li>
+<li><code>finalize</code>方法是对象逃脱死亡的最后机会，稍后GC会对<code>F-Queue</code>队列中的对象进行第二次标记。如果对象在<code>finalize</code>方法中与引用链上的任何一个对象建立了联系，那么在第二次标记时，该对象会被移出“即将回收”集合。之后，对象会再次出现没有引用存在的情况。在这个情况下，<code>finalize</code>方法不会被再次调用，对象会直接变成不可触及的状态，也就是说，一个对象的<code>finalize</code>方法只会被调用一次。</li>
 </ol>
 </li>
 </ul>

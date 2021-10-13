@@ -346,7 +346,6 @@ System.out.println("i=" + i);
 
 ### Cloneable接口
 `clone()`是 `Object` 的 `protected` 方法，它不是被 `public`修饰；一个类不显式的去重写`clone()`，其它类就不能直接去调用该类实例的 `clone()`方法：
-
 ```
 public class CloneExample {
     private int a;
@@ -357,7 +356,6 @@ CloneExample e1 = new CloneExample();
 ```
 
 重写`clone()`方法得到以下实现：
-
 ```
 public class CloneExample {
     private int a;
@@ -379,10 +377,11 @@ try {
 }
 ```
 
-以上抛出了 ``java.lang.CloneNotSupportedException: CloneExample``，这是因为 ``CloneExample ``没有实现 ``Cloneable`` 接口。
+以上抛出了 `java.lang.CloneNotSupportedException: CloneExample`，这是因为 `CloneExample` 没有实现 `Cloneable` 接口。
 
-应该注意的是，`clone()` 方法并不是 ``Cloneable`` 接口的方法，而是 `Object` 的一个 `protected` 方法。
-``Cloneable`` 接口只是规定，如果一个类没有实现 ``Cloneable ``接口又调用了 `clone()` 方法，就会抛出 ``CloneNotSupportedException``。
+应该注意的是，`clone()` 方法并不是 `Cloneable` 接口的方法，而是 `Object` 的一个 `protected` 方法。
+
+`Cloneable` 接口只是规定，如果一个类没有实现 `Cloneable` 接口又调用了 `clone()` 方法，就会抛出 `CloneNotSupportedException`。
 
 ```
 public class CloneExample implements Cloneable {
@@ -405,7 +404,6 @@ public class CloneExample implements Cloneable {
 如果被复制对象的属性包含其他实体类对象引用，那么这些实体类对象都需要实现`cloneable`接口并覆盖`clone()`方法。
 
 #### 浅拷贝
-
 ```
 public class ShallowCloneExample implements Cloneable {
 
@@ -535,11 +533,9 @@ System.out.println(e2.get(2)); // 2
 ```
 
 ## finalize
-`finalize()`方法是Java提供的对象终止机制，允许开发人员提供对象被销毁之前的自定义处理逻辑。
-当垃圾回收器发现没有引用指向一个对象，即：垃圾回收此对象之前，总会先调用这个对象的`finalize()`方法。
+`finalize()`方法是Java提供的对象终止机制，允许开发人员提供对象被销毁之前的自定义处理逻辑。当垃圾回收器发现没有引用指向一个对象，即：垃圾回收此对象之前，总会先调用这个对象的`finalize()`方法。
 
-`finalize()` 方法允许在子类中被重写，用于在对象被回收时进行资源释放。
-通常在这个方法中进行一些资源释放和清理的工作，比如关闭文件、套接字和数据库连接等。
+`finalize()` 方法允许在子类中被重写，用于在对象被回收时进行资源释放。通常在这个方法中进行一些资源释放和清理的工作，比如关闭文件、套接字和数据库连接等。
 
 文档注释大意：当GC确定不再有对对象的引用时，由垃圾收集器在对象上调用。子类重写`finalize`方法来释放系统资源或执行其他清理。
 ```
@@ -564,8 +560,7 @@ System.out.println(e2.get(2)); // 2
 
 **由于`finalize`方法的存在,虚拟机中的对象一般可能处于三种状态：**
 
-如果从所有的根节点都无法访问到某个对象，说明对象己经不再使用了。一般来说，此对象需要被回收。
-但事实上，也并非是“非死不可”的，这时候它们暂时处于“缓刑”阶段。一个无法触及的对象有可能在某一个条件下“复活”自己，如果这样，那么对它的回收就是不合理的，为此，虚拟机中定义了的对象可能的三种状态：
+如果从所有的根节点都无法访问到某个对象，说明对象己经不再使用了。一般来说，此对象需要被回收。但事实上，也并非是“非死不可”的，这时候它们暂时处于“缓刑”阶段。一个无法触及的对象有可能在某一个条件下“复活”自己，如果这样，那么对它的回收就是不合理的，为此，虚拟机中定义了的对象可能的三种状态：
 - 可触及的：从根节点开始，可以到达这个对象；对象存活被使用；
 - 可复活的：对象的所有引用都被释放，但是对象有可能在`finalize`中复活；对象被复活，对象在`finalize`方法中被重新使用；
 - 不可触及的：对象的`finalize`方法被调用，并且没有复活，那么就会进入不可触及状态；对象死亡，对象没有被使用；
@@ -579,8 +574,7 @@ System.out.println(e2.get(2)); // 2
 - 进行筛选，判断此对象是否有必要执行`finalize`方法
     1. 如果对象没有重写`finalize`方法，或者`finalize`方法已经被虚拟机调用过，则虚拟机视为“没有必要执行”，对象被判定为不可触及的。
     2. 如果对象重写了`finalize`方法，且还未执行过，那么会被插入到`F-Queue`队列中，由一个虚拟机自动创建的、低优先级的`Finalizer`线程触发其`finalize`方法执行。
-    3. `finalize`方法是对象逃脱死亡的最后机会，稍后GC会对`F-Queue`队列中的对象进行第二次标记。如果对象在`finalize`方法中与引用链上的任何一个对象建立了联系，那么在第二次标记时，该对象会被移出“即将回收”集合。
-    之后，对象会再次出现没有引用存在的情况。在这个情况下，`finalize`方法不会被再次调用，对象会直接变成不可触及的状态，也就是说，一个对象的`finalize`方法只会被调用一次。
+    3. `finalize`方法是对象逃脱死亡的最后机会，稍后GC会对`F-Queue`队列中的对象进行第二次标记。如果对象在`finalize`方法中与引用链上的任何一个对象建立了联系，那么在第二次标记时，该对象会被移出“即将回收”集合。之后，对象会再次出现没有引用存在的情况。在这个情况下，`finalize`方法不会被再次调用，对象会直接变成不可触及的状态，也就是说，一个对象的`finalize`方法只会被调用一次。
     
 代码演示对象能否被回收：
 ```
@@ -628,6 +622,7 @@ public class MainTest {
 
 }
 ```
+
 ## getClass
 ```
     /**
@@ -653,7 +648,6 @@ public class MainTest {
 - `wait`方法的作用是让当前对象上的线程进入等待状态，同时`wait()`也会让当前线程释放它所持有的锁。直到其他线程调用此对象的`notify()`方法或 `notifyAll()` 方法，当前对象上线程被唤醒进入就绪状态。
 - `notify()`和`notifyAll()`的作用，则是唤醒当前对象上的等待线程；`notify()`是(随机)唤醒当前对象上单个线程，而`notifyAll()`是唤醒当前对象上所有的线程。
 - `wait(long timeout)`方法让当前对象上线程处于等待(阻塞)状态，直到其他线程调用此对象的`notify()`方法或`notifyAll()`方法，或者超过指定的时间量，当前线程被唤醒进入就绪状态。
-
 
 需要注意的是`wait`方法与`sleep`方法，很多人分不清他俩。
 

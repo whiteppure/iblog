@@ -100,13 +100,17 @@ int[] arr2 = Arrays.copyOf(arr, 10);
 int[] arr3 = Arrays.copyOfRange(arr, 1, 3);
 ```
 ## ArrayList
+在ArrayList中实现了`RandomAccess, Cloneable`接口，分别为ArrayList提供的作用下面详细说明。
+```
+public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAccess,Cloneable,Serializable
+```
 
 ### RandomAccess
 Random是随机的意思，Access是访问的意思，合起来就是随机访问的意思。
 
-`RandomAccess`接口是一个标记接口，用来标记实现的List集合具备快速随机访问的能力。所有的List实现都支持随机访问的，只是基于基本结构的不同，实现的速度不同罢了。
+RandomAccess接口是一个标记接口，用来标记实现的List集合具备快速随机访问的能力。所有的List实现都支持随机访问的，只是基于基本结构的不同，实现的速度不同罢了。
 
-当一个List拥有快速访问功能时，其遍历方法采用随机访问速度最快，而没有快速随机访问的List采用顺序访问的速度最快。如果集合中的数据量过大需要遍历时，此时需要格外注意，因为不同的遍历方式会影响很大，可以使用`instanceof`关键字来判断该类有没有`RandomAccess`标记:
+当一个List拥有快速访问功能时，其遍历方法采用随机访问速度最快，而没有快速随机访问的List采用顺序访问的速度最快。如果集合中的数据量过大需要遍历时，此时需要格外注意，因为不同的遍历方式会影响很大，可以使用`instanceof`关键字来判断该类有没有RandomAccess标记:
 ```
 // 假设 list 数据量非常大,推荐写法
 List<Object> list = ...;
@@ -123,10 +127,174 @@ if(list instanceof RandomAccess){
     }
 }
 ```
-在List中ArrayList被`RandomAccess`接口标记，而LinkedList没有被`RandomAccess`接口标记，所以ArrayList适合随机访问，LinkedList适合顺序访问。
+在List中ArrayList被RandomAccess接口标记，而LinkedList没有被RandomAccess接口标记，所以ArrayList适合随机访问，LinkedList适合顺序访问。
 
+### Cloneable
+Cloneable接口是Java开发中常用的一个接口之一,它是一个标记接口。
+
+如果一个想要拷贝一个对象，就需要重写Object中的clone方法并让其实现Cloneable接口，如果只重写clone方法，不实现Cloneable接口就会报CloneNotSupportedException异常。
+
+JDK中clone方法源码：
+```
+protected native Object clone() throws CloneNotSupportedException;
+```
+应当注意的是，`clone()` 方法并不是 `Cloneable` 接口的方法，而是 `Object` 的一个 `protected` 方法。`Cloneable` 接口只是规定，如果一个类没有实现 `Cloneable` 接口又调用了 `clone()` 方法，就会抛出 `CloneNotSupportedException`。
+
+换言之，clone方法规定了想要拷贝对象，就需要实现Cloneable方法，clone方法让Cloneable接口变得有意义。
+
+#### 浅拷贝与深拷贝
+- 浅拷贝：被复制对象的所有值属性都含有与原来对象的相同，而所有的对象引用属性仍然指向原来的对象。
+- 深拷贝：在浅拷贝的基础上，所有引用其他对象的变量也进行了`clone`，并指向被复制过的新对象。
+
+如果一个被复制的属性都是基本类型，那么只需要实现当前类的`cloneable`机制就可以了，此为浅拷贝。
+
+如果被复制对象的属性包含其他实体类对象引用，那么这些实体类对象都需要实现`cloneable`接口并覆盖`clone()`方法。
+
+**浅拷贝：**
+```
+public class ShallowCloneExample implements Cloneable {
+
+    private int[] arr;
+
+    public ShallowCloneExample() {
+        arr = new int[10];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = i;
+        }
+    }
+
+    public void set(int index, int value) {
+        arr[index] = value;
+    }
+
+    public int get(int index) {
+        return arr[index];
+    }
+
+    @Override
+    protected ShallowCloneExample clone() throws CloneNotSupportedException {
+        return (ShallowCloneExample) super.clone();
+    }
+}
+
+```
+
+```
+ShallowCloneExample e1 = new ShallowCloneExample();
+ShallowCloneExample e2 = null;
+try {
+    e2 = e1.clone();
+} catch (CloneNotSupportedException e) {
+    e.printStackTrace();
+}
+e1.set(2, 222);
+System.out.println(e2.get(2)); // 222
+```
+
+**深拷贝：**
+```
+public class DeepCloneExample implements Cloneable {
+
+    private int[] arr;
+
+    public DeepCloneExample() {
+        arr = new int[10];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = i;
+        }
+    }
+
+    public void set(int index, int value) {
+        arr[index] = value;
+    }
+
+    public int get(int index) {
+        return arr[index];
+    }
+
+    @Override
+    protected DeepCloneExample clone() throws CloneNotSupportedException {
+        DeepCloneExample result = (DeepCloneExample) super.clone();
+        result.arr = new int[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            result.arr[i] = arr[i];
+        }
+        return result;
+    }
+}
+
+```
+
+```
+DeepCloneExample e1 = new DeepCloneExample();
+DeepCloneExample e2 = null;
+try {
+    e2 = e1.clone();
+} catch (CloneNotSupportedException e) {
+    e.printStackTrace();
+}
+e1.set(2, 222);
+System.out.println(e2.get(2)); // 2
+```
+#### ArrayList中clone方法
+文档注释大意：返回这个ArrayList实例的浅拷贝(元素本身不会被复制)。
+```
+public class ArrayList implements Cloneable {
+
+    transient Object[] elementData;     
+
+    /**
+     * Returns a shallow copy of this <tt>ArrayList</tt> instance.  (The
+     * elements themselves are not copied.)
+     *
+     * @return a clone of this <tt>ArrayList</tt> instance
+     */
+    public Object clone() {
+        try {
+            // 调用Object类的clone方法
+            ArrayList<?> v = (ArrayList<?>) super.clone();
+            
+            // 将集合中的元素进行拷贝
+            v.elementData = Arrays.copyOf(elementData, size);
+            v.modCount = 0;
+            return v;
+        } catch (CloneNotSupportedException e) {
+            // this shouldn't happen, since we are Cloneable
+            throw new InternalError(e);
+        }
+    }
+}
+```
+
+```
+public class Arrays{
+   public static <T> T[] copyOf(T[] original, int newLength) {
+        return (T[]) copyOf(original, newLength, original.getClass());
+    }
+    
+    public static <T,U> T[] copyOf(U[] original, int newLength, Class<? extends T[]> newType) {
+        @SuppressWarnings("unchecked")
+        T[] copy = ((Object)newType == (Object)Object[].class)
+            ? (T[]) new Object[newLength]
+            : (T[]) Array.newInstance(newType.getComponentType(), newLength);
+        System.arraycopy(original, 0, copy, 0, Math.min(original.length, newLength));
+        return copy;
+    }
+}
+```
+ArrayList中clone方法底层是调用父类的clone方法，父类没有重写clone方法所以调用的是Object类的clone方法。
+
+在ArrayList中核心方法最终调用`Arrays.copyOf`方法,不论怎样都会创建一个Object数组。
+> `Arrays.newInstance(Class<?> componentType,int length)`方法作用，创建具有指定组件类型和长度的新数组。
+
+最终使用`System.arraycopy`方法将之前的旧数组中的元素拷贝到新创建的数组中，然后赋值给`ArrayList.elementData`对象并返回。
+
+### ArrayList扩容
 
 ### ArrayList与LinkedList
+ArrayList与LinkedList性能比较是一道经典的面试题，ArrayList查找快，增删慢；而LinkedList增删快，查找慢。
+
+造成这种原因是因为底层的数据结构不一样，ArrayList底层是数组，数组的中的元素内存分配都是连续的，并且数组中的元素只能存放一种，
 
 ## Set
 ## Queue

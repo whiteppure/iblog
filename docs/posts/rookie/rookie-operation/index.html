@@ -795,7 +795,7 @@
 <td></td>
 </tr>
 <tr>
-<td>&ndash;</td>
+<td><code>--</code></td>
 <td>自减</td>
 <td>操作数的值减少1</td>
 <td></td>
@@ -822,7 +822,7 @@
 </code></pre><p>如果被除数小于除数,那取模的结果就是被除数.如果被除数等于除数,结果是0,如果除数是1,结果是0.</p>
 <p><strong>取余应用</strong></p>
 <p>当使用随机数生成器产生的结果时,取余运算（%）可将结果限制在上限为操作数最大值减1的范围.</p>
-<p>例如:n是随机数,那么<code>n%10</code>就是<code>0~9</code>中的一个数.无论n是多大的数,<code>n%10</code>只能是<code>0~9</code>之间的一个数,其中10就是操作数.可以利用这一特性,可以在数据库分库,分表 等.</p>
+<p>例如:n是随机数,那么<code>n%10</code>就是<code>0~9</code>中的一个数.无论n是多大的数,<code>n%10</code>只能是<code>0~9</code>之间的一个数,其中10就是操作数.可以利用这一特性,可以在数据库分库,分表等.</p>
 <h6 id="自增和自减">自增和自减</h6>
 <p>基本用法</p>
 <pre><code>    public static void main(String[] args) {
@@ -883,12 +883,12 @@
 <td>把左操作数和右操作数取模后赋值给左操作数</td>
 </tr>
 <tr>
-<td>&laquo;=</td>
+<td><code>&lt;&lt;=</code></td>
 <td>左位移等于</td>
 <td>把左操作数和右操作数进行左移运算后赋值给左操作数</td>
 </tr>
 <tr>
-<td>&raquo;=</td>
+<td><code>&gt;&gt;=</code></td>
 <td>右位移等于</td>
 <td>把左操作数和右操作数进行右移运算后赋值给左操作数</td>
 </tr>
@@ -1022,17 +1022,17 @@
 <td>翻转操作数的每一位,即0变成1,1变成0.</td>
 </tr>
 <tr>
-<td>&laquo;</td>
+<td><code>&lt;&lt;</code></td>
 <td>左移</td>
 <td>左操作数按位左移右操作数指定的位数.</td>
 </tr>
 <tr>
-<td>&raquo;</td>
+<td><code>&gt;&gt;</code></td>
 <td>右移</td>
 <td>左操作数按位右移右操作数指定的位数.</td>
 </tr>
 <tr>
-<td>&raquo;&gt;</td>
+<td><code>&gt;&gt;&gt;</code></td>
 <td>无符号右移</td>
 <td>左操作数的值按右操作数指定的位数右移,移动得到的空位以零填充.</td>
 </tr>
@@ -1050,8 +1050,7 @@
         System.out.println(i&gt;&gt;&gt;j);//0
     }
 </code></pre><p>解析:</p>
-<p>以下示例用十进制的1和2进行运算.1用二进制表示为<code>0000 0001</code>,2用二进制表示为<code>0000 0010</code>
-<a href="https://www.google.com/search?sxsrf=ALeKk0010piT4DlhyvDp3DJUzmKw1n2QLA%3A1612180398529&amp;ei=rusXYLncH9X_wAP5n5GwDQ&amp;q=10%E8%BF%9B%E5%88%B62%E8%BF%9B%E5%88%B6%E4%BA%92%E7%9B%B8%E8%BD%AC%E6%8D%A2&amp;oq=10%E8%BF%9B%E5%88%B62%E8%BF%9B%E5%88%B6%E4%BA%92%E7%9B%B8%E8%BD%AC%E6%8D%A2&amp;gs_lcp=CgZwc3ktYWIQA1CuT1iuT2CEVmgBcAB4AIABvQGIAb0BkgEDMC4xmAEAoAECoAEBqgEHZ3dzLXdpesABAQ&amp;sclient=psy-ab&amp;ved=0ahUKEwi5697_z8juAhXVP3AKHflPBNYQ4dUDCA0&amp;uact=5">10进制2进制互相转换</a>怎么转就不讲了.不懂的小伙伴可自行查看链接.</p>
+<p>以下示例用十进制的1和2进行运算.1用二进制表示为<code>0000 0001</code>,2用二进制表示为<code>0000 0010</code><a href="https://www.google.com/search?sxsrf=ALeKk0010piT4DlhyvDp3DJUzmKw1n2QLA%3A1612180398529&amp;ei=rusXYLncH9X_wAP5n5GwDQ&amp;q=10%E8%BF%9B%E5%88%B62%E8%BF%9B%E5%88%B6%E4%BA%92%E7%9B%B8%E8%BD%AC%E6%8D%A2&amp;oq=10%E8%BF%9B%E5%88%B62%E8%BF%9B%E5%88%B6%E4%BA%92%E7%9B%B8%E8%BD%AC%E6%8D%A2&amp;gs_lcp=CgZwc3ktYWIQA1CuT1iuT2CEVmgBcAB4AIABvQGIAb0BkgEDMC4xmAEAoAECoAEBqgEHZ3dzLXdpesABAQ&amp;sclient=psy-ab&amp;ved=0ahUKEwi5697_z8juAhXVP3AKHflPBNYQ4dUDCA0&amp;uact=5">10进制2进制互相转换</a>怎么转就不讲了.不懂的小伙伴可自行查看链接.</p>
 <p>&amp;:如果相对应位都是1,则结果为1,否则为0</p>
 <pre><code>0000 0001
 0000 0010
@@ -1099,7 +1098,11 @@
 <pre><code>1111 1111
 ——————————
 0011 1111
-</code></pre><h5 id="其他运算符">其他运算符</h5>
+</code></pre><blockquote>
+<p><code>&gt;&gt;</code>,右移几位就是相当于除以2的几次幂
+<code>&lt;&lt;</code>,左移几位就是相当于乘以2的几次幂</p>
+</blockquote>
+<h5 id="其他运算符">其他运算符</h5>
 <h6 id="三目运算符">三目运算符</h6>
 <p>该运算符有3个操作数,其功能是对表达式条件进行判断,根据判断结果是<code>true</code>或者<code>false</code>两种情况赋予赋予不同的返回值.
 该运算符的主要是决定哪个值应该赋值给变量.</p>
