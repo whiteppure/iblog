@@ -237,6 +237,14 @@ e1.set(2, 222);
 System.out.println(e2.get(2)); // 2
 ```
 #### ArrayList中clone方法
+clone方法调用栈：
+```
+clone 
+    -> Object.clone
+    -> Arrays.copyOf(T[] original, int newLength)
+    -> Arrays.copyOf(U[] original, int newLength, Class<? extends T[]> newType)
+```
+
 文档注释大意：返回这个ArrayList实例的浅拷贝(元素本身不会被复制)。
 ```
 public class ArrayList implements Cloneable {
@@ -290,11 +298,72 @@ ArrayList中clone方法底层是调用父类的clone方法，父类没有重写c
 最终使用`System.arraycopy`方法将之前的旧数组中的元素拷贝到新创建的数组中，然后赋值给`ArrayList.elementData`对象并返回。
 
 ### ArrayList扩容
+因为ArrayList底层使用数组保存数据的，而数组一旦被创建就不能改变大小，但是ArrayList的长度是可以改变的，所以可以通过ArrayList类中的add方法找到数组扩容方法。
+
+add方法调用栈：
+```
+add 
+    -> ensureCapacityInternal()
+    -> calculateCapacity()
+    -> ensureExplicitCapacity()
+    -> grow()
+```
+```
+    private void grow(int minCapacity) {
+        // overflow-conscious code
+        int oldCapacity = elementData.length;
+        int newCapacity = oldCapacity + (oldCapacity >> 1);
+        if (newCapacity - minCapacity < 0)
+            newCapacity = minCapacity;
+        if (newCapacity - MAX_ARRAY_SIZE > 0)
+            newCapacity = hugeCapacity(minCapacity);
+        // minCapacity is usually close to size, so this is a win:
+        elementData = Arrays.copyOf(elementData, newCapacity);
+    }
+```
+ArrayList容量：如果没有指定容量创建数组，默认会创建一个长度为10的数组用来保存元素，之后通过：
+```
+ int newCapacity = oldCapacity + (oldCapacity >> 1);
+```
+每次扩容都是原容量的1.5倍。
+> `>>`,右移几位就是相当于除以2的几次幂
+  `<<`,左移几位就是相当于乘以2的几次幂
+
+最后通过Arrays.copyOf方法将之前的数组中元素，全部移到新创建的数组上。
+
+由于频繁的扩容数组会对性能产生影响，如果在ArrayList中要存储很大的数据，就需要在ArrayList的有参构造中指定数组的长度：
+```
+List<String> list = new ArrayList(1000000);
+```
+需要注意的是创建指定长度的ArrayList，在没有add之前ArrayList中的数组已经初始化了，但是List的大小没变，因为List的大小是由size决定的。
 
 ### ArrayList与LinkedList
 ArrayList与LinkedList性能比较是一道经典的面试题，ArrayList查找快，增删慢；而LinkedList增删快，查找慢。
 
-造成这种原因是因为底层的数据结构不一样，ArrayList底层是数组，数组的中的元素内存分配都是连续的，并且数组中的元素只能存放一种，
+造成这种原因是因为底层的数据结构不一样，ArrayList底层是数组，而数组的中的元素内存分配都是连续的，并且数组中的元素只能存放一种，这就造成了数组中的元素地址是有规律的，数组中查找元素快速的原因正是利用了这一特点。
+> 查询方式为: 首地址＋（元素长度＊下标）
+> 例如：new int arr[5]; arr数组的地址假设为0x1000，arr[0] ~ arr[5] 地址可看作为 0x1000 + i * 4。
+
+而LinkedList的底层结构是对象，每一个对象结点中都保存了下一个结点的位置形成的链表结构，由于LinkedList元素的地址是不连续的，所以没办法按照数组那样去查找，所以就比较慢。
+
+因为数组一旦分配了大小就不能改变，所以ArrayList在进行添加操作时会创建新的数组，如果要添加到ArrayList中的指定的位置，是通过System.arraycopy方法将数组进行复制，新的数组会将待插入的指定位置空余出来，最后在将元素添加到集合中。
+在进行删除操作时没有创建新的数组，是通过System.arraycopy方法，将待删除元素后面剩余元素复制到待删除元素的位置。当ArrayList里有大量数据时，这时候去频繁插入或删除元素会触发底层数组频繁拷贝，效率不高，还会造成内存空间的浪费。
+
+LinkedList在进行添加，删除操作时，会用二分查找法找到将要添加或删除的元素，之后再设置对象的下一个结点来进行添加或删除操作。
+> 二分查找法：也称为折半查找法，是一种适用于大量数据查找的方法，但是要求数据必须的排好序的，每次以中间的值进行比较，根据比较的结果可以直接舍去一半的值，直至全部找完（可能会找不到）或者找到数据为止。
+> 
+> 此处LinkedList会比较查找的元素是距离头结点比较近，还是尾结点比较近，距离哪边较近则从哪边开始查找。
+
+ArrayList，获取元素效率非常的高，时间复杂度是O(1)，而查找，插入和删除元素效率似乎不太高，时间复杂度为O(n)。
+
+LinkedList，正与ArrayList相反，获取第几个元素依次遍历复杂度O(n)，添加到末尾复杂度O(1)，**添加到指定位置复杂度O(n)**，删除元素，直接指针指向操作复杂度O(1)。
+
+**注意，ArrayList的增删不一定比LinkedList效率低，但是ArrayList查找效率一定比LinkedList高，如果在List靠近末尾的地方插入，那么ArrayList只需要移动较少的数据，而LinkedList则需要一直查找到列表尾部，反而耗费较多时间，这时ArrayList就比LinkedList要快。**
+
+使用场景：
+- 如果应用程序对数据有较多的随机访问，ArrayList对象要优于LinkedList对象；
+- 如果应用程序有更多的插入或者删除操作，较少的随机访问，LinkedList对象要优于ArrayList对象；
+
 
 ## Set
 ## Queue
