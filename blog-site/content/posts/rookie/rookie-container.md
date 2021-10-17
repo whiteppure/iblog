@@ -30,6 +30,8 @@ if(obj instanceof int[]){
 }
 ```
 
+> `void  method_name(int ... value)`方法中变参就是当数组处理的，参数为定参的编译后就是数组。一个方法只能有一个变参，即使是不同的类型也不行，变参参数只能在形参列表的末尾，如果传入的是数组，则只能传一个。
+
 ### 优缺点
 数组优点:
 - 数组元素的内存地址是连续分配的，所以通过下标访问元素的效率很高，可以快速找到指定下标为n的元素的地址；
@@ -100,7 +102,9 @@ int[] arr2 = Arrays.copyOf(arr, 10);
 int[] arr3 = Arrays.copyOfRange(arr, 1, 3);
 ```
 ## ArrayList
-在ArrayList中实现了`RandomAccess, Cloneable`接口，分别为ArrayList提供的作用下面详细说明。
+在List接口实现类中，最常用的就是ArrayList,ArrayList 类是一个可以动态修改的数组，与普通数组的区别就是它是没有固定大小的限制，可以添加或删除元素。
+
+ArrayList 继承了 AbstractList ，并实现了 List、RandomAccess, Cloneable 接口：
 ```
 public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAccess,Cloneable,Serializable
 ```
@@ -344,10 +348,11 @@ ArrayList与LinkedList性能比较是一道经典的面试题，ArrayList查找�
 > 查询方式为: 首地址＋（元素长度＊下标）
 > 例如：new int arr[5]; arr数组的地址假设为0x1000，arr[0] ~ arr[5] 地址可看作为 0x1000 + i * 4。
 
-而LinkedList的底层结构是对象，每一个对象结点中都保存了下一个结点的位置形成的链表结构，由于LinkedList元素的地址是不连续的，所以没办法按照数组那样去查找，所以就比较慢。
+而LinkedList在Java中的底层结构是对象，每一个对象结点中都保存了下一个结点的位置形成的链表结构，由于LinkedList元素的地址是不连续的，所以没办法按照数组那样去查找，所以就比较慢。
 
-因为数组一旦分配了大小就不能改变，所以ArrayList在进行添加操作时会创建新的数组，如果要添加到ArrayList中的指定的位置，是通过System.arraycopy方法将数组进行复制，新的数组会将待插入的指定位置空余出来，最后在将元素添加到集合中。
-在进行删除操作时没有创建新的数组，是通过System.arraycopy方法，将待删除元素后面剩余元素复制到待删除元素的位置。当ArrayList里有大量数据时，这时候去频繁插入或删除元素会触发底层数组频繁拷贝，效率不高，还会造成内存空间的浪费。
+由于数组一旦分配了大小就不能改变，所以ArrayList在进行添加操作时会创建新的数组，如果要添加到ArrayList中的指定的位置，是通过System.arraycopy方法将数组进行复制，新的数组会将待插入的指定位置空余出来，最后在将元素添加到集合中。
+
+在进行删除操作时是通过System.arraycopy方法，将待删除元素后面剩余元素复制到待删除元素的位置。当ArrayList里有大量数据时，这时候去频繁插入或删除元素会触发底层数组频繁拷贝，效率不高，还会造成内存空间的浪费。
 
 LinkedList在进行添加，删除操作时，会用二分查找法找到将要添加或删除的元素，之后再设置对象的下一个结点来进行添加或删除操作。
 > 二分查找法：也称为折半查找法，是一种适用于大量数据查找的方法，但是要求数据必须的排好序的，每次以中间的值进行比较，根据比较的结果可以直接舍去一半的值，直至全部找完（可能会找不到）或者找到数据为止。
@@ -361,14 +366,76 @@ LinkedList，正与ArrayList相反，获取第几个元素依次遍历复杂度O
 **注意，ArrayList的增删不一定比LinkedList效率低，但是ArrayList查找效率一定比LinkedList高，如果在List靠近末尾的地方插入，那么ArrayList只需要移动较少的数据，而LinkedList则需要一直查找到列表尾部，反而耗费较多时间，这时ArrayList就比LinkedList要快。**
 
 使用场景：
-- 如果应用程序对数据有较多的随机访问，ArrayList对象要优于LinkedList对象；
-- 如果应用程序有更多的插入或者删除操作，较少的随机访问，LinkedList对象要优于ArrayList对象；
+- 如果应用程序对数据有较多的随机访问，ArrayList要优于LinkedList；
+- 如果应用程序有更多的插入或者删除操作，较少的随机访问，LinkedList要优于ArrayList；
 
+### 线程安全问题
+众所周知，ArrayList是线程不安全的：
+```
+public class MainTest {
+    // 如果没有报错，需要多试几次
+    public static void main(String[] args) {
+        ArrayList<String> arrayList = new ArrayList<>();
+        for(int i=0; i< 10; i++) {
+            new Thread(() -> {
+                arrayList.add(UUID.randomUUID().toString());
+                System.out.println(arrayList);
+            },String.valueOf(i)).start();
+        }
+    }
+}
+```
+为避免偶然事件，请重复多试几次上面的代码,很大情况会出现`ConcurrentModificationException`"同步修改异常"：
+```
+java.util.ConcurrentModificationException
+```
+出现该异常的原因是，当某个线程正在执行 `add()`方法时,被某个线程打断,添加到一半被打断,没有被添加完。
 
+保证ArrayList线程安全有以下几种方法：
+- 可以使用 `Vector` 来代替 `ArrayList`,`Vector` 是线程安全的 `ArrayList`,但是由于底层是加了`synchronized`,性能略差不推荐使用;
+    ```
+    List list = new Vector();
+    list.add(UUID.randomUUID().toString());
+    ```
+- 使用`Collections.synchronizedArrayList()` 来创建 `ArrayList`；使用 `Collections` 工具类来创建 `ArrayList` 的思路是,在 `ArrayList` 的外边套了一个`synchronized`外壳,来使 `ArrayList` 线程安全;
+    ```
+    List list = Collections.synchronizedArrayList();
+    list.add(UUID.randomUUID().toString());
+    ```
+- 使用`CopyOnWriteArrayList()`来保证 `ArrayList` 线程安全；`CopyWriteArrayList`字面意思就是在写的时候复制,主要思想就是读写分离的思想。`CopyWriteArrayList`之所以线程安全的原因是在源码里面使用`ReentrantLock`，所以保证了某个线程在写的时候不会被打断；
+    ```
+    CopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();
+    list.add(UUID.randomUUID().toString());
+    ```
 ## Set
+- TreeSet：基于红黑树实现，支持有序性操作，例如根据一个范围查找元素的操作。但是查找效率不如 HashSet，HashSet 查找的时间复杂度为 O(1)，TreeSet 则为 O(logN)；
+- HashSet：基于哈希表实现，支持快速查找，但不支持有序性操作。并且失去了元素的插入顺序信息，也就是说使用 Iterator 遍历 HashSet 得到的结果是不确定的。HashSet的value作为hashmap的key，来保证不重复；
+- LinkedHashSet：具有 HashSet 的查找效率，且内部使用双向链表维护元素的插入顺序；
+
 ## Queue
+队列是一种经常使用的集合。Queue实际上是实现了一个先进先出（FIFO：First In First Out）的有序列表。它和List的区别在于，List可以在任意位置添加和删除元素，而Queue只有两个操作：
+- 把元素添加到队列末尾；
+- 从队列头部取出元素；
+
+常见实现：
+- LinkedList：可以用它来实现双向队列；
+- PriorityQueue：基于堆结构实现，可以用它来实现优先队列；
+
+Queue实现通常不允许插入null元素，尽管一些实现，如LinkedList，不禁止插入null元素。即使在允许它的实现中，null也不应插入Queue中，因为poll方法也使用null作为特殊返回值，用来表示队列不包含任何元素。
+> poll(): 检索并删除此队列的头部，如果此队列为空，则返回null
+> peek(): 检索但不删除此队列的头部，如果此队列为空，则返回null
 
 ## HashMap
+- HashMap 是一个散列表，它存储的内容是键值对(key-value)映射；
+- HashMap 实现了 Map 接口，根据键的 HashCode 值存储数据，具有很快的访问速度，最多允许一条记录的键为 null，不支持线程同步；
+- HashMap 是无序的，即不会记录插入的顺序；
+
+相关操作：
+- 存贮: 通过key的hashcode方法找到在hashMap 存贮的位置,如果该位置有元素,则通过equals方法进行比较,equals返回值为true,则覆盖value,equals返回值为false则,在该数组元素的头部追加该元素,形成一个链表结构；
+- 读取:通过key的hashcode方法获取元素存在该数组的位置,然后通过equals拿到该值；
+- 结构: hashMap是一个散列数据结构,HashMap底层就是一个数组结构，数组中的每一项又是一个链表；
+
+总的来说hashMap底层将key-value(键值对)当成一个整体来处理,hashMap底层采用一个 Entry 数组保存所有的键值对,当存储一个entry对象时,会根据key的hash算法来决定存放在数组中的位置,在根据equals方法来确定在链表中的位置,读取一个entry对象,先根据hash算法确定在数组中的位置,再根据equals来获取该值,equals和equals在hashMap中就像一个坐标一样,来确定hashMap中的值。
 
 ### 相关概念
 - `capacity`： 容量，默认16；
@@ -789,5 +856,3 @@ void transfer(Entry[] newTable) {
         return newTab;
     }
 ```
-
-## 集合与数组的比较
