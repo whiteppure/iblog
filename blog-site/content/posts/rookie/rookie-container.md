@@ -1,5 +1,5 @@
 ---
-title: "Java中的集合"
+title: "Java基础-Java集合"
 date: 2021-10-04
 draft: false
 tags: ["Java", "容器"]

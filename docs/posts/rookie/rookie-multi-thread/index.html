@@ -8,7 +8,7 @@
 	
 	
 	
-	<title>Java多线程 ｜ whitepure</title>
+	<title>Java基础-Java多线程 ｜ whitepure</title>
 	
     
     
@@ -2347,7 +2347,7 @@
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
-                        <h2><a href='/iblog/posts/rookie/rookie-multi-thread/'>Java多线程</a></h2>
+                        <h2><a href='/iblog/posts/rookie/rookie-multi-thread/'>Java基础-Java多线程</a></h2>
                         <span class="date">2021.05.05</span>
                     </div>
                     <div class="post_content markdown"><h2 id="相关概念">相关概念</h2>
@@ -2808,7 +2808,7 @@ class ThreadDemo extends Thread {
 1） <code>FixedThreadPool</code> 和 <code>SingleThreadPool</code>： 允许的请求队列长度为 <code>Integer.MAX_VALUE</code>，可能会堆积大量的请求，从而导致 OOM。
 2） <code>CachedThreadPool</code>： 允许的创建线程数量为 <code>Integer.MAX_VALUE</code>，可能会创建大量的线程，从而导致 OOM。</p>
 </blockquote>
-<p>自定义线程池代码演示</p>
+<p>自定义线程池代码演示：</p>
 <pre><code>public class MainTest {
     public static void main(String[] args) {
         ExecutorService executor1 = null;
@@ -2830,6 +2830,74 @@ class ThreadDemo extends Thread {
             executor1.shutdown();
         }
     }
+}
+</code></pre><p>SpringBoot异步配置，自定义线程池代码演示：</p>
+<pre><code>@EnableAsync
+@Configuration
+public class AsyncConfig {
+
+    /**
+     * 线程空闲存活的时间 单位: TimeUnit.SECONDS
+     */
+    public static final int KEEP_ALIVE_TIME = 60 * 60;
+    /**
+     * CPU 核心数量
+     */
+    private static final int CPU_COUNT = Runtime.getRuntime().availableProcessors();
+    /**
+     * 核心线程数量
+     */
+    public static final int CORE_POOL_SIZE = Math.max(2, Math.min(CPU_COUNT - 1, 4));
+    /**
+     * 线程池最大容纳线程数量
+     * IO密集型:即存在大量堵塞; 公式: CPU核心数量 / 1- 阻塞系数 (阻塞系统在 0.8~0.9 之间)
+     * CPU密集型: 需要大量运算,没有堵塞或很少有; 公式:CPU核心数量 + 1
+     */
+    public static final int IO_MAXIMUM_POOL_SIZE = (int) (CPU_COUNT / (1 - 0.9));
+    public static final int CPU_MAXIMUM_POOL_SIZE = CPU_COUNT + 2;
+
+    /**
+     * 执行写入请求时的线程池
+     *
+     * @return 线程池
+     */
+    @Bean(name = &quot;iSaveTaskThreadPool&quot;)
+    public Executor iSaveTaskThreadPool() {
+        return getThreadPoolTaskExecutor(&quot;iSaveTaskThreadPool-&quot;,IO_MAXIMUM_POOL_SIZE,100000,new ThreadPoolExecutor.CallerRunsPolicy());
+    }
+
+    /**
+     * 执行读请求时的线程池
+     *
+     * @return 线程池
+     */
+    @Bean(name = &quot;iQueryThreadPool&quot;)
+    public Executor iQueryThreadPool() {
+        return getThreadPoolTaskExecutor(&quot;iQueryThreadPool-&quot;,CPU_MAXIMUM_POOL_SIZE,10000,new ThreadPoolExecutor.CallerRunsPolicy());
+    }
+
+    /**
+     * 创建一个线程池对象
+     * @param threadNamePrefix 线程名称
+     * @param queueCapacity 堵塞队列长度
+     * @param refusePolicy 拒绝策略
+     */
+    private ThreadPoolTaskExecutor getThreadPoolTaskExecutor(String threadNamePrefix,int maxPoolSize,int queueCapacity,ThreadPoolExecutor.CallerRunsPolicy refusePolicy) {
+        ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
+        taskExecutor.setCorePoolSize(CORE_POOL_SIZE);
+        taskExecutor.setMaxPoolSize(maxPoolSize);
+        taskExecutor.setKeepAliveSeconds(KEEP_ALIVE_TIME);
+        taskExecutor.setThreadNamePrefix(threadNamePrefix);
+        // 拒绝策略; 既不会抛弃任务,也不会抛出异常,而是将某些任务回退到调用者,从而降低新任务的流量
+        taskExecutor.setRejectedExecutionHandler(refusePolicy);
+        // 阻塞队列 长度
+        taskExecutor.setQueueCapacity(queueCapacity);
+        taskExecutor.setWaitForTasksToCompleteOnShutdown(true);
+        taskExecutor.setAwaitTerminationSeconds(60);
+        taskExecutor.initialize();
+        return taskExecutor;
+    }
+
 }
 </code></pre><h4 id="合理配置线程池参数">合理配置线程池参数</h4>
 <p>合理配置线程池参数，可以分为以下两种情况</p>
@@ -4668,7 +4736,7 @@ class Counter implements Runnable{
 <li><a href="https://blog.csdn.net/luoweifu/article/details/46613015">https://blog.csdn.net/luoweifu/article/details/46613015</a></li>
 <li><a href="https://www.artima.com/insidejvm/ed2/threadsynch.html">https://www.artima.com/insidejvm/ed2/threadsynch.html</a></li>
 </ul>
-<p>阅读前建议先了解<a href="http://localhost:1313/iblog/posts/jvm/java-object/#%E5%AF%B9%E8%B1%A1%E5%A4%B4">Java对象头</a>。
+<p>阅读前建议先了解<a href="https://whiteppure.github.io/iblog/posts/jvm/java-object/#%E5%AF%B9%E8%B1%A1%E5%A4%B4">Java对象头</a>。
 如果你对对象头有了解，你就知道在Java中<code>synchronized</code>锁对象时，其实就是改变对象中的对象头的<code>markword</code>的锁的标志位来实现的。</p>
 <p>通过上面的使用，可以体会到被<code>synchronized</code>修饰的代码块及方法，在同一时间，只能被单个线程访问。</p>
 <p>用<code>javap -v MainTest.class</code> 命令反编译下面代码，我们就能了解到JVM对<code>synchronized</code>是怎么处理的了。</p>

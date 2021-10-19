@@ -1,5 +1,5 @@
 ---
-title: "Java多线程"
+title: "Java基础-Java多线程"
 date: 2021-05-05
 draft: false
 tags: ["Java", "面向菜鸟编程"]
@@ -468,7 +468,7 @@ public class SynchronousQueueDemo {
   2） `CachedThreadPool`： 允许的创建线程数量为 `Integer.MAX_VALUE`，可能会创建大量的线程，从而导致 OOM。
 
 
-自定义线程池代码演示
+自定义线程池代码演示：
 ```
 public class MainTest {
     public static void main(String[] args) {
@@ -493,6 +493,78 @@ public class MainTest {
     }
 }
 ```
+
+SpringBoot异步配置，自定义线程池代码演示：
+```
+@EnableAsync
+@Configuration
+public class AsyncConfig {
+
+    /**
+     * 线程空闲存活的时间 单位: TimeUnit.SECONDS
+     */
+    public static final int KEEP_ALIVE_TIME = 60 * 60;
+    /**
+     * CPU 核心数量
+     */
+    private static final int CPU_COUNT = Runtime.getRuntime().availableProcessors();
+    /**
+     * 核心线程数量
+     */
+    public static final int CORE_POOL_SIZE = Math.max(2, Math.min(CPU_COUNT - 1, 4));
+    /**
+     * 线程池最大容纳线程数量
+     * IO密集型:即存在大量堵塞; 公式: CPU核心数量 / 1- 阻塞系数 (阻塞系统在 0.8~0.9 之间)
+     * CPU密集型: 需要大量运算,没有堵塞或很少有; 公式:CPU核心数量 + 1
+     */
+    public static final int IO_MAXIMUM_POOL_SIZE = (int) (CPU_COUNT / (1 - 0.9));
+    public static final int CPU_MAXIMUM_POOL_SIZE = CPU_COUNT + 2;
+
+    /**
+     * 执行写入请求时的线程池
+     *
+     * @return 线程池
+     */
+    @Bean(name = "iSaveTaskThreadPool")
+    public Executor iSaveTaskThreadPool() {
+        return getThreadPoolTaskExecutor("iSaveTaskThreadPool-",IO_MAXIMUM_POOL_SIZE,100000,new ThreadPoolExecutor.CallerRunsPolicy());
+    }
+
+    /**
+     * 执行读请求时的线程池
+     *
+     * @return 线程池
+     */
+    @Bean(name = "iQueryThreadPool")
+    public Executor iQueryThreadPool() {
+        return getThreadPoolTaskExecutor("iQueryThreadPool-",CPU_MAXIMUM_POOL_SIZE,10000,new ThreadPoolExecutor.CallerRunsPolicy());
+    }
+
+    /**
+     * 创建一个线程池对象
+     * @param threadNamePrefix 线程名称
+     * @param queueCapacity 堵塞队列长度
+     * @param refusePolicy 拒绝策略
+     */
+    private ThreadPoolTaskExecutor getThreadPoolTaskExecutor(String threadNamePrefix,int maxPoolSize,int queueCapacity,ThreadPoolExecutor.CallerRunsPolicy refusePolicy) {
+        ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
+        taskExecutor.setCorePoolSize(CORE_POOL_SIZE);
+        taskExecutor.setMaxPoolSize(maxPoolSize);
+        taskExecutor.setKeepAliveSeconds(KEEP_ALIVE_TIME);
+        taskExecutor.setThreadNamePrefix(threadNamePrefix);
+        // 拒绝策略; 既不会抛弃任务,也不会抛出异常,而是将某些任务回退到调用者,从而降低新任务的流量
+        taskExecutor.setRejectedExecutionHandler(refusePolicy);
+        // 阻塞队列 长度
+        taskExecutor.setQueueCapacity(queueCapacity);
+        taskExecutor.setWaitForTasksToCompleteOnShutdown(true);
+        taskExecutor.setAwaitTerminationSeconds(60);
+        taskExecutor.initialize();
+        return taskExecutor;
+    }
+
+}
+```
+
 #### 合理配置线程池参数
 合理配置线程池参数，可以分为以下两种情况
 - CPU密集型：CPU密集的意思是该任务需要大量的运算，而没有阻塞，CPU一直全速运行；
@@ -2543,7 +2615,7 @@ class Counter implements Runnable{
 - https://blog.csdn.net/luoweifu/article/details/46613015
 - https://www.artima.com/insidejvm/ed2/threadsynch.html
 
-阅读前建议先了解[Java对象头](http://localhost:1313/iblog/posts/jvm/java-object/#对象头)。
+阅读前建议先了解[Java对象头](https://whiteppure.github.io/iblog/posts/jvm/java-object/#对象头)。
 如果你对对象头有了解，你就知道在Java中`synchronized`锁对象时，其实就是改变对象中的对象头的`markword`的锁的标志位来实现的。
 
 通过上面的使用，可以体会到被`synchronized`修饰的代码块及方法，在同一时间，只能被单个线程访问。

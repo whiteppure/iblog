@@ -1,5 +1,5 @@
 ---
-title: "Java资料相关链接(持续更新)"
+title: "Java资料相关链接"
 date: 2021-01-01
 draft: false
 tags: ["Java", "相关链接"]
