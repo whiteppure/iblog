@@ -100,5 +100,47 @@ Producer生产的数据会被不断追加到该log文件末端，且每条数据
 
 ![MQ详解-006](/iblog/posts/images/essays/MQ详解-006.png)
 
-
 ### 生产者分区策略
+
+分区的原因：
+- 方便在集群中扩展，每个Partition可以通过调整以适应它所在的机器，而一个topic又可以有多个Partition组成，因此整个集群就可以适应适合的数据了；
+- 可以提高并发，因为可以以Partition为单位读写了，每个partition在不同的服务区上；
+
+![MQ详解-007](/iblog/posts/images/essays/MQ详解-007.png)
+
+- 在指明partition的情况下，直接将指明的值直接作为partiton值；
+- 在没有指明partition值但有key的情况下，将key的hash 值与topic的partition数进行取余得到partition值；
+- 既没有partition值又没有key值的情况下，第一次调用时随机生成一个整数（后面每次调用在这个整数上自增），将这个值与topic可用的partition总数取余得到partition值，也就是常说的round-robin算法；
+
+### 生产者数据可靠性保证
+为保证 producer 发送的数据，能可靠的发送到指定的 topic，topic 的每个 partition 收到 producer 发送的数据后，都需要向 producer 发送 ack(acknowledgement 确认收到)，如果 producer 收到 ack，就会进行下一轮的发送，否则重新发送数据。
+
+![MQ详解-008](/iblog/posts/images/essays/MQ详解-008.png)
+
+| 方案                          | 优点                                                       | 缺点                                                         |
+| ----------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------ |
+| 半数以上完成同步，就发 送 ack | 延迟低                                                     | 选举新的 leader 时，容忍 n 台 节点的故障，需要 2n+1 个副本 |
+| 全部完成同步，才发送ack       | 选举新的 leader 时，容忍 n 台 节点的故障，需要 n+1 个副 本 | 延迟高                                      |
+
+> 理解 2n+1：
+> 半数以上完成同步才可以发ACK，如果挂了n台有副本的服务器，那么就需要有另外n台正常发送（这样正常发送的刚好是总数（挂的和没挂的）的一半（n（挂的）+n（正常的）=2n））,因为是半数以上所以2n+1.(所以总数2n+1的时候最多只能容忍n台有故障)
+> 
+> 即，如果挂了n台有副本的服务器，那么存在副本的服务器的总和为 2n+1
+
+kafka选择了第二种方案，原因如下:
+1.同样为了容忍 n 台节点的故障，第一种方案需要 2n+1 个副本，而第二种方案只需要 n+1 个副本，而 Kafka 的每个分区都有大量的数据，第一种方案会造成大量数据的冗余；
+2.虽然第二种方案的网络延迟会比较高，但网络延迟对 Kafka 的影响较小；
+
+采用第二种方案之后，设想以下情景： leader 收到数据，所有 follower 都开始同步数据，但有一个 follower，因为某种故障，迟迟不能与 leader 进行同步，那 leader 就要一直等下去，直到它完成同步，才能发送 ack。这个问题怎么解决呢？
+
+Leader 维护了一个动态的 in-sync replica set 即ISR。
+
+当和 leader 保持同步的 follower 集合。当 ISR 中的 follower 完成数据的同步之后，就会给 leader 发送 ack。如果 follower长时间未向leader同步数据，则该follower将被踢出ISR，该时间阈值由replica.lag.time.max.ms参数设定。 Leader 发生故障之后，就会从 ISR 中选举新的 leader。
+
+>  kafka是通过消息条数差值(replica.lag.time.max.messages) 加 通信时间长短(同步时间replica.lag.time.max.ms) 两个条件来选副本进ISR，在高版本中不再关注副本的消息条数最大条件。
+
+为何会去掉消息条数差值参数？
+
+因为kafka一般是按batch批量发数据到leader, 如果批量条数12条，replica.lag.time.max.messages参数设置是10条，那么当一个批次消息发到kafka leader，此时，ISR中就要踢掉所有的follower，很快follower同步完所有数据后，follower又要被加入到ISR，而且要加入到zookeeper中频繁操作，所以去除掉该条件。
+
+
