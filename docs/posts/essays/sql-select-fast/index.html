@@ -1559,6 +1559,9 @@ latin：一个字符一个字节；</p>
 </ul>
 <h3 id="sql优化方法">SQL优化方法</h3>
 <h4 id="exist和in选择">exist和in选择</h4>
+<ul>
+<li><a href="http://blog.chinaunix.net/uid-30272888-id-5602128.html">http://blog.chinaunix.net/uid-30272888-id-5602128.html</a></li>
+</ul>
 <p>两者可以互相替代，如果主查询的数据集大，使用in的效率高一点；如果子查询的数据集大，使用exist效率高一点；</p>
 <pre><code> -- 假设此处主查询数据集较大，使用in
  select * from tbl_001 where tid in (select id from tbl_001);

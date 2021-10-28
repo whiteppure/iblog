@@ -143,13 +143,6 @@ Leader 维护了一个动态的 in-sync replica set 即ISR。
 
 因为kafka一般是按batch批量发数据到leader, 如果批量条数12条，replica.lag.time.max.messages参数设置是10条，那么当一个批次消息发到kafka leader，此时，ISR中就要踢掉所有的follower，很快follower同步完所有数据后，follower又要被加入到ISR，而且要加入到zookeeper中频繁操作，所以去除掉该条件。
 
-### 生产者ack机制
-对于某些不太重要的数据，对数据的可靠性要求不是很高，能够容忍数据的少量丢失，所以没必要等 ISR 中的 follower 全部接收成功。kafka为生产者提供了三种ack可靠性级别配置：
-
-- 0：producer 不等待 broker 的 ack，这一操作提供了一个最低的延迟，broker 一接收到还没有写入磁盘就已经返回，当 broker 故障时有可能丢失数据； 
-- 1： producer 等待 broker 的 ack， partition 的 leader 落盘成功后返回 ack，如果在 follower同步成功之前 leader 故障，那么将会丢失数据；
-- 1/all：producer 等待 broker 的 ack， ISR队列中 partition 的 leader 和 ISR 的follower 全部落盘成功后才返回 ack。但是如果在 follower 同步完成后，broker 发送 ack 之前， leader 发生故障，那么会造成数据重复；
-
 ### 生产者数据一致性保证
 
 ![MQ详解-009](/iblog/posts/images/essays/MQ详解-009.png)
@@ -159,5 +152,33 @@ Leader 维护了一个动态的 in-sync replica set 即ISR。
 
 - follower 故障：follower 发生故障后会被临时踢出 ISR，待该 follower 恢复后， follower 会读取本地磁盘记录的上次的 HW，并将 log 文件高于 HW 的部分截取掉，从 HW 开始向 leader 进行同步。等该 follower 的 LEO 大于等于该 Partition 的 HW，即 follower 追上 leader 之后，就可以重新加入 ISR 了。
 - leader 故障：leader 发生故障之后，会从 ISR 中选出一个新的 leader，之后，为保证多个副本之间的数据一致性， 其余的 follower 会先将各自的 log 文件高于 HW 的部分截掉，然后从新的 leader同步数据；如果少于 leader 中的数据则会从 leader 中进行同步。
+
+### 生产者ack机制
+对于某些不太重要的数据，对数据的可靠性要求不是很高，能够容忍数据的少量丢失，所以没必要等 ISR 中的 follower 全部接收成功。kafka为生产者提供了三种ack可靠性级别配置：
+
+- 0：producer 不等待 broker 的 ack，这一操作提供了一个最低的延迟，broker 一接收到还没有写入磁盘就已经返回，当 broker 故障时有可能丢失数据； 
+- 1： producer 等待 broker 的 ack， partition 的 leader 落盘成功后返回 ack，如果在 follower同步成功之前 leader 故障，那么将会丢失数据；
+- 1/all：producer 等待 broker 的 ack， ISR队列中 partition 的 leader 和 ISR 的follower 全部落盘成功后才返回 ack。但是如果在 follower 同步完成后，broker 发送 ack 之前， leader 发生故障，那么会造成数据重复；
+
+### Exactly Once
+将服务器的 ACK 级别设置为-1（all），可以保证 Producer 到 Server 之间不会丢失数据，即 At Least Once 语义，至少发送一次；相对的，将服务器 ACK 级别设置为 0，可以保证生产者每条消息只会被发送一次，即 At Most Once 语义，至多发送一次。
+
+至少发送一次可以保证数据不丢失，但是不能保证数据不重复；相对的，至多发送一次可以保证数据不重复，但是不能保证数据不丢失。 但是，对于一些非常重要的信息，比如说交易数据，下游数据消费者要求数据既不重复也不丢失，即 Exactly Once 语义，准确发送一次。
+
+在0.11 版本的 Kafka，引入了一项重大特性：幂等性。所谓的幂等性就是指生产者不论向 Server 发送多少次重复数据， Server 端都只会持久化一条。幂等性结合 At Least Once 语义，就构成了 Kafka 的 Exactly Once 语义。
+
+要启用幂等性，只需要将 Producer 的参数中 `enable.idempotence` 设置为 true 即可。
+
+Kafka的幂等性实现其实就是将原来下游需要做的去重放在了数据上游。开启幂等性的 Producer 在初始化的时候会被分配一个 PID，发往同一 Partition 的消息会附带 Sequence Number。而Broker 端会对<PID, Partition, SeqNumber>做缓存，当具有相同主键的消息提交时， Broker 只会持久化一条。但是 PID 重启就会变化，同时不同的 Partition 也具有不同主键，所以幂等性无法保证跨分区跨会话的 Exactly Once。
+
+### 消费者分区分配策略
+一个消费者组中有多个消费者，一个主题有多个分区，所以必然会涉及到分区的分配问题，即确定哪个个分区由哪个消费者来消费。
+
+消费分配策略：
+- round-robin：轮询分配；
+- range：范围分配；
+
+
+
 
 
