@@ -57,6 +57,7 @@ kafka是一个分布式的基于发布/订阅模式的消息队列，主要应�
 - Replica：副本，为保证集群中的某个节点发生故障时，该节点上的分区数据不丢失，且kafka仍然能够继续工作，kafka提供了副本机制，一个topic的每个分区都有若干个副本，一个leader和若干个follower；
 - Leader：每个分区多个副本的“主”，生产者发送数据的对象，以及消费者消费数据的对象都是leader。leader是针对topic的，而不是broker的，即不同的kafka服务区中会出现同一个leader；
 - Follower：每个分区多个副本中的“从”，实时从leader中同步数据，保持和leader数据的同步。leader发生故障时，某个Follower会成为新的leader；
+- Controller：Kafka 集群中有一个broker会被选举为Controller，负责管理集群broker的上下线，所有topic的分区副本分配和leader选举等工作，Controller的管理工作都是依赖于Zookeeper的；
 
 消费者组的作用为了提高消费能力，即提高并发。
 
@@ -79,7 +80,9 @@ Producer生产的数据会被不断追加到该log文件末端，且每条数据
 
 消费者可以选择随时倒退或跳至所需的主题偏移量并阅读所有后续消息。
 
-### 文件存储
+### 生产者
+
+#### 生产者文件存储
 参考文章：
 - https://www.jianshu.com/p/3e54a5a39683
 
@@ -100,7 +103,7 @@ Producer生产的数据会被不断追加到该log文件末端，且每条数据
 
 ![MQ详解-006](/iblog/posts/images/essays/MQ详解-006.png)
 
-### 生产者分区策略
+#### 生产者分区策略
 
 分区的原因：
 - 方便在集群中扩展，每个Partition可以通过调整以适应它所在的机器，而一个topic又可以有多个Partition组成，因此整个集群就可以适应适合的数据了；
@@ -112,7 +115,7 @@ Producer生产的数据会被不断追加到该log文件末端，且每条数据
 - 在没有指明partition值但有key的情况下，将key的hash 值与topic的partition数进行取余得到partition值；
 - 既没有partition值又没有key值的情况下，第一次调用时随机生成一个整数（后面每次调用在这个整数上自增），将这个值与topic可用的partition总数取余得到partition值，也就是常说的round-robin算法；
 
-### 生产者数据可靠性保证
+#### 生产者数据可靠性保证
 为保证 producer 发送的数据，能可靠的发送到指定的 topic，topic 的每个 partition 收到 producer 发送的数据后，都需要向 producer 发送 ack(acknowledgement 确认收到)，如果 producer 收到 ack，就会进行下一轮的发送，否则重新发送数据。
 
 ![MQ详解-008](/iblog/posts/images/essays/MQ详解-008.png)
@@ -143,7 +146,7 @@ Leader 维护了一个动态的 in-sync replica set 即ISR。
 
 因为kafka一般是按batch批量发数据到leader, 如果批量条数12条，replica.lag.time.max.messages参数设置是10条，那么当一个批次消息发到kafka leader，此时，ISR中就要踢掉所有的follower，很快follower同步完所有数据后，follower又要被加入到ISR，而且要加入到zookeeper中频繁操作，所以去除掉该条件。
 
-### 生产者数据一致性保证
+#### 生产者数据一致性保证
 
 ![MQ详解-009](/iblog/posts/images/essays/MQ详解-009.png)
 
@@ -153,15 +156,15 @@ Leader 维护了一个动态的 in-sync replica set 即ISR。
 - follower 故障：follower 发生故障后会被临时踢出 ISR，待该 follower 恢复后， follower 会读取本地磁盘记录的上次的 HW，并将 log 文件高于 HW 的部分截取掉，从 HW 开始向 leader 进行同步。等该 follower 的 LEO 大于等于该 Partition 的 HW，即 follower 追上 leader 之后，就可以重新加入 ISR 了。
 - leader 故障：leader 发生故障之后，会从 ISR 中选出一个新的 leader，之后，为保证多个副本之间的数据一致性， 其余的 follower 会先将各自的 log 文件高于 HW 的部分截掉，然后从新的 leader同步数据；如果少于 leader 中的数据则会从 leader 中进行同步。
 
-### 生产者ack机制
+#### 生产者ack机制
 对于某些不太重要的数据，对数据的可靠性要求不是很高，能够容忍数据的少量丢失，所以没必要等 ISR 中的 follower 全部接收成功。kafka为生产者提供了三种ack可靠性级别配置：
 
 - 0：producer 不等待 broker 的 ack，这一操作提供了一个最低的延迟，broker 一接收到还没有写入磁盘就已经返回，当 broker 故障时有可能丢失数据； 
 - 1： producer 等待 broker 的 ack， partition 的 leader 落盘成功后返回 ack，如果在 follower同步成功之前 leader 故障，那么将会丢失数据；
 - 1/all：producer 等待 broker 的 ack， ISR队列中 partition 的 leader 和 ISR 的follower 全部落盘成功后才返回 ack。但是如果在 follower 同步完成后，broker 发送 ack 之前， leader 发生故障，那么会造成数据重复；
 
-### Exactly Once
-将服务器的 ACK 级别设置为-1（all），可以保证 Producer 到 Server 之间不会丢失数据，即 At Least Once 语义，至少发送一次；相对的，将服务器 ACK 级别设置为 0，可以保证生产者每条消息只会被发送一次，即 At Most Once 语义，至多发送一次。
+#### ExactlyOnce
+将服务器的 ACK 级别设置为-1，可以保证 Producer 到 Server 之间不会丢失数据，即 At Least Once 语义，至少发送一次；相对的，将服务器 ACK 级别设置为 0，可以保证生产者每条消息只会被发送一次，即 At Most Once 语义，至多发送一次。
 
 至少发送一次可以保证数据不丢失，但是不能保证数据不重复；相对的，至多发送一次可以保证数据不重复，但是不能保证数据不丢失。 但是，对于一些非常重要的信息，比如说交易数据，下游数据消费者要求数据既不重复也不丢失，即 Exactly Once 语义，准确发送一次。
 
@@ -171,14 +174,36 @@ Leader 维护了一个动态的 in-sync replica set 即ISR。
 
 Kafka的幂等性实现其实就是将原来下游需要做的去重放在了数据上游。开启幂等性的 Producer 在初始化的时候会被分配一个 PID，发往同一 Partition 的消息会附带 Sequence Number。而Broker 端会对<PID, Partition, SeqNumber>做缓存，当具有相同主键的消息提交时， Broker 只会持久化一条。但是 PID 重启就会变化，同时不同的 Partition 也具有不同主键，所以幂等性无法保证跨分区跨会话的 Exactly Once。
 
-### 消费者分区分配策略
+
+#### 生产者发送消息流程
+kafka的生产者发送消息采用的是异步发送的方式。在消息发送的过程中，涉及到了两个线程——main 线程和 Sender 线程，以及一个线程共享变量——RecordAccumulator。
+
+![MQ详解-010](/iblog/posts/images/essays/MQ详解-010.png)
+
+在生产者发送消息时，main线程将消息发送给 RecordAccumulator，当数据积累到 batch.size 之后，sender线程才会不断从 RecordAccumulator 中拉取消息发送到 kafka的broker；如果数据迟迟未达到 batch.size，sender 线程等待 linger.time 之后就会发送数据。
+
+
+### 消费者
+#### 消费者分区分配策略
 一个消费者组中有多个消费者，一个主题有多个分区，所以必然会涉及到分区的分配问题，即确定哪个个分区由哪个消费者来消费。
 
 消费分配策略：
-- round-robin：轮询分配；
-- range：范围分配；
+- round-robin：会采用轮询的方式将当前所有的分区依次分配给所有的消费者；
+- range：首先会计算每个消费者可以消费的分区个数，然后按照顺序将指定个数范围的分区分配给各个消费者；
+- sticky：这种分区策略是最新版本中新增的一种策略，将现有的分区尽可能均衡的分配给各个消费者，存在此目的的原因在于Round-Robin和Range分配策略实际上都会导致某几个消费者承载过多的分区，从而导致消费压力不均衡；
 
 
+轮询就不必说了，就是把分区按照hash排序，然后分配。range按范围分配，先将所有的分区放到一起然后排序，按照平均分配的方式计算每个消费者会得到多少个分区，如果没有除尽，则会将多出来的分区依次计算到前面几个消费者。
+比如这里是三个分区和两个消费者，那么每个消费者至少会得到1个分区，而3除以2后还余1，那么就会将多余的部分依次算到前面几个消费者，也就是这里的1会分配给第一个消费者，
+
+如果按照Range分区方式进行分配，其本质上是依次遍历每个topic，然后将这些topic的分区按照其所订阅的消费者数量进行平均的范围分配。这种方式从计算原理上就会导致排序在前面的消费者分配到更多的分区，从而导致各个消费者的压力不均衡。
+
+### kafka事务
+kafka从0.11版本开始引入了事务支持。事务可以保证kafka在[Exactly Once](#exactlyonce)语义的基础上，生产和消费可以跨分区和会话，要么全部成功，要么全部失败。
+
+- 生产者：为了实现跨分区跨会话的事务，需要引入一个全局唯一的事务ID，并将生产者获得的PID和事务ID绑定。这样当生产者重启后就可以通过正在进行的事务ID获得原来的PID，进而保证精准发送一次；
+> 为了管理 Transaction， Kafka 引入了一个新的组件 Transaction Coordinator。 Producer 就是通过和 Transaction Coordinator 交互获得 Transaction ID 对应的任务状态。 Transaction Coordinator 还负责将事务所有写入 Kafka 的一个内部 Topic，这样即使整个服务重启，由于事务状态得到保存，进行中的事务状态可以得到恢复，从而继续进行。
+- 消费者：对于消费者而言，事务的保证就会相对较弱，尤其时无法保证提交的信息被精确消费。这是由于消费者可以通过offset访问任意信息，而且不同的[Segment File](#文件存储)生命周期不同，同一事务的消息可能会出现重启后被删除的情况；
 
 
 
