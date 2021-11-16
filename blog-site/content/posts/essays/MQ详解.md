@@ -150,7 +150,7 @@ Leader 维护了一个动态的 in-sync replica set 即ISR。
 
 ![MQ详解-009](/iblog/posts/images/essays/MQ详解-009.png)
 
-- LEO：（Log End Offset）每个副本的最后一个offset；
+- LEO：（Log End offset）每个副本的最后一个offset；
 - HW：（High Watermark）高水位，指的是消费者能见到的最大的 offset， ISR 队列中最小的 LEO；
 
 - follower 故障：follower 发生故障后会被临时踢出 ISR，待该 follower 恢复后， follower 会读取本地磁盘记录的上次的 HW，并将 log 文件高于 HW 的部分截取掉，从 HW 开始向 leader 进行同步。等该 follower 的 LEO 大于等于该 Partition 的 HW，即 follower 追上 leader 之后，就可以重新加入 ISR 了。
@@ -197,6 +197,23 @@ kafka的生产者发送消息采用的是异步发送的方式。在消息发送
 比如这里是三个分区和两个消费者，那么每个消费者至少会得到1个分区，而3除以2后还余1，那么就会将多余的部分依次算到前面几个消费者，也就是这里的1会分配给第一个消费者，
 
 如果按照Range分区方式进行分配，其本质上是依次遍历每个topic，然后将这些topic的分区按照其所订阅的消费者数量进行平均的范围分配。这种方式从计算原理上就会导致排序在前面的消费者分配到更多的分区，从而导致各个消费者的压力不均衡。
+
+#### 消费者消费数据问题
+消费者在消费的时候，需要维护一个offset，用于记录消费的位置，当offset提交时会有两个问题：重复消费和漏消费：
+
+- 当提交的offset小于当前程序处理的最后一条消息的offset,会造成重复消费。情景：先消费，后提交offset,如果消费成功、提交失败，消费者下次获取的offset还是以前的，所以会造成重复消费。
+- 当提交的offset大于当前程序处理的最后一条消息的offset,会造成漏消费。情景：先提交offset，后消费,如果提交成功、消费失败，消费者下次获取的offset已经是新的，所以会造成漏消费。
+
+这里就需要注意offset的提交方式，offset默认是自动提交，当然这会造成消费的不准确。offset提交方式：
+- 异步提交当前offset；
+- 同步提交当前offset；
+- 异步提交当前offset；
+- 同步和异步组合提交；
+- 提交指定的offset；
+
+建议将offset保存在数据库中，使当前业务与offset提交绑定起来，这样可以一定程度避免重复消费问题，重复消费的问题，一方面需要消息中间件来进行保证。另一方面需要自己的处理逻辑来保证消息的幂等性。
+
+
 
 ### kafka事务
 kafka从0.11版本开始引入了事务支持。事务可以保证kafka在[Exactly Once](#exactlyonce)语义的基础上，生产和消费可以跨分区和会话，要么全部成功，要么全部失败。

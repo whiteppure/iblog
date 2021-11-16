@@ -563,6 +563,38 @@
             
         <ul class="nav">
             
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%b6%88%e8%b4%b9%e8%80%85%e6%b6%88%e8%b4%b9%e6%95%b0%e6%8d%ae%e9%97%ae%e9%a2%98">
+                    消费者消费数据问题
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
             
             <li class="nav-item">
                 <a class="nav-link text-left" href="#kafka%e4%ba%8b%e5%8a%a1">
@@ -776,7 +808,7 @@
 <p><img src="/iblog/posts/images/essays/MQ%E8%AF%A6%E8%A7%A3-009.png" alt="MQ详解-009"></p>
 <ul>
 <li>
-<p>LEO：（Log End Offset）每个副本的最后一个offset；</p>
+<p>LEO：（Log End offset）每个副本的最后一个offset；</p>
 </li>
 <li>
 <p>HW：（High Watermark）高水位，指的是消费者能见到的最大的 offset， ISR 队列中最小的 LEO；</p>
@@ -817,6 +849,21 @@
 <p>轮询就不必说了，就是把分区按照hash排序，然后分配。range按范围分配，先将所有的分区放到一起然后排序，按照平均分配的方式计算每个消费者会得到多少个分区，如果没有除尽，则会将多出来的分区依次计算到前面几个消费者。
 比如这里是三个分区和两个消费者，那么每个消费者至少会得到1个分区，而3除以2后还余1，那么就会将多余的部分依次算到前面几个消费者，也就是这里的1会分配给第一个消费者，</p>
 <p>如果按照Range分区方式进行分配，其本质上是依次遍历每个topic，然后将这些topic的分区按照其所订阅的消费者数量进行平均的范围分配。这种方式从计算原理上就会导致排序在前面的消费者分配到更多的分区，从而导致各个消费者的压力不均衡。</p>
+<h4 id="消费者消费数据问题">消费者消费数据问题</h4>
+<p>消费者在消费的时候，需要维护一个offset，用于记录消费的位置，当offset提交时会有两个问题：重复消费和漏消费：</p>
+<ul>
+<li>当提交的offset小于当前程序处理的最后一条消息的offset,会造成重复消费。情景：先消费，后提交offset,如果消费成功、提交失败，消费者下次获取的offset还是以前的，所以会造成重复消费。</li>
+<li>当提交的offset大于当前程序处理的最后一条消息的offset,会造成漏消费。情景：先提交offset，后消费,如果提交成功、消费失败，消费者下次获取的offset已经是新的，所以会造成漏消费。</li>
+</ul>
+<p>这里就需要注意offset的提交方式，offset默认是自动提交，当然这会造成消费的不准确。offset提交方式：</p>
+<ul>
+<li>异步提交当前offset；</li>
+<li>同步提交当前offset；</li>
+<li>异步提交当前offset；</li>
+<li>同步和异步组合提交；</li>
+<li>提交指定的offset；</li>
+</ul>
+<p>建议将offset保存在数据库中，使当前业务与offset提交绑定起来，这样可以一定程度避免重复消费问题，重复消费的问题，一方面需要消息中间件来进行保证。另一方面需要自己的处理逻辑来保证消息的幂等性。</p>
 <h3 id="kafka事务">kafka事务</h3>
 <p>kafka从0.11版本开始引入了事务支持。事务可以保证kafka在<a href="#exactlyonce">Exactly Once</a>语义的基础上，生产和消费可以跨分区和会话，要么全部成功，要么全部失败。</p>
 <ul>
