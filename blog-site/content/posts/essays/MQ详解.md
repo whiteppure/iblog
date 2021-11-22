@@ -161,7 +161,7 @@ Leader 维护了一个动态的 in-sync replica set 即ISR。
 
 - 0：producer 不等待 broker 的 ack，这一操作提供了一个最低的延迟，broker 一接收到还没有写入磁盘就已经返回，当 broker 故障时有可能丢失数据； 
 - 1： producer 等待 broker 的 ack， partition 的 leader 落盘成功后返回 ack，如果在 follower同步成功之前 leader 故障，那么将会丢失数据；
-- 1/all：producer 等待 broker 的 ack， ISR队列中 partition 的 leader 和 ISR 的follower 全部落盘成功后才返回 ack。但是如果在 follower 同步完成后，broker 发送 ack 之前， leader 发生故障，那么会造成数据重复；
+- -1/all：producer 等待 broker 的 ack， ISR队列中 partition 的 leader 和 ISR 的follower 全部落盘成功后才返回 ack。但是如果在 follower 同步完成后，broker 发送 ack 之前， leader 发生故障，那么会造成数据重复；
 
 #### ExactlyOnce
 将服务器的 ACK 级别设置为-1，可以保证 Producer 到 Server 之间不会丢失数据，即 At Least Once 语义，至少发送一次；相对的，将服务器 ACK 级别设置为 0，可以保证生产者每条消息只会被发送一次，即 At Most Once 语义，至多发送一次。

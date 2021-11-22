@@ -1015,7 +1015,7 @@ AOP,全称：`Aspect-Oriented Programming`，译为面向切面编程 。AOP可�
 - 采用代理机制组装起来运行，在不改变原程序的基础上对代码段进行增强处理，增加新的功能。
 
 ### 动态代理
-动态代理，可以说是AOP的核心了。在`Spring`中主要使用了两种[动态代理](https://whiteppure.github.io/iblog/posts/rookie/rookie-object-oriented/#动态代理)：
+动态代理，可以说是AOP的核心了。在`Spring`中主要使用了两种[动态代理](/iblog/posts/rookie/rookie-object-oriented/#动态代理)：
 - JDK 动态代理技术
 - CGLib 动态代理技术
 

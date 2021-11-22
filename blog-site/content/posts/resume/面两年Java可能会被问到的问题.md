@@ -18,7 +18,7 @@ slug: "interview-junior-javaer"
 
 
 ## 基础
-### [UDP、TCP区别及http与https区别](/iblog/posts/essays/net-program-java/)
+### [UDP、TCP及http与https特点](/iblog/posts/essays/net-program-java/)
 ### [SpringBoot自动配置原理](/iblog/posts/spring/java-springboot/#springbootapplication原理)
 ### [如何保证线程安全](/iblog/posts/rookie/rookie-multi-thread/#线程安全)
 ### [线程池工作原理](/iblog/posts/rookie/rookie-multi-thread/#线程池)
@@ -46,7 +46,7 @@ slug: "interview-junior-javaer"
 ### [Redis内存淘汰策略](/iblog/posts/essays/java-redis/#redis内存淘汰策略)
 ### [Redis部署策略](/iblog/posts/essays/java-redis/#redis部署策略)
 ### [手写一个负载均衡算法](/iblog/posts/essays/java-small-service/#服务负载)
-### [Netty用过吗(拆包、丢包，原理)](/iblog/posts/rookie/rookie-io/#nettyhttpsdongzlgithubionetty-handbook)
+### [Netty用过吗(丢包、粘包、原理)](/iblog/posts/rookie/rookie-io/#nettyhttpsdongzlgithubionetty-handbook)
 ### [分布式注册中心、熔断降级、网关知道吗](/iblog/posts/essays/java-small-service/)
 ---
 
