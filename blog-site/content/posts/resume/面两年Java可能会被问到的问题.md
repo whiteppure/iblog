@@ -1,5 +1,5 @@
 ---
-title: "面两年Java可能会被问到的问题"
+title: "面两年Java相关问题"
 date: 2021-05-11
 draft: false
 tags: ["Java", "求职"]
@@ -18,7 +18,7 @@ slug: "interview-junior-javaer"
 
 
 ## 基础
-### UDP、TCP区别及http与https区别
+### [UDP、TCP区别及http与https区别](/iblog/posts/essays/net-program-java/)
 ### [SpringBoot自动配置原理](/iblog/posts/spring/java-springboot/#springbootapplication原理)
 ### [如何保证线程安全](/iblog/posts/rookie/rookie-multi-thread/#线程安全)
 ### [线程池工作原理](/iblog/posts/rookie/rookie-multi-thread/#线程池)
@@ -27,8 +27,7 @@ slug: "interview-junior-javaer"
 ### [ArrayList与LinkedList](/iblog/posts/rookie/rookie-java-container/#arraylist)
 ### [介绍一下HashMap](/iblog/posts/essays/java-hashmap/)
 ### [Object类常用方法：equals、hash等](/iblog/posts/rookie/rookie-objectclass-methods/)
-### 你平时SQL优化思路是什么
-### [索引使用场景和相关技巧](/iblog/posts/essays/sql-select-fast/#mysqlsql优化)
+### [SQL优化思路是什么及索引](/iblog/posts/essays/sql-select-fast/#mysqlsql优化)
 ### [常用的设计模式：工厂、单例、代理、模板、适配器、策略等](/iblog/posts/rookie/rookie-object-oriented/#设计模式)
 ### [说一下你对JVM的认识](/iblog/posts/jvm/jvm-start/#jvm整体结构)
 ### [介绍一下JVM中的堆](/iblog/posts/jvm/jvm-heap/#堆)
@@ -37,7 +36,7 @@ slug: "interview-junior-javaer"
 ---
 
 
-## 分布式进阶
+## 分布式
 ### [为什么要进行系统拆分](/iblog/posts/essays/java-small-service/#为什么要使用微服务)
 ### [知道分布式事务吗(CAP、BASE理论)](/iblog/posts/essays/java-transaction/)
 ### [kafka如何保证消息不丢失](/iblog/posts/essays/java-mq/#生产者数据可靠性保证)
@@ -48,7 +47,7 @@ slug: "interview-junior-javaer"
 ### [Redis部署策略](/iblog/posts/essays/java-redis/#redis部署策略)
 ### [手写一个负载均衡算法](/iblog/posts/essays/java-small-service/#服务负载)
 ### [Netty用过吗(拆包、丢包，原理)](/iblog/posts/rookie/rookie-io/#nettyhttpsdongzlgithubionetty-handbook)
-### [你是如何理解分布式注册中心、熔断降级、网关](/iblog/posts/essays/java-small-service/)
+### [分布式注册中心、熔断降级、网关知道吗](/iblog/posts/essays/java-small-service/)
 ---
 
 

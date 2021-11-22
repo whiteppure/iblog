@@ -43,6 +43,7 @@ slug: "sql-select-fast"
 参考文章：
 - https://www.hollischuang.com/archives/6330
 - https://dev.mysql.com/doc/refman/8.0/en/using-explain.html
+- https://www.javanav.com/interview/7b1d6961b1e344fa9b6ea74819d4f417.html
 
 为什么要进行SQL优化？
 - SQL语句欠佳、执行过程耗时较长；
@@ -65,12 +66,32 @@ slug: "sql-select-fast"
 
 > Hint: 简单来说就是在某些特定的场景下人工协助MySQL优化器的工作，使其生成最优的执行计划。一般来说，优化器的执行计划都是最优化的，不过在某些特定场景下，执行计划可能不是最优化。
 
-如何进行SQL优化：
-- 最大化利用索引；
-- 尽可能避免全表扫描；
-- 减少无效数据的查询；
+### 慢SQL优化思路
+引起 SQL 查询很慢的原因与解决办法：
 
-对于后端程序员来说最主要的就是优化索引。
+1、没有索引。解决办法：
+- 根据 where 和 order by 使用比较频繁的字段创建索引，提高查询效率
+- 索引不宜过多，单表最好不要超过 6 个。索引过多会导致占用存储空间变大；insert、update 变慢
+- 删除未使用的索引
+ 
+2、索引未生效。解决办法：
+- 避免在 where 子句中对字段进行 null 值判断，创建表默认值是 NULL。尽量使用 NOT NULL，或使用特殊值，如 0、-1
+- 避免在 where 子句中使用 != 或 <> 操作符， MySQL 只有对以下操作符才使用索引：<、<=、=、>、>=、BETWEEN、IN、非 % 开头的 LIKE
+- 避免在 where 子句中使用 or 来连接条件，可以使用 UNION 进行连接
+- 能用 union all 就不用 union，union 过滤重复数据要耗费更多的 CPU 资源
+- 避免全部 like 查询，如 '%ConstXiong%'
+- 避免在索引列上使用计算、函数
+- in 和 not in 慎用，能用 between 不要用 in
+- select 子句中避免使用 *
+ 
+3、单表数据量太大。解决办法：
+- 分页查询(在索引上完成排序分页操作、借助主键进行关联)
+- 单表数据过大，进行分库分表
+- 考虑使用非关系型数据库提高查询效率
+- 全文索引场景较多，考虑使用 ElasticSearch、solr
+
+对于后端程序员来说最主要的就是优化索引和分库分表了。
+
 ### 索引
 MySQL官方对索引的定义为：索引（Index）是帮助MySQL高效获取数据的数据结构。可以得到索引的本质：索引是数据结构。相当于一本书的目录或者字典。
 
