@@ -8,7 +8,7 @@ slug: "interview-junior-javaer"
 
 ## 面试必问
 ### [自我介绍](/iblog/posts/resume/interview-questions-and-answers/#自我介绍)
-### [你有什么职业规划](/iblog/posts/resume/interview-questions-and-answers/#你的职业规划是什么)
+### [你有什么职业规划](/iblog/posts/resume/interview-questions-and-answers/#你的职业规划是什么httpswwwbilibilicomvideobv1ff4y1y7ze)
 ### [你为什么要离职](/iblog/posts/resume/interview-questions-and-answers/#你从上一家公司离职的原因)
 ### [说一下你的优缺点](/iblog/posts/resume/interview-questions-and-answers/#优缺点)
 ### [你的期望薪资是多少](/iblog/posts/resume/interview-questions-and-answers/#面试如何谈薪资)

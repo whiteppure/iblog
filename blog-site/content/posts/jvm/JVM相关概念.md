@@ -1,5 +1,5 @@
 ---
-title: "JVM-JVM相关概念"
+title: "JVM-相关概念"
 date: 2021-04-27
 draft: false
 tags: ["Java", "JVM"]

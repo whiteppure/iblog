@@ -1,0 +1,2024 @@
+<!DOCTYPE html>
+<html lang="zh" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="whitepure" />
+	
+	
+	
+	<title>规范编写代码心得 ｜ whitepure</title>
+	
+    
+    
+    <meta name="description" content="" />
+    
+
+    
+    
+    <meta name="keywords" content="whitepure博客, whiteppure, whitepure" />
+    
+
+	
+    
+    <link rel="shortcut icon" href="https://whiteppure.github.io/iblog/images/favicon.ico" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/zozo.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/highlight.css" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/toc.css" />
+
+    
+    
+</head>
+
+<body>
+    
+    
+    
+
+
+
+
+
+
+
+
+
+<div class="toc">
+
+    <div class="page-header"><strong>- CATALOG -</strong></div>
+
+    <div id="page-scrollspy" class="toc-nav">
+
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%86%85%e5%ad%98%e6%b3%84%e9%9c%b2%e9%97%ae%e9%a2%98">
+                    内存泄露问题
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%86%85%e5%ad%98%e6%b3%84%e9%9c%b2%e5%8e%9f%e5%9b%a0">
+                    内存泄露原因
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%8f%98%e9%87%8f%e4%bd%9c%e7%94%a8%e5%9f%9f%e4%b8%8d%e5%90%88%e7%90%86%e5%af%bc%e8%87%b4%e5%86%85%e5%ad%98%e6%b3%84%e9%9c%b2">
+                    变量作用域不合理导致内存泄露
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%90%91%e9%9d%99%e6%80%81%e9%9b%86%e5%90%88%e6%b7%bb%e5%8a%a0%e6%95%b0%e6%8d%ae%e5%af%bc%e8%87%b4%e5%86%85%e5%ad%98%e6%b3%84%e9%9c%b2">
+                    向静态集合添加数据导致内存泄露
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%86%85%e9%83%a8%e7%b1%bb%e6%8c%81%e6%9c%89%e5%a4%96%e9%83%a8%e7%b1%bb%e5%bc%95%e7%94%a8%e5%af%bc%e8%87%b4%e5%86%85%e5%ad%98%e6%b3%84%e9%9c%b2">
+                    内部类持有外部类引用导致内存泄露
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84%e4%b8%ad%e7%a7%bb%e9%99%a4%e5%85%83%e7%b4%a0%e5%af%bc%e8%87%b4%e5%86%85%e5%ad%98%e6%b3%84%e9%9c%b2">
+                    数据结构中移除元素导致内存泄露
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e8%bf%9e%e6%8e%a5%e6%9c%aa%e9%87%8a%e6%94%be">
+                    连接未释放
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%bb%a3%e7%a0%81%e7%bb%93%e6%9e%84">
+                    代码结构
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%bc%98%e9%9b%85%e5%88%a4%e7%a9%ba">
+                    优雅判空
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8spring%e6%8f%90%e4%be%9b%e7%9a%84%e5%b7%a5%e5%85%b7%e7%b1%bbassert%e5%88%a4%e7%a9%ba">
+                    使用Spring提供的工具类Assert判空
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8java8%e9%93%be%e5%bc%8f%e8%b0%83%e7%94%a8%e7%89%b9%e6%80%a7%e5%88%a4%e7%a9%ba">
+                    使用Java8链式调用特性判空
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8beanvalidator%e6%b3%a8%e8%a7%a3%e5%88%a4%e7%a9%ba">
+                    使用BeanValidator注解判空
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e8%bf%87%e5%a4%9aifelse">
+                    过多if..else
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8%e6%9e%9a%e4%b8%be%e4%bb%a3%e6%9b%bfifelse">
+                    使用枚举代替if..else
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%94%be%e5%85%a5%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84%e4%b8%ad%e8%bf%9b%e8%a1%8c%e5%88%a4%e6%96%ad%e4%bb%8e%e8%80%8c%e5%87%8f%e5%b0%91ifelse">
+                    放入数据结构中进行判断从而减少if..else
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8switchcase%e4%bb%a3%e6%9b%bfifelse">
+                    使用switch..case代替if..else
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%b0%bd%e6%97%a9%e7%bb%93%e6%9d%9fif%e4%bd%bf%e4%bb%a3%e7%a0%81%e7%bb%93%e6%9e%84%e6%9b%b4%e6%b8%85%e6%99%b0">
+                    尽早结束if使代码结构更清晰
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8%e8%81%8c%e8%b4%a3%e9%93%be%e6%a8%a1%e5%bc%8f%e4%bb%a3%e6%9b%bfifelse">
+                    使用职责链模式代替if..else
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8%e6%a8%a1%e6%9d%bf%e6%96%b9%e6%b3%95%e6%a8%a1%e5%bc%8f%e4%bb%a3%e6%9b%bfifelse">
+                    使用模板方法模式代替if..else
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8%e5%b7%a5%e5%8e%82%e6%96%b9%e6%b3%95%e6%a8%a1%e5%bc%8f%e4%bb%a3%e6%9b%bfifelse">
+                    使用工厂方法模式代替if..else
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8%e6%b3%a8%e8%a7%a3%e4%bb%a3%e6%9b%bfifelse">
+                    使用注解代替if..else
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+
+    </div>
+
+</div>
+
+
+
+    
+    <div class="main animate__animated animate__fadeInDown" id="pdf_content">
+        <div class="nav_container animated fadeInDown">
+    <div class="site_nav" id="site_nav">
+        <ul><li class="">
+                <a href="https://whiteppure.github.io/iblog/">首页</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/iblog/posts/">归档</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/iblog/tags/">标签</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/iblog/about/">关于</a>
+            </li>
+        </ul>
+    </div>
+    <div class="menu_icon">
+        <a id="menu_icon"><i class="ri-menu-line"></i></a>
+    </div>
+</div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="content">
+            <div class="post_page">
+                <div class="post animate__animated animate__fadeInDown">
+                    <div class="post_title post_detail_title">
+                        <h2><a href='/iblog/posts/essays/java-code-rule/'>规范编写代码心得</a></h2>
+                        <span class="date">2021.11.25</span>
+                    </div>
+                    <div class="post_content markdown"><h2 id="内存泄露问题">内存泄露问题</h2>
+<p>内存泄漏是指无用对象持续占有内存或无用对象的内存得不到及时释放，从而造成内存空间的浪费。</p>
+<p><a href="/iblog/posts/jvm/jvm-about/#%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F">内存泄露</a>导致问题：</p>
+<ul>
+<li>最明显问题频繁GC，从而<a href="/iblog/posts/jvm/jvm-about/#stw">STW</a>次数增加,导致用户体验变差；</li>
+<li>如果内存泄露问题严重，会导致OOM，直接导致程序不能正常运行；</li>
+</ul>
+<p>内存泄露是很严重的问题，在出现内存泄露的情况下，想要解决是肯定要修改代码的，所以在编写代码的时候要避免出现内存泄露。</p>
+<h3 id="内存泄露原因">内存泄露原因</h3>
+<p>大多数内存泄露的原因是，长生命周期的对象引用了短生命周期的对象。例如，A对象引用B对象，A对象的生命周期（t1-t4）比B对象的生命周期（t2-t3）长的多。当B对象没有被应用程序使用之后，A对象仍然在引用着B对象。这样，垃圾回收器就没办法将B对象从内存中移除，从而导致内存泄露问题。</p>
+<h4 id="变量作用域不合理导致内存泄露">变量作用域不合理导致内存泄露</h4>
+<p>一个变量的定义的作用范围大于其使用范围，很有可能会造成内存泄漏</p>
+<pre><code>public class UsingRandom {
+    private String msg;
+    public void receiveMsg(){
+        readFromNet();//从网络中接受数据保存到msg中
+        saveDB();//把msg保存到数据库中
+    }
+}
+</code></pre><p>解决办法，将msg定义在receiveMsg方法中或将msg重置为null。</p>
+<pre><code>public class UsingRandom {
+    private String msg;
+    public void receiveMsg(){
+        readFromNet();//从网络中接受数据保存到msg中
+        saveDB();//把msg保存到数据库中
+        msg = null;
+    }
+}
+</code></pre><h4 id="向静态集合添加数据导致内存泄露">向静态集合添加数据导致内存泄露</h4>
+<p>HashMap、LinkedList 等集合类，如果这些集合是静态的并且向集合中添加了对象，这些对象就算不再使用，也不会被GC主动回收的，它们的生命周期与JVM程序一致，容器中的对象在程序结束之前将不能被释放，从而造成内存泄漏。</p>
+<pre><code>public class MyTest {
+    static Map&lt;String, User&gt; map = new HashMap&lt;&gt;();
+    public static void main(String[] args) throws InterruptedException {
+        User user = new User();
+        map.put(&quot;01&quot;,user);
+    }
+}
+</code></pre><p>解决办法是将使用完后的集合和对象重置为null，或将集合替换成弱引用集合（只要垃圾回收机制一运行，不管 JVM 的内存空间是否足够，总会回收该对象占用的内存）。</p>
+<pre><code>    static Map&lt;String, User&gt; map = new HashMap&lt;&gt;();
+    public static void main(String[] args) throws InterruptedException {
+
+        User user = new User();
+        map.put(&quot;01&quot;,user);
+
+        user = null;
+        map = null;
+
+        System.gc();
+        Thread.sleep(1000);
+    }
+</code></pre><pre><code>    static Map&lt;String, User&gt; map = new WeakHashMap&lt;&gt;();
+    public static void main(String[] args) throws InterruptedException {
+        User user = new User();
+        map.put(&quot;01&quot;,user);
+    }
+</code></pre><h4 id="内部类持有外部类引用导致内存泄露">内部类持有外部类引用导致内存泄露</h4>
+<p>非静态内部类，自动生成的构造方法，默认的参数是外部类的类型，因此使用非内部内部类的时候会保留一个外部类的引用。如果换成静态内部类则不会生成默认的构造方法。</p>
+<pre><code>public class MyClass {
+
+
+    public static void main(String[] args) throws Throwable {
+
+    }
+
+    public class A{
+        public void methed1(){
+
+        }
+    }
+
+    public static  class B{
+        public void methed1(){
+
+        }
+    }
+}
+</code></pre><p>如果一个外部类的实例对象的方法返回了一个内部类的实例对象。这个内部类对象被长期引用了，即使那个外部类实例对象不再被使用，但由于内部类持有外部类的实例对象，这个外部类对象将不会被垃圾回收，这也会造成内存泄漏。</p>
+<h4 id="数据结构中移除元素导致内存泄露">数据结构中移除元素导致内存泄露</h4>
+<ul>
+<li>链表中移除元素，没有将移除的元素置为null导致的内存泄露问题</li>
+</ul>
+<p>Java容器LinkedList移除元素方法核心源码:</p>
+<pre><code>
+//删除指定节点并返回被删除的元素值
+E unlink(Node&lt;E&gt; x) {
+    //获取当前值和前后节点
+    final E element = x.item;
+    final Node&lt;E&gt; next = x.next;
+    final Node&lt;E&gt; prev = x.prev;
+    if (prev == null) {
+        first = next; //如果前一个节点为空(如当前节点为首节点)，后一个节点成为新的首节点
+    } else {
+        prev.next = next;//如果前一个节点不为空，那么他先后指向当前的下一个节点
+        x.prev = null;
+    }
+    if (next == null) {
+        last = prev; //如果后一个节点为空(如当前节点为尾节点)，当前节点前一个成为新的尾节点
+    } else {
+        next.prev = prev;//如果后一个节点不为空，后一个节点向前指向当前的前一个节点
+        x.next = null;
+    }
+    x.item = null; // help gc
+    size--;
+    modCount++;
+    return element;
+}
+</code></pre><p>除了修改节点间的关联关系，我们还要做的就是赋值为null的操作，不管GC何时会开始清理，我们都应及时的将无用的对象标记为可被清理的对象。</p>
+<hr>
+<ul>
+<li>在栈中将该元素出栈，没有将出栈的元素置为null导致的内存泄露问题</li>
+</ul>
+<pre><code>public E pop(){
+    if(size == 0)
+        return null;
+    else{
+        E e = (E) elementData[--size];
+        elementData[size] = null; // help gc
+        return e;
+    }
+}
+</code></pre><hr>
+<ul>
+<li>改变hash表中对象的属性值，再将该元素移除导致的内存泄露问题</li>
+</ul>
+<p>因为改变了对象属性的值相当于改变了改对象的hash值，删除的时候是根据对象的hash值来删除的，删除对象的时候找不到对应的hash值，所以不能删除，最终导致内存泄露。</p>
+<pre><code>public class ChangeHashCode {
+    public static void main(String[] args) {
+        HashSet set = new HashSet();
+        Person p1 = new Person(1001, &quot;AA&quot;);
+        Person p2 = new Person(1002, &quot;BB&quot;);
+ 
+        set.add(p1);
+        set.add(p2);
+ 
+        p1.name = &quot;CC&quot;; // 导致了内存的泄漏
+        set.remove(p1);  // 对象哈希值发生变化，检索不到，导致删除失败
+ 
+        System.out.println(set);
+ 
+        set.add(new Person(1001, &quot;CC&quot;));
+        System.out.println(set);
+ 
+        set.add(new Person(1001, &quot;AA&quot;));
+        System.out.println(set);
+    }
+}
+ 
+class Person {
+    int id;
+    String name;
+ 
+    public Person(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+ 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Person)) return false;
+ 
+        Person person = (Person) o;
+ 
+        if (id != person.id) return false;
+        return name != null ? name.equals(person.name) : person.name == null;
+    }
+ 
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
+    }
+ 
+    @Override
+    public String toString() {
+        return &quot;Person{&quot; +
+                &quot;id=&quot; + id +
+                &quot;, name='&quot; + name + '\'' +
+                '}';
+    }
+}
+</code></pre><h4 id="连接未释放">连接未释放</h4>
+<p>如数据库连接、网络连接和IO连接等。当不再使用时，需要调用close方法来释放连接。只有连接被关闭后，垃圾回收器才会回收对应的对象。否则，如果在连接过程中，对一些对象不显性地关闭，将会造成大量的对象无法被回收，从而引起内存泄漏。</p>
+<pre><code>public static void main(String[] args) {
+    try{
+        Connection conn =null;
+        Class.forName(&quot;com.mysql.jdbc.Driver&quot;);
+        conn =DriverManager.getConnection(&quot;url&quot;,&quot;&quot;,&quot;&quot;);
+        Statement stmt =conn.createStatement();
+        ResultSet rs =stmt.executeQuery(&quot;....&quot;);
+    } catch（Exception e）{
+    } finally {
+        // 1．关闭结果集 Statement
+        // 2．关闭声明的对象 ResultSet
+        // 3．关闭连接 Connection
+    }
+}
+</code></pre><h2 id="代码结构">代码结构</h2>
+<p>编写代码最终要的原则就是要具有扩展性，如果没有扩展性那么代码维护起来会非常麻烦。</p>
+<h3 id="优雅判空">优雅判空</h3>
+<h4 id="使用spring提供的工具类assert判空">使用Spring提供的工具类Assert判空</h4>
+<pre><code>public class MyTest {
+    public static void main(String[] args) {
+        Object obj = new Object();
+        Assert.notNull(obj,&quot;对象不能为空&quot;);
+        Assert.isTrue(obj != null,&quot;对象不能为空&quot;);
+        ArrayList&lt;Object&gt; list = new ArrayList&lt;&gt;();
+        Assert.notEmpty(list,&quot;list不能为空&quot;);
+    }
+}
+</code></pre><h4 id="使用java8链式调用特性判空">使用Java8链式调用特性判空</h4>
+<pre><code>public class MyTest {
+    public static void main(String[] args) {
+        Object obj = new Object();
+        System.out.println(&quot;是否不为空：&quot; + Optional.of(obj).isPresent());
+
+        User user = new User();
+        user.setId(1);
+        user.setName(&quot;ls&quot;);
+        Optional&lt;User&gt; zs = Optional.of(user).filter(u -&gt; u.getName().equals(&quot;zs&quot;));
+        System.out.println(zs.get());
+        zs.ifPresent(item -&gt;{
+             System.out.println(&quot;对象不等于空，做的一系列操作&quot;);
+         });
+        User user1 = Optional.of(zs.orElse(new User())).get();
+        System.out.println(user1);
+    }
+
+
+    static class User {
+        private int id;
+        private String name;
+
+        public String getName() {
+            return name;
+        }
+        public int getId() {
+            return id;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        @Override
+        public String toString() {
+            return &quot;User{&quot; +
+                    &quot;id=&quot; + id +
+                    &quot;, name='&quot; + name + '\'' +
+                    '}';
+        }
+    }
+}
+</code></pre><p>自定义链式调用，对Optional扩展：</p>
+<ul>
+<li><a href="https://www.hollischuang.com/archives/5605">https://www.hollischuang.com/archives/5605</a></li>
+</ul>
+<pre><code>@Data
+public class User {
+
+    private String name;
+
+    private String gender;
+
+    private School school;
+
+    @Data
+    public static class School {
+
+        private String scName;
+
+        private String adress;
+    }
+}
+</code></pre><pre><code>/**
+* @author Axin
+* @since 2020-09-10
+* @summary 链式调用 bean 中 value 的方法
+*/
+public final class OptionalBean&lt;T&gt; {
+
+    private static final OptionalBean&lt;?&gt; EMPTY = new OptionalBean&lt;&gt;();
+
+    private final T value;
+
+    private OptionalBean() {
+        this.value = null;
+    }
+
+    /**
+     * 空值会抛出空指针
+     * @param value
+     */
+    private OptionalBean(T value) {
+        this.value = Objects.requireNonNull(value);
+    }
+
+    /**
+     * 包装一个不能为空的 bean
+     * @param value
+     * @param &lt;T&gt;
+     * @return
+     */
+    public static &lt;T&gt; OptionalBean&lt;T&gt; of(T value) {
+        return new OptionalBean&lt;&gt;(value);
+    }
+
+    /**
+     * 包装一个可能为空的 bean
+     * @param value
+     * @param &lt;T&gt;
+     * @return
+     */
+    public static &lt;T&gt; OptionalBean&lt;T&gt; ofNullable(T value) {
+        return value == null ? empty() : of(value);
+    }
+
+    /**
+     * 取出具体的值
+     * @param fn
+     * @param &lt;R&gt;
+     * @return
+     */
+    public T get() {
+        return Objects.isNull(value) ? null : value;
+    }
+
+    /**
+     * 取出一个可能为空的对象
+     * @param fn
+     * @param &lt;R&gt;
+     * @return
+     */
+    public &lt;R&gt; OptionalBean&lt;R&gt; getBean(Function&lt;? super T, ? extends R&gt; fn) {
+        return Objects.isNull(value) ? OptionalBean.empty() : OptionalBean.ofNullable(fn.apply(value));
+    }
+
+    /**
+     * 如果目标值为空 获取一个默认值
+     * @param other
+     * @return
+     */
+    public T orElse(T other) {
+        return value != null ? value : other;
+    }
+
+    /**
+     * 如果目标值为空 通过lambda表达式获取一个值
+     * @param other
+     * @return
+     */
+    public T orElseGet(Supplier&lt;? extends T&gt; other) {
+        return value != null ? value : other.get();
+    }
+
+    /**
+     * 如果目标值为空 抛出一个异常
+     * @param exceptionSupplier
+     * @param &lt;X&gt;
+     * @return
+     * @throws X
+     */
+    public &lt;X extends Throwable&gt; T orElseThrow(Supplier&lt;? extends X&gt; exceptionSupplier) throws X {
+        if (value != null) {
+            return value;
+        } else {
+            throw exceptionSupplier.get();
+        }
+    }
+
+    public boolean isPresent() {
+        return value != null;
+    }
+
+    public void ifPresent(Consumer&lt;? super T&gt; consumer) {
+        if (value != null)
+            consumer.accept(value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(value);
+    }
+
+    /**
+     * 空值常量
+     * @param &lt;T&gt;
+     * @return
+     */
+    public static&lt;T&gt; OptionalBean&lt;T&gt; empty() {
+        @SuppressWarnings(&quot;unchecked&quot;)
+        OptionalBean&lt;T&gt; none = (OptionalBean&lt;T&gt;) EMPTY;
+        return none;
+    }
+
+}
+</code></pre><pre><code>public static void main(String[] args) {
+
+    User axin = new User();
+    User.School school = new User.School();
+    axin.setName(&quot;hello&quot;);
+
+    // 1. 基本调用
+    String value1 = OptionalBean.ofNullable(axin)
+            .getBean(User::getSchool)
+            .getBean(User.School::getAdress).get();
+    System.out.println(value1);
+
+    // 2. 扩展的 isPresent方法 用法与 Optional 一样
+    boolean present = OptionalBean.ofNullable(axin)
+            .getBean(User::getSchool)
+            .getBean(User.School::getAdress).isPresent();
+    System.out.println(present);
+
+
+    // 3. 扩展的 ifPresent 方法
+    OptionalBean.ofNullable(axin)
+            .getBean(User::getSchool)
+            .getBean(User.School::getAdress)
+            .ifPresent(adress -&gt; System.out.println(String.format(&quot;地址存在:%s&quot;, adress)));
+
+    // 4. 扩展的 orElse
+    String value2 = OptionalBean.ofNullable(axin)
+            .getBean(User::getSchool)
+            .getBean(User.School::getAdress).orElse(&quot;家里蹲&quot;);
+
+    System.out.println(value2);
+
+    // 5. 扩展的 orElseThrow
+    try {
+        String value3 = OptionalBean.ofNullable(axin)
+                .getBean(User::getSchool)
+                .getBean(User.School::getAdress).orElseThrow(() -&gt; new RuntimeException(&quot;空指针了&quot;));
+    } catch (Exception e) {
+        System.out.println(e.getMessage());
+    }
+}
+</code></pre><h4 id="使用beanvalidator注解判空">使用BeanValidator注解判空</h4>
+<p>思路：定义一个注解，将需要校验的参数对象都标注该注解，利用SpringAOP，拦截该注解，将其中标注的参数取出，最后通过BeanValidator进行校验。</p>
+<p>所需依赖：</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.hibernate&lt;/groupId&gt;
+    &lt;artifactId&gt;hibernate-validator&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre><pre><code>/**
+ * facade接口注解， 用于统一对facade进行参数校验及异常捕获
+ * @author whitepure
+ */
+@Target({ElementType.METHOD,ElementType.PARAMETER})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Facade {
+
+}
+</code></pre><pre><code>@Slf4j
+@Aspect
+@Component
+public class FacadeAspect {
+
+
+    @Around(&quot;@annotation(com.spring.example.annotation.Facade)&quot;)
+    public Object facade(ProceedingJoinPoint pjp) throws Exception {
+
+        // 获取，执行目标方法
+        Method method = ((MethodSignature) pjp.getSignature()).getMethod();
+
+        Object[] args = pjp.getArgs();
+
+        log.info(&quot;获取@Facede注解参数列表,参数: {}&quot;, args);
+
+        // 参数类型
+        Class&lt;?&gt; returnType = ((MethodSignature) pjp.getSignature()).getMethod().getReturnType();
+
+        //循环遍历所有参数，进行参数校验
+        for (Object parameter : args) {
+            try {
+                BeanValidator.validateObject(parameter);
+            } catch (ValidationException e) {
+                return getFailedResponse(returnType, e);
+            }
+        }
+
+        try {
+            // 目标方法执行
+            return pjp.proceed();
+        } catch (Throwable throwable) {
+            // 返回通用失败响应
+            return getFailedResponse(returnType, throwable);
+        }
+    }
+
+    /**
+     * 定义并返回一个通用的失败响应
+     */
+    private Object getFailedResponse(Class&lt;?&gt; returnType, Throwable throwable)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+
+        //如果返回值的类型为BaseResponse 的子类，则创建一个通用的失败响应
+        if (returnType.getDeclaredConstructor().newInstance() instanceof ApiResponse) {
+            ApiResponse response = (ApiResponse) returnType.getDeclaredConstructor().newInstance();
+            String message = throwable.getMessage();
+            log.error(&quot;校验bean异常：&quot;, throwable);
+            response.setMessage(message);
+            response.setCode(Status.ERROR.getCode());
+            return response;
+        }
+        log.error(&quot;failed to getFailedResponse , returnType ({}) is not instanceof BaseResponse&quot;, returnType);
+        return null;
+    }
+
+}
+</code></pre><pre><code>public class BeanValidator {
+
+
+    private static final Validator validator = Validation
+            .byProvider(HibernateValidator.class)
+            .configure().failFast(true)
+            .buildValidatorFactory().getValidator();
+
+    /**
+     * 校验对象
+     *
+     * @param object object
+     * @param groups groups
+     */
+    public static void validateObject(Object object, Class&lt;?&gt;... groups) throws ValidationException {
+        Set&lt;ConstraintViolation&lt;Object&gt;&gt; constraintViolations = validator.validate(object, groups);
+        if (constraintViolations.stream().findFirst().isPresent()) {
+            throw new ValidationException(constraintViolations.stream().findFirst().get().getMessage());
+        }
+    }
+
+
+    /**
+     * 校验对象bean
+     *
+     * @param t      bean
+     * @param groups 校验组
+     * @return ValidResult
+     */
+    public static &lt;T&gt; ValidResult validateBean(T t, Class&lt;?&gt;... groups) {
+        ValidResult result = new ValidResult();
+        Set&lt;ConstraintViolation&lt;T&gt;&gt; violationSet = validator.validate(t, groups);
+        boolean hasError = violationSet != null &amp;&amp; violationSet.size() &gt; 0;
+        result.setHasErrors(hasError);
+        if (hasError) {
+            for (ConstraintViolation&lt;T&gt; violation : violationSet) {
+                result.addError(violation.getPropertyPath().toString(), violation.getMessage());
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 校验bean的某一个属性
+     *
+     * @param obj          bean
+     * @param propertyName 属性名称
+     * @return ValidResult
+     */
+    public static &lt;T&gt; ValidResult validateProperty(T obj, String propertyName) {
+        ValidResult result = new ValidResult();
+        Set&lt;ConstraintViolation&lt;T&gt;&gt; violationSet = validator.validateProperty(obj, propertyName);
+        boolean hasError = violationSet != null &amp;&amp; violationSet.size() &gt; 0;
+        result.setHasErrors(hasError);
+        if (hasError) {
+            for (ConstraintViolation&lt;T&gt; violation : violationSet) {
+                result.addError(propertyName, violation.getMessage());
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 校验结果类
+     */
+    @Data
+    public static class ValidResult {
+
+        /**
+         * 是否有错误
+         */
+        private boolean hasErrors;
+
+        /**
+         * 错误信息
+         */
+        private List&lt;ErrorMessage&gt; errors;
+
+        public ValidResult() {
+            this.errors = new ArrayList&lt;&gt;();
+        }
+
+        public boolean hasErrors() {
+            return hasErrors;
+        }
+
+        public void setHasErrors(boolean hasErrors) {
+            this.hasErrors = hasErrors;
+        }
+
+        /**
+         * 获取所有验证信息
+         *
+         * @return 集合形式
+         */
+        public List&lt;ErrorMessage&gt; getAllErrors() {
+            return errors;
+        }
+
+        /**
+         * 获取所有验证信息
+         *
+         * @return 字符串形式
+         */
+        public String getErrors() {
+            StringBuilder sb = new StringBuilder();
+            for (ErrorMessage error : errors) {
+                sb.append(error.getPropertyPath()).append(&quot;:&quot;).append(error.getMessage()).append(&quot; &quot;);
+            }
+            return sb.toString();
+        }
+
+        public void addError(String propertyName, String message) {
+            this.errors.add(new ErrorMessage(propertyName, message));
+        }
+    }
+
+    @Data
+    public static class ErrorMessage {
+
+        private String propertyPath;
+
+        private String message;
+
+        public ErrorMessage() {
+        }
+
+        public ErrorMessage(String propertyPath, String message) {
+            this.propertyPath = propertyPath;
+            this.message = message;
+        }
+    }
+
+}
+</code></pre><h3 id="过多ifelse">过多if..else</h3>
+<p>替换if..else并不会降低代码的复杂度，相反比较少见的写法可能会增加认知负荷，从而进一步增加了复杂度。之所以要替换过多的if..else是为了对代码进行解耦合，方便扩展代码，最终方便对代码的维护。</p>
+<p>以下有几种常见的方法来替换过多的if..else。</p>
+<h4 id="使用枚举代替ifelse">使用枚举代替if..else</h4>
+<pre><code>public class MyTest {
+    public static void main(String[] args) {
+        String val = &quot;FOUR&quot;;
+        condition(val);
+        System.out.println(&quot;--------------&quot;);
+        newCondition(val);
+    }
+
+    public static void condition(String val) {
+        if (&quot;ONE&quot;.equals(val)) {
+            System.out.println(&quot;val:&quot; + 1111111);
+        } else if (&quot;TWO&quot;.equals(val)) {
+            System.out.println(&quot;val:&quot; + 2222222);
+        } else if (&quot;THREE&quot;.equals(val)) {
+            System.out.println(&quot;val:&quot; + 3333333);
+        } else {
+            System.out.println(&quot;val:&quot; + val);
+        }
+    }
+
+    public static void newCondition(String val) {
+        ConditionEnum conditionEnum;
+        try {
+            conditionEnum = ConditionEnum.valueOf(val);
+        } catch (IllegalArgumentException e) {
+            System.out.println(&quot;val:&quot; + val);
+            return;
+        }
+        exec(conditionEnum);
+    }
+
+    public static void exec(ConditionEnum conditionEnum) {
+        conditionEnum.context();
+    }
+
+    enum ConditionEnum {
+        ONE {
+            @Override
+            public void context() {
+                System.out.println(&quot;val:&quot; + 1111111);
+            }
+        },
+        TWO {
+            @Override
+            public void context() {
+                System.out.println(&quot;val:&quot; + 2222222);
+            }
+        },
+        THREE {
+            @Override
+            public void context() {
+                System.out.println(&quot;val:&quot; + 3333333);
+            }
+        };
+
+        public abstract void context();
+    }
+
+}
+</code></pre><p>也可用枚举替换成这样：</p>
+<pre><code>    public static void newCondition(String val) {
+        ConditionEnum condition = ConditionEnum.getCondition(val);
+        System.out.println(&quot;val:&quot; + (condition == null ? val : condition.value));
+    }
+
+    enum ConditionEnum {
+        ONE(&quot;ONE&quot;,1111111),
+        TWO(&quot;TWO&quot;,2222222),
+        THREE(&quot;THREE&quot;,3333333)
+
+        ;
+
+        private String key;
+        private Integer value;
+
+        ConditionEnum(String key,Integer value){
+            this.key = key;
+            this.value = value;
+        }
+
+        public  static ConditionEnum getCondition(String key){
+            return Arrays.stream(ConditionEnum.values()).filter(x -&gt; Objects.equals(x.key, key)).findFirst().orElse(null);
+        }
+    }
+</code></pre><h4 id="放入数据结构中进行判断从而减少ifelse">放入数据结构中进行判断从而减少if..else</h4>
+<pre><code>public class MyTest {
+    public static void main(String[] args) {
+        String val = &quot;1&quot;;
+        condition(val);
+        System.out.println(&quot;--------------&quot;);
+        newCondition(val);
+    }
+    public static void condition(String val) {
+        if (&quot;1&quot;.equals(val)){
+            System.out.println(&quot;val:&quot; + 1111111);
+        }else if (&quot;2&quot;.equals(val)){
+            System.out.println(&quot;val:&quot; + 2222222);
+        }else if (&quot;3&quot;.equals(val)){
+            System.out.println(&quot;val:&quot; + 3333333);
+        }else {
+            System.out.println(&quot;val:&quot; + val);
+        }
+    }
+    public static void newCondition(String val){
+        Map&lt;String, Function&lt;?,?&gt;&gt; map = new HashMap&lt;&gt;();
+        map.put(&quot;1&quot;,(action) -&gt; 1111111);
+        map.put(&quot;2&quot;,(action) -&gt; 2222222);
+        map.put(&quot;3&quot;,(action) -&gt; 3333333);
+        System.out.println(&quot;val:&quot; + (map.get(val) != null ? map.get(val).apply(null) : val));
+    }
+
+}
+</code></pre><h4 id="使用switchcase代替ifelse">使用switch..case代替if..else</h4>
+<pre><code>public class MyTest {
+    public static void main(String[] args) {
+        String val = &quot;FOUR&quot;;
+        condition(val);
+        System.out.println(&quot;--------------&quot;);
+        newCondition(val);
+    }
+
+    public static void condition(String val) {
+        if (&quot;ONE&quot;.equals(val)) {
+            System.out.println(&quot;val:&quot; + 1111111);
+        } else if (&quot;TWO&quot;.equals(val)) {
+            System.out.println(&quot;val:&quot; + 2222222);
+        } else if (&quot;THREE&quot;.equals(val)) {
+            System.out.println(&quot;val:&quot; + 3333333);
+        } else {
+            System.out.println(&quot;val:&quot; + val);
+        }
+    }
+
+    public static void newCondition(String val) {
+        switch (val) {
+            case &quot;ONE&quot;:
+                System.out.println(&quot;val:&quot; + 1111111);
+                break;
+            case &quot;TWO&quot;:
+                System.out.println(&quot;val:&quot; + 2222222);
+                break;
+            case &quot;THREE&quot;:
+                System.out.println(&quot;val:&quot; + 3333333);
+                break;
+            default:
+                System.out.println(&quot;val:&quot; + val);
+        }
+    }
+}
+</code></pre><h4 id="尽早结束if使代码结构更清晰">尽早结束if使代码结构更清晰</h4>
+<pre><code>public class MyTest {
+    public static void main(String[] args) {
+        String val = &quot;222&quot;;
+        condition(val);
+        System.out.println(&quot;--------------&quot;);
+        newCondition(val);
+    }
+
+    public static void condition(String val) {
+        if (&quot;ONE&quot;.equals(val)) {
+            System.out.println(&quot;val:&quot; + 1111111);
+        } else if (&quot;TWO&quot;.equals(val)) {
+            System.out.println(&quot;val:&quot; + 2222222);
+        } else if (&quot;THREE&quot;.equals(val)) {
+            System.out.println(&quot;val:&quot; + 3333333);
+        } else {
+            System.out.println(&quot;val:&quot; + val);
+        }
+    }
+
+    public static void newCondition(String val) {
+        if (&quot;ONE&quot;.equals(val)) {
+            System.out.println(&quot;val:&quot; + 1111111);
+            return;
+        }
+        if (&quot;TWO&quot;.equals(val)) {
+            System.out.println(&quot;val:&quot; + 2222222);
+            return;
+        }
+        if (&quot;THREE&quot;.equals(val)) {
+            System.out.println(&quot;val:&quot; + 3333333);
+            return;
+        }
+        System.out.println(&quot;val:&quot; + val);
+    }
+}
+</code></pre><h4 id="使用职责链模式代替ifelse">使用职责链模式代替if..else</h4>
+<pre><code>public class MyTest {
+    public static void main(String[] args) {
+        String val = &quot;1&quot;;
+        condition(val);
+        System.out.println(&quot;--------------&quot;);
+        newCondition(val);
+    }
+
+    public static void condition(String val) {
+        if (&quot;ONE&quot;.equals(val)) {
+            System.out.println(&quot;val:&quot; + 1111111);
+        } else if (&quot;TWO&quot;.equals(val)) {
+            System.out.println(&quot;val:&quot; + 2222222);
+        } else if (&quot;THREE&quot;.equals(val)) {
+            System.out.println(&quot;val:&quot; + 3333333);
+        } else {
+            System.out.println(&quot;val:&quot; + val);
+        }
+    }
+
+    public static void newCondition(String val) {
+        One one = new One();
+        Two two = new Two();
+        Three three = new Three();
+
+        // 设置调用链,可设置成死循环
+        one.setAbstractHandler(two);
+        two.setAbstractHandler(three);
+
+        // 执行
+        one.exec(val);
+    }
+}
+
+abstract class AbstractHandler {
+
+    protected AbstractHandler abstractHandler;
+
+    protected void setAbstractHandler(AbstractHandler abstractHandler) {
+        this.abstractHandler = abstractHandler;
+    }
+
+    protected abstract void exec(String val);
+
+}
+
+class One extends AbstractHandler {
+
+    @Override
+    protected void exec(String val) {
+        if (!val.equals(&quot;ONE&quot;)){
+            abstractHandler.exec(val);
+            return;
+        }
+        System.out.println(&quot;val:&quot; + 1111111);
+    }
+}
+
+class Two extends AbstractHandler {
+
+    @Override
+    protected void exec(String val) {
+        if (!val.equals(&quot;TWO&quot;)){
+            abstractHandler.exec(val);
+            return;
+        }
+        System.out.println(&quot;val:&quot; + 2222222);
+    }
+}
+
+class Three extends AbstractHandler {
+
+    @Override
+    protected void exec(String val) {
+        System.out.println(val.equals(&quot;THREE&quot;) ? &quot;val:&quot; + 3333333 : &quot;val:&quot; + val);
+    }
+}
+</code></pre><h4 id="使用模板方法模式代替ifelse">使用模板方法模式代替if..else</h4>
+<pre><code>public class MyTest {
+    public static void main(String[] args) {
+        String val = &quot;ONE&quot;;
+        condition(val);
+        System.out.println(&quot;--------------&quot;);
+        newCondition(val);
+    }
+
+    public static void condition(String val) {
+        if (&quot;ONE&quot;.equals(val)) {
+            System.out.println(&quot;val:&quot; + 1111111);
+        } else if (&quot;TWO&quot;.equals(val)) {
+            System.out.println(&quot;val:&quot; + 2222222);
+        } else if (&quot;THREE&quot;.equals(val)) {
+            System.out.println(&quot;val:&quot; + 3333333);
+        } else {
+            System.out.println(&quot;val:&quot; + val);
+        }
+    }
+
+    public static void newCondition(String val) {
+        if (!Objects.equals(val, &quot;ONE&quot;) &amp;&amp; !Objects.equals(val, &quot;TWO&quot;) &amp;&amp; !Objects.equals(val, &quot;THREE&quot;)) {
+            System.out.println(&quot;val:&quot; + val);
+            return;
+        }
+        List&lt;ConditionTemplate&gt; list = new ArrayList&lt;&gt;(Arrays.asList(new One(), new Two(), new Three()));
+        for (ConditionTemplate item : list) {
+            item.template(val);
+        }
+    }
+
+}
+
+abstract class ConditionTemplate {
+
+    public void template(String val){
+        if (supportIns(val)){
+            support();
+        }
+    }
+
+    public abstract void support();
+
+    public abstract boolean supportIns(String val);
+
+}
+
+class One extends ConditionTemplate {
+    @Override
+    public void support() {
+        System.out.println(&quot;val:&quot; + 1111111);
+    }
+    @Override
+    public boolean supportIns(String val) {
+        return &quot;ONE&quot;.equals(val);
+    }
+}
+
+class Two extends ConditionTemplate {
+    @Override
+    public void support() {
+        System.out.println(&quot;val:&quot; + 2222222);
+    }
+    @Override
+    public boolean supportIns(String val) {
+        return &quot;TWO&quot;.equals(val);
+    }
+}
+
+class Three extends ConditionTemplate {
+    @Override
+    public void support() {
+        System.out.println(&quot;val:&quot; + 3333333);
+    }
+    @Override
+    public boolean supportIns(String val) {
+        return &quot;THREE&quot;.equals(val);
+    }
+}
+</code></pre><h4 id="使用工厂方法模式代替ifelse">使用工厂方法模式代替if..else</h4>
+<pre><code>public class MyTest {
+    public static void main(String[] args) {
+        String val = &quot;ONE&quot;;
+        condition(val);
+        System.out.println(&quot;--------------&quot;);
+        newCondition(val);
+    }
+
+    public static void condition(String val) {
+        if (&quot;ONE&quot;.equals(val)) {
+            System.out.println(&quot;val:&quot; + 1111111);
+        } else if (&quot;TWO&quot;.equals(val)) {
+            System.out.println(&quot;val:&quot; + 2222222);
+        } else if (&quot;THREE&quot;.equals(val)) {
+            System.out.println(&quot;val:&quot; + 3333333);
+        } else {
+            System.out.println(&quot;val:&quot; + val);
+        }
+    }
+
+    public static void newCondition(String val) {
+         Map&lt;String, ConditionFactory&gt; operationMap = new HashMap&lt;&gt;();
+        operationMap.put(&quot;ONE&quot;,new One());
+        operationMap.put(&quot;TWO&quot;,new Two());
+        operationMap.put(&quot;THREE&quot;,new Three());
+        if (operationMap.get(val) == null) {
+            System.out.println(&quot;val:&quot; + val);
+        }else {
+            operationMap.get(val).printCondition();
+        }
+    }
+
+}
+
+interface ConditionFactory{
+    void printCondition();
+}
+
+class One implements ConditionFactory {
+    @Override
+    public void printCondition() {
+        System.out.println(&quot;val:&quot; + 1111111);
+    }
+}
+
+class Two implements ConditionFactory {
+    @Override
+    public void printCondition() {
+        System.out.println(&quot;val:&quot; + 2222222);
+    }
+}
+
+class Three implements ConditionFactory {
+    @Override
+    public void printCondition() {
+        System.out.println(&quot;val:&quot; + 3333333);
+    }
+}
+</code></pre><h4 id="使用注解代替ifelse">使用注解代替if..else</h4>
+<ul>
+<li><a href="https://www.zhihu.com/question/318511891/answer/1730548947">https://www.zhihu.com/question/318511891/answer/1730548947</a></li>
+</ul>
+<pre><code>@Retention(RetentionPolicy.RUNTIME)  
+@Target(ElementType.TYPE)  
+public @interface PayCode {  
+
+     String value();    
+     String name();  
+}
+</code></pre><pre><code>@PayCode(value = &quot;alia&quot;, name = &quot;支付宝支付&quot;)  
+@Service
+public class AliaPay implements IPay {  
+
+     @Override
+     public void pay() {  
+         System.out.println(&quot;===发起支付宝支付===&quot;);  
+     }  
+}  
+
+
+@PayCode(value = &quot;weixin&quot;, name = &quot;微信支付&quot;)  
+@Service
+public class WeixinPay implements IPay {  
+
+     @Override
+     public void pay() {  
+         System.out.println(&quot;===发起微信支付===&quot;);  
+     }  
+} 
+
+
+@PayCode(value = &quot;jingdong&quot;, name = &quot;京东支付&quot;)  
+@Service
+public class JingDongPay implements IPay {  
+
+     @Override
+     public void pay() {  
+        System.out.println(&quot;===发起京东支付===&quot;);  
+     }  
+}
+</code></pre><pre><code>@Service
+public class PayService2 implements ApplicationListener&lt;ContextRefreshedEvent&gt; {  
+
+     private static Map&lt;String, IPay&gt; payMap = null;  
+
+     @Override
+     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {  
+         ApplicationContext applicationContext = contextRefreshedEvent.getApplicationContext();  
+         Map&lt;String, Object&gt; beansWithAnnotation = applicationContext.getBeansWithAnnotation(PayCode.class);  
+
+         if (beansWithAnnotation != null) {  
+             payMap = new HashMap&lt;&gt;();  
+             beansWithAnnotation.forEach((key, value) -&gt;{  
+                 String bizType = value.getClass().getAnnotation(PayCode.class).value();  
+                 payMap.put(bizType, (IPay) value);  
+             });  
+         }  
+     }  
+
+     public void pay(String code) {  
+        payMap.get(code).pay();  
+     }  
+}
+</code></pre></div>
+                    <div class="post_footer">
+                        
+                        <div class="meta">
+                            <div class="info">
+                                <span class="field tags">
+                                    <i class="ri-stack-line"></i>
+                                    
+                                    <a href="https://whiteppure.github.io/iblog/tags/java/">Java</a>
+                                    
+                                    <a href="https://whiteppure.github.io/iblog/tags/%E8%A7%84%E8%8C%83/">规范</a>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                
+                <div class="doc_comments"></div>
+                
+            </div>
+        </div>
+    </div>
+    <a id="back_to_top" href="#" class="back_to_top"><i class="ri-arrow-up-s-line"></i></a>
+    <footer class="footer">
+    <div class="powered_by">
+        <a href="https://varkai.com">Designed by VarKai,</a>
+        <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+    </div>
+
+    <div class="footer_slogan">
+        <span>whitepure@2021</span>
+    </div>
+</footer>
+    <script src="https://whiteppure.github.io/iblog/js/jquery-3.5.1.min.js"></script>
+<link href="https://whiteppure.github.io/iblog/css/fancybox.min.css" rel="stylesheet">
+<script src="https://whiteppure.github.io/iblog/js/fancybox.min.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/zozo.js"></script>
+
+
+<script type="text/javascript" async
+    src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\[\[', '\]\]']],
+                processEscapes: true,
+                processEnvironments: true,
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+                TeX: {
+                    equationNumbers: { autoNumber: "AMS" },
+                    extensions: ["AMSmath.js", "AMSsymbols.js"]
+                }
+            }
+        });
+
+        MathJax.Hub.Queue(function () {
+            
+            
+            
+            var all = MathJax.Hub.getAllJax(), i;
+            for (i = 0; i < all.length; i += 1) {
+                all[i].SourceElement().parentNode.className += ' has-jax';
+            }
+        });
+    </script>
+
+<style>
+    code.has-jax {
+        font: inherit;
+        font-size: 100%;
+        background: inherit;
+        border: inherit;
+        color: #515151;
+    }
+</style>
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jspdf/1.0.106/jspdf.debug.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+
+<script type="text/javascript">
+    var downPdf = document.getElementById("export_pdf");
+    var pdfContent = document.getElementById('pdf_content');
+    downPdf.onclick = () => {
+        html2canvas(pdfContent, {
+            onrendered:function(canvas) {
+
+                var contentWidth = canvas.width;
+                var contentHeight = canvas.height;
+
+                
+                
+
+                var pageHeight = contentWidth / 592.28 * 841.89;
+                
+                var leftHeight = contentHeight;
+                
+                var position = 0;
+                
+                
+                
+
+                var imgWidth = 595.28;
+                var imgHeight = 585.28/contentWidth * contentHeight;
+
+                var pageData = canvas.toDataURL('image/jpeg', 1.0);
+
+                var pdf = new jsPDF('', 'pt', 'a4');
+
+                
+                
+
+                
+                
+                if (leftHeight < pageHeight) {
+                    pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
+                } else {
+                    while(leftHeight > 0) {
+                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                        leftHeight -= pageHeight;
+                        position -= 841.89;
+                        
+                        if(leftHeight > 0) {
+                            pdf.addPage();
+                        }
+                    }
+                }
+
+                pdf.save('whitepure_blog.pdf');
+            }
+        })
+    }
+</script>
+</body>
+
+</html>
