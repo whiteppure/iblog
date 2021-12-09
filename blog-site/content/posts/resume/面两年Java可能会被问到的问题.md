@@ -27,7 +27,7 @@ slug: "interview-junior-javaer"
 ### [ArrayList与LinkedList](/iblog/posts/rookie/rookie-java-container/#arraylist)
 ### [介绍一下HashMap](/iblog/posts/essays/java-hashmap/)
 ### [Object类常用方法：equals、hash等](/iblog/posts/rookie/rookie-objectclass-methods/)
-### [SQL优化思路是什么及索引](/iblog/posts/essays/sql-select-fast/#mysqlsql优化)
+### [SQL优化相关](/iblog/posts/essays/sql-select-fast/#mysqlsql优化)
 ### [常用的设计模式：工厂、单例、代理、模板、适配器、策略等](/iblog/posts/rookie/rookie-object-oriented/#设计模式)
 ### [说一下你对JVM的认识](/iblog/posts/jvm/jvm-start/#jvm整体结构)
 ### [介绍一下JVM中的堆](/iblog/posts/jvm/jvm-heap/#堆)

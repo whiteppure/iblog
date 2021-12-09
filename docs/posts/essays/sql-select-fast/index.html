@@ -117,8 +117,36 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e6%85%a2sql%e4%bc%98%e5%8c%96%e6%80%9d%e8%b7%af">
-                    慢SQL优化思路
+                <a class="nav-link text-left" href="#%e4%bc%98%e5%8c%96%e6%80%9d%e8%b7%af">
+                    优化思路
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%88%86%e8%a1%a8">
+                    分表
                 </a>
             </li>
             
@@ -1122,11 +1150,13 @@
 <li><a href="https://dev.mysql.com/doc/refman/8.0/en/using-explain.html">https://dev.mysql.com/doc/refman/8.0/en/using-explain.html</a></li>
 <li><a href="https://www.javanav.com/interview/7b1d6961b1e344fa9b6ea74819d4f417.html">https://www.javanav.com/interview/7b1d6961b1e344fa9b6ea74819d4f417.html</a></li>
 </ul>
-<p>为什么要进行SQL优化？</p>
+<p>为什么要进行优化？</p>
 <ul>
-<li>SQL语句欠佳、执行过程耗时较长；</li>
-<li>索引失效；</li>
+<li>SQL语句欠佳、执行过程耗时较长、索引失效；</li>
+<li>单库数据量越来越大，存储出现问题；</li>
+<li>在高并发场景下，大量请求阻塞；</li>
 </ul>
+<p>总之一句话，数据库出现性能瓶颈。</p>
 <p>想要进行SQL优化首先要弄懂SQL编写过程和SQL执行过程是存在区别的：</p>
 <ul>
 <li>SQL编写过程：</li>
@@ -1145,15 +1175,12 @@
 <blockquote>
 <p>Hint: 简单来说就是在某些特定的场景下人工协助MySQL优化器的工作，使其生成最优的执行计划。一般来说，优化器的执行计划都是最优化的，不过在某些特定场景下，执行计划可能不是最优化。</p>
 </blockquote>
-<h3 id="慢sql优化思路">慢SQL优化思路</h3>
-<p>引起 SQL 查询很慢的原因与解决办法：</p>
-<p>1、没有索引。解决办法：</p>
-<ul>
-<li>根据 where 和 order by 使用比较频繁的字段创建索引，提高查询效率</li>
-<li>索引不宜过多，单表最好不要超过 6 个。索引过多会导致占用存储空间变大；insert、update 变慢</li>
-<li>删除未使用的索引</li>
-</ul>
-<p>2、索引未生效。解决办法：</p>
+<h3 id="优化思路">优化思路</h3>
+<p>数据库优化方案很多，主要分为两大类：软件层面、硬件层面。</p>
+<p>软件层面包括：SQL 调优、表结构优化、读写分离、数据库集群、分库分表等；硬件层面主要是增加机器性能。对于后端程序员来说最主要的就是软件层面优化索引和分库分表了。</p>
+<ol>
+<li>SQL调优主要目的是尽可能的让那些慢 SQL 变快，手段其实也很简单就是让 SQL 执行尽量命中索引：</li>
+</ol>
 <ul>
 <li>避免在 where 子句中对字段进行 null 值判断，创建表默认值是 NULL。尽量使用 NOT NULL，或使用特殊值，如 0、-1</li>
 <li>避免在 where 子句中使用 != 或 &lt;&gt; 操作符， MySQL 只有对以下操作符才使用索引：&lt;、&lt;=、=、&gt;、&gt;=、BETWEEN、IN、非 % 开头的 LIKE</li>
@@ -1163,15 +1190,59 @@
 <li>避免在索引列上使用计算、函数</li>
 <li>in 和 not in 慎用，能用 between 不要用 in</li>
 <li>select 子句中避免使用 *</li>
+<li>根据 where 和 order by 使用比较频繁的字段创建索引，提高查询效率</li>
+<li>索引不宜过多，单表最好不要超过 6 个。索引过多会导致占用存储空间变大；insert、update 变慢</li>
+<li>删除未使用的索引</li>
 </ul>
-<p>3、单表数据量太大。解决办法：</p>
+<ol start="2">
+<li>单表数据量太大。解决办法：</li>
+</ol>
 <ul>
 <li>分页查询(在索引上完成排序分页操作、借助主键进行关联)</li>
 <li>单表数据过大，进行分库分表</li>
 <li>考虑使用非关系型数据库提高查询效率</li>
 <li>全文索引场景较多，考虑使用 ElasticSearch、solr</li>
 </ul>
-<p>对于后端程序员来说最主要的就是优化索引和分库分表了。</p>
+<ol start="3">
+<li>其他优化：</li>
+</ol>
+<ul>
+<li>数据库配置参数调整</li>
+<li>数据库表结构优化</li>
+<li>硬件优化，增加服务器数量，扩大服务器内存，CPU核数</li>
+</ul>
+<h3 id="分表">分表</h3>
+<ul>
+<li><a href="https://mp.weixin.qq.com/s/-Jipxjwe-jAax4hJSe-9Jg">https://mp.weixin.qq.com/s/-Jipxjwe-jAax4hJSe-9Jg</a></li>
+</ul>
+<p>当数据库存储出现瓶颈的时候，就需要进行分库分表了。</p>
+<p>分表主要是为了减少单张表的大小，解决单表数据量带来的性能问题。当单表数据增量过快，业界流传是超过500万的数据量就要考虑分表了。当然500万只是一个经验值，大家可以根据实际情况做出决策。</p>
+<p>分表有几个维度，一是水平切分和垂直切分，二是单库内分表和多库内分表：</p>
+<ul>
+<li>
+<p>水平拆分：基于数据划分，表结构相同，数据不同。例如，现有一个业务表，新建业务表2，业务表与业务表2中字段一致，将ID为奇数的存储在业务表中，偶数的存放在业务表2中；</p>
+</li>
+<li>
+<p>垂直拆分：基于表或字段划分，表结构不同。例如，将业务表中不常用的字段name和age存放到业务表2中；</p>
+</li>
+<li>
+<p>单库内拆：先分库，将不同数据库中的表拆分为了多个子表，多个子表存在于同一数据库中；
+<img src="/iblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-013.png" alt="MySqlSQL优化及锁机制-013"></p>
+</li>
+<li>
+<p>多库拆分：
+<img src="/iblog/posts/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-014.png" alt="MySqlSQL优化及锁机制-014"></p>
+</li>
+</ul>
+<p>在一个数据库中将一张表拆分为几个子表在一定程度上可以解决单表查询性能的问题，但是也会遇到一个问题：单数据库存储瓶颈。所以在业界用的更多的还是将子表拆分到多个数据库中。</p>
+<p>分库分表问题：</p>
+<ul>
+<li>跨库关联查询</li>
+<li>分布式事务</li>
+<li>排序、分页、函数计算问题</li>
+<li>分布式 ID</li>
+<li>多数据源</li>
+</ul>
 <h3 id="索引">索引</h3>
 <p>MySQL官方对索引的定义为：索引（Index）是帮助MySQL高效获取数据的数据结构。可以得到索引的本质：索引是数据结构。相当于一本书的目录或者字典。</p>
 <p>比如，要查“mysql”这个单词，我们肯定需要定位到m字母，然后从下往下找到y字母，再找到剩下的sql；如果没有索引，那么你可能需要逐个逐个寻找。你可以简单理解为，索引维护的就是一组排好序的数据。</p>
