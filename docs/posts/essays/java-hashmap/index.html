@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>HashMap详解 ｜ whitepure</title>
+	<title>HashMap详解 ｜ 至简</title>
 	
     
     
-    <meta name="description" content="" />
+    <meta name="description" content="相关概念 capacity： 容量，默认16； loadFactor： 负载因子，表示HashMap满的程度，默认值为0.75f，也就是说默认情况下，当HashMap中" />
     
 
     
@@ -566,35 +566,36 @@
         <a id="menu_icon"><i class="ri-menu-line"></i></a>
     </div>
 </div>
-        
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
+                    <span>至简</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">大道至简</p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
         <div class="content">
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
@@ -638,7 +639,7 @@ And when they become too small (due to removal or resizing) they are converted b
 <p>举个极端例子，现在单链表的节点个数是9，开始变成红黑树，然后红黑树节点个数又变成8，就又得变成单链表，然后节点个数又变成9，就又得变成红黑树，这样的情况消耗严重浪费。因此干脆错开两个阈值的大小，使得变成红黑树后“不那么容易”就需要变回单链表，同样，使得变成单链表后，“不那么容易”就需要变回红黑树。</p>
 <h3 id="引入红黑树后如果单链表节点个数超过8个是否一定会树化">引入红黑树后，如果单链表节点个数超过8个是否一定会树化</h3>
 <p>不一定，在进行树化之前会进行判断<code>(n = tab.length) &lt; MIN_TREEIFY_CAPACITY)</code>是否需要扩容，如果表中数组元素小于这个阈值（默认是64），就会进行扩容。 因为扩容不仅能增加表中的容量，还能缩短单链表的节点数，从而更长远的解决链表遍历慢问题。</p>
-<pre><code>    /**
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    /**
      * Replaces all linked nodes in bin at index for given hash unless
      * table is too small, in which case resizes instead.
      */
@@ -662,14 +663,14 @@ And when they become too small (due to removal or resizing) they are converted b
                 hd.treeify(tab);
         }
     }
-</code></pre><h2 id="容量">容量</h2>
+</code></pre></div><h2 id="容量">容量</h2>
 <h3 id="为什么负载因子默认是075">为什么负载因子默认是0.75</h3>
 <p>HashMap中的负载因子这个值现在在JDK的源码中默认是0.75：</p>
-<pre><code>/**
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">/**
  * The load factor used when none specified in constructor.
  */
 static final float DEFAULT_LOAD_FACTOR = 0.75f;
-</code></pre><p>在<a href="https://docs.oracle.com/javase/6/docs/api/java/util/HashMap.html">JDK的官方文档</a>中解释如下：</p>
+</code></pre></div><p>在<a href="https://docs.oracle.com/javase/6/docs/api/java/util/HashMap.html">JDK的官方文档</a>中解释如下：</p>
 <blockquote>
 <p>As a general rule, the default load factor (.75) offers a good tradeoff between time and space costs.
 Higher values decrease the space overhead but increase the lookup cost (reflected in most of the operations of the HashMap class, including get and put).
@@ -689,11 +690,11 @@ If the initial capacity is greater than the maximum number of entries divided by
 <p>为了减少Hash碰撞，尽量使Hash算法的结果均匀分布。</p>
 <p>当使用put方法时，到底存入HashMap中的那个数组中？这时是通过hash算法决定的，如果某一个数组中的链表过长旧会影响查询的效率；那么为了避免出现hash碰撞，让hash尽可能的散列分布，就需要在hash算法上做文章。</p>
 <p>JDK1.7通过逻辑与运算，来判断这个元素该进入哪个数组；在下面的代码中length的长度始终为不小于指定容量的2的幂数。</p>
-<pre><code>static int indexFor(int h, int length) {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">static int indexFor(int h, int length) {
     return h &amp; (length - 1);
 }
-</code></pre><p>为了更好的理解举个例子：假设h=2或h=3，length=15，进行与运算，最终逻辑与运算后的结果是一致的，因为最终结果是一致的所以就发生了hash碰撞，这种问题多了以后会造成容器中的元素分布不均匀，都分配在同一个数组上，在查询的时候就减慢了查询的效率，另一方面也造成空间的浪费。</p>
-<pre><code>-- 2转换为2进制与15-1进行&amp;运算
+</code></pre></div><p>为了更好的理解举个例子：假设h=2或h=3，length=15，进行与运算，最终逻辑与运算后的结果是一致的，因为最终结果是一致的所以就发生了hash碰撞，这种问题多了以后会造成容器中的元素分布不均匀，都分配在同一个数组上，在查询的时候就减慢了查询的效率，另一方面也造成空间的浪费。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">-- 2转换为2进制与15-1进行&amp;运算
   0000 0010
 &amp; 0000 1110 
 ———————————— 
@@ -704,9 +705,9 @@ If the initial capacity is greater than the maximum number of entries divided by
 &amp; 0000 1110 
 ————————————
   0000 1110
-</code></pre><p>为了避免上面<code>length=15</code>这类问题出现，所以集合的容量采用必须是2的N次幂这种方式，因为2的N次幂的结果减一转换为二进制后都是以<code>...1111</code>结尾的，所以在进行逻辑与运算时碰撞几率小。</p>
+</code></pre></div><p>为了避免上面<code>length=15</code>这类问题出现，所以集合的容量采用必须是2的N次幂这种方式，因为2的N次幂的结果减一转换为二进制后都是以<code>...1111</code>结尾的，所以在进行逻辑与运算时碰撞几率小。</p>
 <p>在JDK1.8中，在<code>putVal()</code>方法中通过<code>i = (n - 1) &amp; hash</code>来计算key的散列地址：</p>
-<pre><code>final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
                    boolean evict) {
         // 此处省略了代码
         // i = (n - 1) &amp; hash]
@@ -719,13 +720,13 @@ If the initial capacity is greater than the maximum number of entries divided by
             // 省略了代码
         }
 }
-</code></pre><blockquote>
+</code></pre></div><blockquote>
 <p>这里的 &ldquo;&amp;&rdquo; 等同于 %&quot;，但是&quot;%&ldquo;运算的速度并没有&rdquo;&amp;&ldquo;的操作速度快；&quot;&amp;&ldquo;操作能代替&rdquo;%&ldquo;运算，必须满足一定的条件，也就是<code>a%b=a&amp;(b-1)</code>仅当b是2的n次方的时候方能成立。</p>
 </blockquote>
 <p><strong>容器容量怎么保持始终为2的N次方？</strong></p>
 <p><code>HashMap</code>的<code>tableSizeFor()</code>方法做了处理，能保证n永远都是2次幂。</p>
 <p>如果用户制定了初始容量，那么HashMap会计算出比该数大的第一个2的幂作为初始容量；另外就是在扩容的时候，也是进行成倍的扩容，即4变成8，8变成16。</p>
-<pre><code>/**
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">/**
  * Returns a power of two size for the given target capacity.
  */
 static final int tableSizeFor(int cap) {
@@ -754,39 +755,39 @@ static final int tableSizeFor(int cap) {
     // 即最终返回 32 = 2 的 (n=5)次方
     return (n &lt; 0) ? 1 : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
 }
-</code></pre><p>发现上面在进行<code>&gt;&gt;&gt;</code>操作时会将cap的二进制值变为最高位后边全是1，<code>00010001 -&gt; 00011111</code>这个算法就导致了任意传入一个数值，会将该数字变为它的2倍减1，因为任何尾数全为1的在加1都为2的倍数。</p>
+</code></pre></div><p>发现上面在进行<code>&gt;&gt;&gt;</code>操作时会将cap的二进制值变为最高位后边全是1，<code>00010001 -&gt; 00011111</code>这个算法就导致了任意传入一个数值，会将该数字变为它的2倍减1，因为任何尾数全为1的在加1都为2的倍数。</p>
 <p>至于开头减1，是因为如果给定的n已经是2的次幂，但是不进行减1操作的话，那么得到的值就是大于给定值的最小2的次幂值，例如传入4就会返回8。</p>
 <p>为什么最大右移到16位，因为可以得到的最大值是32个1，这个是int类型存储变量的最大值，在往后就没意义了。</p>
 <h3 id="默认初始化容量为什么是16">默认初始化容量为什么是16</h3>
 <p>没有找到相关解释，推断这应该就是个经验值，既然一定要设置一个默认的2^n 作为初始值，那么就需要在效率和内存使用上做一个权衡。这个值既不能太小，也不能太大。太小了就有可能频繁发生扩容，影响效率。太大了又浪费空间，不划算。所以，16就作为一个经验值被采用了。</p>
 <p>关于默认容量的定义：</p>
-<pre><code>/**
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">/**
  * The default initial capacity - MUST be a power of two.
  */
 static final int DEFAULT_INITIAL_CAPACITY = 1 &lt;&lt; 4; // aka 16
-</code></pre><p>故意把16写成<code>1 &lt;&lt; 4</code>这种形式，就是提醒开发者，这个地方要是2的次幂。</p>
+</code></pre></div><p>故意把16写成<code>1 &lt;&lt; 4</code>这种形式，就是提醒开发者，这个地方要是2的次幂。</p>
 <h3 id="初始化容量设置多少合适">初始化容量设置多少合适</h3>
 <p>当我们使用<code>HashMap(int initialCapacity)</code>来初始化容量的时候，<code>HashMap</code>并不会使用我们传进来的<code>initialCapacity</code>直接作为初始容量。JDK会默认帮我们计算一个相对合理的值当做初始容量。所谓合理值，其实是找到第一个比用户传入的值大的2的幂。</p>
 <p>如果创建hashMap初始化容量设置为7，那么JDK通过计算会创建一个初始化为8的hashMap。当hashMap中的元素到<code>0.75 * 8 = 6</code>就会进行扩容，这明显是我们不希望看到的。</p>
 <p>参考JDK8中<code>putAll</code>方法中的实现：</p>
-<pre><code>(int) ((float) expectedSize / 0.75F + 1.0F);
-</code></pre><p>通过<code>expectedSize / 0.75F + 1.0F</code>计算，<code>7/0.75 + 1 = 10</code> ,10经过JDK处理之后，会被设置成16，这就大大的减少了扩容的几率。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">(int) ((float) expectedSize / 0.75F + 1.0F);
+</code></pre></div><p>通过<code>expectedSize / 0.75F + 1.0F</code>计算，<code>7/0.75 + 1 = 10</code> ,10经过JDK处理之后，会被设置成16，这就大大的减少了扩容的几率。</p>
 <p>当我们明确知道HashMap中元素的个数的时候，把默认容量设置成<code>expectedSize / 0.75F + 1.0F</code> 是一个在性能上相对好的选择，但是，同时也会牺牲些内存。</p>
 <p>这个算法在guava中有实现，开发的时候，可以直接通过Maps类创建一个HashMap：</p>
-<pre><code>Map&lt;String, String&gt; map = Maps.newHashMapWithExpectedSize(7);
-</code></pre><pre><code>public static &lt;K, V&gt; HashMap&lt;K, V&gt; newHashMapWithExpectedSize(int expectedSize) {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">Map&lt;String, String&gt; map = Maps.newHashMapWithExpectedSize(7);
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static &lt;K, V&gt; HashMap&lt;K, V&gt; newHashMapWithExpectedSize(int expectedSize) {
     return new HashMap(capacity(expectedSize));
 }
 
 static int capacity(int expectedSize) {
     if (expectedSize &lt; 3) {
-        CollectPreconditions.checkNonnegative(expectedSize, &quot;expectedSize&quot;);
+        CollectPreconditions.checkNonnegative(expectedSize, &#34;expectedSize&#34;);
         return expectedSize + 1;
     } else {
         return expectedSize &lt; 1073741824 ? (int)((float)expectedSize / 0.75F + 1.0F) : 2147483647;
     }
 }
-</code></pre><h2 id="扩容">扩容</h2>
+</code></pre></div><h2 id="扩容">扩容</h2>
 <ul>
 <li>JDK1.7: 先扩容在添加元素；</li>
 <li>JDK1.8: 先添加元素在扩容；</li>
@@ -802,10 +803,10 @@ static int capacity(int expectedSize) {
 </blockquote>
 <h3 id="什么时机进行扩容">什么时机进行扩容</h3>
 <p>HashMap的扩容条件就是当HashMap中的元素个数（size）超过临界值（threshold）时就会自动扩容。在HashMap中，<code>threshold = loadFactor * capacity</code>。默认情况下负载因子为0.75,理解为当容器中元素到容器的3/4时就会扩容。</p>
-<pre><code> if (++size &gt; threshold)
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> if (++size &gt; threshold)
     resize();
-</code></pre><p>HashMap的容量是有上限的，必须小于<code>1&lt;&lt;30</code>，即<code>1073741824</code>。如果容量超出了这个数，则不再增长，且阈值会被设置为<code>Integer.MAX_VALUE</code>：</p>
-<pre><code>// Java8
+</code></pre></div><p>HashMap的容量是有上限的，必须小于<code>1&lt;&lt;30</code>，即<code>1073741824</code>。如果容量超出了这个数，则不再增长，且阈值会被设置为<code>Integer.MAX_VALUE</code>：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// Java8
 if (oldCap &gt;= MAXIMUM_CAPACITY) {
     threshold = Integer.MAX_VALUE;
     return oldTab;
@@ -815,12 +816,12 @@ if (oldCapacity == MAXIMUM_CAPACITY) {
     threshold = Integer.MAX_VALUE;
     return;
 }
-</code></pre><h3 id="17扩容">1.7扩容</h3>
+</code></pre></div><h3 id="17扩容">1.7扩容</h3>
 <ul>
 <li><code>新容量 = 旧容量 * 2</code></li>
 <li><code>新阈值 = 新容量 * 负载因子</code></li>
 </ul>
-<pre><code>void addEntry(int hash, K key, V value, int bucketIndex) {  
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">void addEntry(int hash, K key, V value, int bucketIndex) {  
     //size：The number of key-value mappings contained in this map.  
     //threshold：The next size value at which to resize (capacity * load factor)  
     //数组扩容条件：1.已经存在的key-value mappings的个数大于等于阈值  
@@ -832,7 +833,7 @@ if (oldCapacity == MAXIMUM_CAPACITY) {
     }  
     createEntry(hash, key, value, bucketIndex);  
 } 
-</code></pre><pre><code>void resize(int newCapacity) {   //传入新的容量
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">void resize(int newCapacity) {   //传入新的容量
     Entry[] oldTable = table;    //引用扩容前的Entry数组
     int oldCapacity = oldTable.length;
     if (oldCapacity == MAXIMUM_CAPACITY) {  //扩容前的数组大小如果已经达到最大(2^30)了
@@ -845,8 +846,8 @@ if (oldCapacity == MAXIMUM_CAPACITY) {
     table = newTable;                           //HashMap的table属性引用新的Entry数组
     threshold = (int) (newCapacity * loadFactor);//修改阈值
 }
-</code></pre><p>通过transfer方法将旧数组上的元素转移到扩容后的新数组上</p>
-<pre><code>void transfer(Entry[] newTable) {
+</code></pre></div><p>通过transfer方法将旧数组上的元素转移到扩容后的新数组上</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">void transfer(Entry[] newTable) {
     Entry[] src = table;                   //src引用了旧的Entry数组
     int newCapacity = newTable.length;
     for (int j = 0; j &lt; src.length; j++) { //遍历旧的Entry数组
@@ -863,11 +864,11 @@ if (oldCapacity == MAXIMUM_CAPACITY) {
         }
     }
 }
-</code></pre><h3 id="18扩容">1.8扩容</h3>
+</code></pre></div><h3 id="18扩容">1.8扩容</h3>
 <p>容量变为原来的2倍，阈值也变为原来的2倍。容量和阈值都变为原来的2倍时，负载因子还是不变。</p>
 <p>在1.8时做了一些优化，文档注释写的很清楚：&ldquo;元素的位置要么是在原位置，要么是在原位置再移动2次幂的位置&rdquo;。也就是对比1.7的迁移到新的数组上省去了重新计算hash值的时间。</p>
 <p>这里的&quot;2次幂的位置&quot;是指长度为原来数组元素的两倍的位置;举个例子,现在容量为16，要扩容到32，要将之前的元素迁移过去，要根据hash值来判断迁移过去的位置；假设元素A：hash值：0101 0101；根据代码<code>h &amp; (length - 1)</code>可得<code>元素A &amp; 15</code>、<code>元素A &amp; 31</code></p>
-<pre><code>扩容之前的位置：
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">扩容之前的位置：
   0101 0101
 &amp; 0000 1111
 ————————————
@@ -878,8 +879,8 @@ if (oldCapacity == MAXIMUM_CAPACITY) {
 &amp; 0001 1111
 ————————————
   0001 0101
-</code></pre><p>发现规律：扩容前的hash值和扩容后的hash值，如果元素A二进制形式第三位如果是0，扩容之后就还是原来的位置，如果是1扩容后就是原来的位置加16，而16就是扩容的大小。</p>
-<pre><code> /**
+</code></pre></div><p>发现规律：扩容前的hash值和扩容后的hash值，如果元素A二进制形式第三位如果是0，扩容之后就还是原来的位置，如果是1扩容后就是原来的位置加16，而16就是扩容的大小。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> /**
      * Initializes or doubles table size.  If null, allocates in
      * accord with initial capacity target held in field threshold.
      * Otherwise, because we are using power-of-two expansion, the
@@ -914,7 +915,7 @@ if (oldCapacity == MAXIMUM_CAPACITY) {
                       (int)ft : Integer.MAX_VALUE);
         }
         threshold = newThr;
-        @SuppressWarnings({&quot;rawtypes&quot;,&quot;unchecked&quot;})
+        @SuppressWarnings({&#34;rawtypes&#34;,&#34;unchecked&#34;})
         Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])new Node[newCap];
         table = newTab;
         if (oldTab != null) {
@@ -961,7 +962,7 @@ if (oldCapacity == MAXIMUM_CAPACITY) {
         }
         return newTab;
     }
-</code></pre><h2 id="参考文章">参考文章</h2>
+</code></pre></div><h2 id="参考文章">参考文章</h2>
 <ul>
 <li><a href="https://blog.csdn.net/u010841296/article/details/82832166">https://blog.csdn.net/u010841296/article/details/82832166</a></li>
 <li><a href="https://blog.csdn.net/Elliot_Elliot/article/details/115610387">https://blog.csdn.net/Elliot_Elliot/article/details/115610387</a></li>
@@ -992,7 +993,25 @@ if (oldCapacity == MAXIMUM_CAPACITY) {
                 </div>
                 
                 
-                <div class="doc_comments"></div>
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+    })
+</script>
                 
             </div>
         </div>

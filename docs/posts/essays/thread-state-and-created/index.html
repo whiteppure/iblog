@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>线程状态及创建方式 ｜ whitepure</title>
+	<title>线程状态及创建方式 ｜ 至简</title>
 	
     
     
-    <meta name="description" content="" />
+    <meta name="description" content="线程状态及转换 线程状态共包含6种，6中状态又可以互相的转换。 新建状态(New): 创建了线程后尚未启动； 可运行状态(Runnable): 可能正在运行，也可能正在等" />
     
 
     
@@ -434,35 +434,36 @@
         <a id="menu_icon"><i class="ri-menu-line"></i></a>
     </div>
 </div>
-        
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
+                    <span>至简</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">大道至简</p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
         <div class="content">
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
@@ -500,7 +501,7 @@
 <p>在Java中，创建一个线程，有且仅有一种方式: 创建一个<code>Thread</code>类实例，并调用它的<code>start</code>方法。</p>
 <h3 id="thread类">Thread类</h3>
 <p>通过继承<code>Thread</code>类，重写<code>run()</code>方法来创建线程。</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         ThreadDemo thread1 = new ThreadDemo();
         thread1.start();
@@ -509,43 +510,43 @@
 class ThreadDemo extends Thread {
     @Override
     public void run() {
-        System.out.printf(&quot;通过继承Thread类的方式创建线程,线程 %s 启动&quot;,Thread.currentThread().getName());
+        System.out.printf(&#34;通过继承Thread类的方式创建线程,线程 %s 启动&#34;,Thread.currentThread().getName());
     }
 }
-</code></pre><h3 id="runnable接口">Runnable接口</h3>
+</code></pre></div><h3 id="runnable接口">Runnable接口</h3>
 <p>实现 <code>Runnale</code> 接口，将它作为 <code>target</code> 参数传递给 <code>Thread</code> 类构造函数的方式创建线程。</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         new Thread(() -&gt; {
-            System.out.printf(&quot;通过实现Runnable接口的方式，重写run方法创建线程；线程 %s 启动&quot;,Thread.currentThread().getName());
+            System.out.printf(&#34;通过实现Runnable接口的方式，重写run方法创建线程；线程 %s 启动&#34;,Thread.currentThread().getName());
         }).start();
     }
 }
-</code></pre><h3 id="callable接口">Callable接口</h3>
+</code></pre></div><h3 id="callable接口">Callable接口</h3>
 <p>通过实现 <code>Callable</code>接口，来创建一个带有返回值的线程。</p>
 <p>在Callable执行完之前的这段时间，主线程可以先去做一些其他的事情，事情都做完之后，再获取Callable的返回结果。可以通过isDone()来判断子线程是否执行完。</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         FutureTask&lt;String&gt; futureTask = new FutureTask&lt;&gt;(() -&gt; {
-            System.out.printf(&quot;通过实现Callable接口的方式，重写call方法创建线程；线程 %s 启动&quot;, Thread.currentThread().getName());
+            System.out.printf(&#34;通过实现Callable接口的方式，重写call方法创建线程；线程 %s 启动&#34;, Thread.currentThread().getName());
             System.out.println();
             Thread.sleep(10000);
-            return &quot;我是call方法返回值&quot;;
+            return &#34;我是call方法返回值&#34;;
         });
         new Thread(futureTask).start();
 
-        System.out.println(&quot;主线程工作中 ...&quot;);
+        System.out.println(&#34;主线程工作中 ...&#34;);
         String callRet = null;
         while (callRet == null){
             if(futureTask.isDone()){
                 callRet = futureTask.get();
             }
-            System.out.println(&quot;主线程继续工作 ...&quot;);
+            System.out.println(&#34;主线程继续工作 ...&#34;);
         }
-        System.out.println(&quot;获取call方法返回值：&quot;+ callRet);
+        System.out.println(&#34;获取call方法返回值：&#34;+ callRet);
     }
 }
-</code></pre><h3 id="线程池">线程池</h3>
+</code></pre></div><h3 id="线程池">线程池</h3>
 <p>线程池做的工作主要是控制运行的线程的数量，处理过程中将任务放入队列，然后在线程创建后启动这些任务，如果线程数量超过了最大数量超出数量的线程排队等候，等其它线程执行完毕，再从队列中取出任务来执行。</p>
 <p>它的主要特点为：线程复用，控制最大并发数，管理线程。</p>
 <p>优点：</p>
@@ -568,21 +569,21 @@ class ThreadDemo extends Thread {
 <li><code>newSingleThreadExecutor</code> 将 <code>corePoolSize</code> 和 <code>maximumPoolSize</code> 都设置为1，它使用的 <code>LinkedBlockingQueue</code>。</li>
 </ul>
 <p>源代码</p>
-<pre><code>    public static ExecutorService newSingleThreadExecutor() {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public static ExecutorService newSingleThreadExecutor() {
         return new FinalizableDelegatedExecutorService
             (new ThreadPoolExecutor(1, 1,
                                     0L, TimeUnit.MILLISECONDS,
                                     new LinkedBlockingQueue&lt;Runnable&gt;()));
     }
-</code></pre><p>代码演示</p>
-<pre><code>public class MainTest {
+</code></pre></div><p>代码演示</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         ExecutorService executor1 = null;
         try {
             executor1 = Executors.newSingleThreadExecutor();
             for (int i = 1; i &lt;= 10; i++) {
                 executor1.execute(() -&gt; {
-                    System.out.println(Thread.currentThread().getName() + &quot;执行了&quot;);
+                    System.out.println(Thread.currentThread().getName() + &#34;执行了&#34;);
                 });
             }
         } finally {
@@ -590,26 +591,26 @@ class ThreadDemo extends Thread {
         }
     }
 }
-</code></pre><h5 id="fixedthreadpool">FixedThreadPool</h5>
+</code></pre></div><h5 id="fixedthreadpool">FixedThreadPool</h5>
 <ul>
 <li>使用<code>Executors.newFixedThreadPool(int)</code>创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待</li>
 <li><code>newFixedThreadPool</code> 创建的线程池 <code>corePoolSize</code> 和 <code>maximumPoolSize</code> 值是相等的，它使用的 <code>LinkedBlockingQueue</code>。</li>
 </ul>
 <p>源代码</p>
-<pre><code>    public static ExecutorService newFixedThreadPool(int nThreads) {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public static ExecutorService newFixedThreadPool(int nThreads) {
         return new ThreadPoolExecutor(nThreads, nThreads,
                                       0L, TimeUnit.MILLISECONDS,
                                       new LinkedBlockingQueue&lt;Runnable&gt;());
     }
-</code></pre><p>代码演示</p>
-<pre><code>public class MainTest {
+</code></pre></div><p>代码演示</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         ExecutorService executor1 = null;
         try {
             executor1 = Executors.newFixedThreadPool(10);
             for (int i = 1; i &lt;= 10; i++) {
                 executor1.execute(() -&gt; {
-                    System.out.println(Thread.currentThread().getName() + &quot;执行了&quot;);
+                    System.out.println(Thread.currentThread().getName() + &#34;执行了&#34;);
                 });
             }
         } finally {
@@ -617,26 +618,26 @@ class ThreadDemo extends Thread {
         }
     }
 }
-</code></pre><h5 id="cachedthreadpool">CachedThreadPool</h5>
+</code></pre></div><h5 id="cachedthreadpool">CachedThreadPool</h5>
 <ul>
 <li>使用<code>Executors.newCachedThreadPool()</code>创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。</li>
 <li><code>newCachedThreadPool</code> 将 <code>corePoolSize</code> 设置为0，将 <code>maximumPoolSize</code> 设置为 <code>Integer.MAX_VALUE</code>，使用的 <code>SynchronousQueue</code>，也就是说来了任务就创建线程运行，当线程空闲超过60秒，就销毁线程。</li>
 </ul>
 <p>源代码</p>
-<pre><code>    public static ExecutorService newCachedThreadPool() {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public static ExecutorService newCachedThreadPool() {
         return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
                                       60L, TimeUnit.SECONDS,
                                       new SynchronousQueue&lt;Runnable&gt;());
     }
-</code></pre><p>代码演示</p>
-<pre><code>public class MainTest {
+</code></pre></div><p>代码演示</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         ExecutorService executor1 = null;
         try {
             executor1 = Executors.newCachedThreadPool();
             for (int i = 1; i &lt;= 10; i++) {
                 executor1.execute(() -&gt; {
-                    System.out.println(Thread.currentThread().getName() + &quot;执行了&quot;);
+                    System.out.println(Thread.currentThread().getName() + &#34;执行了&#34;);
                 });
             }
         } finally {
@@ -644,8 +645,8 @@ class ThreadDemo extends Thread {
         }
     }
 }
-</code></pre><h4 id="线程池参数">线程池参数</h4>
-<pre><code>    public ThreadPoolExecutor(int corePoolSize,
+</code></pre></div><h4 id="线程池参数">线程池参数</h4>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public ThreadPoolExecutor(int corePoolSize,
                               int maximumPoolSize,
                               long keepAliveTime,
                               TimeUnit unit,
@@ -654,7 +655,7 @@ class ThreadDemo extends Thread {
                               RejectedExecutionHandler handler) {
                  // ...
     }
-</code></pre><ul>
+</code></pre></div><ul>
 <li><code>corePoolSize</code>: 线程池中的常驻核心线程数,可理解为初始化线程数</li>
 <li><code>maximumPoolSize</code>：线程池能够容纳同时执行的最大线程数，此值必须大于等于1</li>
 <li><code>threadFactory</code>：线程工厂；表示生成线程池中工作线程的线程工厂，用于创建线程，一般用默认的即可</li>
@@ -699,7 +700,7 @@ class ThreadDemo extends Thread {
 2） <code>CachedThreadPool</code>： 允许的创建线程数量为 <code>Integer.MAX_VALUE</code>，可能会创建大量的线程，从而导致 OOM。</p>
 </blockquote>
 <p>自定义线程池代码演示</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         ExecutorService executor1 = null;
         try {
@@ -713,7 +714,7 @@ class ThreadDemo extends Thread {
                     new ThreadPoolExecutor.CallerRunsPolicy());
             for (int i = 1; i &lt;= 20; i++) {
                 executor1.execute(() -&gt; {
-                    System.out.println(Thread.currentThread().getName() + &quot;执行了&quot;);
+                    System.out.println(Thread.currentThread().getName() + &#34;执行了&#34;);
                 });
             }
         } finally {
@@ -721,7 +722,7 @@ class ThreadDemo extends Thread {
         }
     }
 }
-</code></pre><h4 id="合理配置线程池参数">合理配置线程池参数</h4>
+</code></pre></div><h4 id="合理配置线程池参数">合理配置线程池参数</h4>
 <p>合理配置线程池参数，可以分为以下两种情况</p>
 <ul>
 <li>
@@ -734,7 +735,7 @@ CPU密集型任务配置尽可能少的线程数量：<code>参考公式：（CP
 </li>
 </ul>
 <p>代码演示</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         ExecutorService executor1 = null;
         try {
@@ -746,7 +747,7 @@ CPU密集型任务配置尽可能少的线程数量：<code>参考公式：（CP
              */
 //            int maximumPoolSize = coreNum + 1;
             int maximumPoolSize = (int) (coreNum / (1 - 0.9));
-            System.out.println(&quot;当前线程池最大允许存放：&quot; + maximumPoolSize + &quot;个线程&quot;);
+            System.out.println(&#34;当前线程池最大允许存放：&#34; + maximumPoolSize + &#34;个线程&#34;);
             executor1 = new ThreadPoolExecutor(
                     2,
                     maximumPoolSize,
@@ -757,7 +758,7 @@ CPU密集型任务配置尽可能少的线程数量：<code>参考公式：（CP
                     new ThreadPoolExecutor.CallerRunsPolicy());
             for (int i = 1; i &lt;= 20; i++) {
                 executor1.execute(() -&gt; {
-                    System.out.println(Thread.currentThread().getName() + &quot;执行了&quot;);
+                    System.out.println(Thread.currentThread().getName() + &#34;执行了&#34;);
                 });
             }
         } finally {
@@ -765,7 +766,7 @@ CPU密集型任务配置尽可能少的线程数量：<code>参考公式：（CP
         }
     }
 }
-</code></pre></div>
+</code></pre></div></div>
                     <div class="post_footer">
                         
                         <div class="meta">
@@ -785,7 +786,25 @@ CPU密集型任务配置尽可能少的线程数量：<code>参考公式：（CP
                 </div>
                 
                 
-                <div class="doc_comments"></div>
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+    })
+</script>
                 
             </div>
         </div>

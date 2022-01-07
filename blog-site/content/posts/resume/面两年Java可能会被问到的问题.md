@@ -7,24 +7,24 @@ slug: "interview-junior-javaer"
 ---
 
 ## 面试必问
-### [自我介绍](/iblog/posts/resume/interview-questions-and-answers/#自我介绍)
+### [自我介绍一下](/iblog/posts/resume/interview-questions-and-answers/#自我介绍)
 ### [你有什么职业规划](/iblog/posts/resume/interview-questions-and-answers/#你的职业规划是什么httpswwwbilibilicomvideobv1ff4y1y7ze)
 ### [你为什么要离职](/iblog/posts/resume/interview-questions-and-answers/#你从上一家公司离职的原因)
 ### [说一下你的优缺点](/iblog/posts/resume/interview-questions-and-answers/#优缺点)
 ### [你的期望薪资是多少](/iblog/posts/resume/interview-questions-and-answers/#面试如何谈薪资)
 ### [你还有什么问题要问的吗](/iblog/posts/resume/interview-questions-and-answers/#你还有什么想问的吗)
-### [你能否接受加班](/iblog/posts/resume/interview-questions-and-answers/#你能否接受加班)
+### [你是否接受加班](/iblog/posts/resume/interview-questions-and-answers/#你能否接受加班)
 ---
 
 
 ## 基础
-### [UDP、TCP及http与https特点](/iblog/posts/essays/net-program-java/)
+### [说一下UDP、TCP及http与https](/iblog/posts/essays/net-program-java/)
 ### [SpringBoot自动配置原理](/iblog/posts/spring/java-springboot/#springbootapplication原理)
 ### [如何保证线程安全](/iblog/posts/rookie/rookie-multi-thread/#线程安全)
 ### [线程池工作原理](/iblog/posts/rookie/rookie-multi-thread/#线程池)
 ### [如何避免死锁](/iblog/posts/rookie/rookie-multi-thread/#死锁)
 ### [说一下NIO、BIO、AIO](/iblog/posts/rookie/rookie-io/#io模型)
-### [ArrayList与LinkedList](/iblog/posts/rookie/rookie-java-container/#arraylist)
+### [说一下ArrayList与LinkedList](/iblog/posts/rookie/rookie-java-container/#arraylist)
 ### [介绍一下HashMap](/iblog/posts/essays/java-hashmap/)
 ### [Object类常用方法：equals、hash等](/iblog/posts/rookie/rookie-objectclass-methods/)
 ### [SQL优化相关](/iblog/posts/essays/sql-select-fast/#mysqlsql优化)

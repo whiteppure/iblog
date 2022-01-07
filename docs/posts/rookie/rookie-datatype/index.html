@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>Java基础-Java数据类型 ｜ whitepure</title>
+	<title>Java数据类型 ｜ 至简</title>
 	
     
     
-    <meta name="description" content="" />
+    <meta name="description" content="基本类型 Java语言提供了八种基本类型。六种数值类型（四个整数型，两个浮点型），一种字符类型，还有一种布尔型. 俗称4类8种 这里只介绍称4类8种.实际上，JAVA" />
     
 
     
@@ -1122,40 +1122,41 @@
         <a id="menu_icon"><i class="ri-menu-line"></i></a>
     </div>
 </div>
-        
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
+                    <span>至简</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">大道至简</p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
         <div class="content">
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
-                        <h2><a href='/iblog/posts/rookie/rookie-datatype/'>Java基础-Java数据类型</a></h2>
+                        <h2><a href='/iblog/posts/rookie/rookie-datatype/'>Java数据类型</a></h2>
                         <span class="date">2021.01.20</span>
                     </div>
                     <div class="post_content markdown"><h2 id="基本类型">基本类型</h2>
@@ -1268,8 +1269,8 @@
 <h2 id="类型转换">类型转换</h2>
 <p><strong>整型、实型（常量）、字符型数据可以混合运算。运算中，不同类型的数据先转化为同一类型，然后进行运算。</strong></p>
 <p>转换从低级到高级。</p>
-<pre><code>byte,short,char,int,long,float,double
-</code></pre><p>数据类型转换必须满足如下规则：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">byte,short,char,int,long,float,double
+</code></pre></div><p>数据类型转换必须满足如下规则：</p>
 <ul>
 <li>
 <p>不能对boolean类型进行类型转换。</p>
@@ -1282,52 +1283,52 @@
 </li>
 <li>
 <p>浮点数到整数的转换是通过舍弃小数得到，而不是四舍五入</p>
-<pre><code>(int)23.7 == 23;        
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">(int)23.7 == 23;        
 (int)-45.89f == -45
-</code></pre></li>
+</code></pre></div></li>
 <li>
 <p>转换过程中可能导致溢出或损失精度,在运算时要避免该问题.例如：</p>
-<pre><code>// 因为 byte 类型是 8 位，最大值为127，所以当 int 强制转换为 byte 类型时，值 128 时候就会导致溢出
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// 因为 byte 类型是 8 位，最大值为127，所以当 int 强制转换为 byte 类型时，值 128 时候就会导致溢出
 int i =128;   
 byte b = (byte)i;
-</code></pre></li>
+</code></pre></div></li>
 </ul>
 <h3 id="自动类型转换">自动类型转换</h3>
 <p>自动类型转换必须满足<strong>转换前的数据类型的位数要低于转换后的数据类型</strong>. 即可以 <code>long l = 100;</code>而不可以<code>int l = 100L;</code></p>
-<pre><code>public class Test{
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class Test{
         public static void main(String[] args){
-            char c1='a';//定义一个char类型
+            char c1=&#39;a&#39;;//定义一个char类型
             int i1 = c1;//char自动类型转换为int
-            System.out.println(&quot;char自动类型转换为int后的值等于&quot;+i1);
-            char c2 = 'A';//定义一个char类型
+            System.out.println(&#34;char自动类型转换为int后的值等于&#34;+i1);
+            char c2 = &#39;A&#39;;//定义一个char类型
             int i2 = c2+1;//char 类型和 int 类型计算
-            System.out.println(&quot;char类型和int计算后的值等于&quot;+i2);
+            System.out.println(&#34;char类型和int计算后的值等于&#34;+i2);
         }
 }
 // 结果:
 // char自动类型转换为int后的值等于97
 // char类型和int计算后的值等于66
-</code></pre><h3 id="隐式类型转换">隐式类型转换</h3>
+</code></pre></div><h3 id="隐式类型转换">隐式类型转换</h3>
 <p><strong>Java 不能隐式执行向下转型，因为这会使得精度降低。</strong></p>
 <p><code>1.1 </code>字面量属于 <code>double</code> 类型，不能直接将 <code>1.1 </code>直接赋值给 <code>float </code>变量，因为这是向下转型。</p>
-<pre><code>float f = 1.1;
-</code></pre><p><code>1.1f</code> 字面量才是 float 类型。</p>
-<pre><code>float f = 1.1f;
-</code></pre><p>因为字面量 1 是 int 类型，它比 short 类型精度要高，因此不能隐式地将 int 类型下转型为 short 类型。</p>
-<pre><code>short s1 = 1;
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">float f = 1.1;
+</code></pre></div><p><code>1.1f</code> 字面量才是 float 类型。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">float f = 1.1f;
+</code></pre></div><p>因为字面量 1 是 int 类型，它比 short 类型精度要高，因此不能隐式地将 int 类型下转型为 short 类型。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">short s1 = 1;
 s1 = s1 + 1;
-</code></pre><p>但是使用 += 或者 ++ 运算符可以执行隐式类型转换。</p>
-<pre><code>s1 += 1;
+</code></pre></div><p>但是使用 += 或者 ++ 运算符可以执行隐式类型转换。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">s1 += 1;
 s1++;
-</code></pre><p>上面的语句相当于将 <code>s1 + 1</code> 的计算结果进行了向下转型：</p>
-<pre><code>//强制类型转换
+</code></pre></div><p>上面的语句相当于将 <code>s1 + 1</code> 的计算结果进行了向下转型：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">//强制类型转换
 s1 = (short) (s1 + 1);
-</code></pre><p>简而言之,不能够直接的将精度高的类型 直接的赋值给精度低的类型.如: <code>float f = 1.1; short s = 1;</code> 如果想要赋值可用Java的隐式类型转换 如:<code>float f+=1.1; s += 1;</code></p>
+</code></pre></div><p>简而言之,不能够直接的将精度高的类型 直接的赋值给精度低的类型.如: <code>float f = 1.1; short s = 1;</code> 如果想要赋值可用Java的隐式类型转换 如:<code>float f+=1.1; s += 1;</code></p>
 <p><strong>由大到小需要强制转换,由小到大不需要强转.  顺序:<code>byte , short , char , int ,long,float,double</code></strong></p>
-<pre><code>byte b=1; int a = b;//由小到大
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">byte b=1; int a = b;//由小到大
 int c = 1;
 byte d = (byte) c;//由大到小
-</code></pre><h2 id="包装类型">包装类型</h2>
+</code></pre></div><h2 id="包装类型">包装类型</h2>
 <table>
 <thead>
 <tr>
@@ -1376,19 +1377,19 @@ byte d = (byte) c;//由大到小
 <h3 id="拆箱与装箱">拆箱与装箱</h3>
 <p>基本类型都有对应的包装类型，基本类型与其对应的包装类型之间的赋值使用自动装箱与拆箱完成。</p>
 <p>以<code>Integer int</code> 为例</p>
-<pre><code>Integer x = 2;     // 装箱 调用了 Integer.valueOf(2)
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">Integer x = 2;     // 装箱 调用了 Integer.valueOf(2)
 int y = x;         // 拆箱 调用了 X.intValue()
-</code></pre><h4 id="自动拆装箱">自动拆装箱</h4>
+</code></pre></div><h4 id="自动拆装箱">自动拆装箱</h4>
 <p>自动装箱: 就是将基本数据类型自动转换成对应的包装类.</p>
 <p>自动拆箱：就是将包装类自动转换成对应的基本数据类型.</p>
-<pre><code>    Integer i = 10;  //自动装箱
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    Integer i = 10;  //自动装箱
     int b = i;     //自动拆箱
-</code></pre><p>反编译得</p>
-<pre><code>    public static  void main(String[]args){
+</code></pre></div><p>反编译得</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public static  void main(String[]args){
         Integer integer=Integer.valueOf(1);
         int i=integer.intValue();
     }
-</code></pre><p><code>int</code>的自动装箱都是通过<code> Integer.valueOf()</code> 方法来实现的，Integer 的自动拆箱都是通过 <code>integer.intValue</code> 来实现的</p>
+</code></pre></div><p><code>int</code>的自动装箱都是通过<code> Integer.valueOf()</code> 方法来实现的，Integer 的自动拆箱都是通过 <code>integer.intValue</code> 来实现的</p>
 <blockquote>
 <p>自动装箱都是通过包装类的 <code>valueOf()</code> 方法来实现的.自动拆箱都是通过包装类对象的 <code>xxxValue() </code>来实现的。</p>
 </blockquote>
@@ -1413,20 +1414,20 @@ int y = x;         // 拆箱 调用了 X.intValue()
 <li><code>new Integer(123)</code> 每次都会新建一个对象；</li>
 <li><code>Integer.valueOf(123)</code> 会使用缓存池中的对象，多次调用会取得同一个对象的引用</li>
 </ul>
-<pre><code>Integer x = new Integer(123);
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">Integer x = new Integer(123);
 Integer y = new Integer(123);
 System.out.println(x == y);    // false
 Integer z = Integer.valueOf(123);
 Integer k = Integer.valueOf(123);
 System.out.println(z == k);   // true
-</code></pre><p><code>valueOf()</code> 方法的实现比较简单，就是先判断值是否在缓存池中，如果在的话就直接返回缓存池的内容</p>
-<pre><code>public static Integer valueOf(int i) {
+</code></pre></div><p><code>valueOf()</code> 方法的实现比较简单，就是先判断值是否在缓存池中，如果在的话就直接返回缓存池的内容</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static Integer valueOf(int i) {
     if (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)
         return IntegerCache.cache[i + (-IntegerCache.low)];
     return new Integer(i);
 }
-</code></pre><p><strong>在 Java 8 中，Integer 缓存池的大小默认为 -128~127</strong></p>
-<pre><code>static final int low = -128;
+</code></pre></div><p><strong>在 Java 8 中，Integer 缓存池的大小默认为 -128~127</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">static final int low = -128;
 static final int high;
 static final Integer cache[];
 
@@ -1434,7 +1435,7 @@ static {
     // high value may be configured by property
     int h = 127;
     String integerCacheHighPropValue =
-        sun.misc.VM.getSavedProperty(&quot;java.lang.Integer.IntegerCache.high&quot;);
+        sun.misc.VM.getSavedProperty(&#34;java.lang.Integer.IntegerCache.high&#34;);
     if (integerCacheHighPropValue != null) {
         try {
             int i = parseInt(integerCacheHighPropValue);
@@ -1455,15 +1456,15 @@ static {
     // range [-128, 127] must be interned (JLS7 5.1.7)
     assert IntegerCache.high &gt;= 127;
 }
-</code></pre><p><strong>编译器会在自动装箱过程调用 <code>valueOf()</code> 方法，因此多个值相同且值在缓存池范围内的 Integer 实例使用自动装箱来创建，那么就会引用相同的对象。</strong></p>
-<pre><code>Integer m = 123;
+</code></pre></div><p><strong>编译器会在自动装箱过程调用 <code>valueOf()</code> 方法，因此多个值相同且值在缓存池范围内的 Integer 实例使用自动装箱来创建，那么就会引用相同的对象。</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">Integer m = 123;
 Integer n = 123;
 System.out.println(m == n); // true
-</code></pre><p><code>Integer,int </code>在 <code>-127~128</code>之前是不会创建新的对象的,即</p>
-<pre><code> Integer a = new Integer(12);
+</code></pre></div><p><code>Integer,int </code>在 <code>-127~128</code>之前是不会创建新的对象的,即</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> Integer a = new Integer(12);
  int b = 12;
  System.out.println(a==b);//true
-</code></pre><p><code>Integer</code>和<code>int</code>自动装箱拆箱会通过<code>valueOf()</code>方法实现,当这个数在-127~128之间直接从缓存里边取,不会重新new对象</p>
+</code></pre></div><p><code>Integer</code>和<code>int</code>自动装箱拆箱会通过<code>valueOf()</code>方法实现,当这个数在-127~128之间直接从缓存里边取,不会重新new对象</p>
 <p><strong>基本类型对应的缓冲池如下：</strong></p>
 <ul>
 <li><code>boolean values true and false</code></li>
@@ -1503,10 +1504,10 @@ System.out.println(m == n); // true
 </ul>
 <h2 id="常量">常量</h2>
 <p>案例: 常量,变量和字面量</p>
-<pre><code>int a = 10; //a为变量，10为字面量
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">int a = 10; //a为变量，10为字面量
 final int b = 10;  //b为常量，10为字面量
-static c = &quot;Hello World&quot;;  //c为变量,HelloWorld为字面量
-</code></pre><ul>
+static c = &#34;Hello World&#34;;  //c为变量,HelloWorld为字面量
+</code></pre></div><ul>
 <li>常量：程序运行中，固定不变的量.</li>
 <li>变量：值可以修改的数据类型。</li>
 <li>字面量：字面量就是数据，是由字母、数字等构成的字符串或者数值，如30（整型）、3.15（浮点型）、“我是字符串”（字符串型）、‘中’（字符型）、true（布尔型）、false（布尔型）等,只能作为右值出现如<code>int a = 10</code>;这里的a是左值,10为右值.</li>
@@ -1525,9 +1526,9 @@ static c = &quot;Hello World&quot;;  //c为变量,HelloWorld为字面量
 <p>要声明一个常量，第一需要制定数据类型，第二需要通过<code>final</code>关键字进行限定格式：
 <code>final 数据类型 常量名称[=值]</code></p>
 <p><strong>常量在程序运行时是不能被修改的(final作用).所以在定义常量时就需要对该常量进行初始化.为了与变量区别，常量取名一般都用大写字符</strong></p>
-<pre><code>final double PI = 3.1415927;
-</code></pre><p><code>final</code> 关键字表示最终的，它可以修改很多元素，修饰变量就变成了常量.之后会详细说明<code>final</code>关键字</p>
-<pre><code>public class HelloWorld {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">final double PI = 3.1415927;
+</code></pre></div><p><code>final</code> 关键字表示最终的，它可以修改很多元素，修饰变量就变成了常量.之后会详细说明<code>final</code>关键字</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class HelloWorld {
     // 静态常量
     public static final double PI = 3.14;
     // 声明成员常量
@@ -1537,7 +1538,7 @@ static c = &quot;Hello World&quot;;  //c为变量,HelloWorld为字面量
         final double x = 3.3;
     }
 }
-</code></pre><h3 id="常量池">常量池</h3>
+</code></pre></div><h3 id="常量池">常量池</h3>
 <p>一个有效的字节码文件中除了包含类的版本信息、字段、方法以及接口等描述符信息外，
 还包含一项信息就是常量池表（Constant Pool Table），包括各种字面量和对类型、域和方法的符号引用。</p>
 <p><strong>常量池中有什么？</strong></p>
@@ -1560,21 +1561,21 @@ static c = &quot;Hello World&quot;;  //c为变量,HelloWorld为字面量
 <p>有了字节码，无论是哪种平台（如Windows、Linux等），只要安装了虚拟机，都可以直接运行字节码。目前Java虚拟机已经可以支持很多除Java语言以外的语言了，如Groovy、JRuby、Jython、Scala等。之所以可以支持，就是因为这些语言也可以被编译成字节码。而虚拟机并不关心字节码是有哪种语言编译而来的。</p>
 </blockquote>
 <p>将下面代码通过<code>javac</code>命令编译</p>
-<pre><code>public class HelloWorld {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class HelloWorld {
     public static void main(String[] args) {
-        String s = &quot;123&quot;;
+        String s = &#34;123&#34;;
     }
 }
-</code></pre><p>生成<code>.class</code>文件.<code>vi</code>命令查看</p>
-<pre><code>Êþº¾^@^@^@4^@^Q
+</code></pre></div><p>生成<code>.class</code>文件.<code>vi</code>命令查看</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">Êþº¾^@^@^@4^@^Q
 ^@^D^@^M^H^@^N^G^@^O^G^@^P^A^@^F&lt;init&gt;^A^@^C()V^A^@^DCode^A^@^OLineNumberTable^A^@^Dmain^A^@^V([Ljava/lang/String;)V^A^@
 SourceFile^A^@^OHelloWorld.java^L^@^E^@^F^A^@^C123^A^@7com/example/springboot/example/security/util/HelloWorld^A^@^Pjava/lang/Object^@!^@^C^@^D^@^@^@^@^@^B^@^A^@^E^@^F^@^A^@^G^@^@^@^]^@^A^@^A^@^@^@^E*·^@^A±^@^@^@^A^@^H^@^@^@^F^@^A^@^@^@^C^@        ^@      ^@
 ^@^A^@^G^@^@^@ ^@^A^@^B^@^@^@^D^R^BL±^@^@^@^A^@^H^@^@^@
 ^@^B^@^@^@^E^@^C^@^F^@^A^@^K^@^@^@^B^@^L
-</code></pre><blockquote>
+</code></pre></div><blockquote>
 <p>使用16进制打开class文件：使用 vim xxx.class ，然后在交互模式下，输入:%!xxd 即可。</p>
 </blockquote>
-<pre><code>00000000: cafe babe 0000 0034 0011 0a00 0400 0d08  .......4........
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">00000000: cafe babe 0000 0034 0011 0a00 0400 0d08  .......4........
 00000010: 000e 0700 0f07 0010 0100 063c 696e 6974  ...........&lt;init
 00000020: 3e01 0003 2829 5601 0004 436f 6465 0100  &gt;...()V...Code..
 00000030: 0f4c 696e 654e 756d 6265 7254 6162 6c65  .LineNumberTable
@@ -1588,12 +1589,12 @@ SourceFile^A^@^OHelloWorld.java^L^@^E^@^F^A^@^C123^A^@7com/example/springboot/ex
 000000b0: 7269 7479 2f75 7469 6c2f 4865 6c6c 6f57  rity/util/HelloW
 000000c0: 6f72 6c64 0100 106a 6176 612f 6c61 6e67  orld...java/lang
 
-</code></pre><blockquote>
+</code></pre></div><blockquote>
 <p>HelloWorld.class文件中的前八个字母是cafe babe，这就是Class文件的魔数（Java中的”魔数”）</p>
 </blockquote>
-<pre><code>cafe babe   0000      0034        0011      0a00 0400 0d08
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">cafe babe   0000      0034        0011      0a00 0400 0d08
    魔数    此版本号   主版本号    常量池计数器      常量池计数区
-</code></pre><blockquote>
+</code></pre></div><blockquote>
 <p>我们需要知道的是,在Class文件的4个字节的魔数后面的分别是4个字节的Class文件的版本号（第5、6个字节是次版本号，第7、8个字节是主版本号，我生成的Class文件的版本号是52，这时Java 8对应的版本。也就是说，这个版本的字节码，在JDK 1.8以下的版本中无法运行）在版本号后面的，就是Class常量池入口了.</p>
 </blockquote>
 <h5 id="存放内容">存放内容</h5>
@@ -1677,7 +1678,7 @@ JDK1.7之前方法区位于永久代.由于一些原因在JDK1.8时彻底祛除�
 </ul>
 <p><strong>如何证明Java8中的字符串常量池方到了堆中？</strong></p>
 <p>代码演示：</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     // 虚拟机参数： -Xmx6m -Xms6m -XX:MetaspaceSize=10m -XX:MaxMetaspaceSize=10m
     public static void main(String[] args) {
         HashSet&lt;String&gt; hashSet = new HashSet&lt;&gt;();
@@ -1687,11 +1688,11 @@ JDK1.7之前方法区位于永久代.由于一些原因在JDK1.8时彻底祛除�
         }
     }
 }
-</code></pre><p>抛出异常证明Java8中的字符串常量池方到了堆中</p>
-<pre><code>Exception in thread &quot;main&quot; java.lang.OutOfMemoryError: Java heap space
-</code></pre><h5 id="intern方法">intern方法</h5>
+</code></pre></div><p>抛出异常证明Java8中的字符串常量池方到了堆中</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">Exception in thread &#34;main&#34; java.lang.OutOfMemoryError: Java heap space
+</code></pre></div><h5 id="intern方法">intern方法</h5>
 <p>intern是一个native方法，调用的是底层C的方法</p>
-<pre><code>    /**
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    /**
      * Returns a canonical representation for the string object.
      * &lt;p&gt;
      * A pool of strings, initially empty, is maintained privately by the
@@ -1712,24 +1713,24 @@ JDK1.7之前方法区位于永久代.由于一些原因在JDK1.8时彻底祛除�
      * &lt;cite&gt;The Java&amp;trade; Language Specification&lt;/cite&gt;.
      */
     public native String intern();
-</code></pre><p><code>intern</code>方法文档注释大意是：字符串池最初是空的，由String类私有地维护。在调用intern方法时，如果池中已经包含了由equals(object)方法确定的与该字符串对象相等的字符串，则返回池中的字符串。
+</code></pre></div><p><code>intern</code>方法文档注释大意是：字符串池最初是空的，由String类私有地维护。在调用intern方法时，如果池中已经包含了由equals(object)方法确定的与该字符串对象相等的字符串，则返回池中的字符串。
 否则，该字符串对象将被添加到池中，并返回对该字符串对象的引用。</p>
 <p><strong>当一个字符串调用 <code>intern()</code> 方法时，如果 String Pool 中已经存在一个字符串和该字符串值相等（使用 <code>equals()</code>方法进行确定），那么就会返回 String Pool 中字符串的引用；否则，就会在 String Pool 中添加一个新的字符串，并返回这个新字符串的引用.</strong></p>
 <p>下面示例中，s1 和 s2 采用<code> new String()</code> 的方式新建了两个不同字符串，而 s3 和 s4 是通过 <code>s1.intern()</code> 方法取得一个字符串引用。<code>intern()</code> 首先把 s1 引用的字符串放到 String Pool 中，然后返回这个字符串引用。因此 s3 和 s4 引用的是同一个字符串。</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
-        String s1 = new String(&quot;aaa&quot;);
-        String s2 = new String(&quot;aaa&quot;);
+        String s1 = new String(&#34;aaa&#34;);
+        String s2 = new String(&#34;aaa&#34;);
         System.out.println(s1 == s2);           // false
         String s3 = s1.intern();
         String s4 = s1.intern();
         System.out.println(s3 == s4);           // true
     }
 }
-</code></pre><p>上面的示例说明了可以使用 String的<code>intern()</code>方法在程序运行过程中将字符串添加到字符串常量池中。</p>
+</code></pre></div><p>上面的示例说明了可以使用 String的<code>intern()</code>方法在程序运行过程中将字符串添加到字符串常量池中。</p>
 <p><strong>空间效率测试</strong></p>
 <p>对于程序中大量使用存在的字符串时，尤其存在很多已经重复的字符串时，使用<code>intern()</code>方法能够节省内存空间。</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     static final int MAX_COUNT = 1000 * 10000;
     static final String[] arr = new String[MAX_COUNT];
 
@@ -1741,7 +1742,7 @@ JDK1.7之前方法区位于永久代.由于一些原因在JDK1.8时彻底祛除�
             arr[i] = new String(String.valueOf(data[i%data.length])).intern(); // 花费的时间为：1196
         }
         long end = System.currentTimeMillis();
-        System.out.println(&quot;花费的时间为：&quot; + (end - start));
+        System.out.println(&#34;花费的时间为：&#34; + (end - start));
 
         try {
             Thread.sleep(1000000);
@@ -1751,7 +1752,7 @@ JDK1.7之前方法区位于永久代.由于一些原因在JDK1.8时彻底祛除�
         System.gc();
     }
 }
-</code></pre><p>不使用<code>intern</code>方法
+</code></pre></div><p>不使用<code>intern</code>方法
 <img src="/iblog/posts/images/essays/%E4%B8%8D%E7%94%A8intern%E6%96%B9%E6%B3%95%E6%B5%8B%E8%AF%95.png" alt="不用intern方法测试"></p>
 <p>使用<code>intern</code>方法后
 <img src="/iblog/posts/images/essays/%E4%BD%BF%E7%94%A8intern%E6%96%B9%E6%B3%95%E6%B5%8B%E8%AF%95.png" alt="使用intern方法测试"></p>
@@ -1767,7 +1768,7 @@ JDK1.7之前方法区位于永久代.由于一些原因在JDK1.8时彻底祛除�
 <p>初始化新创建的String对象，使其表示与实参相同的字符序列;换句话说，新创建的字符串是实参字符串的副本。
 除非需要显式复制形参的值，否则没有必要使用这个构造函数，因为字符串是不可变的。</p>
 </blockquote>
-<pre><code>/**
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">/**
  * Initializes a newly created {@code String} object so that it represents
  * the same sequence of characters as the argument; in other words, the
  * newly created string is a copy of the argument string. Unless an
@@ -1779,15 +1780,15 @@ public String(String original) {
     this.value = original.value;
     this.hash = original.hash;
 }
-</code></pre><p>字节码分析：</p>
+</code></pre></div><p>字节码分析：</p>
 <p>创建一个测试类，其 main 方法中使用这种方式来创建字符串对象。</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
-        String s = new String(&quot;abc&quot;);
+        String s = new String(&#34;abc&#34;);
     }
 }
-</code></pre><p>使用 <code>javap -verbose</code> 进行反编译，得到以下内容：</p>
-<pre><code>// ...
+</code></pre></div><p>使用 <code>javap -verbose</code> 进行反编译，得到以下内容：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// ...
 Constant pool:
 // ...
    #2 = Class              #18            // java/lang/String
@@ -1805,10 +1806,10 @@ Constant pool:
          0: new           #2                  // class java/lang/String
          3: dup
          4: ldc           #3                  // String abc
-         6: invokespecial #4                  // Method java/lang/String.&quot;&lt;init&gt;&quot;:(Ljava/lang/String;)V
+         6: invokespecial #4                  // Method java/lang/String.&#34;&lt;init&gt;&#34;:(Ljava/lang/String;)V
          9: astore_1
 // ...
-</code></pre><p>在 <code>Constant Pool</code> 中，#19 存储这字符串字面量 <code>&quot;abc&quot;</code>，#3 是 String Pool 的字符串对象，它指向 <code>#19</code> 这个字符串字面量。
+</code></pre></div><p>在 <code>Constant Pool</code> 中，#19 存储这字符串字面量 <code>&quot;abc&quot;</code>，#3 是 String Pool 的字符串对象，它指向 <code>#19</code> 这个字符串字面量。
 在 <code>main</code> 方法中，<code>0:</code> 行使用 <code>new #2</code> 在堆中创建一个字符串对象，并且使用 <code>ldc #3</code> 将 String Pool 中的字符串对象作为 String 构造函数的参数。
 所以能看到使用<code>new String()</code> 的方式创建字符串是创建两个对象。</p>
 <p><strong>使用<code>new String(&quot;a&quot;) + new String(&quot;b&quot;)</code> 会创建几个对象？</strong></p>
@@ -1824,18 +1825,18 @@ Constant pool:
 </ul>
 <p>也可跟上面的代码一样从字节码角度进行分析，这里不做过多分析。</p>
 <p><strong>扩展：在JDK1.6/JDK1.7中下列代码执行结果不同</strong></p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
-        String s3 = new String(&quot;1&quot;) + new String(&quot;1&quot;); // ==&gt; new String(&quot;11&quot;); 并不会在字符串常量池创建 &quot;11&quot;
+        String s3 = new String(&#34;1&#34;) + new String(&#34;1&#34;); // ==&gt; new String(&#34;11&#34;); 并不会在字符串常量池创建 &#34;11&#34;
         // 在Jdk7及之后，JVM为了节省空间进行优化，在字符串常量池中的对象只保存了堆中对象的地址，而并不是创建了一个真正的对象；
-        // &quot;11&quot;不在字符串常量池中 ，把&quot;11&quot;放入字符串常量池中 因为堆中已经存在对象，JDK6在字符串池中保存的是一个真正的对象 JDK7保存的是一个引用地址
+        // &#34;11&#34;不在字符串常量池中 ，把&#34;11&#34;放入字符串常量池中 因为堆中已经存在对象，JDK6在字符串池中保存的是一个真正的对象 JDK7保存的是一个引用地址
         s3.intern(); 
         // 获取字符串常量池的引用
-        String s4 = &quot;11&quot;; 
+        String s4 = &#34;11&#34;; 
         System.out.println(s3 == s4); // JDK1.6: false   JDK1.7: true
     }
 }
-</code></pre><p>原因是因为字符串常量池在JDK1.7的时候被放在了堆中，而JDK1.6被放在了永久区中；</p>
+</code></pre></div><p>原因是因为字符串常量池在JDK1.7的时候被放在了堆中，而JDK1.6被放在了永久区中；</p>
 <p>JDK1.6创建对象被放在了永久区中的字符串常量池，并非堆中，JVM无法对其进行优化；
 在JDK1.7及之后，<code>new String(&quot;1&quot;)</code> 会在堆中创建一个对象并且会在字符串常量池中创建一个对象；
 因为在堆中已经创建了对象，JVM为了节省空间，在字符串常量池中的对象只保留了引用堆中对象的地址，而并不是创建了一个真正的对象；</p>
@@ -1863,7 +1864,7 @@ Constant pool:
 <li>在JDK8中，StringTable可以设置的最小值为1009;stringTable的长度默认值是60013；</li>
 </ul>
 <p>可以配置不同版本的JRE，运行下列代码，然后使用 <code>jsp(获取程序进程ID) -&gt; jinfo -flag StringTableSize 进程ID</code>命令进行查看stringTableSize</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         try {
             Thread.sleep(1000000);
@@ -1872,17 +1873,17 @@ Constant pool:
         }
     }
 }
-</code></pre><h4 id="为什么需要常量池">为什么需要常量池</h4>
+</code></pre></div><h4 id="为什么需要常量池">为什么需要常量池</h4>
 <p>一个Java源文件中的类、接口，编译后产生一个字节码文件。
 而Java中的字节码需要数据支持，通常这种数据会很大以至于不能直接存到字节码里，换另一种方式，可以存到常量池，这个字节码包含了指向常量池的引用。
 在动态链接的时候会用到运行时常量池。</p>
 <p>比如：如下的代码：</p>
-<pre><code>public class SimpleClass {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class SimpleClass {
     public void sayHello() {
-        System.out.println(&quot;hello&quot;);
+        System.out.println(&#34;hello&#34;);
     }
 }
-</code></pre><p>虽然上述代码生成的class文件只有194字节，但是里面却使用了String、System、PrintStream及Object等结构。
+</code></pre></div><p>虽然上述代码生成的class文件只有194字节，但是里面却使用了String、System、PrintStream及Object等结构。
 这里的代码量其实很少了，如果代码多的话，引用的结构将会更多，这样就需要用到常量池了。</p>
 <p>常量池是为了避免频繁的创建和销毁对象而影响系统性能，其实现了对象的共享.
 避免了相同内容的字符串的创建，节省了内存，省去了创建相同字符串的时间，同时提升了性能.</p>
@@ -1892,13 +1893,13 @@ Constant pool:
 <p>String实现了Serializable接口：表示字符串是支持序列化的。实现了Comparable接口：表示string可以比较大小；</p>
 <h3 id="为什么jdk9改变了存储结构">为什么JDK9改变了存储结构</h3>
 <p><strong>在 Java 8 中，String 内部使用 char 数组存储数据。</strong></p>
-<pre><code>public final class String
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public final class String
     implements java.io.Serializable, Comparable&lt;String&gt;, CharSequence {
     /** The value is used for character storage. */
     private final char value[];
 }
-</code></pre><p><strong>在 Java 9 之后，String 类的实现改用 byte 数组存储字符串，同时使用 coder 来标识使用了哪种编码。</strong></p>
-<pre><code>public final class String
+</code></pre></div><p><strong>在 Java 9 之后，String 类的实现改用 byte 数组存储字符串，同时使用 coder 来标识使用了哪种编码。</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public final class String
     implements java.io.Serializable, Comparable&lt;String&gt;, CharSequence {
     /** The value is used for character storage. */
     private final byte[] value;
@@ -1906,7 +1907,7 @@ Constant pool:
     /** The identifier of the encoding used to encode the bytes in {@code value}. */
     private final byte coder;
 }
-</code></pre><p><a href="http://openjdk.java.net/jeps/254">那么为什么要改变内存存储结构呢？</a>
+</code></pre></div><p><a href="http://openjdk.java.net/jeps/254">那么为什么要改变内存存储结构呢？</a>
 官方的解释：</p>
 <blockquote>
 <p>The current implementation of the String class stores characters in a char array, using two bytes (sixteen bits) for each character.
@@ -1932,14 +1933,14 @@ The encoding flag will indicate which encoding is used.</p>
 并且 String 内部没有改变 value 数组的方法，因此可以保证<code>String</code>不可变；
 String是Java中一个不可变的类，所以他一旦一个string对象在内存(堆)中被创建出来，他就无法被修改。</p>
 <p>下面代码说明String是不可变的：</p>
-<pre><code>public class MainTest {
-    String str = new String(&quot;good&quot;);
-    char [] ch = {'t','e','s','t'};
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
+    String str = new String(&#34;good&#34;);
+    char [] ch = {&#39;t&#39;,&#39;e&#39;,&#39;s&#39;,&#39;t&#39;};
 
     public void change(String str, char ch []) {
-        str = &quot;test ok&quot;;
-        System.out.println( &quot;chanage方法里str=&quot; + str); // chanage方法里str=test ok
-        ch[0] = 'b';
+        str = &#34;test ok&#34;;
+        System.out.println( &#34;chanage方法里str=&#34; + str); // chanage方法里str=test ok
+        ch[0] = &#39;b&#39;;
     }
 
     public static void main(String[] args) {
@@ -1949,7 +1950,7 @@ String是Java中一个不可变的类，所以他一旦一个string对象在内�
         System.out.println(ex.ch);// best
     }
 }
-</code></pre><p><strong>特别要注意的是，String类的所有方法都没有改变字符串本身的值，都是返回了一个新的对象。字符串不可变的根本原因应是处于安全性考虑。</strong></p>
+</code></pre></div><p><strong>特别要注意的是，String类的所有方法都没有改变字符串本身的值，都是返回了一个新的对象。字符串不可变的根本原因应是处于安全性考虑。</strong></p>
 <p>不可变性优点：</p>
 <ol>
 <li>可以缓存 hash 值</li>
@@ -1972,79 +1973,79 @@ String是Java中一个不可变的类，所以他一旦一个string对象在内�
 String不可变性天生具备线程安全,可以在多个线程中安全地使用.</p>
 <h3 id="使用">使用</h3>
 <h4 id="创建字符串">创建字符串</h4>
-<pre><code>// String 直接创建
-String str1 = &quot;123&quot;;
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// String 直接创建
+String str1 = &#34;123&#34;;
 // String 对象创建
-String str2 = new String(&quot;123&quot;);
+String str2 = new String(&#34;123&#34;);
 // 引用创建
 String str3 = str1;
-</code></pre><p>格式化创建字符串</p>
-<pre><code>String str = String.format(&quot;浮点型变量: &quot; +
-                   &quot;%f, 整型变量: &quot; +
-                   &quot; %d, 字符串变量: &quot; +
-                   &quot; %s&quot;, 1.0f, 1, &quot;1&quot;);
+</code></pre></div><p>格式化创建字符串</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">String str = String.format(&#34;浮点型变量: &#34; +
+                   &#34;%f, 整型变量: &#34; +
+                   &#34; %d, 字符串变量: &#34; +
+                   &#34; %s&#34;, 1.0f, 1, &#34;1&#34;);
 System.out.println(str);
-</code></pre><p><strong>通过字面量的方式（区别于new）给一个字符串赋值,存储在String常量池中，而 new 创建的字符串对象在堆上.</strong></p>
+</code></pre></div><p><strong>通过字面量的方式（区别于new）给一个字符串赋值,存储在String常量池中，而 new 创建的字符串对象在堆上.</strong></p>
 <h4 id="连接字符串">连接字符串</h4>
 <p><strong>因为String类是不可变的.所以所谓字符串拼接，都是重新生成了一个新的字符串.</strong></p>
 <p>以下是字符串的几种拼接的方式</p>
-<pre><code>// 原字符串
-String str1 = &quot;123&quot;;
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// 原字符串
+String str1 = &#34;123&#34;;
 
 //1. concat 方法连接字符串
-String str2 = &quot;123&quot;.concat(&quot;456&quot;);
+String str2 = &#34;123&#34;.concat(&#34;456&#34;);
 System.out.println(str2);
 
-//2. 用 &quot;+&quot; 连接字符串
-// 在编译时会编译成 String str4 = &quot;123456&quot;;
-String str3 = &quot;123&quot; + &quot;456&quot;;
+//2. 用 &#34;+&#34; 连接字符串
+// 在编译时会编译成 String str4 = &#34;123456&#34;;
+String str3 = &#34;123&#34; + &#34;456&#34;;
 // 会调用StringBuilder.append方法
-String str4 = str3 + &quot;789&quot;;
+String str4 = str3 + &#34;789&#34;;
 System.out.println(str3);
 System.out.println(str4);
 
 //3. 用JDK内置处理字符串类 Stringbuilder, StringBuffer
 StringBuilder builder = new StringBuilder();
 StringBuffer buffer = new StringBuffer();
-String str5 = builder.append(str).append(&quot;456&quot;).toString();
-String str6 = buffer.append(str).append(&quot;456&quot;).toString();
+String str5 = builder.append(str).append(&#34;456&#34;).toString();
+String str6 = buffer.append(str).append(&#34;456&#34;).toString();
 System.out.println(str5);
 System.out.println(str6);
 
 //4. Java8新增String.join方法连接字符串
 List&lt;String&gt; list = new ArrayList&lt;&gt;();
-list.add(&quot;1&quot;);
-list.add(&quot;2&quot;);
-list.add(&quot;3&quot;);
-String str7 = String.join(&quot;-&quot;, list);
-String str8 = String.join(&quot;~&quot;, new String[]{&quot;1&quot;,&quot;2&quot;,&quot;3&quot;}r);
+list.add(&#34;1&#34;);
+list.add(&#34;2&#34;);
+list.add(&#34;3&#34;);
+String str7 = String.join(&#34;-&#34;, list);
+String str8 = String.join(&#34;~&#34;, new String[]{&#34;1&#34;,&#34;2&#34;,&#34;3&#34;}r);
 System.out.println(str7);
 System.out.println(str8);
 
 //5. 用第三方处理字符串工具类. 例如: apache.commons.
-String str9 = StringUtils.join(new String[]{str, &quot;456&quot;, &quot;789&quot;});
+String str9 = StringUtils.join(new String[]{str, &#34;456&#34;, &#34;789&#34;});
 
 // Java8提供的String.join方法和`apache.commons`方法相似.
 // 主要作用是将数组或集合以某拼接符拼接到一起形成新的字符串
 
-</code></pre><h5 id="拼接字符串">拼接字符串</h5>
+</code></pre></div><h5 id="拼接字符串">拼接字符串</h5>
 <p>拼接字符串最简单的方式就是直接使用符号+来拼接. + 是Java提供的一个语法糖.</p>
 <blockquote>
 <p>语法糖：语法糖（Syntactic sugar），也译为糖衣语法，是由英国计算机科学家彼得·兰丁发明的一个术语，指计算机语言中添加的某种语法，这种语法对语言的功能没有影响，但是更方便程序员使用。语法糖让程序更加简洁，有更高的可读性。</p>
 </blockquote>
-<pre><code>    public static void main(String[] args) {
-        String str = &quot;12&quot; + &quot;3&quot;;
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public static void main(String[] args) {
+        String str = &#34;12&#34; + &#34;3&#34;;
     }
-</code></pre><p>两个都为编译期常量,编译器会进行常量折叠变为<code>String str = &quot;123&quot;;</code></p>
+</code></pre></div><p>两个都为编译期常量,编译器会进行常量折叠变为<code>String str = &quot;123&quot;;</code></p>
 <p>如果拼接符号的前后出现了变量，则相当于在堆空间中<code>new String()</code>（这里的堆指的是除了字符串常量池外的区域），具体的内容为拼接的结果.</p>
-<pre><code>    public static void main(String[] args) {
-        String str1 = &quot;123&quot;;
-        String str2 = &quot;456&quot;;
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public static void main(String[] args) {
+        String str1 = &#34;123&#34;;
+        String str2 = &#34;456&#34;;
         String str3 = str1 + str2;
         System.out.println(str3);
     }
-</code></pre><p>打开文件所在位置,用<code>javap -verbose</code>命令进行反编译.</p>
-<pre><code>// ...
+</code></pre></div><p>打开文件所在位置,用<code>javap -verbose</code>命令进行反编译.</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// ...
   public static void main(java.lang.String[]);
     descriptor: ([Ljava/lang/String;)V
     flags: ACC_PUBLIC, ACC_STATIC
@@ -2056,7 +2057,7 @@ String str9 = StringUtils.join(new String[]{str, &quot;456&quot;, &quot;789&quot
          5: astore_2
          6: new           #4                  // class java/lang/StringBuilder
          9: dup
-        10: invokespecial #5                  // Method java/lang/StringBuilder.&quot;&lt;init&gt;&quot;:()V
+        10: invokespecial #5                  // Method java/lang/StringBuilder.&#34;&lt;init&gt;&#34;:()V
         13: aload_1
         14: invokevirtual #6                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
         17: aload_2
@@ -2069,24 +2070,24 @@ String str9 = StringUtils.join(new String[]{str, &quot;456&quot;, &quot;789&quot
         32: return
       // ...
 
-</code></pre><p>可以看到<strong>在字符串拼接过程中,是将String转成了<code>StringBuilder</code>后，使用其<code>append</code>方法进行拼接字符串处理的.最后在去调用<code>StringBuilder</code>的<code>toString</code>方法进行返回</strong></p>
+</code></pre></div><p>可以看到<strong>在字符串拼接过程中,是将String转成了<code>StringBuilder</code>后，使用其<code>append</code>方法进行拼接字符串处理的.最后在去调用<code>StringBuilder</code>的<code>toString</code>方法进行返回</strong></p>
 <blockquote>
 <p>在JDK5之后，使用的是StringBuilder，在JDK5之前使用的是StringBuffer</p>
 </blockquote>
 <p>但是如果使用final修饰String变量时，在VM编译过程中，仍然被编译器优化；</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
-        final String a = &quot;1&quot;;
-        final String b = &quot;2&quot;;
+        final String a = &#34;1&#34;;
+        final String b = &#34;2&#34;;
         String ab = a + b; // 在class文件中会优化为: String ab = 12;
-        String ab0 = &quot;12&quot;;
+        String ab0 = &#34;12&#34;;
         System.out.println(ab == ab0);
     }
 }
-</code></pre><p>在开发中，能够使用final的时候，建议使用上。</p>
+</code></pre></div><p>在开发中，能够使用final的时候，建议使用上。</p>
 <h5 id="concat方法">concat方法</h5>
 <p>源码</p>
-<pre><code>    public String concat(String str) {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public String concat(String str) {
         // 获取字符串长度 
         int otherLen = str.length();
         // 判空
@@ -2103,9 +2104,9 @@ String str9 = StringUtils.join(new String[]{str, &quot;456&quot;, &quot;789&quot
         // 创建新的字符串对象
         return new String(buf, true);
     }
-</code></pre><h5 id="stringbuffer和stringbuilder">StringBuffer和StringBuilder</h5>
+</code></pre></div><h5 id="stringbuffer和stringbuilder">StringBuffer和StringBuilder</h5>
 <p><code>Stringbuilder</code>和<code>StringBuffer</code>共同的父类：</p>
-<pre><code>abstract class AbstractStringBuilder implements Appendable, CharSequence {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">abstract class AbstractStringBuilder implements Appendable, CharSequence {
     /**
      * The value is used for character storage.
      */
@@ -2118,34 +2119,34 @@ String str9 = StringUtils.join(new String[]{str, &quot;456&quot;, &quot;789&quot
 
     // ...
 }
-</code></pre><p>用于存贮的<code>value</code>并没有用<code>final</code>修饰,说明是可以修改的.还有一个属性字段<code>count</code>,用来保存数组中已经使用的字符个数.</p>
+</code></pre></div><p>用于存贮的<code>value</code>并没有用<code>final</code>修饰,说明是可以修改的.还有一个属性字段<code>count</code>,用来保存数组中已经使用的字符个数.</p>
 <p><strong>append方法</strong></p>
 <p><code>StringBuilder.append</code>方法</p>
-<pre><code>    @Override
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    @Override
     public StringBuilder append(String str) {
         super.append(str);
         return this;
     }
-</code></pre><p><code>StringBuffer.append</code>方法</p>
-<pre><code>    @Override
+</code></pre></div><p><code>StringBuffer.append</code>方法</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    @Override
     public synchronized StringBuffer append(String str) {
         toStringCache = null;
         super.append(str);
         return this;
     }
-</code></pre><p>由此可以看出<code>StringBuilder</code>和<code>StringBuffer</code>原理是相似的,最大的区别就是<code>StringBuffer</code>是线程安全的.原因是用了<code>synchronized</code>修饰.</p>
+</code></pre></div><p>由此可以看出<code>StringBuilder</code>和<code>StringBuffer</code>原理是相似的,最大的区别就是<code>StringBuffer</code>是线程安全的.原因是用了<code>synchronized</code>修饰.</p>
 <p><code>append</code>方法原理的在父类中.需要注意的是,如果<code>append</code>方法<code>append(null)</code>会直接拼接字符串&quot;null&rdquo;</p>
-<pre><code>    public AbstractStringBuilder append(String str) {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public AbstractStringBuilder append(String str) {
         // 判空
         if (str == null)
             /**
              * final char[] value = this.value;
-             * value[c++] = 'n';
-             * value[c++] = 'u';
-             * value[c++] = 'l';
-             * value[c++] = 'l';
+             * value[c++] = &#39;n&#39;;
+             * value[c++] = &#39;u&#39;;
+             * value[c++] = &#39;l&#39;;
+             * value[c++] = &#39;l&#39;;
              */
-           // 如果是'null' 则返回 字符串 &quot;null&quot;
+           // 如果是&#39;null&#39; 则返回 字符串 &#34;null&#34;
             return appendNull();
         // 获取字符长度
         int len = str.length();
@@ -2162,7 +2163,7 @@ String str9 = StringUtils.join(new String[]{str, &quot;456&quot;, &quot;789&quot
         count += len;
         return this;
     }
-</code></pre><p>与 String 类不同的是，<code>StringBuffer</code> 和 <code>StringBuilder</code> 类的对象能够被多次的修改，并且不产生新的未使用对象。</p>
+</code></pre></div><p>与 String 类不同的是，<code>StringBuffer</code> 和 <code>StringBuilder</code> 类的对象能够被多次的修改，并且不产生新的未使用对象。</p>
 <p>如果你需要一个可修改的字符串，应该使用<code>StringBuffer</code> 或者 <code>StringBuilder</code>。但是会有大量时间浪费在垃圾回收上，因为每次试图修改都有新的<code>String</code>对象被创建出来.</p>
 <h5 id="比较和使用">比较和使用</h5>
 <p>时间比较(短-&gt;长):</p>
@@ -2177,20 +2178,20 @@ String str9 = StringUtils.join(new String[]{str, &quot;456&quot;, &quot;789&quot
 如下代码：</p>
 </li>
 </ul>
-<pre><code>    public static void method1(int highLevel) {
-        String src = &quot;&quot;;
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public static void method1(int highLevel) {
+        String src = &#34;&#34;;
         for (int i = 0; i &lt; highLevel; i++) {
-            src += &quot;a&quot;; // 每次循环都会创建一个StringBuilder对象
+            src += &#34;a&#34;; // 每次循环都会创建一个StringBuilder对象
         }
     }
 
     public static void method2(int highLevel) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i &lt; highLevel; i++) {
-            sb.append(&quot;a&quot;);
+            sb.append(&#34;a&#34;);
         }
     }
-</code></pre><p>通过<code>StringBuilder</code>的<code>append()</code>方式添加字符串的效率，要远远高于<code>String</code>的字符串拼接方法.</p>
+</code></pre></div><p>通过<code>StringBuilder</code>的<code>append()</code>方式添加字符串的效率，要远远高于<code>String</code>的字符串拼接方法.</p>
 <p>在实际开发中还可以进行优化，<code>StringBuilder</code> 的空参构造器，默认的字符串容量是16,如果需要存放的数据过多，容量就会进行扩容，我们可以设置默认初始化更大的长度，来减少扩容的次数。</p>
 <p>如果我们能够确定，前前后后需要添加的字符串不高于某个限定值，那么建议使用构造器创建一个阈值的长度。</p>
 <h4 id="常用方法">常用方法</h4>
@@ -2198,7 +2199,7 @@ String str9 = StringUtils.join(new String[]{str, &quot;456&quot;, &quot;789&quot
 <h5 id="substring">substring</h5>
 <p>对字符串进行截取.返回一个新的字符串,它是此字符串的一个子字符串.</p>
 <p>源码</p>
-<pre><code>    public String substring(int beginIndex) {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public String substring(int beginIndex) {
         // 判空
         if (beginIndex &lt; 0) {
             throw new StringIndexOutOfBoundsException(beginIndex);
@@ -2226,9 +2227,9 @@ String str9 = StringUtils.join(new String[]{str, &quot;456&quot;, &quot;789&quot
         return ((beginIndex == 0) &amp;&amp; (endIndex == value.length)) ? this
                 : new String(value, beginIndex, subLen);
     }
-</code></pre><p>使用</p>
-<pre><code>    public static void main(String[] args) {
-        String str = &quot;123456&quot;;
+</code></pre></div><p>使用</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public static void main(String[] args) {
+        String str = &#34;123456&#34;;
         String substring = str.substring(2);
         // 3456
         System.out.println(substring);
@@ -2237,10 +2238,10 @@ String str9 = StringUtils.join(new String[]{str, &quot;456&quot;, &quot;789&quot
         // 34
         System.out.println(substring2);
     }
-</code></pre><h5 id="replace">replace</h5>
+</code></pre></div><h5 id="replace">replace</h5>
 <p>替换字符串.返回一个新的字符串,它是通过用 <code>newChar</code> 替换此字符串中出现的所有 <code>oldChar</code> 得到的.</p>
 <p>源码</p>
-<pre><code> public String replace(char oldChar, char newChar) {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> public String replace(char oldChar, char newChar) {
         // 校验: 需要进行替换新旧字符不能相同
         if (oldChar != newChar) {
             // 获取源字符串中的长度
@@ -2273,20 +2274,20 @@ String str9 = StringUtils.join(new String[]{str, &quot;456&quot;, &quot;789&quot
         }
         return this;
     }
-</code></pre><p>使用</p>
-<pre><code>    public static void main(String[] args) {
-        String str = &quot;123456&quot;;
+</code></pre></div><p>使用</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public static void main(String[] args) {
+        String str = &#34;123456&#34;;
         // 223456
-        System.out.println(str.replace('1', '2'));
+        System.out.println(str.replace(&#39;1&#39;, &#39;2&#39;));
     }
-</code></pre><h5 id="replaceall">replaceAll</h5>
+</code></pre></div><h5 id="replaceall">replaceAll</h5>
 <p>使用给定的 <code>replacement</code> 替换此字符串所有匹配给定的正则表达式的子字符串.</p>
 <p>源码</p>
-<pre><code>    public String replaceAll(String regex, String replacement) {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public String replaceAll(String regex, String replacement) {
         return Pattern.compile(regex).matcher(this).replaceAll(replacement);
     }
     
-</code></pre><pre><code>    // complile 解析正则表达式 获得 Pattern对象
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    // complile 解析正则表达式 获得 Pattern对象
     public static Pattern compile(String regex) {
         return new Pattern(regex, 0);
     }
@@ -2324,8 +2325,8 @@ String str9 = StringUtils.join(new String[]{str, &quot;456&quot;, &quot;789&quot
         }
         return text.toString();
     }
-</code></pre><p>重点看一下<code>replaceAll</code>中调用的<code>appendReplacement</code>方法</p>
-<pre><code>    public Matcher appendReplacement(StringBuffer sb, String replacement) {
+</code></pre></div><p>重点看一下<code>replaceAll</code>中调用的<code>appendReplacement</code>方法</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public Matcher appendReplacement(StringBuffer sb, String replacement) {
             
             // ...
             
@@ -2340,20 +2341,20 @@ String str9 = StringUtils.join(new String[]{str, &quot;456&quot;, &quot;789&quot
                 
                 char nextChar = replacement.charAt(cursor);
                 
-                if (nextChar == '\\') {
-                    // 重点1：当字符为'\'时，跳过，并获取其后面的字符，追加到result
+                if (nextChar == &#39;\\&#39;) {
+                    // 重点1：当字符为&#39;\&#39;时，跳过，并获取其后面的字符，追加到result
                     cursor++;
                     nextChar = replacement.charAt(cursor);
                     result.append(nextChar);
                     cursor++;
-                } else if (nextChar == '$') {
+                } else if (nextChar == &#39;$&#39;) {
                     
                     // 重点2：当字符为$时，跳过，并获取其后面的数值，并以此如果$后面第一个不为数字则抛异常，
                     // Skip past $
                     cursor++;
                     
                     // The first number is always a group
-                    int refNum = (int)replacement.charAt(cursor) - '0';
+                    int refNum = (int)replacement.charAt(cursor) - &#39;0&#39;;
                     
                     // 此处代码用于计算$符号后的数值，数值结果赋予 refNum
                     // ...
@@ -2385,29 +2386,29 @@ String str9 = StringUtils.join(new String[]{str, &quot;456&quot;, &quot;789&quot
              */
             return this;
         }
-</code></pre><p><code>replaceAll</code>中第二个参数<code>replacement</code>中，\ 有转义的作用, $ 用于获取分组匹配的当前子字符串 因为引入了 $ 符的分组功能,所以为了解决能输出 $ 字符，故引入 \ 转义功能.</p>
+</code></pre></div><p><code>replaceAll</code>中第二个参数<code>replacement</code>中，\ 有转义的作用, $ 用于获取分组匹配的当前子字符串 因为引入了 $ 符的分组功能,所以为了解决能输出 $ 字符，故引入 \ 转义功能.</p>
 <p>使用</p>
-<pre><code>    public static void main(String[] args) {
-        String str = &quot;111111&quot;;
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public static void main(String[] args) {
+        String str = &#34;111111&#34;;
         // 222222
-        System.out.println(str.replaceAll(&quot;1&quot;, &quot;2&quot;));
+        System.out.println(str.replaceAll(&#34;1&#34;, &#34;2&#34;));
     }
-</code></pre><h5 id="valueof">valueOf</h5>
+</code></pre></div><h5 id="valueof">valueOf</h5>
 <p>该方法作用是将对象转成String类型.</p>
 <p>源码</p>
-<pre><code>    public static String valueOf(Object obj) {
-        return (obj == null) ? &quot;null&quot; : obj.toString();
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public static String valueOf(Object obj) {
+        return (obj == null) ? &#34;null&#34; : obj.toString();
     }
-</code></pre><p>使用</p>
-<pre><code>    public static void main(String[] args) {
+</code></pre></div><p>使用</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public static void main(String[] args) {
         Integer integer = 11111;
         String str = String.valueOf(integer);
         // 11111
         System.out.println(str);
     }
-</code></pre><h3 id="长度限制">长度限制</h3>
+</code></pre></div><h3 id="长度限制">长度限制</h3>
 <p>翻阅String源码在String源码中发现有定义字符串长度的构造函数</p>
-<pre><code>    // count 就是 字符串定义长度 
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    // count 就是 字符串定义长度 
     public String(char value[], int offset, int count) {
         if (offset &lt; 0) {
             throw new StringIndexOutOfBoundsException(offset);
@@ -2417,7 +2418,7 @@ String str9 = StringUtils.join(new String[]{str, &quot;456&quot;, &quot;789&quot
                 throw new StringIndexOutOfBoundsException(count);
             }
             if (offset &lt;= value.length) {
-                this.value = &quot;&quot;.value;
+                this.value = &#34;&#34;.value;
                 return;
             }
         }
@@ -2427,35 +2428,35 @@ String str9 = StringUtils.join(new String[]{str, &quot;456&quot;, &quot;789&quot
         }
         this.value = Arrays.copyOfRange(value, offset, offset+count);
     }
-</code></pre><p>通过源码可以看到<code>int</code>的最大长度就是<code>String</code>的支持的最大长度.</p>
-<pre><code>    public static void main(String[] args) {
+</code></pre></div><p>通过源码可以看到<code>int</code>的最大长度就是<code>String</code>的支持的最大长度.</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public static void main(String[] args) {
         // 2,147,483,648 = 2^31 - 1 
         System.out.println(Integer.MAX_VALUE);
     }
-</code></pre><p><strong>注意<code>new String(char value[], int offset, int count)</code>是运行时<code>String</code>支持的最大长度.</strong></p>
+</code></pre></div><p><strong>注意<code>new String(char value[], int offset, int count)</code>是运行时<code>String</code>支持的最大长度.</strong></p>
 <p>在<code>String</code>编译声明期间,用<code>javac</code>编译 长度为<code>2^31 -1</code>的字符串.</p>
-<pre><code>    public static void main(String[] args) {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public static void main(String[] args) {
         // 长度: 2^31 -1
-        String str = &quot;1111 ... &quot;;
+        String str = &#34;1111 ... &#34;;
         System.out.println(str);
     }
-</code></pre><pre><code>java: 常量字符串过长
-</code></pre><p>在<code>Gen</code>类中相关报错信息源码</p>
-<pre><code>private void checkStringConstant(DiagnosticPosition var1, Object var2) {
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">java: 常量字符串过长
+</code></pre></div><p>在<code>Gen</code>类中相关报错信息源码</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">private void checkStringConstant(DiagnosticPosition var1, Object var2) {
     if (this.nerrs == 0 &amp;&amp; var2 != null &amp;&amp; var2 instanceof String &amp;&amp; ((String)var2).length() &gt;= 65535) {
-        this.log.error(var1, &quot;limit.string&quot;, new Object[0]);
+        this.log.error(var1, &#34;limit.string&#34;, new Object[0]);
         ++this.nerrs;
     }
 }
-</code></pre><p>可以看到源码中如果<code>String</code>长度大于等于65535会导致编译失败</p>
+</code></pre></div><p>可以看到源码中如果<code>String</code>长度大于等于65535会导致编译失败</p>
 <p>在编译期的时候,字面量要进字符串常量池.所以要遵守<a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.4.3">《Java®虚拟机规范》(Java8)中对String常量池的描述.</a></p>
 <p><code>CONSTANT_String_info</code> 用于表示 <code>java.lang.String</code> 类型的常量对象结构体</p>
 <p><code>CONSTANT_String_info</code>格式如下:</p>
-<pre><code>CONSTANT_String_info {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">CONSTANT_String_info {
     u1 tag;
     u2 string_index;
 }
-</code></pre><blockquote>
+</code></pre></div><blockquote>
 <p><strong>tag</strong><br>
 结构<code>CONSTANT_String_info</code>的标签项的值为<code>CONSTANT_String(8)</code></p>
 </blockquote>
@@ -2464,12 +2465,12 @@ String str9 = StringUtils.join(new String[]{str, &quot;456&quot;, &quot;789&quot
 <code>string_index</code> 项的值必须是对常量池的有效索引，常量池在该索引处的项必须是 <code>CONSTANT_Utf8_info</code> 结构，表示一组 <code>Unicode</code> 码点序列，这组 Unicode 码点序列最终会被初始化为一个 下 <code>Unicode</code> 对象</p>
 </blockquote>
 <p><code>CONSTANT_Utf8_info</code>是一个<code>CONSTANT_Utf8</code>类型的常量池数据项，它存储的是一个常量字符串。常量池中的所有字面量几乎都是通过<code>CONSTANT_Utf8_info</code>描述的。<code>CONSTANT_Utf8_info</code>的定义如下：</p>
-<pre><code>ONSTANT_Utf8_info {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">ONSTANT_Utf8_info {
     u1 tag;
     u2 length;
     u1 bytes[length];
 }
-</code></pre><p><code>length</code>则指明了 <code>bytes</code>数组的长度，其类型为<code>u2</code></p>
+</code></pre></div><p><code>length</code>则指明了 <code>bytes</code>数组的长度，其类型为<code>u2</code></p>
 <p>通过查阅《JVM规范》发现<code>u2</code>表示两个字节的无符号数，那么1个字节有8位，2个字节就有16位。16位无符号数可表示的最大值位<code>2^16 - 1 = 65535</code>。也就是说，<code>Class</code>文件中常量池的格式规定了，其字符串常量的长度不能超过65535。</p>
 <p><strong>关于编译器字符串最大长度65534的问题</strong></p>
 <blockquote>
@@ -2500,33 +2501,33 @@ String str9 = StringUtils.join(new String[]{str, &quot;456&quot;, &quot;789&quot
 <p>在编码(字符串到字节)的时候是用一种编码;而在解码(从字节到字符串)的时候用另一种编码;所以导致乱码问题.<strong>所以想要避免乱码问题最简单的办法就是从始至终,都用同一种字符格式</strong></p>
 <h4 id="相关方法">相关方法</h4>
 <p><code>String</code>类有两种比较常用的操作编码方式</p>
-<pre><code>    // 注意处理异常
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    // 注意处理异常
     public static void main(String[] args) throws UnsupportedEncodingException {
         // 本地使用的是 utf-8 的编码
-        String str = &quot;你好&quot;;
-        byte[] bytes = str.getBytes(&quot;utf-8&quot;);
+        String str = &#34;你好&#34;;
+        byte[] bytes = str.getBytes(&#34;utf-8&#34;);
         // 你好
         System.out.println(new String(bytes));
-        String string = new String(str.getBytes(), &quot;utf-8&quot;);
+        String string = new String(str.getBytes(), &#34;utf-8&#34;);
         // 你好
         System.out.println(string);
     }
-</code></pre><h5 id="getbytesstring-charsetname">getBytes(String charsetName)</h5>
+</code></pre></div><h5 id="getbytesstring-charsetname">getBytes(String charsetName)</h5>
 <p>该方法会根据指定的<code>decode</code>编码返回某字符串在该编码下的<code>byte</code>数组表示</p>
 <p>源码</p>
-<pre><code>    public byte[] getBytes(String charsetName)
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public byte[] getBytes(String charsetName)
             throws UnsupportedEncodingException {
         if (charsetName == null) throw new NullPointerException();
         return StringCoding.encode(charsetName, value, 0, value.length);
     }
-</code></pre><p><code>StringCoding.encode</code>方法</p>
-<pre><code>// len: 当前字符串长度
+</code></pre></div><p><code>StringCoding.encode</code>方法</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// len: 当前字符串长度
 static byte[] encode(String charsetName, char[] ca, int off, int len)
         throws UnsupportedEncodingException
     {
         StringEncoder se = deref(encoder);
         // 如果为空 默认ISO-8859-1
-        String csn = (charsetName == null) ? &quot;ISO-8859-1&quot; : charsetName;
+        String csn = (charsetName == null) ? &#34;ISO-8859-1&#34; : charsetName;
         // 
         if ((se == null) || !(csn.equals(se.requestedCharsetName())
                               || csn.equals(se.charsetName()))) {
@@ -2543,26 +2544,26 @@ static byte[] encode(String charsetName, char[] ca, int off, int len)
         }
         return se.encode(ca, off, len);
     }
-</code></pre><h5 id="new-stringbyte-bytes-string-charsetname">new String(byte bytes[], String charsetName)</h5>
+</code></pre></div><h5 id="new-stringbyte-bytes-string-charsetname">new String(byte bytes[], String charsetName)</h5>
 <p>该方法为字节数组构造</p>
 <p><code>char[]</code>数组是以<code>unicode</code>码来存储的,<code>String</code>和<code>char</code>为内存形式.<code>byte</code>是网络传输或存储的序列化形式.可以通过<code>charset</code>来解码指定的<code>byte</code>数组，将其解码成<code>unicode</code>的<code>char[]</code>数组，构造<code>String</code>.</p>
 <p>源码</p>
-<pre><code>    public String(byte bytes[], String charsetName)
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public String(byte bytes[], String charsetName)
             throws UnsupportedEncodingException {
         this(bytes, 0, bytes.length, charsetName);
     }
-</code></pre><pre><code>    public String(byte bytes[], int offset, int length, String charsetName)
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public String(byte bytes[], int offset, int length, String charsetName)
             throws UnsupportedEncodingException {
         if (charsetName == null)
-            throw new NullPointerException(&quot;charsetName&quot;);
+            throw new NullPointerException(&#34;charsetName&#34;);
         checkBounds(bytes, offset, length);
         this.value = StringCoding.decode(charsetName, bytes, offset, length);
     }
-</code></pre><pre><code>    static char[] decode(String charsetName, byte[] ba, int off, int len)
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    static char[] decode(String charsetName, byte[] ba, int off, int len)
         throws UnsupportedEncodingException
     {
         StringDecoder sd = deref(decoder);
-        String csn = (charsetName == null) ? &quot;ISO-8859-1&quot; : charsetName;
+        String csn = (charsetName == null) ? &#34;ISO-8859-1&#34; : charsetName;
         if ((sd == null) || !(csn.equals(sd.requestedCharsetName())
                               || csn.equals(sd.charsetName()))) {
             sd = null;
@@ -2577,7 +2578,7 @@ static byte[] encode(String charsetName, char[] ca, int off, int len)
         }
         return sd.decode(ba, off, len);
     }
-</code></pre></div>
+</code></pre></div></div>
                     <div class="post_footer">
                         
                         <div class="meta">
@@ -2587,7 +2588,7 @@ static byte[] encode(String charsetName, char[] ca, int off, int len)
                                     
                                     <a href="https://whiteppure.github.io/iblog/tags/java/">Java</a>
                                     
-                                    <a href="https://whiteppure.github.io/iblog/tags/%E9%9D%A2%E5%90%91%E8%8F%9C%E9%B8%9F%E7%BC%96%E7%A8%8B/">面向菜鸟编程</a>
+                                    <a href="https://whiteppure.github.io/iblog/tags/java%E5%9F%BA%E7%A1%80/">Java基础</a>
                                     
                                 </span>
                             </div>
@@ -2597,7 +2598,25 @@ static byte[] encode(String charsetName, char[] ca, int off, int len)
                 </div>
                 
                 
-                <div class="doc_comments"></div>
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+    })
+</script>
                 
             </div>
         </div>

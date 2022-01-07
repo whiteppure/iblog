@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>Java基础-Java异常 ｜ whitepure</title>
+	<title>Java异常 ｜ 至简</title>
 	
     
     
-    <meta name="description" content="" />
+    <meta name="description" content="异常类型 Throwable 可以用来表示任何可以作为异常抛出的类，分为两种：Error 和 Exception。 其中 Error 用来表示Java程序无法处理的错误；这类错误一般与硬件有关，与程" />
     
 
     
@@ -510,40 +510,41 @@
         <a id="menu_icon"><i class="ri-menu-line"></i></a>
     </div>
 </div>
-        
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
+                    <span>至简</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">大道至简</p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
         <div class="content">
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
-                        <h2><a href='/iblog/posts/rookie/rookie-exception/'>Java基础-Java异常</a></h2>
+                        <h2><a href='/iblog/posts/rookie/rookie-exception/'>Java异常</a></h2>
                         <span class="date">2021.01.13</span>
                     </div>
                     <div class="post_content markdown"><p><img src="/iblog/posts/images/essays/Java%E5%BC%82%E5%B8%B8%E5%88%86%E7%B1%BB.png" alt="Java异常分类"></p>
@@ -553,17 +554,17 @@
 <p><code>Exception</code> 分为两种：运行时异常和检查型异常。</p>
 <ul>
 <li>受检异常 ：需要用<code>try...catch...</code>语句捕获并进行处理，并且可以从异常中恢复；
-<pre><code>public void test() throws MyException{}
-</code></pre><p>Java编译器对检查性异常会要求我们进行<code>catch</code>，必须得进行捕获，否则编译不过去。Java认为检查性异常都可以被处理，所以必须显示的处理 <code>checked</code> 异常。
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public void test() throws MyException{}
+</code></pre></div><p>Java编译器对检查性异常会要求我们进行<code>catch</code>，必须得进行捕获，否则编译不过去。Java认为检查性异常都可以被处理，所以必须显示的处理 <code>checked</code> 异常。
 常见的检查性异常有<code>IOException</code>，<code>SqlException</code>。
 当我们希望我们的⽅法调⽤者， 明确的处理⼀些特殊情况的时候， 就应该使⽤受检异常。</p>
 </li>
 <li>非受检异常 ：是程序运行时错误。例如：除 0 会引发 <code>ArithmeticException</code> ，此时程序崩溃并且无法恢复。
-<pre><code>public void test() {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public void test() {
     int a = 1;
     int b = a/0;
 }
-</code></pre><p>这种异常⼀般可以理解为是代码原因导致的。
+</code></pre></div><p>这种异常⼀般可以理解为是代码原因导致的。
 ⽐如发⽣空指针、 数组越界等。 所以， 只要代码写的没问题， 这些异常都是可以避免的。
 也就不需要我们显⽰的进⾏处理。</p>
 </li>
@@ -580,7 +581,7 @@
 <li>如果你想写一个<strong>运行时异常</strong>类，那么需要继承 <code>RuntimeException</code> 类。</li>
 </ul>
 <p>大多数情况下都会继承<code>RuntimeException</code>,自定义运行时异常。</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
 
     void context() throws TestException {
         throw new TestException();
@@ -597,22 +598,22 @@ class TestException extends Exception {
 // Test2Exception为运行时异常 可以不进行处理
 class Test2Exception extends RuntimeException{
 }
-</code></pre><h2 id="异常链">异常链</h2>
+</code></pre></div><h2 id="异常链">异常链</h2>
 <blockquote>
 <p>异常链是Java中⾮常流⾏的异常处理概念， 是指在进⾏⼀个异常处理时抛出了另外⼀个异常， 由此产⽣了⼀个异常链条。</p>
 </blockquote>
 <p>如果因为因为异常你决定抛出⼀个新的异常， 你⼀定要包含原有的异常， 这样， 处理程序才可以通过<code>getCause()</code>和<code>initCause()</code>⽅法来访问异常最终的根源。</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         try {
             int a = 1;
             int b = a / 0;
         } catch (ArithmeticException e) {
-            throw new RuntimeException(&quot;除以零异常&quot;, e);
+            throw new RuntimeException(&#34;除以零异常&#34;, e);
         }
     }
 }
-</code></pre><p>在此示例中，当捕获到<code>ArithmeticException</code>时，将创建一个新的<code>RuntimeException</code>异常，并附加原始的异常原因，并将异常链抛出到下一个更高级别的异常处理程序。</p>
+</code></pre></div><p>在此示例中，当捕获到<code>ArithmeticException</code>时，将创建一个新的<code>RuntimeException</code>异常，并附加原始的异常原因，并将异常链抛出到下一个更高级别的异常处理程序。</p>
 <h2 id="处理异常">处理异常</h2>
 <p>异常的处理⽅式有两种:</p>
 <ol>
@@ -627,15 +628,15 @@ class Test2Exception extends RuntimeException{
 <p><code>catch</code>语句应该指定具体的异常类型。不能把不该捕获的异常也捕获了;如果<code>finally</code>里面也会抛出异常，也一样需要使用<code>try..catch</code>处理。</p>
 <h3 id="trycatch">try..catch..</h3>
 <p>在Java中如果需要处理异常，必须先对异常通过<code>try..catch..</code>进行捕获，然后再对异常情况进行处理。</p>
-<pre><code>try{
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">try{
    // 程序代码
 }catch(异常类型1 异常的变量名1){
   // 程序代码
 }
-</code></pre><p>一个 <code>try</code> 对应多个 <code>catch</code>,进行多重捕获。</p>
+</code></pre></div><p>一个 <code>try</code> 对应多个 <code>catch</code>,进行多重捕获。</p>
 <p>可以在 <code>try</code> 语句后面添加任意数量的 <code>catch</code> 块。如果发生异常，异常被抛给第一个 <code>catch</code> 块。如果不匹配，它会被传递给第二个 <code>catch</code> 块。
 如此，直到异常被捕获或者通过所有的 <code>catch</code> 块。</p>
-<pre><code>try{
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">try{
    // 程序代码
 }catch(异常类型1 异常的变量名1){
   // 程序代码
@@ -644,15 +645,15 @@ class Test2Exception extends RuntimeException{
 }catch(异常类型3 异常的变量名3){
   // 程序代码
 }
-</code></pre><p>在JDK7之后，可以将 <code>catch</code> 语句块折叠,这意味着可以将多个不同类型的异常合并处理。</p>
-<pre><code>try{
+</code></pre></div><p>在JDK7之后，可以将 <code>catch</code> 语句块折叠,这意味着可以将多个不同类型的异常合并处理。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">try{
   // 程序代码
 } catch (异常类型1 | 异常类型2 | 异常类型3 e) {
   // 程序代码
 }
-</code></pre><h3 id="finally">finally</h3>
+</code></pre></div><h3 id="finally">finally</h3>
 <p><code>try..catch..</code>通常连用用来捕获异常；<code>try..catch..finally..</code>也可以连用。</p>
-<pre><code>try{
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">try{
   // 程序代码
   return a;
 }catch(异常类型2 异常的变量名2){
@@ -662,7 +663,7 @@ class Test2Exception extends RuntimeException{
   // 程序代码
   return c;
 }
-</code></pre><p>对于<code>try..catch..finally..</code>语句块中执行顺序的解释</p>
+</code></pre></div><p>对于<code>try..catch..finally..</code>语句块中执行顺序的解释</p>
 <p>根据JVM规范:</p>
 <ul>
 <li>如果 <code>try</code> 语句块里边有返回值则返回 <code>try</code> 语句块里边的;</li>
@@ -678,41 +679,41 @@ class Test2Exception extends RuntimeException{
 </blockquote>
 <p>JVM先会把<code>try</code>或者 <code>catch</code>代码块中的返回值保留，再来执行 <code>finally</code> 代码块中的语句，等到 <code>finally</code> 代码块执行完毕之后，在把之前保留的返回值给返回出去。
 这条规则（保留返回值），只适用于 <code>return</code> 和 <code>throw</code> 语句，不适用于 <code>break</code> 和 <code>continue</code> 语句，因为它们根本就没有返回值。</p>
-<pre><code>public class MyTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MyTest {
  
 	public static void main(String[] args) {
         // main 代码块中的执行结果为：1
-		System.out.println(&quot;main 代码块中的执行结果为：&quot; + myMethod());
+		System.out.println(&#34;main 代码块中的执行结果为：&#34; + myMethod());
 	}
  
 	public static int myMethod() {
 		int i = 1;
 		try {
-			System.out.println(&quot;try 代码块被执行！&quot;);
+			System.out.println(&#34;try 代码块被执行！&#34;);
 			return i;
 		} finally {
 			++i;
-			System.out.println(&quot;finally 代码块被执行！&quot;);
-			System.out.println(&quot;finally 代码块中的i = &quot; + i);
+			System.out.println(&#34;finally 代码块被执行！&#34;);
+			System.out.println(&#34;finally 代码块中的i = &#34; + i);
 		}
  
 	}
  
 }
-</code></pre><p><code>try</code> 语句块不止可以与 <code>catch</code> 连用，也可以与 <code>finally</code> 连用，但是 <code>catch</code> 不能与 <code>finally</code> 连用。</p>
-<pre><code>try{
+</code></pre></div><p><code>try</code> 语句块不止可以与 <code>catch</code> 连用，也可以与 <code>finally</code> 连用，但是 <code>catch</code> 不能与 <code>finally</code> 连用。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">try{
   // 程序代码
 } finally{
   // 程序代码
 }
-</code></pre><h3 id="try-with-resources">try-with-resources</h3>
+</code></pre></div><h3 id="try-with-resources">try-with-resources</h3>
 <p>由于<code>..finally..</code>语句块中的代码一般情况下一定会执行，所以经常用来关闭资源。</p>
 <p>代码演示</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         InputStream in = null;
         try {
-            in = new FileInputStream(&quot;awsl&quot;);
+            in = new FileInputStream(&#34;awsl&#34;);
             in.read();
         } catch (IOException e) {
             e.printStackTrace();
@@ -727,17 +728,17 @@ class Test2Exception extends RuntimeException{
         }
     }
 }
-</code></pre><p>自从JDK7之后，支持<code>try-with-resources</code>的写法,这种写法对比之前更清晰、明了：</p>
-<pre><code>public class MainTest {
+</code></pre></div><p>自从JDK7之后，支持<code>try-with-resources</code>的写法,这种写法对比之前更清晰、明了：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
-        try (InputStream in = new FileInputStream(&quot;awsl&quot;)) {
+        try (InputStream in = new FileInputStream(&#34;awsl&#34;)) {
             in.read();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 }
-</code></pre><p>这种写法其实是Java语法糖。</p>
+</code></pre></div><p>这种写法其实是Java语法糖。</p>
 <blockquote>
 <p>Java语法糖</p>
 <p>1.什么是语法糖?
@@ -760,11 +761,11 @@ class Test2Exception extends RuntimeException{
 <ul>
 <li><code>throws</code> 用在方法上声明异常,子类继承的时候要继承该异常或者该异常的子类,不处理异常,谁调用该方法谁处理异常；
 <code>throws</code>抛出异常时，它的调用者也要申明抛出异常或者捕获，不然编译报错。
-<pre><code>public static void main(String[] args) throws Exception {}
-</code></pre></li>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static void main(String[] args) throws Exception {}
+</code></pre></div></li>
 <li><code>throw</code>用于方法内部，抛出的是异常对象。调用者可以不申明或不捕获（这是非常不负责任的方式）但编译器不会报错。
-<pre><code>throw new RuntimeException(&quot;这是运行中的异常&quot;);
-</code></pre></li>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">throw new RuntimeException(&#34;这是运行中的异常&#34;);
+</code></pre></div></li>
 </ul>
 <p><code>throws</code>表示出现异常的一种可能性，告诉调用者这个方法是危险的，并不一定会发生这些异常；<code>throw</code>则是抛出了异常，执行<code>throw</code>则一定抛出了某种异常对象。
 两者都是消极处理异常的方式（这里的消极并不是说这种方式不好），只是抛出或者可能抛出异常，但是不会由方法去处理异常，真正的处理异常由此方法的上层调用处理。</p>
@@ -779,59 +780,59 @@ class Test2Exception extends RuntimeException{
 如果在程序中能够用if语句和<code>boolean</code>变量来进行逻辑判断，那么尽量减少异常的使用，从而避免不必要的异常捕获和处理。</p>
 <h3 id="空catch">空catch</h3>
 <p>千万不要使用空的<code>catch</code>块:</p>
-<pre><code>try{
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">try{
  // ...
 }catch(IOException e){
   // ...
 }
-</code></pre><p>在捕获了异常之后什么都不做，相当于忽略了这个异常。空的<code>catch</code>块意味着你在程序中隐藏了错误和异常，并且很可能导致程序出现不可控的执行结果。
+</code></pre></div><p>在捕获了异常之后什么都不做，相当于忽略了这个异常。空的<code>catch</code>块意味着你在程序中隐藏了错误和异常，并且很可能导致程序出现不可控的执行结果。
 如果你非常肯定捕获到的异常不会以任何方式对程序造成影响，最好用日志将该异常进行记录，以便日后方便更新和维护。</p>
 <h3 id="吞掉异常">吞掉异常</h3>
 <p>请不要在<code>catch</code>块中吞掉异常:</p>
-<pre><code>catch (NoSuchMethodException e) {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">catch (NoSuchMethodException e) {
    return null;
 }
-</code></pre><p>不要不处理异常，而返回<code>null</code>，这样异常就会被吞掉，无法获取到任何失败信息，会给日后的问题排查带来巨大困难。</p>
+</code></pre></div><p>不要不处理异常，而返回<code>null</code>，这样异常就会被吞掉，无法获取到任何失败信息，会给日后的问题排查带来巨大困难。</p>
 <h3 id="精确处理异常">精确处理异常</h3>
-<pre><code>public void foo() throws Exception { //错误做法
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public void foo() throws Exception { //错误做法
 }
-</code></pre><p>一定要尽量避免上面的代码，因为他的调用者完全不知道错误的原因到底是什么。</p>
+</code></pre></div><p>一定要尽量避免上面的代码，因为他的调用者完全不知道错误的原因到底是什么。</p>
 <p>在方法声明中，可以由方法抛出一些特定受检异常。如果有多个，那就分别抛出多个，这样这个方法的使用者才会分别针对每个异常做特定的处理，从而避免发生故障。</p>
-<pre><code>public void foo() throws SpecificException1, SpecificException2 { 
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public void foo() throws SpecificException1, SpecificException2 { 
 //正确做法
 }
-</code></pre><p>同样的在捕获异常时，也要注意，尽量捕获特定的子类，而不是直接捕获<code>Exception</code>类。</p>
-<pre><code>try {
+</code></pre></div><p>同样的在捕获异常时，也要注意，尽量捕获特定的子类，而不是直接捕获<code>Exception</code>类。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">try {
     someMethod();
 } 
 catch (Exception e) {
-    log.error(&quot;method has failed&quot;, e);
+    log.error(&#34;method has failed&#34;, e);
 }
-</code></pre><p>上面代码，最大的问题就是，如果<code>someMethod()</code>的开发者在里面新增了一个特定的异常，并且预期是调用方能够特殊的对他进行处理。</p>
+</code></pre></div><p>上面代码，最大的问题就是，如果<code>someMethod()</code>的开发者在里面新增了一个特定的异常，并且预期是调用方能够特殊的对他进行处理。</p>
 <p>但是调用者直接<code>catch了Exception</code>类，就会导致永远无法知道<code>someMethod</code>的具体变化细节。这久可能导致在运行的过程中在某一个时间点程序崩溃。</p>
 <p>更不要去捕获<code>Throwable</code>类。因为Java中的<code>Error</code>也可以是<code>Throwable</code>的子类。但是<code>Error</code>是Java虚拟机本身无法控制的。Java虚拟机甚至可能不会在出现任何错误时请求用户的<code>catch</code>子句。</p>
-<pre><code>try {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">try {
     someMethod();
 } 
 catch (Throwable e) {
-    log.error(&quot;method has failed&quot;, e);
+    log.error(&#34;method has failed&#34;, e);
 }
-</code></pre><p><code>OutOfMemoryError</code>和<code>StackOverflowError</code>便是典型的例子，它们都是由于一些超出应用处理范围的情况导致的。</p>
+</code></pre></div><p><code>OutOfMemoryError</code>和<code>StackOverflowError</code>便是典型的例子，它们都是由于一些超出应用处理范围的情况导致的。</p>
 <h3 id="抛出异常">抛出异常</h3>
 <p>通常情况下，在捕获异常的时候抛出异常，需要注意的是，要始终在自定义异常中，覆盖原有的异常，从而构成一条异常链，这样堆栈跟踪就不会丢失：</p>
-<pre><code>catch (NoSuchMethodException e) {
-    throw new MyServiceException(&quot;Some information: &quot; + e.getMessage());  //错误做法
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">catch (NoSuchMethodException e) {
+    throw new MyServiceException(&#34;Some information: &#34; + e.getMessage());  //错误做法
 }
-</code></pre><p>上面的命令可能会丢失掉主异常的堆栈跟踪。正确的方法是:</p>
-<pre><code>catch (NoSuchMethodException e) {
-     throw new MyServiceException(&quot;Some information: &quot; , e);  //正确做法
+</code></pre></div><p>上面的命令可能会丢失掉主异常的堆栈跟踪。正确的方法是:</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">catch (NoSuchMethodException e) {
+     throw new MyServiceException(&#34;Some information: &#34; , e);  //正确做法
 }
-</code></pre><p>需要注意的是，可以记录异常或抛出异常，但不要同时做：</p>
-<pre><code>catch (NoSuchMethodException e) {
-   log.error(&quot;Some information&quot;, e);
+</code></pre></div><p>需要注意的是，可以记录异常或抛出异常，但不要同时做：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">catch (NoSuchMethodException e) {
+   log.error(&#34;Some information&#34;, e);
    throw e;
 }
-</code></pre><p>抛出和日志记录可能会在日志文件中产生多个日志消息,这就会导致同一个问题，却在日志中有很多不同的错误信息，使得开发人员陷入混乱。</p>
+</code></pre></div><p>抛出和日志记录可能会在日志文件中产生多个日志消息,这就会导致同一个问题，却在日志中有很多不同的错误信息，使得开发人员陷入混乱。</p>
 <h3 id="选择异常">选择异常</h3>
 <p>一旦你决定抛出异常，你就要决定抛出抛出检查异常还是非检查异常。</p>
 <p>检查异常导致了太多的<code>try…catch</code>代码，可能有很多检查异常对开发人员来说是无法合理地进行处理的，比如:<code>SQLException</code>，而开发人员却不得不去进行<code>try…catch</code>，这样就会导致经常出现这样一种情况：逻辑代码只有很少的几行，而进行异常捕获和处理的代码却有很多行。
@@ -839,12 +840,12 @@ catch (Throwable e) {
 <p>建议尽量避免检查异常的使用，如果确实该异常情况出现很的普遍，需要提醒调用者注意处理的话，就使用检查异常；否则使用非检查异常。
 因此，在一般情况下，尽量将检查异常转变为非检查异常交给上层处理。</p>
 <h3 id="不要在finally中抛异常">不要在finally中抛异常</h3>
-<pre><code>try {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">try {
   someMethod();  //抛出 exceptionOne
 }finally{
   cleanUp();    //如果在这里再抛出一个异常，那么try中的exception将会丢失
 }
-</code></pre><p>在上面的例子中，如果<code>someMethod()</code>抛出一个异常，并且在<code>finally</code>块中，<code>cleanUp()</code>也抛出一个异常，那么初始的<code>exception</code>(正确的错误异常)将永远丢失。</p>
+</code></pre></div><p>在上面的例子中，如果<code>someMethod()</code>抛出一个异常，并且在<code>finally</code>块中，<code>cleanUp()</code>也抛出一个异常，那么初始的<code>exception</code>(正确的错误异常)将永远丢失。</p>
 <p>但是，如果你不想处理<code>someMethod()</code>中的异常，但是仍然需要做一些清理工作，那么在<code>finally</code>块中进行清理。不要使用<code>catch</code>块。</p>
 </div>
                     <div class="post_footer">
@@ -856,7 +857,7 @@ catch (Throwable e) {
                                     
                                     <a href="https://whiteppure.github.io/iblog/tags/java/">Java</a>
                                     
-                                    <a href="https://whiteppure.github.io/iblog/tags/%E9%9D%A2%E5%90%91%E8%8F%9C%E9%B8%9F%E7%BC%96%E7%A8%8B/">面向菜鸟编程</a>
+                                    <a href="https://whiteppure.github.io/iblog/tags/java%E5%9F%BA%E7%A1%80/">Java基础</a>
                                     
                                 </span>
                             </div>
@@ -866,7 +867,25 @@ catch (Throwable e) {
                 </div>
                 
                 
-                <div class="doc_comments"></div>
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+    })
+</script>
                 
             </div>
         </div>

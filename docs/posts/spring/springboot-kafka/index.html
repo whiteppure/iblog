@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>SpringBoot整合kafka ｜ whitepure</title>
+	<title>SpringBoot整合kafka ｜ 至简</title>
 	
     
     
-    <meta name="description" content="" />
+    <meta name="description" content="kafka介绍 kafka官网: http://kafka.apache.org kafka中文官网: https://kafka.apachecn.org Kafka是一种分布式的，基于发布/订阅的消息系统。主要特点如下： 以时间复杂度为O(1)的方式提供消息持久" />
     
 
     
@@ -402,35 +402,36 @@
         <a id="menu_icon"><i class="ri-menu-line"></i></a>
     </div>
 </div>
-        
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
+                    <span>至简</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">大道至简</p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
         <div class="content">
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
@@ -459,10 +460,10 @@
 <h3 id="安装kafka">安装kafka</h3>
 <p>kafka依赖Java和zookeeper，安装前请先安装Java和zookeeper。</p>
 <p>安装zookeeper</p>
-<pre><code>brew install zookeeper
-</code></pre><p>安装kafka</p>
-<pre><code>brew install kafka
-</code></pre><h3 id="启动kafka">启动kafka</h3>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">brew install zookeeper
+</code></pre></div><p>安装kafka</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">brew install kafka
+</code></pre></div><h3 id="启动kafka">启动kafka</h3>
 <p>假定你是按照上边的方法安装的kafka,接下来启动kafka</p>
 <p>因为kafka依赖zk，所以首先要启动zookeeper</p>
 <ul>
@@ -496,12 +497,12 @@
 </div>
 <h2 id="springboot整合kafka">Springboot整合kafka</h2>
 <h3 id="引入pom依赖">引入pom依赖</h3>
-<pre><code>    &lt;dependency&gt;
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    &lt;dependency&gt;
         &lt;groupId&gt;org.springframework.kafka&lt;/groupId&gt;
         &lt;artifactId&gt;spring-kafka&lt;/artifactId&gt;
     &lt;/dependency&gt;
-</code></pre><h3 id="配置applicationyml">配置application.yml</h3>
-<pre><code>server:
+</code></pre></div><h3 id="配置applicationyml">配置application.yml</h3>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">server:
   port: 8080
   servlet:
     context-path: /demo
@@ -528,8 +529,8 @@ spring:
       concurrency: 5
       # 手动提交
       ack-mode: manual_immediate
-</code></pre><h3 id="创建kafka配置类">创建kafka配置类</h3>
-<pre><code>public interface KafkaConsts {
+</code></pre></div><h3 id="创建kafka配置类">创建kafka配置类</h3>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public interface KafkaConsts {
     /**
      * 默认分区大小
      */
@@ -538,9 +539,9 @@ spring:
     /**
      * Topic 名称
      */
-    String TOPIC_TEST = &quot;test&quot;;
+    String TOPIC_TEST = &#34;test&#34;;
 }
-</code></pre><pre><code>@Configuration
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Configuration
 @EnableConfigurationProperties({KafkaProperties.class})
 @EnableKafka
 @AllArgsConstructor
@@ -572,7 +573,7 @@ public class KafkaConfig {
         return new DefaultKafkaConsumerFactory&lt;&gt;(kafkaProperties.buildConsumerProperties());
     }
 
-    @Bean(&quot;ackContainerFactory&quot;)
+    @Bean(&#34;ackContainerFactory&#34;)
     public ConcurrentKafkaListenerContainerFactory&lt;String, String&gt; ackContainerFactory() {
         ConcurrentKafkaListenerContainerFactory&lt;String, String&gt; factory = new ConcurrentKafkaListenerContainerFactory&lt;&gt;();
         factory.setConsumerFactory(consumerFactory());
@@ -582,16 +583,16 @@ public class KafkaConfig {
     }
 
 }
-</code></pre><h3 id="创建消息处理器">创建消息处理器</h3>
-<pre><code>@Component
+</code></pre></div><h3 id="创建消息处理器">创建消息处理器</h3>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Component
 @Slf4j
 public class MessageHandler {
 
-    @KafkaListener(topics = KafkaConsts.TOPIC_TEST, containerFactory = &quot;ackContainerFactory&quot;)
+    @KafkaListener(topics = KafkaConsts.TOPIC_TEST, containerFactory = &#34;ackContainerFactory&#34;)
     public void handleMessage(ConsumerRecord record, Acknowledgment acknowledgment) {
         try {
             String message = (String) record.value();
-            log.info(&quot;收到消息: {}&quot;, message);
+            log.info(&#34;收到消息: {}&#34;, message);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         } finally {
@@ -600,9 +601,9 @@ public class MessageHandler {
         }
     }
 }
-</code></pre><h3 id="创建测试类">创建测试类</h3>
+</code></pre></div><h3 id="创建测试类">创建测试类</h3>
 <p>测试之前请确保kafka已启动</p>
-<pre><code>@RunWith(SpringRunner.class)
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@RunWith(SpringRunner.class)
 @SpringBootTest
 public class SpringBootDemoMqKafkaApplicationTests {
     @Autowired
@@ -613,11 +614,11 @@ public class SpringBootDemoMqKafkaApplicationTests {
      */
     @Test
     public void testSend() {
-        kafkaTemplate.send(KafkaConsts.TOPIC_TEST, &quot;hello,kafka...&quot;);
+        kafkaTemplate.send(KafkaConsts.TOPIC_TEST, &#34;hello,kafka...&#34;);
     }
 
 }
-</code></pre></div>
+</code></pre></div></div>
                     <div class="post_footer">
                         
                         <div class="meta">
@@ -637,7 +638,25 @@ public class SpringBootDemoMqKafkaApplicationTests {
                 </div>
                 
                 
-                <div class="doc_comments"></div>
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+    })
+</script>
                 
             </div>
         </div>

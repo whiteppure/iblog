@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>常见故障排查及程序配置 ｜ whitepure</title>
+	<title>常见故障排查及程序配置 ｜ 至简</title>
 	
     
     
-    <meta name="description" content="" />
+    <meta name="description" content="故障排查基础 收录Linux常用命令，以下命令来自https://www.bilibili.com/video/BV14A411378a 关机/重启/注销 常用命令 作" />
     
 
     
@@ -1086,35 +1086,36 @@
         <a id="menu_icon"><i class="ri-menu-line"></i></a>
     </div>
 </div>
-        
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
+                    <span>至简</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">大道至简</p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
         <div class="content">
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
@@ -2501,15 +2502,15 @@
 <blockquote>
 <p>OQL:全称，Object Query Language 类似于SQL查询的一种语言，OQL使用SQL语法，可以在堆中进行对象的筛选。</p>
 <p>基本语法：</p>
-<pre><code>select &lt;JavaScript expression to select&gt; 
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">select &lt;JavaScript expression to select&gt; 
 [ from (instanceof) &lt;class name&gt; &lt;identifier&gt;
 ( where &lt;JavaScript boolean expression to filter&gt; ) ]
-</code></pre><p>1.class name是java类的完全限定名
+</code></pre></div><p>1.class name是java类的完全限定名
 2.instanceof表示也查询某一个类的子类
 3.from和where子句都是可选的
 4.可以使用obj.field_name语法访问Java字段</p>
 <p>例如</p>
-<pre><code>-- 查询长度大于等于100的字符串
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">-- 查询长度大于等于100的字符串
 select s from java.lang.String s where s.value.length &gt;= 100
 
 -- 显示所有File对象的文件路径 
@@ -2517,7 +2518,7 @@ select file.path.value.toString() from java.io.File file
 
 -- 显示由给定id字符串标识的Class的实例
 select o from instanceof 0x741012748 o
-</code></pre></blockquote>
+</code></pre></div></blockquote>
 <p>visual vm也可以将两个dump文件进行比较：</p>
 <p><img src="/iblog/posts/images/essays/%E5%B8%B8%E8%A7%81%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5%E5%8F%8A%E7%A8%8B%E5%BA%8F%E9%85%8D%E7%BD%AE-008.png" alt="常见故障排查及程序配置-008"></p>
 <p>visual vm不但可以生成堆的dump文件，也可以对线程dump：</p>
@@ -2663,109 +2664,109 @@ select o from instanceof 0x741012748 o
 </tbody>
 </table>
 <h3 id="java程序shell脚本示例">Java程序shell脚本示例</h3>
-<pre><code>#!/bin/sh
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/sh
+</span><span class="cp"></span>
+<span class="c1">#非特殊应用下面内存分配已经够用</span>
+<span class="nv">HEAP_MEMORY</span><span class="o">=</span>1024M
+<span class="nv">METASPACE_SIZE</span><span class="o">=</span>256M
 
-#非特殊应用下面内存分配已经够用
-HEAP_MEMORY=1024M
-METASPACE_SIZE=256M
+<span class="nv">SERVER_HOME</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span> <span class="nb">cd</span> <span class="s2">&#34;</span><span class="k">$(</span> dirname <span class="s2">&#34;</span><span class="nv">$0</span><span class="s2">&#34;</span>  <span class="k">)</span><span class="s2">&#34;</span> <span class="o">&amp;&amp;</span> <span class="nb">pwd</span>  <span class="k">)</span><span class="s2">&#34;</span>
+<span class="nv">APP_NAME</span><span class="o">=</span><span class="si">${</span><span class="p">@: -1</span><span class="si">}</span>
 
-SERVER_HOME=&quot;$( cd &quot;$( dirname &quot;$0&quot;  )&quot; &amp;&amp; pwd  )&quot;
-APP_NAME=${@: -1}
+<span class="c1">#使用说明，用来提示输入参数  </span>
+help<span class="o">()</span> <span class="o">{</span>
+    <span class="nb">echo</span> <span class="s2">&#34;Usage: start.sh {start|stop|restart|status|help} APP_NAME.jar&#34;</span> &gt;<span class="p">&amp;</span><span class="m">2</span>
+    <span class="nb">echo</span> <span class="s2">&#34;Examples:&#34;</span>
+    <span class="nb">echo</span> <span class="s2">&#34;  sh start.sh start APP_NAME.jar&#34;</span>
+    <span class="nb">echo</span> <span class="s2">&#34;  sh start.sh stop APP_NAME.jar&#34;</span>
+    <span class="nb">echo</span> <span class="s2">&#34;  sh start.sh start -Heap 1024M -MetaspaceSize 256M APP_NAME.jar&#34;</span>
+<span class="o">}</span>
 
-#使用说明，用来提示输入参数  
-help() {
-    echo &quot;Usage: start.sh {start|stop|restart|status|help} APP_NAME.jar&quot; &gt;&amp;2
-    echo &quot;Examples:&quot;
-    echo &quot;  sh start.sh start APP_NAME.jar&quot;
-    echo &quot;  sh start.sh stop APP_NAME.jar&quot;
-    echo &quot;  sh start.sh start -Heap 1024M -MetaspaceSize 256M APP_NAME.jar&quot;
-}
+<span class="c1">#检查程序是否在运行  </span>
+is_exist<span class="o">()</span> <span class="o">{</span>
+    <span class="nv">pid</span><span class="o">=</span><span class="sb">`</span>ps -ef <span class="p">|</span> grep <span class="si">${</span><span class="nv">SERVER_HOME</span><span class="si">}</span> <span class="p">|</span> grep <span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span> <span class="p">|</span> grep -v grep <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="sb">`</span>
+    <span class="c1">#如果不存在返回1，存在返回0  </span>
+    <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pid</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+      <span class="k">return</span> <span class="m">1</span>
+    <span class="k">else</span>
+      <span class="k">return</span> <span class="m">0</span>
+    <span class="k">fi</span>
+<span class="o">}</span>
 
-#检查程序是否在运行  
-is_exist() {
-    pid=`ps -ef | grep ${SERVER_HOME} | grep ${APP_NAME} | grep -v grep | awk '{print $2}' `
-    #如果不存在返回1，存在返回0  
-    if [ -z &quot;${pid}&quot; ]; then
-      return 1
-    else
-      return 0
-    fi
-}
-
-#启动方法  
-start() {
+<span class="c1">#启动方法  </span>
+start<span class="o">()</span> <span class="o">{</span>
    is_exist
-   if [ $? -eq &quot;0&quot; ]; then
-      echo &quot;${APP_NAME} is already running. pid=${pid} .&quot;  
-   else
-      echo &quot;${APP_NAME} running...&quot;
-      JAVA_OPTS=&quot;-server -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError&quot;
-      JAVA_OPTS=&quot;${JAVA_OPTS} -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false&quot;
-      #JAVA_OPTS=&quot;${JAVA_OPTS} -Djava.rmi.server.hostname=${LOCAL_IP} -Dcom.sun.management.jmxremote.port=${JMX_PORT} -Dcom.sun.management.jmxremote.rmi.port=${JMX_PORT}&quot;
+   <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="s2">&#34;0&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+      <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span><span class="s2"> is already running. pid=</span><span class="si">${</span><span class="nv">pid</span><span class="si">}</span><span class="s2"> .&#34;</span>  
+   <span class="k">else</span>
+      <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span><span class="s2"> running...&#34;</span>
+      <span class="nv">JAVA_OPTS</span><span class="o">=</span><span class="s2">&#34;-server -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError&#34;</span>
+      <span class="nv">JAVA_OPTS</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">JAVA_OPTS</span><span class="si">}</span><span class="s2"> -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false&#34;</span>
+      <span class="c1">#JAVA_OPTS=&#34;${JAVA_OPTS} -Djava.rmi.server.hostname=${LOCAL_IP} -Dcom.sun.management.jmxremote.port=${JMX_PORT} -Dcom.sun.management.jmxremote.rmi.port=${JMX_PORT}&#34;</span>
 
-      shift
-      ARGS=($*)
-      for ((i=0; i&lt;${#ARGS[@]}; i++)); do
-          case &quot;${ARGS[$i]}&quot; in
-          -D*)    JAVA_OPTS=&quot;${JAVA_OPTS} ${ARGS[$i]}&quot; ;;
-          -Heap*) HEAP_MEMORY=&quot;${ARGS[$i+1]}&quot; ;;
-          -MetaspaceSize*) METASPACE_SIZE=&quot;${ARGS[$i+1]}&quot; ;;
-          esac
-      done
+      <span class="nb">shift</span>
+      <span class="nv">ARGS</span><span class="o">=(</span><span class="nv">$*</span><span class="o">)</span>
+      <span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span> i&lt;<span class="si">${#</span><span class="nv">ARGS</span><span class="p">[@]</span><span class="si">}</span><span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span>
+          <span class="k">case</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">ARGS</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span><span class="s2">&#34;</span> in
+          -D*<span class="o">)</span>    <span class="nv">JAVA_OPTS</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">JAVA_OPTS</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">ARGS</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span><span class="s2">&#34;</span> <span class="p">;;</span>
+          -Heap*<span class="o">)</span> <span class="nv">HEAP_MEMORY</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">ARGS</span><span class="p">[</span><span class="nv">$i</span><span class="p">+1]</span><span class="si">}</span><span class="s2">&#34;</span> <span class="p">;;</span>
+          -MetaspaceSize*<span class="o">)</span> <span class="nv">METASPACE_SIZE</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">ARGS</span><span class="p">[</span><span class="nv">$i</span><span class="p">+1]</span><span class="si">}</span><span class="s2">&#34;</span> <span class="p">;;</span>
+          <span class="k">esac</span>
+      <span class="k">done</span>
 
-      JAVA_OPTS=&quot;${JAVA_OPTS} -Xms${HEAP_MEMORY} -Xmx${HEAP_MEMORY} -XX:MaxMetaspaceSize=${METASPACE_SIZE} -XX:MetaspaceSize=${METASPACE_SIZE}&quot;
-      #生产环境加上下面这个配置 服务启动的时候真实的分配物理内存给jvm
-      #JAVA_OPTS=&quot;${JAVA_OPTS} -XX:+AlwaysPreTouch&quot; 
-      JAVA_OPTS=&quot;${JAVA_OPTS} -Duser.dir=${SERVER_HOME}&quot;
-      #下面两段根据需要酌情配置
-      #JAVA_OPTS=&quot;${JAVA_OPTS} -Xloggc:${APP_NAME}.gc.log&quot;
-      #JAVA_OPTS=&quot;${JAVA_OPTS} -Dapp.name=${SERVER_NAME} -Dlogging.config=${SERVER_HOME}/logback-spring.xml -Dspring.profiles.active=dev&quot;
-      echo &quot;jvm args: ${JAVA_OPTS}&quot;
-      java ${JAVA_OPTS} -jar ${APP_NAME} &gt;/dev/null 2&gt;&amp;1 &amp;
-   fi
-}
+      <span class="nv">JAVA_OPTS</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">JAVA_OPTS</span><span class="si">}</span><span class="s2"> -Xms</span><span class="si">${</span><span class="nv">HEAP_MEMORY</span><span class="si">}</span><span class="s2"> -Xmx</span><span class="si">${</span><span class="nv">HEAP_MEMORY</span><span class="si">}</span><span class="s2"> -XX:MaxMetaspaceSize=</span><span class="si">${</span><span class="nv">METASPACE_SIZE</span><span class="si">}</span><span class="s2"> -XX:MetaspaceSize=</span><span class="si">${</span><span class="nv">METASPACE_SIZE</span><span class="si">}</span><span class="s2">&#34;</span>
+      <span class="c1">#生产环境加上下面这个配置 服务启动的时候真实的分配物理内存给jvm</span>
+      <span class="c1">#JAVA_OPTS=&#34;${JAVA_OPTS} -XX:+AlwaysPreTouch&#34; </span>
+      <span class="nv">JAVA_OPTS</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">JAVA_OPTS</span><span class="si">}</span><span class="s2"> -Duser.dir=</span><span class="si">${</span><span class="nv">SERVER_HOME</span><span class="si">}</span><span class="s2">&#34;</span>
+      <span class="c1">#下面两段根据需要酌情配置</span>
+      <span class="c1">#JAVA_OPTS=&#34;${JAVA_OPTS} -Xloggc:${APP_NAME}.gc.log&#34;</span>
+      <span class="c1">#JAVA_OPTS=&#34;${JAVA_OPTS} -Dapp.name=${SERVER_NAME} -Dlogging.config=${SERVER_HOME}/logback-spring.xml -Dspring.profiles.active=dev&#34;</span>
+      <span class="nb">echo</span> <span class="s2">&#34;jvm args: </span><span class="si">${</span><span class="nv">JAVA_OPTS</span><span class="si">}</span><span class="s2">&#34;</span>
+      java <span class="si">${</span><span class="nv">JAVA_OPTS</span><span class="si">}</span> -jar <span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span> &gt;/dev/null 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">&amp;</span>
+   <span class="k">fi</span>
+<span class="o">}</span>
 
-#停止方法  
-stop() {
+<span class="c1">#停止方法  </span>
+stop<span class="o">()</span> <span class="o">{</span>
    is_exist
-   if [ $? -eq &quot;0&quot; ]; then
-     echo &quot;${APP_NAME} is stopping...&quot;
-     kill -9 $pid
-   else
-     echo &quot;${APP_NAME} is not running&quot;  
-   fi
-}
+   <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="s2">&#34;0&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+     <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span><span class="s2"> is stopping...&#34;</span>
+     <span class="nb">kill</span> -9 <span class="nv">$pid</span>
+   <span class="k">else</span>
+     <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span><span class="s2"> is not running&#34;</span>  
+   <span class="k">fi</span>
+<span class="o">}</span>
 
-#输出运行状态  
-status() {
+<span class="c1">#输出运行状态  </span>
+status<span class="o">()</span> <span class="o">{</span>
    is_exist
-   if [ $? -eq &quot;0&quot; ]; then
-     echo &quot;${APP_NAME} is running. Pid is ${pid}&quot;  
-   else
-     echo &quot;${APP_NAME} is not running.&quot;  
-   fi
-}
+   <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="s2">&#34;0&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+     <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span><span class="s2"> is running. Pid is </span><span class="si">${</span><span class="nv">pid</span><span class="si">}</span><span class="s2">&#34;</span>  
+   <span class="k">else</span>
+     <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span><span class="s2"> is not running.&#34;</span>  
+   <span class="k">fi</span>
+<span class="o">}</span>
 
-#根据输入参数，选择执行对应方法，不输入则执行使用说明  
-case &quot;$1&quot; in
-   &quot;start&quot;)
-     start $@;
-     ;;
-   &quot;stop&quot;)
-     stop $@;
-     ;;
-   &quot;status&quot;)
-     status $@;
-     ;;
-   &quot;restart&quot;)
-     stop $@;
-     start $@;
-     ;;
-   *)
-     help
-     ;;
-esac
-</code></pre><h2 id="常见故障排查">常见故障排查</h2>
+<span class="c1">#根据输入参数，选择执行对应方法，不输入则执行使用说明  </span>
+<span class="k">case</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> in
+   <span class="s2">&#34;start&#34;</span><span class="o">)</span>
+     start <span class="nv">$@</span><span class="p">;</span>
+     <span class="p">;;</span>
+   <span class="s2">&#34;stop&#34;</span><span class="o">)</span>
+     stop <span class="nv">$@</span><span class="p">;</span>
+     <span class="p">;;</span>
+   <span class="s2">&#34;status&#34;</span><span class="o">)</span>
+     status <span class="nv">$@</span><span class="p">;</span>
+     <span class="p">;;</span>
+   <span class="s2">&#34;restart&#34;</span><span class="o">)</span>
+     stop <span class="nv">$@</span><span class="p">;</span>
+     start <span class="nv">$@</span><span class="p">;</span>
+     <span class="p">;;</span>
+   *<span class="o">)</span>
+     <span class="nb">help</span>
+     <span class="p">;;</span>
+<span class="k">esac</span>
+</code></pre></div><h2 id="常见故障排查">常见故障排查</h2>
 <h3 id="cpu使用过高定位分析">CPU使用过高定位分析</h3>
 <p>一般在生产环境排查程序故障，都会查看日志什么的，但是有些故障日志是看不出来的，就比如：CPU使用过高。</p>
 <p>那应该怎么办呢？我们需要结合linux命令和JDK相关命令来排查程序故障。</p>
@@ -2781,8 +2782,8 @@ esac
 </blockquote>
 </li>
 <li>获取到线程ID后，将线程ID转化为16进制格式，如果有英文要小写格式；可以用命令<code>printf &quot;%x\n&quot; 线程ID</code>,当然也可以使用工具从10进制转16进制。
-<pre><code>printf &quot;%x\n&quot; 16
-</code></pre></li>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">printf &#34;%x\n&#34; 16
+</code></pre></div></li>
 <li>线程ID转成16进制后，执行最后一个命令：<code>jstack 进程ID | grep 16进制线程ID -A50</code>,就能看到有问题的代码。</li>
 </ul>
 <h3 id="内存使用过高定位分析">内存使用过高定位分析</h3>
@@ -2796,13 +2797,13 @@ esac
 <h3 id="死锁编码及定位分析">死锁编码及定位分析</h3>
 <p>死锁经常表现为程序的停顿，或者不再响应用户的请求。从操作系统上观察，对应进程的CPU占用率为零，很快会从top或prstat的输出中消失。</p>
 <p>死锁示例代码：</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
 
     public static void main(String[] args) {
-         String lockA = &quot;lockA&quot;;
-         String lockB = &quot;lockB&quot;;
-        new Thread(new ThreadHolderLock(lockA,lockB),&quot;线程AAA&quot;).start();
-        new Thread(new ThreadHolderLock(lockB,lockA),&quot;线程BBB&quot;).start();
+         String lockA = &#34;lockA&#34;;
+         String lockB = &#34;lockB&#34;;
+        new Thread(new ThreadHolderLock(lockA,lockB),&#34;线程AAA&#34;).start();
+        new Thread(new ThreadHolderLock(lockB,lockA),&#34;线程BBB&#34;).start();
     }
 }
 
@@ -2819,7 +2820,7 @@ class ThreadHolderLock implements Runnable{
     @Override
     public void run() {
         synchronized (lockA){
-            System.out.println(Thread.currentThread().getName() + &quot;\t 持有锁 &quot;+ lockA+&quot;, 尝试获得&quot;+ lockB);
+            System.out.println(Thread.currentThread().getName() + &#34;\t 持有锁 &#34;+ lockA+&#34;, 尝试获得&#34;+ lockB);
 
             try {
                 Thread.sleep(1000);
@@ -2828,41 +2829,41 @@ class ThreadHolderLock implements Runnable{
             }
 
             synchronized (lockB){
-                System.out.println(Thread.currentThread().getName() + &quot;\t 持有锁 &quot;+ lockB+&quot;, 尝试获得&quot;+ lockA);
+                System.out.println(Thread.currentThread().getName() + &#34;\t 持有锁 &#34;+ lockB+&#34;, 尝试获得&#34;+ lockA);
             }
         }
     }
 }
-</code></pre><p>步骤：</p>
+</code></pre></div><p>步骤：</p>
 <ul>
 <li>使用<code>jps -l</code>命令找到程序进程；</li>
 <li>使用<code>jstack pid</code>命令打印堆栈信息；</li>
 </ul>
 <p>上面死锁示例代码使用<code>jstack pid</code>后的一些信息：</p>
-<pre><code>Found one Java-level deadlock:
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">Found one Java-level deadlock:
 =============================
-&quot;线程BBB&quot;:
+&#34;线程BBB&#34;:
   waiting to lock monitor 0x00007feb0d80b018 (object 0x000000076af2d588, a java.lang.String),
-  which is held by &quot;线程AAA&quot;
-&quot;线程AAA&quot;:
+  which is held by &#34;线程AAA&#34;
+&#34;线程AAA&#34;:
   waiting to lock monitor 0x00007feb0d80d8a8 (object 0x000000076af2d5c0, a java.lang.String),
-  which is held by &quot;线程BBB&quot;
+  which is held by &#34;线程BBB&#34;
 
 Java stack information for the threads listed above:
 ===================================================
-&quot;线程BBB&quot;:
+&#34;线程BBB&#34;:
 	at com.github.springcloud.service.ThreadHolderLock.run(MainTest.java:35)
 	- waiting to lock &lt;0x000000076af2d588&gt; (a java.lang.String)
 	- locked &lt;0x000000076af2d5c0&gt; (a java.lang.String)
 	at java.lang.Thread.run(Thread.java:748)
-&quot;线程AAA&quot;:
+&#34;线程AAA&#34;:
 	at com.github.springcloud.service.ThreadHolderLock.run(MainTest.java:35)
 	- waiting to lock &lt;0x000000076af2d5c0&gt; (a java.lang.String)
 	- locked &lt;0x000000076af2d588&gt; (a java.lang.String)
 	at java.lang.Thread.run(Thread.java:748)
 
 Found 1 deadlock.
-</code></pre><h3 id="内存泄露排查分析">内存泄露排查分析</h3>
+</code></pre></div><h3 id="内存泄露排查分析">内存泄露排查分析</h3>
 <p>Java虚拟机是使用引用计数法和可达性分析来判断对象是否可回收，本质是判断一个对象是否还被引用，如果没有引用则回收。在开发的过程中，由于代码的实现不同就会出现很多种内存泄漏问题，让gc误以为此对象还在引用中，无法回收，造成内存泄漏。</p>
 <p>当内存泄露时，如果不是JVM参数中的内存分配太小了，那么从根本上解决Java内存泄露的唯一方法就是修改程序。</p>
 <p>内存泄露主要原因：</p>
@@ -2912,7 +2913,25 @@ Found 1 deadlock.
                 </div>
                 
                 
-                <div class="doc_comments"></div>
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+    })
+</script>
                 
             </div>
         </div>

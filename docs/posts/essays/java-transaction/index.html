@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>事务详解 ｜ whitepure</title>
+	<title>事务详解 ｜ 至简</title>
 	
     
     
-    <meta name="description" content="" />
+    <meta name="description" content="基础概念 什么是事务 什么是事务？举个例子：你去超市买东西，&amp;ldquo;一手交钱，一手交货&amp;quot;就是一个事务的例子，交钱和交货必须同时成功，事务才算成功，其" />
     
 
     
@@ -898,35 +898,36 @@
         <a id="menu_icon"><i class="ri-menu-line"></i></a>
     </div>
 </div>
-        
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
+                    <span>至简</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">大道至简</p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
         <div class="content">
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
@@ -953,16 +954,16 @@
 例如：用户注册送积分事务、创建订单减少库存、银行转账事务。</p>
 <p>本地事务与分布式事务理解：</p>
 <p>1.本地事务：</p>
-<pre><code>begin transation;
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">begin transation;
 // 1.本地数据库操作：张三减少金额
 // 2.本地数据库操作：李四增加金额
 commit transation;
-</code></pre><p>2.分布式事务：</p>
-<pre><code>begin transation;
+</code></pre></div><p>2.分布式事务：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">begin transation;
 // 1.本地数据库操作：张三减少金额
 // 2.远程调用：李四增加金额
 commit transation;
-</code></pre><p>在<code>2.分布式事务</code>中如果李四增加金额成功，但是由于网络原因，远程调用并没有返回，此时本地事务提交失败就会回滚张三减少金额的操作，此时张三李四的金额就不一致了。</p>
+</code></pre></div><p>在<code>2.分布式事务</code>中如果李四增加金额成功，但是由于网络原因，远程调用并没有返回，此时本地事务提交失败就会回滚张三减少金额的操作，此时张三李四的金额就不一致了。</p>
 <p>因此在分布式架构的基础上，传统数据库事务就无法使用了，张三和李四的账户不在同一个数据库中甚至不在一个系统中，实现转账事务需要通过远程调用，由于网络的问题就会导致分布式事务的问题。</p>
 <h3 id="分布式事务产生场景">分布式事务产生场景</h3>
 <ol>
@@ -1420,7 +1421,25 @@ Try操作做业务检查及资源预留，Confirm做业务确认操作，Cancel�
                 </div>
                 
                 
-                <div class="doc_comments"></div>
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+    })
+</script>
                 
             </div>
         </div>

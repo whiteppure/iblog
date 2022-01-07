@@ -1,9 +1,10 @@
 ---
-title: "Java基础-Java集合"
+title: "Java集合"
 date: 2021-10-04
 draft: false
-tags: ["Java", "容器"]
+tags: ["Java", "Java基础"]
 slug: "rookie-java-container"
+weight: 40
 ---
 
 ## 概述
@@ -441,7 +442,7 @@ Queue实现通常不允许插入null元素，尽管一些实现，如LinkedList�
 - `capacity`： 容量，默认16；
 - `loadFactor`： 负载因子，表示HashMap满的程度，默认值为0.75f，也就是说默认情况下，当HashMap中元素个数达到了容量的3/4的时候就会进行自动扩容；
 - `threshold`： 阈值；`阈值 = 容量 * 负载因子`。默认12；
-- hash碰撞（hash冲突）：，两个不同的输入值，根据同一散列函数计算出的散列值相同的现象叫做碰撞。hash碰撞就是用同一hash散列函数计算出相同的散列值；当插入hashmap中元素的key出现重复时，这个时候就发生了hash碰撞；
+- hash碰撞：即hash冲突，两个不同的输入值，根据同一散列函数计算出的散列值相同的现象叫做碰撞。hash碰撞就是用同一hash散列函数计算出相同的散列值；当插入hashmap中元素的key出现重复时，这个时候就发生了hash碰撞；
 
 ### 结构
 ![HashMap结构](/iblog/posts/images/essays/HashMap结构.png)

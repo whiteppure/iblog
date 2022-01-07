@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>Java基础-Java集合 ｜ whitepure</title>
+	<title>Java集合 ｜ 至简</title>
 	
     
     
-    <meta name="description" content="" />
+    <meta name="description" content="概述 Java中的集合主要包括 Collection 和 Map 两种，Collection 存储着对象的集合，而 Map 存储着键值对（两个对象）的映射表。 如果你看过ArrayList类源码，就知道A" />
     
 
     
@@ -1206,40 +1206,41 @@
         <a id="menu_icon"><i class="ri-menu-line"></i></a>
     </div>
 </div>
-        
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
+                    <span>至简</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">大道至简</p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
         <div class="content">
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
-                        <h2><a href='/iblog/posts/rookie/rookie-java-container/'>Java基础-Java集合</a></h2>
+                        <h2><a href='/iblog/posts/rookie/rookie-java-container/'>Java集合</a></h2>
                         <span class="date">2021.10.04</span>
                     </div>
                     <div class="post_content markdown"><h2 id="概述">概述</h2>
@@ -1249,7 +1250,7 @@
 <h2 id="数组">数组</h2>
 <p>Java中提供的数组是用来存储固定大小的同类型元素，所以Java数组就是同类数据元素的集合。</p>
 <p>数组是引用数据类型，如果使用了没有开辟空间的数组，则一定会出现<code>NullPointerException</code>异常信息。所以数组本质上也是Java对象，能够向下或者向上转型,能使用<code>instanceof</code>关键字。</p>
-<pre><code>// 数组的父类也是Object,可以将a向上转型到Object  
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// 数组的父类也是Object,可以将a向上转型到Object  
 int[] a = new int[8];  
 Object obj = a ; 
 
@@ -1259,7 +1260,7 @@ int[] b = (int[])obj;
 // 可以用instanceof关键字进行类型判定 
 if(obj instanceof int[]){ 
 }
-</code></pre><blockquote>
+</code></pre></div><blockquote>
 <p><code>void  method_name(int ... value)</code>方法中变参就是当数组处理的，参数为定参的编译后就是数组。一个方法只能有一个变参，即使是不同的类型也不行，变参参数只能在形参列表的末尾，如果传入的是数组，则只能传一个。</p>
 </blockquote>
 <h3 id="优缺点">优缺点</h3>
@@ -1278,33 +1279,33 @@ if(obj instanceof int[]){
 <h3 id="操作数组">操作数组</h3>
 <p>由于数组没有提供任何的封装，所有对元素的操作，都是通过自定义的方法实现的，对数组元素的操作比较麻烦，好在Java自带了一些API供开发者调用。</p>
 <h4 id="定义数组">定义数组</h4>
-<pre><code> int[] array1 = { 1,2,3,4,5 }; 
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> int[] array1 = { 1,2,3,4,5 }; 
  int[] array2 = new int[10];
  int[] array3 = new int[]{ 1,2,3,4,5 };
-</code></pre><p>需要注意的是[],写在数组名称的前后都可以,但是推荐第一种写法：</p>
-<pre><code>  int[] array1 = { 1,2,3,4,5 };
+</code></pre></div><p>需要注意的是[],写在数组名称的前后都可以,但是推荐第一种写法：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">  int[] array1 = { 1,2,3,4,5 };
   int array2[] = { 1,2,3,4,5 };
-</code></pre><h4 id="遍历数组">遍历数组</h4>
-<pre><code> for (int i = 0; i &lt; array1.length; i++) {
+</code></pre></div><h4 id="遍历数组">遍历数组</h4>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> for (int i = 0; i &lt; array1.length; i++) {
        System.out.println(array1[i]);
  }
-</code></pre><h4 id="数组去重">数组去重</h4>
-<pre><code>// 最简单方法，利用 hashSet 集合去重
+</code></pre></div><h4 id="数组去重">数组去重</h4>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// 最简单方法，利用 hashSet 集合去重
 Set&lt;Integer&gt; set2 = new HashSet&lt;Integer&gt;();
 for (int i = 0; i &lt; arr11.length; i++) {
     set2.add(arr11[i]);
 }
-</code></pre><h4 id="数组与集合转换">数组与集合转换</h4>
-<pre><code>// 数组转成set集合
+</code></pre></div><h4 id="数组与集合转换">数组与集合转换</h4>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// 数组转成set集合
 Set&lt;String&gt; set = new HashSet&lt;String&gt;(Arrays.asList(array2));
 
 // 数组转list 
 List&lt;String &gt; list2 = Arrays.asList(array);
-</code></pre><h4 id="数组排序">数组排序</h4>
-<pre><code> // 原生方法 或 8种排序算法
+</code></pre></div><h4 id="数组排序">数组排序</h4>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> // 原生方法 或 8种排序算法
  Arrays.sort(arr);
-</code></pre><h4 id="复制数组">复制数组</h4>
-<pre><code>// 待复制的数组
+</code></pre></div><h4 id="复制数组">复制数组</h4>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// 待复制的数组
 int[] arr = {1, 2, 3, 4};
 
 // 指定新数组的长度
@@ -1312,15 +1313,15 @@ int[] arr2 = Arrays.copyOf(arr, 10);
 
 // 只复制从索引[1]到索引[3]之间的元素（不包括索引[3]的元素）
 int[] arr3 = Arrays.copyOfRange(arr, 1, 3);
-</code></pre><h2 id="arraylist">ArrayList</h2>
+</code></pre></div><h2 id="arraylist">ArrayList</h2>
 <p>在List接口实现类中，最常用的就是ArrayList,ArrayList 类是一个可以动态修改的数组，与普通数组的区别就是它是没有固定大小的限制，可以添加或删除元素。</p>
 <p>ArrayList 继承了 AbstractList ，并实现了 List、RandomAccess, Cloneable 接口：</p>
-<pre><code>public class ArrayList&lt;E&gt; extends AbstractList&lt;E&gt; implements List&lt;E&gt;, RandomAccess,Cloneable,Serializable
-</code></pre><h3 id="randomaccess">RandomAccess</h3>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class ArrayList&lt;E&gt; extends AbstractList&lt;E&gt; implements List&lt;E&gt;, RandomAccess,Cloneable,Serializable
+</code></pre></div><h3 id="randomaccess">RandomAccess</h3>
 <p>Random是随机的意思，Access是访问的意思，合起来就是随机访问的意思。</p>
 <p>RandomAccess接口是一个标记接口，用来标记实现的List集合具备快速随机访问的能力。所有的List实现都支持随机访问的，只是基于基本结构的不同，实现的速度不同罢了。</p>
 <p>当一个List拥有快速访问功能时，其遍历方法采用随机访问速度最快，而没有快速随机访问的List采用顺序访问的速度最快。如果集合中的数据量过大需要遍历时，此时需要格外注意，因为不同的遍历方式会影响很大，可以使用<code>instanceof</code>关键字来判断该类有没有RandomAccess标记:</p>
-<pre><code>// 假设 list 数据量非常大,推荐写法
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// 假设 list 数据量非常大,推荐写法
 List&lt;Object&gt; list = ...;
 
 if(list instanceof RandomAccess){
@@ -1334,13 +1335,13 @@ if(list instanceof RandomAccess){
         System.out.println(obj);
     }
 }
-</code></pre><p>在List中ArrayList被RandomAccess接口标记，而LinkedList没有被RandomAccess接口标记，所以ArrayList适合随机访问，LinkedList适合顺序访问。</p>
+</code></pre></div><p>在List中ArrayList被RandomAccess接口标记，而LinkedList没有被RandomAccess接口标记，所以ArrayList适合随机访问，LinkedList适合顺序访问。</p>
 <h3 id="cloneable">Cloneable</h3>
 <p>Cloneable接口是Java开发中常用的一个接口之一,它是一个标记接口。</p>
 <p>如果一个想要拷贝一个对象，就需要重写Object中的clone方法并让其实现Cloneable接口，如果只重写clone方法，不实现Cloneable接口就会报CloneNotSupportedException异常。</p>
 <p>JDK中clone方法源码：</p>
-<pre><code>protected native Object clone() throws CloneNotSupportedException;
-</code></pre><p>应当注意的是，<code>clone()</code> 方法并不是 <code>Cloneable</code> 接口的方法，而是 <code>Object</code> 的一个 <code>protected</code> 方法。<code>Cloneable</code> 接口只是规定，如果一个类没有实现 <code>Cloneable</code> 接口又调用了 <code>clone()</code> 方法，就会抛出 <code>CloneNotSupportedException</code>。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">protected native Object clone() throws CloneNotSupportedException;
+</code></pre></div><p>应当注意的是，<code>clone()</code> 方法并不是 <code>Cloneable</code> 接口的方法，而是 <code>Object</code> 的一个 <code>protected</code> 方法。<code>Cloneable</code> 接口只是规定，如果一个类没有实现 <code>Cloneable</code> 接口又调用了 <code>clone()</code> 方法，就会抛出 <code>CloneNotSupportedException</code>。</p>
 <p>换言之，clone方法规定了想要拷贝对象，就需要实现Cloneable方法，clone方法让Cloneable接口变得有意义。</p>
 <h4 id="浅拷贝与深拷贝">浅拷贝与深拷贝</h4>
 <ul>
@@ -1350,7 +1351,7 @@ if(list instanceof RandomAccess){
 <p>如果一个被复制的属性都是基本类型，那么只需要实现当前类的<code>cloneable</code>机制就可以了，此为浅拷贝。</p>
 <p>如果被复制对象的属性包含其他实体类对象引用，那么这些实体类对象都需要实现<code>cloneable</code>接口并覆盖<code>clone()</code>方法。</p>
 <p><strong>浅拷贝：</strong></p>
-<pre><code>public class ShallowCloneExample implements Cloneable {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class ShallowCloneExample implements Cloneable {
 
     private int[] arr;
 
@@ -1375,7 +1376,7 @@ if(list instanceof RandomAccess){
     }
 }
 
-</code></pre><pre><code>ShallowCloneExample e1 = new ShallowCloneExample();
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">ShallowCloneExample e1 = new ShallowCloneExample();
 ShallowCloneExample e2 = null;
 try {
     e2 = e1.clone();
@@ -1384,8 +1385,8 @@ try {
 }
 e1.set(2, 222);
 System.out.println(e2.get(2)); // 222
-</code></pre><p><strong>深拷贝：</strong></p>
-<pre><code>public class DeepCloneExample implements Cloneable {
+</code></pre></div><p><strong>深拷贝：</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class DeepCloneExample implements Cloneable {
 
     private int[] arr;
 
@@ -1415,7 +1416,7 @@ System.out.println(e2.get(2)); // 222
     }
 }
 
-</code></pre><pre><code>DeepCloneExample e1 = new DeepCloneExample();
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">DeepCloneExample e1 = new DeepCloneExample();
 DeepCloneExample e2 = null;
 try {
     e2 = e1.clone();
@@ -1424,14 +1425,14 @@ try {
 }
 e1.set(2, 222);
 System.out.println(e2.get(2)); // 2
-</code></pre><h4 id="arraylist中clone方法">ArrayList中clone方法</h4>
+</code></pre></div><h4 id="arraylist中clone方法">ArrayList中clone方法</h4>
 <p>clone方法调用栈：</p>
-<pre><code>clone 
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">clone 
     -&gt; Object.clone
     -&gt; Arrays.copyOf(T[] original, int newLength)
     -&gt; Arrays.copyOf(U[] original, int newLength, Class&lt;? extends T[]&gt; newType)
-</code></pre><p>文档注释大意：返回这个ArrayList实例的浅拷贝(元素本身不会被复制)。</p>
-<pre><code>public class ArrayList implements Cloneable {
+</code></pre></div><p>文档注释大意：返回这个ArrayList实例的浅拷贝(元素本身不会被复制)。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class ArrayList implements Cloneable {
 
     transient Object[] elementData;     
 
@@ -1451,18 +1452,18 @@ System.out.println(e2.get(2)); // 2
             v.modCount = 0;
             return v;
         } catch (CloneNotSupportedException e) {
-            // this shouldn't happen, since we are Cloneable
+            // this shouldn&#39;t happen, since we are Cloneable
             throw new InternalError(e);
         }
     }
 }
-</code></pre><pre><code>public class Arrays{
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class Arrays{
    public static &lt;T&gt; T[] copyOf(T[] original, int newLength) {
         return (T[]) copyOf(original, newLength, original.getClass());
     }
     
     public static &lt;T,U&gt; T[] copyOf(U[] original, int newLength, Class&lt;? extends T[]&gt; newType) {
-        @SuppressWarnings(&quot;unchecked&quot;)
+        @SuppressWarnings(&#34;unchecked&#34;)
         T[] copy = ((Object)newType == (Object)Object[].class)
             ? (T[]) new Object[newLength]
             : (T[]) Array.newInstance(newType.getComponentType(), newLength);
@@ -1470,7 +1471,7 @@ System.out.println(e2.get(2)); // 2
         return copy;
     }
 }
-</code></pre><p>ArrayList中clone方法底层是调用父类的clone方法，父类没有重写clone方法所以调用的是Object类的clone方法。</p>
+</code></pre></div><p>ArrayList中clone方法底层是调用父类的clone方法，父类没有重写clone方法所以调用的是Object类的clone方法。</p>
 <p>在ArrayList中核心方法最终调用<code>Arrays.copyOf</code>方法,不论怎样都会创建一个Object数组。</p>
 <blockquote>
 <p><code>Arrays.newInstance(Class&lt;?&gt; componentType,int length)</code>方法作用，创建具有指定组件类型和长度的新数组。</p>
@@ -1479,12 +1480,12 @@ System.out.println(e2.get(2)); // 2
 <h3 id="arraylist扩容">ArrayList扩容</h3>
 <p>因为ArrayList底层使用数组保存数据的，而数组一旦被创建就不能改变大小，但是ArrayList的长度是可以改变的，所以可以通过ArrayList类中的add方法找到数组扩容方法。</p>
 <p>add方法调用栈：</p>
-<pre><code>add 
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">add 
     -&gt; ensureCapacityInternal()
     -&gt; calculateCapacity()
     -&gt; ensureExplicitCapacity()
     -&gt; grow()
-</code></pre><pre><code>    private void grow(int minCapacity) {
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    private void grow(int minCapacity) {
         // overflow-conscious code
         int oldCapacity = elementData.length;
         int newCapacity = oldCapacity + (oldCapacity &gt;&gt; 1);
@@ -1495,17 +1496,17 @@ System.out.println(e2.get(2)); // 2
         // minCapacity is usually close to size, so this is a win:
         elementData = Arrays.copyOf(elementData, newCapacity);
     }
-</code></pre><p>ArrayList容量：如果没有指定容量创建数组，默认会创建一个长度为10的数组用来保存元素，之后通过：</p>
-<pre><code> int newCapacity = oldCapacity + (oldCapacity &gt;&gt; 1);
-</code></pre><p>每次扩容都是原容量的1.5倍。</p>
+</code></pre></div><p>ArrayList容量：如果没有指定容量创建数组，默认会创建一个长度为10的数组用来保存元素，之后通过：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> int newCapacity = oldCapacity + (oldCapacity &gt;&gt; 1);
+</code></pre></div><p>每次扩容都是原容量的1.5倍。</p>
 <blockquote>
 <p><code>&gt;&gt;</code>,右移几位就是相当于除以2的几次幂
 <code>&lt;&lt;</code>,左移几位就是相当于乘以2的几次幂</p>
 </blockquote>
 <p>最后通过Arrays.copyOf方法将之前的数组中元素，全部移到新创建的数组上。</p>
 <p>由于频繁的扩容数组会对性能产生影响，如果在ArrayList中要存储很大的数据，就需要在ArrayList的有参构造中指定数组的长度：</p>
-<pre><code>List&lt;String&gt; list = new ArrayList(1000000);
-</code></pre><p>需要注意的是创建指定长度的ArrayList，在没有add之前ArrayList中的数组已经初始化了，但是List的大小没变，因为List的大小是由size决定的。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">List&lt;String&gt; list = new ArrayList(1000000);
+</code></pre></div><p>需要注意的是创建指定长度的ArrayList，在没有add之前ArrayList中的数组已经初始化了，但是List的大小没变，因为List的大小是由size决定的。</p>
 <h3 id="arraylist与linkedlist">ArrayList与LinkedList</h3>
 <p>ArrayList与LinkedList性能比较是一道经典的面试题，ArrayList查找快，增删慢；而LinkedList增删快，查找慢。</p>
 <p>造成这种原因是因为底层的数据结构不一样，ArrayList底层是数组，而数组的中的元素内存分配都是连续的，并且数组中的元素只能存放一种，这就造成了数组中的元素地址是有规律的，数组中查找元素快速的原因正是利用了这一特点。</p>
@@ -1531,7 +1532,7 @@ System.out.println(e2.get(2)); // 2
 </ul>
 <h3 id="线程安全问题">线程安全问题</h3>
 <p>众所周知，ArrayList是线程不安全的：</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     // 如果没有报错，需要多试几次
     public static void main(String[] args) {
         ArrayList&lt;String&gt; arrayList = new ArrayList&lt;&gt;();
@@ -1543,23 +1544,23 @@ System.out.println(e2.get(2)); // 2
         }
     }
 }
-</code></pre><p>为避免偶然事件，请重复多试几次上面的代码,很大情况会出现<code>ConcurrentModificationException</code>&ldquo;同步修改异常&rdquo;：</p>
-<pre><code>java.util.ConcurrentModificationException
-</code></pre><p>出现该异常的原因是，当某个线程正在执行 <code>add()</code>方法时,被某个线程打断,添加到一半被打断,没有被添加完。</p>
+</code></pre></div><p>为避免偶然事件，请重复多试几次上面的代码,很大情况会出现<code>ConcurrentModificationException</code>&ldquo;同步修改异常&rdquo;：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">java.util.ConcurrentModificationException
+</code></pre></div><p>出现该异常的原因是，当某个线程正在执行 <code>add()</code>方法时,被某个线程打断,添加到一半被打断,没有被添加完。</p>
 <p>保证ArrayList线程安全有以下几种方法：</p>
 <ul>
 <li>可以使用 <code>Vector</code> 来代替 <code>ArrayList</code>,<code>Vector</code> 是线程安全的 <code>ArrayList</code>,但是由于底层是加了<code>synchronized</code>,性能略差不推荐使用;
-<pre><code>List list = new Vector();
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">List list = new Vector();
 list.add(UUID.randomUUID().toString());
-</code></pre></li>
+</code></pre></div></li>
 <li>使用<code>Collections.synchronizedArrayList()</code> 来创建 <code>ArrayList</code>；使用 <code>Collections</code> 工具类来创建 <code>ArrayList</code> 的思路是,在 <code>ArrayList</code> 的外边套了一个<code>synchronized</code>外壳,来使 <code>ArrayList</code> 线程安全;
-<pre><code>List list = Collections.synchronizedArrayList();
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">List list = Collections.synchronizedArrayList();
 list.add(UUID.randomUUID().toString());
-</code></pre></li>
+</code></pre></div></li>
 <li>使用<code>CopyOnWriteArrayList()</code>来保证 <code>ArrayList</code> 线程安全；<code>CopyWriteArrayList</code>字面意思就是在写的时候复制,主要思想就是读写分离的思想。<code>CopyWriteArrayList</code>之所以线程安全的原因是在源码里面使用<code>ReentrantLock</code>，所以保证了某个线程在写的时候不会被打断；
-<pre><code>CopyOnWriteArrayList&lt;String&gt; list = new CopyOnWriteArrayList&lt;&gt;();
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">CopyOnWriteArrayList&lt;String&gt; list = new CopyOnWriteArrayList&lt;&gt;();
 list.add(UUID.randomUUID().toString());
-</code></pre></li>
+</code></pre></div></li>
 </ul>
 <h2 id="set">Set</h2>
 <ul>
@@ -1601,7 +1602,7 @@ peek(): 检索但不删除此队列的头部，如果此队列为空，则返回
 <li><code>capacity</code>： 容量，默认16；</li>
 <li><code>loadFactor</code>： 负载因子，表示HashMap满的程度，默认值为0.75f，也就是说默认情况下，当HashMap中元素个数达到了容量的3/4的时候就会进行自动扩容；</li>
 <li><code>threshold</code>： 阈值；<code>阈值 = 容量 * 负载因子</code>。默认12；</li>
-<li>hash碰撞（hash冲突）：，两个不同的输入值，根据同一散列函数计算出的散列值相同的现象叫做碰撞。hash碰撞就是用同一hash散列函数计算出相同的散列值；当插入hashmap中元素的key出现重复时，这个时候就发生了hash碰撞；</li>
+<li>hash碰撞：即hash冲突，两个不同的输入值，根据同一散列函数计算出的散列值相同的现象叫做碰撞。hash碰撞就是用同一hash散列函数计算出相同的散列值；当插入hashmap中元素的key出现重复时，这个时候就发生了hash碰撞；</li>
 </ul>
 <h3 id="结构">结构</h3>
 <p><img src="/iblog/posts/images/essays/HashMap%E7%BB%93%E6%9E%84.png" alt="HashMap结构"></p>
@@ -1632,7 +1633,7 @@ And when they become too small (due to removal or resizing) they are converted b
 <p>举个极端例子，现在单链表的节点个数是9，开始变成红黑树，然后红黑树节点个数又变成8，就又得变成单链表，然后节点个数又变成9，就又得变成红黑树，这样的情况消耗严重浪费。因此干脆错开两个阈值的大小，使得变成红黑树后“不那么容易”就需要变回单链表，同样，使得变成单链表后，“不那么容易”就需要变回红黑树。</p>
 <h4 id="引入红黑树后如果单链表节点个数超过8个是否一定会树化">引入红黑树后，如果单链表节点个数超过8个是否一定会树化</h4>
 <p>不一定，在进行树化之前会进行判断<code>(n = tab.length) &lt; MIN_TREEIFY_CAPACITY)</code>是否需要扩容，如果表中数组元素小于这个阈值（默认是64），就会进行扩容。 因为扩容不仅能增加表中的容量，还能缩短单链表的节点数，从而更长远的解决链表遍历慢问题。</p>
-<pre><code>    /**
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    /**
      * Replaces all linked nodes in bin at index for given hash unless
      * table is too small, in which case resizes instead.
      */
@@ -1656,14 +1657,14 @@ And when they become too small (due to removal or resizing) they are converted b
                 hd.treeify(tab);
         }
     }
-</code></pre><h3 id="容量">容量</h3>
+</code></pre></div><h3 id="容量">容量</h3>
 <h4 id="为什么负载因子默认是075">为什么负载因子默认是0.75</h4>
 <p>HashMap中的负载因子这个值现在在JDK的源码中默认是0.75：</p>
-<pre><code>/**
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">/**
  * The load factor used when none specified in constructor.
  */
 static final float DEFAULT_LOAD_FACTOR = 0.75f;
-</code></pre><p>在<a href="https://docs.oracle.com/javase/6/docs/api/java/util/HashMap.html">JDK的官方文档</a>中解释如下：</p>
+</code></pre></div><p>在<a href="https://docs.oracle.com/javase/6/docs/api/java/util/HashMap.html">JDK的官方文档</a>中解释如下：</p>
 <blockquote>
 <p>As a general rule, the default load factor (.75) offers a good tradeoff between time and space costs.
 Higher values decrease the space overhead but increase the lookup cost (reflected in most of the operations of the HashMap class, including get and put).
@@ -1683,11 +1684,11 @@ If the initial capacity is greater than the maximum number of entries divided by
 <p>为了减少Hash碰撞，尽量使Hash算法的结果均匀分布。</p>
 <p>当使用put方法时，到底存入HashMap中的那个数组中？这时是通过hash算法决定的，如果某一个数组中的链表过长旧会影响查询的效率；那么为了避免出现hash碰撞，让hash尽可能的散列分布，就需要在hash算法上做文章。</p>
 <p>JDK1.7通过逻辑与运算，来判断这个元素该进入哪个数组；在下面的代码中length的长度始终为不小于指定容量的2的幂数。</p>
-<pre><code>static int indexFor(int h, int length) {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">static int indexFor(int h, int length) {
     return h &amp; (length - 1);
 }
-</code></pre><p>为了更好的理解举个例子：假设h=2或h=3，length=15，进行与运算，最终逻辑与运算后的结果是一致的，因为最终结果是一致的所以就发生了hash碰撞，这种问题多了以后会造成容器中的元素分布不均匀，都分配在同一个数组上，在查询的时候就减慢了查询的效率，另一方面也造成空间的浪费。</p>
-<pre><code>-- 2转换为2进制与15-1进行&amp;运算
+</code></pre></div><p>为了更好的理解举个例子：假设h=2或h=3，length=15，进行与运算，最终逻辑与运算后的结果是一致的，因为最终结果是一致的所以就发生了hash碰撞，这种问题多了以后会造成容器中的元素分布不均匀，都分配在同一个数组上，在查询的时候就减慢了查询的效率，另一方面也造成空间的浪费。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">-- 2转换为2进制与15-1进行&amp;运算
   0000 0010
 &amp; 0000 1110 
 ———————————— 
@@ -1698,9 +1699,9 @@ If the initial capacity is greater than the maximum number of entries divided by
 &amp; 0000 1110 
 ————————————
   0000 1110
-</code></pre><p>为了避免上面<code>length=15</code>这类问题出现，所以集合的容量采用必须是2的N次幂这种方式，因为2的N次幂的结果减一转换为二进制后都是以<code>...1111</code>结尾的，所以在进行逻辑与运算时碰撞几率小。</p>
+</code></pre></div><p>为了避免上面<code>length=15</code>这类问题出现，所以集合的容量采用必须是2的N次幂这种方式，因为2的N次幂的结果减一转换为二进制后都是以<code>...1111</code>结尾的，所以在进行逻辑与运算时碰撞几率小。</p>
 <p>在JDK1.8中，在<code>putVal()</code>方法中通过<code>i = (n - 1) &amp; hash</code>来计算key的散列地址：</p>
-<pre><code>final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
                    boolean evict) {
         // 此处省略了代码
         // i = (n - 1) &amp; hash]
@@ -1713,13 +1714,13 @@ If the initial capacity is greater than the maximum number of entries divided by
             // 省略了代码
         }
 }
-</code></pre><blockquote>
+</code></pre></div><blockquote>
 <p>这里的 &ldquo;&amp;&rdquo; 等同于 %&quot;，但是&quot;%&ldquo;运算的速度并没有&rdquo;&amp;&ldquo;的操作速度快；&quot;&amp;&ldquo;操作能代替&rdquo;%&ldquo;运算，必须满足一定的条件，也就是<code>a%b=a&amp;(b-1)</code>仅当b是2的n次方的时候方能成立。</p>
 </blockquote>
 <p><strong>容器容量怎么保持始终为2的N次方？</strong></p>
 <p><code>HashMap</code>的<code>tableSizeFor()</code>方法做了处理，能保证n永远都是2次幂。</p>
 <p>如果用户制定了初始容量，那么HashMap会计算出比该数大的第一个2的幂作为初始容量；另外就是在扩容的时候，也是进行成倍的扩容，即4变成8，8变成16。</p>
-<pre><code>/**
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">/**
  * Returns a power of two size for the given target capacity.
  */
 static final int tableSizeFor(int cap) {
@@ -1748,39 +1749,39 @@ static final int tableSizeFor(int cap) {
     // 即最终返回 32 = 2 的 (n=5)次方
     return (n &lt; 0) ? 1 : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
 }
-</code></pre><p>发现上面在进行<code>&gt;&gt;&gt;</code>操作时会将cap的二进制值变为最高位后边全是1，<code>00010001 -&gt; 00011111</code>这个算法就导致了任意传入一个数值，会将该数字变为它的2倍减1，因为任何尾数全为1的在加1都为2的倍数。</p>
+</code></pre></div><p>发现上面在进行<code>&gt;&gt;&gt;</code>操作时会将cap的二进制值变为最高位后边全是1，<code>00010001 -&gt; 00011111</code>这个算法就导致了任意传入一个数值，会将该数字变为它的2倍减1，因为任何尾数全为1的在加1都为2的倍数。</p>
 <p>至于开头减1，是因为如果给定的n已经是2的次幂，但是不进行减1操作的话，那么得到的值就是大于给定值的最小2的次幂值，例如传入4就会返回8。</p>
 <p>为什么最大右移到16位，因为可以得到的最大值是32个1，这个是int类型存储变量的最大值，在往后就没意义了。</p>
 <h4 id="默认初始化容量为什么是16">默认初始化容量为什么是16</h4>
 <p>没有找到相关解释，推断这应该就是个经验值，既然一定要设置一个默认的2^n 作为初始值，那么就需要在效率和内存使用上做一个权衡。这个值既不能太小，也不能太大。太小了就有可能频繁发生扩容，影响效率。太大了又浪费空间，不划算。所以，16就作为一个经验值被采用了。</p>
 <p>关于默认容量的定义：</p>
-<pre><code>/**
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">/**
  * The default initial capacity - MUST be a power of two.
  */
 static final int DEFAULT_INITIAL_CAPACITY = 1 &lt;&lt; 4; // aka 16
-</code></pre><p>故意把16写成<code>1 &lt;&lt; 4</code>这种形式，就是提醒开发者，这个地方要是2的次幂。</p>
+</code></pre></div><p>故意把16写成<code>1 &lt;&lt; 4</code>这种形式，就是提醒开发者，这个地方要是2的次幂。</p>
 <h4 id="初始化容量设置多少合适">初始化容量设置多少合适</h4>
 <p>当我们使用<code>HashMap(int initialCapacity)</code>来初始化容量的时候，<code>HashMap</code>并不会使用我们传进来的<code>initialCapacity</code>直接作为初始容量。JDK会默认帮我们计算一个相对合理的值当做初始容量。所谓合理值，其实是找到第一个比用户传入的值大的2的幂。</p>
 <p>如果创建hashMap初始化容量设置为7，那么JDK通过计算会创建一个初始化为8的hashMap。当hashMap中的元素到<code>0.75 * 8 = 6</code>就会进行扩容，这明显是我们不希望看到的。</p>
 <p>参考JDK8中<code>putAll</code>方法中的实现：</p>
-<pre><code>(int) ((float) expectedSize / 0.75F + 1.0F);
-</code></pre><p>通过<code>expectedSize / 0.75F + 1.0F</code>计算，<code>7/0.75 + 1 = 10</code> ,10经过JDK处理之后，会被设置成16，这就大大的减少了扩容的几率。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">(int) ((float) expectedSize / 0.75F + 1.0F);
+</code></pre></div><p>通过<code>expectedSize / 0.75F + 1.0F</code>计算，<code>7/0.75 + 1 = 10</code> ,10经过JDK处理之后，会被设置成16，这就大大的减少了扩容的几率。</p>
 <p>当我们明确知道HashMap中元素的个数的时候，把默认容量设置成<code>expectedSize / 0.75F + 1.0F</code> 是一个在性能上相对好的选择，但是，同时也会牺牲些内存。</p>
 <p>这个算法在guava中有实现，开发的时候，可以直接通过Maps类创建一个HashMap：</p>
-<pre><code>Map&lt;String, String&gt; map = Maps.newHashMapWithExpectedSize(7);
-</code></pre><pre><code>public static &lt;K, V&gt; HashMap&lt;K, V&gt; newHashMapWithExpectedSize(int expectedSize) {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">Map&lt;String, String&gt; map = Maps.newHashMapWithExpectedSize(7);
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static &lt;K, V&gt; HashMap&lt;K, V&gt; newHashMapWithExpectedSize(int expectedSize) {
     return new HashMap(capacity(expectedSize));
 }
 
 static int capacity(int expectedSize) {
     if (expectedSize &lt; 3) {
-        CollectPreconditions.checkNonnegative(expectedSize, &quot;expectedSize&quot;);
+        CollectPreconditions.checkNonnegative(expectedSize, &#34;expectedSize&#34;);
         return expectedSize + 1;
     } else {
         return expectedSize &lt; 1073741824 ? (int)((float)expectedSize / 0.75F + 1.0F) : 2147483647;
     }
 }
-</code></pre><h3 id="扩容">扩容</h3>
+</code></pre></div><h3 id="扩容">扩容</h3>
 <ul>
 <li>JDK1.7: 先扩容在添加元素；</li>
 <li>JDK1.8: 先添加元素在扩容；</li>
@@ -1796,10 +1797,10 @@ static int capacity(int expectedSize) {
 </blockquote>
 <h4 id="什么时机进行扩容">什么时机进行扩容</h4>
 <p>HashMap的扩容条件就是当HashMap中的元素个数（size）超过临界值（threshold）时就会自动扩容。在HashMap中，<code>threshold = loadFactor * capacity</code>。默认情况下负载因子为0.75,理解为当容器中元素到容器的3/4时就会扩容。</p>
-<pre><code> if (++size &gt; threshold)
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> if (++size &gt; threshold)
     resize();
-</code></pre><p>HashMap的容量是有上限的，必须小于<code>1&lt;&lt;30</code>，即<code>1073741824</code>。如果容量超出了这个数，则不再增长，且阈值会被设置为<code>Integer.MAX_VALUE</code>：</p>
-<pre><code>// Java8
+</code></pre></div><p>HashMap的容量是有上限的，必须小于<code>1&lt;&lt;30</code>，即<code>1073741824</code>。如果容量超出了这个数，则不再增长，且阈值会被设置为<code>Integer.MAX_VALUE</code>：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// Java8
 if (oldCap &gt;= MAXIMUM_CAPACITY) {
     threshold = Integer.MAX_VALUE;
     return oldTab;
@@ -1809,12 +1810,12 @@ if (oldCapacity == MAXIMUM_CAPACITY) {
     threshold = Integer.MAX_VALUE;
     return;
 }
-</code></pre><h4 id="17扩容">1.7扩容</h4>
+</code></pre></div><h4 id="17扩容">1.7扩容</h4>
 <ul>
 <li><code>新容量 = 旧容量 * 2</code></li>
 <li><code>新阈值 = 新容量 * 负载因子</code></li>
 </ul>
-<pre><code>void addEntry(int hash, K key, V value, int bucketIndex) {  
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">void addEntry(int hash, K key, V value, int bucketIndex) {  
     //size：The number of key-value mappings contained in this map.  
     //threshold：The next size value at which to resize (capacity * load factor)  
     //数组扩容条件：1.已经存在的key-value mappings的个数大于等于阈值  
@@ -1826,7 +1827,7 @@ if (oldCapacity == MAXIMUM_CAPACITY) {
     }  
     createEntry(hash, key, value, bucketIndex);  
 } 
-</code></pre><pre><code>void resize(int newCapacity) {   //传入新的容量
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">void resize(int newCapacity) {   //传入新的容量
     Entry[] oldTable = table;    //引用扩容前的Entry数组
     int oldCapacity = oldTable.length;
     if (oldCapacity == MAXIMUM_CAPACITY) {  //扩容前的数组大小如果已经达到最大(2^30)了
@@ -1839,8 +1840,8 @@ if (oldCapacity == MAXIMUM_CAPACITY) {
     table = newTable;                           //HashMap的table属性引用新的Entry数组
     threshold = (int) (newCapacity * loadFactor);//修改阈值
 }
-</code></pre><p>通过transfer方法将旧数组上的元素转移到扩容后的新数组上</p>
-<pre><code>void transfer(Entry[] newTable) {
+</code></pre></div><p>通过transfer方法将旧数组上的元素转移到扩容后的新数组上</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">void transfer(Entry[] newTable) {
     Entry[] src = table;                   //src引用了旧的Entry数组
     int newCapacity = newTable.length;
     for (int j = 0; j &lt; src.length; j++) { //遍历旧的Entry数组
@@ -1857,11 +1858,11 @@ if (oldCapacity == MAXIMUM_CAPACITY) {
         }
     }
 }
-</code></pre><h4 id="18扩容">1.8扩容</h4>
+</code></pre></div><h4 id="18扩容">1.8扩容</h4>
 <p>容量变为原来的2倍，阈值也变为原来的2倍。容量和阈值都变为原来的2倍时，负载因子还是不变。</p>
 <p>在1.8时做了一些优化，文档注释写的很清楚：&ldquo;元素的位置要么是在原位置，要么是在原位置再移动2次幂的位置&rdquo;。也就是对比1.7的迁移到新的数组上省去了重新计算hash值的时间。</p>
 <p>这里的&quot;2次幂的位置&quot;是指长度为原来数组元素的两倍的位置;举个例子,现在容量为16，要扩容到32，要将之前的元素迁移过去，要根据hash值来判断迁移过去的位置；假设元素A：hash值：0101 0101；根据代码<code>h &amp; (length - 1)</code>可得<code>元素A &amp; 15</code>、<code>元素A &amp; 31</code></p>
-<pre><code>扩容之前的位置：
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">扩容之前的位置：
   0101 0101
 &amp; 0000 1111
 ————————————
@@ -1872,8 +1873,8 @@ if (oldCapacity == MAXIMUM_CAPACITY) {
 &amp; 0001 1111
 ————————————
   0001 0101
-</code></pre><p>发现规律：扩容前的hash值和扩容后的hash值，如果元素A二进制形式第三位如果是0，扩容之后就还是原来的位置，如果是1扩容后就是原来的位置加16，而16就是扩容的大小。</p>
-<pre><code> /**
+</code></pre></div><p>发现规律：扩容前的hash值和扩容后的hash值，如果元素A二进制形式第三位如果是0，扩容之后就还是原来的位置，如果是1扩容后就是原来的位置加16，而16就是扩容的大小。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> /**
      * Initializes or doubles table size.  If null, allocates in
      * accord with initial capacity target held in field threshold.
      * Otherwise, because we are using power-of-two expansion, the
@@ -1908,7 +1909,7 @@ if (oldCapacity == MAXIMUM_CAPACITY) {
                       (int)ft : Integer.MAX_VALUE);
         }
         threshold = newThr;
-        @SuppressWarnings({&quot;rawtypes&quot;,&quot;unchecked&quot;})
+        @SuppressWarnings({&#34;rawtypes&#34;,&#34;unchecked&#34;})
         Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])new Node[newCap];
         table = newTab;
         if (oldTab != null) {
@@ -1955,7 +1956,7 @@ if (oldCapacity == MAXIMUM_CAPACITY) {
         }
         return newTab;
     }
-</code></pre></div>
+</code></pre></div></div>
                     <div class="post_footer">
                         
                         <div class="meta">
@@ -1965,7 +1966,7 @@ if (oldCapacity == MAXIMUM_CAPACITY) {
                                     
                                     <a href="https://whiteppure.github.io/iblog/tags/java/">Java</a>
                                     
-                                    <a href="https://whiteppure.github.io/iblog/tags/%E5%AE%B9%E5%99%A8/">容器</a>
+                                    <a href="https://whiteppure.github.io/iblog/tags/java%E5%9F%BA%E7%A1%80/">Java基础</a>
                                     
                                 </span>
                             </div>
@@ -1975,7 +1976,25 @@ if (oldCapacity == MAXIMUM_CAPACITY) {
                 </div>
                 
                 
-                <div class="doc_comments"></div>
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+    })
+</script>
                 
             </div>
         </div>

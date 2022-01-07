@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>SpringBoot整合redis ｜ whitepure</title>
+	<title>SpringBoot整合redis ｜ 至简</title>
 	
     
     
-    <meta name="description" content="" />
+    <meta name="description" content="Redis介绍 redis是开源的一个高性能的 key-value 数据库。 主要特点 Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用 Redi" />
     
 
     
@@ -482,35 +482,36 @@
         <a id="menu_icon"><i class="ri-menu-line"></i></a>
     </div>
 </div>
-        
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
+                    <span>至简</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">大道至简</p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
         <div class="content">
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
@@ -544,18 +545,18 @@
 </ul>
 <p>参考<a href="https://www.runoob.com/redis/redis-intro.html">菜鸟教程</a></p>
 <h2 id="导入依赖">导入依赖</h2>
-<pre><code>&lt;dependency&gt;
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;dependency&gt;
     &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
     &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
     &lt;version&gt;2.1.3.RELEASE&lt;/version&gt;
 &lt;/dependency&gt;
-</code></pre><h2 id="配置redis">配置redis</h2>
+</code></pre></div><h2 id="配置redis">配置redis</h2>
 <h3 id="redisconfigclass">RedisConfig.class</h3>
-<pre><code>@Configuration
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Configuration
 public class RedisConfig {
 
     //用于解决注解操作redis 序列话的问题
-    @Bean(name = &quot;myCacheManager&quot;)
+    @Bean(name = &#34;myCacheManager&#34;)
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
 
         RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);
@@ -567,14 +568,14 @@ public class RedisConfig {
         defaultCacheConfig.entryTtl(Duration.ofMinutes(30));
         return new RedisCacheManager(redisCacheWriter, defaultCacheConfig);
     }
-</code></pre><pre><code>    /**
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    /**
  * 解决用redisTemplate操作的序列化的问题
  *
  * @param factory RedisConnectionFactory
  * @return redisTemplate
  */
     @Bean
-    @ConditionalOnMissingBean(name = &quot;redisTemplate&quot;)
+    @ConditionalOnMissingBean(name = &#34;redisTemplate&#34;)
     public RedisTemplate&lt;String,Object&gt; redisTemplate(RedisConnectionFactory factory){
         // 配置redisTemplate
         RedisTemplate&lt;String, Object&gt; redisTemplate = new RedisTemplate&lt;&gt;();
@@ -592,16 +593,16 @@ public class RedisConfig {
     }
 
 }
-</code></pre><h3 id="启动类配置">启动类配置</h3>
-<pre><code>@EnableCaching  //允许注解操作缓存
+</code></pre></div><h3 id="启动类配置">启动类配置</h3>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@EnableCaching  //允许注解操作缓存
 @SpringBootApplication
 public class RedisExampleApplication {
    public static void main(String[] args) {
       SpringApplication.run(RedisExampleApplication.class, args);
    }
 }
-</code></pre><h3 id="applicationyml-配置">application.yml 配置</h3>
-<pre><code>#redis 缓存配置
+</code></pre></div><h3 id="applicationyml-配置">application.yml 配置</h3>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">#redis 缓存配置
 redis:
   database: 0
   host: @ip
@@ -619,7 +620,7 @@ redis:
       min-idle: 0
       #连接池最大空闲连接
       max-idle: 8
-</code></pre><h2 id="缓存注解介绍">缓存注解介绍</h2>
+</code></pre></div><h2 id="缓存注解介绍">缓存注解介绍</h2>
 <h3 id="cacheable">@Cacheable</h3>
 <p><code>@Cacheable</code>作用将方法的运行结果进行缓存,以后要相同的数据,直接从缓存中获取.
 cacheNames 和 key 都必须填，如果不填 key ，默认的 key 是当前的方法名，更新缓存时会因为方法名不同而更新失败.</p>
@@ -634,27 +635,27 @@ cacheNames 和 key 都必须填，如果不填 key ，默认的 key 是当前的
 <li>sync:  是否异步, 不支持unless</li>
 </ul>
 <p>key 也可以动态设置为方法的参数(支持EL)</p>
-<pre><code>@Cacheable(cacheNames = &quot;xxx&quot;, key = &quot;#openid&quot;)
-public Response detail(@RequestParam(&quot;openid&quot;) String openid){
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Cacheable(cacheNames = &#34;xxx&#34;, key = &#34;#openid&#34;)
+public Response detail(@RequestParam(&#34;openid&#34;) String openid){
       //to do sthing
 }
-</code></pre><pre><code>@Cacheable(cacheNames = &quot;xxx&quot;, key = &quot;xxx&quot;,keyGenerator = &quot;xxx&quot;, CacheManager = &quot;xxx&quot;, condition = &quot;xxx&quot;, unless = &quot;xxx&quot;, sync = &quot;xxx&quot;)
-</code></pre><h3 id="cacheput">@CachePut</h3>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Cacheable(cacheNames = &#34;xxx&#34;, key = &#34;xxx&#34;,keyGenerator = &#34;xxx&#34;, CacheManager = &#34;xxx&#34;, condition = &#34;xxx&#34;, unless = &#34;xxx&#34;, sync = &#34;xxx&#34;)
+</code></pre></div><h3 id="cacheput">@CachePut</h3>
 <p>既调用方法又更新缓存修改了数据库某个数据.
 更新缓存,先调用目标方法将目标方法缓存起来,更新时要注意,要和查询时的key相同,否则缓存不会更新,属性和 @Cacheable 相同</p>
-<pre><code>@CachePut(cacheNames = &quot;xxx&quot;, key = &quot;xxx&quot;,keyGenerator = &quot;xxx&quot;, CacheManager = &quot;xxx&quot;, condition = &quot;xxx&quot;, unless = &quot;xxx&quot;, sync = &quot;xxx&quot;)
-</code></pre><h3 id="cacheevict">@CacheEvict</h3>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@CachePut(cacheNames = &#34;xxx&#34;, key = &#34;xxx&#34;,keyGenerator = &#34;xxx&#34;, CacheManager = &#34;xxx&#34;, condition = &#34;xxx&#34;, unless = &#34;xxx&#34;, sync = &#34;xxx&#34;)
+</code></pre></div><h3 id="cacheevict">@CacheEvict</h3>
 <p>该注解作用是删除缓存，需要指定 key</p>
 <ul>
 <li>allEntries:是否删除所有字段的缓存</li>
 <li>beforeInvocation:是否在方法之前执行</li>
 </ul>
-<pre><code>@CacheEvict(cacheNames = &quot;xxx&quot;, key = &quot;xxx&quot;, allEntries = &quot;xxx&quot;, beforeInvocation=&quot;xxx&quot;)
-</code></pre><h3 id="cacheconfig">@CacheConfig</h3>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@CacheEvict(cacheNames = &#34;xxx&#34;, key = &#34;xxx&#34;, allEntries = &#34;xxx&#34;, beforeInvocation=&#34;xxx&#34;)
+</code></pre></div><h3 id="cacheconfig">@CacheConfig</h3>
 <p><code>@CacheConfig </code>可指定公共key的生成策略</p>
-<pre><code>// 公共的cacheNames (value) 可以统一写在类上面 这样就不用每缓存一个就起名字了
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// 公共的cacheNames (value) 可以统一写在类上面 这样就不用每缓存一个就起名字了
 // 公共的CacheManager
-@CacheConfig(cacheNames = &quot;xxx&quot;)
+@CacheConfig(cacheNames = &#34;xxx&#34;)
 public class RedisExampleController {
   
     @Caching(cacheable = {@Cacheable}, put = {@CachePut})
@@ -662,12 +663,12 @@ public class RedisExampleController {
           //to do
     }
 }
-</code></pre><h3 id="复合注解">复合注解</h3>
-<pre><code>// 查询数据时 先去更新数据 在放到缓存中
+</code></pre></div><h3 id="复合注解">复合注解</h3>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// 查询数据时 先去更新数据 在放到缓存中
 @Caching(cacheable = {@Cacheable}, put = {@CachePut})
 @Caching(cacheable = {@Cacheable}, put = {@CachePut}, evict = {@CacheEvict})
-</code></pre><h2 id="测试">测试</h2>
-<pre><code>@Autowired
+</code></pre></div><h2 id="测试">测试</h2>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Autowired
 private RedisTemplate redisTemplate;
 
  @Test 
@@ -676,25 +677,25 @@ public void demo(){
     //常见redis类型数据操作 set zset 未列出
         
     //string 类型数据
-    redisTemplate.opsForValue().set(&quot;test&quot;,&quot;123&quot;);
-    redisTemplate.opsForValue().get(&quot;test&quot;) // 输出结果为123
+    redisTemplate.opsForValue().set(&#34;test&#34;,&#34;123&#34;);
+    redisTemplate.opsForValue().get(&#34;test&#34;) // 输出结果为123
     
    //list 数据类型
-   redisTemplate.opsForList().rightPushAll(&quot;list&quot;,new String[]{&quot;1&quot;,&quot;2&quot;,&quot;3&quot;});//从右边插入元素
-   redisTemplate.opsForList().range(&quot;list&quot;,0,-1);//获取所有元素
-   redisTemplate.opsForList().index(&quot;listRight&quot;,1);//获取下标为2的元素
-   redisTemplate.opsForList().rightPush(&quot;listRiht&quot;,&quot;1&quot;);//从右边插入 也可从左边插
-   redisTemplate.opsForList().leftPop(&quot;list&quot;);//从左边弹出元素 元素弹出将不存在
+   redisTemplate.opsForList().rightPushAll(&#34;list&#34;,new String[]{&#34;1&#34;,&#34;2&#34;,&#34;3&#34;});//从右边插入元素
+   redisTemplate.opsForList().range(&#34;list&#34;,0,-1);//获取所有元素
+   redisTemplate.opsForList().index(&#34;listRight&#34;,1);//获取下标为2的元素
+   redisTemplate.opsForList().rightPush(&#34;listRiht&#34;,&#34;1&#34;);//从右边插入 也可从左边插
+   redisTemplate.opsForList().leftPop(&#34;list&#34;);//从左边弹出元素 元素弹出将不存在
 
    //hash
-   redisTemplate.opsForHash().hasKey(&quot;redisHash&quot;,&quot;111&quot;);//判断该hash key 是否存在
-   redisTemplate.opsForHash().put(&quot;redisHash&quot;,&quot;name&quot;,&quot;111&quot;);//存放 hash 数据
-   redisTemplate.opsForHash().keys(&quot;redisHash&quot;);//获取该key对应的hash值
-   redisTemplate.opsForHash().get(&quot;redisHash&quot;,&quot;age&quot;);//给定key 获取 hash 值
+   redisTemplate.opsForHash().hasKey(&#34;redisHash&#34;,&#34;111&#34;);//判断该hash key 是否存在
+   redisTemplate.opsForHash().put(&#34;redisHash&#34;,&#34;name&#34;,&#34;111&#34;);//存放 hash 数据
+   redisTemplate.opsForHash().keys(&#34;redisHash&#34;);//获取该key对应的hash值
+   redisTemplate.opsForHash().get(&#34;redisHash&#34;,&#34;age&#34;);//给定key 获取 hash 值
  
  
 }
-</code></pre></div>
+</code></pre></div></div>
                     <div class="post_footer">
                         
                         <div class="meta">
@@ -714,7 +715,25 @@ public void demo(){
                 </div>
                 
                 
-                <div class="doc_comments"></div>
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+    })
+</script>
                 
             </div>
         </div>

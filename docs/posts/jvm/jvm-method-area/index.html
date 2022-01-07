@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>JVM-方法区 ｜ whitepure</title>
+	<title>JVM-方法区 ｜ 至简</title>
 	
     
     
-    <meta name="description" content="" />
+    <meta name="description" content="Java虚拟机定义了若干种程序运行期间会使用到的运行时数据区，其中有一些会随着虚拟机启动而创建，随着虚拟机退出而销毁。 另外一些则是与线程一一对应的，这些与线程对" />
     
 
     
@@ -682,35 +682,36 @@
         <a id="menu_icon"><i class="ri-menu-line"></i></a>
     </div>
 </div>
-        
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
+                    <span>至简</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">大道至简</p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
         <div class="content">
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
@@ -780,8 +781,8 @@ JDK 1.8后，元空间存放在直接内存中。</p>
 <h3 id="oom">OOM</h3>
 <p>JDK8 方法区/元空间 OOM代码演示</p>
 <p>设置虚拟机参数</p>
-<pre><code>-XX:MetaspaceSize=10m -XX:MaxMetaspaceSize=10m
-</code></pre><pre><code>public class MainTest  extends ClassLoader{
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">-XX:MetaspaceSize=10m -XX:MaxMetaspaceSize=10m
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest  extends ClassLoader{
     public static void main(String[] args) {
         MainTest mainTest = new MainTest();
         int count = 0;
@@ -789,10 +790,10 @@ JDK 1.8后，元空间存放在直接内存中。</p>
             for (int i = 0; i &lt; 1000; i++) {
 
                 ClassWriter classWriter = new ClassWriter(0);
-                classWriter.visit(Opcodes.V1_8,Opcodes.ACC_PUBLIC ,&quot;Class&quot; + i,null,&quot;java/lang/Object&quot;,null);
+                classWriter.visit(Opcodes.V1_8,Opcodes.ACC_PUBLIC ,&#34;Class&#34; + i,null,&#34;java/lang/Object&#34;,null);
 
                 byte[] bytes = classWriter.toByteArray();
-                mainTest.defineClass(&quot;Class&quot; + i, bytes, 0, bytes.length);
+                mainTest.defineClass(&#34;Class&#34; + i, bytes, 0, bytes.length);
                 count ++;
             }
         }finally {
@@ -800,7 +801,7 @@ JDK 1.8后，元空间存放在直接内存中。</p>
         }
     }
 }
-</code></pre><p><strong>如何解决OOM？</strong></p>
+</code></pre></div><p><strong>如何解决OOM？</strong></p>
 <ol>
 <li>
 <p>要解决ooM异常或heap space的异常，一般的手段是首先通过内存映像分析工具（如Ec1ipse Memory Analyzer）对dump出来的堆转储快照进行分析，
@@ -825,9 +826,9 @@ JDK 1.8后，元空间存放在直接内存中。</p>
 <p>方法区用于存储已被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等。</p>
 </blockquote>
 <p>展示方法区内部结构，演示代码</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
 
-    private String string = &quot;awsl&quot;;
+    private String string = &#34;awsl&#34;;
 
     public static void context() {
         try {
@@ -848,7 +849,7 @@ JDK 1.8后，元空间存放在直接内存中。</p>
     }
 
 }
-</code></pre><p>编译该类，找到该类的class文件，打开终端执行<code>javap -v MainTest.class &gt; test.txt</code>命令，在当前目录会生成<code>test.txt</code>文件.
+</code></pre></div><p>编译该类，找到该类的class文件，打开终端执行<code>javap -v MainTest.class &gt; test.txt</code>命令，在当前目录会生成<code>test.txt</code>文件.
 打开即可查看反编译后的字节码信息。</p>
 <h4 id="类型信息">类型信息</h4>
 <p>对每个加载的类型（类class、接口interface、枚举enum、注解annotation），Jvm必须在方法区中存储以下类型信息：</p>
@@ -858,23 +859,23 @@ JDK 1.8后，元空间存放在直接内存中。</p>
 <li>这个类型的修饰符（public，abstract，final的某个子集）</li>
 <li>这个类型直接接口的一个有序列表</li>
 </ul>
-<pre><code>// ...
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// ...
 public class content.posts.jvm.MainTest
   minor version: 0
   major version: 52
   flags: ACC_PUBLIC, ACC_SUPER
 //...
-</code></pre><h4 id="域信息">域信息</h4>
+</code></pre></div><h4 id="域信息">域信息</h4>
 <p>JVM必须在方法区中保存类型的所有域的相关信息以及域的声明顺序。</p>
 <p>域的相关信息包括：域名称、域类型、域修饰符（public，private，protected，static，final，volatile，transient的某个子集）</p>
-<pre><code>// ...
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// ...
 Constant pool:
-   #1 = Methodref          #10.#35        // java/lang/Object.&quot;&lt;init&gt;&quot;:()V
+   #1 = Methodref          #10.#35        // java/lang/Object.&#34;&lt;init&gt;&#34;:()V
    #2 = String             #36            // awsl
    #3 = Fieldref           #6.#37         // content/posts/jvm/MainTest.string:Ljava/lang/String;
 
 // ...
-</code></pre><h4 id="方法信息">方法信息</h4>
+</code></pre></div><h4 id="方法信息">方法信息</h4>
 <p>JVM必须保存所有方法的以下信息，同域信息一样包括声明顺序：</p>
 <ul>
 <li>方法名称</li>
@@ -885,7 +886,7 @@ Constant pool:
 <li>异常表（<code>abstract和native</code>方法除外）</li>
 </ul>
 <p>每个异常处理的开始位置、结束位置、代码处理在程序计数器中的偏移地址、被捕获的异常类的常量池索引</p>
-<pre><code> public static void context();
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> public static void context();
     descriptor: ()V
     flags: ACC_PUBLIC, ACC_STATIC
     Code:
@@ -922,10 +923,10 @@ Constant pool:
         frame_type = 74 /* same_locals_1_stack_item */
           stack = [ class java/lang/Exception ]
         frame_type = 4 /* same */
-</code></pre><h4 id="non-final的类变量">non-final的类变量</h4>
+</code></pre></div><h4 id="non-final的类变量">non-final的类变量</h4>
 <p>静态变量和类关联在一起，随着类的加载而加载，他们成为类数据在逻辑上的一部分。</p>
 <p>类变量被类的所有实例共享，即使没有类实例时，也可以访问它：</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
 
     public static void main(String[] args) {
         Test test = null;
@@ -941,15 +942,15 @@ class Test {
     public static final int number = 2;
 
     public static void hello() {
-        System.out.println(&quot;hello!&quot;);
+        System.out.println(&#34;hello!&#34;);
     }
 }
-</code></pre><p>全局常量就是使用 static final 进行修饰</p>
+</code></pre></div><p>全局常量就是使用 static final 进行修饰</p>
 <p>被声明为final的类变量的处理方法则不同，每个全局常量在编译的时候就会被分配了。</p>
 <h4 id="运行时常量池iblogpostsrookierookie-datatype常量池"><a href="/iblog/posts/rookie/rookie-datatype/#%E5%B8%B8%E9%87%8F%E6%B1%A0">运行时常量池</a></h4>
 <h3 id="字节码指令解析">字节码指令解析</h3>
 <p>代码如下</p>
-<pre><code>public class MethodAreaDemo {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MethodAreaDemo {
     public static void main(String args[]) {
         int x = 500;
         int y = 100;
@@ -958,8 +959,8 @@ class Test {
         System.out.println(a+b);
     }
 }
-</code></pre><p>反编译后该方法字节码指令</p>
-<pre><code>// ....
+</code></pre></div><p>反编译后该方法字节码指令</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// ....
      // 栈的最大深度为3 局部变量表长度为5 参数长度为1
       stack=3, locals=5, args_size=1
          // 将500压入操作数栈
@@ -996,7 +997,7 @@ class Test {
         // void 类型返回 main方法执行结束
         25: return
 // ...
-</code></pre><h3 id="方法区演进细节">方法区演进细节</h3>
+</code></pre></div><h3 id="方法区演进细节">方法区演进细节</h3>
 <p>只有<code>Hotspot</code>才有永久代（方法区具体实现）。<code>BEA JRockit、IBMJ9</code>等来说，是不存在永久代的概念的。</p>
 <p>Hotspot中方法区的变化</p>
 <table>
@@ -1110,7 +1111,25 @@ class Test {
                 </div>
                 
                 
-                <div class="doc_comments"></div>
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+    })
+</script>
                 
             </div>
         </div>

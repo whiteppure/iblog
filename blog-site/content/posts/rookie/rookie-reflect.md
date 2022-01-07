@@ -1,9 +1,10 @@
 ---
-title: "Java基础-Java反射"
+title: "Java反射"
 date: 2021-10-02
 draft: false
-tags: ["Java", "面向菜鸟编程"]
+tags: ["Java", "Java基础"]
 slug: "rookie-reflect"
+weight: 80
 ---
 
 ## 概述

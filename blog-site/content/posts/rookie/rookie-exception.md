@@ -1,9 +1,10 @@
 ---
-title: "Java基础-Java异常"
+title: "Java异常"
 date: 2021-01-13
 draft: false
-tags: ["Java", "面向菜鸟编程"]
+tags: ["Java", "Java基础"]
 slug: "rookie-exception"
+weight: 30
 ---
 
 ![Java异常分类](/iblog/posts/images/essays/Java异常分类.png)

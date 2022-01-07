@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>Nginx介绍 ｜ whitepure</title>
+	<title>Nginx介绍 ｜ 至简</title>
 	
     
     
-    <meta name="description" content="" />
+    <meta name="description" content="Nginx介绍 Nginx (&amp;ldquo;engine x&amp;rdquo;)是一个高性能的HTTP和反向代理服务器，特点是占有内存少，并发能 力强，事实上nginx的并发能力确实在同类型的网页服务器中表" />
     
 
     
@@ -354,35 +354,36 @@
         <a id="menu_icon"><i class="ri-menu-line"></i></a>
     </div>
 </div>
-        
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
+                    <span>至简</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">大道至简</p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
         <div class="content">
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
@@ -428,30 +429,30 @@ Nginx 需要配合其他后端来使用 ,Apache 的组件比 Nginx 多。</p>
 <p>如未安装docker移步<a href="/iblog/posts/springboot/springboot-docker">安装 docker</a></p>
 <h3 id="拉取镜像">拉取镜像</h3>
 <p>搜寻 nginx 镜像</p>
-<pre><code>docker search nginx
-</code></pre><p>拉取 nginx 镜像</p>
-<pre><code>docker pull nginx
-</code></pre><p>查看本地已经安装的镜像，是否有我们刚拉取的 nginx 镜像</p>
-<pre><code>docker images
-</code></pre><h3 id="配置nginx">配置nginx</h3>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">docker search nginx
+</code></pre></div><p>拉取 nginx 镜像</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">docker pull nginx
+</code></pre></div><p>查看本地已经安装的镜像，是否有我们刚拉取的 nginx 镜像</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">docker images
+</code></pre></div><h3 id="配置nginx">配置nginx</h3>
 <p>在本地创建对应 docekr 上 nginx 的配置文件和目录，方便管理。</p>
 <p><code>~/Documents/config/nginx</code>是我本地存放 nginx 的配置路径。路径哪里方便放哪里。</p>
 <p>在上述路径下创建 <code>conf.d</code>、<code>www</code> 文件夹</p>
-<pre><code>mkdir conf.d www
-</code></pre><p>创建 nginx 临时容器，用于拷贝所需配置文件</p>
-<pre><code>docker run --name tmp-nginx-container -d nginx
-</code></pre><p>拷贝 nginx 配置文件</p>
-<pre><code>docker cp tmp-nginx-container:/etc/nginx/nginx.conf ~/Documents/config/nginx/nginx.conf
-</code></pre><p><img src="/iblog/posts/images/application/nginx%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84.jpg" alt="nginx存放路径"></p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">mkdir conf.d www
+</code></pre></div><p>创建 nginx 临时容器，用于拷贝所需配置文件</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">docker run --name tmp-nginx-container -d nginx
+</code></pre></div><p>拷贝 nginx 配置文件</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">docker cp tmp-nginx-container:/etc/nginx/nginx.conf ~/Documents/config/nginx/nginx.conf
+</code></pre></div><p><img src="/iblog/posts/images/application/nginx%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84.jpg" alt="nginx存放路径"></p>
 <p>拷贝站点配置文件</p>
-<pre><code>docker cp tmp-nginx-container:/etc/nginx/conf.d/default.conf ~/Documents/config/nginx/conf.d/default.conf
-</code></pre><p>删除 nginx 临时容器</p>
-<pre><code>docker rm -f tmp-nginx-container
-</code></pre><p>创建 nginx 容器，并映射 nginx 配置文件、站点配置文件目录和网站根目录；-v 是挂载的意思,将宿主机的文件映射到容器中</p>
-<pre><code>docker run --name nginx -p 80:80 -v ~/Documents/config/nginx/nginx.conf:/etc/nginx/nginx.conf -v ~/Documents/config/nginx/conf.d:/etc/nginx/conf.d -v ~/Documents/config/nginx/www:/www -d nginx
-</code></pre><h3 id="测试nginx">测试nginx</h3>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">docker cp tmp-nginx-container:/etc/nginx/conf.d/default.conf ~/Documents/config/nginx/conf.d/default.conf
+</code></pre></div><p>删除 nginx 临时容器</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">docker rm -f tmp-nginx-container
+</code></pre></div><p>创建 nginx 容器，并映射 nginx 配置文件、站点配置文件目录和网站根目录；-v 是挂载的意思,将宿主机的文件映射到容器中</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">docker run --name nginx -p 80:80 -v ~/Documents/config/nginx/nginx.conf:/etc/nginx/nginx.conf -v ~/Documents/config/nginx/conf.d:/etc/nginx/conf.d -v ~/Documents/config/nginx/www:/www -d nginx
+</code></pre></div><h3 id="测试nginx">测试nginx</h3>
 <p>拷贝 <code>default.conf</code> 为 <code>test.conf</code> ，并修改<code>test.conf</code> 中 <code>server_name</code>文件</p>
-<pre><code>server {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">server {
     listen       80;
     listen  [::]:80;
     server_name  www.test.com;
@@ -474,18 +475,18 @@ Nginx 需要配合其他后端来使用 ,Apache 的组件比 Nginx 多。</p>
     }
     # ...
 }
-</code></pre><p>修改本地 <code>/etc/hosts</code> 文件；浏览器解析域名会先从 hosts 文件进行解析，如果没有的话，会从网络上进行解析。</p>
-<pre><code>127.0.0.1 www.test.com
-</code></pre><p><img src="/iblog/posts/images/application/nginx%E6%B5%8B%E8%AF%95%E4%BF%AE%E6%94%B9hosts%E6%96%87%E4%BB%B6.jpg" alt="nginx测试修改hosts文件"></p>
+</code></pre></div><p>修改本地 <code>/etc/hosts</code> 文件；浏览器解析域名会先从 hosts 文件进行解析，如果没有的话，会从网络上进行解析。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">127.0.0.1 www.test.com
+</code></pre></div><p><img src="/iblog/posts/images/application/nginx%E6%B5%8B%E8%AF%95%E4%BF%AE%E6%94%B9hosts%E6%96%87%E4%BB%B6.jpg" alt="nginx测试修改hosts文件"></p>
 <p>在本地 <code>~/Documents/config/nginx/www</code> 下新建 test 目录，并编写一个 <code>index.html</code> 测试文件
 <img src="/iblog/posts/images/application/nginx%E6%9C%AC%E5%9C%B0%E8%B7%AF%E5%BE%84.jpg" alt="nginx本地路径"></p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;!DOCTYPE html&gt;
+&lt;html lang=&#34;en&#34;&gt;
  
 &lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;
+    &lt;meta charset=&#34;UTF-8&#34;&gt;
+    &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt;
+    &lt;meta http-equiv=&#34;X-UA-Compatible&#34; content=&#34;ie=edge&#34;&gt;
     &lt;title&gt;Document&lt;/title&gt;
 &lt;/head&gt;
  
@@ -494,12 +495,12 @@ Nginx 需要配合其他后端来使用 ,Apache 的组件比 Nginx 多。</p>
 &lt;/body&gt;
  
 &lt;/html&gt;
-</code></pre><p>重启 nginx</p>
-<pre><code>docker restart nginx
-</code></pre><p>浏览器访问<a href="http://www.test.com">http://www.test.com</a>
+</code></pre></div><p>重启 nginx</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">docker restart nginx
+</code></pre></div><p>浏览器访问<a href="http://www.test.com">http://www.test.com</a>
 <img src="/iblog/posts/images/application/%E6%B5%8B%E8%AF%95nginx%E6%88%90%E5%8A%9F.jpg" alt="测试nginx成功"></p>
 <h3 id="nginx配置详解">Nginx配置详解</h3>
-<pre><code>######Nginx配置文件nginx.conf中文详解#####
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">######Nginx配置文件nginx.conf中文详解#####
 
 #定义Nginx运行的用户和用户组
 user www www;
@@ -740,15 +741,15 @@ http
         #$http_referer：用来记录从那个页面链接访问过来的；
         #$http_user_agent：记录客户浏览器的相关信息；
         #通常web服务器放在反向代理的后面，这样就不能获取到客户的IP地址了，通过$remote_add拿到的IP地址是反向代理服务器的iP地址。反向代理服务器在转发请求的http头信息中，可以增加x_forwarded_for信息，用以记录原有客户端的IP地址和原来客户端的请求的服务器地址。
-        log_format access '$remote_addr - $remote_user [$time_local] &quot;$request&quot; '
-        '$status $body_bytes_sent &quot;$http_referer&quot; '
-        '&quot;$http_user_agent&quot; $http_x_forwarded_for';
+        log_format access &#39;$remote_addr - $remote_user [$time_local] &#34;$request&#34; &#39;
+        &#39;$status $body_bytes_sent &#34;$http_referer&#34; &#39;
+        &#39;&#34;$http_user_agent&#34; $http_x_forwarded_for&#39;;
 
         #定义本虚拟主机的访问日志
         access_log  /usr/local/nginx/logs/host.access.log  main;
         access_log  /usr/local/nginx/logs/host.access.404.log  log404;
 
-        #对 &quot;/&quot; 启用反向代理
+        #对 &#34;/&#34; 启用反向代理
         location / {
             proxy_pass http://127.0.0.1:88;
             proxy_redirect off;
@@ -804,7 +805,7 @@ http
         location /NginxStatus {
             stub_status on;
             access_log on;
-            auth_basic &quot;NginxStatus&quot;;
+            auth_basic &#34;NginxStatus&#34;;
             auth_basic_user_file confpasswd;
             #htpasswd文件的内容可以用apache提供的htpasswd工具来产生。
         }
@@ -832,7 +833,7 @@ http
     }
 }
 ######Nginx配置文件nginx.conf中文详解#####
-</code></pre><p>参考链接: <a href="https://blog.6ag.cn/2918.html">https://blog.6ag.cn/2918.html</a></p>
+</code></pre></div><p>参考链接: <a href="https://blog.6ag.cn/2918.html">https://blog.6ag.cn/2918.html</a></p>
 </div>
                     <div class="post_footer">
                         
@@ -853,7 +854,25 @@ http
                 </div>
                 
                 
-                <div class="doc_comments"></div>
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+    })
+</script>
                 
             </div>
         </div>

@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>Java基础-面向对象 ｜ whitepure</title>
+	<title>面向对象 ｜ 至简</title>
 	
     
     
-    <meta name="description" content="" />
+    <meta name="description" content="面向对象是一种编程思想，包括三大特性和六大原则，其中，三大特性指的是封装、继承和多态；六大原则指的是单一职责原则、开放封闭原则、迪米特原则、里氏替换原则、依赖倒" />
     
 
     
@@ -1906,40 +1906,41 @@
         <a id="menu_icon"><i class="ri-menu-line"></i></a>
     </div>
 </div>
-        
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
+                    <span>至简</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">大道至简</p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
         <div class="content">
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
-                        <h2><a href='/iblog/posts/rookie/rookie-object-oriented/'>Java基础-面向对象</a></h2>
+                        <h2><a href='/iblog/posts/rookie/rookie-object-oriented/'>面向对象</a></h2>
                         <span class="date">2021.02.15</span>
                     </div>
                     <div class="post_content markdown"><blockquote>
@@ -1953,7 +1954,7 @@
 <p>PS: 面向过程编程简称POP(Procedural oriented programming),面向过程是以过程为中心的编程思想.是自顶而下的编程.</p>
 </blockquote>
 <p>举个栗子: 下五子棋</p>
-<pre><code>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">
 面向过程 {
 
   1.开始游戏
@@ -1973,7 +1974,7 @@
   8.返回到 黑子先走
  
 }
-</code></pre><pre><code>面向对象 {
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">面向对象 {
 
     1.创建黑棋,白棋
     
@@ -1985,7 +1986,7 @@
     
     5.各个功能之间互相调用
 }
-</code></pre><p><strong>面向对象是模型化的,你只需抽象出几个类,进行封装成各个功能,通过不同对象之间的调用来解决问题.而面向过程需要把问题分解为几个步骤,每个步骤用对应的函数调用即可.面向过程是具体化的,流程化的,解决一个问题,需要你一步一步的分析,一步一步的实现.</strong></p>
+</code></pre></div><p><strong>面向对象是模型化的,你只需抽象出几个类,进行封装成各个功能,通过不同对象之间的调用来解决问题.而面向过程需要把问题分解为几个步骤,每个步骤用对应的函数调用即可.面向过程是具体化的,流程化的,解决一个问题,需要你一步一步的分析,一步一步的实现.</strong></p>
 <p>面向对象的底层其实还是面向过程,把面向过程抽象成类,然后进行封装,方便我们我们使用,就是面向对象了.</p>
 <p>简而言之,用面向过程的方法写出来的程序是一份蛋炒饭,而用面向对象写出来的程序是一份盖浇饭(就是在一碗白米饭上面浇上一份盖菜，你喜欢什么菜,你就浇上什么菜).
 通过例子可以看出面向对象更重视不重复造轮子,即创建一次,重复使用.</p>
@@ -2053,12 +2054,12 @@
 <p><strong>其核心思想为：一个类，最好只做一件事，只有一个引起它的变化。单一职责原则可降低类的复杂度,提高代码可读性,可维护性,降低变更风险.</strong> 单一职责原则可以看做是低耦合、高内聚在面向对象原则上的引申，将职责定义为引起变化的原因，以提高内聚性来减少引起变化的原因。职责过多，可能引起它变化的原因就越多，这将导致职责依赖，相互之间就产生影响，从而大大损伤其内聚性和耦合度。通常意义下的单一职责，就是指只有一种单一功能，不要为类实现过多的功能点，以保证实体只有一个引起它变化的原因。 专注，是一个人优良的品质；同样的，单一也是一个类的优良设计。交杂不清的职责将使得代码看起来特别别扭牵一发而动全身，有失美感和必然导致丑陋的系统错误风险。</p>
 </blockquote>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         Vehicle vehicle = new Vehicle();
-        vehicle.running(&quot;汽车&quot;);
+        vehicle.running(&#34;汽车&#34;);
         // 飞机不是在路上行驶
-        vehicle.running(&quot;飞机&quot;);
+        vehicle.running(&#34;飞机&#34;);
     }
 }
 
@@ -2068,37 +2069,37 @@
  */
 class Vehicle{
     public void running(String name) {
-        System.out.println(name + &quot;在路上行驶 ....&quot;);
+        System.out.println(name + &#34;在路上行驶 ....&#34;);
     }
 }
 
-</code></pre><pre><code>// 解决
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// 解决
 public class MainTest {
     public static void main(String[] args) {
         Driving driving = new Driving();
-        driving.running(&quot;汽车&quot;);
+        driving.running(&#34;汽车&#34;);
         Flight flight = new Flight();
-        flight.running(&quot;飞机&quot;);
+        flight.running(&#34;飞机&#34;);
     }
 }
 
 class Driving {
     public void running(String name) {
-        System.out.println(name + &quot;在路上行驶 ....&quot;);
+        System.out.println(name + &#34;在路上行驶 ....&#34;);
     }
 }
 
 class Flight {
     public void running(String name) {
-        System.out.println(name + &quot;在空中飞行 ....&quot;);
+        System.out.println(name + &#34;在空中飞行 ....&#34;);
     }
 }
-</code></pre><p><strong>通常情况下,我们应当遵循单一职责原则,只要逻辑足够简单,才可以在代码里边违反单一职责原则;只要类中方法数量足够少,可以在方法级别保持单一职责原则.</strong></p>
-<pre><code>public class MainTest {
+</code></pre></div><p><strong>通常情况下,我们应当遵循单一职责原则,只要逻辑足够简单,才可以在代码里边违反单一职责原则;只要类中方法数量足够少,可以在方法级别保持单一职责原则.</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         Vehicle2 vehicle2 = new Vehicle2();
-        vehicle2.driving(&quot;汽车&quot;);
-        vehicle2.flight(&quot;飞机&quot;);
+        vehicle2.driving(&#34;汽车&#34;);
+        vehicle2.flight(&#34;飞机&#34;);
     }
 }
 /*
@@ -2108,13 +2109,13 @@ class Flight {
 
 class Vehicle2 {
     public void driving(String name) {
-        System.out.println(name + &quot;在路上行驶 ....&quot;);
+        System.out.println(name + &#34;在路上行驶 ....&#34;);
     }
     public void flight(String name) {
-        System.out.println(name + &quot;在空中飞行 ....&quot;);
+        System.out.println(name + &#34;在空中飞行 ....&#34;);
     }
 }
-</code></pre><h3 id="开放封闭原则">开放封闭原则</h3>
+</code></pre></div><h3 id="开放封闭原则">开放封闭原则</h3>
 <blockquote>
 <p><strong>软件实体应该是可扩展的，而不可修改的。也就是，对(提供方)扩展开放，对(使用方)修改封闭的。</strong> 开放封闭原则主要体现在两个方面</p>
 <ul>
@@ -2125,7 +2126,7 @@ class Vehicle2 {
 </blockquote>
 <p>当软件需要变化时,尽量使用扩展的软件实体的方式行为来实现变化,而不是通过修改已有的代码来实现变化.</p>
 <p>代码实现</p>
-<pre><code>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">
 public class MainTest {
     public static void main(String[] args) {
         Mother mother = new Mother();
@@ -2147,14 +2148,14 @@ abstract class AbstractFather {
 class Son  extends AbstractFather{
     @Override
     protected void display() {
-        System.out.println(&quot;son class ...&quot;);
+        System.out.println(&#34;son class ...&#34;);
     }
 }
 class Daughter  extends AbstractFather{
 
     @Override
     protected void display() {
-        System.out.println(&quot;daughter class ...&quot;);
+        System.out.println(&#34;daughter class ...&#34;);
     }
 }
 
@@ -2171,12 +2172,12 @@ class Mother {
     }
 
 }
-</code></pre><h3 id="依赖倒置原则">依赖倒置原则</h3>
+</code></pre></div><h3 id="依赖倒置原则">依赖倒置原则</h3>
 <blockquote>
 <p><strong>该原则依赖于抽象。具体而言就是高层模块不依赖于底层模块，二者都同依赖于抽象；抽象不依赖于具体，具体依赖于抽象。</strong> 我们知道，依赖一定会存在于类与类、模块与模块之间。当两个模块之间存在紧密的耦合关系时，最好的方法就是分离接口和实现：在依赖之间定义一个抽象的接口使得高层模块调用接口，而底层模块实现接口的定义，以此来有效控制耦合关系，达到依赖于抽象的设计目标。 抽象的稳定性决定了系统的稳定性，因为抽象是不变的，依赖于抽象是面向对象设计的精髓，也是依赖倒置原则的核心。 依赖于抽象是一个通用的原则，而某些时候依赖于细节则是在所难免的，必须权衡在抽象和具体之间的取舍，方法不是一层不变的。<strong>依赖于抽象，就是对接口编程，不要对实现编程。</strong></p>
 </blockquote>
 <p>代码实现</p>
-<pre><code>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">
 public class MainTest {
 
     public static void main(String[] args) {
@@ -2205,7 +2206,7 @@ class CustomDisk implements Disk{
 
     @Override
     public void diskMethod() {
-        System.out.println(&quot;i am disk ...&quot;);
+        System.out.println(&#34;i am disk ...&#34;);
     }
 }
 
@@ -2213,7 +2214,7 @@ class  CustomMemory implements Memory{
 
     @Override
     public void memoryMethod() {
-        System.out.println(&quot;i am memory ...&quot;);
+        System.out.println(&#34;i am memory ...&#34;);
     }
 }
 
@@ -2239,12 +2240,12 @@ class Computer {
         return memory;
     }
     public void run() {
-        System.out.println(&quot; computer is running ...&quot;);
+        System.out.println(&#34; computer is running ...&#34;);
         memory.memoryMethod();
         disk.diskMethod();
     }
 }
-</code></pre><h3 id="接口隔离原则">接口隔离原则</h3>
+</code></pre></div><h3 id="接口隔离原则">接口隔离原则</h3>
 <blockquote>
 <p><strong>使用多个小的专门的接口，而不要使用一个大的总接口。</strong> 具体而言，接口隔离原则体现在：接口应该是内聚的，应该避免“胖”接口。一个类对另外一个类的依赖应该建立在最小的接口上，不要强迫依赖不用的方法，这是一种接口污染。 接口有效地将细节和抽象隔离，体现了对抽象编程的一切好处，接口隔离强调接口的单一性。而胖接口存在明显的弊端，会导致实现的类型必须完全实现接口的所有方法、属性等；而某些时候，实现类型并非需要所有的接口定义，在设计上这是“浪费”，而且在实施上这会带来潜在的问题，对胖接口的修改将导致一连串的客户端程序需要修改，有时候这是一种灾难。在这种情况下，将胖接口分解为多个特点的定制化方法，使得客户端仅仅依赖于它们的实际调用的方法，从而解除了客户端不会依赖于它们不用的方法。</p>
 <p>分离的手段主要有以下两种：</p>
@@ -2254,7 +2255,7 @@ class Computer {
 </ul>
 </blockquote>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         FuncImpl func = new FuncImpl();
         func.func1();
@@ -2282,27 +2283,27 @@ class FuncImpl implements Function1,Function2,Function3{
 
     @Override
     public void func1() {
-        System.out.println(&quot;i am function1 impl&quot;);
+        System.out.println(&#34;i am function1 impl&#34;);
     }
 
     @Override
     public void func2() {
-        System.out.println(&quot;i am function2 impl&quot;);
+        System.out.println(&#34;i am function2 impl&#34;);
     }
 
     @Override
     public void func3() {
-        System.out.println(&quot;i am function3 impl&quot;);
+        System.out.println(&#34;i am function3 impl&#34;);
     }
 }
-</code></pre><h3 id="里氏替换原则">里氏替换原则</h3>
+</code></pre></div><h3 id="里氏替换原则">里氏替换原则</h3>
 <blockquote>
 <p><strong>子类必须能够替换其基类。</strong> 这一思想体现为对继承机制的约束规范，只有子类能够替换基类时，才能保证系统在运行期内识别子类，这是保证继承复用的基础。在父类和子类的具体行为中，必须严格把握继承层次中的关系和特征，将基类替换为子类，程序的行为不会发生任何变化。同时，这一约束反过来则是不成立的，子类可以替换基类，但是基类不一定能替换子类。 里氏替换原则，主要着眼于对抽象和多态建立在继承的基础上，因此只有遵循了里氏替换原则，才能保证继承复用是可靠地。</p>
 <p>实现的方法是面向接口编程：将公共部分抽象为基类接口或抽象类，通过<code>Extract Abstract Class</code>，在子类中通过覆写父类的方法实现新的方式支持同样的职责。 里氏替换原则是关于继承机制的设计原则，违反了里氏替换原则就必然导致违反开放封闭原则。 里氏替换原则能够保证系统具有良好的拓展性，同时实现基于多态的抽象机制，能够减少代码冗余，避免运行期的类型判别。</p>
 </blockquote>
 <p>简单来说就是子类可以扩展父类的功能,但是尽量不要重写父类的功能.如果通过重写父类方法来完成新的功能,这样写起来虽然简单,但整个体系的可复用性会非常差,特别是运用多态比较频繁时,程序运行出错的概率会非常大.</p>
 <p>代码实现</p>
-<pre><code>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">
 public class MainTest {
     public static void main(String[] args) {
         Rectangle rectangle = new Rectangle();
@@ -2310,7 +2311,7 @@ public class MainTest {
         rectangle.setHeight(10);
         resize(rectangle);
         print(rectangle);
-        System.out.println(&quot;=======================&quot;);
+        System.out.println(&#34;=======================&#34;);
         // 因为 Square类 重写了父类set的方法导致调用时出错
         Rectangle square = new Square();
         square.setWidth(10);
@@ -2365,7 +2366,7 @@ class Rectangle {
         return height;
     }
 }
-</code></pre><h3 id="合成复用原则">合成复用原则</h3>
+</code></pre></div><h3 id="合成复用原则">合成复用原则</h3>
 <blockquote>
 <p><strong>尽量使用对象组合，而不是继承来达到复用的目的。</strong> 在面向对象设计中，可以通过两种方法在不同的环境中复用已有的设计和实现，<strong>即通过组合/聚合关系或通过继承，但首先应该考虑使用组合/聚合</strong>，组合/聚合可以使系统更加灵活，降低类与类之间的耦合度，一个类的变化对其他类造成的影响相对较少；其次才考虑继承，在使用继承时，需要严格遵循里氏代换原则，有效使用继承会有助于对问题的理解，降低复杂度，而滥用继承反而会增加系统构建和维护的难度以及系统的复杂度，因此需要慎重使用继承复用。</p>
 </blockquote>
@@ -2379,7 +2380,7 @@ class Rectangle {
 <p>迪米特法则还有个更简单的定义：只与直接的朋友通信</p>
 <p>朋友定义：<strong>每个对象都会与其他对象有耦合关系，只要两个对象之间有耦合关系，我们就说这两个对象之间是朋友关系。</strong> 耦合的方式很多，依赖，关联，组合，聚合等。其中，我们称出现<strong>成员变量，方法参数，方法返回值中的类为直接的朋友</strong>，而出现在<strong>局部变量中的类不是直接的朋友</strong>。也就是说，<strong>陌生的类最好不要以局部变量的形式出现在类的内部。</strong></p>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         //创建了一个 SchoolManager 对象
         SchoolManager schoolManager = new SchoolManager();
@@ -2421,7 +2422,7 @@ class CollegeManager {
         List&lt;CollegeEmployee&gt; list = new ArrayList&lt;&gt;();
         for (int i = 0; i &lt; 10; i++) {
             CollegeEmployee emp = new CollegeEmployee();
-            emp.setId(&quot;学院员工 id= &quot; + i);
+            emp.setId(&#34;学院员工 id= &#34; + i);
             list.add(emp);
         }
         return list;
@@ -2436,7 +2437,7 @@ class SchoolManager {
         for (int i = 0; i &lt; 5; i++) {
             //这里我们增加了 5 个员工到
             Employee emp = new Employee();
-            emp.setId(&quot;学校总部员工 id= &quot; + i);
+            emp.setId(&#34;学校总部员工 id= &#34; + i);
             list.add(emp);
         }
         return list;
@@ -2445,25 +2446,25 @@ class SchoolManager {
     void printAllEmployee(CollegeManager sub) {
         //获取到学院员工
         List&lt;CollegeEmployee&gt; list1 = sub.getAllEmployee();
-        System.out.println(&quot;------------学院员工------------&quot;);
+        System.out.println(&#34;------------学院员工------------&#34;);
         for (CollegeEmployee e : list1) {
             System.out.println(e.getId());
         }
         //获取到学校总部员工
         List&lt;Employee&gt; list2 = this.getAllEmployee();
-        System.out.println(&quot;------------学校总部员工------------&quot;);
+        System.out.println(&#34;------------学校总部员工------------&#34;);
         for (Employee e : list2) {
             System.out.println(e.getId());
         }
     }
 }
-</code></pre><pre><code>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">
 class CollegeManager {
     public List&lt;CollegeEmployee&gt; getAllEmployee() {
         List&lt;CollegeEmployee&gt; list = new ArrayList&lt;&gt;();
         for (int i = 0; i &lt; 10; i++) {
             CollegeEmployee emp = new CollegeEmployee();
-            emp.setId(&quot;学院员工 id= &quot; + i);
+            emp.setId(&#34;学院员工 id= &#34; + i);
             list.add(emp);
         }
         return list;
@@ -2471,7 +2472,7 @@ class CollegeManager {
     // 修改后
     public void printAllEmployee() {
         List&lt;CollegeEmployee&gt; list1 = this.getAllEmployee();
-        System.out.println(&quot;------------学院员工------------&quot;);
+        System.out.println(&#34;------------学院员工------------&#34;);
         for (CollegeEmployee e : list1) {
             System.out.println(e.getId());
         }
@@ -2486,7 +2487,7 @@ class SchoolManager {
         for (int i = 0; i &lt; 5; i++) {
             //这里我们增加了 5 个员工到
             Employee emp = new Employee();
-            emp.setId(&quot;学校总部员工 id= &quot; + i);
+            emp.setId(&#34;学校总部员工 id= &#34; + i);
             list.add(emp);
         }
         return list;
@@ -2499,13 +2500,13 @@ class SchoolManager {
 
         //获取到学校总部员工
         List&lt;Employee&gt; list2 = this.getAllEmployee();
-        System.out.println(&quot;------------学校总部员工------------&quot;);
+        System.out.println(&#34;------------学校总部员工------------&#34;);
         for (Employee e : list2) {
             System.out.println(e.getId());
         }
     }
 }
-</code></pre><h2 id="三大特性">三大特性</h2>
+</code></pre></div><h2 id="三大特性">三大特性</h2>
 <h3 id="封装">封装</h3>
 <p>封装是面向对象方法的重要原则，就是把对象的属性和操作（或服务）结合为一个独立的整体，并尽可能隐藏对象的内部实现细节.简单的说,一个类就是一个封装了数据以及操作这些数据的代码的逻辑实体。在一个对象内部，<strong>某些代码或某些数据可以是私有的</strong>，不能被外界访问。通过这种方式，对象对内部数据提供了不同级别的保护，以防止程序中无关的部分意外的改变或错误的使用了对象的私有部分。</p>
 <p><strong>封装的目的是增强安全性和简化编程,使用者不必了解具体的实现细节,而只是要通过外部接口,以特定的访问权限来使用类的成员.</strong></p>
@@ -2583,25 +2584,25 @@ class SchoolManager {
 <p><strong>如果子类的方法重写了父类的方法，那么子类中该方法的访问级别不允许低于父类的访问级别</strong>。这是为了确保可以使用父类实例的地方都可以使用子类实例，也就是确保满足<strong>里氏替换原则</strong>。</p>
 <p><strong>某个类的字段决不能是公有的，因为这么做的话就失去了对这个字段修改行为的控制，其他类可以对其随意修改。</strong>
 例如下面的例子中，<code>AccessExample</code>拥有id公有字段，如果在某个时刻，我们想要使用<code>int</code>存储<code>id</code>字段，那么就需要修改所有类中的代码。</p>
-<pre><code>public class AccessExample {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class AccessExample {
     public String id;
     // public int id;
 }
-</code></pre><p>可以使用公有的 <code>getter</code> 和 <code>setter</code> 方法来替换公有字段，这样的话就可以控制对字段的修改行为。实现了封装</p>
-<pre><code>public class AccessExample {
+</code></pre></div><p>可以使用公有的 <code>getter</code> 和 <code>setter</code> 方法来替换公有字段，这样的话就可以控制对字段的修改行为。实现了封装</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class AccessExample {
 
     private int id;
 
     public String getId() {
-        return id + &quot;&quot;;
+        return id + &#34;&#34;;
     }
 
     public void setId(String id) {
         this.id = Integer.valueOf(id);
     }
 }
-</code></pre><p><strong>但是也有例外，如果是包级私有的类或者私有的嵌套类，那么直接暴露成员不会有特别大的影响。</strong></p>
-<pre><code>public class AccessWithInnerClassExample {
+</code></pre></div><p><strong>但是也有例外，如果是包级私有的类或者私有的嵌套类，那么直接暴露成员不会有特别大的影响。</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class AccessWithInnerClassExample {
 
     private class InnerClass {
         int x;
@@ -2617,7 +2618,7 @@ class SchoolManager {
         return innerClass.x;  // 直接访问
     }
 }
-</code></pre><h3 id="继承">继承</h3>
+</code></pre></div><h3 id="继承">继承</h3>
 <p>继承可以使用现有类的所有功能，并在无需重新编写原来的类的情况下对这些功能进行扩展。通过继承创建的新类称为“子类”或“派生类”，被继承的类称为“基类”、“父类”或“超类”。继承的过程，就是从一般到特殊的过程.<strong>要实现继承，可以通过“继承”（Inheritance）和“组合”（Composition）来实现.</strong> 继承概念的实现方式有两类：实现继承与接口继承。实现继承是指直接使用基类的属性和方法而无需额外编码的能力；接口继承是指仅使用属性和方法的名称、但是子类必须提供实现的能力.</p>
 <blockquote>
 <p>继承: 如果多个类的某个部分的功能相同,那么可以抽象出一个类来,把相同的部分放到父类中,让他们继承这个类</p>
@@ -2627,7 +2628,7 @@ class SchoolManager {
 <h4 id="继承与组合">继承与组合</h4>
 <p>继承是实现复用代码的重要手段,但是继承会破坏封装.组合也是代码复用的重要方式,可以提供良好的封装性.</p>
 <h5 id="实现继承">实现继承</h5>
-<pre><code>// 继承
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// 继承
 
 public class MainTest {
 
@@ -2642,7 +2643,7 @@ class A {
     protected int i;
 
     protected void test() {
-        System.out.println(&quot;I am super class ... &quot;);
+        System.out.println(&#34;I am super class ... &#34;);
     }
 
 }
@@ -2655,7 +2656,7 @@ class B  extends A{
     }
 
 }
-</code></pre><p>通过以上代码,可以发现,子类可以访问父类的成员变量方法,并且通过重写可以改变父类方法实现.从而破坏了封装性.</p>
+</code></pre></div><p>通过以上代码,可以发现,子类可以访问父类的成员变量方法,并且通过重写可以改变父类方法实现.从而破坏了封装性.</p>
 <blockquote>
 <p>在继承结构中，父类的内部细节对于子类是可见的。所以我们通常也可以说通过继承的代码复用是一种<strong>白盒式代码复用</strong>。（如果基类的实现发生改变，那么派生类的实现也将随之改变。这样就导致了子类行为的不可预知性；）</p>
 </blockquote>
@@ -2670,7 +2671,7 @@ class B  extends A{
 <p>继承是类与类或者接口与接口之间最常见的关系,继承是一种<code>is-a</code>关系。</p>
 <h5 id="实现组合">实现组合</h5>
 <p>组合是把旧类对象作为新类对象的成员变量组合进来,用以实现新类的功能.</p>
-<pre><code>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">
 public class MainTest {
 
     public static void main(String[] args) {
@@ -2684,7 +2685,7 @@ class A {
     protected int i;
 
     protected void test() {
-        System.out.println(&quot;I am super class ... &quot;);
+        System.out.println(&#34;I am super class ... &#34;);
     }
 
 }
@@ -2701,7 +2702,7 @@ class B {
         a.test();
     }
 }
-</code></pre><blockquote>
+</code></pre></div><blockquote>
 <p>组合是通过对现有的对象进行拼装（组合）产生新的、更复杂的功能。因为在对象之间，各自的内部细节是不可见的，所以我们也说这种方式的代码复用是<strong>黑盒式代码复用</strong>。（因为组合中一般都定义一个类型，所以在编译期根本不知道具体会调用哪个实现类的方法）</p>
 </blockquote>
 <p>组合强调的是整体与部分、拥有的关系，即<code>has-a</code>的关系.</p>
@@ -2760,7 +2761,7 @@ class B {
 <li>访问父类的构造函数：可以使用<code>super()</code>函数访问父类的构造函数，从而委托父类完成一些初始化的工作。<strong>应该注意到，子类一定会调用父类的构造函数来完成初始化工作，一般是调用父类的默认构造函数</strong>，<strong>如果子类需要调用父类其它构造函数，那么就可以使用super函数。</strong></li>
 <li>访问父类的成员：如果子类重写了父类的某个方法，可以通过使用 <code>super </code>关键字来引用父类的方法实现。</li>
 </ul>
-<pre><code>public class SuperExample {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class SuperExample {
 
     protected int x;
     protected int y;
@@ -2771,7 +2772,7 @@ class B {
     }
 
     public void func() {
-        System.out.println(&quot;SuperExample.func()&quot;);
+        System.out.println(&#34;SuperExample.func()&#34;);
     }
 }
 public class SuperExtendExample extends SuperExample {
@@ -2786,19 +2787,19 @@ public class SuperExtendExample extends SuperExample {
     @Override
     public void func() {
         super.func();
-        System.out.println(&quot;SuperExtendExample.func()&quot;);
+        System.out.println(&#34;SuperExtendExample.func()&#34;);
     }
 }
 SuperExample e = new SuperExtendExample(1, 2, 3);
 e.func();
 SuperExample.func()
 SuperExtendExample.func()
-</code></pre><h4 id="抽象类与接口">抽象类与接口</h4>
+</code></pre></div><h4 id="抽象类与接口">抽象类与接口</h4>
 <p>抽象类和接口也是Java继承体系中的重要组成部分.抽象类是用来捕捉子类的通用特性的，而接口则是抽象方法的集合；抽象类不能被实例化，只能被用作子类的超类，是被用来创建继承层级里子类的模板，而接口只是一种形式，接口自身不能做任何事情。</p>
 <h5 id="抽象类">抽象类</h5>
 <p><strong>抽象类和抽象方法都使用<code>abstract</code>关键字进行声明。如果一个类中包含抽象方法，那么这个类必须声明为抽象类。</strong></p>
 <p>抽象类和普通类最大的区别是，抽象类不能被实例化，需要继承抽象类才能实例化其子类。</p>
-<pre><code>public abstract class AbstractClassExample {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public abstract class AbstractClassExample {
 
     protected int x;
     private int y;
@@ -2806,13 +2807,13 @@ SuperExtendExample.func()
     public abstract void func1();
 
     public void func2() {
-        System.out.println(&quot;func2&quot;);
+        System.out.println(&#34;func2&#34;);
     }
 }
 public class AbstractExtendClassExample extends AbstractClassExample {
     @Override
     public void func1() {
-        System.out.println(&quot;func1&quot;);
+        System.out.println(&#34;func1&#34;);
     }
 }
 
@@ -2821,42 +2822,42 @@ public class AbstractExtendClassExample extends AbstractClassExample {
 // 实例化抽象类子类
 // AbstractClassExample ac2 = new AbstractExtendClassExample();
 // ac2.func1();
-</code></pre><h5 id="接口">接口</h5>
+</code></pre></div><h5 id="接口">接口</h5>
 <p><strong>接口是抽象类的延伸，在 Java 8 之前，它可以看成是一个完全抽象的类，也就是说它不能有任何的方法实现。</strong></p>
 <p><strong>从 Java 8 开始</strong>，<strong>接口也可以拥有默认的方法实现</strong>，这是因为不支持默认方法的接口的维护成本太高了。在 Java 8 之前，如果一个接口想要添加新的方法，那么要修改所有实现了该接口的类,现在不用修改所有实现该接口的类.</p>
 <p>接口的成员（字段 + 方法）默认都是<code>public</code>的，并且不允许定义为<code>private</code>或者 <code>protected</code>。</p>
 <p>接口的字段默认都是用<code>static</code>和<code>final</code>修饰的.</p>
-<pre><code>public interface InterfaceExample {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public interface InterfaceExample {
 
     void func1();
 
     default void func2(){
-        System.out.println(&quot;func2&quot;);
+        System.out.println(&#34;func2&#34;);
     }
 
     int x = 123;
-    // int y;               // Variable 'y' might not have been initialized
-    public int z = 0;       // Modifier 'public' is redundant for interface fields
-    // private int k = 0;   // Modifier 'private' not allowed here
-    // protected int l = 0; // Modifier 'protected' not allowed here
-    // private void fun3(); // Modifier 'private' not allowed here
+    // int y;               // Variable &#39;y&#39; might not have been initialized
+    public int z = 0;       // Modifier &#39;public&#39; is redundant for interface fields
+    // private int k = 0;   // Modifier &#39;private&#39; not allowed here
+    // protected int l = 0; // Modifier &#39;protected&#39; not allowed here
+    // private void fun3(); // Modifier &#39;private&#39; not allowed here
 }
 public class InterfaceImplementExample implements InterfaceExample {
     @Override
     public void func1() {
-        System.out.println(&quot;func1&quot;);
+        System.out.println(&#34;func1&#34;);
     }
 }
 
-// InterfaceExample ie1 = new InterfaceExample(); // 'InterfaceExample' is abstract; cannot be instantiated
+// InterfaceExample ie1 = new InterfaceExample(); // &#39;InterfaceExample&#39; is abstract; cannot be instantiated
 InterfaceExample ie2 = new InterfaceImplementExample();
 ie2.func1();//func1
 System.out.println(InterfaceExample.x);//123
-</code></pre><p>Java的接口可以多继承</p>
-<pre><code>interface Action extends Serializable,AutoCloseable {
+</code></pre></div><p>Java的接口可以多继承</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">interface Action extends Serializable,AutoCloseable {
 	// to do ...
 }
-</code></pre><h5 id="比较-1">比较</h5>
+</code></pre></div><h5 id="比较-1">比较</h5>
 <ul>
 <li>从设计层面上看，抽象类提供了一种<code>is-a</code>关系，那么就必须满足里式替换原则，即子类对象必须能够替换掉所有父类对象。而接口更像是一种 <code>like-a</code> 关系，它只是提供一种方法实现契约，并不要求接口和实现接口的类具有 <code>is-a</code> 关系。</li>
 <li>从使用上来看，一个类可以实现多个接口，但是不能继承多个抽象类。</li>
@@ -2885,16 +2886,16 @@ System.out.println(InterfaceExample.x);//123
 <li>父类的引用指向子类的对象;例如：<code>Parent p = new Child();</code></li>
 </ul>
 <p>简单说来: 父类引用指向子类对象，调用方法时会调用子类的实现，而不是父类的实现，称为多态.</p>
-<pre><code>class Parent {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">class Parent {
 
     void contextLoads(){
-        System.out.println(&quot;i am Parent ... &quot;);
+        System.out.println(&#34;i am Parent ... &#34;);
     }
 }
 class Child  extends Parent {
     @Override
     void contextLoads(){
-        System.out.println(&quot;i am Child ... &quot;);
+        System.out.println(&#34;i am Child ... &#34;);
     }
 }
 class mainTest{
@@ -2904,7 +2905,7 @@ class mainTest{
         child.contextLoads();
     }
 }
-</code></pre><h4 id="优缺点">优缺点</h4>
+</code></pre></div><h4 id="优缺点">优缺点</h4>
 <p><strong>优点</strong></p>
 <ul>
 <li>消除类型之间的耦合关系</li>
@@ -2916,33 +2917,33 @@ class mainTest{
 </ul>
 <p><strong>缺点</strong></p>
 <p>不能使用子类特有的方法和属性.在编写代码期间使用多态调用方法或属性时，编译工具首先会检查父类中是否有该方法和属性，如果没有，则会编译报错。</p>
-<pre><code>class Parent {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">class Parent {
     void contextLoads(){
-        System.out.println(&quot;i am Parent ... &quot;);
+        System.out.println(&#34;i am Parent ... &#34;);
     }
 }
 class Child  extends Parent {
 
-    String  c = &quot;child&quot;;
+    String  c = &#34;child&#34;;
 
     @Override
     void contextLoads(){
-        System.out.println(&quot;i am Child ... &quot;);
+        System.out.println(&#34;i am Child ... &#34;);
     }
     void test() {
-        System.out.println(&quot;i am test method ...&quot;);
+        System.out.println(&#34;i am test method ...&#34;);
     }
 }
 class mainTest{
     public static void main(String[] args) {
         Parent child = new Child();
-        // 编译报错: 无法解析 'Parent' 中的方法 'test'
+        // 编译报错: 无法解析 &#39;Parent&#39; 中的方法 &#39;test&#39;
         child.test();
-        // 编译报错: 不能解决符号 'c'
+        // 编译报错: 不能解决符号 &#39;c&#39;
         child.c;
     }
 }
-</code></pre><h4 id="重写与重载">重写与重载</h4>
+</code></pre></div><h4 id="重写与重载">重写与重载</h4>
 <h5 id="重写">重写</h5>
 <p><strong>重写(Override)存在于继承体系中，指子类实现了一个与父类在方法声明上完全相同的一个方法。</strong></p>
 <blockquote>
@@ -2961,7 +2962,7 @@ class mainTest{
 <li><strong>子类抛出的异常类型为 <code>Exception</code>，是父类抛出异常 <code>Throwable</code> 的子类。</strong></li>
 <li><strong>子类重写方法使用<code>@Override</code>注解，从而让编译器自动检查是否满足限制条件。</strong></li>
 </ul>
-<pre><code>class SuperClass {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">class SuperClass {
     protected List&lt;Integer&gt; func() throws Throwable {
         return new ArrayList&lt;&gt;();
     }
@@ -2973,14 +2974,14 @@ class SubClass extends SuperClass {
         return new ArrayList&lt;&gt;();
     }
 }
-</code></pre><p>在调用一个方法时，先从本类中查找看是否有对应的方法，如果没有查找到再到父类中查看，看是否有继承来的方法。否则就要对参数进行转型，转成父类之后看是否有对应的方法。总的来说，方法调用的优先级为：</p>
+</code></pre></div><p>在调用一个方法时，先从本类中查找看是否有对应的方法，如果没有查找到再到父类中查看，看是否有继承来的方法。否则就要对参数进行转型，转成父类之后看是否有对应的方法。总的来说，方法调用的优先级为：</p>
 <ul>
 <li><code>this.func(this)</code></li>
 <li><code>super.func(this)</code></li>
 <li><code>this.func(super)</code></li>
 <li><code>super.func(super)</code></li>
 </ul>
-<pre><code>/*继承关系
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">/*继承关系
     A
     |
     B
@@ -2994,11 +2995,11 @@ class SubClass extends SuperClass {
 class A {
 
     public void show(A obj) {
-        System.out.println(&quot;A.show(A)&quot;);
+        System.out.println(&#34;A.show(A)&#34;);
     }
 
     public void show(C obj) {
-        System.out.println(&quot;A.show(C)&quot;);
+        System.out.println(&#34;A.show(C)&#34;);
     }
 }
 
@@ -3006,7 +3007,7 @@ class B extends A {
 
     @Override
     public void show(A obj) {
-        System.out.println(&quot;B.show(A)&quot;);
+        System.out.println(&#34;B.show(A)&#34;);
     }
 }
 
@@ -3038,7 +3039,7 @@ class  mainTest{
         ba.show(d); // A.show(C)
     }
 }
-</code></pre><h5 id="重载">重载</h5>
+</code></pre></div><h5 id="重载">重载</h5>
 <p><strong>重载(overload)是在一个类里面，方法名字相同，但是参数类型、个数、顺序至少有一个不同。返回类型可以相同也可以不同。应该注意的是，返回值不同，其它都相同不算是重载。</strong></p>
 <p><strong>每个重载的方法（或者构造函数）都必须有一个独一无二的参数类型列表。</strong> 最常用的地方就是构造器的重载。</p>
 <blockquote>
@@ -3052,36 +3053,36 @@ class  mainTest{
 <li>无法以返回值类型作为重载函数的区分标准。</li>
 </ul>
 </blockquote>
-<pre><code>public class Overloading {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class Overloading {
     public int test(){
-        System.out.println(&quot;test1&quot;);
+        System.out.println(&#34;test1&#34;);
         return 1;
     }
  
     public void test(int a){
-        System.out.println(&quot;test2&quot;);
+        System.out.println(&#34;test2&#34;);
     }   
  
     //以下两个参数类型顺序不同
     public String test(int a,String s){
-        System.out.println(&quot;test3&quot;);
-        return &quot;returntest3&quot;;
+        System.out.println(&#34;test3&#34;);
+        return &#34;returntest3&#34;;
     }   
  
     public String test(String s,int a){
-        System.out.println(&quot;test4&quot;);
-        return &quot;returntest4&quot;;
+        System.out.println(&#34;test4&#34;);
+        return &#34;returntest4&#34;;
     }   
  
     public static void main(String[] args){
         Overloading o = new Overloading();
         System.out.println(o.test());
         o.test(1);
-        System.out.println(o.test(1,&quot;test3&quot;));
-        System.out.println(o.test(&quot;test4&quot;,1));
+        System.out.println(o.test(1,&#34;test3&#34;));
+        System.out.println(o.test(&#34;test4&#34;,1));
     }
 }
-</code></pre><p><strong>方法的重写(Override)和重载(Overload)是Java多态性的不同表现，重写是父类与子类之间多态性的一种表现，重载可以理解成多态的具体表现形式</strong></p>
+</code></pre></div><p><strong>方法的重写(Override)和重载(Overload)是Java多态性的不同表现，重写是父类与子类之间多态性的一种表现，重载可以理解成多态的具体表现形式</strong></p>
 <blockquote>
 <ul>
 <li>方法重载是一个类中定义了多个方法名相同,而他们的参数的数量不同或数量相同而类型和次序不同,则称为方法的重载(Overloading)。</li>
@@ -3307,7 +3308,7 @@ class  mainTest{
 </tbody>
 </table>
 <h4 id="饿汉式">饿汉式</h4>
-<pre><code>class Singleton {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">class Singleton {
 
     private Singleton() {}
 
@@ -3317,9 +3318,9 @@ class  mainTest{
         return instance;
     }
 }
-</code></pre><p>这种写法比较简单，就是在类加载的时候就完成实例化。避免了线程同步问题。但是在类装载的时候就完成实例化，没有达到懒加载的效果。如果从始至终从未使用过这个实例，则会造成内存的浪费.</p>
+</code></pre></div><p>这种写法比较简单，就是在类加载的时候就完成实例化。避免了线程同步问题。但是在类装载的时候就完成实例化，没有达到懒加载的效果。如果从始至终从未使用过这个实例，则会造成内存的浪费.</p>
 <h4 id="线程不安全的懒汉式">线程不安全的懒汉式</h4>
-<pre><code>class Singleton {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">class Singleton {
     private Singleton() {
     }
 
@@ -3332,9 +3333,9 @@ class  mainTest{
         return instance;
     }
 }
-</code></pre><p>起到了懒加载的效果，但是只能在单线程下使用。如果在多线程下，一个线程进入了<code>if (singleton == null)</code>判断语句块，还未来得及往下执行，另一个线程也通过了这个判断语句，这时便会产生多个实例。所以在多线程环境下不可使用这种方式.</p>
+</code></pre></div><p>起到了懒加载的效果，但是只能在单线程下使用。如果在多线程下，一个线程进入了<code>if (singleton == null)</code>判断语句块，还未来得及往下执行，另一个线程也通过了这个判断语句，这时便会产生多个实例。所以在多线程环境下不可使用这种方式.</p>
 <h4 id="线程安全的懒汉式">线程安全的懒汉式</h4>
-<pre><code>class Singleton {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">class Singleton {
 
     private static Singleton instance;
 
@@ -3348,9 +3349,9 @@ class  mainTest{
         return instance;
     }
 }
-</code></pre><p>虽然解决了线程安全问题但是效率太低了，每个线程在想获得类的实例时候，执行<code>getInstance()</code>方法都要进行同步。而其实这个方法只执行一次实例化代码就够了，后面的想获得该类实例，直接 <code>return</code>就行了。</p>
+</code></pre></div><p>虽然解决了线程安全问题但是效率太低了，每个线程在想获得类的实例时候，执行<code>getInstance()</code>方法都要进行同步。而其实这个方法只执行一次实例化代码就够了，后面的想获得该类实例，直接 <code>return</code>就行了。</p>
 <h4 id="双重校验锁">双重校验锁</h4>
-<pre><code>class Singleton {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">class Singleton {
 
     /**
      * volatile在这作用: 禁止JVM指令重排
@@ -3371,9 +3372,9 @@ class  mainTest{
         return instance;
     }
 }
-</code></pre><p><code>Double-Check</code>概念是多线程开发中常使用到的，如代码中所示，我们进行了两次<code>if (singleton == null)</code>检查，这样就可以保证线程安全了。这样，实例化代码只用执行一次，后面再次访问时，判断<code>if (singleton == null)</code>，直接<code>return</code>实例化对象，也避免的反复进行方法同步.</p>
+</code></pre></div><p><code>Double-Check</code>概念是多线程开发中常使用到的，如代码中所示，我们进行了两次<code>if (singleton == null)</code>检查，这样就可以保证线程安全了。这样，实例化代码只用执行一次，后面再次访问时，判断<code>if (singleton == null)</code>，直接<code>return</code>实例化对象，也避免的反复进行方法同步.</p>
 <h4 id="静态内部类式">静态内部类式</h4>
-<pre><code>class Singleton {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">class Singleton {
 
     private Singleton() {}
 
@@ -3384,23 +3385,23 @@ class  mainTest{
         return InnerClass.instance;
     }
 }
-</code></pre><blockquote>
+</code></pre></div><blockquote>
 <p>这种方式同样利用了<code>classloder</code>的机制来保证初始化<code>instance</code>时只有一个线程，它跟饿汉式不同的是（很细微的差别）：饿汉式是只要<code>Singleton</code>类被装载了，那么<code>instance</code>就会被实例化（没有达到<code>lazy loading</code>效果），而这种方式是<code>Singleton</code>类被装载了，<code>instance</code>不一定被初始化。因为<code>SingletonHolder</code>类没有被主动使用，只有显示通过调用<code>getInstance</code>方法时，才会显示装载<code>SingletonHolder</code>类，从而实例化<code>instance</code>。想象一下，如果实例化<code>instance</code>很消耗资源，我想让他延迟加载，另外一方面，我不希望在<code>Singleton</code>类加载时就实例化，因为我不能确保<code>Singleton</code>类还可能在其他的地方被主动使用从而被加载，那么这个时候实例化<code>instance</code>显然是不合适的。这个时候，这种方式相比饿汉式更加合理。</p>
 </blockquote>
 <h4 id="枚举式">枚举式</h4>
-<pre><code>enum Singleton {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">enum Singleton {
     INSTAMCE;
 
     Singleton() {
     }
 }
-</code></pre><p>这种方式是《Effective Java》作者<code>Josh Bloch</code>提倡的方式.借助 JDK1.5 中添加的枚举来实现单例模式。不仅能避免多线程同步问题，而且还能防止反序列化重新创建新的对象。</p>
+</code></pre></div><p>这种方式是《Effective Java》作者<code>Josh Bloch</code>提倡的方式.借助 JDK1.5 中添加的枚举来实现单例模式。不仅能避免多线程同步问题，而且还能防止反序列化重新创建新的对象。</p>
 <h4 id="单例与序列化">单例与序列化</h4>
 <p>上述单例模式6种写法除了,枚举式单例外其他5种写法都存在序列化问题.<strong>序列化可以破坏单例.原因是序列化会通过反射调用无参数的构造方法创建一个新的对象.</strong></p>
 <p>要想防止序列化对单例的破坏，只要在单例类中定义<code>readResolve</code>方法就可以解决该问题.<strong>原因是反序列化时,会通过反射的方式调用要被反序列化的类的<code>readResolve</code>方法</strong>
 主要在<code>Singleton</code>类中定义<code>readResolve</code>方法，并在该方法中指定要返回的对象的生成策略，就可以防止单例被破坏。</p>
 <p>以<code>DCL</code>为例,在该单例类中插入<code>readResolve</code>方法。</p>
-<pre><code>public class Singleton implements Serializable{
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class Singleton implements Serializable{
 
     private volatile static Singleton singleton;
     
@@ -3421,14 +3422,14 @@ class  mainTest{
         return singleton;
     }
 }
-</code></pre><h3 id="工厂模式">工厂模式</h3>
+</code></pre></div><h3 id="工厂模式">工厂模式</h3>
 <p>工厂模式是将实例化的对象代码提取出来,放到一个类中统一管理和维护,达到和主项目的依赖关系的解耦,从而提高项目的扩展和维护性.创建对象实例时,不要直接<code>new</code>类而是把这个<code>new</code>类的动作放在一个工厂的方法中,并返回.不要让类继承具体的类,而是继承抽象类或者实现接口.</p>
 <p>详情查看以下三种工厂设计模式.</p>
 <h4 id="简单工厂模式">简单工厂模式</h4>
 <blockquote>
 <p>简单工厂模式：定义一个工厂类，它可以根据参数的不同返回不同类的实例，被创建的实例通常都具有共同的父类。因为在简单工厂模式中用于创建实例的方法是静态方法，因此简单工厂模式又被称为静态工厂方法模式，它属于类创建型模式。</p>
 </blockquote>
-<pre><code>public class SimpleFactoryDemo {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class SimpleFactoryDemo {
     public static void main(String[] args) {
         SimpleFactory.getTest(1);
     }
@@ -3438,14 +3439,14 @@ class SimpleFactoryImpl1 implements SimpleFactoryInterface {
 
     @Override
     public void test() {
-        System.out.println(&quot;i am  simpleFactory 1 ...&quot;);
+        System.out.println(&#34;i am  simpleFactory 1 ...&#34;);
     }
 }
 class SimpleFactoryImpl2 implements SimpleFactoryInterface {
 
     @Override
     public void test() {
-        System.out.println(&quot;i am  simpleFactory 2 ...&quot;);
+        System.out.println(&#34;i am  simpleFactory 2 ...&#34;);
     }
 }
 
@@ -3464,7 +3465,7 @@ class SimpleFactory {
         }
     }
 }
-</code></pre><p>简单工厂模式总结:</p>
+</code></pre></div><p>简单工厂模式总结:</p>
 <ul>
 <li><strong>优点</strong> 实现了对象创建和使用的分离,代码解耦.符合面向接口(指对外暴露的接口或类)编程思想</li>
 <li><strong>缺点</strong> 如果代码逻辑,职责过多,则简单工厂会变的十分臃肿.
@@ -3475,7 +3476,7 @@ class SimpleFactory {
 <blockquote>
 <p>工厂方法模式：定义一个用于创建对象的接口，让子类决定将哪一个类实例化。工厂方法模式让一个类的实例化延迟到其子类。工厂方法模式又简称为工厂模式，又可称作虚拟构造器模式或多态工厂模式。工厂方法模式是一种类创建型模式。</p>
 </blockquote>
-<pre><code>public class FactoryMethodDemo {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class FactoryMethodDemo {
     public static void main(String[] args) {
         FoodFactory f = new ColdRiceNoodleFactory();
         f.getFood().eat();
@@ -3494,7 +3495,7 @@ class RiceNoodle implements Food{
 
     @Override
     public void eat() {
-        System.out.println(&quot;eat rice noodle ...&quot;);
+        System.out.println(&#34;eat rice noodle ...&#34;);
     }
 }
 class RiceNoodleFactory implements FoodFactory{
@@ -3509,7 +3510,7 @@ class ColdRiceNoodle implements Food {
 
     @Override
     public void eat() {
-        System.out.println(&quot;eat cold rice noodle ...&quot;);
+        System.out.println(&#34;eat cold rice noodle ...&#34;);
     }
 }
 class ColdRiceNoodleFactory implements FoodFactory {
@@ -3519,14 +3520,14 @@ class ColdRiceNoodleFactory implements FoodFactory {
         return new ColdRiceNoodle();
     }
 }
-</code></pre><p>工厂方法模式是简单工厂模式的延伸,它<strong>继承了简单工厂模式的优点,同时还弥补了简单工厂模式的不足.</strong>
+</code></pre></div><p>工厂方法模式是简单工厂模式的延伸,它<strong>继承了简单工厂模式的优点,同时还弥补了简单工厂模式的不足.</strong>
 使用工厂方法模式扩展时,无须修改抽象工厂和抽象产品提供的接口,无须修改客户端,也无须修改其他的具体工厂和具体产品,而只<strong>要添加一个具体工厂和具体产品</strong>就可以了，这样，系统的可扩展性也就变得非常好，完全符合“开闭原则”。</p>
 <p>但是在添加新产品时，需要编写新的具体产品类，而且还要提供与之对应的具体工厂类，<strong>系统中类的个数将成对增加</strong>，在一定程度上增加了系统的复杂度，有更多的类需要编译和运行，会给系统带来一些额外的开销。</p>
 <h4 id="抽象工厂模式">抽象工厂模式</h4>
 <blockquote>
 <p>抽象工厂模式：提供一个创建一系列相关或相互依赖对象的接口，而无须指定它们具体的类。抽象工厂模式又称为Kit模式，它是一种对象创建型模式。</p>
 </blockquote>
-<pre><code>interface Food {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">interface Food {
     void eat();
 }
 
@@ -3538,14 +3539,14 @@ class RiceNoodle implements Food{
 
     @Override
     public void eat() {
-        System.out.println(&quot;eating rice noodle&quot;);
+        System.out.println(&#34;eating rice noodle&#34;);
     }
 }
 class ColdRiceNoodle implements Food{
 
     @Override
     public void eat() {
-        System.out.println(&quot;eating cold rice noodle&quot;);
+        System.out.println(&#34;eating cold rice noodle&#34;);
     }
 }
 class RiceNoodleFactory implements FoodFactory {
@@ -3574,7 +3575,7 @@ class ColdRiceNoodleFactory implements FoodFactory {
         return new RiceNoodle();
     }
 }
-</code></pre><p>抽象工厂模式是工厂方法模式的进一步延伸,仍然具有工厂方法和简单工厂的<strong>优点</strong>.抽象工厂模式隔离了具体类的生成,使得客户并不需要知道什么被创建。由于这种隔离，更换一个具体工厂就变得相对容易，所有的具体工厂都实现了抽象工厂中定义的那些公共接口，因此只需改变具体工厂的实例，就可以在某种程度上改变整个软件系统的行为.</p>
+</code></pre></div><p>抽象工厂模式是工厂方法模式的进一步延伸,仍然具有工厂方法和简单工厂的<strong>优点</strong>.抽象工厂模式隔离了具体类的生成,使得客户并不需要知道什么被创建。由于这种隔离，更换一个具体工厂就变得相对容易，所有的具体工厂都实现了抽象工厂中定义的那些公共接口，因此只需改变具体工厂的实例，就可以在某种程度上改变整个软件系统的行为.</p>
 <p>但是抽象工厂也存在一些<strong>缺点</strong>,增加新的产品等级结构麻烦，需要对原有系统进行较大的修改，甚至需要修改抽象层代码，这显然会带来较大的不便，违背了“开闭原则”。</p>
 <h3 id="原型模式">原型模式</h3>
 <p>在Java中通过<code>new</code>关键字创建的对象是非常繁琐的,在我们需要大量对象的情况下,原型模式就是我们可以考虑实现的方式.</p>
@@ -3585,15 +3586,15 @@ class ColdRiceNoodleFactory implements FoodFactory {
 <h4 id="浅克隆">浅克隆</h4>
 <p>在浅克隆中,当对象被复制时只复制它本身和其中包含的值类型的成员变量,而引用类型的成员对象并没有复制.</p>
 <p>代码实现</p>
-<pre><code>public class ShallowClone {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class ShallowClone {
     public static void main(String[] args) {
-        CloneHuman cloneHuman = new CloneHuman(&quot;黑色&quot;,&quot;大眼睛&quot;,&quot;高鼻梁&quot;,&quot;大嘴巴&quot;,new Date(123231231231L));
+        CloneHuman cloneHuman = new CloneHuman(&#34;黑色&#34;,&#34;大眼睛&#34;,&#34;高鼻梁&#34;,&#34;大嘴巴&#34;,new Date(123231231231L));
         for (int i = 0; i &lt; 20; i++) {
             try {
                 CloneHuman clone = (CloneHuman)cloneHuman.clone();
-                System.out.printf(&quot;头发：%s,眼睛：%s,鼻子：%s,嘴巴：%s,生日：%s&quot;,clone.getHair(),clone.getEye(),clone.getNodes(),clone.getMouse(),clone.getBirth());
+                System.out.printf(&#34;头发：%s,眼睛：%s,鼻子：%s,嘴巴：%s,生日：%s&#34;,clone.getHair(),clone.getEye(),clone.getNodes(),clone.getMouse(),clone.getBirth());
                 System.out.println();
-                System.out.println(&quot;浅克隆，引用类型地址比较：&quot; + (cloneHuman.getBirth() == clone.getBirth()));
+                System.out.println(&#34;浅克隆，引用类型地址比较：&#34; + (cloneHuman.getBirth() == clone.getBirth()));
             } catch (CloneNotSupportedException e) {
                 System.out.println(e.getMessage());
             }
@@ -3666,7 +3667,7 @@ class CloneHuman  implements Cloneable {
         this.birth = birth;
     }
 }
-</code></pre><blockquote>
+</code></pre></div><blockquote>
 <p>PS Java语言提供的<code>Cloneable</code>接口和<code>Serializable</code>接口的代码非常简单，它们都是空接口，这种空接口也称为标识接口，标识接口中没有任何方法的定义，其作用是告诉JRE这些接口的实现类是否具有某个功能，如是否支持克隆、是否支持序列化等。</p>
 </blockquote>
 <p>应该注意的是，<code>clone()</code>方法并不是<code>Cloneable</code>接口的方法，而是<code>Object</code>的一个<code>protected</code>方法。<code>Cloneable</code>接口只是规定，如果一个类没有实现<code>Cloneable</code>接口又调用了<code>clone()</code>方法，就会抛出 <code>CloneNotSupportedException</code>。</p>
@@ -3674,15 +3675,15 @@ class CloneHuman  implements Cloneable {
 <p>在深克隆中,除了对象本身被复制外,对象所包含的所有成员变量也将复制.
 深克隆有两种实现方式,第一种是在浅克隆的基础上实现,第二种是通过序列化和反序列化实现</p>
 <p><strong>在浅克隆的基础上实现</strong></p>
-<pre><code>public class DeepClone {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class DeepClone {
     public static void main(String[] args) {
-        CloneHuman cloneHuman = new CloneHuman(&quot;黑色&quot;,&quot;大眼睛&quot;,&quot;高鼻梁&quot;,&quot;大嘴巴&quot;,new Date(123231231231L));
+        CloneHuman cloneHuman = new CloneHuman(&#34;黑色&#34;,&#34;大眼睛&#34;,&#34;高鼻梁&#34;,&#34;大嘴巴&#34;,new Date(123231231231L));
         for (int i = 0; i &lt; 20; i++) {
             try {
                 CloneHuman clone = (CloneHuman)cloneHuman.clone();
-                System.out.printf(&quot;头发：%s,眼睛：%s,鼻子：%s,嘴巴：%s,生日：%s&quot;,clone.getHair(),clone.getEye(),clone.getNodes(),clone.getMouse(),clone.getBirth());
+                System.out.printf(&#34;头发：%s,眼睛：%s,鼻子：%s,嘴巴：%s,生日：%s&#34;,clone.getHair(),clone.getEye(),clone.getNodes(),clone.getMouse(),clone.getBirth());
                 System.out.println();
-                System.out.println(&quot;深克隆，引用类型地址比较：&quot; + (cloneHuman.getBirth() == clone.getBirth()));
+                System.out.println(&#34;深克隆，引用类型地址比较：&#34; + (cloneHuman.getBirth() == clone.getBirth()));
             } catch (CloneNotSupportedException e) {
                 System.out.println(e.getMessage());
             }
@@ -3756,10 +3757,10 @@ class CloneHuman  implements Cloneable {
         this.birth = birth;
     }
 }
-</code></pre><p><strong>序列化反序列化实现深克隆</strong></p>
-<pre><code>public class DeepClone2 {
+</code></pre></div><p><strong>序列化反序列化实现深克隆</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class DeepClone2 {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        CloneHuman2 cloneHuman1 = new CloneHuman2(&quot;黑色&quot;,&quot;大眼睛&quot;,&quot;高鼻梁&quot;,&quot;大嘴巴&quot;,new Date(123231231231L));
+        CloneHuman2 cloneHuman1 = new CloneHuman2(&#34;黑色&#34;,&#34;大眼睛&#34;,&#34;高鼻梁&#34;,&#34;大嘴巴&#34;,new Date(123231231231L));
 
         // 使用序列化和反序列化实现深克隆
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -3772,7 +3773,7 @@ class CloneHuman  implements Cloneable {
 
         // 克隆好的对象
         CloneHuman2 cloneHuman2 = (CloneHuman2) ois.readObject();
-        System.out.println(&quot;深克隆，引用类型地址比较：&quot; + (cloneHuman1.getBirth() == cloneHuman2.getBirth()));
+        System.out.println(&#34;深克隆，引用类型地址比较：&#34; + (cloneHuman1.getBirth() == cloneHuman2.getBirth()));
 
     }
 }
@@ -3843,7 +3844,7 @@ class CloneHuman2  implements Cloneable, Serializable {
         this.birth = birth;
     }
 }
-</code></pre><h4 id="总结">总结</h4>
+</code></pre></div><h4 id="总结">总结</h4>
 <p>原型模式作为一种快速创建大量相同或相似对象的方式，在软件开发中应用较为广泛，很多软件提供的复制和粘贴操作就是原型模式的典型应用.</p>
 <p>通过<code>clone</code>的方式在获取大量对象的时候性能开销基本没有什么影响，而<code>new</code>的方式随着实例的对象越来越多，性能会急剧下降，所以原型模式是一种比较重要的获取实例的方式.</p>
 <p><strong>优点</strong></p>
@@ -3870,7 +3871,7 @@ spring中bean的创建实际就是两种：单例模式和原型模式。</p>
 </blockquote>
 <p>建造者模式是较为复杂的创建型模式，它将客户端与包含多个组成部分（或部件）的复杂对象的创建过程分离，客户端无须知道复杂对象的内部组成部分与装配方式，只需要知道所需建造者的类型即可。它关注如何一步一步创建一个的复杂对象，不同的具体建造者定义了不同的创建过程，且具体建造者相互独立，增加新的建造者非常方便，无须修改已有代码，系统具有较好的扩展性。</p>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
 
         Director director = new Director();
@@ -3916,14 +3917,14 @@ class Role {
 
     @Override
     public String toString() {
-        return &quot;Role{&quot; +
-                &quot;head='&quot; + head + '\'' +
-                &quot;, body='&quot; + body + '\'' +
-                &quot;, foot='&quot; + foot + '\'' +
-                &quot;, sp='&quot; + sp + '\'' +
-                &quot;, hp='&quot; + hp + '\'' +
-                &quot;, name='&quot; + name + '\'' +
-                '}';
+        return &#34;Role{&#34; +
+                &#34;head=&#39;&#34; + head + &#39;\&#39;&#39; +
+                &#34;, body=&#39;&#34; + body + &#39;\&#39;&#39; +
+                &#34;, foot=&#39;&#34; + foot + &#39;\&#39;&#39; +
+                &#34;, sp=&#39;&#34; + sp + &#39;\&#39;&#39; +
+                &#34;, hp=&#39;&#34; + hp + &#39;\&#39;&#39; +
+                &#34;, name=&#39;&#34; + name + &#39;\&#39;&#39; +
+                &#39;}&#39;;
     }
 }
 
@@ -3952,32 +3953,32 @@ class CommonRole extends Builder {
 
     @Override
     public void builderHead() {
-        System.out.println(&quot;building head .....&quot;);
+        System.out.println(&#34;building head .....&#34;);
     }
 
     @Override
     public void builderBody() {
-        System.out.println(&quot;building body .....&quot;);
+        System.out.println(&#34;building body .....&#34;);
     }
 
     @Override
     public void builderFoot() {
-        System.out.println(&quot;building foot .....&quot;);
+        System.out.println(&#34;building foot .....&#34;);
     }
 
     @Override
     public void builderSp() {
-        role.setSp(&quot;100&quot;);
+        role.setSp(&#34;100&#34;);
     }
 
     @Override
     public void builderHp() {
-        role.setHp(&quot;100&quot;);
+        role.setHp(&#34;100&#34;);
     }
 
     @Override
     public void builderName() {
-        role.setName(&quot;lucy&quot;);
+        role.setName(&#34;lucy&#34;);
     }
 
     @Override
@@ -3996,7 +3997,7 @@ class Director {
         builder.builderName();
     }
 }
-</code></pre><p><strong>优点</strong></p>
+</code></pre></div><p><strong>优点</strong></p>
 <ul>
 <li>客户端不必知道产品内部组成的细节，将产品本身与产品的创建过程解耦，使得相同的创建过程可以创建不同的产品对象。</li>
 <li>建造者模式很容易进行扩展。如果有新的需求，通过实现一个新的建造者类就可以完成，基本上不用修改之前已经测试通过的代码，因此也就不会对原有功能引入风险。符合<a href="#%E5%BC%80%E6%94%BE%E5%B0%81%E9%97%AD%E5%8E%9F%E5%88%99">开放封闭原则</a>。</li>
@@ -4021,13 +4022,13 @@ class Director {
 <h4 id="对象适配器">对象适配器</h4>
 <p>由于在Java中不支持多重继承，而且有破坏封装之嫌。所以提倡<a href="#%E7%BB%A7%E6%89%BF%E4%B8%8E%E7%BB%84%E5%90%88">多用组合少用继承</a>，在实际开发中推荐使用对象适配器模式。</p>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         new RedHat(new Linux()).useInputMethod();
-        System.out.println(&quot;==============&quot;);
+        System.out.println(&#34;==============&#34;);
 
         new Win10(new Windows()).useInputMethod();
-        System.out.println(&quot;==============&quot;);
+        System.out.println(&#34;==============&#34;);
 
         Adapter adapter = new Adapter(new Windows());
         new RedHat(adapter).useInputMethod();
@@ -4046,7 +4047,7 @@ class Linux implements LinuxSoftware {
 
     @Override
     public void inputMethod() {
-        System.out.println(&quot;linux 系统输入法 ...&quot;);
+        System.out.println(&#34;linux 系统输入法 ...&#34;);
     }
 }
 
@@ -4054,7 +4055,7 @@ class Windows implements WindowsSoftware {
 
     @Override
     public void inputMethod() {
-        System.out.println(&quot;windows 系统输入法 ...&quot;);
+        System.out.println(&#34;windows 系统输入法 ...&#34;);
     }
 }
 
@@ -4066,9 +4067,9 @@ class RedHat {
     }
 
     public void useInputMethod() {
-        System.out.println(&quot;开始使用 redHat 系统输入法 ...&quot;);
+        System.out.println(&#34;开始使用 redHat 系统输入法 ...&#34;);
         linuxSoftware.inputMethod();
-        System.out.println(&quot;结束使用 redHat 系统输入法 ...&quot;);
+        System.out.println(&#34;结束使用 redHat 系统输入法 ...&#34;);
     }
 }
 
@@ -4080,9 +4081,9 @@ class Win10 {
     }
 
     public void useInputMethod() {
-        System.out.println(&quot;开始使用 win10 系统输入法 ...&quot;);
+        System.out.println(&#34;开始使用 win10 系统输入法 ...&#34;);
         windowsSoftware.inputMethod();
-        System.out.println(&quot;结束使用 win10 系统输入法 ...&quot;);
+        System.out.println(&#34;结束使用 win10 系统输入法 ...&#34;);
     }
 }
 
@@ -4100,16 +4101,16 @@ class Adapter implements LinuxSoftware{
         windowsSoftware.inputMethod();
     }
 }
-</code></pre><h4 id="类适配器">类适配器</h4>
+</code></pre></div><h4 id="类适配器">类适配器</h4>
 <p>类适配器模式和对象适配器模式最大的区别在于适配器和适配者之间的关系不同，对象适配器模式中适配器和适配者之间是关联关系，而类适配器模式中适配器和适配者是继承关系。</p>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         new RedHat(new Linux()).useInputMethod();
-        System.out.println(&quot;==============&quot;);
+        System.out.println(&#34;==============&#34;);
 
         new Win10(new Windows()).useInputMethod();
-        System.out.println(&quot;==============&quot;);
+        System.out.println(&#34;==============&#34;);
 
         Adapter adapter = new Adapter();
         new RedHat(adapter).useInputMethod();
@@ -4128,7 +4129,7 @@ class Linux implements LinuxSoftware {
 
     @Override
     public void inputMethod() {
-        System.out.println(&quot;linux 系统输入法 ...&quot;);
+        System.out.println(&#34;linux 系统输入法 ...&#34;);
     }
 }
 
@@ -4136,7 +4137,7 @@ class Windows implements WindowsSoftware {
 
     @Override
     public void inputMethod() {
-        System.out.println(&quot;windows 系统输入法 ...&quot;);
+        System.out.println(&#34;windows 系统输入法 ...&#34;);
     }
 }
 
@@ -4148,9 +4149,9 @@ class RedHat {
     }
 
     public void useInputMethod() {
-        System.out.println(&quot;开始使用 redHat 系统输入法 ...&quot;);
+        System.out.println(&#34;开始使用 redHat 系统输入法 ...&#34;);
         linuxSoftware.inputMethod();
-        System.out.println(&quot;结束使用 redHat 系统输入法 ...&quot;);
+        System.out.println(&#34;结束使用 redHat 系统输入法 ...&#34;);
     }
 }
 
@@ -4162,9 +4163,9 @@ class Win10 {
     }
 
     public void useInputMethod() {
-        System.out.println(&quot;开始使用 win10 系统输入法 ...&quot;);
+        System.out.println(&#34;开始使用 win10 系统输入法 ...&#34;);
         windowsSoftware.inputMethod();
-        System.out.println(&quot;结束使用 win10 系统输入法 ...&quot;);
+        System.out.println(&#34;结束使用 win10 系统输入法 ...&#34;);
     }
 }
 
@@ -4175,7 +4176,7 @@ class Adapter extends Windows implements LinuxSoftware{
         super.inputMethod();
     }
 }
-</code></pre><h4 id="总结-1">总结</h4>
+</code></pre></div><h4 id="总结-1">总结</h4>
 <p>适配器模式将现有接口转化为客户类所期望的接口，实现了对现有类的复用，它是一种使用频率非常高的设计模式，在软件开发中得以广泛应用，在Spring等开源框架、驱动程序设计（如JDBC中的数据库驱动程序）中也使用了适配器模式。</p>
 <p><strong>优点</strong></p>
 <ul>
@@ -4202,13 +4203,13 @@ class Adapter extends Windows implements LinuxSoftware{
 <p>桥接模式是一种很实用的结构型设计模式，如果软件系统中某个类存在两个独立变化的维度，通过该模式可以将这两个维度分离出来，使两者可以独立扩展，让系统更加符合“单一职责原则”。</p>
 <p>例如像手机制造：内存是一个公司生产，芯片是另一个公司生产，而品牌又是另一个公司。我们需要什么样子的手机就把相应的芯片、内存组装起来。桥接模式就是把两个不同维度的东西桥接起来。</p>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         Phone_A phone_a = new Phone_A();
         phone_a.setAbstractChip(new Chip_A());
         phone_a.setAbstractMemory(new Memory_A());
         phone_a.finished();
-        System.out.println(&quot;=================&quot;);
+        System.out.println(&#34;=================&#34;);
         Phone_B phone_b = new Phone_B();
         phone_b.setAbstractChip(new Chip_B());
         phone_b.setAbstractMemory(new Memory_A());
@@ -4241,14 +4242,14 @@ class Memory_A  extends AbstractMemory{
 
     @Override
     protected void size() {
-        System.out.println(&quot;create 6G of memory ...&quot;);
+        System.out.println(&#34;create 6G of memory ...&#34;);
     }
 }
 class Memory_B  extends AbstractMemory{
 
     @Override
     protected void size() {
-        System.out.println(&quot;create 8G of memory ...&quot;);
+        System.out.println(&#34;create 8G of memory ...&#34;);
     }
 }
 
@@ -4256,7 +4257,7 @@ class Chip_A extends AbstractChip {
 
     @Override
     protected void type() {
-        System.out.println(&quot;snapdragon 888 chip ...&quot;);
+        System.out.println(&#34;snapdragon 888 chip ...&#34;);
     }
 }
 
@@ -4264,7 +4265,7 @@ class Chip_B extends AbstractChip {
 
     @Override
     protected void type() {
-        System.out.println(&quot;A14 chip ...&quot;);
+        System.out.println(&#34;A14 chip ...&#34;);
     }
 }
 
@@ -4274,7 +4275,7 @@ class Phone_A  extends AbstractPhone{
     protected void finished() {
         abstractMemory.size();
         abstractChip.type();
-        System.out.println(&quot;phone_a assembly completed ...&quot;);
+        System.out.println(&#34;phone_a assembly completed ...&#34;);
     }
 }
 
@@ -4284,10 +4285,10 @@ class Phone_B  extends AbstractPhone{
     protected void finished() {
         abstractMemory.size();
         abstractChip.type();
-        System.out.println(&quot;phone_b assembly completed ...&quot;);
+        System.out.println(&#34;phone_b assembly completed ...&#34;);
     }
 }
-</code></pre><p>桥接模式是设计Java虚拟机和实现JDBC等驱动程序的核心模式之一，应用较为广泛。在软件开发中如果一个类或一个系统有多个变化维度时，都可以尝试使用桥接模式对其进行设计。桥接模式为多维度变化的系统提供了一套完整的解决方案，并且降低了系统的复杂度。</p>
+</code></pre></div><p>桥接模式是设计Java虚拟机和实现JDBC等驱动程序的核心模式之一，应用较为广泛。在软件开发中如果一个类或一个系统有多个变化维度时，都可以尝试使用桥接模式对其进行设计。桥接模式为多维度变化的系统提供了一套完整的解决方案，并且降低了系统的复杂度。</p>
 <p><strong>优点</strong></p>
 <ul>
 <li>实现了抽象和实现部分的分离，从而极大的提供了系统的灵活性，让抽象部分和实现部分独立开来，这有助于系统进行分层设计，从而产生更好的结构化系统。</li>
@@ -4310,7 +4311,7 @@ class Phone_B  extends AbstractPhone{
 </blockquote>
 <p>组合模式，是用于把一组相似的对象当作一个单一的对象。组合模式依据树形结构来组合对象，用来表示部分以及整体层次。</p>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         Tree tree = new Tree();
         tree.add(new LeftNode());
@@ -4331,17 +4332,17 @@ class LeftNode extends AbstractTree {
 
     @Override
     protected void add(AbstractTree node) {
-        System.out.println(&quot;Exception: the method is not supported. &quot;);
+        System.out.println(&#34;Exception: the method is not supported. &#34;);
     }
 
     @Override
     protected void remove(AbstractTree node) {
-        System.out.println(&quot;Exception: the method is not supported. &quot;);
+        System.out.println(&#34;Exception: the method is not supported. &#34;);
     }
 
     @Override
     protected void implmethod() {
-        System.out.println(&quot;left node method ...&quot;);
+        System.out.println(&#34;left node method ...&#34;);
     }
 }
 
@@ -4349,17 +4350,17 @@ class RightNode extends AbstractTree {
 
     @Override
     protected void add(AbstractTree node) {
-        System.out.println(&quot;Exception: the method is not supported. &quot;);
+        System.out.println(&#34;Exception: the method is not supported. &#34;);
     }
 
     @Override
     protected void remove(AbstractTree node) {
-        System.out.println(&quot;Exception: the method is not supported. &quot;);
+        System.out.println(&#34;Exception: the method is not supported. &#34;);
     }
 
     @Override
     protected void implmethod() {
-        System.out.println(&quot;right node method ...&quot;);
+        System.out.println(&#34;right node method ...&#34;);
     }
 }
 
@@ -4380,13 +4381,13 @@ class Tree extends AbstractTree {
 
     @Override
     protected void implmethod() {
-        System.out.println(&quot;tree node&quot;);
+        System.out.println(&#34;tree node&#34;);
         for (AbstractTree node : treeList) {
             node.implmethod();
         }
     }
 }
-</code></pre><p>组合模式使用面向对象的思想来实现树形结构的构建与处理，描述了如何将容器对象和叶子对象进行递归组合，实现简单，灵活性好。由于在软件开发中存在大量的树形结构，因此组合模式是一种使用频率较高的结构型设计模式。在XML解析、组织结构树处理、文件系统设计等领域，组合模式都得到了广泛应用。</p>
+</code></pre></div><p>组合模式使用面向对象的思想来实现树形结构的构建与处理，描述了如何将容器对象和叶子对象进行递归组合，实现简单，灵活性好。由于在软件开发中存在大量的树形结构，因此组合模式是一种使用频率较高的结构型设计模式。在XML解析、组织结构树处理、文件系统设计等领域，组合模式都得到了广泛应用。</p>
 <p><strong>优点</strong></p>
 <ul>
 <li>高层模块调用简单。客户端可以一致地使用一个组合结构或其中单个对象，不必关心处理的是单个对象还是整个组合结构。</li>
@@ -4406,19 +4407,19 @@ class Tree extends AbstractTree {
 <p>装饰模式：动态地给一个对象增加一些额外的职责，就增加对象功能来说，装饰模式比生成子类实现更为灵活。装饰模式是一种对象结构型模式。</p>
 </blockquote>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         Drink coffee = new ShortBlock();
-        System.out.println(&quot;订单价格：&quot;+ coffee.cost());
-        System.out.println(&quot;订单描述：&quot; + coffee.getDesc());
-        System.out.println(&quot;=====================&quot;);
+        System.out.println(&#34;订单价格：&#34;+ coffee.cost());
+        System.out.println(&#34;订单描述：&#34; + coffee.getDesc());
+        System.out.println(&#34;=====================&#34;);
         coffee = new Chocolate(coffee);
-        System.out.println(&quot;订单价格：&quot;+ coffee.cost());
-        System.out.println(&quot;订单描述：&quot; + coffee.getDesc());
-        System.out.println(&quot;=====================&quot;);
+        System.out.println(&#34;订单价格：&#34;+ coffee.cost());
+        System.out.println(&#34;订单描述：&#34; + coffee.getDesc());
+        System.out.println(&#34;=====================&#34;);
         coffee = new Milk(coffee);
-        System.out.println(&quot;订单价格：&quot;+ coffee.cost());
-        System.out.println(&quot;订单描述：&quot; + coffee.getDesc());
+        System.out.println(&#34;订单价格：&#34;+ coffee.cost());
+        System.out.println(&#34;订单描述：&#34; + coffee.getDesc());
     }
 }
 
@@ -4451,7 +4452,7 @@ class ShortBlock extends Drink{
 
     public ShortBlock() {
         super.setPrice(3.0);
-        super.setDesc(&quot;ShortBlock&quot;);
+        super.setDesc(&#34;ShortBlock&#34;);
     }
 
     @Override
@@ -4464,7 +4465,7 @@ class LongBlock extends Drink {
 
     public LongBlock() {
         super.setPrice(5.0);
-        super.setDesc(&quot;LongBlock&quot;);
+        super.setDesc(&#34;LongBlock&#34;);
     }
 
     @Override
@@ -4488,7 +4489,7 @@ class CoffeeShop extends Drink {
 
     @Override
     public String getDesc() {
-        return desc + &quot; &quot; + getPrice() +&quot; &amp;&amp; &quot;+  coffee.getDesc();
+        return desc + &#34; &#34; + getPrice() +&#34; &amp;&amp; &#34;+  coffee.getDesc();
     }
 }
 
@@ -4496,7 +4497,7 @@ class Milk extends CoffeeShop {
 
     public Milk(Drink seasoning) {
         super(seasoning);
-        super.setDesc(&quot;Milk&quot;);
+        super.setDesc(&#34;Milk&#34;);
         super.setPrice(6);
     }
 
@@ -4506,12 +4507,12 @@ class Chocolate extends CoffeeShop {
 
     public Chocolate(Drink seasoning) {
         super(seasoning);
-        super.setDesc(&quot;Chocolate&quot;);
+        super.setDesc(&#34;Chocolate&#34;);
         super.setPrice(4);
     }
 
 }
-</code></pre><p>装饰模式降低了系统的耦合度，可以动态增加或删除对象的职责，并使得需要装饰的具体构件类和具体装饰类可以独立变化，以便增加新的具体构件类和具体装饰类。在软件开发中，装饰模式应用较为广泛，例如在JavaIO中的输入流和输出流的设计、javax.swing包中一些图形界面构件功能的增强等地方都运用了装饰模式。</p>
+</code></pre></div><p>装饰模式降低了系统的耦合度，可以动态增加或删除对象的职责，并使得需要装饰的具体构件类和具体装饰类可以独立变化，以便增加新的具体构件类和具体装饰类。在软件开发中，装饰模式应用较为广泛，例如在JavaIO中的输入流和输出流的设计、javax.swing包中一些图形界面构件功能的增强等地方都运用了装饰模式。</p>
 <p>**装饰者模式主要解决：**一般的，我们为了扩展一个类经常使用继承方式实现，由于继承为类引入静态特征，并且随着扩展功能的增多，子类会很膨胀。</p>
 <p><strong>优点</strong></p>
 <ul>
@@ -4541,7 +4542,7 @@ class Chocolate extends CoffeeShop {
 </blockquote>
 <p>外观模式又称为门面模式，它是一种对象结构型模式。外观模式是<a href="#%E8%BF%AA%E7%B1%B3%E7%89%B9%E6%B3%95%E5%88%99">迪米特法则</a>的一种具体实现，通过引入一个新的外观角色可以降低原有系统的复杂度，同时降低客户类与子系统的耦合度。</p>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         Facade facade = new Facade();
         facade.aTest();
@@ -4580,7 +4581,7 @@ class A {
    public  void aTest() {
        B.getInstance().aTest();
        C.getInstance().aTest();
-       System.out.println(&quot;A class test method ...&quot;);
+       System.out.println(&#34;A class test method ...&#34;);
    }
 }
 
@@ -4592,7 +4593,7 @@ class B {
     }
     public  void aTest() {
         C.getInstance().aTest();
-        System.out.println(&quot;B class test method ...&quot;);
+        System.out.println(&#34;B class test method ...&#34;);
     }
 }
 
@@ -4603,7 +4604,7 @@ class C {
         return instance;
     }
     public  void aTest() {
-        System.out.println(&quot;C class test method ...&quot;);
+        System.out.println(&#34;C class test method ...&#34;);
     }
 }
 
@@ -4616,10 +4617,10 @@ class D {
     public  void aTest() {
         B.getInstance().aTest();
         C.getInstance().aTest();
-        System.out.println(&quot;D class test method ...&quot;);
+        System.out.println(&#34;D class test method ...&#34;);
     }
 }
-</code></pre><p>外观模式的主要目的在于降低系统的复杂程度，在面向对象软件系统中，类与类之间的关系越多，不能表示系统设计得越好，反而表示系统中类之间的耦合度太大，这样的系统在维护和修改时都缺乏灵活性，因为一个类的改动会导致多个类发生变化，而外观模式的引入在很大程度上降低了类与类之间的耦合关系。引入外观模式之后，增加新的子系统或者移除子系统都非常方便，客户类无须进行修改（或者极少的修改），只需要在外观类中增加或移除对子系统的引用即可。从这一点来说，外观模式在一定程度上并不符合<a href="#%E5%BC%80%E6%94%BE%E5%B0%81%E9%97%AD%E5%8E%9F%E5%88%99">开放封闭原则</a>，增加新的子系统需要对原有系统进行一定的修改，虽然这个修改工作量不大。</p>
+</code></pre></div><p>外观模式的主要目的在于降低系统的复杂程度，在面向对象软件系统中，类与类之间的关系越多，不能表示系统设计得越好，反而表示系统中类之间的耦合度太大，这样的系统在维护和修改时都缺乏灵活性，因为一个类的改动会导致多个类发生变化，而外观模式的引入在很大程度上降低了类与类之间的耦合关系。引入外观模式之后，增加新的子系统或者移除子系统都非常方便，客户类无须进行修改（或者极少的修改），只需要在外观类中增加或移除对子系统的引用即可。从这一点来说，外观模式在一定程度上并不符合<a href="#%E5%BC%80%E6%94%BE%E5%B0%81%E9%97%AD%E5%8E%9F%E5%88%99">开放封闭原则</a>，增加新的子系统需要对原有系统进行一定的修改，虽然这个修改工作量不大。</p>
 <p><strong>优点</strong></p>
 <ul>
 <li>减少关联关系；对客户端屏蔽了具体的实现，使得子系统使用起来更加容易；客户端代码将变得很简单，与之关联的对象也很少。</li>
@@ -4641,21 +4642,21 @@ class D {
 <p>享元模式：运用共享技术有效地支持大量细粒度对象的复用。系统只使用少量的对象，而这些对象都很相似，状态变化很小，可以实现对象的多次复用。由于享元模式要求能够共享的对象必须是细粒度对象，因此它又称为轻量级模式，它是一种对象结构型模式。</p>
 </blockquote>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         WebSiteFactory webSiteFactory = new WebSiteFactory();
         
-        webSiteFactory.getWebSite(&quot;新闻&quot;).use(new User(&quot;lucy&quot;));
+        webSiteFactory.getWebSite(&#34;新闻&#34;).use(new User(&#34;lucy&#34;));
 
-        webSiteFactory.getWebSite(&quot;新闻&quot;).use(new User(&quot;jane&quot;));
+        webSiteFactory.getWebSite(&#34;新闻&#34;).use(new User(&#34;jane&#34;));
 
-        webSiteFactory.getWebSite(&quot;博客&quot;).use(new User(&quot;jack&quot;));
+        webSiteFactory.getWebSite(&#34;博客&#34;).use(new User(&#34;jack&#34;));
 
-        webSiteFactory.getWebSite(&quot;博客&quot;).use(new User(&quot;maik&quot;));
+        webSiteFactory.getWebSite(&#34;博客&#34;).use(new User(&#34;maik&#34;));
 
-        webSiteFactory.getWebSite(&quot;博客&quot;).use(new User(&quot;seven&quot;));
+        webSiteFactory.getWebSite(&#34;博客&#34;).use(new User(&#34;seven&#34;));
 
-        System.out.println(&quot;网站类型共：&quot; + webSiteFactory.countWebSiteType());
+        System.out.println(&#34;网站类型共：&#34; + webSiteFactory.countWebSiteType());
     }
 }
 
@@ -4682,7 +4683,7 @@ class ConcreateWebSite extends WebSite {
 
     @Override
     public void use(User user) {
-        System.out.println(&quot;网站类型名称：&quot; + super.getName() +&quot;\t 网站用户：&quot; + user.getUsername());
+        System.out.println(&#34;网站类型名称：&#34; + super.getName() +&#34;\t 网站用户：&#34; + user.getUsername());
     }
 }
 
@@ -4719,7 +4720,7 @@ class WebSiteFactory{
     }
 
 }
-</code></pre><p>当系统中存在大量相同或者相似的对象时，享元模式是一种较好的解决方案，它通过共享技术实现相同或相似的细粒度对象的复用，从而节约了内存空间，提高了系统性能。相比其他结构型设计模式，享元模式的使用频率并不算太高，但是作为一种以“节约内存，提高性能”为出发点的设计模式，它在软件开发中还是得到了一定程度的应用。例如：String、Java的池技术等。</p>
+</code></pre></div><p>当系统中存在大量相同或者相似的对象时，享元模式是一种较好的解决方案，它通过共享技术实现相同或相似的细粒度对象的复用，从而节约了内存空间，提高了系统性能。相比其他结构型设计模式，享元模式的使用频率并不算太高，但是作为一种以“节约内存，提高性能”为出发点的设计模式，它在软件开发中还是得到了一定程度的应用。例如：String、Java的池技术等。</p>
 <p>享元模式主要解决在有大量对象时，有可能会造成内存溢出，我们把其中共同的部分抽象出来，如果有相同的业务请求，直接返回在内存中已有的对象，避免重新创建。</p>
 <p><strong>优点</strong></p>
 <ul>
@@ -4742,7 +4743,7 @@ class WebSiteFactory{
 <p>代理模式是为一个对象提供一个替身，以控制对这个对象的访问。即通过代理对象访问目标对象.这样做的好处是:可以在目标对象实现的基础上,增强额外的功能操作,即扩展目标对象的功能。被代理的对象可以是远程对象、创建开销大的对象或需要安全控制的对象</p>
 <p>代理模式有不同的形式, 主要有三种 静态代理、动态代理 (<code>JDK</code>代理、<code>Cglib</code>代理)。</p>
 <h4 id="静态代理">静态代理</h4>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         ProxyImpl proxy = new ProxyImpl();
         StaticProxy staticProxy = new StaticProxy(proxy);
@@ -4758,7 +4759,7 @@ class ProxyImpl implements ProxyInterface{
 
     @Override
     public void test() {
-        System.out.println(&quot;helloWorld&quot;);
+        System.out.println(&#34;helloWorld&#34;);
     }
 
 }
@@ -4775,16 +4776,16 @@ class StaticProxy implements ProxyInterface{
 
     @Override
     public void test() {
-        System.out.println(&quot;静态代理之前...&quot;);
+        System.out.println(&#34;静态代理之前...&#34;);
         target.test();
-        System.out.println(&quot;静态代理之后...&quot;);
+        System.out.println(&#34;静态代理之后...&#34;);
     }
 }
-</code></pre><p>静态代理能在不修改目标对象的功能前提下，<strong>能通过代理对象对目标进行扩展。<strong>但是因为代理对象需要与目标对象实现相同的接口，所以会有很多代理类</strong>一旦接口增加方法后，目标对象与代理对象都需要维护</strong>。</p>
+</code></pre></div><p>静态代理能在不修改目标对象的功能前提下，<strong>能通过代理对象对目标进行扩展。<strong>但是因为代理对象需要与目标对象实现相同的接口，所以会有很多代理类</strong>一旦接口增加方法后，目标对象与代理对象都需要维护</strong>。</p>
 <h4 id="动态代理">动态代理</h4>
 <p>动态代理，代理对象不需要实现接口，但是目标对象需要实现接口，否则不能实现动态代理。代理对象的生产是利用JDK的API，动态的在内存中构建代理对象。</p>
 <h5 id="jdk动态代理">JDK动态代理</h5>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         ProxyImpl proxy = new ProxyImpl();
         ProxyInterface jdkProxyInterface = (ProxyInterface)new JDKProxy().bind(proxy);
@@ -4799,7 +4800,7 @@ class ProxyImpl implements ProxyInterface{
 
     @Override
     public void test() {
-        System.out.println(&quot;helloWorld&quot;);
+        System.out.println(&#34;helloWorld&#34;);
     }
 
 }
@@ -4813,24 +4814,24 @@ class JDKProxy {
         //生成代理类（与被代理对象实现相同接口的兄弟类）
         return Proxy.newProxyInstance(target.getClass().getClassLoader(), target.getClass().getInterfaces(), (proxy, method, args) -&gt; {
             Object res;
-            System.out.println(&quot;JDK动态代理前&quot;);
+            System.out.println(&#34;JDK动态代理前&#34;);
             res=method.invoke(target, args);
-            System.out.println(&quot;JDK动态代理后&quot;);
+            System.out.println(&#34;JDK动态代理后&#34;);
             return res;
         });
     }
 
 }
-</code></pre><h5 id="cglib动态代理">CGlib动态代理</h5>
+</code></pre></div><h5 id="cglib动态代理">CGlib动态代理</h5>
 <p><code>Cglib</code>代理也叫作子类代理,它是在内存中构建一个子类对象从而实现对目标对象功能扩展。
 <code>Cglib</code>是一个强大的高性能的代码生成包,它可以在运行期扩展 java 类与实现 java 接口.它广泛的被许多 AOP 的框架使用,例如 Spring AOP，实现方法拦截。</p>
 <p>以下测试代码需要导入Cglib和asm相关jar包。</p>
-<pre><code>asm-3.3.1.jar
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">asm-3.3.1.jar
 cglib-2.2.jar
-</code></pre><pre><code>PS：使用`CGLib`实现动态代理时出现了下面这个异常
-Exception in thread &quot;main&quot; java.lang.IncompatibleClassChangeError: 
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">PS：使用`CGLib`实现动态代理时出现了下面这个异常
+Exception in thread &#34;main&#34; java.lang.IncompatibleClassChangeError: 
 class net.sf.cglib.core.DebuggingClassWriter has interface org.objectweb.asm.ClassVisitor as super class
-</code></pre><blockquote>
+</code></pre></div><blockquote>
 <ul>
 <li>
 <p>原因：
@@ -4842,7 +4843,7 @@ cglib.jar包含asm.jar包。报错内容是<code>ClassVisitor</code>的父类不
 </li>
 </ul>
 </blockquote>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         Target target = new Target();
         Target bind = (Target)new CGLibProxy().bind(target);
@@ -4854,7 +4855,7 @@ cglib.jar包含asm.jar包。报错内容是<code>ClassVisitor</code>的父类不
 class Target{
 
     public void test() {
-        System.out.println(&quot;helloWorld&quot;);
+        System.out.println(&#34;helloWorld&#34;);
     }
 
 }
@@ -4874,14 +4875,14 @@ class CGLibProxy implements MethodInterceptor {
     @Override
     public Object intercept(Object proxy, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
         Object res;
-        System.out.println(&quot;CGLib动态代理前&quot;);
+        System.out.println(&#34;CGLib动态代理前&#34;);
         res=method.invoke(target, args);
-        System.out.println(&quot;CGLib动态代理后&quot;);
+        System.out.println(&#34;CGLib动态代理后&#34;);
         return res;
     }
 
 }
-</code></pre><h4 id="总结-2">总结</h4>
+</code></pre></div><h4 id="总结-2">总结</h4>
 <p>代理模式是常用的结构型设计模式之一，它为对象的间接访问提供了一个解决方案，可以对对象的访问进行控制。代理模式主要解决：在直接访问对象时带来的问题，比如说：要访问的对象在远程的机器上。在面向对象系统中，有些对象由于某些原因（比如对象创建开销很大，或者某些操作需要安全控制，或者需要进程外的访问），直接访问会给使用者或者系统结构带来很多麻烦，我们可以在访问此对象时加上一个对此对象的访问层。</p>
 <p><strong>优点</strong></p>
 <ul>
@@ -4902,15 +4903,15 @@ class CGLibProxy implements MethodInterceptor {
 <p>职责链模式：避免请求发送者与接收者耦合在一起，让多个对象都有可能接收请求，将这些对象连接成一条链，并且沿着这条链传递请求，直到有对象处理它为止。职责链模式是一种对象行为型模式。</p>
 </blockquote>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
          // 产品
-        RequestEntity test = new RequestEntity(&quot;test&quot;, 2000);
+        RequestEntity test = new RequestEntity(&#34;test&#34;, 2000);
 
         // 指定职责链
-        BeforeHandler before = new BeforeHandler(&quot;before&quot;);
-        AfterHandler after = new AfterHandler(&quot;after&quot;);
-        PostHandler post = new PostHandler(&quot;post&quot;);
+        BeforeHandler before = new BeforeHandler(&#34;before&#34;);
+        AfterHandler after = new AfterHandler(&#34;after&#34;);
+        PostHandler post = new PostHandler(&#34;post&#34;);
 
         // 形成链状闭环 要确保会被责任链中的组件处理 否则会一直循环下去 ，当然也可以选择不闭环
         before.setHandler(after);
@@ -4971,7 +4972,7 @@ class BeforeHandler extends Handler {
     @Override
     public void handleRequest(RequestEntity requestEntity) {
         if (requestEntity.getGrade() &lt; 1000) {
-            System.out.println(&quot;分数为：&quot; + requestEntity.getGrade() + &quot;，被&quot; + this.name + &quot;处理 &quot;);
+            System.out.println(&#34;分数为：&#34; + requestEntity.getGrade() + &#34;，被&#34; + this.name + &#34;处理 &#34;);
         }else {
             handler.handleRequest(requestEntity);
         }
@@ -4987,7 +4988,7 @@ class AfterHandler extends Handler {
     @Override
     public void handleRequest(RequestEntity requestEntity) {
         if (requestEntity.getGrade() &lt;= 2000) {
-            System.out.println(&quot;分数为：&quot; + requestEntity.getGrade() + &quot;，被&quot; + this.name + &quot;处理 &quot;);
+            System.out.println(&#34;分数为：&#34; + requestEntity.getGrade() + &#34;，被&#34; + this.name + &#34;处理 &#34;);
         }else {
             handler.handleRequest(requestEntity);
         }
@@ -5003,13 +5004,13 @@ class PostHandler extends Handler {
     @Override
     public void handleRequest(RequestEntity requestEntity) {
         if (requestEntity.getGrade() &gt; 3000) {
-            System.out.println(&quot;分数为：&quot; + requestEntity.getGrade() + &quot;，被&quot; + this.name + &quot;处理 &quot;);
+            System.out.println(&#34;分数为：&#34; + requestEntity.getGrade() + &#34;，被&#34; + this.name + &#34;处理 &#34;);
         }else {
             handler.handleRequest(requestEntity);
         }
     }
 }
-</code></pre><p>职责链模式通过建立一条链来组织请求的处理者，请求将沿着链进行传递，请求发送者无须知道请求在何时、何处以及如何被处理，实现了请求发送者与处理者的解耦。在软件开发中，如果遇到有多个对象可以处理同一请求时可以应用职责链模式，例如在Web应用开发中创建一个过滤器(Filter)链来对请求数据进行过滤，在工作流系统中实现公文的分级审批等等，使用职责链模式可以较好地解决此类问题。</p>
+</code></pre></div><p>职责链模式通过建立一条链来组织请求的处理者，请求将沿着链进行传递，请求发送者无须知道请求在何时、何处以及如何被处理，实现了请求发送者与处理者的解耦。在软件开发中，如果遇到有多个对象可以处理同一请求时可以应用职责链模式，例如在Web应用开发中创建一个过滤器(Filter)链来对请求数据进行过滤，在工作流系统中实现公文的分级审批等等，使用职责链模式可以较好地解决此类问题。</p>
 <p><strong>优点</strong></p>
 <ul>
 <li>增加新的请求处理类很方便，只需要在客户端重新建链即可，从这一点来看是符合<a href="#%E5%BC%80%E6%94%BE%E5%B0%81%E9%97%AD%E5%8E%9F%E5%88%99">开闭原则</a>的。</li>
@@ -5035,7 +5036,7 @@ class PostHandler extends Handler {
 </blockquote>
 <p><strong>命令模式可以将请求发送者和接收者完全解耦，发送者与接收者之间没有直接引用关系，发送请求的对象只需要知道如何发送请求，而不必知道如何完成请求</strong>。</p>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         LightReceiver lightReceiver = new LightReceiver();
 
@@ -5045,13 +5046,13 @@ class PostHandler extends Handler {
         // 测试
         remoteCommand.setCommand(0,lightOnCommand,lightOffCommand);
         // 按下开灯按钮
-        System.out.println(&quot;按下开灯按钮 -------&quot;);
+        System.out.println(&#34;按下开灯按钮 -------&#34;);
         remoteCommand.onButtonPushed(0);
         // 按下关灯按钮
-        System.out.println(&quot;按下关灯按钮 -------&quot;);
+        System.out.println(&#34;按下关灯按钮 -------&#34;);
         remoteCommand.offButtonPushed(0);
         // 按下撤销按钮
-        System.out.println(&quot;按下撤销按钮 ---------&quot;);
+        System.out.println(&#34;按下撤销按钮 ---------&#34;);
         remoteCommand.undoButtonPushed(0);
     }
 }
@@ -5073,11 +5074,11 @@ interface Command{
 class LightReceiver{
 
     public void on(){
-        System.out.println(&quot;开灯 ...&quot;);
+        System.out.println(&#34;开灯 ...&#34;);
     }
 
     public void off() {
-        System.out.println(&quot;关灯 ...&quot;);
+        System.out.println(&#34;关灯 ...&#34;);
     }
 
 
@@ -5130,12 +5131,12 @@ class NoCommand implements Command {
 
     @Override
     public void exec() {
-        System.out.println(&quot;默认命令执行&quot;);
+        System.out.println(&#34;默认命令执行&#34;);
     }
 
     @Override
     public void undo() {
-        System.out.println(&quot;默认撤销方法&quot;);
+        System.out.println(&#34;默认撤销方法&#34;);
     }
 }
 
@@ -5188,7 +5189,7 @@ class RemoteCommand {
 
 
 }
-</code></pre><p>命令模式是一种使用频率非常高的设计模式，它可以将请求发送者与接收者解耦，请求发送者通过命令对象来间接引用请求接收者，使得系统具有更好的灵活性和可扩展性。在基于GUI的软件开发，无论是在电脑桌面应用还是在移动应用中，命令模式都得到了广泛的应用。</p>
+</code></pre></div><p>命令模式是一种使用频率非常高的设计模式，它可以将请求发送者与接收者解耦，请求发送者通过命令对象来间接引用请求接收者，使得系统具有更好的灵活性和可扩展性。在基于GUI的软件开发，无论是在电脑桌面应用还是在移动应用中，命令模式都得到了广泛的应用。</p>
 <p>在软件系统中，行为请求者与行为实现者通常是一种紧耦合的关系，但某些场合，比如需要对行为进行记录、撤销或重做、事务等处理时，这种无法抵御变化的紧耦合的设计就不太合适。</p>
 <p><strong>优点</strong></p>
 <ul>
@@ -5210,17 +5211,17 @@ class RemoteCommand {
 <p>解释器模式：定义一个语言的文法，并且建立一个解释器来解释该语言中的句子，这里的“语言”是指使用规定格式和语法的代码。解释器模式是一种类行为型模式。</p>
 </blockquote>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) throws IOException {
         String expStr = getExpStr();
         HashMap&lt;String, Integer&gt; var = getValue(expStr);
         Calculator calculator = new Calculator(expStr);
-        System.out.println(&quot;运算结果：&quot; + expStr + &quot;=&quot; + calculator.run(var));
+        System.out.println(&#34;运算结果：&#34; + expStr + &#34;=&#34; + calculator.run(var));
     }
 
     // 获得表达式
     public static String getExpStr() throws IOException {
-        System.out.print(&quot;请输入表达式：&quot;);
+        System.out.print(&#34;请输入表达式：&#34;);
         return (new BufferedReader(new InputStreamReader(System.in))).readLine();
     }
 
@@ -5229,9 +5230,9 @@ class RemoteCommand {
         HashMap&lt;String, Integer&gt; map = new HashMap&lt;&gt;();
 
         for (char ch : expStr.toCharArray()) {
-            if (ch != '+' &amp;&amp; ch != '-') {
+            if (ch != &#39;+&#39; &amp;&amp; ch != &#39;-&#39;) {
                 if (!map.containsKey(String.valueOf(ch))) {
-                    System.out.print(&quot;请输入&quot; + String.valueOf(ch) + &quot;的值：&quot;);
+                    System.out.print(&#34;请输入&#34; + String.valueOf(ch) + &#34;的值：&#34;);
                     String in = (new BufferedReader(new InputStreamReader(System.in))).readLine();
                     map.put(String.valueOf(ch), Integer.valueOf(in));
                 }
@@ -5347,15 +5348,15 @@ class Calculator {
         //针对不同的情况，做处理
         for (int i = 0; i &lt; charArray.length; i++) {
             switch (charArray[i]) {
-                case '+':
-                    // 从 stack 取 出 left =&gt; &quot;a&quot;
+                case &#39;+&#39;:
+                    // 从 stack 取 出 left =&gt; &#34;a&#34;
                     left = stack.pop();
-                    // 取出右表达式 &quot;b&quot;
+                    // 取出右表达式 &#34;b&#34;
                     right = new VarExpression(String.valueOf(charArray[++i]));
                     stack.push(new AddExpression(left, right));
                     // 然后根据得到 left 和 right 构建 AddExpresson 加入 stack
                     break;
-                case '-':
+                case &#39;-&#39;:
                     left = stack.pop();
                     right = new VarExpression(String.valueOf(charArray[++i]));
                     stack.push(new SubExpression(left, right));
@@ -5380,7 +5381,7 @@ class Calculator {
 
 }
 
-</code></pre><p>解释器模式为自定义语言的设计和实现提供了一种解决方案，它用于定义一组文法规则并通过这组文法规则来解释语言中的句子。虽然解释器模式的使用频率不是特别高，但是它在正则表达式、XML文档解释等领域还是得到了广泛使用。与解释器模式类似，目前还诞生了很多基于抽象语法树的源代码处理工具，例如Eclipse中的Eclipse AST，它可以用于表示Java语言的语法结构，用户可以通过扩展其功能，创建自己的文法规则。</p>
+</code></pre></div><p>解释器模式为自定义语言的设计和实现提供了一种解决方案，它用于定义一组文法规则并通过这组文法规则来解释语言中的句子。虽然解释器模式的使用频率不是特别高，但是它在正则表达式、XML文档解释等领域还是得到了广泛使用。与解释器模式类似，目前还诞生了很多基于抽象语法树的源代码处理工具，例如Eclipse中的Eclipse AST，它可以用于表示Java语言的语法结构，用户可以通过扩展其功能，创建自己的文法规则。</p>
 <p><strong>优点</strong></p>
 <ul>
 <li>易于改变和扩展文法。增加新的解释表达式较为方便。如果用户需要增加新的解释表达式只需要对应增加一个新的终结符表达式或非终结符表达式类，原有表达式类代码无须修改，符合“<a href="#%E5%BC%80%E6%94%BE%E5%B0%81%E9%97%AD%E5%8E%9F%E5%88%99">开闭原则</a>”。</li>
@@ -5405,13 +5406,13 @@ class Calculator {
 </blockquote>
 <p>迭代器模式的重要用途就是帮助我们遍历容器。迭代器模式，提供一种遍历集合元素的统一接口，用一致的方法遍历集合元素，不需要知道集合对象的底层表示，即：不暴露其内部的结构。在迭代器模式结构中包含聚合和迭代器两个层次结构，考虑到系统的灵活性和可扩展性，在迭代器模式中应用了<a href="#%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F">工厂方法模式</a>.</p>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         Bread bread = new Bread();
-        bread.add(&quot;面粉&quot;);
-        bread.add(&quot;黄油&quot;);
-        bread.add(&quot;白糖&quot;);
-        bread.add(&quot;鸡蛋&quot;);
+        bread.add(&#34;面粉&#34;);
+        bread.add(&#34;黄油&#34;);
+        bread.add(&#34;白糖&#34;);
+        bread.add(&#34;鸡蛋&#34;);
         Iterator iterator = bread.getIterator();
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
@@ -5464,7 +5465,7 @@ class Bread implements Food{
         return new FoodIterator(this.foods);
     }
 }
-</code></pre><blockquote>
+</code></pre></div><blockquote>
 <p>迭代器模式是一种使用频率非常高的设计模式，通过引入迭代器可以将数据的遍历功能从聚合对象中分离出来，聚合对象只负责存储数据，而遍历数据由迭代器来完成。由于很多编程语言的类库都已经实现了迭代器模式，因此在实际开发中，我们只需要直接使用Java、C#等语言已定义好的迭代器即可，迭代器已经成为我们操作聚合对象的基本工具之一。</p>
 </blockquote>
 <p>迭代器的使用现在非常广泛，因为Java中提供了<code>java.util.Iterator</code>。而且Java中的很多容器（<code>Collection、Set</code>）也都提供了对迭代器的支持。</p>
@@ -5490,19 +5491,19 @@ class Bread implements Food{
 </blockquote>
 <p>如果在一个系统中对象之间存在多对多的相互关系，我们可以将对象之间的一些交互行为从各个对象中分离出来，并集中封装在一个中介者对象中，并由该中介者进行统一协调，这样对象之间多对多的复杂关系就转化为相对简单的一对多关系。通过引入中介者来简化对象之间的复杂交互，中介者模式是“<a href="#%E8%BF%AA%E7%B1%B3%E7%89%B9%E6%B3%95%E5%88%99">迪米特法则</a>”的一个典型应用。</p>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         //创建一个中介者对象
         Mediator mediator = new ConcreteMediator();
 
         //创建 Alarm  并且加入到ConcreteMediator 对象的 HashMap
-        Alarm alarm = new Alarm(mediator, &quot;alarm&quot;);
+        Alarm alarm = new Alarm(mediator, &#34;alarm&#34;);
 
         //创建了 CoffeeMachine 对象，并且加入到	ConcreteMediator 对象的 HashMap
-        CoffeeMachine coffeeMachine = new CoffeeMachine(mediator, &quot;coffeeMachine&quot;);
+        CoffeeMachine coffeeMachine = new CoffeeMachine(mediator, &#34;coffeeMachine&#34;);
 
         //创建  tV , 并	且加入到	ConcreteMediator 对象的 HashMap
-        TV tV = new TV(mediator, &quot;TV&quot;);
+        TV tV = new TV(mediator, &#34;TV&#34;);
 
         //让闹钟发出消息 依次调用
         alarm.sendAlarm(0);
@@ -5540,11 +5541,11 @@ class ConcreteMediator extends Mediator {
     @Override
     public void register(String colleagueName, Colleague colleague) {
         if (colleague instanceof Alarm) {
-            interMap.put(&quot;Alarm&quot;, colleagueName);
+            interMap.put(&#34;Alarm&#34;, colleagueName);
         } else if (colleague instanceof CoffeeMachine) {
-            interMap.put(&quot;CoffeeMachine&quot;, colleagueName);
+            interMap.put(&#34;CoffeeMachine&#34;, colleagueName);
         } else {
-            System.out.println(&quot;........&quot;);
+            System.out.println(&#34;........&#34;);
         }
     }
 
@@ -5553,10 +5554,10 @@ class ConcreteMediator extends Mediator {
         if (colleagueMap.get(colleagueName) instanceof Alarm) {
             if (stateChange == 0) {
                 ((CoffeeMachine) (colleagueMap.get(interMap
-                        .get(&quot;CoffeeMachine&quot;)))).startCoffee();
-                ((TV) (colleagueMap.get(interMap.get(&quot;TV&quot;)))).startTv();
+                        .get(&#34;CoffeeMachine&#34;)))).startCoffee();
+                ((TV) (colleagueMap.get(interMap.get(&#34;TV&#34;)))).startTv();
             } else if (stateChange == 1) {
-                ((TV) (colleagueMap.get(interMap.get(&quot;TV&quot;)))).stopTv();
+                ((TV) (colleagueMap.get(interMap.get(&#34;TV&#34;)))).stopTv();
             }
 
         } else if (colleagueMap.get(colleagueName) instanceof TV) {
@@ -5626,12 +5627,12 @@ class TV extends Colleague {
 
 
     public void startTv() {
-        System.out.println(&quot;It's time to StartTv!&quot;);
+        System.out.println(&#34;It&#39;s time to StartTv!&#34;);
     }
 
 
     public void stopTv() {
-        System.out.println(&quot;StopTv!&quot;);
+        System.out.println(&#34;StopTv!&#34;);
     }
 }
 
@@ -5651,17 +5652,17 @@ class CoffeeMachine extends Colleague {
 
 
     public void startCoffee() {
-        System.out.println(&quot;It's time to startcoffee!&quot;);
+        System.out.println(&#34;It&#39;s time to startcoffee!&#34;);
     }
 
 
     public void finishCoffee() {
-        System.out.println(&quot;After 5 minutes!&quot;);
-        System.out.println(&quot;Coffee is ok!&quot;);
+        System.out.println(&#34;After 5 minutes!&#34;);
+        System.out.println(&#34;Coffee is ok!&#34;);
         sendMessage(0);
     }
 }
-</code></pre><p>中介者模式将一个网状的系统结构变成一个以中介者对象为中心的星形结构，在这个星型结构中，使用中介者对象与其他对象的一对多关系来取代原有对象之间的多对多关系。中介者模式在事件驱动类软件中应用较为广泛，特别是基于GUI（图形用户界面）的应用软件，此外，在类与类之间存在错综复杂的关联关系的系统中，中介者模式都能得到较好的应用。</p>
+</code></pre></div><p>中介者模式将一个网状的系统结构变成一个以中介者对象为中心的星形结构，在这个星型结构中，使用中介者对象与其他对象的一对多关系来取代原有对象之间的多对多关系。中介者模式在事件驱动类软件中应用较为广泛，特别是基于GUI（图形用户界面）的应用软件，此外，在类与类之间存在错综复杂的关联关系的系统中，中介者模式都能得到较好的应用。</p>
 <p><strong>优点</strong></p>
 <ul>
 <li>减少类间依赖，降低了耦合，符合<a href="#%E8%BF%AA%E7%B1%B3%E7%89%B9%E6%B3%95%E5%88%99">迪米特法则</a>。</li>
@@ -5687,21 +5688,21 @@ class CoffeeMachine extends Colleague {
 <p>在设计备忘录类时需要考虑其封装性，除了<code>Originator</code>类，不允许其他类来调用备忘录类<code>Memento</code>的构造函数与相关方法，如果不考虑封装性，允许其他类调用构造方法，将导致在备忘录中保存的历史状态发生改变，通过撤销操作所恢复的状态就不再是真实的历史状态，备忘录模式也就失去了本身的意义。</p>
 <p>所谓备忘录模式就是在不破坏封装的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态，这样可以在以后将对象恢复到原先保存的状态。</p>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         Originator originator = new Originator();
         CareTaker careTaker = new CareTaker();
         // 保存状态
-        careTaker.saveMemento(originator.saveState(&quot; 状态#1 &quot;));
-        careTaker.saveMemento(originator.saveState(&quot; 状态#2 &quot;));
-        careTaker.saveMemento(originator.saveState(&quot; 状态#3 &quot;));
+        careTaker.saveMemento(originator.saveState(&#34; 状态#1 &#34;));
+        careTaker.saveMemento(originator.saveState(&#34; 状态#2 &#34;));
+        careTaker.saveMemento(originator.saveState(&#34; 状态#3 &#34;));
 
-        System.out.println(&quot;目前保存的状态为：&quot; + originator.getState());
+        System.out.println(&#34;目前保存的状态为：&#34; + originator.getState());
 
-        System.out.println(&quot;开始恢复以前的状态 ....&quot;);
+        System.out.println(&#34;开始恢复以前的状态 ....&#34;);
         originator.recover(careTaker.recover(0));
 
-        System.out.println(&quot;恢复之后的状态为：&quot; + originator.getState());
+        System.out.println(&#34;恢复之后的状态为：&#34; + originator.getState());
 
     }
 }
@@ -5763,7 +5764,7 @@ class CareTaker {
 
 }
 
-</code></pre><p>备忘录模式在很多软件的使用过程中普遍存在，但是在应用软件开发中，它的使用频率并不太高，因为现在很多基于窗体和浏览器的应用软件并没有提供撤销操作。如果需要为软件提供撤销功能，备忘录模式无疑是一种很好的解决方案。在一些字处理软件、图像编辑软件、数据库管理系统等软件中备忘录模式都得到了很好的应用。</p>
+</code></pre></div><p>备忘录模式在很多软件的使用过程中普遍存在，但是在应用软件开发中，它的使用频率并不太高，因为现在很多基于窗体和浏览器的应用软件并没有提供撤销操作。如果需要为软件提供撤销功能，备忘录模式无疑是一种很好的解决方案。在一些字处理软件、图像编辑软件、数据库管理系统等软件中备忘录模式都得到了很好的应用。</p>
 <p>为了符合迪米特原则，还要增加一个管理备忘录的类(<code>CareTaker</code>);为了节约内存，可使用<a href="#%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F">原型模式</a>+<a href="#%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F">备忘录模式</a>。</p>
 <p><strong>优点</strong></p>
 <ul>
@@ -5786,7 +5787,7 @@ class CareTaker {
 </blockquote>
 <p>观察者模式描述了如何建立对象与对象之间的依赖关系，以及如何构造满足这种需求的系统。观察者模式包含观察目标和观察者两类对象，一个目标可以有任意数目的与之相依赖的观察者，一旦观察目标的状态发生改变，所有的观察者都将得到通知。作为对这个通知的响应，每个观察者都将监视观察目标的状态以使其状态与目标状态同步，这种交互也称为发布-订阅(Publish-Subscribe)。观察目标是通知的发布者，它发出通知时并不需要知道谁是它的观察者，可以有任意数目的观察者订阅它并接收通知。</p>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         WeatherData weatherData = new WeatherData();
         CurrentCondition currentCondition = new CurrentCondition();
@@ -5871,9 +5872,9 @@ class CurrentCondition implements Observer{
     }
 
     void displayed() {
-        System.out.println(&quot;===当前天气情况===&quot;);
-        System.out.println(&quot;当前湿度：&quot; + this.temperature);
-        System.out.println(&quot;当前温度：&quot; + this.humidity);
+        System.out.println(&#34;===当前天气情况===&#34;);
+        System.out.println(&#34;当前湿度：&#34; + this.temperature);
+        System.out.println(&#34;当前温度：&#34; + this.humidity);
     }
 }
 
@@ -5890,13 +5891,13 @@ class BaiduSite implements Observer{
     }
 
     void displayed() {
-        System.out.println(&quot;===当前百度网站天气情况===&quot;);
-        System.out.println(&quot;当前湿度：&quot; + this.temperature);
-        System.out.println(&quot;当前温度：&quot; + this.humidity);
+        System.out.println(&#34;===当前百度网站天气情况===&#34;);
+        System.out.println(&#34;当前湿度：&#34; + this.temperature);
+        System.out.println(&#34;当前温度：&#34; + this.humidity);
     }
 }
 
-</code></pre><p>观察者模式是一种使用频率非常高的设计模式，无论是移动应用、Web应用或者桌面应用，观察者模式几乎无处不在，它为实现对象之间的联动提供了一套完整的解决方案，凡是涉及到一对一或者一对多的对象交互场景都可以使用观察者模式。观察者模式广泛应用于各种编程语言的GUI事件处理的实现，在基于事件的XML解析技术（如SAX2）以及Web事件处理中也都使用了观察者模式。</p>
+</code></pre></div><p>观察者模式是一种使用频率非常高的设计模式，无论是移动应用、Web应用或者桌面应用，观察者模式几乎无处不在，它为实现对象之间的联动提供了一套完整的解决方案，凡是涉及到一对一或者一对多的对象交互场景都可以使用观察者模式。观察者模式广泛应用于各种编程语言的GUI事件处理的实现，在基于事件的XML解析技术（如SAX2）以及Web事件处理中也都使用了观察者模式。</p>
 <p><strong>优点</strong></p>
 <ul>
 <li>观察者和被观察者是抽象耦合的。察目标只需要维持一个抽象观察者的集合，无须了解其具体观察者。由于观察目标和观察者没有紧密地耦合在一起，因此它们可以属于不同的抽象化层次。</li>
@@ -5929,14 +5930,14 @@ class BaiduSite implements Observer{
 </blockquote>
 <p>状态模式用于解决系统中复杂对象的状态转换以及不同状态下行为的封装问题。当系统中某个对象存在多个状态，这些状态之间可以进行转换，而且对象在不同状态下行为不相同时可以使用状态模式。状态模式将一个对象的状态从该对象中分离出来，封装到专门的状态类中，使得对象状态可以灵活变化，对于客户端而言，无须关心对象状态的转换以及对象所处的当前状态，无论对于何种状态的对象，客户端都可以一致处理。</p>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         // 创建活动对象，奖品有 1 个奖品
         RaffleActivity activity = new RaffleActivity(1);
 
         // 我们连续抽 300 次奖
         for (int i = 0; i &lt; 30; i++) {
-            System.out.println(&quot;--------第&quot; + (i + 1) + &quot;次抽奖----------&quot;);
+            System.out.println(&#34;--------第&#34; + (i + 1) + &#34;次抽奖----------&#34;);
             // 参加抽奖，第一步点击扣除积分
             activity.debuctMoney();
 
@@ -6075,20 +6076,20 @@ class DispenseOutState extends State {
 
     @Override
     public void deductMoney() {
-        System.out.println(&quot;奖品发送完了，请下次再参加&quot;);
+        System.out.println(&#34;奖品发送完了，请下次再参加&#34;);
     }
 
 
     @Override
     public boolean raffle() {
-        System.out.println(&quot;奖品发送完了，请下次再参加&quot;);
+        System.out.println(&#34;奖品发送完了，请下次再参加&#34;);
         return false;
     }
 
 
     @Override
     public void dispensePrize() {
-        System.out.println(&quot;奖品发送完了，请下次再参加&quot;);
+        System.out.println(&#34;奖品发送完了，请下次再参加&#34;);
     }
 }
 
@@ -6105,13 +6106,13 @@ class DispenseState extends State {
 
     @Override
     public void deductMoney() {
-        System.out.println(&quot;不能扣除积分&quot;);
+        System.out.println(&#34;不能扣除积分&#34;);
     }
 
 
     @Override
     public boolean raffle() {
-        System.out.println(&quot;不能抽奖&quot;);
+        System.out.println(&#34;不能抽奖&#34;);
         return false;
     }
 
@@ -6119,14 +6120,14 @@ class DispenseState extends State {
     @Override
     public void dispensePrize() {
         if (activity.getCount() &gt; 0) {
-            System.out.println(&quot;恭喜中奖了&quot;);
+            System.out.println(&#34;恭喜中奖了&#34;);
             // 改变状态为不能抽奖
             activity.setState(activity.getNoRafflleState());
         } else {
-            System.out.println(&quot;很遗憾，奖品发送完了&quot;);
+            System.out.println(&#34;很遗憾，奖品发送完了&#34;);
             // 改变状态为奖品发送完毕, 后面我们就不可以抽奖
             activity.setState(activity.getDispensOutState());
-            //System.out.println(&quot;抽奖活动结束&quot;);
+            //System.out.println(&#34;抽奖活动结束&#34;);
             //System.exit(0);
         }
 
@@ -6146,21 +6147,21 @@ class NoRaffleState extends State {
     // 当前状态可以扣积分 , 扣除后，将状态设置成可以抽奖状态
     @Override
     public void deductMoney() {
-        System.out.println(&quot;扣除 50 积分成功，您可以抽奖了&quot;);
+        System.out.println(&#34;扣除 50 积分成功，您可以抽奖了&#34;);
         activity.setState(activity.getCanRaffleState());
     }
 
     // 当前状态不能抽奖
     @Override
     public boolean raffle() {
-        System.out.println(&quot;扣了积分才能抽奖喔！&quot;);
+        System.out.println(&#34;扣了积分才能抽奖喔！&#34;);
         return false;
     }
 
     // 当前状态不能发奖品
     @Override
     public void dispensePrize() {
-        System.out.println(&quot;不能发放奖品&quot;);
+        System.out.println(&#34;不能发放奖品&#34;);
     }
 }
 
@@ -6175,13 +6176,13 @@ class CanRaffleState extends State {
 
     @Override
     public void deductMoney() {
-        System.out.println(&quot;已经扣取过了积分&quot;);
+        System.out.println(&#34;已经扣取过了积分&#34;);
     }
 
     //可以抽奖, 抽完奖后，根据实际情况，改成新的状态
     @Override
     public boolean raffle() {
-        System.out.println(&quot;正在抽奖，请稍等！&quot;);
+        System.out.println(&#34;正在抽奖，请稍等！&#34;);
         Random r = new Random();
         int num = r.nextInt(10);
         // 10%中奖机会
@@ -6190,7 +6191,7 @@ class CanRaffleState extends State {
             activity.setState(activity.getDispenseState());
             return true;
         } else {
-            System.out.println(&quot;很遗憾没有抽中奖品！&quot;);
+            System.out.println(&#34;很遗憾没有抽中奖品！&#34;);
             // 改变状态为不能抽奖
             activity.setState(activity.getNoRafflleState());
             return false;
@@ -6200,10 +6201,10 @@ class CanRaffleState extends State {
     // 不能发放奖品
     @Override
     public void dispensePrize() {
-        System.out.println(&quot;没中奖，不能发放奖品&quot;);
+        System.out.println(&#34;没中奖，不能发放奖品&#34;);
     }
 }
-</code></pre><p>状态模式将一个对象在不同状态下的不同行为封装在一个个状态类中，通过设置不同的状态对象可以让环境对象拥有不同的行为，而状态转换的细节对于客户端而言是透明的，方便了客户端的使用。在实际开发中，状态模式具有较高的使用频率，在工作流和游戏开发中状态模式都得到了广泛的应用，例如公文状态的转换、游戏中角色的升级等。</p>
+</code></pre></div><p>状态模式将一个对象在不同状态下的不同行为封装在一个个状态类中，通过设置不同的状态对象可以让环境对象拥有不同的行为，而状态转换的细节对于客户端而言是透明的，方便了客户端的使用。在实际开发中，状态模式具有较高的使用频率，在工作流和游戏开发中状态模式都得到了广泛的应用，例如公文状态的转换、游戏中角色的升级等。</p>
 <p><strong>优点</strong></p>
 <ul>
 <li>封装了状态的转换规则，在状态模式中可以将状态的转换代码封装在环境类或者具体状态类中，可以对状态转换代码进行集中管理，而不是分散在一个个业务方法中。</li>
@@ -6229,7 +6230,7 @@ class CanRaffleState extends State {
 </blockquote>
 <p>策略模式的主要目的是将算法的定义与使用分开，也就是将算法的行为和环境分开，将算法的定义放在专门的策略类中，每一个策略类封装了一种实现算法，使用算法的环境类针对抽象策略类进行编程，符合“依赖倒转原则”。在出现新的算法时，只需要增加一个新的实现了抽象策略类的具体策略类即可。</p>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         Bird bird = new Bird();
         bird.fly();
@@ -6240,7 +6241,7 @@ class CanRaffleState extends State {
         Dog dog = new Dog();
         dog.fly();
 
-        System.out.println(&quot;变为会飞 ：&quot;);
+        System.out.println(&#34;变为会飞 ：&#34;);
         dog.setFlyStrategy(new GoodFlyStrategy());
         dog.fly();
     }
@@ -6261,7 +6262,7 @@ abstract class AbstractStrategy {
 class Bird  extends AbstractStrategy{
 
     public Bird() {
-        System.out.print(&quot;小鸟&quot;);
+        System.out.print(&#34;小鸟&#34;);
         flyStrategy = new GoodFlyStrategy();
     }
 
@@ -6274,7 +6275,7 @@ class Bird  extends AbstractStrategy{
 class Duck extends AbstractStrategy {
 
     public Duck() {
-        System.out.print(&quot;鸭子&quot;);
+        System.out.print(&#34;鸭子&#34;);
         flyStrategy = new BadFlyStrategy();
     }
 
@@ -6287,7 +6288,7 @@ class Duck extends AbstractStrategy {
 class Dog extends AbstractStrategy {
 
     public Dog() {
-        System.out.print(&quot;狗&quot;);
+        System.out.print(&#34;狗&#34;);
         flyStrategy = new NoFlyStrategy();
     }
 
@@ -6308,7 +6309,7 @@ class GoodFlyStrategy implements FlyStrategy {
 
     @Override
     public void fly() {
-        System.out.println(&quot;擅长飞翔 ...&quot;);
+        System.out.println(&#34;擅长飞翔 ...&#34;);
     }
 }
 
@@ -6316,19 +6317,19 @@ class BadFlyStrategy implements FlyStrategy {
 
     @Override
     public void fly() {
-        System.out.println(&quot;不擅长飞翔 ...&quot;);
+        System.out.println(&#34;不擅长飞翔 ...&#34;);
     }
 }
 
 class NoFlyStrategy implements FlyStrategy {
     @Override
     public void fly() {
-        System.out.println(&quot;不会飞 ...&quot;);
+        System.out.println(&#34;不会飞 ...&#34;);
     }
 }
 
 
-</code></pre><p>策略模式用于算法的自由切换和扩展，它是应用较为广泛的设计模式之一。策略模式对应于解决某一问题的一个算法族，允许用户从该算法族中任选一个算法来解决某一问题，同时可以方便地更换算法或者增加新的算法。只要涉及到算法的封装、复用和切换都可以考虑使用策略模式。</p>
+</code></pre></div><p>策略模式用于算法的自由切换和扩展，它是应用较为广泛的设计模式之一。策略模式对应于解决某一问题的一个算法族，允许用户从该算法族中任选一个算法来解决某一问题，同时可以方便地更换算法或者增加新的算法。只要涉及到算法的封装、复用和切换都可以考虑使用策略模式。</p>
 <p><strong>优点</strong></p>
 <ul>
 <li>策略模式提供了对“<a href="#%E5%BC%80%E6%94%BE%E5%B0%81%E9%97%AD%E5%8E%9F%E5%88%99">开闭原则</a>”的完美支持，用户可以在不修改原有系统的基础上选择算法或行为，也可以灵活地增加新的算法或行为。</li>
@@ -6355,17 +6356,17 @@ class NoFlyStrategy implements FlyStrategy {
 <p>模板方法模式：定义一个操作中的算法骨架，而将算法的一些步骤延迟到子类中，使得子类可以不改变该算法结构的情况下重定义该算法的某些特定步骤。模板方法模式是一种基于继承的代码复用技术，它是一种类行为型模式。</p>
 </blockquote>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
-        System.out.println(&quot;=====红豆豆浆=====&quot;);
+        System.out.println(&#34;=====红豆豆浆=====&#34;);
         RedBean redBean = new RedBean();
         redBean.template();
 
-        System.out.println(&quot;=====花生豆浆=====&quot;);
+        System.out.println(&#34;=====花生豆浆=====&#34;);
         Peanut peanut = new Peanut();
         peanut.template();
 
-        System.out.println(&quot;=====豆浆=====&quot;);
+        System.out.println(&#34;=====豆浆=====&#34;);
         None none = new None();
         none.template();
     }
@@ -6383,17 +6384,17 @@ abstract class SoyaMilk {
     }
 
     void filterMaterial() {
-        System.out.println(&quot;第一步：筛选材料&quot;);
+        System.out.println(&#34;第一步：筛选材料&#34;);
     }
 
     void soak() {
-        System.out.println(&quot;第二步：浸泡&quot;);
+        System.out.println(&#34;第二步：浸泡&#34;);
     }
 
     abstract void add();
 
     void over(){
-        System.out.println(&quot;第四步：打豆浆&quot;);
+        System.out.println(&#34;第四步：打豆浆&#34;);
     }
 
     /**
@@ -6411,7 +6412,7 @@ class Peanut extends SoyaMilk{
 
     @Override
     void add() {
-        System.out.println(&quot;第三步：加入花生&quot;);
+        System.out.println(&#34;第三步：加入花生&#34;);
     }
 }
 
@@ -6420,7 +6421,7 @@ class RedBean extends SoyaMilk {
 
     @Override
     void add() {
-        System.out.println(&quot;第三步：加入红豆&quot;);
+        System.out.println(&#34;第三步：加入红豆&#34;);
     }
 }
 
@@ -6438,7 +6439,7 @@ class None extends SoyaMilk {
 
 }
 
-</code></pre><p>模板方法模式是基于继承的代码复用技术，它体现了面向对象的诸多重要思想，是一种使用较为频繁的模式。模板方法模式广泛应用于框架设计中，以确保通过父类来控制处理流程的逻辑顺序（如框架的初始化，测试流程的设置等）。</p>
+</code></pre></div><p>模板方法模式是基于继承的代码复用技术，它体现了面向对象的诸多重要思想，是一种使用较为频繁的模式。模板方法模式广泛应用于框架设计中，以确保通过父类来控制处理流程的逻辑顺序（如框架的初始化，测试流程的设置等）。</p>
 <p><strong>优点</strong></p>
 <ul>
 <li>它封装了不变部分，扩展可变部分。它把认为是不变部分的算法封装到父类中实现，而把可变部分算法由子类继承实现，便于子类继续扩展。</li>
@@ -6461,7 +6462,7 @@ class None extends SoyaMilk {
 <p>访问者模式：提供一个作用于某对象结构中的各元素的操作表示，它使我们可以在不改变各元素的类的前提下定义作用于这些元素的新操作。访问者模式是一种对象行为型模式。</p>
 </blockquote>
 <p>代码实现</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         ObjectStructure objectStructure = new ObjectStructure();
         objectStructure.attach(new Man());
@@ -6473,7 +6474,7 @@ class None extends SoyaMilk {
         Success success = new Success();
         objectStructure.display(success);
 
-        System.out.println(&quot;==================&quot;);
+        System.out.println(&#34;==================&#34;);
 
         // 显示失败的评价
         Fail fail = new Fail();
@@ -6493,12 +6494,12 @@ class Success  extends Action{
 
     @Override
     protected void getManResult(Man man) {
-        System.out.println(&quot;男人觉得很赞～&quot;);
+        System.out.println(&#34;男人觉得很赞～&#34;);
     }
 
     @Override
     protected void getWomanResult(WoMan woman) {
-        System.out.println(&quot;女人觉得很赞～&quot;);
+        System.out.println(&#34;女人觉得很赞～&#34;);
     }
 }
 
@@ -6506,12 +6507,12 @@ class Fail  extends Action{
 
     @Override
     protected void getManResult(Man man) {
-        System.out.println(&quot;男人觉得很失败～&quot;);
+        System.out.println(&#34;男人觉得很失败～&#34;);
     }
 
     @Override
     protected void getWomanResult(WoMan woman) {
-        System.out.println(&quot;女人觉得很失败～&quot;);
+        System.out.println(&#34;女人觉得很失败～&#34;);
     }
 }
 
@@ -6555,7 +6556,7 @@ class ObjectStructure {
     }
 
 }
-</code></pre><p>由于访问者模式的使用条件较为苛刻，本身结构也较为复杂，因此在实际应用中使用频率不是特别高。当系统中存在一个较为复杂的对象结构，且不同访问者对其所采取的操作也不相同时，可以考虑使用访问者模式进行设计。在XML文档解析、编译器的设计、复杂集合对象的处理等领域访问者模式得到了一定的应用。</p>
+</code></pre></div><p>由于访问者模式的使用条件较为苛刻，本身结构也较为复杂，因此在实际应用中使用频率不是特别高。当系统中存在一个较为复杂的对象结构，且不同访问者对其所采取的操作也不相同时，可以考虑使用访问者模式进行设计。在XML文档解析、编译器的设计、复杂集合对象的处理等领域访问者模式得到了一定的应用。</p>
 <p><strong>优点</strong></p>
 <ul>
 <li>扩展性好。增加新的访问操作很方便。使用访问者模式，增加新的访问操作就意味着增加一个新的具体访问者类，实现简单，无须修改源代码，符合“<a href="#%E5%BC%80%E6%94%BE%E5%B0%81%E9%97%AD%E5%8E%9F%E5%88%99">开闭原则</a>”。</li>
@@ -6584,7 +6585,7 @@ class ObjectStructure {
                                     
                                     <a href="https://whiteppure.github.io/iblog/tags/java/">Java</a>
                                     
-                                    <a href="https://whiteppure.github.io/iblog/tags/%E9%9D%A2%E5%90%91%E8%8F%9C%E9%B8%9F%E7%BC%96%E7%A8%8B/">面向菜鸟编程</a>
+                                    <a href="https://whiteppure.github.io/iblog/tags/java%E5%9F%BA%E7%A1%80/">Java基础</a>
                                     
                                 </span>
                             </div>
@@ -6594,7 +6595,25 @@ class ObjectStructure {
                 </div>
                 
                 
-                <div class="doc_comments"></div>
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+    })
+</script>
                 
             </div>
         </div>

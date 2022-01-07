@@ -1,9 +1,10 @@
 ---
-title: "Java基础-Object类方法"
+title: "Object类方法"
 date: 2021-07-10
 draft: false
-tags: ["Java", "面向菜鸟编程"]
+tags: ["Java", "Java基础"]
 slug: "rookie-objectclass-methods"
+weight: 70
 ---
 
 ## 概览

@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>Java基础-JavaIO ｜ whitepure</title>
+	<title>JavaIO ｜ 至简</title>
 	
     
     
-    <meta name="description" content="" />
+    <meta name="description" content="概念 Java IO通过数据流、序列化和文件系统提供系统输入和输出。 IO，即 in 和 out，也就是输入和输出，指应用程序和外部设备之间的数据传递，常见的外部设备包括文件、管道" />
     
 
     
@@ -1466,40 +1466,41 @@
         <a id="menu_icon"><i class="ri-menu-line"></i></a>
     </div>
 </div>
-        
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
+                    <span>至简</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">大道至简</p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
         <div class="content">
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
-                        <h2><a href='/iblog/posts/rookie/rookie-io/'>Java基础-JavaIO</a></h2>
+                        <h2><a href='/iblog/posts/rookie/rookie-io/'>JavaIO</a></h2>
                         <span class="date">2021.04.09</span>
                     </div>
                     <div class="post_content markdown"><h2 id="概念">概念</h2>
@@ -1580,48 +1581,48 @@
 <p>Java中的File类以抽象的方式代表文件名和目录路径名。该类主要用于文件和目录的创建、文件的查找和文件的删除等。</p>
 <p>File对象代表磁盘中实际存在的文件和目录。</p>
 <p>使用 File 类,查找文件、删除文件、创建文件的代码演示</p>
-<pre><code> public static void main(String args[]) throws IOException {
-        String dirname = &quot;/home/dir&quot;;
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> public static void main(String args[]) throws IOException {
+        String dirname = &#34;/home/dir&#34;;
         File file = new File(dirname);
 
         // 判断目录或文件存在
         if (!file.exists()) {
-            System.out.println(dirname + &quot; 该路径或文件不存在&quot;);
-            System.out.println(&quot;开始创建该文件或目录....&quot;);
+            System.out.println(dirname + &#34; 该路径或文件不存在&#34;);
+            System.out.println(&#34;开始创建该文件或目录....&#34;);
             // 不存在则创建
             if (file.createNewFile()) {
-                System.out.println(dirname + &quot; 创建成功&quot;);
+                System.out.println(dirname + &#34; 创建成功&#34;);
             }
         }
 
         // 判断是否为目录
         if (file.isDirectory()) {
-            System.out.println(&quot;目录： &quot; + dirname);
+            System.out.println(&#34;目录： &#34; + dirname);
             String s[] = file.list();
             for (int i = 0; i &lt; s.length; i++) {
-                File f = new File(dirname + &quot;/&quot; + s[i]);
+                File f = new File(dirname + &#34;/&#34; + s[i]);
                 if (f.isDirectory()) {
-                    System.out.println(s[i] + &quot; 是文件夹&quot;);
+                    System.out.println(s[i] + &#34; 是文件夹&#34;);
                 } else {
-                    System.out.println(s[i] + &quot; 是文件&quot;);
+                    System.out.println(s[i] + &#34; 是文件&#34;);
                 }
             }
         } else {
-            System.out.println(dirname + &quot; 不是一个目录&quot;);
-            System.out.println(&quot;开始删除文件 ...&quot;);
+            System.out.println(dirname + &#34; 不是一个目录&#34;);
+            System.out.println(&#34;开始删除文件 ...&#34;);
             // 删除文件
             if (file.delete()) {
-                System.out.println(dirname + &quot;删除成功&quot;); 
+                System.out.println(dirname + &#34;删除成功&#34;); 
             }
         }
 
     }
-</code></pre><h3 id="操作字节流">操作字节流</h3>
+</code></pre></div><h3 id="操作字节流">操作字节流</h3>
 <p><img src="/iblog/posts/images/essays/%E5%AD%97%E8%8A%82%E6%B5%81.png" alt="字节流"></p>
 <p>操作byte类型数据，主要操作类是<code>OutputStream、InputStream</code>的子类；不用缓冲区，直接对文件本身操作。</p>
 <p>以下代码就是用<code>FileInputStream、FileOutputStream</code>操作字节流</p>
-<pre><code>public static void main(String[] args) throws IOException {
-        File file = new File(&quot;./test.txt&quot;);
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static void main(String[] args) throws IOException {
+        File file = new File(&#34;./test.txt&#34;);
         write(file);
         System.out.println(read(file));
     }
@@ -1630,7 +1631,7 @@
     public static void write(File file) throws IOException {
         OutputStream os = new FileOutputStream(file, true);
         // 要写入的字符串
-        String string = &quot;awslawslawslawslawslawslawsl&quot;;
+        String string = &#34;awslawslawslawslawslawslawsl&#34;;
         // 写入文件
         os.write(string.getBytes());
         // 关闭流
@@ -1655,9 +1656,9 @@
         in.close();
         return sb.toString();
     }
-</code></pre><p>缓冲字节流是为高效率而设计的，真正的读写操作还是靠<code>FileOutputStream</code>和<code>FileInputStream</code></p>
-<pre><code>public static void main(String[] args) throws IOException {
-        File file = new File(&quot;test.txt&quot;);
+</code></pre></div><p>缓冲字节流是为高效率而设计的，真正的读写操作还是靠<code>FileOutputStream</code>和<code>FileInputStream</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static void main(String[] args) throws IOException {
+        File file = new File(&#34;test.txt&#34;);
         write(file);
         System.out.println(read(file));
     }
@@ -1666,7 +1667,7 @@
         // 缓冲字节流，提高了效率
         BufferedOutputStream bis = new BufferedOutputStream(new FileOutputStream(file, true));
         // 要写入的字符串
-        String string = &quot;awslawslawslawslawslawslawsl&quot;;
+        String string = &#34;awslawslawslawslawslawslawsl&#34;;
         // 写入文件
         bis.write(string.getBytes());
         // 关闭流
@@ -1690,28 +1691,28 @@
         fis.close();
         return sb.toString();
     }
-</code></pre><h3 id="操作字符流">操作字符流</h3>
+</code></pre></div><h3 id="操作字符流">操作字符流</h3>
 <p><img src="/iblog/posts/images/essays/%E5%AD%97%E7%AC%A6%E6%B5%81.png" alt="字符流"></p>
 <p>操作字符类型数据，主要操作类是<code>Reader、Writer</code>的子类；使用缓冲区缓冲字符，不关闭流就不会输出任何内容。</p>
 <p>字符流适用于文本文件的读写，<code>OutputStreamWriter</code> 类其实也是借助 <code>FileOutputStream</code> 类实现的</p>
 <p>以下代码就是用<code>InputStreamReader、OutputStreamWriter</code>操作字节流.</p>
-<pre><code>public static void main(String[] args) throws IOException {
-        File file = new File(&quot;test.txt&quot;);
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static void main(String[] args) throws IOException {
+        File file = new File(&#34;test.txt&#34;);
         write(file);
         System.out.println(read(file));
     }
 
     public static void write(File file) throws IOException {
         // OutputStreamWriter可以显示指定字符集，否则使用默认字符集
-        OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file, true), &quot;UTF-8&quot;);
+        OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file, true), &#34;UTF-8&#34;);
         // 要写入的字符串
-        String string = &quot;awslawslawslawslawslawslawslawsl&quot;;
+        String string = &#34;awslawslawslawslawslawslawslawsl&#34;;
         osw.write(string);
         osw.close();
     }
 
     public static String read(File file) throws IOException {
-        InputStreamReader isr = new InputStreamReader(new FileInputStream(file), &quot;UTF-8&quot;);
+        InputStreamReader isr = new InputStreamReader(new FileInputStream(file), &#34;UTF-8&#34;);
         // 字符数组：一次读取多少个字符
         char[] chars = new char[1024];
         // 每次读取的字符数组先append到StringBuilder中
@@ -1727,9 +1728,9 @@
         isr.close();
         return sb.toString();
     }
-</code></pre><p>字符缓冲流</p>
-<pre><code>public static void main(String[] args) throws IOException {
-        File file = new File(&quot;test.txt&quot;);
+</code></pre></div><p>字符缓冲流</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static void main(String[] args) throws IOException {
+        File file = new File(&#34;test.txt&#34;);
         write(file);
         System.out.println(read(file));
     }
@@ -1738,7 +1739,7 @@
         // FileWriter可以大幅度简化代码
         BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
         // 要写入的字符串
-        String string = &quot;awslawslawslawslawslawslawslawsl&quot;;
+        String string = &#34;awslawslawslawslawslawslawslawsl&#34;;
         bw.write(string);
         bw.close();
     }
@@ -1758,28 +1759,28 @@
         br.close();
         return sb.toString();
     }
-</code></pre><p>字节流和字符流间的转换</p>
+</code></pre></div><p>字节流和字符流间的转换</p>
 <ul>
 <li><code>OutputStreamWriter</code> 是字符流通向字节流的桥梁</li>
 </ul>
-<pre><code>    public static void main(String[] args) throws IOException {
-        File f = new File(&quot;test.txt&quot;);
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public static void main(String[] args) throws IOException {
+        File f = new File(&#34;test.txt&#34;);
 
         // OutputStreamWriter 是字符流通向字节流的桥梁,创建了一个字符流通向字节流的对象
-        OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(f),&quot;UTF-8&quot;);
+        OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(f),&#34;UTF-8&#34;);
 
-        osw.write(&quot;我是字符流转换成字节流输出的&quot;);
+        osw.write(&#34;我是字符流转换成字节流输出的&#34;);
         osw.close();
 
     }
-</code></pre><ul>
+</code></pre></div><ul>
 <li><code>InputStreamReader</code> 是字节流通向字符流的桥梁</li>
 </ul>
-<pre><code>  public static void main(String[] args) throws IOException {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">  public static void main(String[] args) throws IOException {
         
-        File f = new File(&quot;test.txt&quot;);
+        File f = new File(&#34;test.txt&#34;);
         
-        InputStreamReader inr = new InputStreamReader(new FileInputStream(f),&quot;UTF-8&quot;);
+        InputStreamReader inr = new InputStreamReader(new FileInputStream(f),&#34;UTF-8&#34;);
         
         char[] buf = new char[1024];
         
@@ -1790,7 +1791,7 @@
 
     }
 
-</code></pre><h2 id="java序列化反序列化httphollischuanggiteeiotobetopjavaer"><a href="http://hollischuang.gitee.io/tobetopjavaer">Java序列化、反序列化</a></h2>
+</code></pre></div><h2 id="java序列化反序列化httphollischuanggiteeiotobetopjavaer"><a href="http://hollischuang.gitee.io/tobetopjavaer">Java序列化、反序列化</a></h2>
 <p>序列化是将对象的状态信息转换为可存储或传输的形式的过程（一个对象可以被表示为一个字节序列，该字节序列包括该对象的数据、有关对象的类型的信息和存储在对象中数据的类型）。
 是一种数据的持久化手段。一般广泛应用于网络传输，RMI和RPC等场景中。
 一般是以字节码或XML格式传输。而字节码或XML编码格式可以还原为完全相等的对象。</p>
@@ -1816,19 +1817,19 @@
 <p>当试图对一个对象进行序列化的时候，如果遇到不支持 Serializable 接口的对象。在此情况下，将抛出 <code>NotSerializableException</code>。并标识非<code>serializable</code>对象的类。</p>
 </blockquote>
 <p>实现<code>Serializable</code>序列化反序列对象化代码演示</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
 //       serialUser();
-        System.out.println(&quot;----------反序列化对象----------&quot;);
+        System.out.println(&#34;----------反序列化对象----------&#34;);
         unSerialUser();
     }
 
     private static void serialUser (){
         User user = new User();
-        user.setName(&quot;Jane&quot;);
-        user.setAge(&quot;100&quot;);
+        user.setName(&#34;Jane&#34;);
+        user.setAge(&#34;100&#34;);
         System.out.println(user);
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(&quot;./user.txt&quot;));) {
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(&#34;./user.txt&#34;));) {
             oos.writeObject(user);
         } catch (IOException e) {
             e.printStackTrace();
@@ -1836,7 +1837,7 @@
     }
 
     private static void unSerialUser() {
-        File file = new File(&quot;./user.txt&quot;);
+        File file = new File(&#34;./user.txt&#34;);
         try(ObjectInputStream ois  = new ObjectInputStream(new FileInputStream(file))) {
             User newUser = (User) ois.readObject();
             System.out.println(newUser);
@@ -1869,13 +1870,13 @@ class User implements Serializable {
 
     @Override
     public String toString() {
-        return &quot;User{&quot; +
-                &quot;name='&quot; + name + '\'' +
-                &quot;, age='&quot; + age + '\'' +
-                '}';
+        return &#34;User{&#34; +
+                &#34;name=&#39;&#34; + name + &#39;\&#39;&#39; +
+                &#34;, age=&#39;&#34; + age + &#39;\&#39;&#39; +
+                &#39;}&#39;;
     }
 }
-</code></pre><h4 id="externalizablehttpsdocsoraclecomjavase7docsapijavaioexternalizablehtml"><a href="https://docs.oracle.com/javase/7/docs/api/java/io/Externalizable.html">Externalizable</a></h4>
+</code></pre></div><h4 id="externalizablehttpsdocsoraclecomjavase7docsapijavaioexternalizablehtml"><a href="https://docs.oracle.com/javase/7/docs/api/java/io/Externalizable.html">Externalizable</a></h4>
 <blockquote>
 <p>Externalizable继承了Serializable，该接口中定义了两个抽象方法：<code>writeExternal</code>()与<code>readExternal()</code>。
 当使用Externalizable接口来进行序列化与反序列化的时候需要开发人员重写<code>writeExternal()</code>与<code>readExternal()</code>方法。
@@ -1886,20 +1887,20 @@ class User implements Serializable {
 <p>如果User类中没有无参数的构造函数，在反序列化时会抛出异常：
 <code>java.io.InvalidClassException: content.posts.rookie.User; no valid constructor</code></p>
 <p>实现<code>Externalizable</code>序列化反序列对象化代码演示</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
 //       serialUser();
-        System.out.println(&quot;----------反序列化对象----------&quot;);
+        System.out.println(&#34;----------反序列化对象----------&#34;);
         unSerialUser();
     }
 
     private static void serialUser ()  {
         User user = new User();
-        user.setName(&quot;Jane&quot;);
-        user.setAge(&quot;100&quot;);
+        user.setName(&#34;Jane&#34;);
+        user.setAge(&#34;100&#34;);
         System.out.println(user);
         // /将对象序列化到文件
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(&quot;./user.txt&quot;));) {
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(&#34;./user.txt&#34;));) {
             oos.writeObject(user);
         } catch (IOException e) {
             e.printStackTrace();
@@ -1907,7 +1908,7 @@ class User implements Serializable {
     }
 
     private static void unSerialUser() {
-        File file = new File(&quot;./user.txt&quot;);
+        File file = new File(&#34;./user.txt&#34;);
         try(ObjectInputStream ois  = new ObjectInputStream(new FileInputStream(file))) {
             User newUser = (User) ois.readObject();
             System.out.println(newUser);
@@ -1944,10 +1945,10 @@ class User implements Externalizable {
 
     @Override
     public String toString() {
-        return &quot;User{&quot; +
-                &quot;name='&quot; + name + '\'' +
-                &quot;, age='&quot; + age + '\'' +
-                '}';
+        return &#34;User{&#34; +
+                &#34;name=&#39;&#34; + name + &#39;\&#39;&#39; +
+                &#34;, age=&#39;&#34; + age + &#39;\&#39;&#39; +
+                &#39;}&#39;;
     }
 
     @Override
@@ -1963,14 +1964,14 @@ class User implements Externalizable {
     }
 }
 
-</code></pre><h4 id="transient">transient</h4>
+</code></pre></div><h4 id="transient">transient</h4>
 <p>对于一个类中的某些字段如果不需要序列化，就需要加上<code>transient</code>关键字。</p>
 <blockquote>
 <p>被<code>transient</code>修饰的成员变量，在序列化的时候其值会被忽略，在被反序列化后， <code>transient</code> 变量的值被设为初始值，
 如 int 型的是 0，对象型的是 null。</p>
 </blockquote>
-<pre><code>private transient String name;
-</code></pre><p>此时name字段将不会被序列化;当然如果一个变量被static修饰，他也不会被序列化。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">private transient String name;
+</code></pre></div><p>此时name字段将不会被序列化;当然如果一个变量被static修饰，他也不会被序列化。</p>
 <h3 id="serialversionuid">serialVersionUID</h3>
 <p>虚拟机是否允许反序列化， 不仅取决于类路径和功能代码是否⼀致， ⼀个⾮常重要的⼀点是两个类的序列化 ID 是否⼀致， 即<code>serialVersionUID</code>要求⼀致。</p>
 <p>因为⽂件存储中的内容可能被篡改,为了保证数据的安全: 在进⾏反序列化时， JVM会把传来的字节流中的<code>serialVersionUID</code>与本地相应实体类的<code>serialVersionUID</code>进⾏⽐较， 如果相同就认为是⼀致的， 可以进⾏反序列化;
@@ -1991,21 +1992,21 @@ and can thus result in unexpectedInvalidClassExceptions during deserialization.<
 <p>Java强烈建议用户自定义一个<code>serialVersionUID</code>,因为默认的<code>serialVersinUID</code>对于class的细节非常敏感，
 反序列化时可能会导致<code>InvalidClassException</code>这个异常。</p>
 <p>代码演示序列化、反序列化加上<code>serialVersionUID</code></p>
-<pre><code>private static final long serialVersionUID = 1L;
-</code></pre><pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">private static final long serialVersionUID = 1L;
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
-        System.out.println(&quot;----------序列化对象----------&quot;);
+        System.out.println(&#34;----------序列化对象----------&#34;);
         serialUser();
-        System.out.println(&quot;----------反序列化对象----------&quot;);
+        System.out.println(&#34;----------反序列化对象----------&#34;);
         unSerialUser();
     }
 
     private static void serialUser (){
         User user = new User();
-        user.setName(&quot;Jane&quot;);
-        user.setAge(&quot;100&quot;);
+        user.setName(&#34;Jane&#34;);
+        user.setAge(&#34;100&#34;);
         System.out.println(user);
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(&quot;./user.txt&quot;));) {
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(&#34;./user.txt&#34;));) {
             oos.writeObject(user);
         } catch (IOException e) {
             e.printStackTrace();
@@ -2013,7 +2014,7 @@ and can thus result in unexpectedInvalidClassExceptions during deserialization.<
     }
 
     private static void unSerialUser() {
-        File file = new File(&quot;./user.txt&quot;);
+        File file = new File(&#34;./user.txt&#34;);
         try(ObjectInputStream ois  = new ObjectInputStream(new FileInputStream(file))) {
             User newUser = (User) ois.readObject();
             System.out.println(newUser);
@@ -2048,17 +2049,17 @@ class User implements Serializable {
 
     @Override
     public String toString() {
-        return &quot;User{&quot; +
-                &quot;name='&quot; + name + '\'' +
-                &quot;, age='&quot; + age + '\'' +
-                '}';
+        return &#34;User{&#34; +
+                &#34;name=&#39;&#34; + name + &#39;\&#39;&#39; +
+                &#34;, age=&#39;&#34; + age + &#39;\&#39;&#39; +
+                &#39;}&#39;;
     }
 }
-</code></pre><pre><code>java.io.InvalidClassException: co.test.User; local class incompatible: stream classdesc serialVersionUID = -1643371274357194431, local class serialVersionUID = 1
-</code></pre><p>代码调用链：</p>
-<pre><code>ObjectInputStream.readObject -&gt; readObject0 -&gt; readOrdinaryObject -&gt; readClassDesc -&gt; readNonProxyDesc -&gt; ObjectStreamClass.initNonProxy
-</code></pre><p>在<code>initNonProxy</code>中 ，关键代码如下：</p>
-<pre><code> void initNonProxy(ObjectStreamClass model,
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">java.io.InvalidClassException: co.test.User; local class incompatible: stream classdesc serialVersionUID = -1643371274357194431, local class serialVersionUID = 1
+</code></pre></div><p>代码调用链：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">ObjectInputStream.readObject -&gt; readObject0 -&gt; readOrdinaryObject -&gt; readClassDesc -&gt; readNonProxyDesc -&gt; ObjectStreamClass.initNonProxy
+</code></pre></div><p>在<code>initNonProxy</code>中 ，关键代码如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> void initNonProxy(ObjectStreamClass model,
                       Class&lt;?&gt; cl,
                       ClassNotFoundException resolveEx,
                       ObjectStreamClass superDesc)
@@ -2070,12 +2071,12 @@ class User implements Serializable {
             osc = lookup(cl, true);
             if (osc.isProxy) {
                 throw new InvalidClassException(
-                        &quot;cannot bind non-proxy descriptor to a proxy class&quot;);
+                        &#34;cannot bind non-proxy descriptor to a proxy class&#34;);
             }
             if (model.isEnum != osc.isEnum) {
                 throw new InvalidClassException(model.isEnum ?
-                        &quot;cannot bind enum descriptor to a non-enum class&quot; :
-                        &quot;cannot bind non-enum descriptor to an enum class&quot;);
+                        &#34;cannot bind enum descriptor to a non-enum class&#34; :
+                        &#34;cannot bind non-enum descriptor to an enum class&#34;);
             }
 
             // ========== 判断反序列化 serializableUID 是否一致 ========== start//
@@ -2083,23 +2084,23 @@ class User implements Serializable {
                     !cl.isArray() &amp;&amp;
                     suid != osc.getSerialVersionUID()) {
                 throw new InvalidClassException(osc.name,
-                        &quot;local class incompatible: &quot; +
-                                &quot;stream classdesc serialVersionUID = &quot; + suid +
-                                &quot;, local class serialVersionUID = &quot; +
+                        &#34;local class incompatible: &#34; +
+                                &#34;stream classdesc serialVersionUID = &#34; + suid +
+                                &#34;, local class serialVersionUID = &#34; +
                                 osc.getSerialVersionUID());
             }
             // ========== 判断反序列化 serializableUID 是否一致 ========== end//
 
             if (!classNamesEqual(model.name, osc.name)) {
                 throw new InvalidClassException(osc.name,
-                        &quot;local class name incompatible with stream class &quot; +
-                                &quot;name \&quot;&quot; + model.name + &quot;\&quot;&quot;);
+                        &#34;local class name incompatible with stream class &#34; +
+                                &#34;name \&#34;&#34; + model.name + &#34;\&#34;&#34;);
             }
             
             // ...
    
-</code></pre><p><code>getSerialVersionUID</code>方法：</p>
-<pre><code>public long getSerialVersionUID() {
+</code></pre></div><p><code>getSerialVersionUID</code>方法：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public long getSerialVersionUID() {
     // REMIND: synchronize instead of relying on volatile?
     if (suid == null) {
         suid = AccessController.doPrivileged(
@@ -2112,7 +2113,7 @@ class User implements Serializable {
     }
     return suid.longValue();
 }
-</code></pre><p>在没有定义<code>serialVersionUID</code>的时候，会调用<code>computeDefaultSUID</code>方法，生成一个默认的<code>serialVersionUID</code>。</p>
+</code></pre></div><p>在没有定义<code>serialVersionUID</code>的时候，会调用<code>computeDefaultSUID</code>方法，生成一个默认的<code>serialVersionUID</code>。</p>
 <p><code>serialVersionUID</code>有两种显示的生成方式：</p>
 <ul>
 <li>默认的1L，比如：<code>private static final long serialVersionUID = 1L; </code></li>
@@ -2125,7 +2126,7 @@ class User implements Serializable {
 <h4 id="如何自定义的序列化和反序列化策略">如何自定义的序列化和反序列化策略?</h4>
 <p>通过在被序列化的类中增加 writeObject 和 readObject 方法来实现。</p>
 <p>在<code>java.util.ArrayList</code>中我们能找到答案：</p>
-<pre><code>public class ArrayList&lt;E&gt; extends AbstractList&lt;E&gt;
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class ArrayList&lt;E&gt; extends AbstractList&lt;E&gt;
         implements List&lt;E&gt;, RandomAccess, Cloneable, java.io.Serializable
 {
     private static final long serialVersionUID = 8683452581122892189L;
@@ -2133,35 +2134,35 @@ class User implements Serializable {
     private int size;
 }
 
-</code></pre><p>ArrayList实现了<code>java.io.Serializable</code>接口，那么我们就可以对它进行序列化及反序列化。
+</code></pre></div><p>ArrayList实现了<code>java.io.Serializable</code>接口，那么我们就可以对它进行序列化及反序列化。
 因为<code>elementData</code>是 <code>transient</code> 的，所以这个成员变量不会被序列化而保留下来.</p>
 <p>ArrayList底层是通过数组实现的。
 那么数组elementData其实就是用来保存列表中的元素的。通过该属性的声明方式我们知道，他是无法通过序列化持久化下来的。
 那么为什么却通过序列化和反序列化把List中的元素保留下来了呢？</p>
-<pre><code>public static void main(String[] args) throws IOException, ClassNotFoundException {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static void main(String[] args) throws IOException, ClassNotFoundException {
         List&lt;String&gt; stringList = new ArrayList&lt;String&gt;();
-        stringList.add(&quot;hello&quot;);
-        stringList.add(&quot;world&quot;);
-        stringList.add(&quot;hollis&quot;);
-        stringList.add(&quot;chuang&quot;);
-        System.out.println(&quot;init StringList&quot; + stringList);
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(&quot;stringlist&quot;));
+        stringList.add(&#34;hello&#34;);
+        stringList.add(&#34;world&#34;);
+        stringList.add(&#34;hollis&#34;);
+        stringList.add(&#34;chuang&#34;);
+        System.out.println(&#34;init StringList&#34; + stringList);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(&#34;stringlist&#34;));
         objectOutputStream.writeObject(stringList);
 
         IOUtils.close(objectOutputStream);
-        File file = new File(&quot;stringlist&quot;);
+        File file = new File(&#34;stringlist&#34;);
         ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
         List&lt;String&gt; newStringList = (List&lt;String&gt;)objectInputStream.readObject();
         IOUtils.close(objectInputStream);
         if(file.exists()){
             file.delete();
         }
-        System.out.println(&quot;new StringList&quot; + newStringList);
+        System.out.println(&#34;new StringList&#34; + newStringList);
     }
 //init StringList[hello, world, hollis, chuang]
 //new StringList[hello, world, hollis, chuang]
 
-</code></pre><blockquote>
+</code></pre></div><blockquote>
 <p>在序列化过程中，如果被序列化的类中定义了<code>writeObject</code> 和 <code>readObject</code> 方法，虚拟机会试图调用对象类里的 <code>writeObject</code> 和 <code>readObject</code> 方法，进行用户自定义的序列化和反序列化。</p>
 <p>如果没有这样的方法，则默认调用是 <code>ObjectOutputStream</code> 的 <code>defaultWriteObject</code> 方法以及 <code>ObjectInputStream</code> 的 <code>defaultReadObject</code> 方法。</p>
 <p>用户自定义的 <code>writeObject</code> 和 <code>readObject</code> 方法可以允许用户控制序列化的过程，比如可以在序列化的过程中动态改变序列化的数值。
@@ -2190,7 +2191,7 @@ ArrayList把元素数组设置为transient。</p>
 <p>类定义的writeObject方法，如果没有则为null</p>
 </blockquote>
 <p><code>invokeWriteObject</code>方法</p>
-<pre><code>    /**
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    /**
      * Invokes the writeObject method of the represented serializable class.
      * Throws UnsupportedOperationException if this class descriptor is not
      * associated with a class, or if the class is externalizable,
@@ -2222,15 +2223,15 @@ ArrayList把元素数组设置为transient。</p>
             throw new UnsupportedOperationException();
         }
     }
-</code></pre><pre><code>    /** class-defined writeObject method, or null if none */
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    /** class-defined writeObject method, or null if none */
     private Method writeObjectMethod;
-</code></pre><h4 id="为什么实现了serializable接口就能保证对象序列化">为什么实现了<code>Serializable</code>接口就能保证对象序列化？</h4>
+</code></pre></div><h4 id="为什么实现了serializable接口就能保证对象序列化">为什么实现了<code>Serializable</code>接口就能保证对象序列化？</h4>
 <p><code>ObjectOutputStream中writeObject</code>的调用栈：</p>
 <blockquote>
 <p>writeObject &mdash;&gt; <strong>writeObject0</strong> &mdash;&gt;writeOrdinaryObject&mdash;&gt;writeSerialData&mdash;&gt;invokeWriteObject</p>
 </blockquote>
 <p><code>writeObject0</code>方法</p>
-<pre><code> /**
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> /**
      * Underlying writeObject/writeUnshared implementation.
      */
     private void writeObject0(Object obj, boolean unshared)
@@ -2254,7 +2255,7 @@ ArrayList把元素数组设置为transient。</p>
             } else {
                 if (extendedDebugInfo) {
                     throw new NotSerializableException(
-                        cl.getName() + &quot;\n&quot; + debugInfoStack.toString());
+                        cl.getName() + &#34;\n&#34; + debugInfoStack.toString());
                 } else {
                     throw new NotSerializableException(cl.getName());
                 }
@@ -2264,15 +2265,15 @@ ArrayList把元素数组设置为transient。</p>
             // ... 
         }
     }
-</code></pre><p>在进行序列化操作时，会判断要被序列化的类是否是 <code>String、Enum、Array</code> 和 <code>Serializable</code> 类型，
+</code></pre></div><p>在进行序列化操作时，会判断要被序列化的类是否是 <code>String、Enum、Array</code> 和 <code>Serializable</code> 类型，
 如果不是则直接抛出 <code>NotSerializableException</code>。</p>
 <h3 id="序列化与单例模式httphollischuanggiteeiotobetopjavaerbasicsjava-basicserialize-singletonid序列化对单例的破坏"><a href="http://hollischuang.gitee.io/tobetopjavaer/#/basics/java-basic/serialize-singleton?id=%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%B9%E5%8D%95%E4%BE%8B%E7%9A%84%E7%A0%B4%E5%9D%8F">序列化与单例模式</a></h3>
 <h4 id="序列化破坏单例">序列化破坏单例</h4>
 <p>为什么序列化可以破坏单例了？</p>
 <p>序列化会通过反射调用无参数的构造方法创建一个新的对象。</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) throws Exception {
-        String path = &quot;/Users/whitepure/github/iblog/blog-site/content/posts/rookie/singleton.txt&quot;;
+        String path = &#34;/Users/whitepure/github/iblog/blog-site/content/posts/rookie/singleton.txt&#34;;
 
         //Write Obj to file
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path));
@@ -2308,7 +2309,7 @@ class Singleton implements Serializable {
         return singleton;
     }
 }
-</code></pre><p>输出结果为false，对<code>Singleton</code> 的序列化与反序列化得到的对象是一个新的对象，这就破坏了 <code>Singleton</code> 的单例性。</p>
+</code></pre></div><p>输出结果为false，对<code>Singleton</code> 的序列化与反序列化得到的对象是一个新的对象，这就破坏了 <code>Singleton</code> 的单例性。</p>
 <h4 id="分析原因">分析原因</h4>
 <p>对象的序列化过程通过 <code>ObjectOutputStream</code> 和 <code>ObjectInputputStream</code> 来实现的</p>
 <p><code>ObjectInputStream</code> 中 <code>readObject</code> 的调用栈：</p>
@@ -2320,11 +2321,11 @@ class Singleton implements Serializable {
 <p>读取并返回&quot;ordinary&quot;(即，不是字符串，类，ObjectStreamClass，数组，或枚举常量)对象，如果对象的类是不可解析的，则为null(在这种情况下，ClassNotFoundException将与对象的句柄相关联)。
 设置passHandle为对象的赋值句柄。</p>
 </blockquote>
-<pre><code>    /**
-     * Reads and returns &quot;ordinary&quot; (i.e., not a String, Class,
-     * ObjectStreamClass, array, or enum constant) object, or null if object's
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    /**
+     * Reads and returns &#34;ordinary&#34; (i.e., not a String, Class,
+     * ObjectStreamClass, array, or enum constant) object, or null if object&#39;s
      * class is unresolvable (in which case a ClassNotFoundException will be
-     * associated with object's handle).  Sets passHandle to object's assigned
+     * associated with object&#39;s handle).  Sets passHandle to object&#39;s assigned
      * handle.
      */
     private Object readOrdinaryObject(boolean unshared)
@@ -2341,7 +2342,7 @@ class Singleton implements Serializable {
         } catch (Exception ex) {
             throw (IOException) new InvalidClassException(
                 desc.forClass().getName(),
-                &quot;unable to create instance&quot;).initCause(ex);
+                &#34;unable to create instance&#34;).initCause(ex);
         }
 
         // ...
@@ -2362,9 +2363,9 @@ class Singleton implements Serializable {
         return obj;
     }
 
-</code></pre><h4 id="解决">解决</h4>
+</code></pre></div><h4 id="解决">解决</h4>
 <p>在 <code>Singleton</code> 中定义 <code>readResolve</code> 方法，并在该方法中指定要返回的对象的生成策略，就可以防止单例被破坏。</p>
-<pre><code>class Singleton implements Serializable {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">class Singleton implements Serializable {
     private static final long serialVersionUID = 6377402142849822126L;
 
     private volatile static Singleton singleton;
@@ -2387,7 +2388,7 @@ class Singleton implements Serializable {
         return singleton;
     }
 }
-</code></pre><h2 id="io模型httphollischuanggiteeiotobetopjavaerbasicsjava-basiclinux-ioidlinux-5种io模型"><a href="http://hollischuang.gitee.io/tobetopjavaer/#/basics/java-basic/linux-io?id=linux-5%E7%A7%8Dio%E6%A8%A1%E5%9E%8B">IO模型</a></h2>
+</code></pre></div><h2 id="io模型httphollischuanggiteeiotobetopjavaerbasicsjava-basiclinux-ioidlinux-5种io模型"><a href="http://hollischuang.gitee.io/tobetopjavaer/#/basics/java-basic/linux-io?id=linux-5%E7%A7%8Dio%E6%A8%A1%E5%9E%8B">IO模型</a></h2>
 <p>IO模型共有5种：阻塞IO、非阻塞IO、信号驱动IO、IO多路转接、异步IO。其中，前四个被称为同步IO。</p>
 <h3 id="阻塞式io模型">阻塞式IO模型</h3>
 <p>BIO（Blocking IO）：最传统的一种IO模型，即在读写数据过程中会发生阻塞现象。</p>
@@ -2531,50 +2532,50 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
 <li>使用 clear() 清空缓冲区，将position、limit 的值回归到初始值；</li>
 </ul>
 <p>代码演示</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
-        String str = &quot;abcde&quot;;
+        String str = &#34;abcde&#34;;
         ByteBuffer allocate = ByteBuffer.allocate(1024);
         allocate.put(str.getBytes());
-        System.out.println(&quot;========向ByteBuffer添加数据========&quot;);
+        System.out.println(&#34;========向ByteBuffer添加数据========&#34;);
         System.out.println(str);
-        System.out.println(&quot;capacity: &quot;+ allocate.capacity());
-        System.out.println(&quot;limit: &quot; + allocate.limit());
-        System.out.println(&quot;position: &quot; + allocate.position());
+        System.out.println(&#34;capacity: &#34;+ allocate.capacity());
+        System.out.println(&#34;limit: &#34; + allocate.limit());
+        System.out.println(&#34;position: &#34; + allocate.position());
 
         allocate.flip();
-        System.out.println(&quot;========切换为读取数据模式========&quot;);
-        System.out.println(&quot;capacity: &quot;+ allocate.capacity());
-        System.out.println(&quot;limit: &quot; + allocate.limit());
-        System.out.println(&quot;position: &quot; + allocate.position());
+        System.out.println(&#34;========切换为读取数据模式========&#34;);
+        System.out.println(&#34;capacity: &#34;+ allocate.capacity());
+        System.out.println(&#34;limit: &#34; + allocate.limit());
+        System.out.println(&#34;position: &#34; + allocate.position());
 
         byte[] bytes = str.getBytes();
         allocate.get(bytes);
-        System.out.println(&quot;========从ByteBuffer取出数据========&quot;);
+        System.out.println(&#34;========从ByteBuffer取出数据========&#34;);
         System.out.println(new String(bytes, 0, bytes.length));
-        System.out.println(&quot;capacity: &quot;+ allocate.capacity());
-        System.out.println(&quot;limit: &quot; + allocate.limit());
-        System.out.println(&quot;position: &quot; + allocate.position());
+        System.out.println(&#34;capacity: &#34;+ allocate.capacity());
+        System.out.println(&#34;limit: &#34; + allocate.limit());
+        System.out.println(&#34;position: &#34; + allocate.position());
 
         allocate.rewind();
-        System.out.println(&quot;========切换重新读取数据模式========&quot;);
-        System.out.println(&quot;capacity: &quot;+ allocate.capacity());
-        System.out.println(&quot;limit: &quot; + allocate.limit());
-        System.out.println(&quot;position: &quot; + allocate.position());
+        System.out.println(&#34;========切换重新读取数据模式========&#34;);
+        System.out.println(&#34;capacity: &#34;+ allocate.capacity());
+        System.out.println(&#34;limit: &#34; + allocate.limit());
+        System.out.println(&#34;position: &#34; + allocate.position());
 
         allocate.clear();
-        System.out.println(&quot;========清空缓冲区========&quot;);
-        System.out.println(&quot;capacity: &quot;+ allocate.capacity());
-        System.out.println(&quot;limit: &quot; + allocate.limit());
-        System.out.println(&quot;position: &quot; + allocate.position());
-        System.out.println(&quot;再来读取数据：&quot; + (char)allocate.get());
+        System.out.println(&#34;========清空缓冲区========&#34;);
+        System.out.println(&#34;capacity: &#34;+ allocate.capacity());
+        System.out.println(&#34;limit: &#34; + allocate.limit());
+        System.out.println(&#34;position: &#34; + allocate.position());
+        System.out.println(&#34;再来读取数据：&#34; + (char)allocate.get());
     }
 }
-</code></pre><p>mark方法: 记录当前position位置。可以通过 reset() 恢复到 mark 的位置。</p>
+</code></pre></div><p>mark方法: 记录当前position位置。可以通过 reset() 恢复到 mark 的位置。</p>
 <p>代码演示</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
-        String str = &quot;abcde&quot;;
+        String str = &#34;abcde&#34;;
         ByteBuffer allocate = ByteBuffer.allocate(1024);
 
         allocate.put(str.getBytes());
@@ -2583,53 +2584,53 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
 
         byte[] bytes = str.getBytes();
         allocate.get(bytes, 0, 2);
-        System.out.println(&quot;========从ByteBuffer取出数据========&quot;);
+        System.out.println(&#34;========从ByteBuffer取出数据========&#34;);
         System.out.println(new String(bytes, 0, 2));
-        System.out.println(&quot;capacity: &quot; + allocate.capacity());
-        System.out.println(&quot;limit: &quot; + allocate.limit());
-        System.out.println(&quot;position: &quot; + allocate.position());
+        System.out.println(&#34;capacity: &#34; + allocate.capacity());
+        System.out.println(&#34;limit: &#34; + allocate.limit());
+        System.out.println(&#34;position: &#34; + allocate.position());
 
         allocate.mark();
-        System.out.println(&quot;========记录当前 `position` 的位置========&quot;);
-        System.out.println(&quot;capacity: &quot; + allocate.capacity());
-        System.out.println(&quot;limit: &quot; + allocate.limit());
-        System.out.println(&quot;position: &quot; + allocate.position());
+        System.out.println(&#34;========记录当前 `position` 的位置========&#34;);
+        System.out.println(&#34;capacity: &#34; + allocate.capacity());
+        System.out.println(&#34;limit: &#34; + allocate.limit());
+        System.out.println(&#34;position: &#34; + allocate.position());
 
         allocate.get(bytes, 2, 2);
-        System.out.println(&quot;========从ByteBuffer再次取出数据========&quot;);
+        System.out.println(&#34;========从ByteBuffer再次取出数据========&#34;);
         System.out.println(new String(bytes, 2, 2));
-        System.out.println(&quot;capacity: &quot; + allocate.capacity());
-        System.out.println(&quot;limit: &quot; + allocate.limit());
-        System.out.println(&quot;position: &quot; + allocate.position());
+        System.out.println(&#34;capacity: &#34; + allocate.capacity());
+        System.out.println(&#34;limit: &#34; + allocate.limit());
+        System.out.println(&#34;position: &#34; + allocate.position());
 
         allocate.reset();
-        System.out.println(&quot;========恢复之前被标记的位置========&quot;);
-        System.out.println(&quot;capacity: &quot; + allocate.capacity());
-        System.out.println(&quot;limit: &quot; + allocate.limit());
-        System.out.println(&quot;position: &quot; + allocate.position());
+        System.out.println(&#34;========恢复之前被标记的位置========&#34;);
+        System.out.println(&#34;capacity: &#34; + allocate.capacity());
+        System.out.println(&#34;limit: &#34; + allocate.limit());
+        System.out.println(&#34;position: &#34; + allocate.position());
     }
 }
-</code></pre><h5 id="非直接缓冲区与直接缓冲区">非直接缓冲区与直接缓冲区</h5>
+</code></pre></div><h5 id="非直接缓冲区与直接缓冲区">非直接缓冲区与直接缓冲区</h5>
 <p>直接缓冲区：通过 <code>allocateDirect()</code> 方法分配直接缓冲区，将缓冲区建立在物理内存中。可以提高读写效率。</p>
 <p><img src="/iblog/posts/images/essays/%E7%9B%B4%E6%8E%A5%E7%BC%93%E5%86%B2%E5%8C%BA.png" alt="直接缓冲区"></p>
 <p>非直接缓冲区：通过 <code>allocate()</code> 方法分配缓冲区，将缓冲区建立在JVM的内存中。</p>
 <p><code>allocate()</code>方法返回的缓冲区进行分配和取消分配所需成本通常高于非直接缓冲区 。
 直接缓冲区的内容可以驻留在常规的垃圾回收堆之外.</p>
 <p><img src="/iblog/posts/images/essays/%E9%9D%9E%E7%9B%B4%E6%8E%A5%E7%BC%93%E5%86%B2%E5%8C%BA.png" alt="非直接缓冲区"></p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         ByteBuffer allocate = ByteBuffer.allocate(1024);
         ByteBuffer direct = ByteBuffer.allocateDirect(1024);
 
         if (direct.isDirect()){
-            System.out.println(&quot;allocateDirect 是直接缓冲区&quot;);
+            System.out.println(&#34;allocateDirect 是直接缓冲区&#34;);
         }
         if (!allocate.isDirect()){
-            System.out.println(&quot;allocate 是非直接缓冲区&quot;);
+            System.out.println(&#34;allocate 是非直接缓冲区&#34;);
         }
     }
 }
-</code></pre><h4 id="通道">通道</h4>
+</code></pre></div><h4 id="通道">通道</h4>
 <p>通道(Channel):用于源节点与目标节点的连接。在 <code>java NIO</code> 中负责缓冲区中数据的传输。Channel本身不存储数据，需要配合缓冲区进行数据传输。</p>
 <p>在操作系统中，通道是一种通过执行通道程序管理I/O操作的控制器，它使主机（CPU和内存）与I/O操作之间达到更高的并行程度。
 需要进行I/O操作时，CPU只需启动通道，然后可以继续执行自身程序，通道则执行通道程序，管理与实现I/O操作。</p>
@@ -2643,7 +2644,7 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
 </ul>
 <p>Java 针对支持通道的类提供了 <code>getChannel()</code> 方法</p>
 <p>使用 非直接缓冲区 完成对文件的读写</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     /**
      * 使用非直接缓冲区完成读写操作
      * @param args args
@@ -2652,8 +2653,8 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
         long start = System.currentTimeMillis();
         try (
                 // 获取通道
-                FileChannel inChannel = new FileInputStream(&quot;1.jpg&quot;).getChannel();
-                FileChannel outChannel = new FileOutputStream(&quot;2.jpg&quot;).getChannel();
+                FileChannel inChannel = new FileInputStream(&#34;1.jpg&#34;).getChannel();
+                FileChannel outChannel = new FileOutputStream(&#34;2.jpg&#34;).getChannel();
         ) {
             // 分配指定大小的缓冲区
             ByteBuffer buf = ByteBuffer.allocate(1024);
@@ -2675,13 +2676,13 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
             e.printStackTrace();
         } finally {
             long end = System.currentTimeMillis();
-            System.out.println(&quot;耗费的时间为：&quot; + (end - start));
+            System.out.println(&#34;耗费的时间为：&#34; + (end - start));
         }
     }
 }
 
-</code></pre><p>使用 直接缓冲区 完成对文件的读写</p>
-<pre><code>public class MainTest {
+</code></pre></div><p>使用 直接缓冲区 完成对文件的读写</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     /**
      * 使用直接缓冲区完成文件的读写
      *
@@ -2690,8 +2691,8 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
         try (
-                FileChannel inChannel = FileChannel.open(Paths.get(&quot;1.jpg&quot;), StandardOpenOption.READ);
-                FileChannel outChannel = FileChannel.open(Paths.get(&quot;2.jpg&quot;), StandardOpenOption.WRITE, StandardOpenOption.READ, StandardOpenOption.CREATE);
+                FileChannel inChannel = FileChannel.open(Paths.get(&#34;1.jpg&#34;), StandardOpenOption.READ);
+                FileChannel outChannel = FileChannel.open(Paths.get(&#34;2.jpg&#34;), StandardOpenOption.WRITE, StandardOpenOption.READ, StandardOpenOption.CREATE);
         ) {
 
             //内存映射文件
@@ -2707,12 +2708,12 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
             e.printStackTrace();
         } finally {
             long end = System.currentTimeMillis();
-            System.out.println(&quot;耗费的时间为：&quot; + (end - start));
+            System.out.println(&#34;耗费的时间为：&#34; + (end - start));
         }
     }
 }
-</code></pre><p>使用 通道 完成对文件的读写</p>
-<pre><code>public class MainTest {
+</code></pre></div><p>使用 通道 完成对文件的读写</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     /**
      * 使用通道完成读写操作
      *
@@ -2722,8 +2723,8 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
         long start = System.currentTimeMillis();
         try (
                 // 获取通道
-                FileChannel inChannel = FileChannel.open(Paths.get(&quot;1.jpg&quot;), StandardOpenOption.READ);
-                FileChannel outChannel = FileChannel.open(Paths.get(&quot;2.jpg&quot;), StandardOpenOption.WRITE, StandardOpenOption.READ, StandardOpenOption.CREATE);
+                FileChannel inChannel = FileChannel.open(Paths.get(&#34;1.jpg&#34;), StandardOpenOption.READ);
+                FileChannel outChannel = FileChannel.open(Paths.get(&#34;2.jpg&#34;), StandardOpenOption.WRITE, StandardOpenOption.READ, StandardOpenOption.CREATE);
         ) {
 
             //内存映射文件
@@ -2739,16 +2740,16 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
             e.printStackTrace();
         } finally {
             long end = System.currentTimeMillis();
-            System.out.println(&quot;耗费的时间为：&quot; + (end - start));
+            System.out.println(&#34;耗费的时间为：&#34; + (end - start));
         }
     }
 }
-</code></pre><p>分散读取和聚集写入：</p>
+</code></pre></div><p>分散读取和聚集写入：</p>
 <ul>
 <li>分散读取（Scattering Reads）：将通道中的数据分散到多个缓冲区中</li>
 <li>聚集写入（Gathering Writes）：将多个缓冲区中的数据聚集到通道中</li>
 </ul>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     /**
      * 分散和聚集
      *
@@ -2758,9 +2759,9 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
         long start = System.currentTimeMillis();
         try (
             // 分散读取通道
-            FileChannel channel1 = new RandomAccessFile(&quot;1.txt&quot;, &quot;rw&quot;).getChannel();
+            FileChannel channel1 = new RandomAccessFile(&#34;1.txt&#34;, &#34;rw&#34;).getChannel();
             // 聚集写入通道
-            FileChannel channel2 = new RandomAccessFile(&quot;2.txt&quot;, &quot;rw&quot;).getChannel();
+            FileChannel channel2 = new RandomAccessFile(&#34;2.txt&#34;, &#34;rw&#34;).getChannel();
         ) {
             // 分配指定大小的缓冲区
             ByteBuffer buf1 = ByteBuffer.allocate(100);
@@ -2775,7 +2776,7 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
             }
 
             System.out.println(new String(bufs[0].array(), 0, bufs[0].limit()));
-            System.out.println(&quot;--------------------&quot;);
+            System.out.println(&#34;--------------------&#34;);
             System.out.println(new String(bufs[1].array(), 0, bufs[1].limit()));
 
             // 聚集写入
@@ -2785,23 +2786,23 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
             e.printStackTrace();
         } finally {
             long end = System.currentTimeMillis();
-            System.out.println(&quot;耗费的时间为：&quot; + (end - start));
+            System.out.println(&#34;耗费的时间为：&#34; + (end - start));
         }
     }
 }
-</code></pre><p>解码与编码：</p>
+</code></pre></div><p>解码与编码：</p>
 <ul>
 <li>编码：字符串转化为字符数组的过程</li>
 <li>解码：字符数组转化为字符串的过程</li>
 </ul>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     /**
      * 编码与解码
      *
      * @param args args
      */
     public static void main(String[] args) {
-        Charset cs1 = Charset.forName(&quot;GBK&quot;);
+        Charset cs1 = Charset.forName(&#34;GBK&#34;);
 
         //获取编码器
         CharsetEncoder ce = cs1.newEncoder();
@@ -2810,7 +2811,7 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
         CharsetDecoder cd = cs1.newDecoder();
 
         CharBuffer cBuf = CharBuffer.allocate(1024);
-        cBuf.put(&quot;阿伟死了&quot;);
+        cBuf.put(&#34;阿伟死了&#34;);
         cBuf.flip();
 
         ByteBuffer bBuf;
@@ -2832,15 +2833,15 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
     }
 }
 
-</code></pre><h3 id="阻塞与非阻塞网络通信">阻塞与非阻塞网络通信</h3>
+</code></pre></div><h3 id="阻塞与非阻塞网络通信">阻塞与非阻塞网络通信</h3>
 <h4 id="阻塞">阻塞</h4>
 <p>传统的 IO 流都是阻塞式的。
 就是说，当一个线程调用 <code>read()</code> 或 <code>write()</code> 时，该线程被阻塞，直到有一些数据被读取或写入，该线程在此期间不能执行其他任务。
 因此，在完成网络通信进行 IO 操作时，由于线程会阻塞，所以服务器端必须为每个客户端都提供一个独立的线程进行处理，当服务器端需要处理大量客户端时，性能急剧下降。</p>
 <p>阻塞式IO,代码演示</p>
-<pre><code>class Client {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">class Client {
     public static void main(String[] args) throws IOException {
-        System.out.println(&quot;启动客户端 ...&quot;);
+        System.out.println(&#34;启动客户端 ...&#34;);
         client();
     }
 
@@ -2848,8 +2849,8 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
      * 阻塞NIO 客户端
      */
     public static void client() throws IOException {
-        SocketChannel sChannel=SocketChannel.open(new InetSocketAddress(&quot;127.0.0.1&quot;,9898));
-        FileChannel inChannel=FileChannel.open(Paths.get(&quot;/Users/whitepure/Desktop/1.txt&quot;), StandardOpenOption.READ);
+        SocketChannel sChannel=SocketChannel.open(new InetSocketAddress(&#34;127.0.0.1&#34;,9898));
+        FileChannel inChannel=FileChannel.open(Paths.get(&#34;/Users/whitepure/Desktop/1.txt&#34;), StandardOpenOption.READ);
         ByteBuffer buf=ByteBuffer.allocate(1024);
 
         while(inChannel.read(buf)!=-1){
@@ -2875,7 +2876,7 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
 
 class Server {
     public static void main(String[] args) throws IOException {
-        System.out.println(&quot;启动服务端 ...&quot;);
+        System.out.println(&#34;启动服务端 ...&#34;);
         server();
     }
     /**
@@ -2883,7 +2884,7 @@ class Server {
      */
     public static void server() throws IOException{
         ServerSocketChannel ssChannel=ServerSocketChannel.open();
-        FileChannel outChannel=FileChannel.open(Paths.get(&quot;/Users/whitepure/Desktop/2.txt&quot;), StandardOpenOption.WRITE,StandardOpenOption.CREATE);
+        FileChannel outChannel=FileChannel.open(Paths.get(&#34;/Users/whitepure/Desktop/2.txt&#34;), StandardOpenOption.WRITE,StandardOpenOption.CREATE);
         ssChannel.bind(new InetSocketAddress(9898));
         SocketChannel sChannel=ssChannel.accept();
         ByteBuffer buf=ByteBuffer.allocate(1024);
@@ -2895,7 +2896,7 @@ class Server {
         }
 
         //发送反馈给客户端
-        buf.put(&quot;服务端接收数据成功&quot;.getBytes());
+        buf.put(&#34;服务端接收数据成功&#34;.getBytes());
         buf.flip();
         sChannel.write(buf);
 
@@ -2904,14 +2905,14 @@ class Server {
         ssChannel.close();
     }
 }
-</code></pre><h4 id="非阻塞">非阻塞</h4>
+</code></pre></div><h4 id="非阻塞">非阻塞</h4>
 <p>Java NIO 是非阻塞模式的。
 当线程从某通道进行读写数据时，若没有数据可用时，该线程可以进行其他任务。线程通常将非阻塞 IO 的空闲时间用于在其他通道上执行 IO 操作，所以单独的线程可以管理多个输入和输出通道。
 因此，NIO 可以让服务器端使用一个或有限几个线程来同时处理连接到服务器端的所有客户端。</p>
 <p>非阻塞式IO,代码演示</p>
-<pre><code>class Client {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">class Client {
     public static void main(String[] args) throws IOException {
-        System.out.println(&quot;启动客户端 ... 等待输入 ...&quot;);
+        System.out.println(&#34;启动客户端 ... 等待输入 ...&#34;);
         client();
     }
 
@@ -2919,14 +2920,14 @@ class Server {
      * 非阻塞NIO 客户端
      */
     public static void client() throws IOException {
-        SocketChannel sChannel = SocketChannel.open(new InetSocketAddress(&quot;127.0.0.1&quot;, 9898));
+        SocketChannel sChannel = SocketChannel.open(new InetSocketAddress(&#34;127.0.0.1&#34;, 9898));
         ByteBuffer buf = ByteBuffer.allocate(1024);
 
         Scanner scanner = new Scanner(System.in);
 
         // 发送数据到服务方
         while (scanner.hasNextLine()) {
-            buf.put((LocalDate.now() + &quot;\n&quot; + scanner.next()).getBytes());
+            buf.put((LocalDate.now() + &#34;\n&#34; + scanner.next()).getBytes());
             buf.flip();
             sChannel.write(buf);
             buf.clear();
@@ -2937,7 +2938,7 @@ class Server {
 
 class Server {
     public static void main(String[] args) throws IOException {
-        System.out.println(&quot;启动服务端 ... 等待客户端请求 ...&quot;);
+        System.out.println(&#34;启动服务端 ... 等待客户端请求 ...&#34;);
         server();
     }
 
@@ -3007,10 +3008,10 @@ class Server {
     }
 }
 
-</code></pre><h4 id="通道-1">通道</h4>
+</code></pre></div><h4 id="通道-1">通道</h4>
 <p>Java NIO 管道是2个线程之间的<strong>单向</strong>数据连接。Pipe有一个source通道和一个sink通道。数据会被写到sink通道，从source通道读取。</p>
 <p>代码演示</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) throws IOException {
         //1.获取管道
         Pipe pipe= Pipe.open();
@@ -3018,7 +3019,7 @@ class Server {
         //2.将缓冲区中的数据写入管道
         ByteBuffer buf= ByteBuffer.allocate(1024);
         Pipe.SinkChannel sinkChannel=pipe.sink();
-        buf.put(&quot;通过单向管道发送数据&quot;.getBytes());
+        buf.put(&#34;通过单向管道发送数据&#34;.getBytes());
         buf.flip();
         sinkChannel.write(buf);
 
@@ -3032,7 +3033,7 @@ class Server {
         sinkChannel.close();
     }
 }
-</code></pre><h2 id="nettyhttpsdongzlgithubionetty-handbook"><a href="https://dongzl.github.io/netty-handbook/#/">Netty</a></h2>
+</code></pre></div><h2 id="nettyhttpsdongzlgithubionetty-handbook"><a href="https://dongzl.github.io/netty-handbook/#/">Netty</a></h2>
 <h3 id="概述">概述</h3>
 <blockquote>
 <p><a href="https://netty.io">Netty is an asynchronous event-driven network application framework
@@ -3157,7 +3158,7 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 </ul>
 <h3 id="简单使用">简单使用</h3>
 <p>1.<a href="https://netty.io/downloads.html">导入依赖</a></p>
-<pre><code>&lt;dependency&gt;
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;dependency&gt;
     &lt;groupId&gt;io.netty&lt;/groupId&gt;
     &lt;artifactId&gt;netty-all&lt;/artifactId&gt;
     &lt;version&gt;4.1.36.Final&lt;/version&gt;
@@ -3166,8 +3167,8 @@ for rapid development of maintainable high performance protocol servers &amp; cl
     &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
     &lt;artifactId&gt;lombok&lt;/artifactId&gt;
 &lt;/dependency&gt;
-</code></pre><p>2.服务器端代码演示</p>
-<pre><code>/**
+</code></pre></div><p>2.服务器端代码演示</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">/**
  * netty 服务端测试
  */
 public class MainTestServer {
@@ -3190,7 +3191,7 @@ public class MainTestServer {
                         channel.pipeline().addLast(new ChannelInboundHandlerAdapter() {
                             @Override
                             public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-                                System.out.println(&quot;服务器端接收数据：&quot; + msg);
+                                System.out.println(&#34;服务器端接收数据：&#34; + msg);
                             }
                         });
                     }
@@ -3199,8 +3200,8 @@ public class MainTestServer {
                 .bind(8090);
     }
 }
-</code></pre><p>3.客户端代码演示</p>
-<pre><code>/**
+</code></pre></div><p>3.客户端代码演示</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">/**
  * netty 客户端测试
  */
 public class MainTestClient {
@@ -3216,15 +3217,15 @@ public class MainTestClient {
                         channel.pipeline().addLast(new StringEncoder());
                     }
                 })
-                .connect(new InetSocketAddress(&quot;127.0.0.1&quot;, 8090))
+                .connect(new InetSocketAddress(&#34;127.0.0.1&#34;, 8090))
                 //阻塞方法，直到与服务器端连接建立
                 .sync()
                 .channel()
                 // 向服务器端发送数据
-                .writeAndFlush(&quot;hello word&quot;);
+                .writeAndFlush(&#34;hello word&#34;);
     }
 }
-</code></pre><h3 id="任务队列">任务队列</h3>
+</code></pre></div><h3 id="任务队列">任务队列</h3>
 <ul>
 <li>用户程序自定义的普通任务</li>
 <li>用户自定义定时任务</li>
@@ -3232,7 +3233,7 @@ public class MainTestClient {
 最终的 Write 会提交到任务队列中后被异步消费</li>
 </ul>
 <p>客户端</p>
-<pre><code>/**
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">/**
  * netty 客户端测试
  */
 public class MainTestClient {
@@ -3246,17 +3247,17 @@ public class MainTestClient {
                     @Override
                     protected void initChannel(NioSocketChannel channel) throws Exception {
                         // 添加编码器 只有当向服务端发送请求数据时 才会执行
-                        channel.pipeline().addLast(&quot;decoder&quot;, new StringDecoder());
-                        channel.pipeline().addLast(&quot;encoder&quot;, new StringEncoder());
+                        channel.pipeline().addLast(&#34;decoder&#34;, new StringDecoder());
+                        channel.pipeline().addLast(&#34;encoder&#34;, new StringEncoder());
                         channel.pipeline().addLast(new ChannelInboundHandlerAdapter(){
                             @Override
                             public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-                                System.out.println(&quot;服务端响应数据：&quot; + msg);
+                                System.out.println(&#34;服务端响应数据：&#34; + msg);
                             }
 
                             @Override
                             public void channelActive(ChannelHandlerContext ctx) throws Exception {
-                                System.out.println(&quot;客户端Active .....&quot;);
+                                System.out.println(&#34;客户端Active .....&#34;);
                             }
 
                             /**
@@ -3272,16 +3273,16 @@ public class MainTestClient {
                     }
 
                 })
-                .connect(new InetSocketAddress(&quot;127.0.0.1&quot;, 8090))
+                .connect(new InetSocketAddress(&#34;127.0.0.1&#34;, 8090))
                 //阻塞方法，直到与服务器端连接建立
                 .sync()
                 .channel()
                 // 向服务器端发送数据
-                .writeAndFlush(&quot;hello word&quot;);
+                .writeAndFlush(&#34;hello word&#34;);
     }
 }
-</code></pre><p>服务端</p>
-<pre><code>/**
+</code></pre></div><p>服务端</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">/**
  * netty 服务端测试
  */
 public class MainTestServer {
@@ -3308,8 +3309,8 @@ public class MainTestServer {
                                 // 当客户端请求发过来时 才会调用
                                 @Override
                                 protected void initChannel(NioSocketChannel channel) throws Exception {
-                                    channel.pipeline().addLast(&quot;decoder&quot;, new StringDecoder(CharsetUtil.UTF_8));
-                                    channel.pipeline().addLast(&quot;encoder&quot;, new StringEncoder(CharsetUtil.UTF_8));
+                                    channel.pipeline().addLast(&#34;decoder&#34;, new StringDecoder(CharsetUtil.UTF_8));
+                                    channel.pipeline().addLast(&#34;encoder&#34;, new StringEncoder(CharsetUtil.UTF_8));
                                     // 自定义handler
                                     channel.pipeline().addLast(new ChannelInboundHandlerAdapter() {
 
@@ -3318,7 +3319,7 @@ public class MainTestServer {
                                          */
                                         @Override
                                         public void channelActive(ChannelHandlerContext ctx) throws Exception {
-                                            System.out.println(&quot;服务端 Active......&quot;);
+                                            System.out.println(&#34;服务端 Active......&#34;);
                                         }
 
                                         /**
@@ -3326,13 +3327,13 @@ public class MainTestServer {
                                          */
                                         @Override
                                         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-                                            System.out.println(&quot;服务器收到消息: &quot; + msg.toString());
+                                            System.out.println(&#34;服务器收到消息: &#34; + msg.toString());
                                             // 比如这里我们有一个非常耗时长的业务-&gt; 应该一步执行 -&gt; 提交该对应的channel
                                             // 将任务放在 taskQueue 中
                                             ctx.channel().eventLoop().execute(() -&gt; {
                                                 try {
                                                     Thread.sleep(10 * 1000);
-                                                    ctx.writeAndFlush(&quot;业务1处理完成&quot;);
+                                                    ctx.writeAndFlush(&#34;业务1处理完成&#34;);
                                                 } catch (InterruptedException e) {
                                                     e.printStackTrace();
                                                 }
@@ -3341,7 +3342,7 @@ public class MainTestServer {
                                             ctx.channel().eventLoop().execute(() -&gt; {
                                                 try {
                                                     Thread.sleep(20 * 1000);
-                                                    ctx.writeAndFlush(&quot;业务2处理完成&quot;);
+                                                    ctx.writeAndFlush(&#34;业务2处理完成&#34;);
                                                 } catch (InterruptedException e) {
                                                     e.printStackTrace();
                                                 }
@@ -3354,10 +3355,10 @@ public class MainTestServer {
                                     
                                                     try {
                                                         Thread.sleep(5 * 1000);
-                                                        ctx.writeAndFlush(Unpooled.copiedBuffer(&quot;hello, 客户端~(&gt;^ω^&lt;)喵4&quot;, CharsetUtil.UTF_8));
-                                                        System.out.println(&quot;channel code=&quot; + ctx.channel().hashCode());
+                                                        ctx.writeAndFlush(Unpooled.copiedBuffer(&#34;hello, 客户端~(&gt;^ω^&lt;)喵4&#34;, CharsetUtil.UTF_8));
+                                                        System.out.println(&#34;channel code=&#34; + ctx.channel().hashCode());
                                                     } catch (Exception ex) {
-                                                        System.out.println(&quot;发生异常&quot; + ex.getMessage());
+                                                        System.out.println(&#34;发生异常&#34; + ex.getMessage());
                                                     }
                                                 }
                                             }, 5, TimeUnit.SECONDS);
@@ -3368,7 +3369,7 @@ public class MainTestServer {
                                          */
                                         @Override
                                         public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-                                            ctx.writeAndFlush(&quot;over&quot;);
+                                            ctx.writeAndFlush(&#34;over&#34;);
                                         }
 
                                         /**
@@ -3398,7 +3399,7 @@ public class MainTestServer {
         }
     }
 }
-</code></pre><h3 id="异步模型">异步模型</h3>
+</code></pre></div><h3 id="异步模型">异步模型</h3>
 <p>异步的概念和同步相对。当一个异步过程调用发出后，调用者不能立刻得到结果。实际处理这个调用的组件在完成后，通过状态、通知和回调来通知调用者。
 <code>Netty</code> 中的 I/O 操作是异步的，包括 <code>Bind、Write、Connect</code> 等操作会简单的返回一个 <code>ChannelFuture</code>。
 调用者并不能立刻获得结果，而是通过 <code>Future-Listener</code> 机制，用户可以方便的主动获取或者通过通知机制获得 IO 操作结果。</p>
@@ -3411,7 +3412,7 @@ public class MainTestServer {
 <li>通过 <code>isCancelled</code> 方法来判断已完成的当前操作是否被取消；</li>
 <li>通过 <code>addListener</code> 方法来注册监听器，当操作已完成（isDone方法返回完成），将会通知指定的监听器；如果 <code>Future</code> 对象已完成，则通知指定的监听器</li>
 </ul>
-<pre><code>//绑定一个端口并且同步,生成了一个ChannelFuture对象
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">//绑定一个端口并且同步,生成了一个ChannelFuture对象
 //启动服务器(并绑定端口)
 ChannelFuture cf = bootstrap.bind(6668).sync();
 //给cf注册监听器，监控我们关心的事件
@@ -3419,16 +3420,16 @@ cf.addListener(new ChannelFutureListener() {
    @Override
    public void operationComplete (ChannelFuture future) throws Exception {
       if (cf.isSuccess()) {
-         System.out.println(&quot;监听端口6668成功&quot;);
+         System.out.println(&#34;监听端口6668成功&#34;);
       } else {
-         System.out.println(&quot;监听端口6668失败&quot;);
+         System.out.println(&#34;监听端口6668失败&#34;);
       }
    }
 });
 
-</code></pre><h3 id="netty搭建http服务">Netty搭建Http服务</h3>
+</code></pre></div><h3 id="netty搭建http服务">Netty搭建Http服务</h3>
 <p>服务端</p>
-<pre><code>public class MainTestServer {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTestServer {
     public static void main(String[] args) {
         //new 一个主线程组
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
@@ -3452,41 +3453,41 @@ cf.addListener(new ChannelFutureListener() {
                                 // 当客户端请求发过来时 才会调用
                                 @Override
                                 protected void initChannel(NioSocketChannel channel) throws Exception {
-                                    channel.pipeline().addLast(&quot;MyHttpServerCodec&quot;, new HttpServerCodec());
+                                    channel.pipeline().addLast(&#34;MyHttpServerCodec&#34;, new HttpServerCodec());
                                     // 自定义handler
                                     channel.pipeline().addLast(new SimpleChannelInboundHandler&lt;HttpObject&gt;() {
                                         @Override
                                         protected void channelRead0(ChannelHandlerContext ctx, HttpObject msg) throws Exception {
-                                            System.out.println(&quot;对应的channel=&quot; + ctx.channel() + &quot; pipeline=&quot; + ctx.pipeline() + &quot; 通过pipeline获取channel&quot; + ctx.pipeline().channel());
+                                            System.out.println(&#34;对应的channel=&#34; + ctx.channel() + &#34; pipeline=&#34; + ctx.pipeline() + &#34; 通过pipeline获取channel&#34; + ctx.pipeline().channel());
 
-                                            System.out.println(&quot;当前ctx的handler=&quot; + ctx.handler());
+                                            System.out.println(&#34;当前ctx的handler=&#34; + ctx.handler());
 
                                             //判断 msg 是不是 httprequest请求
                                             if (msg instanceof HttpRequest) {
 
-                                                System.out.println(&quot;ctx 类型=&quot; + ctx.getClass());
+                                                System.out.println(&#34;ctx 类型=&#34; + ctx.getClass());
 
-                                                System.out.println(&quot;pipeline hashcode&quot; + ctx.pipeline().hashCode() + &quot; TestHttpServerHandler hash=&quot; + this.hashCode());
+                                                System.out.println(&#34;pipeline hashcode&#34; + ctx.pipeline().hashCode() + &#34; TestHttpServerHandler hash=&#34; + this.hashCode());
 
-                                                System.out.println(&quot;msg 类型=&quot; + msg.getClass());
-                                                System.out.println(&quot;客户端地址&quot; + ctx.channel().remoteAddress());
+                                                System.out.println(&#34;msg 类型=&#34; + msg.getClass());
+                                                System.out.println(&#34;客户端地址&#34; + ctx.channel().remoteAddress());
 
                                                 //获取到
                                                 HttpRequest httpRequest = (HttpRequest) msg;
                                                 //获取uri, 过滤指定的资源
                                                 URI uri = new URI(httpRequest.uri());
-                                                if (&quot;/favicon.ico&quot;.equals(uri.getPath())) {
-                                                    System.out.println(&quot;请求了 favicon.ico, 不做响应&quot;);
+                                                if (&#34;/favicon.ico&#34;.equals(uri.getPath())) {
+                                                    System.out.println(&#34;请求了 favicon.ico, 不做响应&#34;);
                                                     return;
                                                 }
                                                 //回复信息给浏览器 [http协议]
 
-                                                ByteBuf content = Unpooled.copiedBuffer(&quot;hello, 我是服务器&quot;, CharsetUtil.UTF_8);
+                                                ByteBuf content = Unpooled.copiedBuffer(&#34;hello, 我是服务器&#34;, CharsetUtil.UTF_8);
 
                                                 //构造一个http的相应，即 httpresponse
                                                 FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, content);
 
-                                                response.headers().set(HttpHeaderNames.CONTENT_TYPE, &quot;text/plain&quot;);
+                                                response.headers().set(HttpHeaderNames.CONTENT_TYPE, &#34;text/plain&#34;);
                                                 response.headers().set(HttpHeaderNames.CONTENT_LENGTH, content.readableBytes());
 
                                                 //将构建好 response返回
@@ -3500,9 +3501,9 @@ cf.addListener(new ChannelFutureListener() {
             ChannelFuture future = serverBootstrap.bind(8090).sync();
             future.addListener( future1 -&gt; {
                 if (future.isSuccess()) {
-                    System.out.println(&quot;监听端口8090成功&quot;);
+                    System.out.println(&#34;监听端口8090成功&#34;);
                 }else{
-                    System.out.println(&quot;监听端口8090失败&quot;);
+                    System.out.println(&#34;监听端口8090失败&#34;);
                 }
             });
             // 对关闭通道进行监听
@@ -3517,7 +3518,7 @@ cf.addListener(new ChannelFutureListener() {
         }
     }
 }
-</code></pre></div>
+</code></pre></div></div>
                     <div class="post_footer">
                         
                         <div class="meta">
@@ -3527,7 +3528,7 @@ cf.addListener(new ChannelFutureListener() {
                                     
                                     <a href="https://whiteppure.github.io/iblog/tags/java/">Java</a>
                                     
-                                    <a href="https://whiteppure.github.io/iblog/tags/%E9%9D%A2%E5%90%91%E8%8F%9C%E9%B8%9F%E7%BC%96%E7%A8%8B/">面向菜鸟编程</a>
+                                    <a href="https://whiteppure.github.io/iblog/tags/java%E5%9F%BA%E7%A1%80/">Java基础</a>
                                     
                                 </span>
                             </div>
@@ -3537,7 +3538,25 @@ cf.addListener(new ChannelFutureListener() {
                 </div>
                 
                 
-                <div class="doc_comments"></div>
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+    })
+</script>
                 
             </div>
         </div>

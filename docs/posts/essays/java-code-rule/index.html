@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>规范编写代码心得 ｜ whitepure</title>
+	<title>规范编写代码心得 ｜ 至简</title>
 	
     
     
-    <meta name="description" content="" />
+    <meta name="description" content="编码规范 命名规则 编码注释 日志规范 内存泄露问题 内存泄漏是指不使用的对象持续占有内存使得内存得不到释放，从而造成内存空间的浪费。 内存泄露导致问题： 最明显问题频繁GC" />
     
 
     
@@ -834,35 +834,36 @@
         <a id="menu_icon"><i class="ri-menu-line"></i></a>
     </div>
 </div>
-        
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
+                    <span>至简</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">大道至简</p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
         <div class="content">
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
@@ -886,15 +887,15 @@
 <p>大多数内存泄露的原因是，长生命周期的对象引用了短生命周期的对象。例如，A对象引用B对象，A对象的生命周期（t1-t4）比B对象的生命周期（t2-t3）长的多。当B对象没有被应用程序使用之后，A对象仍然在引用着B对象。这样，垃圾回收器就没办法将B对象从内存中移除，从而导致内存泄露问题。</p>
 <h4 id="变量作用域不合理导致内存泄露">变量作用域不合理导致内存泄露</h4>
 <p>一个变量的定义的作用范围大于其使用范围，很有可能会造成内存泄漏</p>
-<pre><code>public class UsingRandom {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class UsingRandom {
     private String msg;
     public void receiveMsg(){
         readFromNet();//从网络中接受数据保存到msg中
         saveDB();//把msg保存到数据库中
     }
 }
-</code></pre><p>解决办法，将msg定义在receiveMsg方法中或将msg重置为null。</p>
-<pre><code>public class UsingRandom {
+</code></pre></div><p>解决办法，将msg定义在receiveMsg方法中或将msg重置为null。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class UsingRandom {
     private String msg;
     public void receiveMsg(){
         readFromNet();//从网络中接受数据保存到msg中
@@ -902,21 +903,21 @@
         msg = null;
     }
 }
-</code></pre><h4 id="向静态集合添加数据导致内存泄露">向静态集合添加数据导致内存泄露</h4>
+</code></pre></div><h4 id="向静态集合添加数据导致内存泄露">向静态集合添加数据导致内存泄露</h4>
 <p>HashMap、LinkedList 等集合类，如果这些集合是静态的并且向集合中添加了对象，这些对象就算不再使用，也不会被GC主动回收的，它们的生命周期与JVM程序一致，容器中的对象在程序结束之前将不能被释放，从而造成内存泄漏。</p>
-<pre><code>public class MyTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MyTest {
     static Map&lt;String, User&gt; map = new HashMap&lt;&gt;();
     public static void main(String[] args) throws InterruptedException {
         User user = new User();
-        map.put(&quot;01&quot;,user);
+        map.put(&#34;01&#34;,user);
     }
 }
-</code></pre><p>解决办法是将使用完后的集合和对象重置为null，或将集合替换成弱引用集合（只要垃圾回收机制一运行，不管 JVM 的内存空间是否足够，总会回收该对象占用的内存）。</p>
-<pre><code>    static Map&lt;String, User&gt; map = new HashMap&lt;&gt;();
+</code></pre></div><p>解决办法是将使用完后的集合和对象重置为null，或将集合替换成弱引用集合（只要垃圾回收机制一运行，不管 JVM 的内存空间是否足够，总会回收该对象占用的内存）。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    static Map&lt;String, User&gt; map = new HashMap&lt;&gt;();
     public static void main(String[] args) throws InterruptedException {
 
         User user = new User();
-        map.put(&quot;01&quot;,user);
+        map.put(&#34;01&#34;,user);
 
         user = null;
         map = null;
@@ -924,14 +925,14 @@
         System.gc();
         Thread.sleep(1000);
     }
-</code></pre><pre><code>    static Map&lt;String, User&gt; map = new WeakHashMap&lt;&gt;();
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    static Map&lt;String, User&gt; map = new WeakHashMap&lt;&gt;();
     public static void main(String[] args) throws InterruptedException {
         User user = new User();
-        map.put(&quot;01&quot;,user);
+        map.put(&#34;01&#34;,user);
     }
-</code></pre><h4 id="内部类持有外部类引用导致内存泄露">内部类持有外部类引用导致内存泄露</h4>
+</code></pre></div><h4 id="内部类持有外部类引用导致内存泄露">内部类持有外部类引用导致内存泄露</h4>
 <p>非静态内部类，自动生成的构造方法，默认的参数是外部类的类型，因此使用非内部内部类的时候会保留一个外部类的引用。如果换成静态内部类则不会生成默认的构造方法。</p>
-<pre><code>public class MyClass {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MyClass {
 
 
     public static void main(String[] args) throws Throwable {
@@ -950,13 +951,13 @@
         }
     }
 }
-</code></pre><p>如果一个外部类的实例对象的方法返回了一个内部类的实例对象。这个内部类对象被长期引用了，即使那个外部类实例对象不再被使用，但由于内部类持有外部类的实例对象，这个外部类对象将不会被垃圾回收，这也会造成内存泄漏。</p>
+</code></pre></div><p>如果一个外部类的实例对象的方法返回了一个内部类的实例对象。这个内部类对象被长期引用了，即使那个外部类实例对象不再被使用，但由于内部类持有外部类的实例对象，这个外部类对象将不会被垃圾回收，这也会造成内存泄漏。</p>
 <h4 id="数据结构中移除元素导致内存泄露">数据结构中移除元素导致内存泄露</h4>
 <ul>
 <li>链表中移除元素，没有将移除的元素置为null导致的内存泄露问题</li>
 </ul>
 <p>Java容器LinkedList移除元素方法核心源码:</p>
-<pre><code>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">
 //删除指定节点并返回被删除的元素值
 E unlink(Node&lt;E&gt; x) {
     //获取当前值和前后节点
@@ -980,12 +981,12 @@ E unlink(Node&lt;E&gt; x) {
     modCount++;
     return element;
 }
-</code></pre><p>除了修改节点间的关联关系，我们还要做的就是赋值为null的操作，不管GC何时会开始清理，我们都应及时的将无用的对象标记为可被清理的对象。</p>
+</code></pre></div><p>除了修改节点间的关联关系，我们还要做的就是赋值为null的操作，不管GC何时会开始清理，我们都应及时的将无用的对象标记为可被清理的对象。</p>
 <hr>
 <ul>
 <li>在栈中将该元素出栈，没有将出栈的元素置为null导致的内存泄露问题</li>
 </ul>
-<pre><code>public E pop(){
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public E pop(){
     if(size == 0)
         return null;
     else{
@@ -994,29 +995,29 @@ E unlink(Node&lt;E&gt; x) {
         return e;
     }
 }
-</code></pre><hr>
+</code></pre></div><hr>
 <ul>
 <li>改变hash表中对象的属性值，再将该元素移除导致的内存泄露问题</li>
 </ul>
 <p>因为改变了对象属性的值相当于改变了改对象的hash值，删除的时候是根据对象的hash值来删除的，删除对象的时候找不到对应的hash值，所以不能删除，最终导致内存泄露。</p>
-<pre><code>public class ChangeHashCode {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class ChangeHashCode {
     public static void main(String[] args) {
         HashSet set = new HashSet();
-        Person p1 = new Person(1001, &quot;AA&quot;);
-        Person p2 = new Person(1002, &quot;BB&quot;);
+        Person p1 = new Person(1001, &#34;AA&#34;);
+        Person p2 = new Person(1002, &#34;BB&#34;);
  
         set.add(p1);
         set.add(p2);
  
-        p1.name = &quot;CC&quot;; // 导致了内存的泄漏
+        p1.name = &#34;CC&#34;; // 导致了内存的泄漏
         set.remove(p1);  // 对象哈希值发生变化，检索不到，导致删除失败
  
         System.out.println(set);
  
-        set.add(new Person(1001, &quot;CC&quot;));
+        set.add(new Person(1001, &#34;CC&#34;));
         System.out.println(set);
  
-        set.add(new Person(1001, &quot;AA&quot;));
+        set.add(new Person(1001, &#34;AA&#34;));
         System.out.println(set);
     }
 }
@@ -1050,21 +1051,21 @@ class Person {
  
     @Override
     public String toString() {
-        return &quot;Person{&quot; +
-                &quot;id=&quot; + id +
-                &quot;, name='&quot; + name + '\'' +
-                '}';
+        return &#34;Person{&#34; +
+                &#34;id=&#34; + id +
+                &#34;, name=&#39;&#34; + name + &#39;\&#39;&#39; +
+                &#39;}&#39;;
     }
 }
-</code></pre><h4 id="连接未释放">连接未释放</h4>
+</code></pre></div><h4 id="连接未释放">连接未释放</h4>
 <p>如数据库连接、网络连接和IO连接等。当不再使用时，需要调用close方法来释放连接。只有连接被关闭后，垃圾回收器才会回收对应的对象。否则，如果在连接过程中，对一些对象不显性地关闭，将会造成大量的对象无法被回收，从而引起内存泄漏。</p>
-<pre><code>public static void main(String[] args) {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static void main(String[] args) {
     try{
         Connection conn =null;
-        Class.forName(&quot;com.mysql.jdbc.Driver&quot;);
-        conn =DriverManager.getConnection(&quot;url&quot;,&quot;&quot;,&quot;&quot;);
+        Class.forName(&#34;com.mysql.jdbc.Driver&#34;);
+        conn =DriverManager.getConnection(&#34;url&#34;,&#34;&#34;,&#34;&#34;);
         Statement stmt =conn.createStatement();
-        ResultSet rs =stmt.executeQuery(&quot;....&quot;);
+        ResultSet rs =stmt.executeQuery(&#34;....&#34;);
     } catch（Exception e）{
     } finally {
         // 1．关闭结果集 Statement
@@ -1072,32 +1073,32 @@ class Person {
         // 3．关闭连接 Connection
     }
 }
-</code></pre><h2 id="代码结构">代码结构</h2>
+</code></pre></div><h2 id="代码结构">代码结构</h2>
 <p>编写代码最终要的原则就是要具有扩展性，如果没有扩展性那么代码维护起来会非常麻烦。</p>
 <h3 id="优雅判空">优雅判空</h3>
 <h4 id="使用spring提供的工具类assert判空">使用Spring提供的工具类Assert判空</h4>
-<pre><code>public class MyTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MyTest {
     public static void main(String[] args) {
         Object obj = new Object();
-        Assert.notNull(obj,&quot;对象不能为空&quot;);
-        Assert.isTrue(obj != null,&quot;对象不能为空&quot;);
+        Assert.notNull(obj,&#34;对象不能为空&#34;);
+        Assert.isTrue(obj != null,&#34;对象不能为空&#34;);
         ArrayList&lt;Object&gt; list = new ArrayList&lt;&gt;();
-        Assert.notEmpty(list,&quot;list不能为空&quot;);
+        Assert.notEmpty(list,&#34;list不能为空&#34;);
     }
 }
-</code></pre><h4 id="使用java8链式调用特性判空">使用Java8链式调用特性判空</h4>
-<pre><code>public class MyTest {
+</code></pre></div><h4 id="使用java8链式调用特性判空">使用Java8链式调用特性判空</h4>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MyTest {
     public static void main(String[] args) {
         Object obj = new Object();
-        System.out.println(&quot;是否不为空：&quot; + Optional.of(obj).isPresent());
+        System.out.println(&#34;是否不为空：&#34; + Optional.of(obj).isPresent());
 
         User user = new User();
         user.setId(1);
-        user.setName(&quot;ls&quot;);
-        Optional&lt;User&gt; zs = Optional.of(user).filter(u -&gt; u.getName().equals(&quot;zs&quot;));
+        user.setName(&#34;ls&#34;);
+        Optional&lt;User&gt; zs = Optional.of(user).filter(u -&gt; u.getName().equals(&#34;zs&#34;));
         System.out.println(zs.get());
         zs.ifPresent(item -&gt;{
-             System.out.println(&quot;对象不等于空，做的一系列操作&quot;);
+             System.out.println(&#34;对象不等于空，做的一系列操作&#34;);
          });
         User user1 = Optional.of(zs.orElse(new User())).get();
         System.out.println(user1);
@@ -1123,18 +1124,18 @@ class Person {
 
         @Override
         public String toString() {
-            return &quot;User{&quot; +
-                    &quot;id=&quot; + id +
-                    &quot;, name='&quot; + name + '\'' +
-                    '}';
+            return &#34;User{&#34; +
+                    &#34;id=&#34; + id +
+                    &#34;, name=&#39;&#34; + name + &#39;\&#39;&#39; +
+                    &#39;}&#39;;
         }
     }
 }
-</code></pre><p>自定义链式调用，对Optional扩展：</p>
+</code></pre></div><p>自定义链式调用，对Optional扩展：</p>
 <ul>
 <li><a href="https://www.hollischuang.com/archives/5605">https://www.hollischuang.com/archives/5605</a></li>
 </ul>
-<pre><code>@Data
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Data
 public class User {
 
     private String name;
@@ -1151,7 +1152,7 @@ public class User {
         private String adress;
     }
 }
-</code></pre><pre><code>/**
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">/**
 * @author Axin
 * @since 2020-09-10
 * @summary 链式调用 bean 中 value 的方法
@@ -1267,17 +1268,17 @@ public final class OptionalBean&lt;T&gt; {
      * @return
      */
     public static&lt;T&gt; OptionalBean&lt;T&gt; empty() {
-        @SuppressWarnings(&quot;unchecked&quot;)
+        @SuppressWarnings(&#34;unchecked&#34;)
         OptionalBean&lt;T&gt; none = (OptionalBean&lt;T&gt;) EMPTY;
         return none;
     }
 
 }
-</code></pre><pre><code>public static void main(String[] args) {
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static void main(String[] args) {
 
     User axin = new User();
     User.School school = new User.School();
-    axin.setName(&quot;hello&quot;);
+    axin.setName(&#34;hello&#34;);
 
     // 1. 基本调用
     String value1 = OptionalBean.ofNullable(axin)
@@ -1296,12 +1297,12 @@ public final class OptionalBean&lt;T&gt; {
     OptionalBean.ofNullable(axin)
             .getBean(User::getSchool)
             .getBean(User.School::getAdress)
-            .ifPresent(adress -&gt; System.out.println(String.format(&quot;地址存在:%s&quot;, adress)));
+            .ifPresent(adress -&gt; System.out.println(String.format(&#34;地址存在:%s&#34;, adress)));
 
     // 4. 扩展的 orElse
     String value2 = OptionalBean.ofNullable(axin)
             .getBean(User::getSchool)
-            .getBean(User.School::getAdress).orElse(&quot;家里蹲&quot;);
+            .getBean(User.School::getAdress).orElse(&#34;家里蹲&#34;);
 
     System.out.println(value2);
 
@@ -1309,19 +1310,19 @@ public final class OptionalBean&lt;T&gt; {
     try {
         String value3 = OptionalBean.ofNullable(axin)
                 .getBean(User::getSchool)
-                .getBean(User.School::getAdress).orElseThrow(() -&gt; new RuntimeException(&quot;空指针了&quot;));
+                .getBean(User.School::getAdress).orElseThrow(() -&gt; new RuntimeException(&#34;空指针了&#34;));
     } catch (Exception e) {
         System.out.println(e.getMessage());
     }
 }
-</code></pre><h4 id="使用beanvalidator注解判空">使用BeanValidator注解判空</h4>
+</code></pre></div><h4 id="使用beanvalidator注解判空">使用BeanValidator注解判空</h4>
 <p>思路：定义一个注解，将需要校验的参数对象都标注该注解，利用SpringAOP，拦截该注解，将其中标注的参数取出，最后通过BeanValidator进行校验。</p>
 <p>所需依赖：</p>
-<pre><code>&lt;dependency&gt;
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;dependency&gt;
     &lt;groupId&gt;org.hibernate&lt;/groupId&gt;
     &lt;artifactId&gt;hibernate-validator&lt;/artifactId&gt;
 &lt;/dependency&gt;
-</code></pre><pre><code>/**
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">/**
  * facade接口注解， 用于统一对facade进行参数校验及异常捕获
  * @author whitepure
  */
@@ -1330,13 +1331,13 @@ public final class OptionalBean&lt;T&gt; {
 public @interface Facade {
 
 }
-</code></pre><pre><code>@Slf4j
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Slf4j
 @Aspect
 @Component
 public class FacadeAspect {
 
 
-    @Around(&quot;@annotation(com.spring.example.annotation.Facade)&quot;)
+    @Around(&#34;@annotation(com.spring.example.annotation.Facade)&#34;)
     public Object facade(ProceedingJoinPoint pjp) throws Exception {
 
         // 获取，执行目标方法
@@ -1344,7 +1345,7 @@ public class FacadeAspect {
 
         Object[] args = pjp.getArgs();
 
-        log.info(&quot;获取@Facede注解参数列表,参数: {}&quot;, args);
+        log.info(&#34;获取@Facede注解参数列表,参数: {}&#34;, args);
 
         // 参数类型
         Class&lt;?&gt; returnType = ((MethodSignature) pjp.getSignature()).getMethod().getReturnType();
@@ -1377,17 +1378,17 @@ public class FacadeAspect {
         if (returnType.getDeclaredConstructor().newInstance() instanceof ApiResponse) {
             ApiResponse response = (ApiResponse) returnType.getDeclaredConstructor().newInstance();
             String message = throwable.getMessage();
-            log.error(&quot;校验bean异常：&quot;, throwable);
+            log.error(&#34;校验bean异常：&#34;, throwable);
             response.setMessage(message);
             response.setCode(Status.ERROR.getCode());
             return response;
         }
-        log.error(&quot;failed to getFailedResponse , returnType ({}) is not instanceof BaseResponse&quot;, returnType);
+        log.error(&#34;failed to getFailedResponse , returnType ({}) is not instanceof BaseResponse&#34;, returnType);
         return null;
     }
 
 }
-</code></pre><pre><code>public class BeanValidator {
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class BeanValidator {
 
 
     private static final Validator validator = Validation
@@ -1494,7 +1495,7 @@ public class FacadeAspect {
         public String getErrors() {
             StringBuilder sb = new StringBuilder();
             for (ErrorMessage error : errors) {
-                sb.append(error.getPropertyPath()).append(&quot;:&quot;).append(error.getMessage()).append(&quot; &quot;);
+                sb.append(error.getPropertyPath()).append(&#34;:&#34;).append(error.getMessage()).append(&#34; &#34;);
             }
             return sb.toString();
         }
@@ -1521,27 +1522,27 @@ public class FacadeAspect {
     }
 
 }
-</code></pre><h3 id="过多ifelse">过多if..else</h3>
+</code></pre></div><h3 id="过多ifelse">过多if..else</h3>
 <p>替换if..else并不会降低代码的复杂度，相反比较少见的写法可能会增加认知负荷，从而进一步增加了复杂度。之所以要替换过多的if..else是为了对代码进行解耦合，方便扩展代码，最终方便对代码的维护。</p>
 <p>以下有几种常见的方法来替换过多的if..else。</p>
 <h4 id="使用枚举代替ifelse">使用枚举代替if..else</h4>
-<pre><code>public class MyTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MyTest {
     public static void main(String[] args) {
-        String val = &quot;FOUR&quot;;
+        String val = &#34;FOUR&#34;;
         condition(val);
-        System.out.println(&quot;--------------&quot;);
+        System.out.println(&#34;--------------&#34;);
         newCondition(val);
     }
 
     public static void condition(String val) {
-        if (&quot;ONE&quot;.equals(val)) {
-            System.out.println(&quot;val:&quot; + 1111111);
-        } else if (&quot;TWO&quot;.equals(val)) {
-            System.out.println(&quot;val:&quot; + 2222222);
-        } else if (&quot;THREE&quot;.equals(val)) {
-            System.out.println(&quot;val:&quot; + 3333333);
+        if (&#34;ONE&#34;.equals(val)) {
+            System.out.println(&#34;val:&#34; + 1111111);
+        } else if (&#34;TWO&#34;.equals(val)) {
+            System.out.println(&#34;val:&#34; + 2222222);
+        } else if (&#34;THREE&#34;.equals(val)) {
+            System.out.println(&#34;val:&#34; + 3333333);
         } else {
-            System.out.println(&quot;val:&quot; + val);
+            System.out.println(&#34;val:&#34; + val);
         }
     }
 
@@ -1550,7 +1551,7 @@ public class FacadeAspect {
         try {
             conditionEnum = ConditionEnum.valueOf(val);
         } catch (IllegalArgumentException e) {
-            System.out.println(&quot;val:&quot; + val);
+            System.out.println(&#34;val:&#34; + val);
             return;
         }
         exec(conditionEnum);
@@ -1564,19 +1565,19 @@ public class FacadeAspect {
         ONE {
             @Override
             public void context() {
-                System.out.println(&quot;val:&quot; + 1111111);
+                System.out.println(&#34;val:&#34; + 1111111);
             }
         },
         TWO {
             @Override
             public void context() {
-                System.out.println(&quot;val:&quot; + 2222222);
+                System.out.println(&#34;val:&#34; + 2222222);
             }
         },
         THREE {
             @Override
             public void context() {
-                System.out.println(&quot;val:&quot; + 3333333);
+                System.out.println(&#34;val:&#34; + 3333333);
             }
         };
 
@@ -1584,16 +1585,16 @@ public class FacadeAspect {
     }
 
 }
-</code></pre><p>也可用枚举替换成这样：</p>
-<pre><code>    public static void newCondition(String val) {
+</code></pre></div><p>也可用枚举替换成这样：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public static void newCondition(String val) {
         ConditionEnum condition = ConditionEnum.getCondition(val);
-        System.out.println(&quot;val:&quot; + (condition == null ? val : condition.value));
+        System.out.println(&#34;val:&#34; + (condition == null ? val : condition.value));
     }
 
     enum ConditionEnum {
-        ONE(&quot;ONE&quot;,1111111),
-        TWO(&quot;TWO&quot;,2222222),
-        THREE(&quot;THREE&quot;,3333333)
+        ONE(&#34;ONE&#34;,1111111),
+        TWO(&#34;TWO&#34;,2222222),
+        THREE(&#34;THREE&#34;,3333333)
 
         ;
 
@@ -1609,126 +1610,126 @@ public class FacadeAspect {
             return Arrays.stream(ConditionEnum.values()).filter(x -&gt; Objects.equals(x.key, key)).findFirst().orElse(null);
         }
     }
-</code></pre><h4 id="放入数据结构中进行判断从而减少ifelse">放入数据结构中进行判断从而减少if..else</h4>
-<pre><code>public class MyTest {
+</code></pre></div><h4 id="放入数据结构中进行判断从而减少ifelse">放入数据结构中进行判断从而减少if..else</h4>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MyTest {
     public static void main(String[] args) {
-        String val = &quot;1&quot;;
+        String val = &#34;1&#34;;
         condition(val);
-        System.out.println(&quot;--------------&quot;);
+        System.out.println(&#34;--------------&#34;);
         newCondition(val);
     }
     public static void condition(String val) {
-        if (&quot;1&quot;.equals(val)){
-            System.out.println(&quot;val:&quot; + 1111111);
-        }else if (&quot;2&quot;.equals(val)){
-            System.out.println(&quot;val:&quot; + 2222222);
-        }else if (&quot;3&quot;.equals(val)){
-            System.out.println(&quot;val:&quot; + 3333333);
+        if (&#34;1&#34;.equals(val)){
+            System.out.println(&#34;val:&#34; + 1111111);
+        }else if (&#34;2&#34;.equals(val)){
+            System.out.println(&#34;val:&#34; + 2222222);
+        }else if (&#34;3&#34;.equals(val)){
+            System.out.println(&#34;val:&#34; + 3333333);
         }else {
-            System.out.println(&quot;val:&quot; + val);
+            System.out.println(&#34;val:&#34; + val);
         }
     }
     public static void newCondition(String val){
         Map&lt;String, Function&lt;?,?&gt;&gt; map = new HashMap&lt;&gt;();
-        map.put(&quot;1&quot;,(action) -&gt; 1111111);
-        map.put(&quot;2&quot;,(action) -&gt; 2222222);
-        map.put(&quot;3&quot;,(action) -&gt; 3333333);
-        System.out.println(&quot;val:&quot; + (map.get(val) != null ? map.get(val).apply(null) : val));
+        map.put(&#34;1&#34;,(action) -&gt; 1111111);
+        map.put(&#34;2&#34;,(action) -&gt; 2222222);
+        map.put(&#34;3&#34;,(action) -&gt; 3333333);
+        System.out.println(&#34;val:&#34; + (map.get(val) != null ? map.get(val).apply(null) : val));
     }
 
 }
-</code></pre><h4 id="使用switchcase代替ifelse">使用switch..case代替if..else</h4>
-<pre><code>public class MyTest {
+</code></pre></div><h4 id="使用switchcase代替ifelse">使用switch..case代替if..else</h4>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MyTest {
     public static void main(String[] args) {
-        String val = &quot;FOUR&quot;;
+        String val = &#34;FOUR&#34;;
         condition(val);
-        System.out.println(&quot;--------------&quot;);
+        System.out.println(&#34;--------------&#34;);
         newCondition(val);
     }
 
     public static void condition(String val) {
-        if (&quot;ONE&quot;.equals(val)) {
-            System.out.println(&quot;val:&quot; + 1111111);
-        } else if (&quot;TWO&quot;.equals(val)) {
-            System.out.println(&quot;val:&quot; + 2222222);
-        } else if (&quot;THREE&quot;.equals(val)) {
-            System.out.println(&quot;val:&quot; + 3333333);
+        if (&#34;ONE&#34;.equals(val)) {
+            System.out.println(&#34;val:&#34; + 1111111);
+        } else if (&#34;TWO&#34;.equals(val)) {
+            System.out.println(&#34;val:&#34; + 2222222);
+        } else if (&#34;THREE&#34;.equals(val)) {
+            System.out.println(&#34;val:&#34; + 3333333);
         } else {
-            System.out.println(&quot;val:&quot; + val);
+            System.out.println(&#34;val:&#34; + val);
         }
     }
 
     public static void newCondition(String val) {
         switch (val) {
-            case &quot;ONE&quot;:
-                System.out.println(&quot;val:&quot; + 1111111);
+            case &#34;ONE&#34;:
+                System.out.println(&#34;val:&#34; + 1111111);
                 break;
-            case &quot;TWO&quot;:
-                System.out.println(&quot;val:&quot; + 2222222);
+            case &#34;TWO&#34;:
+                System.out.println(&#34;val:&#34; + 2222222);
                 break;
-            case &quot;THREE&quot;:
-                System.out.println(&quot;val:&quot; + 3333333);
+            case &#34;THREE&#34;:
+                System.out.println(&#34;val:&#34; + 3333333);
                 break;
             default:
-                System.out.println(&quot;val:&quot; + val);
+                System.out.println(&#34;val:&#34; + val);
         }
     }
 }
-</code></pre><h4 id="尽早结束if使代码结构更清晰">尽早结束if使代码结构更清晰</h4>
-<pre><code>public class MyTest {
+</code></pre></div><h4 id="尽早结束if使代码结构更清晰">尽早结束if使代码结构更清晰</h4>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MyTest {
     public static void main(String[] args) {
-        String val = &quot;222&quot;;
+        String val = &#34;222&#34;;
         condition(val);
-        System.out.println(&quot;--------------&quot;);
+        System.out.println(&#34;--------------&#34;);
         newCondition(val);
     }
 
     public static void condition(String val) {
-        if (&quot;ONE&quot;.equals(val)) {
-            System.out.println(&quot;val:&quot; + 1111111);
-        } else if (&quot;TWO&quot;.equals(val)) {
-            System.out.println(&quot;val:&quot; + 2222222);
-        } else if (&quot;THREE&quot;.equals(val)) {
-            System.out.println(&quot;val:&quot; + 3333333);
+        if (&#34;ONE&#34;.equals(val)) {
+            System.out.println(&#34;val:&#34; + 1111111);
+        } else if (&#34;TWO&#34;.equals(val)) {
+            System.out.println(&#34;val:&#34; + 2222222);
+        } else if (&#34;THREE&#34;.equals(val)) {
+            System.out.println(&#34;val:&#34; + 3333333);
         } else {
-            System.out.println(&quot;val:&quot; + val);
+            System.out.println(&#34;val:&#34; + val);
         }
     }
 
     public static void newCondition(String val) {
-        if (&quot;ONE&quot;.equals(val)) {
-            System.out.println(&quot;val:&quot; + 1111111);
+        if (&#34;ONE&#34;.equals(val)) {
+            System.out.println(&#34;val:&#34; + 1111111);
             return;
         }
-        if (&quot;TWO&quot;.equals(val)) {
-            System.out.println(&quot;val:&quot; + 2222222);
+        if (&#34;TWO&#34;.equals(val)) {
+            System.out.println(&#34;val:&#34; + 2222222);
             return;
         }
-        if (&quot;THREE&quot;.equals(val)) {
-            System.out.println(&quot;val:&quot; + 3333333);
+        if (&#34;THREE&#34;.equals(val)) {
+            System.out.println(&#34;val:&#34; + 3333333);
             return;
         }
-        System.out.println(&quot;val:&quot; + val);
+        System.out.println(&#34;val:&#34; + val);
     }
 }
-</code></pre><h4 id="使用职责链模式代替ifelse">使用职责链模式代替if..else</h4>
-<pre><code>public class MyTest {
+</code></pre></div><h4 id="使用职责链模式代替ifelse">使用职责链模式代替if..else</h4>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MyTest {
     public static void main(String[] args) {
-        String val = &quot;1&quot;;
+        String val = &#34;1&#34;;
         condition(val);
-        System.out.println(&quot;--------------&quot;);
+        System.out.println(&#34;--------------&#34;);
         newCondition(val);
     }
 
     public static void condition(String val) {
-        if (&quot;ONE&quot;.equals(val)) {
-            System.out.println(&quot;val:&quot; + 1111111);
-        } else if (&quot;TWO&quot;.equals(val)) {
-            System.out.println(&quot;val:&quot; + 2222222);
-        } else if (&quot;THREE&quot;.equals(val)) {
-            System.out.println(&quot;val:&quot; + 3333333);
+        if (&#34;ONE&#34;.equals(val)) {
+            System.out.println(&#34;val:&#34; + 1111111);
+        } else if (&#34;TWO&#34;.equals(val)) {
+            System.out.println(&#34;val:&#34; + 2222222);
+        } else if (&#34;THREE&#34;.equals(val)) {
+            System.out.println(&#34;val:&#34; + 3333333);
         } else {
-            System.out.println(&quot;val:&quot; + val);
+            System.out.println(&#34;val:&#34; + val);
         }
     }
 
@@ -1762,11 +1763,11 @@ class One extends AbstractHandler {
 
     @Override
     protected void exec(String val) {
-        if (!val.equals(&quot;ONE&quot;)){
+        if (!val.equals(&#34;ONE&#34;)){
             abstractHandler.exec(val);
             return;
         }
-        System.out.println(&quot;val:&quot; + 1111111);
+        System.out.println(&#34;val:&#34; + 1111111);
     }
 }
 
@@ -1774,11 +1775,11 @@ class Two extends AbstractHandler {
 
     @Override
     protected void exec(String val) {
-        if (!val.equals(&quot;TWO&quot;)){
+        if (!val.equals(&#34;TWO&#34;)){
             abstractHandler.exec(val);
             return;
         }
-        System.out.println(&quot;val:&quot; + 2222222);
+        System.out.println(&#34;val:&#34; + 2222222);
     }
 }
 
@@ -1786,33 +1787,33 @@ class Three extends AbstractHandler {
 
     @Override
     protected void exec(String val) {
-        System.out.println(val.equals(&quot;THREE&quot;) ? &quot;val:&quot; + 3333333 : &quot;val:&quot; + val);
+        System.out.println(val.equals(&#34;THREE&#34;) ? &#34;val:&#34; + 3333333 : &#34;val:&#34; + val);
     }
 }
-</code></pre><h4 id="使用模板方法模式代替ifelse">使用模板方法模式代替if..else</h4>
-<pre><code>public class MyTest {
+</code></pre></div><h4 id="使用模板方法模式代替ifelse">使用模板方法模式代替if..else</h4>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MyTest {
     public static void main(String[] args) {
-        String val = &quot;ONE&quot;;
+        String val = &#34;ONE&#34;;
         condition(val);
-        System.out.println(&quot;--------------&quot;);
+        System.out.println(&#34;--------------&#34;);
         newCondition(val);
     }
 
     public static void condition(String val) {
-        if (&quot;ONE&quot;.equals(val)) {
-            System.out.println(&quot;val:&quot; + 1111111);
-        } else if (&quot;TWO&quot;.equals(val)) {
-            System.out.println(&quot;val:&quot; + 2222222);
-        } else if (&quot;THREE&quot;.equals(val)) {
-            System.out.println(&quot;val:&quot; + 3333333);
+        if (&#34;ONE&#34;.equals(val)) {
+            System.out.println(&#34;val:&#34; + 1111111);
+        } else if (&#34;TWO&#34;.equals(val)) {
+            System.out.println(&#34;val:&#34; + 2222222);
+        } else if (&#34;THREE&#34;.equals(val)) {
+            System.out.println(&#34;val:&#34; + 3333333);
         } else {
-            System.out.println(&quot;val:&quot; + val);
+            System.out.println(&#34;val:&#34; + val);
         }
     }
 
     public static void newCondition(String val) {
-        if (!Objects.equals(val, &quot;ONE&quot;) &amp;&amp; !Objects.equals(val, &quot;TWO&quot;) &amp;&amp; !Objects.equals(val, &quot;THREE&quot;)) {
-            System.out.println(&quot;val:&quot; + val);
+        if (!Objects.equals(val, &#34;ONE&#34;) &amp;&amp; !Objects.equals(val, &#34;TWO&#34;) &amp;&amp; !Objects.equals(val, &#34;THREE&#34;)) {
+            System.out.println(&#34;val:&#34; + val);
             return;
         }
         List&lt;ConditionTemplate&gt; list = new ArrayList&lt;&gt;(Arrays.asList(new One(), new Two(), new Three()));
@@ -1840,63 +1841,63 @@ abstract class ConditionTemplate {
 class One extends ConditionTemplate {
     @Override
     public void support() {
-        System.out.println(&quot;val:&quot; + 1111111);
+        System.out.println(&#34;val:&#34; + 1111111);
     }
     @Override
     public boolean supportIns(String val) {
-        return &quot;ONE&quot;.equals(val);
+        return &#34;ONE&#34;.equals(val);
     }
 }
 
 class Two extends ConditionTemplate {
     @Override
     public void support() {
-        System.out.println(&quot;val:&quot; + 2222222);
+        System.out.println(&#34;val:&#34; + 2222222);
     }
     @Override
     public boolean supportIns(String val) {
-        return &quot;TWO&quot;.equals(val);
+        return &#34;TWO&#34;.equals(val);
     }
 }
 
 class Three extends ConditionTemplate {
     @Override
     public void support() {
-        System.out.println(&quot;val:&quot; + 3333333);
+        System.out.println(&#34;val:&#34; + 3333333);
     }
     @Override
     public boolean supportIns(String val) {
-        return &quot;THREE&quot;.equals(val);
+        return &#34;THREE&#34;.equals(val);
     }
 }
-</code></pre><h4 id="使用工厂方法模式代替ifelse">使用工厂方法模式代替if..else</h4>
-<pre><code>public class MyTest {
+</code></pre></div><h4 id="使用工厂方法模式代替ifelse">使用工厂方法模式代替if..else</h4>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MyTest {
     public static void main(String[] args) {
-        String val = &quot;ONE&quot;;
+        String val = &#34;ONE&#34;;
         condition(val);
-        System.out.println(&quot;--------------&quot;);
+        System.out.println(&#34;--------------&#34;);
         newCondition(val);
     }
 
     public static void condition(String val) {
-        if (&quot;ONE&quot;.equals(val)) {
-            System.out.println(&quot;val:&quot; + 1111111);
-        } else if (&quot;TWO&quot;.equals(val)) {
-            System.out.println(&quot;val:&quot; + 2222222);
-        } else if (&quot;THREE&quot;.equals(val)) {
-            System.out.println(&quot;val:&quot; + 3333333);
+        if (&#34;ONE&#34;.equals(val)) {
+            System.out.println(&#34;val:&#34; + 1111111);
+        } else if (&#34;TWO&#34;.equals(val)) {
+            System.out.println(&#34;val:&#34; + 2222222);
+        } else if (&#34;THREE&#34;.equals(val)) {
+            System.out.println(&#34;val:&#34; + 3333333);
         } else {
-            System.out.println(&quot;val:&quot; + val);
+            System.out.println(&#34;val:&#34; + val);
         }
     }
 
     public static void newCondition(String val) {
          Map&lt;String, ConditionFactory&gt; operationMap = new HashMap&lt;&gt;();
-        operationMap.put(&quot;ONE&quot;,new One());
-        operationMap.put(&quot;TWO&quot;,new Two());
-        operationMap.put(&quot;THREE&quot;,new Three());
+        operationMap.put(&#34;ONE&#34;,new One());
+        operationMap.put(&#34;TWO&#34;,new Two());
+        operationMap.put(&#34;THREE&#34;,new Three());
         if (operationMap.get(val) == null) {
-            System.out.println(&quot;val:&quot; + val);
+            System.out.println(&#34;val:&#34; + val);
         }else {
             operationMap.get(val).printCondition();
         }
@@ -1911,66 +1912,66 @@ interface ConditionFactory{
 class One implements ConditionFactory {
     @Override
     public void printCondition() {
-        System.out.println(&quot;val:&quot; + 1111111);
+        System.out.println(&#34;val:&#34; + 1111111);
     }
 }
 
 class Two implements ConditionFactory {
     @Override
     public void printCondition() {
-        System.out.println(&quot;val:&quot; + 2222222);
+        System.out.println(&#34;val:&#34; + 2222222);
     }
 }
 
 class Three implements ConditionFactory {
     @Override
     public void printCondition() {
-        System.out.println(&quot;val:&quot; + 3333333);
+        System.out.println(&#34;val:&#34; + 3333333);
     }
 }
-</code></pre><h4 id="使用注解代替ifelse">使用注解代替if..else</h4>
+</code></pre></div><h4 id="使用注解代替ifelse">使用注解代替if..else</h4>
 <ul>
 <li><a href="https://www.zhihu.com/question/318511891/answer/1730548947">https://www.zhihu.com/question/318511891/answer/1730548947</a></li>
 </ul>
-<pre><code>@Retention(RetentionPolicy.RUNTIME)  
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Retention(RetentionPolicy.RUNTIME)  
 @Target(ElementType.TYPE)  
 public @interface PayCode {  
 
      String value();    
      String name();  
 }
-</code></pre><pre><code>@PayCode(value = &quot;alia&quot;, name = &quot;支付宝支付&quot;)  
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@PayCode(value = &#34;alia&#34;, name = &#34;支付宝支付&#34;)  
 @Service
 public class AliaPay implements IPay {  
 
      @Override
      public void pay() {  
-         System.out.println(&quot;===发起支付宝支付===&quot;);  
+         System.out.println(&#34;===发起支付宝支付===&#34;);  
      }  
 }  
 
 
-@PayCode(value = &quot;weixin&quot;, name = &quot;微信支付&quot;)  
+@PayCode(value = &#34;weixin&#34;, name = &#34;微信支付&#34;)  
 @Service
 public class WeixinPay implements IPay {  
 
      @Override
      public void pay() {  
-         System.out.println(&quot;===发起微信支付===&quot;);  
+         System.out.println(&#34;===发起微信支付===&#34;);  
      }  
 } 
 
 
-@PayCode(value = &quot;jingdong&quot;, name = &quot;京东支付&quot;)  
+@PayCode(value = &#34;jingdong&#34;, name = &#34;京东支付&#34;)  
 @Service
 public class JingDongPay implements IPay {  
 
      @Override
      public void pay() {  
-        System.out.println(&quot;===发起京东支付===&quot;);  
+        System.out.println(&#34;===发起京东支付===&#34;);  
      }  
 }
-</code></pre><pre><code>@Service
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Service
 public class PayService2 implements ApplicationListener&lt;ContextRefreshedEvent&gt; {  
 
      private static Map&lt;String, IPay&gt; payMap = null;  
@@ -1993,7 +1994,7 @@ public class PayService2 implements ApplicationListener&lt;ContextRefreshedEvent
         payMap.get(code).pay();  
      }  
 }
-</code></pre></div>
+</code></pre></div></div>
                     <div class="post_footer">
                         
                         <div class="meta">
@@ -2013,7 +2014,25 @@ public class PayService2 implements ApplicationListener&lt;ContextRefreshedEvent
                 </div>
                 
                 
-                <div class="doc_comments"></div>
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+    })
+</script>
                 
             </div>
         </div>

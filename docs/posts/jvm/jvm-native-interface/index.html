@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>JVM-本地方法接口 ｜ whitepure</title>
+	<title>JVM-本地方法接口 ｜ 至简</title>
 	
     
     
-    <meta name="description" content="" />
+    <meta name="description" content="概念 简单地讲，一个Native Methodt是一个Java调用非Java代码的接囗。 一个Native Method是这样一个Java方法：该方法的实现由非Java" />
     
 
     
@@ -214,35 +214,36 @@
         <a id="menu_icon"><i class="ri-menu-line"></i></a>
     </div>
 </div>
-        
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
+                    <span>至简</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">大道至简</p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
         <div class="content">
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
@@ -258,13 +259,13 @@
 <p>本地接口的作用是融合不同的编程语言为Java所用，它的初衷是融合C/C++程序。
 <img src="/iblog/posts/images/essays/%E6%9C%AC%E5%9C%B0%E6%96%B9%E6%B3%95%E6%8E%A5%E5%8F%A3.png" alt="本地方法接口"></p>
 <p>需要注意的是：标识符native可以与其它java标识符连用，但是abstract除外。</p>
-<pre><code>public class IhaveNatives {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class IhaveNatives {
     public native void Native1(int x);
     native static public long Native2();
     native synchronized private float Native3(Object o);
     native void Natives(int[] ary) throws Exception;
 }
-</code></pre><h2 id="为什么使用本地方法">为什么使用本地方法</h2>
+</code></pre></div><h2 id="为什么使用本地方法">为什么使用本地方法</h2>
 <p>Java使用起来非常方便，然而有些层次的任务用Java实现起来不容易，或者我们对程序的效率很在意时，问题就来了。</p>
 <h3 id="与java环境的交互">与Java环境的交互</h3>
 <p>有时Java应用需要与Java外面的环境交互，这是本地方法存在的主要原因。你可以想想Java需要与一些底层系统，如操作系统或某些硬件交换信息时的情况。
@@ -299,7 +300,25 @@
                 </div>
                 
                 
-                <div class="doc_comments"></div>
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+    })
+</script>
                 
             </div>
         </div>

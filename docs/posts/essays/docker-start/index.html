@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>Docker介绍 ｜ whitepure</title>
+	<title>Docker介绍 ｜ 至简</title>
 	
     
     
-    <meta name="description" content="" />
+    <meta name="description" content="docker是什么 Docker 属于 Linux 容器的一种封装，提供简单易用的容器使用接口。它是目前流行的 Linux 容器解决方案。 Docker 将应用程序与该程序的依赖，打包在一个文件里面。运行这个文件" />
     
 
     
@@ -254,35 +254,36 @@
         <a id="menu_icon"><i class="ri-menu-line"></i></a>
     </div>
 </div>
-        
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
+                    <span>至简</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">大道至简</p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
         <div class="content">
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
@@ -302,31 +303,31 @@ Docker 将应用程序与该程序的依赖，打包在一个文件里面。运�
 <h2 id="安装">安装</h2>
 <p>以linux上安装为例</p>
 <p>1.安装依赖,docker依赖于系统的一些必要的工具</p>
-<pre><code>yum install -y yum-utils device-mapper-persistent-data lvm2
-</code></pre><p>2.添加软件源, 阿里云镜像(在阿里云镜像站上面可以找到docker-ce的软件源，使用国内的源速度比较快)</p>
-<pre><code>yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
-</code></pre><p><a href="https://blog.csdn.net/zhuzz1030/article/details/80097553">3.安装docker-ce(社区版,免费)</a></p>
-<pre><code>yum clean allyum makecache fastyum -y install docker-ce
-</code></pre><p>4.启动服务</p>
-<pre><code> #service 命令的用法
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">yum install -y yum-utils device-mapper-persistent-data lvm2
+</code></pre></div><p>2.添加软件源, 阿里云镜像(在阿里云镜像站上面可以找到docker-ce的软件源，使用国内的源速度比较快)</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+</code></pre></div><p><a href="https://blog.csdn.net/zhuzz1030/article/details/80097553">3.安装docker-ce(社区版,免费)</a></p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">yum clean allyum makecache fastyum -y install docker-ce
+</code></pre></div><p>4.启动服务</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> #service 命令的用法
 $ sudo service docker start
 
 #systemctl 命令的用法
 $ sudo systemctl start docker
-</code></pre><p>5.查看安装版</p>
-<pre><code>docker version
-</code></pre><p>6.测试,检查 docker 是否正确安装并运行 hello-world 镜像</p>
-<pre><code>docker run hello-world
-</code></pre><p>7.Docker 需要用户具有 sudo 权限，为了避免每次命令都输入sudo，可以把用户加入 Docker 用户组</p>
-<pre><code>sudo usermod -aG docker $USER
-</code></pre><h2 id="docker架构">docker架构</h2>
+</code></pre></div><p>5.查看安装版</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">docker version
+</code></pre></div><p>6.测试,检查 docker 是否正确安装并运行 hello-world 镜像</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">docker run hello-world
+</code></pre></div><p>7.Docker 需要用户具有 sudo 权限，为了避免每次命令都输入sudo，可以把用户加入 Docker 用户组</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">sudo usermod -aG docker $USER
+</code></pre></div><h2 id="docker架构">docker架构</h2>
 <p>docker架构分为三部分客户端,宿主机,注册中心</p>
 <p><img src="/iblog/posts/images/application/docker%E6%9E%B6%E6%9E%84.png" alt="docker架构"></p>
 <p>例如：输入 <code>docker run mysql:5.6</code>命令,docker程序会从docker_host去找对应的镜像,
 如果mysql不存在则会去从register下载,下载完成后docker会自动给该镜像分配一个contains,mysql就会运行起来</p>
 <h2 id="docker基本操作">docker基本操作</h2>
 <p>以安装运行<code>nginx</code>为例</p>
-<pre><code>// docker run 包括下载镜像(pull),创建容器(create),运行容器(start) 可用dock -h查看帮助
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// docker run 包括下载镜像(pull),创建容器(create),运行容器(start) 可用dock -h查看帮助
 // --rm 表明这是一个临时的容器,关闭的话会自动删除
 // --name 容器名称
 // -p 外部服务器端口映射docker容器端口
@@ -337,8 +338,8 @@ docker logs myNginx
 
 // 进入容器
 docker exec -it myNginx bash
-</code></pre><h3 id="docker常用命令">docker常用命令</h3>
-<pre><code>// 查看当前运行的镜像
+</code></pre></div><h3 id="docker常用命令">docker常用命令</h3>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// 查看当前运行的镜像
 docker ps
 
 //查看所有镜像
@@ -358,7 +359,7 @@ docker images
 
 //查看远程仓库镜像
 docker search 镜像名
-</code></pre><h2 id="相关链接">相关链接</h2>
+</code></pre></div><h2 id="相关链接">相关链接</h2>
 <ul>
 <li>入门参考:https://baijiahao.baidu.com/s?id=1626633654476933953&amp;wfr=spider&amp;for=pc</li>
 <li>安装docker菜鸟教程: <a href="https://www.runoob.com/docker/centos-docker.install.html">https://www.runoob.com/docker/centos-docker.install.html</a></li>
@@ -389,7 +390,25 @@ docker search 镜像名
                 </div>
                 
                 
-                <div class="doc_comments"></div>
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+    })
+</script>
                 
             </div>
         </div>

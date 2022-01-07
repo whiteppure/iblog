@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>JVM-Java对象 ｜ whitepure</title>
+	<title>JVM-Java对象 ｜ 至简</title>
 	
     
     
-    <meta name="description" content="" />
+    <meta name="description" content="对象实例化 对象的创建方式 使用new关键字创建：最常见的方式、单例类中调用getInstance的静态类方法，XXXFactory的静态方法； 使用反射方式创建： 使" />
     
 
     
@@ -430,35 +430,36 @@
         <a id="menu_icon"><i class="ri-menu-line"></i></a>
     </div>
 </div>
-        
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
+                    <span>至简</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">大道至简</p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
         <div class="content">
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
@@ -483,12 +484,12 @@
 </ul>
 <h3 id="对象的创建步骤">对象的创建步骤</h3>
 <p>创建对象代码演示及字节码指令</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         Object obj = new Object();
     }
 }
-</code></pre><p><img src="/iblog/posts/images/essays/%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4.png" alt="创建对象字节码指令"></p>
+</code></pre></div><p><img src="/iblog/posts/images/essays/%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4.png" alt="创建对象字节码指令"></p>
 <p>创建对象步骤：</p>
 <ol>
 <li>加载类元信息</li>
@@ -540,14 +541,14 @@
 <p><img src="/iblog/posts/images/essays/Java%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B8%83%E5%B1%80.png" alt="Java对象的布局"></p>
 <h3 id="查看对象的组成">查看对象的组成</h3>
 <p><strong>引入依赖</strong></p>
-<pre><code>&lt;!-- 引入查看对象布局的依赖 --&gt;
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;!-- 引入查看对象布局的依赖 --&gt;
 &lt;dependency&gt;
     &lt;groupId&gt;org.openjdk.jol&lt;/groupId&gt;
     &lt;artifactId&gt;jol-core&lt;/artifactId&gt;
     &lt;version&gt;0.9&lt;/version&gt;
 &lt;/dependency&gt;
-</code></pre><p><strong>测试代码</strong></p>
-<pre><code>public class MainTest {
+</code></pre></div><p><strong>测试代码</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         //这个对象里面是空的什么都没有
         T t = new T();
@@ -555,15 +556,15 @@
     }
 }
 class T{}
-</code></pre><p><strong>测试结果</strong></p>
-<pre><code> OFFSET  SIZE   TYPE DESCRIPTION                               VALUE
+</code></pre></div><p><strong>测试结果</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> OFFSET  SIZE   TYPE DESCRIPTION                               VALUE
       0     4        (object header)                           01 00 00 00 (00000001 00000000 00000000 00000000) (1)
       4     4        (object header)                           00 00 00 00 (00000000 00000000 00000000 00000000) (0)
       8     4        (object header)                           a1 2c 01 20 (10100001 00101100 00000001 00100000) (536947873)
      12     4        (loss due to the next object alignment)
 Instance size: 16 bytes
 Space losses: 0 bytes internal + 4 bytes external = 4 bytes total
-</code></pre><p>在64位JVM下,通过测试的结果我们可以看到Java对象的布局对象头占12byte,因为Jvm规定内存分配的字节必须是8的倍数,否则无法分配内存，所以就出现了，4byte的对齐数据。</p>
+</code></pre></div><p>在64位JVM下,通过测试的结果我们可以看到Java对象的布局对象头占12byte,因为Jvm规定内存分配的字节必须是8的倍数,否则无法分配内存，所以就出现了，4byte的对齐数据。</p>
 <p>通过测试发现，Java的对象布局包括：</p>
 <ul>
 <li>必定存在一个对象头</li>
@@ -600,12 +601,12 @@ For Java objects, the &ldquo;klass&rdquo; contains a C++ style &ldquo;vtable&rdq
 <p>类型指针，是对象指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例。</p>
 </blockquote>
 <p>引用上面在64位虚拟机下的测试结果，对象头中的这些二进制数字代表什么呢？</p>
-<pre><code> OFFSET  SIZE   TYPE DESCRIPTION                               VALUE
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> OFFSET  SIZE   TYPE DESCRIPTION                               VALUE
       0     4        (object header)                           01 00 00 00 (00000001 00000000 00000000 00000000) (1)
       4     4        (object header)                           00 00 00 00 (00000000 00000000 00000000 00000000) (0)
       8     4        (object header)                           a1 2c 01 20 (10100001 00101100 00000001 00100000) (536947873)
-</code></pre><p>在<code>openjdk8-master</code>中<code>markOop.hpp</code>，有对<code>mark word</code>的描述</p>
-<pre><code>//  32 bits:
+</code></pre></div><p>在<code>openjdk8-master</code>中<code>markOop.hpp</code>，有对<code>mark word</code>的描述</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">//  32 bits:
 //  --------
 //             hash:25 ------------&gt;| age:4    biased_lock:1 lock:2 (normal object)
 //             JavaThread*:23 epoch:2 age:4    biased_lock:1 lock:2 (biased object)
@@ -618,7 +619,7 @@ For Java objects, the &ldquo;klass&rdquo; contains a C++ style &ldquo;vtable&rdq
 //  JavaThread*:54 epoch:2 unused:1   age:4    biased_lock:1 lock:2 (biased object)
 //  PromotedObject*:61 ---------------------&gt;| promo_bits:3 -----&gt;| (CMS promoted object)
 //  size:64 -----------------------------------------------------&gt;| (CMS free block)
-</code></pre><ul>
+</code></pre></div><ul>
 <li>在32位虚拟机下，正常的对象对象头的<code>mark word</code>，从前到后的顺序，25个位表示hash值，4位表示GC分代的年龄，1位偏向锁的信息，2位锁的状态；</li>
 <li>在64位虚拟机下，正常的对象对象头的<code>mark word</code>，从前到后的顺序，25个未使用，31个位表示hash值，未使用1位，4位表示GC分代的年龄，1位偏向锁的信息，2位锁的状态；</li>
 </ul>
@@ -732,14 +733,14 @@ For Java objects, the &ldquo;klass&rdquo; contains a C++ style &ldquo;vtable&rdq
 <p><code>finalize()</code> 方法允许在子类中被重写，用于在对象被回收时进行资源释放。
 通常在这个方法中进行一些资源释放和清理的工作，比如关闭文件、套接字和数据库连接等。</p>
 <p>文档注释大意：当GC确定不再有对对象的引用时，由垃圾收集器在对象上调用。子类重写<code>finalize</code>方法来释放系统资源或执行其他清理。</p>
-<pre><code>   /**
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">   /**
      * Called by the garbage collector on an object when garbage collection
      * determines that there are no more references to the object.
      * A subclass overrides the {@code finalize} method to dispose of
      * system resources or to perform other cleanup.
      */
     protected void finalize() throws Throwable { }
-</code></pre><p>简而言之，<code>finalize</code>方法是与Java中的垃圾回收器有关系。即：当一个对象变成一个垃圾对象的时候，如果此对象的内存被回收，那么就会调用该类中定义的<code>finalize</code>方法。</p>
+</code></pre></div><p>简而言之，<code>finalize</code>方法是与Java中的垃圾回收器有关系。即：当一个对象变成一个垃圾对象的时候，如果此对象的内存被回收，那么就会调用该类中定义的<code>finalize</code>方法。</p>
 <p>当一个对象可被回收时，就需要执行该对象的 <code>finalize()</code> 方法，那么就有可能在该方法中让对象重新被引用，从而实现自救。自救只能进行一次，如果回收的对象之前调用了 <code>finalize()</code> 方法自救，后面回收时不会再调用该方法。</p>
 <p><strong>永远不要主动调用某个对象的<code>finalize</code>方法应该交给垃圾回收机制调用的原因：</strong></p>
 <ul>
@@ -770,7 +771,7 @@ For Java objects, the &ldquo;klass&rdquo; contains a C++ style &ldquo;vtable&rdq
 </li>
 </ul>
 <p>代码演示对象能否被回收：</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
 
     public static MainTest var;
 
@@ -780,7 +781,7 @@ For Java objects, the &ldquo;klass&rdquo; contains a C++ style &ldquo;vtable&rdq
      */
     @Override
     protected void finalize() throws Throwable {
-        System.out.println(&quot;调用当前类重写的finalize()方法&quot;);
+        System.out.println(&#34;调用当前类重写的finalize()方法&#34;);
         // 复活对象 让当前带回收对象重新与引用链中的对象建立联系
         var = this;
     }
@@ -789,31 +790,31 @@ For Java objects, the &ldquo;klass&rdquo; contains a C++ style &ldquo;vtable&rdq
         var = new MainTest();
         var = null;
         System.gc();
-        System.out.println(&quot;-----------------第一次gc操作------------&quot;);
+        System.out.println(&#34;-----------------第一次gc操作------------&#34;);
         // 因为Finalizer线程的优先级比较低，暂停2秒，以等待它
         Thread.sleep(2000);
         if (var == null) {
-            System.out.println(&quot;对象已经死了&quot;);
+            System.out.println(&#34;对象已经死了&#34;);
             // 如果第一次对象就死亡了 就终止
             return;
         } else {
-            System.out.println(&quot;对象还活着&quot;);
+            System.out.println(&#34;对象还活着&#34;);
         }
 
-        System.out.println(&quot;-----------------第二次gc操作------------&quot;);
+        System.out.println(&#34;-----------------第二次gc操作------------&#34;);
         var = null;
         System.gc();
         // 下面代码和上面代码是一样的，但是 对象却自救失败了
         Thread.sleep(2000);
         if (var == null) {
-            System.out.println(&quot;对象已经死了&quot;);
+            System.out.println(&#34;对象已经死了&#34;);
         } else {
-            System.out.println(&quot;对象还活着&quot;);
+            System.out.println(&#34;对象还活着&#34;);
         }
     }
 
 }
-</code></pre></div>
+</code></pre></div></div>
                     <div class="post_footer">
                         
                         <div class="meta">
@@ -833,7 +834,25 @@ For Java objects, the &ldquo;klass&rdquo; contains a C++ style &ldquo;vtable&rdq
                 </div>
                 
                 
-                <div class="doc_comments"></div>
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+    })
+</script>
                 
             </div>
         </div>

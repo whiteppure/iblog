@@ -1,9 +1,10 @@
 ---
-title: "Java基础-Java多线程"
+title: "Java多线程"
 date: 2021-05-05
 draft: false
-tags: ["Java", "面向菜鸟编程"]
+tags: ["Java", "Java基础"]
 slug: "rookie-multi-thread"
+weight: 90
 ---
 
 ## 相关概念
@@ -3295,7 +3296,7 @@ public CopyOnWriteArraySet() {
     al = new CopyOnWriteArrayList<E>();
 }
 ```
-参照[CopyWriteArrayList原理。](#CopyWriteArrayList原理)
+参照[CopyWriteArrayList原理](#CopyWriteArrayList原理)
 
 ### HashMap
 `HashMap` 也是线程不安全的集合类;

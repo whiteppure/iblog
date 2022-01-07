@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>Java语法糖 ｜ whitepure</title>
+	<title>Java语法糖 ｜ 至简</title>
 	
     
     
-    <meta name="description" content="" />
+    <meta name="description" content="原文地址：https://www.jianshu.com/p/0f967298a5d7 语法糖 语法糖（Syntactic Sugar），也称糖衣语法，是由英国计算机" />
     
 
     
@@ -670,35 +670,36 @@
         <a id="menu_icon"><i class="ri-menu-line"></i></a>
     </div>
 </div>
-        
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
+                    <span>至简</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">大道至简</p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
         <div class="content">
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
@@ -727,47 +728,47 @@
 <p>对于int类型，直接进行数值的比较。对于char类型则是比较其ascii码。</p>
 <p>所以，对于编译器来说，switch中其实只能使用整型，任何类型的比较都要转换成整型。比如<code>byte。short，char</code>(ackii码是整型)以及int。</p>
 <p>那么接下来看下switch对String得支持，有以下代码：</p>
-<pre><code>public class switchDemoString {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class switchDemoString {
     public static void main(String[] args) {
-        String str = &quot;world&quot;;
+        String str = &#34;world&#34;;
         switch (str) {
-            case &quot;hello&quot;:
-                        System.out.println(&quot;hello&quot;);
+            case &#34;hello&#34;:
+                        System.out.println(&#34;hello&#34;);
             break;
-            case &quot;world&quot;:
-                        System.out.println(&quot;world&quot;);
+            case &#34;world&#34;:
+                        System.out.println(&#34;world&#34;);
             break;
             default:
                         break;
         }
     }
 }
-</code></pre><p>反编译后内容如下：</p>
-<pre><code>public class switchDemoString
+</code></pre></div><p>反编译后内容如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class switchDemoString
 {
     public switchDemoString()
         {
     }
     public static void main(String args[])
         {
-        String str = &quot;world&quot;;
+        String str = &#34;world&#34;;
         String s;
         switch((s = str).hashCode())
                 {
             default:
                         break;
             case 99162322:
-                        if(s.equals(&quot;hello&quot;))
-                            System.out.println(&quot;hello&quot;);
+                        if(s.equals(&#34;hello&#34;))
+                            System.out.println(&#34;hello&#34;);
             break;
             case 113318802:
-                        if(s.equals(&quot;world&quot;))
-                            System.out.println(&quot;world&quot;);
+                        if(s.equals(&#34;world&#34;))
+                            System.out.println(&#34;world&#34;);
             break;
         }
     }
 }
-</code></pre><p>看到这个代码，你知道原来字符串的switch是通过equals()和hashCode()方法来实现的。还好hashCode()方法返回的是int，而不是long。</p>
+</code></pre></div><p>看到这个代码，你知道原来字符串的switch是通过equals()和hashCode()方法来实现的。还好hashCode()方法返回的是int，而不是long。</p>
 <blockquote>
 <p>仔细看下可以发现，进行switch的实际是哈希值，然后通过使用equals方法比较进行安全检查，这个检查是必要的，
 因为哈希可能会发生碰撞。因此它的性能是不如使用枚举进行switch或者使用纯整数常量，但这也不是很差。</p>
@@ -786,17 +787,17 @@
 <li>移除所有的类型参数。</li>
 </ul>
 <p>以下代码：</p>
-<pre><code>Map&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();  
-map.put(&quot;name&quot;, &quot;suxiansheng&quot;);  
-map.put(&quot;wechat&quot;, &quot;java&quot;);  
-map.put(&quot;blog&quot;, &quot;https://www.jianshu.com/u/94111742c97c&quot;);  
-</code></pre><p>解语法糖之后会变成：</p>
-<pre><code>Map map = new HashMap();  
-map.put(&quot;name&quot;, &quot;suxiansheng&quot;);  
-map.put(&quot;wechat&quot;, &quot;Java&quot;);  
-map.put(&quot;blog&quot;, &quot;https://www.jianshu.com/u/94111742c97c&quot;);  
-</code></pre><p>以下代码：</p>
-<pre><code>public static &lt;A extends Comparable&lt;A&gt;&gt; A max(Collection&lt;A&gt; xs) {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">Map&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();  
+map.put(&#34;name&#34;, &#34;suxiansheng&#34;);  
+map.put(&#34;wechat&#34;, &#34;java&#34;);  
+map.put(&#34;blog&#34;, &#34;https://www.jianshu.com/u/94111742c97c&#34;);  
+</code></pre></div><p>解语法糖之后会变成：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">Map map = new HashMap();  
+map.put(&#34;name&#34;, &#34;suxiansheng&#34;);  
+map.put(&#34;wechat&#34;, &#34;Java&#34;);  
+map.put(&#34;blog&#34;, &#34;https://www.jianshu.com/u/94111742c97c&#34;);  
+</code></pre></div><p>以下代码：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static &lt;A extends Comparable&lt;A&gt;&gt; A max(Collection&lt;A&gt; xs) {
     Iterator&lt;A&gt; xi = xs.iterator();
     A w = xi.next();
     while (xi.hasNext()) {
@@ -806,8 +807,8 @@ map.put(&quot;blog&quot;, &quot;https://www.jianshu.com/u/94111742c97c&quot;);
     }
     return w;
 }
-</code></pre><p>类型擦除后会变成：</p>
-<pre><code> public static Comparable max(Collection xs){
+</code></pre></div><p>类型擦除后会变成：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> public static Comparable max(Collection xs){
     Iterator xi = xs.iterator();
     Comparable w = (Comparable)xi.next();
     while(xi.hasNext())
@@ -818,44 +819,44 @@ map.put(&quot;blog&quot;, &quot;https://www.jianshu.com/u/94111742c97c&quot;);
     }
     return w;
 }
-</code></pre><p>虚拟机中没有泛型，只有普通类和普通方法，所有泛型类的类型参数在编译时都会被擦除，泛型类并没有自己独有的Class类对象。
+</code></pre></div><p>虚拟机中没有泛型，只有普通类和普通方法，所有泛型类的类型参数在编译时都会被擦除，泛型类并没有自己独有的Class类对象。
 比如并不存在<code>List&lt;String&gt;.class</code>或是<code>List&lt;Integer&gt;.class</code>，而只有<code>List.class</code>。</p>
 <h4 id="自动装箱与拆箱">自动装箱与拆箱</h4>
 <p>自动装箱就是Java自动将原始类型值转换成对应的对象，比如将int的变量转换成Integer对象，这个过程叫做装箱，反之将Integer对象转换成int类型值，这个过程叫做拆箱。参考：一文读懂什么是Java中的自动拆装箱</p>
 <p>因为这里的装箱和拆箱是自动进行的非人为转换，所以就称作为自动装箱和拆箱。</p>
 <p>原始类型<code>byte, short, char, int, long, float, double，boolean</code> 对应的封装类为<code>Byte, Short, Character, Integer, Long, Float, Double, Boolean</code>。</p>
 <p>先来看个自动装箱的代码：</p>
-<pre><code> public static void main(String[] args) {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> public static void main(String[] args) {
     int i = 10;
     Integer n = i;
 }
-</code></pre><p>反编译后代码如下:</p>
-<pre><code>public static void main(String args[])
+</code></pre></div><p>反编译后代码如下:</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static void main(String args[])
 {
     int i = 10;
     Integer n = Integer.valueOf(i);
 }
-</code></pre><p>再来看个自动拆箱的代码：</p>
-<pre><code>public static void main(String[] args) {
+</code></pre></div><p>再来看个自动拆箱的代码：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static void main(String[] args) {
 
     Integer i = 10;
     int n = i;
 }
-</code></pre><p>反编译后代码如下：</p>
-<pre><code>public static void main(String args[])
+</code></pre></div><p>反编译后代码如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static void main(String args[])
 {
     Integer i = Integer.valueOf(10);
     int n = i.intValue();
 }
-</code></pre><p>从反编译得到内容可以看出，在装箱的时候自动调用的是Integer的valueOf(int)方法。
+</code></pre></div><p>从反编译得到内容可以看出，在装箱的时候自动调用的是Integer的valueOf(int)方法。
 而在拆箱的时候自动调用的是Integer的intValue方法。
 所以，装箱过程是通过调用包装器的valueOf方法实现的，而拆箱过程是通过调用包装器的 xxxValue方法实现的。</p>
 <h4 id="方法变长参数">方法变长参数</h4>
 <p>可变参数(variable arguments)是在Java 1.5中引入的一个特性。它允许一个方法把任意数量的值作为参数。</p>
 <p>看下以下可变参数代码，其中print方法接收可变参数：</p>
-<pre><code>public static void main(String[] args)
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static void main(String[] args)
     {
-        print(&quot;java&quot;, &quot;123&quot;, &quot;456&quot;, &quot;789&quot;);
+        print(&#34;java&#34;, &#34;123&#34;, &#34;456&#34;, &#34;789&#34;);
     }
 
 public static void print(String... strs)
@@ -865,11 +866,11 @@ public static void print(String... strs)
         System.out.println(strs[i]);
     }
 }
-</code></pre><p>反编译后代码：</p>
-<pre><code>public static void main(String args[])
+</code></pre></div><p>反编译后代码：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static void main(String args[])
 {
     print(new String[] {
-        &quot;java&quot;, &quot;123&quot;, &quot;456&quot;, &quot;789&quot;
+        &#34;java&#34;, &#34;123&#34;, &#34;456&#34;, &#34;789&#34;
     });
 }
 
@@ -879,18 +880,18 @@ public static transient void print(String strs[])
         System.out.println(strs[i]);
 
 }
-</code></pre><p>从反编译后代码可以看出，可变参数在被使用的时候，他首先会创建一个数组，数组的长度就是调用该方法是传递的实参的个数，
+</code></pre></div><p>从反编译后代码可以看出，可变参数在被使用的时候，他首先会创建一个数组，数组的长度就是调用该方法是传递的实参的个数，
 然后再把参数值全部放到这个数组当中，然后再把这个数组作为参数传递到被调用的方法中。</p>
 <h4 id="枚举">枚举</h4>
 <p>Java SE5提供了一种新的类型-Java的枚举类型，关键字enum可以将一组具名的值的有限集合创建为一种新的类型，而这些具名的值可以作为常规的程序组件使用，这是一种非常有用的功能。</p>
 <p>要想看源码，首先得有一个类吧，那么枚举类型到底是什么类呢？是enum吗？</p>
 <p>答案很明显不是，enum就和class一样，只是一个关键字，他并不是一个类。</p>
 <p>那么枚举是由什么类维护的呢，我们简单的写一个枚举：</p>
-<pre><code>public enum t {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public enum t {
     SPRING,SUMMER;
 }
-</code></pre><p>然后我们使用反编译，看看这段代码到底是怎么实现的，反编译后代码内容如下：</p>
-<pre><code>public final class T extends Enum
+</code></pre></div><p>然后我们使用反编译，看看这段代码到底是怎么实现的，反编译后代码内容如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public final class T extends Enum
 {
     private T(String s, int i)
     {
@@ -915,14 +916,14 @@ public static transient void print(String strs[])
     private static final T ENUM$VALUES[];
     static
     {
-        SPRING = new T(&quot;SPRING&quot;, 0);
-        SUMMER = new T(&quot;SUMMER&quot;, 1);
+        SPRING = new T(&#34;SPRING&#34;, 0);
+        SUMMER = new T(&#34;SUMMER&#34;, 1);
         ENUM$VALUES = (new T[] {
             SPRING, SUMMER
         });
     }
 }
-</code></pre><p>通过反编译后代码我们可以看到，<code>public final class T extends Enum</code>，说明，
+</code></pre></div><p>通过反编译后代码我们可以看到，<code>public final class T extends Enum</code>，说明，
 该类是继承了Enum类的，同时final关键字告诉我们，这个类也是不能被继承的。</p>
 <p>当我们使用enmu来定义一个枚举类型的时候，编译器会自动帮我们创建一个final类型的类继承Enum类，所以枚举类型不能被继承。</p>
 <h4 id="内部类">内部类</h4>
@@ -930,7 +931,7 @@ public static transient void print(String strs[])
 <p>内部类之所以也是语法糖，是因为它仅仅是一个编译时的概念。</p>
 <p><code>outer.java</code>里面定义了一个内部类inner，一旦编译成功，就会生成两个完全不同的.class文件了，
 分别是<code>outer.class</code>和<code>outer$inner.class</code>。所以内部类的名字完全可以和它的外部类名字相同。</p>
-<pre><code>public class OutterClass {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class OutterClass {
     private String userName;
 
     public String getUserName() {
@@ -957,13 +958,13 @@ public static transient void print(String strs[])
         }
     }
 }
-</code></pre><p>以上代码编译后会生成两个class文件：<code>OutterClass$InnerClass.class 、OutterClass.class</code> 。</p>
+</code></pre></div><p>以上代码编译后会生成两个class文件：<code>OutterClass$InnerClass.class 、OutterClass.class</code> 。</p>
 <p>当我们尝试使用jad对<code>OutterClass.class</code>文件进行反编译的时候，命令行会打印以下内容：</p>
-<pre><code>Parsing OutterClass.class...
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">Parsing OutterClass.class...
 Parsing inner class OutterClass$InnerClass.class...
 Generating OutterClass.jad
-</code></pre><p>他会把两个文件全部进行反编译，然后一起生成一个<code>OutterClass.jad</code>文件。文件内容如下：</p>
-<pre><code>public class OutterClass
+</code></pre></div><p>他会把两个文件全部进行反编译，然后一起生成一个<code>OutterClass.jad</code>文件。文件内容如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class OutterClass
 {
     class InnerClass
     {
@@ -1000,26 +1001,26 @@ Generating OutterClass.jad
     }
     private String userName;
 }
-</code></pre><p>七 、条件编译</p>
+</code></pre></div><p>七 、条件编译</p>
 <p>—般情况下，程序中的每一行代码都要参加编译。
 但有时候出于对程序代码优化的考虑，希望只对其中一部分内容进行编译，此时就需要在程序中加上条件，让编译器只对满足条件的代码进行编译，将不满足条件的代码舍弃，这就是条件编译。</p>
 <p>如在C或CPP中，可以通过预处理语句来实现条件编译。其实在Java中也可实现条件编译。我们先来看一段代码：</p>
-<pre><code>public class ConditionalCompilation {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class ConditionalCompilation {
     public static void main(String[] args) {
         final boolean DEBUG = true;
         if(DEBUG) {
-            System.out.println(&quot;Java, DEBUG!&quot;);
+            System.out.println(&#34;Java, DEBUG!&#34;);
         }
 
         final boolean ONLINE = false;
 
         if(ONLINE){
-            System.out.println(&quot;Java, ONLINE!&quot;);
+            System.out.println(&#34;Java, ONLINE!&#34;);
         }
     }
 }
-</code></pre><p>反编译后代码如下：</p>
-<pre><code>public class ConditionalCompilation
+</code></pre></div><p>反编译后代码如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class ConditionalCompilation
 {
 
     public ConditionalCompilation()
@@ -1029,11 +1030,11 @@ Generating OutterClass.jad
     public static void main(String args[])
     {
         boolean DEBUG = true;
-        System.out.println(&quot;Java, DEBUG!&quot;);
+        System.out.println(&#34;Java, DEBUG!&#34;);
         boolean ONLINE = false;
     }
 }
-</code></pre><p>首先，我们发现，在反编译后的代码中没有<code>System.out.println(&quot;Hello, ONLINE!&quot;);</code>，这其实就是条件编译。</p>
+</code></pre></div><p>首先，我们发现，在反编译后的代码中没有<code>System.out.println(&quot;Hello, ONLINE!&quot;);</code>，这其实就是条件编译。</p>
 <p>当if(ONLINE)为false的时候，编译器就没有对其内的代码进行编译。
 所以，Java语法的条件编译，是通过判断条件为常量的if语句实现的。根据if判断条件的真假，编译器直接把分支为false的代码块消除。
 通过该方式实现的条件编译，必须在方法体内实现，而无法在正整个Java类的结构或者类的属性上进行条件编译。</p>
@@ -1043,18 +1044,18 @@ Generating OutterClass.jad
 Java在执行的时候默认是不启动断言检查的（这个时候，所有的断言语句都将忽略！）。</p>
 <p>如果要开启断言检查，则需要用开关<code>-enableassertions</code>或<code>-ea</code>来开启。</p>
 <p>看一段包含断言的代码：</p>
-<pre><code>public class AssertTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class AssertTest {
     public static void main(String args[]) {
         int a = 1;
         int b = 1;
         assert a == b;
-        System.out.println(&quot;Java&quot;);
-        assert a != b : &quot;suxiansheng&quot;;
-        System.out.println(&quot;博客：https://www.jianshu.com/u/94111742c97c&quot;);
+        System.out.println(&#34;Java&#34;);
+        assert a != b : &#34;suxiansheng&#34;;
+        System.out.println(&#34;博客：https://www.jianshu.com/u/94111742c97c&#34;);
     }
 }
-</code></pre><p>反编译后代码如下：</p>
-<pre><code>public class AssertTest {
+</code></pre></div><p>反编译后代码如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class AssertTest {
    public AssertTest()
     {
     }
@@ -1064,13 +1065,13 @@ Java在执行的时候默认是不启动断言检查的（这个时候，所有�
     int b = 1;
     if(!$assertionsDisabled &amp;&amp; a != b)
         throw new AssertionError();
-    System.out.println(&quot;\u516C\u4F17\u53F7\uFF1AJava&quot;);
+    System.out.println(&#34;\u516C\u4F17\u53F7\uFF1AJava&#34;);
     if(!$assertionsDisabled &amp;&amp; a == b)
     {
-        throw new AssertionError(&quot;Java&quot;);
+        throw new AssertionError(&#34;Java&#34;);
     } else
     {
-        System.out.println(&quot;\u535A\u5BA2\uFF1Awww.jianshu.com/u/94111742c97c&quot;);
+        System.out.println(&#34;\u535A\u5BA2\uFF1Awww.jianshu.com/u/94111742c97c&#34;);
         return;
     }
 }
@@ -1078,19 +1079,19 @@ Java在执行的时候默认是不启动断言检查的（这个时候，所有�
 static final boolean $assertionsDisabled = !com/hollis/suguar/AssertTest.desiredAssertionStatus();
 
 }
-</code></pre><p>很明显，反编译之后的代码要比我们自己的代码复杂的多。所以，使用了assert这个语法糖我们节省了很多代码。</p>
+</code></pre></div><p>很明显，反编译之后的代码要比我们自己的代码复杂的多。所以，使用了assert这个语法糖我们节省了很多代码。</p>
 <p>其实断言的底层实现就是if语言，如果断言结果为true，则什么都不做，程序继续执行，如果断言结果为false，则程序抛出AssertError来打断程序的执行。</p>
 <h4 id="数值字面量">数值字面量</h4>
 <p>在java 7中，数值字面量，不管是整数还是浮点数，都允许在数字之间插入任意多个下划线。这些下划线不会对字面量的数值产生影响，目的就是方便阅读。</p>
 <p>比如：</p>
-<pre><code>public class Test {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class Test {
     public static void main(String... args) {
         int i = 10_000;
         System.out.println(i);
     }
 }
-</code></pre><p>反编译后：</p>
-<pre><code>public class Test
+</code></pre></div><p>反编译后：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class Test
 {
   public static void main(String[] args)
   {
@@ -1098,24 +1099,24 @@ static final boolean $assertionsDisabled = !com/hollis/suguar/AssertTest.desired
     System.out.println(i);
   }
 }
-</code></pre><p>反编译后就是把删除了。也就是说<strong>编译器并不认识在数字字面量中的，需要在编译阶段把他去掉</strong>。</p>
+</code></pre></div><p>反编译后就是把删除了。也就是说<strong>编译器并不认识在数字字面量中的，需要在编译阶段把他去掉</strong>。</p>
 <h4 id="for-each">for-each</h4>
 <p>增强for循环（for-each）相信大家都不陌生，日常开发经常会用到的，他会比for循环要少写很多代码，那么这个语法糖背后是如何实现的呢？</p>
-<pre><code>public static void main(String... args) {
-    String[] strs = {&quot;suxiansehng&quot;, &quot;Java&quot;, &quot;博客：www.jianshu.com/u/94111742c97c&quot;};
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static void main(String... args) {
+    String[] strs = {&#34;suxiansehng&#34;, &#34;Java&#34;, &#34;博客：www.jianshu.com/u/94111742c97c&#34;};
     for (String s : strs) {
         System.out.println(s);
     }
-    List&lt;String&gt; strList = ImmutableList.of(&quot;suxiansheng&quot;, &quot;java&quot;, &quot;博客：www.jianshu.com/u/94111742c97c&quot;);
+    List&lt;String&gt; strList = ImmutableList.of(&#34;suxiansheng&#34;, &#34;java&#34;, &#34;博客：www.jianshu.com/u/94111742c97c&#34;);
     for (String s : strList) {
         System.out.println(s);
     }
 }
-</code></pre><p>反编译后代码如下：</p>
-<pre><code>public static transient void main(String args[])
+</code></pre></div><p>反编译后代码如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static transient void main(String args[])
 {
     String strs[] = {
-        &quot;suxiansheng&quot;, &quot;\u516C\u4F17\u53F7\uFF1AJava&quot;, &quot;\u535A\u5BA2\uFF1Awww.jianshu.com/u/94111742c97c&quot;
+        &#34;suxiansheng&#34;, &#34;\u516C\u4F17\u53F7\uFF1AJava&#34;, &#34;\u535A\u5BA2\uFF1Awww.jianshu.com/u/94111742c97c&#34;
     };
     String args1[] = strs;
     int i = args1.length;
@@ -1125,21 +1126,21 @@ static final boolean $assertionsDisabled = !com/hollis/suguar/AssertTest.desired
         System.out.println(s);
     }
 
-    List strList = ImmutableList.of(&quot;suxiansheng&quot;, &quot;\u516C\u4F17\u53F7\uFF1AJava&quot;, &quot;\u535A\u5BA2\uFF1Awww.jianshu.com/u/94111742c97c&quot;);
+    List strList = ImmutableList.of(&#34;suxiansheng&#34;, &#34;\u516C\u4F17\u53F7\uFF1AJava&#34;, &#34;\u535A\u5BA2\uFF1Awww.jianshu.com/u/94111742c97c&#34;);
     String s;
     for(Iterator iterator = strList.iterator(); iterator.hasNext(); System.out.println(s))
         s = (String)iterator.next();
 
 }
-</code></pre><p>代码很简单，for-each的实现原理其实就是使用了普通的for循环和迭代器。</p>
+</code></pre></div><p>代码很简单，for-each的实现原理其实就是使用了普通的for循环和迭代器。</p>
 <h4 id="try-with-resource">try-with-resource</h4>
 <p>Java里，对于文件操作IO流、数据库连接等开销非常昂贵的资源，用完之后必须及时通过close方法将其关闭，否则资源会一直处于打开状态，可能会导致内存泄露等问题。</p>
 <p>关闭资源的常用方式就是在finally块里是释放，即调用close方法。比如，我们经常会写这样的代码：</p>
-<pre><code>public static void main(String[] args) {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static void main(String[] args) {
     BufferedReader br = null;
     try {
         String line;
-        br = new BufferedReader(new FileReader(&quot;d:\\hollischuang.xml&quot;));
+        br = new BufferedReader(new FileReader(&#34;d:\\hollischuang.xml&#34;));
         while ((line = br.readLine()) != null) {
             System.out.println(line);
         }
@@ -1155,9 +1156,9 @@ static final boolean $assertionsDisabled = !com/hollis/suguar/AssertTest.desired
         }
     }
 }
-</code></pre><p>从Java 7开始，jdk提供了一种更好的方式关闭资源，使用<code>try-with-resources</code>语句，改写一下上面的代码，效果如下：</p>
-<pre><code>public static void main(String... args) {
-    try (BufferedReader br = new BufferedReader(new FileReader(&quot;d:\\ hollischuang.xml&quot;))) {
+</code></pre></div><p>从Java 7开始，jdk提供了一种更好的方式关闭资源，使用<code>try-with-resources</code>语句，改写一下上面的代码，效果如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static void main(String... args) {
+    try (BufferedReader br = new BufferedReader(new FileReader(&#34;d:\\ hollischuang.xml&#34;))) {
         String line;
         while ((line = br.readLine()) != null) {
             System.out.println(line);
@@ -1166,13 +1167,13 @@ static final boolean $assertionsDisabled = !com/hollis/suguar/AssertTest.desired
         // handle exception
     }
 }
-</code></pre><p>看，这简直是一大福音啊，虽然我之前一般使用IOUtils去关闭流，并不会使用在finally中写很多代码的方式，但是这种新的语法糖看上去好像优雅很多呢。</p>
+</code></pre></div><p>看，这简直是一大福音啊，虽然我之前一般使用IOUtils去关闭流，并不会使用在finally中写很多代码的方式，但是这种新的语法糖看上去好像优雅很多呢。</p>
 <p>反编译以上代码，看下他的背后原理：</p>
-<pre><code>public static transient void main(String args[])
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static transient void main(String args[])
     {
         BufferedReader br;
         Throwable throwable;
-        br = new BufferedReader(new FileReader(&quot;d:\\ hollischuang.xml&quot;));
+        br = new BufferedReader(new FileReader(&#34;d:\\ hollischuang.xml&#34;));
         throwable = null;
         String line;
         try
@@ -1217,40 +1218,40 @@ static final boolean $assertionsDisabled = !com/hollis/suguar/AssertTest.desired
         ioexception;
     }
 }
-</code></pre><p>其实背后的原理也很简单，那些我们没有做的关闭资源的操作，编译器都帮我们做了。</p>
+</code></pre></div><p>其实背后的原理也很简单，那些我们没有做的关闭资源的操作，编译器都帮我们做了。</p>
 <p>所以，再次印证了，语法糖的作用就是方便程序员的使用，但最终还是要转成编译器认识的语言。</p>
 <h4 id="lambda表达式">Lambda表达式</h4>
 <p>关于lambda表达式，有人可能会有质疑，因为网上有人说他并不是语法糖。其实我想纠正下这个说法。</p>
 <p>Labmda表达式不是匿名内部类的语法糖，但是他也是一个语法糖。实现方式其实是依赖了几个JVM底层提供的lambda相关api。</p>
 <p>先来看一个简单的lambda表达式。遍历一个list：</p>
-<pre><code>public static void main(String... args) {
-    List&lt;String&gt; strList = ImmutableList.of(&quot;suxiansheng&quot;, &quot;Java&quot;, &quot;博客：www.jianshu.com/u/94111742c97c&quot;);
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static void main(String... args) {
+    List&lt;String&gt; strList = ImmutableList.of(&#34;suxiansheng&#34;, &#34;Java&#34;, &#34;博客：www.jianshu.com/u/94111742c97c&#34;);
 
     strList.forEach( s -&gt; { System.out.println(s); } );
 }
-</code></pre><p>为啥说他并不是内部类的语法糖呢，前面讲内部类我们说过，内部类在编译之后会有两个class文件，但是，包含lambda表达式的类编译后只有一个文件。</p>
+</code></pre></div><p>为啥说他并不是内部类的语法糖呢，前面讲内部类我们说过，内部类在编译之后会有两个class文件，但是，包含lambda表达式的类编译后只有一个文件。</p>
 <p>反编译后代码如下:</p>
-<pre><code>public static /* varargs */ void main(String ... args) {
-    ImmutableList strList = ImmutableList.of((Object)&quot;Java&quot;, (Object)&quot;\u516c\u4f17\u53f7\uff1aJava&quot;, (Object)&quot;\u535a\u5ba2\uff1awww.jianshu.com/u/94111742c97c&quot;);
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static /* varargs */ void main(String ... args) {
+    ImmutableList strList = ImmutableList.of((Object)&#34;Java&#34;, (Object)&#34;\u516c\u4f17\u53f7\uff1aJava&#34;, (Object)&#34;\u535a\u5ba2\uff1awww.jianshu.com/u/94111742c97c&#34;);
     strList.forEach((Consumer&lt;String&gt;)LambdaMetafactory.metafactory(null, null, null, (Ljava/lang/Object;)V, lambda$main$0(java.lang.String ), (Ljava/lang/String;)V)());
 }
 
 private static /* synthetic */ void lambda$main$0(String s) {
     System.out.println(s);
 }
-</code></pre><p>可以看到，在forEach方法中，其实是调用了<code>java.lang.invoke.LambdaMetafactory#metafactory</code>方法，
+</code></pre></div><p>可以看到，在forEach方法中，其实是调用了<code>java.lang.invoke.LambdaMetafactory#metafactory</code>方法，
 该方法的第四个参数implMethod指定了方法实现。可以看到这里其实是调用了一个lambda0方法进行了输出。</p>
 <p>再来看一个稍微复杂一点的，先对List进行过滤，然后再输出：</p>
-<pre><code>public static void main(String... args) {
-    List&lt;String&gt; strList = ImmutableList.of(&quot;suxiansheng&quot;, &quot;Java, &quot;博客：www.jianshu.com/u/94111742c97c&quot;);
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static void main(String... args) {
+    List&lt;String&gt; strList = ImmutableList.of(&#34;suxiansheng&#34;, &#34;Java, &#34;博客：www.jianshu.com/u/94111742c97c&#34;);
 
-    List HollisList = strList.stream().filter(string -&gt; string.contains(&quot;Java&quot;)).collect(Collectors.toList());
+    List HollisList = strList.stream().filter(string -&gt; string.contains(&#34;Java&#34;)).collect(Collectors.toList());
 
     HollisList.forEach( s -&gt; { System.out.println(s); } );
 }
-</code></pre><p>反编译后代码如下：</p>
-<pre><code>public static /* varargs */ void main(String ... args) {
-    ImmutableList strList = ImmutableList.of((Object)&quot;Java&quot;, (Object)&quot;\u516c\u4f17\u53f7\uff1aJava&quot;, (Object)&quot;\u535a\u5ba2\uff1awww.jianshu.com/u/94111742c97c&quot;);
+</code></pre></div><p>反编译后代码如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static /* varargs */ void main(String ... args) {
+    ImmutableList strList = ImmutableList.of((Object)&#34;Java&#34;, (Object)&#34;\u516c\u4f17\u53f7\uff1aJava&#34;, (Object)&#34;\u535a\u5ba2\uff1awww.jianshu.com/u/94111742c97c&#34;);
     List&lt;Object&gt; HollisList = strList.stream().filter((Predicate&lt;String&gt;)LambdaMetafactory.metafactory(null, null, null, (Ljava/lang/Object;)Z, lambda$main$0(java.lang.String ), (Ljava/lang/String;)Z)()).collect(Collectors.toList());
     HollisList.forEach((Consumer&lt;Object&gt;)LambdaMetafactory.metafactory(null, null, null, (Ljava/lang/Object;)V, lambda$main$1(java.lang.Object ), (Ljava/lang/Object;)V)());
 }
@@ -1260,28 +1261,28 @@ private static /* synthetic */ void lambda$main$1(Object s) {
 }
 
 private static /* synthetic */ boolean lambda$main$0(String string) {
-    return string.contains(&quot;Hollis&quot;);
+    return string.contains(&#34;Hollis&#34;);
 }
-</code></pre><p>两个lambda表达式分别调用了lambda1和lambda0两个方法。</p>
+</code></pre></div><p>两个lambda表达式分别调用了lambda1和lambda0两个方法。</p>
 <p>所以，lambda表达式的实现其实是依赖了一些底层的api，在编译阶段，编译器会把lambda表达式进行解糖，转换成调用内部api的方式。</p>
 <h3 id="可能遇到的坑">可能遇到的坑</h3>
 <h4 id="泛型当泛型遇到重载">泛型——当泛型遇到重载</h4>
-<pre><code>public class GenericTypes {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class GenericTypes {
 
     public static void method(List&lt;String&gt; list) {  
-        System.out.println(&quot;invoke method(List&lt;String&gt; list)&quot;);  
+        System.out.println(&#34;invoke method(List&lt;String&gt; list)&#34;);  
     }  
 
     public static void method(List&lt;Integer&gt; list) {  
-        System.out.println(&quot;invoke method(List&lt;Integer&gt; list)&quot;);  
+        System.out.println(&#34;invoke method(List&lt;Integer&gt; list)&#34;);  
     }  
 } 
-</code></pre><p>上面这段代码，有两个重载的函数，因为他们的参数类型不同，一个是List另一个是List，
+</code></pre></div><p>上面这段代码，有两个重载的函数，因为他们的参数类型不同，一个是List另一个是List，
 但是，这段代码是编译通不过的。因为我们前面讲过，参数List和List编译之后都被擦除了，变成了一样的原生类型List，擦除动作导致这两个方法的特征签名变得一模一样。</p>
 <h4 id="泛型当泛型遇到catch">泛型——当泛型遇到catch</h4>
 <p>泛型的类型参数不能用在Java异常处理的catch语句中。因为异常处理是由JVM在运行时刻来进行的。由于类型信息被擦除，JVM是无法区分两个异常类型MyException<String>和MyException<Integer>的</p>
 <p>泛型——当泛型内包含静态变量</p>
-<pre><code>public class StaticTest{
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class StaticTest{
     public static void main(String[] args){
         GT&lt;Integer&gt; gti = new GT&lt;Integer&gt;();
         gti.var=1;
@@ -1294,29 +1295,29 @@ class GT&lt;T&gt;{
     public static int var=0;
     public void nothing(T x){}
 }
-</code></pre><p>以上代码输出结果为：2！由于经过类型擦除，所有的泛型类实例都关联到同一份字节码上，泛型类的所有静态变量是共享的。</p>
+</code></pre></div><p>以上代码输出结果为：2！由于经过类型擦除，所有的泛型类实例都关联到同一份字节码上，泛型类的所有静态变量是共享的。</p>
 <h4 id="自动装箱与拆箱对象相等比较">自动装箱与拆箱——对象相等比较</h4>
-<pre><code>public static void main(String[] args) {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static void main(String[] args) {
     Integer a = 1000;
     Integer b = 1000;
     Integer c = 100;
     Integer d = 100;
-    System.out.println(&quot;a == b is &quot; + (a == b));
-    System.out.println((&quot;c == d is &quot; + (c == d)));
+    System.out.println(&#34;a == b is &#34; + (a == b));
+    System.out.println((&#34;c == d is &#34; + (c == d)));
 }
-</code></pre><p>输出结果：</p>
-<pre><code>a == b is false
+</code></pre></div><p>输出结果：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">a == b is false
 c == d is true
-</code></pre><p>在Java 5中，在Integer的操作上引入了一个新功能来节省内存和提高性能。整型对象通过使用相同的对象引用实现了缓存和重用。</p>
+</code></pre></div><p>在Java 5中，在Integer的操作上引入了一个新功能来节省内存和提高性能。整型对象通过使用相同的对象引用实现了缓存和重用。</p>
 <blockquote>
 <p>适用于整数值区间<code>-128 至 +127</code>。只适用于自动装箱。使用构造函数创建对象不适用。</p>
 </blockquote>
 <h4 id="增强for循环">增强for循环</h4>
-<pre><code>for (Student stu : students) {    
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">for (Student stu : students) {    
     if (stu.getId() == 2)     
         students.remove(stu);    
 }
-</code></pre><p>会抛出<code>ConcurrentModificationException</code>异常。</p>
+</code></pre></div><p>会抛出<code>ConcurrentModificationException</code>异常。</p>
 <p>Iterator是工作在一个独立的线程中，并且拥有一个 mutex 锁。
 Iterator被创建之后会建立一个指向原来对象的单链索引表，当原来的对象数量发生变化时，这个索引表的内容不会同步改变，所以当索引指针往后移动的时候就找不到要迭代的对象，
 所以按照 <code>fail-fast</code> 原则 Iterator 会马上抛出<code>java.util.ConcurrentModificationException</code>异常。</p>
@@ -1348,7 +1349,25 @@ Iterator被创建之后会建立一个指向原来对象的单链索引表，当
                 </div>
                 
                 
-                <div class="doc_comments"></div>
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+    })
+</script>
                 
             </div>
         </div>

@@ -1,9 +1,10 @@
 ---
-title: "Java基础-Java数据类型"
+title: "Java数据类型"
 date: 2021-01-20
 draft: false
-tags: ["Java", "面向菜鸟编程"]
+tags: ["Java", "Java基础"]
 slug: "rookie-datatype"
+weight: 10
 ---
 
 

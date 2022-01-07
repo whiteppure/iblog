@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>JVM-Java类加载机制 ｜ whitepure</title>
+	<title>JVM-Java类加载机制 ｜ 至简</title>
 	
     
     
-    <meta name="description" content="" />
+    <meta name="description" content="类加载过程 在Java中，类加载器把一个类装入`JVM中，要经过以下步骤： 加载、验证、准备、解析和初始化。其中验证,准备,解析统称为连接。 这5个阶段一般是顺序发生" />
     
 
     
@@ -678,35 +678,36 @@
         <a id="menu_icon"><i class="ri-menu-line"></i></a>
     </div>
 </div>
-        
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
+                    <span>至简</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">大道至简</p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
         <div class="content">
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
@@ -749,10 +750,10 @@
 <h3 id="准备">准备</h3>
 <p>为静态变量在方法取分配内存,并设置默认初始值。将在方法区中进行分配.</p>
 <p>举个例子:</p>
-<pre><code>public String var1 = &quot;var1&quot;;
-public static String var2 = &quot;var2&quot;;
-public static final String var3 = &quot;var3&quot;;
-</code></pre><p>变量<code>var1</code>不会被分配内存,但是<code>var2</code>会被分配.<code>var2</code>会被分配初始值为<code>null</code>而不是&rsquo;var2'.</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public String var1 = &#34;var1&#34;;
+public static String var2 = &#34;var2&#34;;
+public static final String var3 = &#34;var3&#34;;
+</code></pre></div><p>变量<code>var1</code>不会被分配内存,但是<code>var2</code>会被分配.<code>var2</code>会被分配初始值为<code>null</code>而不是&rsquo;var2'.</p>
 <p>这里所设置的初始值通常情况下是数据类型默认的零值（如<code>0、0L、null、false</code>等），而不是被在Java代码中被显式地赋予的值。</p>
 <p>实例变量会在对象实例化时随着对象一块分配在Java堆中。</p>
 <p>这里不包含<code>final</code>修饰的<code>static</code>,因为<code>final</code>在编译的时候就已经分配了.也就是说<code>var3</code>被分配的值为&rsquo;var3'</p>
@@ -779,8 +780,8 @@ public static final String var3 = &quot;var3&quot;;
 也就是说，当我们代码中包含static变量的时候，就会有<code>&lt;clinit&gt;()</code>方法</p>
 <p>在准备阶段，静态变量已经被赋过默认初始值，而在初始化阶段，静态变量将被赋值为代码期望赋的值.</p>
 <p>举个例子</p>
-<pre><code>public static String var2 = &quot;var2&quot;;
-</code></pre><p>在准备阶段变量<code>var2</code>的值为<code>null</code>,在初始化阶段赋值为&rsquo;var2'.</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public static String var2 = &#34;var2&#34;;
+</code></pre></div><p>在准备阶段变量<code>var2</code>的值为<code>null</code>,在初始化阶段赋值为&rsquo;var2'.</p>
 <p>在Java中对类变量进行初始值设定有两种方式：</p>
 <ul>
 <li>声明类变量时指定初始值</li>
@@ -809,8 +810,8 @@ public static final String var3 = &quot;var3&quot;;
 <h4 id="初始化规则">初始化规则</h4>
 <p>若该类具有父类，JVM会保证子类的<clinit>()方法执行前，父类的<clinit>()方法已经执行完毕。</p>
 <p>初始化顺序</p>
-<pre><code>父类静态域 --&gt; 子类静态域 --&gt; 父类成员初始化 --&gt;父类构造块 ---&gt;父类构造方法 --&gt;子类成员初始化 --&gt;子类构造块 --&gt;子类构造方法
-</code></pre><p>一些初始化规则:</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">父类静态域 --&gt; 子类静态域 --&gt; 父类成员初始化 --&gt;父类构造块 ---&gt;父类构造方法 --&gt;子类成员初始化 --&gt;子类构造块 --&gt;子类构造方法
+</code></pre></div><p>一些初始化规则:</p>
 <blockquote>
 <ul>
 <li>类从顶至底的顺序初始化，所以声明在顶部的字段的早于底部的字段初始化</li>
@@ -827,7 +828,7 @@ public static final String var3 = &quot;var3&quot;;
 <p>JVM设计者把<strong>类加载阶段中的&quot;通过&rsquo;类全名&rsquo;来获取定义此类的二进制字节流&quot;</strong> 这个动作放到Java虚拟机外部去实现，以便让应用程序自己决定如何去获取所需要的类。实现这个动作的代码模块称为“类加载器”。</p>
 <p>从虚拟机的角度来说，只存在两种不同的类加载器：一种是启动类加载器(<code>Bootstrap ClassLoader</code>)，该类加载器使用C++语言实现(这里仅限于<code>Hotspot</code>，也就是JDK1.5之后默认的虚拟机，有很多其他的虚拟机是用Java语言实现的)，属于虚拟机自身的一部分。
 另外一种就是自定义类加载器，这些类加载器是由Java语言实现，独立于JVM外部，并且全部继承自抽象类<code>java.lang.ClassLoader</code>。</p>
-<pre><code>public class ClassloaderTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class ClassloaderTest {
     public static void main(String[] args) {
         // 获取系统类加载器
         ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
@@ -856,12 +857,12 @@ public static final String var3 = &quot;var3&quot;;
         System.out.println(classLoader1);
     }
 }
-</code></pre><p>可以看出 启动类加载器无法直接通过代码获取，同时目前用户代码所使用的加载器为系统类加载器。同时我们通过获取String类型的加载器，发现是null，
+</code></pre></div><p>可以看出 启动类加载器无法直接通过代码获取，同时目前用户代码所使用的加载器为系统类加载器。同时我们通过获取String类型的加载器，发现是null，
 那么说明String类型是通过根加载器进行加载的，也就是说Java的核心类库都是使用根加载器进行加载的。</p>
 <p>获取启动类加载器加载的路径</p>
-<pre><code>public class ClassloaderTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class ClassloaderTest {
     public static void main(String[] args) {
-        System.out.println(&quot;*********启动类加载器加载的路径************&quot;);
+        System.out.println(&#34;*********启动类加载器加载的路径************&#34;);
         // 获取BootstrapClassLoader 能够加载的API的路径
         URL[] urls = sun.misc.Launcher.getBootstrapClassPath().getURLs();
         for (URL url : urls) {  
@@ -874,7 +875,7 @@ public static final String var3 = &quot;var3&quot;;
 
     }
 }
-</code></pre><h3 id="启动类加载器引导类加载器bootstrap-classloader">启动类加载器(引导类加载器、Bootstrap ClassLoader)</h3>
+</code></pre></div><h3 id="启动类加载器引导类加载器bootstrap-classloader">启动类加载器(引导类加载器、Bootstrap ClassLoader)</h3>
 <ul>
 <li>该类加载器使用C/C++语言实现的，嵌套在JVM内部,可理解为就是JVM的一部分。</li>
 <li>它用来加载Java的核心库（<code>JAVAHOME/jre/1ib/rt.jar、resources.jar</code>或<code>sun.boot.class.path</code>路径下的内容），用于提供JVM自身需要的类。</li>
@@ -924,7 +925,7 @@ public static final String var3 = &quot;var3&quot;;
 </blockquote>
 <p><strong>重写<code>findClass</code>方法</strong></p>
 <p>准备一个class文件，编译后放到C盘根目录下</p>
-<pre><code>public class People {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class People {
 	private String name;
 	public String getName() {
 		return name;
@@ -934,8 +935,8 @@ public static final String var3 = &quot;var3&quot;;
 	}
 }
 
-</code></pre><p>自定义类加载器,继承<code>ClassLoader</code>重写<code>findClass</code>方法（其中<code>defineClass</code>方法可以把二进制流字节组成的文件转换为一个<code>java.lang.Class</code>）</p>
-<pre><code>public class MyClassLoader extends ClassLoader {
+</code></pre></div><p>自定义类加载器,继承<code>ClassLoader</code>重写<code>findClass</code>方法（其中<code>defineClass</code>方法可以把二进制流字节组成的文件转换为一个<code>java.lang.Class</code>）</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MyClassLoader extends ClassLoader {
 
     public MyClassLoader(){}
     
@@ -945,7 +946,7 @@ public static final String var3 = &quot;var3&quot;;
     }
     
     protected Class&lt;?&gt; findClass(String name) throws ClassNotFoundException {
-    	File file = new File(&quot;C:/People.class&quot;);
+    	File file = new File(&#34;C:/People.class&#34;);
         try{
             byte[] bytes = getClassBytes(file);
             //defineClass方法可以把二进制流字节组成的文件转换为一个java.lang.Class
@@ -981,7 +982,7 @@ public static final String var3 = &quot;var3&quot;;
     }
 }
 
-</code></pre><h2 id="双亲委派模型">双亲委派模型</h2>
+</code></pre></div><h2 id="双亲委派模型">双亲委派模型</h2>
 <p><img src="/iblog/posts/images/essays/%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B.png" alt="双亲委派模型"></p>
 <p>这种层次关系称为<strong>类加载器的双亲委派模型。</strong> 我们把每一层上面的类加载器叫做当前层类加载器的父加载器，当然，它们之间的父子关系并不是通过继承关系来实现的，而是使用组合关系来复用父加载器中的代码。
 该模型在JDK1.2期间被引入并广泛应用于之后几乎所有的Java程序中，但它并不是一个强制性的约束模型，而是Java设计者们推荐给开发者的一种类的加载器实现方式。</p>
@@ -994,7 +995,7 @@ public static final String var3 = &quot;var3&quot;;
 <p>双亲委派模型的工作流程是：如果一个类加载器收到了类加载的请求，它首先不会自己去尝试加载这个类，而是把请求委托给父加载器去完成，依次向上。
 因此，所有的类加载请求最终都应该被传递到顶层的启动类加载器中，只有当父加载器在它的搜索范围中没有找到所需的类时，即无法完成该加载，子加载器才会尝试自己去加载该类。</p>
 <p>在<code>rt.jar</code>包中的<code>java.lang.ClassLoader</code>类中，我们可以查看类加载实现过程<code>loadClass</code>方法的代码，具体源码如下：</p>
-<pre><code>    protected Class&lt;?&gt; loadClass(String name, boolean resolve)
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    protected Class&lt;?&gt; loadClass(String name, boolean resolve)
         throws ClassNotFoundException
     {
         synchronized (getClassLoadingLock(name)) {
@@ -1032,7 +1033,7 @@ public static final String var3 = &quot;var3&quot;;
             return c;
         }
     }
-</code></pre><p>根据代码以及代码中的注释可以很清楚地了解整个过程：
+</code></pre></div><p>根据代码以及代码中的注释可以很清楚地了解整个过程：
 先检查是否已经被加载过，如果没有则调用父加载器的<code>loadClass()</code>方法，如果父加载器为空则默认使用启动类加载器作为父加载器。
 如果父类加载器加载失败，则先抛出<code>ClassNotFoundException</code>,然后再调用自己的<code>findClass()</code>方法进行加载。</p>
 <h3 id="优势">优势</h3>
@@ -1091,7 +1092,25 @@ public static final String var3 = &quot;var3&quot;;
                 </div>
                 
                 
-                <div class="doc_comments"></div>
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+    })
+</script>
                 
             </div>
         </div>

@@ -1,9 +1,10 @@
 ---
-title: "Java基础-JavaIO"
+title: "JavaIO"
 date: 2021-04-09
 draft: false
-tags: ["Java", "面向菜鸟编程"]
+tags: ["Java", "Java基础"]
 slug: "rookie-io"
+weight: 50
 ---
 
 ## 概念

@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>JVM-直接内存 ｜ whitepure</title>
+	<title>JVM-直接内存 ｜ 至简</title>
 	
     
     
-    <meta name="description" content="" />
+    <meta name="description" content="直接内存不是虚拟机运行时数据区的一部分，也不是《Java虚拟机规范》中定义的内存区域。 直接内存是在Java堆外的、直接向系统申请的内存区间。 操作直接内存演示代码" />
     
 
     
@@ -63,35 +63,36 @@
         <a id="menu_icon"><i class="ri-menu-line"></i></a>
     </div>
 </div>
-        
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
+                    <span>至简</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">大道至简</p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
         <div class="content">
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
@@ -102,28 +103,28 @@
                     <div class="post_content markdown"><p>直接内存不是虚拟机运行时数据区的一部分，也不是《Java虚拟机规范》中定义的内存区域。
 直接内存是在Java堆外的、直接向系统申请的内存区间。</p>
 <p>操作直接内存演示代码：</p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     public static void main(String[] args) {
         ByteBuffer allocate = ByteBuffer.allocate(1024 * 1024 * 1024);
 
-        System.out.println(&quot;直接内存分配完成 ...&quot;);
+        System.out.println(&#34;直接内存分配完成 ...&#34;);
         Scanner scanner = new Scanner(System.in);
         scanner.next();
 
-        System.out.println(&quot;直接内存开始释放&quot;);
+        System.out.println(&#34;直接内存开始释放&#34;);
         System.gc();
 
         scanner.next();
-        System.out.println(&quot;退出！&quot;);
+        System.out.println(&#34;退出！&#34;);
     }
 }
-</code></pre><p>使用NIO，通过存在堆中的直接内存操作本地内存</p>
+</code></pre></div><p>使用NIO，通过存在堆中的直接内存操作本地内存</p>
 <p><img src="/iblog/posts/images/essays/IO%E8%AF%BB%E5%86%99.png" alt="IO读写">
 <img src="/iblog/posts/images/essays/NIO%E8%AF%BB%E5%86%99.png" alt="NIO读写"></p>
 <p>通常，访问直接内存的速度会优于Java堆。即读写性能高。因此出于性能考虑，读写频繁的场合可能会考虑使用直接内存。
 Java的NIO库允许Java程序使用直接内存，用于数据缓冲区。</p>
 <p>直接内存也存在 <code>OutOfMemoryError</code> 异常:<code>OutOfMemoryError: Direct buffer memory</code></p>
-<pre><code>public class MainTest {
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
     private static final int BUFFER = 1024 * 1024 * 20;
     public static void main(String[] args) {
         ArrayList&lt;ByteBuffer&gt; list = new ArrayList&lt;&gt;();
@@ -144,7 +145,7 @@ Java的NIO库允许Java程序使用直接内存，用于数据缓冲区。</p>
         }
     }
 }
-</code></pre><p>由于直接内存在Java堆外，因此它的大小不会直接受限于<code>-Xmx</code>指定的最大堆大小，但是系统内存是有限的，
+</code></pre></div><p>由于直接内存在Java堆外，因此它的大小不会直接受限于<code>-Xmx</code>指定的最大堆大小，但是系统内存是有限的，
 Java堆和直接内存的总和依然受限于操作系统能给出的最大内存。</p>
 <p>直接内存缺点：</p>
 <ul>
@@ -172,7 +173,25 @@ Java堆和直接内存的总和依然受限于操作系统能给出的最大内�
                 </div>
                 
                 
-                <div class="doc_comments"></div>
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+    })
+</script>
                 
             </div>
         </div>
