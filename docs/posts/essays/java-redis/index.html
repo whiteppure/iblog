@@ -1945,10 +1945,10 @@ NoSql 不依赖业务逻辑方式存储，而以简单的key-value模式存储�
 <li>基于sql的结构化查询存储，处理复杂的关系,需要及时查询;</li>
 <li>用不着sql的和用了sql也不行的情况，请考虑用NoSql；</li>
 </ul>
-<p>传统数据库遵循 ACID 规则。而 Nosql 一般为分布式,而分布式一般遵循 <a href="https://whiteppure.github.io/iblog/posts/essays/java-transaction/#cap%E7%90%86%E8%AE%BA">CAP</a> 定理。</p>
+<p>传统数据库遵循 ACID 规则。而 Nosql 一般为分布式,而分布式一般遵循 <a href="/iblog/posts/essays/java-transaction/#cap%E7%90%86%E8%AE%BA">CAP</a> 定理。</p>
 <h3 id="redis相关知识">Redis相关知识</h3>
 <p>Redis 默认16个数据库，类似数组下标从0开始，初始默认使用0号库。可使用命令 <code>select  &lt;dbid&gt;</code>来切换数据库。如: <code>select 8</code> 。</p>
-<p>Redis是单线程+<a href="https://whiteppure.github.io/iblog/posts/rookie/rookie-io/#reactor-%E6%A8%A1%E5%9E%8B">多路IO复用技术</a></p>
+<p>Redis是单线程+<a href="/iblog/posts/rookie/rookie-io/#reactor-%E6%A8%A1%E5%9E%8B">多路IO复用技术</a></p>
 <p><strong>多路复用：</strong>
 指使用一个线程来检查多个文件描述符（Socket）的就绪状态，比如调用select和poll函数，传入多个文件描述符，如果有一个文件描述符就绪，则返回，否则阻塞直到超时。得到就绪状态后进行真正的操作可以在同一个线程里执行，也可以启动线程执行，比如使用线程池。</p>
 <p><strong>Redis与原子性：</strong>
@@ -2337,7 +2337,7 @@ QUEUED
 <p><strong>为什么要使用事务？</strong></p>
 <p>想想一个场景：有很多人有你的账户,同时去参加抢购。一个请求想给金额减8000、一个请求想给金额减5000、一个请求想给金额减1000。</p>
 <p>如果不加事务，有可能一个线程在减8000后，还没有写入数据库，此时另一个线程执行减5000操作写入数据库，然后再将减8000的操作写入数据库，就会造成数据异常。针对于高并发这种情况下我们就需要用事务来控制，可以用加锁来处理。</p>
-<p>在Redis中可以使用<a href="https://whiteppure.github.io/iblog/posts/rookie/rookie-multi-thread/#%E6%82%B2%E8%A7%82%E9%94%81%E4%B8%8E%E4%B9%90%E8%A7%82%E9%94%81">悲观锁、乐观锁</a>的思想来处理。</p>
+<p>在Redis中可以使用<a href="/iblog/posts/rookie/rookie-multi-thread/#%E6%82%B2%E8%A7%82%E9%94%81%E4%B8%8E%E4%B9%90%E8%A7%82%E9%94%81">悲观锁、乐观锁</a>的思想来处理。</p>
 <h4 id="悲观锁">悲观锁</h4>
 <p><img src="/iblog/posts/images/essays/Redis%E8%AF%A6%E8%A7%A3-017.png" alt="Redis详解-017"></p>
 <p>悲观锁(Pessimistic Lock), 顾名思义，就是很悲观，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会block直到它拿到锁。传统的关系型数据库里边就用到了很多这种锁机制，比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上锁。</p>
@@ -3488,7 +3488,9 @@ save 60 10000
 <script src="https://cdn.bootcdn.net/ajax/libs/jspdf/1.0.106/jspdf.debug.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
 
+
 <script type="text/javascript">
+
     var downPdf = document.getElementById("export_pdf");
     var pdfContent = document.getElementById('pdf_content');
     downPdf.onclick = () => {

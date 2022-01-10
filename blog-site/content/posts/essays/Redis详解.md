@@ -35,12 +35,12 @@ NoSql不适用场景:
 - 基于sql的结构化查询存储，处理复杂的关系,需要及时查询;
 - 用不着sql的和用了sql也不行的情况，请考虑用NoSql；
 
-传统数据库遵循 ACID 规则。而 Nosql 一般为分布式,而分布式一般遵循 [CAP](https://whiteppure.github.io/iblog/posts/essays/java-transaction/#cap理论) 定理。
+传统数据库遵循 ACID 规则。而 Nosql 一般为分布式,而分布式一般遵循 [CAP](/iblog/posts/essays/java-transaction/#cap理论) 定理。
 
 ### Redis相关知识
 Redis 默认16个数据库，类似数组下标从0开始，初始默认使用0号库。可使用命令 `select  <dbid>`来切换数据库。如: `select 8` 。
 
-Redis是单线程+[多路IO复用技术](https://whiteppure.github.io/iblog/posts/rookie/rookie-io/#reactor-模型)
+Redis是单线程+[多路IO复用技术](/iblog/posts/rookie/rookie-io/#reactor-模型)
 
 **多路复用：**
 指使用一个线程来检查多个文件描述符（Socket）的就绪状态，比如调用select和poll函数，传入多个文件描述符，如果有一个文件描述符就绪，则返回，否则阻塞直到超时。得到就绪状态后进行真正的操作可以在同一个线程里执行，也可以启动线程执行，比如使用线程池。
@@ -384,7 +384,7 @@ QUEUED
 
 如果不加事务，有可能一个线程在减8000后，还没有写入数据库，此时另一个线程执行减5000操作写入数据库，然后再将减8000的操作写入数据库，就会造成数据异常。针对于高并发这种情况下我们就需要用事务来控制，可以用加锁来处理。
 
-在Redis中可以使用[悲观锁、乐观锁](https://whiteppure.github.io/iblog/posts/rookie/rookie-multi-thread/#悲观锁与乐观锁)的思想来处理。
+在Redis中可以使用[悲观锁、乐观锁](/iblog/posts/rookie/rookie-multi-thread/#悲观锁与乐观锁)的思想来处理。
 
 #### 悲观锁
 ![Redis详解-017](/iblog/posts/images/essays/Redis详解-017.png)
