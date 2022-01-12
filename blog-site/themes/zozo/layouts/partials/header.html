@@ -6,9 +6,19 @@
                     <span>{{ .Site.Title }}</span>
                 </a>
             </h1>
+            {{ if .Site.Params.valine.enable }}
+            <div class="post">
+                <div class="post_title post_detail_title">
+                    <span class="date" id="busuanzi_container_site_pv">总访问量 <span id="busuanzi_value_site_pv"></span> 次</span>
+                </div>
+            </div>
+            {{ else }}
+            {{ end }}
         </div>
         <div class="description">
-            <p class="sub_title">{{ with .Site.Params.subTitle }}{{ . }}{{ else }}{{ end }}</p>
+            <p class="sub_title">
+                {{ with .Site.Params.subTitle }}{{ . }}{{ else }}{{ end }}
+            </p>
             <div class="my_socials">
                 {{ range $key, $val := .Site.Social }}
                 {{ if ne $val "" }}

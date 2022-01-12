@@ -18,9 +18,9 @@ draft: false
 如果你想要使用 hugo 搭建博客，可以参考以下相关资料：
 - [hugo中文帮助文档](https://hugo.aiaide.com)
 - [hugo中文文档](https://www.gohugo.org)
-- [hugo给文章添加目录](https://www.ariesme.com/posts/2019/add_toc_for_hugo/)
-- [使用hugo搭建个人博客站点](https://blog.coderzh.com/2015/08/29/hugo/)
-
+- [hugo给文章添加目录](https://www.ariesme.com/posts/2019/add_toc_for_hugo)
+- [使用hugo搭建个人博客站点](https://blog.coderzh.com/2015/08/29/hugo)
+- [hugo博客添加评论系统Valine](https://blog.smslit.cn/2018/07/08/hugo-valine)
 
 ## 其他学习参考资料
 因为本人目前主要是做Java开发相关的工作，所以这里的博客文章、参考资料大部分都和Java相关，如果您不想看到Java可以直接关闭本页面。

@@ -8,7 +8,7 @@
 	
 	
 	
-	<title>数据结构与算法 ｜ 大道至简</title>
+	<title>数据结构与算法 ｜ 至简</title>
 	
     
     
@@ -455,8 +455,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e9%81%8d%e5%8e%86">
-                    二叉树的遍历
+                <a class="nav-link text-left" href="#%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e9%81%8d%e5%8e%86%e5%8f%8a%e6%9f%a5%e6%89%be">
+                    二叉树的遍历及查找
                 </a>
             </li>
             
@@ -1039,6 +1039,38 @@
             
         <ul class="nav">
             
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%a0%86%e6%8e%92%e5%ba%8f">
+                    堆排序
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
             
             <li class="nav-item">
                 <a class="nav-link text-left" href="#%e6%9f%a5%e6%89%be%e7%ae%97%e6%b3%95">
@@ -1467,12 +1499,21 @@
         <div class="site_title">
             <h1>
                 <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
-                    <span>大道至简</span>
+                    <span>至简</span>
                 </a>
             </h1>
+            
+            <div class="post">
+                <div class="post_title post_detail_title">
+                    <span class="date" id="busuanzi_container_site_pv">总访问量 <span id="busuanzi_value_site_pv"></span> 次</span>
+                </div>
+            </div>
+            
         </div>
         <div class="description">
-            <p class="sub_title">真传一句话，假传万卷书</p>
+            <p class="sub_title">
+                大道至简
+            </p>
             <div class="my_socials">
                 
                 
@@ -2731,7 +2772,7 @@
 <p>PS: 二叉树中结点等价于节点</p>
 </blockquote>
 <p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-022.png" alt="数据结构与算法-022"></p>
-<h4 id="二叉树的遍历">二叉树的遍历</h4>
+<h4 id="二叉树的遍历及查找">二叉树的遍历及查找</h4>
 <p>对于二叉树来讲最主要、最基本的运算是遍历。遍历二叉树 是指以一定的次序访问二叉树中的每个结点。所谓访问结点是指对结点进行各种操作的简称。</p>
 <p>例如，查询结点数据域的内容，或输出它的值，或找出结点位置，或是执行对结点的其他操作。遍历二叉树的过程实质是把二叉树的结点进行线性排列的过程。</p>
 <p>二叉树的遍历方法：</p>
@@ -3070,43 +3111,116 @@
         <span class="n">binaryTreeObj3</span><span class="o">.</span><span class="na">setLeft</span><span class="o">(</span><span class="n">binaryTreeObj4</span><span class="o">);</span>
         <span class="n">binaryTreeObj3</span><span class="o">.</span><span class="na">setRight</span><span class="o">(</span><span class="n">binaryTreeObj5</span><span class="o">);</span>
 
-        <span class="n">ThreadedBinaryTree</span> <span class="n">threadedBinaryTree</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ThreadedBinaryTree</span><span class="o">();</span>
+        <span class="c1">// 中序线索化二叉树
+</span><span class="c1"></span>        <span class="n">ThreadedBinaryTree</span> <span class="n">threadedBinaryTree</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ThreadedBinaryTree</span><span class="o">();</span>
         <span class="n">threadedBinaryTree</span><span class="o">.</span><span class="na">infixThreadedBinaryTree</span><span class="o">(</span><span class="n">root</span><span class="o">);</span>
 
-        <span class="c1">// 2,1,4,3,5
-</span><span class="c1"></span>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">binaryTreeObj4</span><span class="o">.</span><span class="na">getLeft</span><span class="o">());</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">binaryTreeObj4</span><span class="o">.</span><span class="na">getRight</span><span class="o">());</span>
-    <span class="o">}</span>
+        <span class="c1">// 遍历中序线索化二叉树
+</span><span class="c1"></span>        <span class="n">threadedBinaryTree</span><span class="o">.</span><span class="na">forEachInfixThreadedBinaryTree</span><span class="o">(</span><span class="n">root</span><span class="o">);</span> <span class="c1">// 2,1,4,3,5
+</span><span class="c1"></span>    <span class="o">}</span>
 <span class="o">}</span>
 
 
 <span class="kd">class</span> <span class="nc">ThreadedBinaryTree</span><span class="o">{</span>
+
     <span class="kd">private</span> <span class="n">BinaryTreeObj</span> <span class="n">pre</span><span class="o">;</span>
 
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">infixThreadedBinaryTree</span><span class="o">(</span><span class="n">BinaryTreeObj</span> <span class="n">node</span><span class="o">){</span>
+    <span class="c1">// 中序线索化二叉树
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">infixThreadedBinaryTree</span><span class="o">(</span><span class="n">BinaryTreeObj</span> <span class="n">node</span><span class="o">){</span>
         <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
             <span class="k">return</span><span class="o">;</span>
         <span class="o">}</span>
-
         <span class="c1">// 左递归线索化二叉树
 </span><span class="c1"></span>        <span class="n">infixThreadedBinaryTree</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">getLeft</span><span class="o">());</span>
 
-        <span class="c1">// 线索化核心代码
-</span><span class="c1"></span>        <span class="c1">// 将左结点线索化
+        <span class="c1">// 线索化核心代码 将左结点线索化
 </span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">getLeft</span><span class="o">()</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
             <span class="n">node</span><span class="o">.</span><span class="na">setLeft</span><span class="o">(</span><span class="n">pre</span><span class="o">);</span>
+            <span class="n">node</span><span class="o">.</span><span class="na">setLeftType</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
         <span class="o">}</span>
-
         <span class="c1">// 将右结点线索化
 </span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">pre</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">pre</span><span class="o">.</span><span class="na">getRight</span><span class="o">()</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
             <span class="n">pre</span><span class="o">.</span><span class="na">setRight</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+            <span class="n">pre</span><span class="o">.</span><span class="na">setRightType</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
         <span class="o">}</span>
-
         <span class="c1">// 使辅助结点指针指向当前结点
 </span><span class="c1"></span>        <span class="n">pre</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
 
         <span class="c1">// 右递归线索化二叉树
 </span><span class="c1"></span>        <span class="n">infixThreadedBinaryTree</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">getRight</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 遍历中序线索二叉树
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">forEachInfixThreadedBinaryTree</span><span class="o">(</span><span class="n">BinaryTreeObj</span> <span class="n">root</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 用辅助结点保存根结点
+</span><span class="c1"></span>        <span class="n">BinaryTreeObj</span> <span class="n">node</span> <span class="o">=</span> <span class="n">root</span><span class="o">;</span>
+
+        <span class="k">while</span> <span class="o">(</span><span class="n">node</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+
+            <span class="c1">// 向左子树遍历,直到找到 leftType=1 的结点，等于1代表该结点为前驱结点
+</span><span class="c1"></span>            <span class="k">while</span> <span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">getLeftType</span><span class="o">()</span> <span class="o">==</span> <span class="n">0</span><span class="o">){</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">getLeft</span><span class="o">();</span>
+            <span class="o">}</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+
+            <span class="c1">// 向右子树遍历，直到找到 rightType=0 的结点， 等于0代表该结点为右子树
+</span><span class="c1"></span>            <span class="k">while</span> <span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">getRightType</span><span class="o">()</span> <span class="o">==</span> <span class="n">1</span><span class="o">){</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">getRight</span><span class="o">();</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+            <span class="o">}</span>
+
+            <span class="c1">// node 结点向右边找
+</span><span class="c1"></span>            <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">getRight</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">BinaryTreeObj</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="n">BinaryTreeObj</span> <span class="n">left</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">BinaryTreeObj</span> <span class="n">right</span><span class="o">;</span>
+
+    <span class="c1">// 如果leftType == 0 表示指向的是左子树, 如果 1 则表示指向前驱结点
+</span><span class="c1"></span>    <span class="c1">// 如果rightType == 0 表示指向是右子树, 如果 1 表示指向后继结点
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="kt">int</span> <span class="n">leftType</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">rightType</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">BinaryTreeObj</span><span class="o">(</span><span class="n">Integer</span> <span class="n">id</span><span class="o">,</span><span class="n">String</span> <span class="n">name</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">getId</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">id</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">BinaryTreeObj</span> <span class="nf">getLeft</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">left</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">BinaryTreeObj</span> <span class="nf">getRight</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">right</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setLeft</span><span class="o">(</span><span class="n">BinaryTreeObj</span> <span class="n">left</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">left</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setRight</span><span class="o">(</span><span class="n">BinaryTreeObj</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">right</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setLeftType</span><span class="o">(</span><span class="kt">int</span> <span class="n">leftType</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">leftType</span> <span class="o">=</span> <span class="n">leftType</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setRightType</span><span class="o">(</span><span class="kt">int</span> <span class="n">rightType</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">rightType</span> <span class="o">=</span> <span class="n">rightType</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getLeftType</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">leftType</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getRightType</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">rightType</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div><h2 id="算法">算法</h2>
@@ -3709,7 +3823,67 @@ while(i&lt;n){
         <span class="o">}</span>
 
     <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h4 id="堆排序">堆排序</h4>
+<p>堆排序是利用堆这种数据结构而设计的一种排序算法，堆排序是一种选择排序，它的最坏、最好、平均时间复杂度均为O(nlogn)，它也是不稳定排序。</p>
+<p>堆排序的基本思想是：将待排序序列构造成一个大顶堆，此时，整个序列的最大值就是堆顶的根节点。将其与末尾元素进行交换，此时末尾就为最大值。然后将剩余n-1个元素重新构造成一个堆，这样会得到n个元素的次小值。如此反复执行，便能得到一个有序序列了。</p>
+<blockquote>
+<p>大顶堆：每个节点的值都大于或等于其子节点的值，在堆排序算法中用于升序排列；
+小顶堆：每个节点的值都小于或等于其子节点的值，在堆排序算法中用于降序排列；</p>
+</blockquote>
+<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-027.png" alt="数据结构与算法-027"></p>
+<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-026.gif" alt="数据结构与算法-026"></p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">HeapSorting</span> <span class="o">{</span>
 
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">arr</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 计算树中的叶子结点位置
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">leafNode</span> <span class="o">=</span> <span class="o">(</span><span class="n">arr</span><span class="o">.</span><span class="na">length</span> <span class="o">&gt;&gt;</span> <span class="n">1</span><span class="o">)</span> <span class="o">-</span> <span class="n">1</span><span class="o">;</span>
+
+        <span class="c1">// 构建大顶堆，此处需要注意 i &gt;= 0 需要算根结点
+</span><span class="c1"></span>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">leafNode</span><span class="o">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span><span class="o">--)</span> <span class="o">{</span>
+            <span class="n">buildMaxHeap</span><span class="o">(</span><span class="n">arr</span><span class="o">,</span> <span class="n">i</span><span class="o">,</span> <span class="n">arr</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="c1">// 构建大顶堆后，将根元素与树中的最后一个进行交换，再循环构建大顶堆
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">tmp</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span><span class="o">--)</span> <span class="o">{</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+            <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">0</span><span class="o">];</span>
+            <span class="n">arr</span><span class="o">[</span><span class="n">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">;</span>
+            <span class="n">buildMaxHeap</span><span class="o">(</span><span class="n">arr</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 堆排序核心代码 构建大顶堆
+</span><span class="cm">     *
+</span><span class="cm">     * @param arr 需要调整的数组
+</span><span class="cm">     * @param i   非叶子结点的索引位置
+</span><span class="cm">     * @param len 每次调整的长度
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">buildMaxHeap</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">arr</span><span class="o">,</span> <span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">int</span> <span class="n">len</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 保存非叶子结点的位置如果该结点的值小于子结点的值，则需要进行交换
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+
+        <span class="c1">// 从上至下，从左至右 遍历. 从第一个左子结点开始遍历
+</span><span class="c1"></span>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="n">1</span><span class="o">)</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">len</span><span class="o">;</span> <span class="n">n</span> <span class="o">=</span> <span class="o">(</span><span class="n">n</span> <span class="o">&lt;&lt;</span> <span class="n">1</span><span class="o">)</span> <span class="o">+</span> <span class="n">1</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// 如果左子结点 &lt; 右结点，则需要将 n 指向右结点，即后移
+</span><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">n</span> <span class="o">+</span> <span class="n">1</span> <span class="o">&lt;</span> <span class="n">len</span> <span class="o">&amp;&amp;</span> <span class="n">arr</span><span class="o">[</span><span class="n">n</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="o">[</span><span class="n">n</span> <span class="o">+</span> <span class="n">1</span><span class="o">])</span> <span class="o">{</span>
+                <span class="n">n</span><span class="o">++;</span>
+            <span class="o">}</span>
+            <span class="c1">// 当前非叶子结点 &lt; 当前子结点
+</span><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">arr</span><span class="o">[</span><span class="n">n</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">tmp</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// 将当前非叶子结点指向叶子结点
+</span><span class="c1"></span>                <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">n</span><span class="o">];</span>
+                <span class="c1">// 将i指向当前叶子结点，待最后将其变为 非叶子结点的值 即tmp的值
+</span><span class="c1"></span>                <span class="n">i</span> <span class="o">=</span> <span class="n">n</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="k">break</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="c1">// 与前面互相呼应
+</span><span class="c1"></span>        <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">;</span>
+    <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div><h3 id="查找算法">查找算法</h3>
 <h4 id="线性查找">线性查找</h4>
@@ -3836,20 +4010,20 @@ while(i&lt;n){
 <h3 id="马踏棋盘算法">马踏棋盘算法</h3>
 </div>
                     <div class="post_footer">
-                        
                         <div class="meta">
                             <div class="info">
                                 <span class="field tags">
                                     <i class="ri-stack-line"></i>
                                     
+                                    
                                     <a href="https://whiteppure.github.io/iblog/tags/java/">Java</a>
                                     
                                     <a href="https://whiteppure.github.io/iblog/tags/%E7%AE%97%E6%B3%95/">算法</a>
                                     
+                                    
                                 </span>
                             </div>
                         </div>
-                        
                     </div>
                 </div>
                 
@@ -3860,9 +4034,11 @@ while(i&lt;n){
     <div id="vcomments"></div>
 </div>
 
-<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
+<link rel="stylesheet" href="https://whiteppure.github.io/iblog/css/comments.css" />
+
 <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
 <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
 
 <script type="text/javascript">
     new Valine({
@@ -3871,8 +4047,64 @@ while(i&lt;n){
         appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
         placeholder: '说点什么吧...',
         visitor: 'true',
+        
+        emojiCDN: '//i0.hdslb.com/bfs/emote/',
+        
+        emojiMaps: {
+            "tv_doge": "6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png",
+            "tv_亲亲": "a8111ad55953ef5e3be3327ef94eb4a39d535d06.png",
+            "tv_偷笑": "bb690d4107620f1c15cff29509db529a73aee261.png",
+            "tv_再见": "180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png",
+            "tv_冷漠": "b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png",
+            "tv_发怒": "34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png",
+            "tv_发财": "34db290afd2963723c6eb3c4560667db7253a21a.png",
+            "tv_可爱": "9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png",
+            "tv_吐血": "09dd16a7aa59b77baa1155d47484409624470c77.png",
+            "tv_呆": "fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png",
+            "tv_呕吐": "9f996894a39e282ccf5e66856af49483f81870f3.png",
+            "tv_困": "241ee304e44c0af029adceb294399391e4737ef2.png",
+            "tv_坏笑": "1f0b87f731a671079842116e0991c91c2c88645a.png",
+            "tv_大佬": "093c1e2c490161aca397afc45573c877cdead616.png",
+            "tv_大哭": "23269aeb35f99daee28dda129676f6e9ea87934f.png",
+            "tv_委屈": "d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png",
+            "tv_害羞": "a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png",
+            "tv_尴尬": "7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png",
+            "tv_微笑": "70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png",
+            "tv_思考": "90cf159733e558137ed20aa04d09964436f618a1.png",
+            "tv_惊吓": "0d15c7e2ee58e935adc6a7193ee042388adc22af.png",
+            "tv_打脸": "56ab10b624063e966bfcb76ea5dc4794d87dfd47.png",
+            "tv_抓狂": "fe31c08edad661d63762b04e17b8d5ae3c71a757.png",
+            "tv_抠鼻": "c666f55e88d471e51bbd9fab9bb308110824a6eb.png",
+            "tv_斜眼笑": "911f987aa8bc1bee12d52aafe62bc41ef4474e6c.png",
+            "tv_无奈": "ea8ed89ee9878f2fece2dda0ea8a5dbfe21b5751.png",
+            "tv_晕": "5443c22b4d07fb1907ccc610c8e6db254f2461b7.png",
+            "tv_流汗": "cead1c351ab8d79e9f369605beb90148db0fbed3.png",
+            "tv_流泪": "7e71cde7858f0cd50d74b0264aa26db612a8a167.png",
+            "tv_流鼻血": "c32d39db2737f89b904ca32700d140a9241b0767.png",
+            "tv_点赞": "f85c354995bd99e28fc76c869bfe42ba6438eff4.png",
+            "tv_生气": "26702dcafdab5e8225b43ffd23c94ac1ff932654.png",
+            "tv_生病": "8b0ec90e6b86771092a498c54f09fc94621c1900.png",
+            "tv_疑问": "0793d949b18d7be716078349c202c15ff166f314.png",
+            "tv_白眼": "c1d59f439e379ee50eef488bcb5e5378e5044ea4.png",
+            "tv_皱眉": "72ccad6679fea0d14cce648b4d818e09b8ffea2d.png",
+            "tv_目瞪口呆": "0b8cb81a68de5d5365212c99375e7ace3e7891b7.png",
+            "tv_睡着": "8b196675b53af58264f383c50ad0945048290b33.png",
+            "tv_笑哭": "1abc628f6d4f4caf9d0e7800878f4697abbc8273.png",
+            "tv_腼腆": "89712c0d4af73e67f89e35cbc518420380a7f6f4.png",
+            "tv_色": "61822c7e9aae5da76475e7892534545336b23a6f.png",
+            "tv_调侃": "4bc022533ef31544ca0d72c12c808cf4a1cce3e3.png",
+            "tv_调皮": "b9c41de8e82dd7a8515ae5e3cb63e898bf245186.png",
+            "tv_鄙视": "6e72339f346a692a495b123174b49e4e8e781303.png",
+            "tv_闭嘴": "c9e990da7f6e93975e25fd8b70e2e290aa4086ef.png",
+            "tv_难过": "87f46748d3f142ebc6586ff58860d0e2fc8263ba.png",
+            "tv_馋": "fc7e829b845c43c623c8b490ee3602b7f0e76a31.png",
+            "tv_鬼脸": "0ffbbddf8a94d124ca2f54b360bbc04feb6bbfea.png",
+            "tv_黑人问号": "45821a01f51bc867da9edbaa2e070410819a95b2.png",
+            "tv_鼓掌": "1d21793f96ef4e6f48b23e53e3b9e42da833a0f6.png"
+        }
     })
 </script>
+
                 
             </div>
         </div>
@@ -3936,62 +4168,64 @@ while(i&lt;n){
 
 <script src="https://cdn.bootcdn.net/ajax/libs/jspdf/1.0.106/jspdf.debug.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-<script type="text/javascript">
 
-    var downPdf = document.getElementById("export_pdf");
-    var pdfContent = document.getElementById('pdf_content');
-    downPdf.onclick = () => {
-        html2canvas(pdfContent, {
-            onrendered:function(canvas) {
 
-                var contentWidth = canvas.width;
-                var contentHeight = canvas.height;
 
-                
-                
 
-                var pageHeight = contentWidth / 592.28 * 841.89;
-                
-                var leftHeight = contentHeight;
-                
-                var position = 0;
-                
-                
-                
 
-                var imgWidth = 595.28;
-                var imgHeight = 585.28/contentWidth * contentHeight;
 
-                var pageData = canvas.toDataURL('image/jpeg', 1.0);
 
-                var pdf = new jsPDF('', 'pt', 'a4');
 
-                
-                
 
-                
-                
-                if (leftHeight < pageHeight) {
-                    pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
-                } else {
-                    while(leftHeight > 0) {
-                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
-                        leftHeight -= pageHeight;
-                        position -= 841.89;
-                        
-                        if(leftHeight > 0) {
-                            pdf.addPage();
-                        }
-                    }
-                }
 
-                pdf.save('whitepure_blog.pdf');
-            }
-        })
-    }
-</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 
 </html>

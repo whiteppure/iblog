@@ -8,7 +8,7 @@
 	
 	
 	
-	<title>线程 ｜ 大道至简</title>
+	<title>线程 ｜ 至简</title>
 	
     
     
@@ -21,7 +21,7 @@
     
 
 	
-	<link rel="alternate" type="application/rss+xml" href="https://whiteppure.github.io/iblog/tags/%E7%BA%BF%E7%A8%8B/index.xml" title="大道至简" />
+	<link rel="alternate" type="application/rss+xml" href="https://whiteppure.github.io/iblog/tags/%E7%BA%BF%E7%A8%8B/index.xml" title="至简" />
     
     
     <link rel="shortcut icon" href="https://whiteppure.github.io/iblog/images/favicon.ico" />
@@ -62,12 +62,21 @@
         <div class="site_title">
             <h1>
                 <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
-                    <span>大道至简</span>
+                    <span>至简</span>
                 </a>
             </h1>
+            
+            <div class="post">
+                <div class="post_title post_detail_title">
+                    <span class="date" id="busuanzi_container_site_pv">总访问量 <span id="busuanzi_value_site_pv"></span> 次</span>
+                </div>
+            </div>
+            
         </div>
         <div class="description">
-            <p class="sub_title">真传一句话，假传万卷书</p>
+            <p class="sub_title">
+                大道至简
+            </p>
             <div class="my_socials">
                 
                 
@@ -186,62 +195,64 @@
 
 <script src="https://cdn.bootcdn.net/ajax/libs/jspdf/1.0.106/jspdf.debug.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-<script type="text/javascript">
 
-    var downPdf = document.getElementById("export_pdf");
-    var pdfContent = document.getElementById('pdf_content');
-    downPdf.onclick = () => {
-        html2canvas(pdfContent, {
-            onrendered:function(canvas) {
 
-                var contentWidth = canvas.width;
-                var contentHeight = canvas.height;
 
-                
-                
 
-                var pageHeight = contentWidth / 592.28 * 841.89;
-                
-                var leftHeight = contentHeight;
-                
-                var position = 0;
-                
-                
-                
 
-                var imgWidth = 595.28;
-                var imgHeight = 585.28/contentWidth * contentHeight;
 
-                var pageData = canvas.toDataURL('image/jpeg', 1.0);
 
-                var pdf = new jsPDF('', 'pt', 'a4');
 
-                
-                
 
-                
-                
-                if (leftHeight < pageHeight) {
-                    pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
-                } else {
-                    while(leftHeight > 0) {
-                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
-                        leftHeight -= pageHeight;
-                        position -= 841.89;
-                        
-                        if(leftHeight > 0) {
-                            pdf.addPage();
-                        }
-                    }
-                }
 
-                pdf.save('whitepure_blog.pdf');
-            }
-        })
-    }
-</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 
 </html>
