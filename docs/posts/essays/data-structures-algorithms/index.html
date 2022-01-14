@@ -8,7 +8,7 @@
 	
 	
 	
-	<title>数据结构与算法 ｜ 至简</title>
+	<title>数据结构与算法 ｜ 泊客</title>
 	
     
     
@@ -559,6 +559,34 @@
             
         </ul>
         
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%93%88%e5%a4%ab%e6%9b%bc%e6%a0%91">
+                    哈夫曼树
+                </a>
+            </li>
+            
+            
         </ul>
         
         </ul>
@@ -1229,6 +1257,34 @@
             
             
             <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%93%88%e5%a4%ab%e6%9b%bc%e7%bc%96%e7%a0%81">
+                    哈夫曼编码
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
                 <a class="nav-link text-left" href="#%e5%88%86%e6%b2%bb%e7%ae%97%e6%b3%95">
                     分治算法
                 </a>
@@ -1498,17 +1554,10 @@
     <div class="site_title_container">
         <div class="site_title">
             <h1>
-                <a href="https://whiteppure.github.io/iblog/" style="width: 100%">
-                    <span>至简</span>
+                <a href="https://whiteppure.github.io/iblog/">
+                    <span>泊客</span>
                 </a>
             </h1>
-            
-            <div class="post">
-                <div class="post_title post_detail_title">
-                    <span class="date" id="busuanzi_container_site_pv">总访问量 <span id="busuanzi_value_site_pv"></span> 次</span>
-                </div>
-            </div>
-            
         </div>
         <div class="description">
             <p class="sub_title">
@@ -1530,6 +1579,16 @@
 
 
             </div>
+            
+            <div class="post">
+                <div class="post_title post_detail_title">
+                    <span class="date" id="busuanzi_container_site_pv">访问量 <span id="busuanzi_value_site_pv"></span>次</span>
+                </div>
+                <div class="post_title post_detail_title">
+                    <span class="date" id="busuanzi_container_site_uv">访客数 <span id="busuanzi_value_site_uv"></span>人</span>
+                </div>
+            </div>
+            
         </div>
     </div>
 </div>
@@ -3223,6 +3282,95 @@
         <span class="k">return</span> <span class="n">rightType</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
+</code></pre></div><h3 id="哈夫曼树">哈夫曼树</h3>
+<p>哈夫曼树重要概念：</p>
+<ul>
+<li>路径和路径长度：在一棵树中，从一个结点往下可以达到的孩子或孙子结点之间的通路，称为路径。通路中分支的数目称为路径长度。若规定根结点的层数为 1，则从根结点到第 L 层结点的路径长度为 L-1；</li>
+<li>结点的权及带权路径长度：若将树中结点赋给一个有着某种含义的数值，则这个数值称为该结点的权。结点的带权路径长度为：从根结点到该结点之间的路径长度与该结点的权的乘积；</li>
+<li>树的带权路径长度：树的带权路径长度规定为所有叶子结点的带权路径长度之和，记为WPL(weighted path length) ，权值越大的结点离根结点越近的二叉树才是最优二叉树。WPL 最小的就是赫夫曼树；</li>
+</ul>
+<p>给定n个权值作为n个叶子结点，构造一棵二叉树，若该树的带权路径长度(wpl)达到最小，称这样的二叉树为最优二叉树，称为哈夫曼树，有些资料也译为赫夫曼树。</p>
+<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-028.png" alt="数据结构与算法-028"></p>
+<p>WPL最小的就是哈夫曼树，如上图，中间的树就是哈夫曼树。</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HuffmanTreeDemo</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">HuffmanTree</span> <span class="n">huffmanTree</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HuffmanTree</span><span class="o">();</span>
+        <span class="n">HuffmanTreeNode</span> <span class="n">root</span> <span class="o">=</span> <span class="n">huffmanTree</span><span class="o">.</span><span class="na">buildHuffmanTree</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="n">13</span><span class="o">,</span> <span class="n">7</span><span class="o">,</span> <span class="n">8</span><span class="o">,</span> <span class="n">3</span><span class="o">,</span> <span class="n">29</span><span class="o">,</span> <span class="n">6</span><span class="o">,</span> <span class="n">1</span><span class="o">});</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;前序遍历huffman树：&#34;</span><span class="o">);</span>
+        <span class="n">huffmanTree</span><span class="o">.</span><span class="na">preOrder</span><span class="o">(</span><span class="n">root</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">HuffmanTree</span><span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">preOrder</span><span class="o">(</span><span class="n">HuffmanTreeNode</span> <span class="n">root</span><span class="o">){</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">root</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="n">root</span><span class="o">.</span><span class="na">preOrder</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">HuffmanTreeNode</span> <span class="nf">buildHuffmanTree</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">arr</span><span class="o">){</span>
+
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">HuffmanTreeNode</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">value</span> <span class="o">:</span> <span class="n">arr</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">HuffmanTreeNode</span><span class="o">(</span><span class="n">value</span><span class="o">));</span>
+        <span class="o">}</span>
+
+        <span class="c1">// 如果集合中的元素大于1则继续循环
+</span><span class="c1"></span>        <span class="k">while</span> <span class="o">(</span><span class="n">list</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">1</span><span class="o">){</span>
+            <span class="c1">// 从大到小进行排序
+</span><span class="c1"></span>            <span class="n">Collections</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">list</span><span class="o">);</span>
+
+            <span class="c1">// 获取集合中两个较小的元素进行构建 huffman 树
+</span><span class="c1"></span>            <span class="n">HuffmanTreeNode</span> <span class="n">leftNode</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+            <span class="n">HuffmanTreeNode</span> <span class="n">rightNode</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+            <span class="n">HuffmanTreeNode</span> <span class="n">parentNode</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HuffmanTreeNode</span><span class="o">(</span><span class="n">leftNode</span><span class="o">.</span><span class="na">value</span> <span class="o">+</span> <span class="n">rightNode</span><span class="o">.</span><span class="na">value</span><span class="o">);</span>
+            <span class="n">parentNode</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">leftNode</span><span class="o">;</span>
+            <span class="n">parentNode</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">rightNode</span><span class="o">;</span>
+
+            <span class="c1">// 构建后将 leftNode， rightNode 移除集合；将parentNode加入集合；然后重新排序
+</span><span class="c1"></span>            <span class="n">list</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">leftNode</span><span class="o">);</span>
+            <span class="n">list</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">rightNode</span><span class="o">);</span>
+            <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">parentNode</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+
+<span class="kd">class</span> <span class="nc">HuffmanTreeNode</span> <span class="kd">implements</span> <span class="n">Comparable</span><span class="o">&lt;</span><span class="n">HuffmanTreeNode</span><span class="o">&gt;{</span>
+    <span class="kt">int</span> <span class="n">value</span><span class="o">;</span>
+    <span class="n">HuffmanTreeNode</span> <span class="n">left</span><span class="o">;</span>
+    <span class="n">HuffmanTreeNode</span> <span class="n">right</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">HuffmanTreeNode</span><span class="o">(</span><span class="kt">int</span> <span class="n">value</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">preOrder</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">left</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">preOrder</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">right</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">right</span><span class="o">.</span><span class="na">preOrder</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compareTo</span><span class="o">(</span><span class="n">HuffmanTreeNode</span> <span class="n">o</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 从小到大排序
+</span><span class="c1"></span>        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">value</span> <span class="o">-</span> <span class="n">o</span><span class="o">.</span><span class="na">value</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&#34;HuffmanTreeNode{&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;value=&#34;</span> <span class="o">+</span> <span class="n">value</span> <span class="o">+</span>
+                <span class="sc">&#39;}&#39;</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div><h2 id="算法">算法</h2>
 <p>英文对应的单词是Algorithm，它的本意为：解决问题的方法，所以算法的直接理解就是解决问题的方法。在计算机领域定义的话就是：一系列解决问题的、清晰、可执行的计算机指令。</p>
 <p>一个算法的优劣可以用空间复杂度与时间复杂度来衡量。</p>
@@ -3993,10 +4141,363 @@ while(i&lt;n){
                 <span class="n">low</span> <span class="o">=</span> <span class="n">middle</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span>
                 <span class="n">k</span> <span class="o">-=</span> <span class="n">2</span><span class="o">;</span>
             <span class="o">}</span><span class="k">else</span><span class="o">{</span>
-                <span class="k">return</span> <span class="n">middle</span> <span class="o">&lt;</span> <span class="n">high</span> <span class="o">?</span> <span class="n">middle</span> <span class="o">:</span> <span class="n">high</span><span class="o">;</span>
+                <span class="k">return</span> <span class="n">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="n">middle</span><span class="o">,</span><span class="n">high</span><span class="o">);</span>
             <span class="o">}</span>
         <span class="o">}</span>
         <span class="k">return</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="哈夫曼编码">哈夫曼编码</h3>
+<p>赫夫曼编码也翻译为哈夫曼编码(Huffman Coding)，又称霍夫曼编码，是一种编码方式，属于一种程序算法。</p>
+<p>哈夫曼编码是哈夫曼树在电讯通信中的经典的应用之一。哈夫曼编码广泛地用于数据文件压缩。其压缩率通常在20%～90%之间。哈夫曼码是可变字长编码的一种。Huffman于1952年提出一种编码方法，称之为最佳编码。</p>
+<blockquote>
+<p>定长编码与变长编码，以字符串like like为例：</p>
+<ul>
+<li>定长编码：</li>
+</ul>
+<ol>
+<li>将上述字符串转换对应的ASCII： 108 105 107 101 32 108 105 107 101</li>
+<li>ASCII转换为二进制：01101100 01101001 01101011 01100101 00100000 01101100 01101001 01101011 01100101
+<br></li>
+</ol>
+<ul>
+<li>变长编码：</li>
+</ul>
+<ol>
+<li>统计上述字符串出现的各字符出现的次数：l：2 i：2 k：2 e：2 ：1</li>
+<li>按照各个字符出现的次数进行编码，原则是出现次数越多的，则编码越小：0=l 1=i 10=k 11=e 100=</li>
+<li>最终转换为变长编码为：011011100011011</li>
+</ol>
+</blockquote>
+<p>上述的变长编码 011011100011011 在解码的时候会出现多意现象，比如当匹配到数字1，是把1解成i还是按照10来进行解码。因为这种现象的存在，所以在进行变长编码时，编码要符合前缀编码。</p>
+<blockquote>
+<p>字符的编码都不能是其他字符编码的前缀，符合此要求的编码叫做前缀编码， 即不能匹配到重复的编码。</p>
+</blockquote>
+<p>构建哈夫曼编码思路：</p>
+<ol>
+<li>统计字节数组中各个数据的权重,即字符出现的次数；</li>
+<li>将统计好的字符出现的次数，<a href="/iblog/posts/essays/data-structures-algorithms/#%E5%93%88%E5%A4%AB%E6%9B%BC%E6%A0%91">构建成哈夫曼树</a>；</li>
+<li>根据上面创建的哈夫曼树获得每个数值对应的可变长编码值，规定结点的左边为0 ，右边为1；</li>
+<li>以每个数值新的编码重新对字符数组进行编码，即可得到赫夫曼编码后的值；</li>
+</ol>
+<p>假如一段信息里只有A，B，C，D，E，F这6个字符，他们出现的次数依次是2次，3次，7次，9次，18次，25次，最终构建成哈夫曼编树为下图所示：</p>
+<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-029.png" alt="数据结构与算法-029"></p>
+<p>得到哈夫曼编码：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">A=11100 B=11101 C=1111 D=110 E=10 F=0
+</code></pre></div><p>利用哈夫曼编码，压缩解压文件：</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HuffmanCodeTest</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="c1">// 测试压缩文件
+</span><span class="c1"></span>        <span class="n">String</span> <span class="n">srcFile</span> <span class="o">=</span> <span class="s">&#34;/Users/whitepure/Desktop/1.png&#34;</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">dstFile</span> <span class="o">=</span> <span class="s">&#34;/Users/whitepure/Desktop/1.zip&#34;</span><span class="o">;</span>
+
+        <span class="n">zipFile</span><span class="o">(</span><span class="n">srcFile</span><span class="o">,</span> <span class="n">dstFile</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;压缩文件成功&#34;</span><span class="o">);</span>
+
+        <span class="c1">// 测试解压文件
+</span><span class="c1"></span>        <span class="n">srcFile</span> <span class="o">=</span> <span class="s">&#34;/Users/whitepure/Desktop/1.zip&#34;</span><span class="o">;</span>
+        <span class="n">dstFile</span> <span class="o">=</span> <span class="s">&#34;/Users/whitepure/Desktop/1copy.png&#34;</span><span class="o">;</span>
+        <span class="n">unZipFile</span><span class="o">(</span><span class="n">srcFile</span><span class="o">,</span> <span class="n">dstFile</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;解压成功!&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+
+
+    <span class="c1">// 将一个文件进行压缩
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">zipFile</span><span class="o">(</span><span class="n">String</span> <span class="n">srcFile</span><span class="o">,</span> <span class="n">String</span> <span class="n">dstFile</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 创建输出流
+</span><span class="c1"></span>        <span class="n">OutputStream</span> <span class="n">os</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="n">ObjectOutputStream</span> <span class="n">oos</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="c1">// 创建文件的输入流
+</span><span class="c1"></span>        <span class="n">FileInputStream</span> <span class="n">is</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">// 创建文件的输入流
+</span><span class="c1"></span>            <span class="n">is</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="n">srcFile</span><span class="o">);</span>
+            <span class="c1">// 创建一个和源文件大小一样的byte[]
+</span><span class="c1"></span>            <span class="kt">byte</span><span class="o">[]</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">is</span><span class="o">.</span><span class="na">available</span><span class="o">()];</span>
+            <span class="c1">// 读取文件
+</span><span class="c1"></span>            <span class="n">is</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+            <span class="n">HuffmanCode</span> <span class="n">huffmanCode</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HuffmanCode</span><span class="o">();</span>
+            <span class="c1">// 直接对源文件压缩
+</span><span class="c1"></span>            <span class="kt">byte</span><span class="o">[]</span> <span class="n">huffmanBytes</span> <span class="o">=</span> <span class="n">huffmanCode</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+            <span class="c1">// 创建文件的输出流, 存放压缩文件
+</span><span class="c1"></span>            <span class="n">os</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileOutputStream</span><span class="o">(</span><span class="n">dstFile</span><span class="o">);</span>
+            <span class="c1">// 创建一个和文件输出流关联的ObjectOutputStream
+</span><span class="c1"></span>            <span class="n">oos</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ObjectOutputStream</span><span class="o">(</span><span class="n">os</span><span class="o">);</span>
+            <span class="c1">// 把 赫夫曼编码后的字节数组写入压缩文件
+</span><span class="c1"></span>            <span class="n">oos</span><span class="o">.</span><span class="na">writeObject</span><span class="o">(</span><span class="n">huffmanBytes</span><span class="o">);</span> <span class="c1">// 我们是把
+</span><span class="c1"></span>            <span class="c1">// 这里我们以对象流的方式写入 赫夫曼编码，是为了以后我们恢复源文件时使用
+</span><span class="c1"></span>            <span class="c1">// 注意一定要把赫夫曼编码 写入压缩文件
+</span><span class="c1"></span>            <span class="n">oos</span><span class="o">.</span><span class="na">writeObject</span><span class="o">(</span><span class="n">huffmanCode</span><span class="o">.</span><span class="na">getHuffmanCodes</span><span class="o">());</span>
+
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// TODO: handle exception
+</span><span class="c1"></span>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+        <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">is</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+                <span class="n">oos</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+                <span class="n">os</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// TODO: handle exception
+</span><span class="c1"></span>                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+
+
+    <span class="c1">// 完成对压缩文件的解压
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">unZipFile</span><span class="o">(</span><span class="n">String</span> <span class="n">zipFile</span><span class="o">,</span> <span class="n">String</span> <span class="n">dstFile</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="c1">// 定义文件输入流
+</span><span class="c1"></span>        <span class="n">InputStream</span> <span class="n">is</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="c1">// 定义一个对象输入流
+</span><span class="c1"></span>        <span class="n">ObjectInputStream</span> <span class="n">ois</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="c1">// 定义文件的输出流
+</span><span class="c1"></span>        <span class="n">OutputStream</span> <span class="n">os</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">// 创建文件输入流
+</span><span class="c1"></span>            <span class="n">is</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="n">zipFile</span><span class="o">);</span>
+            <span class="c1">// 创建一个和 is关联的对象输入流
+</span><span class="c1"></span>            <span class="n">ois</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ObjectInputStream</span><span class="o">(</span><span class="n">is</span><span class="o">);</span>
+            <span class="c1">// 读取byte数组 huffmanBytes
+</span><span class="c1"></span>            <span class="kt">byte</span><span class="o">[]</span> <span class="n">huffmanBytes</span> <span class="o">=</span> <span class="o">(</span><span class="kt">byte</span><span class="o">[])</span> <span class="n">ois</span><span class="o">.</span><span class="na">readObject</span><span class="o">();</span>
+            <span class="c1">// 读取赫夫曼编码表
+</span><span class="c1"></span>            <span class="n">Map</span><span class="o">&lt;</span><span class="n">Byte</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">huffmanCodes</span> <span class="o">=</span> <span class="o">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">Byte</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;)</span> <span class="n">ois</span><span class="o">.</span><span class="na">readObject</span><span class="o">();</span>
+            <span class="n">HuffmanCode</span> <span class="n">huffmanCode</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HuffmanCode</span><span class="o">();</span>
+            <span class="c1">// 解码
+</span><span class="c1"></span>            <span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">huffmanCode</span><span class="o">.</span><span class="na">decode</span><span class="o">(</span><span class="n">huffmanCodes</span><span class="o">,</span> <span class="n">huffmanBytes</span><span class="o">);</span>
+            <span class="c1">// 将bytes 数组写入到目标文件
+</span><span class="c1"></span>            <span class="n">os</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileOutputStream</span><span class="o">(</span><span class="n">dstFile</span><span class="o">);</span>
+            <span class="c1">// 写数据到 dstFile 文件
+</span><span class="c1"></span>            <span class="n">os</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">bytes</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// TODO: handle exception
+</span><span class="c1"></span>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+        <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">os</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+                <span class="n">ois</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+                <span class="n">is</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e2</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// TODO: handle exception
+</span><span class="c1"></span>                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e2</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+            <span class="o">}</span>
+
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">HuffmanCode</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">Byte</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">huffmanCodes</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+
+    <span class="kd">public</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">Byte</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="nf">getHuffmanCodes</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">huffmanCodes</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 生成 huffman 编码 压缩
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">byte</span><span class="o">[]</span> <span class="nf">encode</span><span class="o">(</span><span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span> <span class="n">nodes</span> <span class="o">=</span> <span class="n">buildHuffmanNodes</span><span class="o">(</span><span class="n">bytes</span><span class="o">);</span>
+        <span class="n">Node</span> <span class="n">huffmanTreeRoot</span> <span class="o">=</span> <span class="n">buildHuffmanTree</span><span class="o">(</span><span class="n">nodes</span><span class="o">);</span>
+        <span class="n">Map</span><span class="o">&lt;</span><span class="n">Byte</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">huffmanCodes</span> <span class="o">=</span> <span class="n">buildHuffmanCodeTab</span><span class="o">(</span><span class="n">huffmanTreeRoot</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">zip</span><span class="o">(</span><span class="n">bytes</span><span class="o">,</span> <span class="n">huffmanCodes</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 将 huffman编码 解码 解压缩
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">byte</span><span class="o">[]</span> <span class="nf">decode</span><span class="o">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">Byte</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">huffmanCodes</span><span class="o">,</span> <span class="kt">byte</span><span class="o">[]</span> <span class="n">huffmanBytes</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">StringBuilder</span> <span class="n">stringBuilder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">();</span>
+
+        <span class="c1">// 将byte数组转成二进制的字符串
+</span><span class="c1"></span>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">huffmanBytes</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="kt">byte</span> <span class="n">b</span> <span class="o">=</span> <span class="n">huffmanBytes</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+            <span class="n">String</span> <span class="n">strToAppend</span> <span class="o">=</span> <span class="n">byteToBitString</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+            <span class="c1">// 判断是不是最后一个字节
+</span><span class="c1"></span>            <span class="kt">boolean</span> <span class="n">isLastByte</span> <span class="o">=</span> <span class="o">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">huffmanBytes</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">2</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">isLastByte</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// 得到最后一个字节的有效位数
+</span><span class="c1"></span>                <span class="kt">byte</span> <span class="n">validBits</span> <span class="o">=</span> <span class="n">huffmanBytes</span><span class="o">[</span><span class="n">huffmanBytes</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">1</span><span class="o">];</span>
+                <span class="n">strToAppend</span> <span class="o">=</span> <span class="n">strToAppend</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">0</span><span class="o">,</span> <span class="n">validBits</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="n">stringBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">strToAppend</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="c1">// 把字符串按照指定的赫夫曼编码进行解码
+</span><span class="c1"></span>        <span class="c1">// 把赫夫曼编码表进行调换，因为反向查询 a-&gt;100 100-&gt;a
+</span><span class="c1"></span>        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Byte</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+        <span class="n">huffmanCodes</span><span class="o">.</span><span class="na">forEach</span><span class="o">((</span><span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="n">key</span><span class="o">));</span>
+
+        <span class="c1">// 创建要给集合，存放byte
+</span><span class="c1"></span>        <span class="n">List</span><span class="o">&lt;</span><span class="n">Byte</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="c1">// i 可以理解成就是索引,扫描 stringBuilder
+</span><span class="c1"></span>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">stringBuilder</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="o">)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span>
+            <span class="kt">boolean</span> <span class="n">flag</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+            <span class="n">Byte</span> <span class="n">b</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+            <span class="k">while</span> <span class="o">(</span><span class="n">flag</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// 递增的取出 key
+</span><span class="c1"></span>                <span class="n">String</span> <span class="n">key</span> <span class="o">=</span> <span class="n">stringBuilder</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">i</span> <span class="o">+</span> <span class="n">count</span><span class="o">);</span>
+                <span class="n">b</span> <span class="o">=</span> <span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">b</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="c1">// 没有匹配到
+</span><span class="c1"></span>                    <span class="n">count</span><span class="o">++;</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="c1">// 匹配到
+</span><span class="c1"></span>                    <span class="n">flag</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="n">count</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="kt">byte</span><span class="o">[]</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">list</span><span class="o">.</span><span class="na">size</span><span class="o">()];</span>
+        <span class="n">IntStream</span><span class="o">.</span><span class="na">range</span><span class="o">(</span><span class="n">0</span><span class="o">,</span> <span class="n">b</span><span class="o">.</span><span class="na">length</span><span class="o">).</span><span class="na">forEach</span><span class="o">(</span><span class="n">i</span> <span class="o">-&gt;</span> <span class="n">b</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
+        <span class="k">return</span> <span class="n">b</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 计算字符串中每个字符出现的次数
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span> <span class="nf">buildHuffmanNodes</span><span class="o">(</span><span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span> <span class="n">nodes</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+
+        <span class="c1">// 利用map记录集合中元素出现的次数
+</span><span class="c1"></span>        <span class="n">Map</span><span class="o">&lt;</span><span class="n">Byte</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">counts</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">byte</span> <span class="n">b</span> <span class="o">:</span> <span class="n">bytes</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">counts</span><span class="o">.</span><span class="na">merge</span><span class="o">(</span><span class="n">b</span><span class="o">,</span> <span class="n">1</span><span class="o">,</span> <span class="n">Integer</span><span class="o">::</span><span class="n">sum</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="c1">// 把每一个键值对转成一个Node 对象，并加入到nodes集合
+</span><span class="c1"></span>        <span class="n">counts</span><span class="o">.</span><span class="na">forEach</span><span class="o">((</span><span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">nodes</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">)));</span>
+        <span class="k">return</span> <span class="n">nodes</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 构建Huffman树
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="n">Node</span> <span class="nf">buildHuffmanTree</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span> <span class="n">nodes</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">nodes</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">1</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// 排序, 从小到大
+</span><span class="c1"></span>            <span class="n">Collections</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">nodes</span><span class="o">);</span>
+            <span class="c1">// 取出第一颗最小的二叉树
+</span><span class="c1"></span>            <span class="n">Node</span> <span class="n">leftNode</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+            <span class="c1">// 取出第二颗最小的二叉树
+</span><span class="c1"></span>            <span class="n">Node</span> <span class="n">rightNode</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+            <span class="c1">// 创建一颗新的二叉树,它的根节点 没有data, 只有权值
+</span><span class="c1"></span>            <span class="n">Node</span> <span class="n">parent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="n">leftNode</span><span class="o">.</span><span class="na">weight</span> <span class="o">+</span> <span class="n">rightNode</span><span class="o">.</span><span class="na">weight</span><span class="o">);</span>
+            <span class="n">parent</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">leftNode</span><span class="o">;</span>
+            <span class="n">parent</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">rightNode</span><span class="o">;</span>
+
+            <span class="c1">// 将已经处理的两颗二叉树从nodes删除
+</span><span class="c1"></span>            <span class="n">nodes</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">leftNode</span><span class="o">);</span>
+            <span class="n">nodes</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">rightNode</span><span class="o">);</span>
+            <span class="c1">// 将新的二叉树，加入到nodes
+</span><span class="c1"></span>            <span class="n">nodes</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">parent</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">// nodes 最后的结点，就是赫夫曼树的根结点
+</span><span class="c1"></span>        <span class="k">return</span> <span class="n">nodes</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 重载 getCodes
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">Byte</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="nf">buildHuffmanCodeTab</span><span class="o">(</span><span class="n">Node</span> <span class="n">root</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">root</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="c1">// 处理root的左子树
+</span><span class="c1"></span>        <span class="n">buildHuffmanCodeTab</span><span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">left</span><span class="o">,</span> <span class="s">&#34;0&#34;</span><span class="o">,</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">());</span>
+        <span class="c1">// 处理root的右子树
+</span><span class="c1"></span>        <span class="n">buildHuffmanCodeTab</span><span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">right</span><span class="o">,</span> <span class="s">&#34;1&#34;</span><span class="o">,</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">());</span>
+        <span class="k">return</span> <span class="n">huffmanCodes</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 获取huffman编码表
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">buildHuffmanCodeTab</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">,</span> <span class="n">String</span> <span class="n">code</span><span class="o">,</span> <span class="n">StringBuilder</span> <span class="n">stringBuilder</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">StringBuilder</span> <span class="n">curNodeCode</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">(</span><span class="n">stringBuilder</span><span class="o">);</span>
+        <span class="n">curNodeCode</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">code</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="c1">// 判断当前node 是叶子结点还是非叶子结点
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">data</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// 非叶子结点
+</span><span class="c1"></span>            <span class="c1">// 向左递归
+</span><span class="c1"></span>            <span class="n">buildHuffmanCodeTab</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">,</span> <span class="s">&#34;0&#34;</span><span class="o">,</span> <span class="n">curNodeCode</span><span class="o">);</span>
+            <span class="c1">// 向右递归
+</span><span class="c1"></span>            <span class="n">buildHuffmanCodeTab</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">,</span> <span class="s">&#34;1&#34;</span><span class="o">,</span> <span class="n">curNodeCode</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="c1">// 表示找到某个叶子结点的最后
+</span><span class="c1"></span>            <span class="n">huffmanCodes</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">data</span><span class="o">,</span> <span class="n">curNodeCode</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 压缩传入字节（将传入字符串转成字节类型）将待压缩字节转换为字节数组
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="kt">byte</span><span class="o">[]</span> <span class="nf">zip</span><span class="o">(</span><span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span><span class="o">,</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">Byte</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">huffmanCodes</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 利用 huffmanCodes 将 bytes 转成 赫夫曼编码对应的字符串
+</span><span class="c1"></span>        <span class="n">StringBuilder</span> <span class="n">stringBuilder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">();</span>
+        <span class="c1">// 遍历bytes 数组
+</span><span class="c1"></span>        <span class="k">for</span> <span class="o">(</span><span class="kt">byte</span> <span class="n">b</span> <span class="o">:</span> <span class="n">bytes</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">stringBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">huffmanCodes</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">b</span><span class="o">));</span>
+        <span class="o">}</span>
+
+        <span class="c1">// 统计返回 byte[] huffmanCodeBytes 长度
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">len</span><span class="o">;</span>
+        <span class="c1">// 等同于 int len = (stringBuilder.length() + 7) / 8;
+</span><span class="c1"></span>        <span class="kt">byte</span> <span class="n">countToEight</span> <span class="o">=</span> <span class="o">(</span><span class="kt">byte</span><span class="o">)</span> <span class="o">(</span><span class="n">stringBuilder</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&amp;</span> <span class="n">7</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">countToEight</span> <span class="o">==</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">len</span> <span class="o">=</span> <span class="n">stringBuilder</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&gt;&gt;</span> <span class="n">3</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">len</span> <span class="o">=</span> <span class="o">(</span><span class="n">stringBuilder</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&gt;&gt;</span> <span class="n">3</span><span class="o">)</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span>
+            <span class="c1">// 后面补零
+</span><span class="c1"></span>            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">countToEight</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">8</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">stringBuilder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&#34;0&#34;</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="c1">// 创建 存储压缩后的 byte数组，huffmanCodeBytes[len]记录赫夫曼编码最后一个字节的有效位数
+</span><span class="c1"></span>        <span class="kt">byte</span><span class="o">[]</span> <span class="n">huffmanCodeBytes</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">len</span> <span class="o">+</span> <span class="n">1</span><span class="o">];</span>
+        <span class="n">huffmanCodeBytes</span><span class="o">[</span><span class="n">len</span><span class="o">]</span> <span class="o">=</span> <span class="n">countToEight</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="c1">// 因为是每8位对应一个byte,所以步长 +8
+</span><span class="c1"></span>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">stringBuilder</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="n">i</span> <span class="o">+=</span> <span class="n">8</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">String</span> <span class="n">strByte</span><span class="o">;</span>
+            <span class="n">strByte</span> <span class="o">=</span> <span class="n">stringBuilder</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">i</span> <span class="o">+</span> <span class="n">8</span><span class="o">);</span>
+            <span class="c1">// 将strByte 转成一个byte,放入到 huffmanCodeBytes
+</span><span class="c1"></span>            <span class="n">huffmanCodeBytes</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">=</span> <span class="o">(</span><span class="kt">byte</span><span class="o">)</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">strByte</span><span class="o">,</span> <span class="n">2</span><span class="o">);</span>
+            <span class="n">index</span><span class="o">++;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">huffmanCodeBytes</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 将 byte 转换为对应的字符串
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="n">String</span> <span class="nf">byteToBitString</span><span class="o">(</span><span class="kt">byte</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">b</span><span class="o">;</span>
+        <span class="c1">// 如果是正数我们需要将高位补零
+</span><span class="c1"></span>        <span class="n">temp</span> <span class="o">|=</span> <span class="n">0x100</span><span class="o">;</span>
+        <span class="c1">// 转换为二进制字符串，正数：高位补 0 即可，然后截取低八位即可；负数直接截取低八位即可
+</span><span class="c1"></span>        <span class="c1">// 负数在计算机内存储的是补码，补码转原码：先 -1 ，再取反
+</span><span class="c1"></span>        <span class="n">String</span> <span class="n">binaryStr</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">toBinaryString</span><span class="o">(</span><span class="n">temp</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">binaryStr</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">binaryStr</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">-</span> <span class="n">8</span><span class="o">);</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Node</span> <span class="kd">implements</span> <span class="n">Comparable</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="n">Byte</span> <span class="n">data</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">weight</span><span class="o">;</span>
+    <span class="n">Node</span> <span class="n">left</span><span class="o">;</span>
+    <span class="n">Node</span> <span class="n">right</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Node</span><span class="o">(</span><span class="n">Byte</span> <span class="n">data</span><span class="o">,</span> <span class="kt">int</span> <span class="n">weight</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">weight</span> <span class="o">=</span> <span class="n">weight</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compareTo</span><span class="o">(</span><span class="n">Node</span> <span class="n">o</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 从小到大排序
+</span><span class="c1"></span>        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">weight</span> <span class="o">-</span> <span class="n">o</span><span class="o">.</span><span class="na">weight</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&#34;Node [data = &#34;</span> <span class="o">+</span> <span class="n">data</span> <span class="o">+</span> <span class="s">&#34; weight=&#34;</span> <span class="o">+</span> <span class="n">weight</span> <span class="o">+</span> <span class="s">&#34;]&#34;</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div><h3 id="分治算法">分治算法</h3>
@@ -4020,6 +4521,11 @@ while(i&lt;n){
                                     
                                     <a href="https://whiteppure.github.io/iblog/tags/%E7%AE%97%E6%B3%95/">算法</a>
                                     
+                                    
+                                    
+                                    <span id="busuanzi_container_page_pv">
+                                      阅读量<span id="busuanzi_value_page_pv"></span>次
+                                    </span>
                                     
                                 </span>
                             </div>
