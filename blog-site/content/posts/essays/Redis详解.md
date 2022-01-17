@@ -113,7 +113,7 @@ Redis 可以存储键和不同类型的值之间的映射。键的类型只能�
 #### String
 String是Redis最基本的类型，一个key对应一个value。String类型是二进制安全的。意味着Redis的string可以包含任何数据。比如jpg图片或者序列化的对象。String类型是Redis最基本的数据类型，一个Redis中字符串value最多可以是512M。
 
-![Redis详解-001](/iblog/posts/images/essays/Redis详解-001.png)
+![Redis详解-001](/iblog/posts/annex/images/essays/Redis详解-001.png)
 
 String的数据结构为简单动态字符串(Simple Dynamic String,缩写SDS)。是可以修改的字符串，内部结构实现上类似于Java的ArrayList，采用预分配冗余空间的方式来减少内存的频繁分配.
 
@@ -132,7 +132,7 @@ String的数据结构为简单动态字符串(Simple Dynamic String,缩写SDS)�
 #### List
 Redis列表是简单的字符串列表，按照插入顺序排序。你可以添加一个元素到列表的头部（左边）或者尾部（右边）,单键多值。它的底层实际是个双向链表，对两端的操作性能很高，通过索引下标的操作中间的节点性能会较差。
 
-![Redis详解-002](/iblog/posts/images/essays/Redis详解-002.png)
+![Redis详解-002](/iblog/posts/annex/images/essays/Redis详解-002.png)
 
 List的数据结构为快速链表quickList。首先在列表元素较少的情况下会使用一块连续的内存存储，这个结构是ziplist，也即是压缩列表。它将所有的元素紧挨着一起存储，分配的是一块连续的内存。当数据量比较多的时候才会改成quicklist。
 
@@ -200,10 +200,10 @@ zset底层使用了两个数据结构:
 >举例：对比有序链表和跳跃表，从链表中查询出51
 >
 > 有序链表: 查找值为51的元素，需要从第一个元素开始依次查找、比较才能找到;共需要6次比较。
-> ![Redis详解-003](/iblog/posts/images/essays/Redis详解-003.png)
+> ![Redis详解-003](/iblog/posts/annex/images/essays/Redis详解-003.png)
 >
 > 跳跃表:从第2层开始，1节点比51节点小，向后比较；21节点比51节点小，继续向后比较，后面就是NULL了，所以从21节点向下到第1层；在第1层，41节点比51节点小，继续向后，61节点比51节点大，所以从41向下；在第0层，51节点为要查找的节点，节点被找到，共查找4次。
->![Redis详解-004](/iblog/posts/images/essays/Redis详解-004.png)
+>![Redis详解-004](/iblog/posts/annex/images/essays/Redis详解-004.png)
 >
 >可以看出跳跃表比有序链表效率要高。
 
@@ -224,7 +224,7 @@ Bitmaps 并不是一种数据结构，实际上它就是字符串，但是可以
 
 Bitmaps单独提供了一套命令， 所以在Redis中使用Bitmaps和使用字符串的方法不太相同。 可以把Bitmaps想象成一个以位为单位的数组， 数组的每个单元只能存储0和1， 数组的下标在Bitmaps中叫做偏移量。
 
-![Redis详解-009](/iblog/posts/images/essays/Redis详解-009.png)
+![Redis详解-009](/iblog/posts/annex/images/essays/Redis详解-009.png)
 
 常用命令：
 - 设置Bitmaps中某个偏移量的值(0或1),offset偏移量从0开始：`setbit <key><offset><value>`
@@ -279,21 +279,21 @@ Redis 发布订阅 (pub/sub) 是一种消息通信模式：发送者 (pub) 发�
 
 客户端可以订阅频道：
 
-![Redis详解-005](/iblog/posts/images/essays/Redis详解-005.png)
+![Redis详解-005](/iblog/posts/annex/images/essays/Redis详解-005.png)
 
 给这个频道发布消息后，消息就会发送给订阅的客户端：
 
-![Redis详解-006](/iblog/posts/images/essays/Redis详解-006.png)
+![Redis详解-006](/iblog/posts/annex/images/essays/Redis详解-006.png)
 
 **实现Redis发布订阅模式：**
 
 1. 打开两个Redis客户端;
 
 2. 在其中一个客户端输入：`subscribe <channel>`,channel为订阅的频道名称：
-![Redis详解-008](/iblog/posts/images/essays/Redis详解-008.png)
+![Redis详解-008](/iblog/posts/annex/images/essays/Redis详解-008.png)
 
 3. 在另外一个客户端输入：`publish <channel> <message>`,channel为订阅的频道名称,message为推送的消息，返回的1是订阅者数量：
-![Redis详解-007](/iblog/posts/images/essays/Redis详解-007.png)
+![Redis详解-007](/iblog/posts/annex/images/essays/Redis详解-007.png)
 
 ## Redis事务
 Redis事务是一个单独的隔离操作：事务中的所有命令都会序列化、按顺序地执行。事务在执行的过程中，不会被其他客户端发送来的命令请求所打断。
@@ -302,7 +302,7 @@ Redis事务的主要作用就是**串联多个命令防止别的命令插队**�
 
 Redis事务操作相关命令：Multi、Exec、discard
 
-![Redis详解-014](/iblog/posts/images/essays/Redis详解-014.png)
+![Redis详解-014](/iblog/posts/annex/images/essays/Redis详解-014.png)
 
 从输入Multi命令开始，输入的命令都会依次进入命令队列中，但不会执行，直到输入Exec后，Redis会将之前的命令队列中的命令依次执行。组队的过程中可以通过discard来放弃组队。
 可以将exec命令理解为提交操作，discard理解为回滚操作。
@@ -339,7 +339,7 @@ OK
 
 如果在组队过程中执行某个命令失败了，则认为组队失败整个队列都会被取消：
 
-![Redis详解-015](/iblog/posts/images/essays/Redis详解-015.png)
+![Redis详解-015](/iblog/posts/annex/images/essays/Redis详解-015.png)
 
 ```
 127.0.0.1:6379> multi
@@ -354,7 +354,7 @@ QUEUED
 
 如果执行阶段某个命令出了错，则只有报错的命令不会被执行，而其他的命令都会执行且不会回滚：
 
-![Redis详解-016](/iblog/posts/images/essays/Redis详解-016.png)
+![Redis详解-016](/iblog/posts/annex/images/essays/Redis详解-016.png)
 
 ```
 127.0.0.1:6379> multi 
@@ -387,7 +387,7 @@ QUEUED
 在Redis中可以使用[悲观锁、乐观锁](/iblog/posts/rookie/rookie-multi-thread/#悲观锁与乐观锁)的思想来处理。
 
 #### 悲观锁
-![Redis详解-017](/iblog/posts/images/essays/Redis详解-017.png)
+![Redis详解-017](/iblog/posts/annex/images/essays/Redis详解-017.png)
 
 悲观锁(Pessimistic Lock), 顾名思义，就是很悲观，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会block直到它拿到锁。传统的关系型数据库里边就用到了很多这种锁机制，比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上锁。
 
@@ -401,13 +401,13 @@ LUA脚本在Redis中的优势：
 
 
 #### 乐观锁
-![Redis详解-018](/iblog/posts/images/essays/Redis详解-018.png)
+![Redis详解-018](/iblog/posts/annex/images/essays/Redis详解-018.png)
 
 乐观锁(Optimistic Lock), 顾名思义，就是很乐观，每次去拿数据的时候都认为别人不会修改，所以不会上锁，但是在更新的时候会判断一下在此期间别人有没有去更新这个数据，可以使用版本号等机制。乐观锁适用于多读的应用类型，这样可以提高吞吐量。Redis就是利用这种check-and-set机制实现事务的。
 
 乐观锁实现：在Redis中如果涉及到了操作数据需要用事务控制的情况可以用 WATCH key ... 命令来监控,可以监控多个key。如果在事务执行之前这个key被其他命令所改动，那么事务将被打断。
 
-![Redis详解-019](/iblog/posts/images/essays/Redis详解-019.gif)
+![Redis详解-019](/iblog/posts/annex/images/essays/Redis详解-019.gif)
 
 UNWATCH 取消 WATCH 命令对所有 key 的监视。如果在执行 WATCH 命令之后，EXEC 命令或DISCARD命令先被执行了的话，那么就不需要再执行UNWATCH了。
 
@@ -422,7 +422,7 @@ UNWATCH 取消 WATCH 命令对所有 key 的监视。如果在执行 WATCH 命�
 用户第一次访问数据库中的某些数据。整个过程会比较慢，因为是从硬盘上读取的。如果将该用户访问的数据存在数缓存中，这样下一次再访问这些数据的时候就可以直接从缓存中获取了。操作缓存就是直接操作内存，所以速度相当快，但随之而来的也会存在一些问题。
 
 ### 缓存穿透
-![Redis详解-027](/iblog/posts/images/essays/Redis详解-027.png)
+![Redis详解-027](/iblog/posts/annex/images/essays/Redis详解-027.png)
 
 Redis中的key对应的数据在数据源并不存在，每次针对此key的请求从缓存获取不到，请求都会压到数据源，从而可能压垮数据源。简单理解为,避开缓存,疯狂请求数据库里没有的数据.从而造成服务器宕机。
 
@@ -505,7 +505,7 @@ Redis中的key对应的数据在数据源并不存在，每次针对此key的请
 ```
 
 ### 缓存击穿
-![Redis详解-028](/iblog/posts/images/essays/Redis详解-028.png)
+![Redis详解-028](/iblog/posts/annex/images/essays/Redis详解-028.png)
 
 key对应的数据存在，但在redis中过期，此时若有大量并发请求过来，这些请求发现缓存过期一般都会从后端数据库加载数据并回设到缓存，大并发集中对这一个点进行访问，当这个key在失效的瞬间，持续的大并发就穿破缓存，直接请求数据库，就像在一个屏障上凿开了一个洞。这个时候大并发的请求可能会瞬间把后端数据源压垮。
 
@@ -547,7 +547,7 @@ key对应的数据存在，但在redis中过期，此时若有大量并发请求
 ```
 
 ### 缓存雪崩
-![Redis详解-029](/iblog/posts/images/essays/Redis详解-029.png)
+![Redis详解-029](/iblog/posts/annex/images/essays/Redis详解-029.png)
 
 key对应的数据存在，但在redis中过期，此时若有大量并发请求过来，这些请求发现缓存过期一般都会从后端数据源加载数据并回设到缓存，这个时候大并发的请求可能会瞬间把后端数据源压垮，简单理解为,在某一个时间段,缓存key大面积失效,集中过期.可能会导致服务器宕机。
 
@@ -569,7 +569,7 @@ key对应的数据存在，但在redis中过期，此时若有大量并发请求
 ## Redis部署策略
 
 ### Redis主从复制
-![Redis详解-022](/iblog/posts/images/essays/Redis详解-022.png)
+![Redis详解-022](/iblog/posts/annex/images/essays/Redis详解-022.png)
 
 主从复制，是指将一台Redis服务器的数据，复制到其他的Redis服务器。前者称为主节点(master)，后者称为从节点(slave)；数据的复制是单向的，只能由主节点到从节点。Master以写为主，Slave以读为主。
 
@@ -586,7 +586,7 @@ key对应的数据存在，但在redis中过期，此时若有大量并发请求
 5. 在主从服务器上测试读写；
 
 #### 主从复制过程
-![Redis详解-023](/iblog/posts/images/essays/Redis详解-023.png)
+![Redis详解-023](/iblog/posts/annex/images/essays/Redis详解-023.png)
 
 1. 当从服务器连接到主服务器后，从服务器会向主服务器发送同步数据请求；
 2. 主服务器接收到从服务器发送过来的请求，首先会把主服务器数据进行持久化，变为rdb文件，把rdb文件发送到从服务器，从服务器拿到rdb文件进行读取；
@@ -597,7 +597,7 @@ key对应的数据存在，但在redis中过期，此时若有大量并发请求
 部分复制：用于网络中断等情况后的复制，只将中断期间主节点执行的写命令发送给从节点，与全量复制相比更加高效。需要注意的是，如果网络中断时间过长，导致主节点没有能够完整地保存中断期间执行的写命令，则无法进行部分复制，仍使用全量复制。
 
 ### 一主二仆
-![Redis详解-024](/iblog/posts/images/essays/Redis详解-024.png)
+![Redis详解-024](/iblog/posts/annex/images/essays/Redis详解-024.png)
 
 特点：
 - 当主服务挂掉之后，从服务器不会上位；
@@ -605,7 +605,7 @@ key对应的数据存在，但在redis中过期，此时若有大量并发请求
 - 从服务器不能执行写操作；
 
 ### 薪火相传
-![Redis详解-025](/iblog/posts/images/essays/Redis详解-025.png)
+![Redis详解-025](/iblog/posts/annex/images/essays/Redis详解-025.png)
 
 特点：
 - 当主服务挂掉之后，从服务器不会上位；
@@ -618,7 +618,7 @@ key对应的数据存在，但在redis中过期，此时若有大量并发请求
 当一个master宕机后，后面的slave可以立刻升为master，其后面的slave不用做任何修改，手动执行命令`slaveof  no one` 将从机变为主机。可以使用哨兵模式让"反客为主"模式变为自动。
 
 ### Redis哨兵模式
-![Redis详解-026](/iblog/posts/images/essays/Redis详解-026.png)
+![Redis详解-026](/iblog/posts/annex/images/essays/Redis详解-026.png)
 
 反客为主的自动版，能够后台监控主机是否故障，如果故障了根据投票数自动将从库转换为主库。当主机挂掉，从机选举中产生新的主机,当之前的主机再次启动，会变为从机。
 
@@ -739,7 +739,7 @@ public class MainTest {
 }
 ```
 但是，当项目采用分布式部署方式之后，再使用`ReetrantLock、synchronized`就不能保证数据的准确性，可能会出现严重bug。
-![Redis详解-010](/iblog/posts/images/essays/Redis详解-010.png)
+![Redis详解-010](/iblog/posts/annex/images/essays/Redis详解-010.png)
 
 举个例子，当很多个请求过来的时候，会先经过`Nginx`,然后`Nginx`再根据算法分发请求，到哪些服务器的程序上。
 此时商品的库存为一件，有两个请求，到达不同服务器上的不同程序的相同代码，先后执行了查询SQL，查出来的数据是相同的，然后依次执行库存减一操作，此时库存会变成-1件。这就造成了超卖问题。
@@ -1002,7 +1002,7 @@ end;
 `Redisson`大致工作原理：只要线程一加锁成功，就会启动一个`watch dog`看门狗，它是一个后台线程，会每隔10秒检查一下，如果线程一还持有锁，那么就会不断的延长锁key的生存时间。
 因此，`Redisson`解决了锁过期释放，业务没执行完问题。
 
-![Redis详解-011](/iblog/posts/images/essays/Redis详解-011.png)
+![Redis详解-011](/iblog/posts/annex/images/essays/Redis详解-011.png)
 
 看似完美的解决方案，但是在高并发下可能也会出现下面的异常：
 ```
@@ -1094,7 +1094,7 @@ Redis提供了三种删除策略：
 ### 淘汰策略
 在 `Redis 4.0` 版本之前有 6 种策略，4.0 增加了 2种，主要新增了 `LFU` 算法。下图为 `Redis 6.2.0` 版本的配置文件：
 
-![Redis详解-012](/iblog/posts/images/essays/Redis详解-012.png)
+![Redis详解-012](/iblog/posts/annex/images/essays/Redis详解-012.png)
 
 淘汰策略默认,使用`noeviction`，意思是不再驱逐的，即等着内存被打满。
 ```
@@ -1135,7 +1135,7 @@ LRU是，`Least Recently Used`的缩写，即最近最少使用，是一种常�
 
 明白了思想之后，要实现LRU算法，首先要确定数据结构，再确定实现思路。如果对算法有要求，查询和插入的时间复杂度都是`O(1)`，可以选用链表+哈希的结构来存储：
 
-![Redis详解-013](/iblog/posts/images/essays/Redis详解-013.png)
+![Redis详解-013](/iblog/posts/annex/images/essays/Redis详解-013.png)
 
 #### 方式一
 链表+哈希，我们不难想到JDK中的`LinkedHashMap`,在`LinkedHashMap`文档注释中找到关于LRU算法的相关描述：
@@ -1385,7 +1385,7 @@ redis 在进行数据持久化的过程中，会先将数据写入到一个临�
 >- 在Linux程序中，fork()会产生一个和父进程完全相同的子进程，但子进程在此后多会exec系统调用，出于效率考虑，Linux中引入了“写时复制技术”；
 >- 一般情况父进程和子进程会共用同一段物理内存，只有进程空间的各段的内容要发生变化时，才会将父进程的内容复制一份给子进程；
 
-![Redis详解-020](/iblog/posts/images/essays/Redis详解-020.png)
+![Redis详解-020](/iblog/posts/annex/images/essays/Redis详解-020.png)
 
 如果需要进行大规模数据的恢复，且对于数据恢复的完整性不是非常敏感，那 RDB 方式要比 AOF 方式更加的高效。虽然 RDB 有不少优点，但它的缺点也是不容忽视的：丢失数据风险较大，fork进程在保存rdb文件时会先复制旧文件，如果文件较大则耗时较多。如果你对数据的完整性非常敏感，那么 RDB 方式就不太适合你，因为即使你每 5 分钟都持久化一次，当 redis 故障时，仍然会有近 5 分钟的数据丢失。所以，redis 还提供了另一种持久化方式，那就是 AOF。
 
@@ -1436,7 +1436,7 @@ AOF，英文是 Append Only File，即只允许追加不允许改写的文件。
     ```
 
 #### 执行过程
-![Redis详解-021](/iblog/posts/images/essays/Redis详解-021.png)
+![Redis详解-021](/iblog/posts/annex/images/essays/Redis详解-021.png)
 
 - 客户端的请求写命令会被append追加到AOF缓冲区内；
 - AOF缓冲区根据AOF持久化策略[always,everysec,no]将操作sync同步到磁盘的AOF文件中；

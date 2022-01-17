@@ -26,7 +26,7 @@ apache是同步多进程模型，一个连接对应一个进程；nginx是异步
 所以在高连接并发的情况下，Nginx是Apache服务器不错的替代品。
 
 ### 反向代理
-![nginx反向代理](/iblog/posts/images/application/nginx反向代理.jpg)
+![nginx反向代理](/iblog/posts/annex/images/application/nginx反向代理.jpg)
 
 **正向代理**：
 在客户端(浏览器)配置代理服务器，通过代理服务器进行互联网访问<br>
@@ -42,12 +42,12 @@ apache是同步多进程模型，一个连接对应一个进程；nginx是异步
 由于访问量的增加，单个服务器承受不了并发，我们增加服务器的数量，然后将请求分发到各个服务器上,
 将原先请求集中到单个服务器上的情况改为将请求分发到多个服务器上,将负载分发到不同的服
 务器，也就是我们所说的负载均衡。
-![nginx负载均衡](/iblog/posts/images/application/nginx负载均衡.png)uig./rh/e,
+![nginx负载均衡](/iblog/posts/annex/images/application/nginx负载均衡.png)uig./rh/e,
 
 ### 动静分离
 为了加快网站的解析速度，降低原来单个服务器的压力，可以把动态页面和静态页面由不同的服务器来解析。
 
-![nginx动静分离](/iblog/posts/images/application/nginx动静分离.jpg)
+![nginx动静分离](/iblog/posts/annex/images/application/nginx动静分离.jpg)
 
 ## Docker安装nginx
 
@@ -89,7 +89,7 @@ docker run --name tmp-nginx-container -d nginx
 ```
 docker cp tmp-nginx-container:/etc/nginx/nginx.conf ~/Documents/config/nginx/nginx.conf
 ```
-![nginx存放路径](/iblog/posts/images/application/nginx安装路径.jpg)
+![nginx存放路径](/iblog/posts/annex/images/application/nginx安装路径.jpg)
 
 
 拷贝站点配置文件
@@ -141,11 +141,11 @@ server {
 ```
 127.0.0.1 www.test.com
 ```
-![nginx测试修改hosts文件](/iblog/posts/images/application/nginx测试修改hosts文件.jpg)
+![nginx测试修改hosts文件](/iblog/posts/annex/images/application/nginx测试修改hosts文件.jpg)
 
 
 在本地 `~/Documents/config/nginx/www` 下新建 test 目录，并编写一个 `index.html` 测试文件
-![nginx本地路径](/iblog/posts/images/application/nginx本地路径.jpg)
+![nginx本地路径](/iblog/posts/annex/images/application/nginx本地路径.jpg)
 ```
 <!DOCTYPE html>
 <html lang="en">
@@ -170,7 +170,7 @@ docker restart nginx
 ```
 
 浏览器访问[http://www.test.com](http://www.test.com)
-![测试nginx成功](/iblog/posts/images/application/测试nginx成功.jpg)
+![测试nginx成功](/iblog/posts/annex/images/application/测试nginx成功.jpg)
 
 
 ### Nginx配置详解

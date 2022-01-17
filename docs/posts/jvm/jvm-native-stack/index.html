@@ -185,7 +185,7 @@
                     </div>
                     <div class="post_content markdown"><p>Java虚拟机定义了若干种程序运行期间会使用到的运行时数据区，其中有一些会随着虚拟机启动而创建，随着虚拟机退出而销毁。
 另外一些则是与线程一一对应的，这些与线程对应的数据区域会随着线程开始和结束而创建和销毁。</p>
-<p><img src="/iblog/posts/images/essays/%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA.png" alt="运行时数据区"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA.png" alt="运行时数据区"></p>
 <p>运行时数据区域包括</p>
 <ul>
 <li>程序计数寄存器</li>
@@ -204,7 +204,7 @@
 如果本地方法栈可以动态扩展，并且在尝试扩展的时候无法申请到足够的内存，或者在创建新的线程时没有足够的内存去创建对应的本地方法栈，那么Java虚拟机将会抛出一个<code>OutOfMemoryError</code>异常。
 本地方法是使用C语言实现的。</p>
 <p>它的具体做法是Native Method Stack中登记native方法，在Execution Engine 执行时加载本地方法库。
-<img src="/iblog/posts/images/essays/%E6%9C%AC%E5%9C%B0%E6%96%B9%E6%B3%95%E6%A0%88.png" alt="本地方法栈"></p>
+<img src="/iblog/posts/annex/images/essays/%E6%9C%AC%E5%9C%B0%E6%96%B9%E6%B3%95%E6%A0%88.png" alt="本地方法栈"></p>
 <p>当某个线程调用一个本地方法时，它就进入了一个全新的并且不再受虚拟机限制的世界。它和虚拟机拥有同样的权限。</p>
 <p>本地方法可以通过本地方法接口来访问虚拟机内部的运行时数据区。</p>
 <ul>

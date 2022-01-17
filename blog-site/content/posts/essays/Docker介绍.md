@@ -62,7 +62,7 @@ sudo usermod -aG docker $USER
 ## docker架构
 docker架构分为三部分客户端,宿主机,注册中心
 
-![docker架构](/iblog/posts/images/application/docker架构.png)
+![docker架构](/iblog/posts/annex/images/application/docker架构.png)
 
 例如：输入 `docker run mysql:5.6`命令,docker程序会从docker_host去找对应的镜像,
 如果mysql不存在则会去从register下载,下载完成后docker会自动给该镜像分配一个contains,mysql就会运行起来

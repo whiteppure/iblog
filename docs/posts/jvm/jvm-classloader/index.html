@@ -731,12 +731,12 @@
 <p>在Java中，<a href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8">类加载器</a>把一个类装入`JVM中，要经过以下步骤：
 加载、验证、准备、解析和初始化。其中验证,准备,解析统称为连接。
 这5个阶段一般是顺序发生的，但在动态绑定的情况下，解析阶段发生在初始化阶段之后。
-<img src="/iblog/posts/images/essays/Jvm%E5%86%85%E5%AD%98%E5%9B%BE.png" alt="Jvm内存图"></p>
+<img src="/iblog/posts/annex/images/essays/Jvm%E5%86%85%E5%AD%98%E5%9B%BE.png" alt="Jvm内存图"></p>
 <p>类加载器只负责class文件的加载，至于它是否可以运行，则由执行引擎(Execution Engine)决定。</p>
 <p>被加载的类信息存放于一块称为方法区的内存空间。除了类的信息外，方法区中还会存放运行时常量池信息，可能还包括字符串字面量和数字常量。</p>
 <p>类加载过程流程图：
-<img src="/iblog/posts/images/essays/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B.png" alt="类加载过程">
-<img src="/iblog/posts/images/essays/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B%E8%AF%A6%E7%BB%86.png" alt="类加载过程详细"></p>
+<img src="/iblog/posts/annex/images/essays/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B.png" alt="类加载过程">
+<img src="/iblog/posts/annex/images/essays/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B%E8%AF%A6%E7%BB%86.png" alt="类加载过程详细"></p>
 <h3 id="加载">加载</h3>
 <blockquote>
 <p>加载阶段是类加载过程的第一个阶段。在这个阶段，JVM 的主要目的是将字节码从各个位置（网络、磁盘等）转化为二进制字节流加载到内存中，接着会为这个类在 JVM 的方法区创建一个对应的 Class 对象，这个 Class 对象就是这个类各种数据的访问入口。</p>
@@ -995,7 +995,7 @@ public static final String var3 = &#34;var3&#34;;
 }
 
 </code></pre></div><h2 id="双亲委派模型">双亲委派模型</h2>
-<p><img src="/iblog/posts/images/essays/%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B.png" alt="双亲委派模型"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B.png" alt="双亲委派模型"></p>
 <p>这种层次关系称为<strong>类加载器的双亲委派模型。</strong> 我们把每一层上面的类加载器叫做当前层类加载器的父加载器，当然，它们之间的父子关系并不是通过继承关系来实现的，而是使用组合关系来复用父加载器中的代码。
 该模型在JDK1.2期间被引入并广泛应用于之后几乎所有的Java程序中，但它并不是一个强制性的约束模型，而是Java设计者们推荐给开发者的一种类的加载器实现方式。</p>
 <h3 id="工作原理">工作原理</h3>

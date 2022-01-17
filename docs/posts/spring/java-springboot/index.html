@@ -944,7 +944,7 @@ public @interface EnableAutoConfiguration {
 <p>在<code>getCandidateConfigurations</code>中有如下代码</p>
 <div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">Assert.notEmpty(configurations, &#34;No auto configuration classes found in META-INF/spring.factories. If you are using a custom packaging, make sure that file is correct.&#34;);
 </code></pre></div><p>大意：在<code>META-INF/spring.factories</code>中没有发现自动配置类。如果您使用的是自定义打包，请确保该文件是正确的。
-<img src="/iblog/posts/images/essays/%E6%89%BE%E5%88%B0spring.factories.png" alt="找到spring.factories"></p>
+<img src="/iblog/posts/annex/images/essays/%E6%89%BE%E5%88%B0spring.factories.png" alt="找到spring.factories"></p>
 <p><code>spring.factories</code>包含了很多类，但不是全部都加载的，在某些类里面，是有一个条件<code>@ConditionalOnXXX</code>注解，只有当这个注解上的条件满足才会加载。</p>
 <p>例如：<code>SpringApplicationAdminJmxAutoConfiguration</code></p>
 <div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Configuration(proxyBeanMethods = false)
@@ -953,7 +953,7 @@ public @interface EnableAutoConfiguration {
 		matchIfMissing = false)
 public class SpringApplicationAdminJmxAutoConfiguration 
 </code></pre></div><h3 id="总结">总结</h3>
-<p><img src="/iblog/posts/images/essays/@SpringbootApplication%E5%8E%9F%E7%90%86.png" alt="@SpringbootApplication原理"></p>
+<p><img src="/iblog/posts/annex/images/essays/@SpringbootApplication%E5%8E%9F%E7%90%86.png" alt="@SpringbootApplication原理"></p>
 <p>当 <code>Springboot</code> 启动的时候，会执行<code>AutoConfigurationImportSelector</code>这个类中的<code>getCandidateConfigurations</code>方法，这个方法会帮我们加载<code>META-INF/spring.factories</code>文件里面的当<code>@ConditionXXX</code>注解条件满足的类。</p>
 <h2 id="bean的自动装配">Bean的自动装配</h2>
 <p><code>Spring</code>利用依赖注入（DI），完成对IOC容器中各个组件的依赖关系赋值。</p>
@@ -1481,7 +1481,7 @@ class TestService {
 public interface Aware {
 
 }
-</code></pre></div><p><img src="/iblog/posts/images/essays/Aware%E5%AD%90%E6%8E%A5%E5%8F%A3.png" alt="Aware子接口"></p>
+</code></pre></div><p><img src="/iblog/posts/annex/images/essays/Aware%E5%AD%90%E6%8E%A5%E5%8F%A3.png" alt="Aware子接口"></p>
 <p>使用测试</p>
 <div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Component
 class TestService implements ApplicationContextAware, EmbeddedValueResolverAware, BeanFactoryAware {
@@ -1884,7 +1884,7 @@ public @interface EnableAspectJAutoProxy {}
 <p>通过对下面代码打断点</p>
 <div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">AopConfigUtils.registerAspectJAnnotationAutoProxyCreatorIfNecessary(registry);
 </code></pre></div><p>可以看到该方法是给容器中注册了一个<code>AnnotationAwareAspectJAutoProxyCreator</code>组件，实际上是注册<code>AnnotationAwareAspectJAutoProxyCreator</code>组件。</p>
-<p><img src="/iblog/posts/images/essays/AOP%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6.png" alt="AOP核心组件1"></p>
+<p><img src="/iblog/posts/annex/images/essays/AOP%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6.png" alt="AOP核心组件1"></p>
 <p>可以看出<code>@EnableAspectJAutoProxy</code>注解最主要的作用实际上就是通过<code>@Import</code>注解把<code>AnnotationAwareAspectJAutoProxyCreator</code>这个对象注入到<code>spring</code>容器中。</p>
 <p>现在只要把<code>AnnotationAwareAspectJAutoProxyCreator</code>组件何时注册搞懂，<code>AspectJAutoProxyRegistrar</code>组件何时注册也就明白了。</p>
 <p><code>AnnotationAwareAspectJAutoProxyCreator</code>继承关系：</p>
@@ -2125,7 +2125,7 @@ protected Object applyBeanPostProcessorsBeforeInstantiation(Class&lt;?&gt; beanC
 </code></pre></div><p>到这就跟前边对上了，AOP相关的后置处理器也就是在这被调用的。</p>
 <p>回头在看上面的<code>createBean()</code>方法，刚才看到的是<code>resolveBeforeInstantiation()</code>方法的调用栈，所以从层次结构上看<code>AnnotationAwareAspectJAutoProxyCreator</code>组件的调用
 是在创建 <code>Bean</code>实例之前先尝试用后置处理器返回对象的。</p>
-<p><img src="/iblog/posts/images/essays/AOP@EnableAspectJAutoProxy%E5%8E%9F%E7%90%86.png" alt="AOP@EnableAspectJAutoProxy原理"></p>
+<p><img src="/iblog/posts/annex/images/essays/AOP@EnableAspectJAutoProxy%E5%8E%9F%E7%90%86.png" alt="AOP@EnableAspectJAutoProxy原理"></p>
 </div>
                     <div class="post_footer">
                         <div class="meta">

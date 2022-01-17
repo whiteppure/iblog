@@ -24,7 +24,7 @@ Java消息服务是一个与具体平台无关的API，绝大多数MOM提供商�
 ### 点对点模式
 消息发送者发送消息，消息代理将其放入消息队列中，消息接受者从队列中获取消息，消息读取后被移除消息队列。每个消息都被发送到一个特定的队列，接收者从队列中获取消息。队列保留着消息，直到它们被消费或超时。
 
-![MQ详解-001](/iblog/posts/images/essays/MQ详解-001.png)
+![MQ详解-001](/iblog/posts/annex/images/essays/MQ详解-001.png)
 
 虽然可能有多个客户端在队列中侦听消息，但只有一个可以读取到消息，之后消息将不存在，其他消费者将无法读取。也就是说消息队列只有唯一一个发送者和*接受者*，但是并不能说只有一个*接收者*。
 	
@@ -36,7 +36,7 @@ Java消息服务是一个与具体平台无关的API，绝大多数MOM提供商�
 ### 发布订阅模式
 发布者将消息发送到主题Topic中，多个订阅者订阅这个主题，订阅者不断的去轮询监听消息队列中的消息，那么就会在消息到达的同时接收消息。
 
-![MQ详解-002](/iblog/posts/images/essays/MQ详解-002.png)
+![MQ详解-002](/iblog/posts/annex/images/essays/MQ详解-002.png)
 
 特点：
 - 每个消息可以有多个消费者，消费完消息之后消息不会清除；
@@ -46,7 +46,7 @@ Java消息服务是一个与具体平台无关的API，绝大多数MOM提供商�
 kafka是一个分布式的基于发布/订阅模式的消息队列，主要应用于大数据实时处理领域。
 
 ### 基础架构
-![MQ详解-003](/iblog/posts/images/essays/MQ详解-003.png)
+![MQ详解-003](/iblog/posts/annex/images/essays/MQ详解-003.png)
 
 - Producer：消息生产者，向kafka推送消息；
 - Consumer：消息消费者，向kafka中broker获取消息的客户端；
@@ -68,7 +68,7 @@ kafka中消息是以topic进行分类的，producer生产消息，consumer消费
 Producer生产的数据会被不断追加到该log文件末端，且每条数据都有自己的offset。consumer组中的每个consumer，都会实时记录自己消费到了哪个offset，以便出错恢复时，从上次的位置继续消费。
 
 ### 发布订阅工作流程
-![MQ详解-004](/iblog/posts/images/essays/MQ详解-004.png)
+![MQ详解-004](/iblog/posts/annex/images/essays/MQ详解-004.png)
 
 1. 生产者定期向主题发送消息；
 2. kafka代理将所有消息存储在为特定主题配置的分区中。它确保消息在分区之间平均共享。如果生产者发送了两个消息，并且有两个分区，kafka将在第一个分区中存储一个消息，在第二个分区中存储第二个消息；
@@ -86,7 +86,7 @@ Producer生产的数据会被不断追加到该log文件末端，且每条数据
 参考文章：
 - https://www.jianshu.com/p/3e54a5a39683
 
-![MQ详解-005](/iblog/posts/images/essays/MQ详解-005.png)
+![MQ详解-005](/iblog/posts/annex/images/essays/MQ详解-005.png)
 
 由于生产者生产的消息会不断追加到log文件末尾，为防止log文件过大导致数据定位效率低下，kafka采取了分片和索引机制，将每个partition分为多个segment。
 每个segment对应两个文件：“.index”文件和“.log”文件。这些文件位于一个文件夹下，该文件夹的命名规则为：topic名称+分区序号。例如，first这个topic有三个分区，则其对应的文件夹为 first-0,first-1,first-2。其中，每个segment中的日志数据文件大小均相等。
@@ -101,7 +101,7 @@ Producer生产的数据会被不断追加到该log文件末端，且每条数据
 
 根据该物理位置在分段的日志数据文件中顺序扫描查找偏移量与指定偏移量相等的消息。由于index文件中的每条对应log文件中存储内容大小都相同，所以想要找到指定的消息，只需要用index文件中的该条的大小加上该条的偏移量即可得出log文件中指定消息的位置。
 
-![MQ详解-006](/iblog/posts/images/essays/MQ详解-006.png)
+![MQ详解-006](/iblog/posts/annex/images/essays/MQ详解-006.png)
 
 #### 生产者分区策略
 
@@ -109,7 +109,7 @@ Producer生产的数据会被不断追加到该log文件末端，且每条数据
 - 方便在集群中扩展，每个Partition可以通过调整以适应它所在的机器，而一个topic又可以有多个Partition组成，因此整个集群就可以适应适合的数据了；
 - 可以提高并发，因为可以以Partition为单位读写了，每个partition在不同的服务区上；
 
-![MQ详解-007](/iblog/posts/images/essays/MQ详解-007.png)
+![MQ详解-007](/iblog/posts/annex/images/essays/MQ详解-007.png)
 
 - 在指明partition的情况下，直接将指明的值直接作为partiton值；
 - 在没有指明partition值但有key的情况下，将key的hash 值与topic的partition数进行取余得到partition值；
@@ -118,7 +118,7 @@ Producer生产的数据会被不断追加到该log文件末端，且每条数据
 #### 生产者数据可靠性保证
 为保证 producer 发送的数据，能可靠的发送到指定的 topic，topic 的每个 partition 收到 producer 发送的数据后，都需要向 producer 发送 ack(acknowledgement 确认收到)，如果 producer 收到 ack，就会进行下一轮的发送，否则重新发送数据。
 
-![MQ详解-008](/iblog/posts/images/essays/MQ详解-008.png)
+![MQ详解-008](/iblog/posts/annex/images/essays/MQ详解-008.png)
 
 | 方案                          | 优点                                                       | 缺点                                                         |
 | ----------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------ |
@@ -148,7 +148,7 @@ Leader 维护了一个动态的 in-sync replica set 即ISR。
 
 #### 生产者数据一致性保证
 
-![MQ详解-009](/iblog/posts/images/essays/MQ详解-009.png)
+![MQ详解-009](/iblog/posts/annex/images/essays/MQ详解-009.png)
 
 - LEO：（Log End offset）每个副本的最后一个offset；
 - HW：（High Watermark）高水位，指的是消费者能见到的最大的 offset， ISR 队列中最小的 LEO；
@@ -178,7 +178,7 @@ Kafka的幂等性实现其实就是将原来下游需要做的去重放在了数
 #### 生产者发送消息流程
 kafka的生产者发送消息采用的是异步发送的方式。在消息发送的过程中，涉及到了两个线程——main 线程和 Sender 线程，以及一个线程共享变量——RecordAccumulator。
 
-![MQ详解-010](/iblog/posts/images/essays/MQ详解-010.png)
+![MQ详解-010](/iblog/posts/annex/images/essays/MQ详解-010.png)
 
 在生产者发送消息时，main线程将消息发送给 RecordAccumulator，当数据积累到 batch.size 之后，sender线程才会不断从 RecordAccumulator 中拉取消息发送到 kafka的broker；如果数据迟迟未达到 batch.size，sender 线程等待 linger.time 之后就会发送数据。
 

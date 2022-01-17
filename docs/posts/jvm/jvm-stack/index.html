@@ -1061,7 +1061,7 @@
                     </div>
                     <div class="post_content markdown"><p>Java虚拟机定义了若干种程序运行期间会使用到的运行时数据区，其中有一些会随着虚拟机启动而创建，随着虚拟机退出而销毁。
 另外一些则是与线程一一对应的，这些与线程对应的数据区域会随着线程开始和结束而创建和销毁。</p>
-<p><img src="/iblog/posts/images/essays/%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA.png" alt="运行时数据区"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA.png" alt="运行时数据区"></p>
 <p>运行时数据区域包括</p>
 <ul>
 <li>程序计数寄存器</li>
@@ -1130,7 +1130,7 @@ Exception in thread &#34;main&#34; java.lang.StackOverflowError
 这个栈帧被称为当前栈帧（Current Frame），与当前栈帧相对应的方法就是当前方法（Current Method），定义这个方法的类就是当前类（Current Class）。</p>
 <p>执行引擎运行的所有字节码指令只针对当前栈帧进行操作。</p>
 <p>如果在该方法中调用了其他方法，对应的新的栈帧会被创建出来，放在栈的顶端，成为新的当前帧。
-<img src="/iblog/posts/images/essays/%E6%A0%88%E4%B8%AD%E5%AD%98%E5%82%A8%E5%86%85%E5%AE%B9.png" alt="栈中存储内容"></p>
+<img src="/iblog/posts/annex/images/essays/%E6%A0%88%E4%B8%AD%E5%AD%98%E5%82%A8%E5%86%85%E5%AE%B9.png" alt="栈中存储内容"></p>
 <p>代码演示</p>
 <div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
 
@@ -1172,7 +1172,7 @@ Exception in thread &#34;main&#34; java.lang.StackOverflowError
 <li>方法返回地址（或方法正常退出或者异常退出的定义）</li>
 <li>一些附加信息</li>
 </ul>
-<p><img src="/iblog/posts/images/essays/%E6%A0%88%E6%A1%A2%E7%9A%84%E7%BB%93%E6%9E%84.png" alt="栈桢的结构"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%A0%88%E6%A1%A2%E7%9A%84%E7%BB%93%E6%9E%84.png" alt="栈桢的结构"></p>
 <p>每个线程下的栈都是私有的，因此每个线程都有自己各自的栈，并且每个栈里面都有很多栈帧，栈帧的大小主要由 局部变量表 和 操作数栈 决定的。</p>
 <h3 id="栈桢">栈桢</h3>
 <h4 id="局部变量表">局部变量表</h4>
@@ -1181,8 +1181,8 @@ Exception in thread &#34;main&#34; java.lang.StackOverflowError
 <p>由于局部变量表是建立在线程的栈上，是线程的私有数据，因此不存在数据安全问题。</p>
 <p><em>局部变量表所需的容量大小是在编译期确定下来的，并保存在方法的Code属性的<code>maximum local variables</code>数据项中。
 在方法运行期间是不会改变局部变量表的大小的。</em></p>
-<p><img src="/iblog/posts/images/essays/%E5%AD%97%E8%8A%82%E7%A0%81%E4%BB%8B%E7%BB%8D.png" alt="字节码介绍">
-<img src="/iblog/posts/images/essays/%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E8%A1%A8.png" alt="局部变量表"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E5%AD%97%E8%8A%82%E7%A0%81%E4%BB%8B%E7%BB%8D.png" alt="字节码介绍">
+<img src="/iblog/posts/annex/images/essays/%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E8%A1%A8.png" alt="局部变量表"></p>
 <p>方法嵌套调用的次数由栈的大小决定。一般来说，栈越大，方法嵌套调用次数越多。
 对一个函数而言，它的参数和局部变量越多，使得局部变量表膨胀，它的栈帧就越大，以满足方法调用所需传递的信息增大的需求。
 进而函数调用就会占用更多的栈空间，导致其嵌套调用次数就会减少。</p>
@@ -1197,7 +1197,7 @@ JVM会为局部变量表中的每一个Slot都分配一个访问索引，通过�
 <p>当一个实例方法被调用的时候，它的方法参数和方法体内部定义的局部变量将会按照顺序被复制到局部变量表中的每一个slot上</p>
 <p>如果需要访问局部变量表中一个64bit的局部变量值时，只需要使用前一个索引即可。（比如：访问1ong或doub1e类型变量）</p>
 <p>如果当前帧是由构造方法或者实例方法创建的，那么该对象引用this将会存放在index为0的s1ot处，其余的参数按照参数表顺序继续排列。</p>
-<p><img src="/iblog/posts/images/essays/slot.png" alt="slot"></p>
+<p><img src="/iblog/posts/annex/images/essays/slot.png" alt="slot"></p>
 <h5 id="slot重复利用">Slot重复利用</h5>
 <p>栈帧中的局部变量表中的槽位是可以重用的，如果一个局部变量过了其作用域，那么在其作用域之后申明的新的局部变就很有可能会复用过期局部变量的槽位，
 从而达到节省资源的目的。</p>
@@ -1211,7 +1211,7 @@ JVM会为局部变量表中的每一个Slot都分配一个访问索引，通过�
         int c = a + 1;
     }
 
-</code></pre></div><p><img src="/iblog/posts/images/essays/slot%E9%87%8D%E5%A4%8D%E5%88%A9%E7%94%A8.png" alt="slot重复利用"></p>
+</code></pre></div><p><img src="/iblog/posts/annex/images/essays/slot%E9%87%8D%E5%A4%8D%E5%88%A9%E7%94%A8.png" alt="slot重复利用"></p>
 <h5 id="静态变量与局部变量">静态变量与局部变量</h5>
 <p>变量的分类：</p>
 <ul>
@@ -1238,10 +1238,10 @@ JVM会为局部变量表中的每一个Slot都分配一个访问索引，通过�
 <ul>
 <li>某些字节码指令将值压入操作数栈，其余的字节码指令将操作数取出栈。使用它们后再把结果压入栈。</li>
 <li>比如：执行复制、交换、求和等操作。
-<img src="/iblog/posts/images/essays/%E6%93%8D%E4%BD%9C%E6%95%B0%E6%A0%88add.png" alt="操作数栈add"></li>
+<img src="/iblog/posts/annex/images/essays/%E6%93%8D%E4%BD%9C%E6%95%B0%E6%A0%88add.png" alt="操作数栈add"></li>
 </ul>
 <p>举例</p>
-<p><img src="/iblog/posts/images/essays/%E6%93%8D%E4%BD%9C%E6%95%B0%E6%A0%88%E4%BB%A3%E7%A0%81%E4%B8%BE%E4%BE%8B.png" alt="操作数栈代码举例"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%93%8D%E4%BD%9C%E6%95%B0%E6%A0%88%E4%BB%A3%E7%A0%81%E4%B8%BE%E4%BE%8B.png" alt="操作数栈代码举例"></p>
 <p>操作数栈，主要用于保存计算过程的中间结果，同时作为计算过程中变量临时的存储空间。</p>
 <blockquote>
 <p>PS：这个时候操作数栈是有长度的，数组一旦创建，那么就是不可变的</p>
@@ -1260,8 +1260,8 @@ JVM会为局部变量表中的每一个Slot都分配一个访问索引，通过�
 <h4 id="动态链接">动态链接</h4>
 <p>每一个栈帧内部都包含一个指向运行时常量池中该栈帧所属方法的引用包含这个引用的目的就是为了支持当前方法的代码能够实现动态链接（Dynamic Linking）。
 比如：invokedynamic指令。</p>
-<p><img src="/iblog/posts/images/essays/%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5.png" alt="动态链接">
-<img src="/iblog/posts/images/essays/%E5%B8%B8%E9%87%8F%E6%B1%A0.png" alt="常量池"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5.png" alt="动态链接">
+<img src="/iblog/posts/annex/images/essays/%E5%B8%B8%E9%87%8F%E6%B1%A0.png" alt="常量池"></p>
 <p>在Java源文件被编译到字节码文件中时，所有的变量和方法引用都作为符号引用（symbolic Reference）保存在class文件的常量池里。
 比如：描述一个方法调用了另外的其他方法时，就是通过常量池中指向方法的符号引用来表示的，
 那么动态链接的作用就是为了将这些符号引用转换为调用方法的直接引用。</p>
@@ -1286,7 +1286,7 @@ JVM会为局部变量表中的每一个Slot都分配一个访问索引，通过�
 另外还有一个return指令声明为void的方法，实例初始化方法，类和接口的初始化方法使用。</p>
 </blockquote>
 <p>方法执行过程中，抛出异常时的异常处理，存储在一个异常处理表，方便在发生异常的时候找到处理异常的代码
-<img src="/iblog/posts/images/essays/%E5%BC%82%E5%B8%B8%E8%A1%A8.png" alt="异常表">
+<img src="/iblog/posts/annex/images/essays/%E5%BC%82%E5%B8%B8%E8%A1%A8.png" alt="异常表">
 本质上，方法的退出就是当前栈帧出栈的过程。
 此时，需要恢复上层方法的局部变量表、操作数栈、将返回值压入调用者栈帧的操作数栈、设置PC寄存器值等，让调用者方法继续执行下去。</p>
 <p>正常完成出口和异常完成出口的区别在于：通过异常完成出口退出的不会给他的上层调用者产生任何的返回值。</p>
@@ -1331,7 +1331,7 @@ JVM会为局部变量表中的每一个Slot都分配一个访问索引，通过�
 <li><code>invokevirtual</code>：调用所有虚方法</li>
 <li><code>invokeinterface</code>：调用接口方法</li>
 </ul>
-<p><img src="/iblog/posts/images/essays/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%8C%87%E4%BB%A4%E8%99%9A%E9%9D%9E%E8%99%9A%E6%96%B9%E6%B3%95.png" alt="虚拟机指令虚非虚方法"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%8C%87%E4%BB%A4%E8%99%9A%E9%9D%9E%E8%99%9A%E6%96%B9%E6%B3%95.png" alt="虚拟机指令虚非虚方法"></p>
 <p>动态调用指令</p>
 <ul>
 <li><code>invokedynamic</code>：动态解析出需要调用的方法，然后执行</li>
@@ -1341,7 +1341,7 @@ JVM会为局部变量表中的每一个Slot都分配一个访问索引，通过�
 直到Java8的Lambda表达式的出现，invokedynamic指令的生成，在Java中才有了直接的生成方式。</p>
 <p>Java7中增加的动态语言类型支持的本质是对Java虚拟机规范的修改，而不是对Java语言规则的修改，这一块相对来讲比较复杂，
 增加了虚拟机中的方法调用，最直接的受益者就是运行在Java平台的动态语言的编译器。
-<img src="/iblog/posts/images/essays/%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%99%9A%E6%96%B9%E6%B3%95%E6%8C%87%E4%BB%A4.png" alt="虚拟机虚方法指令"></p>
+<img src="/iblog/posts/annex/images/essays/%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%99%9A%E6%96%B9%E6%B3%95%E6%8C%87%E4%BB%A4.png" alt="虚拟机虚方法指令"></p>
 <p>前四条指令固化在虚拟机内部，方法的调用执行不可人为干预，而<code>invokedynamic</code>指令则支持由用户确定方法版本。
 其中<code>invokestatic</code>指令和<code>invokespecial</code>指令调用的方法称为非虚方法，其余的（final修饰的除外）称为虚方法。</p>
 <h4 id="重写的本质">重写的本质</h4>
@@ -1359,7 +1359,7 @@ JVM会为局部变量表中的每一个Slot都分配一个访问索引，通过�
 <p>在面向对象的编程中，会很频繁的使用到动态分派，如果在每次动态分派的过程中都要重新在类的方法元数据中搜索合适的目标的话就可能影响到执行效率。因此，为了提高性能，JVM采用在类的方法区建立一个虚方法表 （virtual method table）（非虚方法不会出现在表中）来实现。使用索引表来代替查找。</p>
 <p>每个类中都有一个虚方法表，表中存放着各个方法的实际入口。</p>
 <p>虚方法表会在类加载的链接阶段被创建并开始初始化，类的变量初始值准备完成之后，JVM会把该类的方法表也初始化完毕。</p>
-<p><img src="/iblog/posts/images/essays/%E8%99%9A%E6%96%B9%E6%B3%95%E8%A1%A8.png" alt="虚方法表"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E8%99%9A%E6%96%B9%E6%B3%95%E8%A1%A8.png" alt="虚方法表"></p>
 <p>如果类中重写了方法，那么调用的时候，就会直接在虚方法表中查找，否则将会直接连接到Object的方法中。</p>
 <h3 id="栈的相关面试题">栈的相关面试题</h3>
 <h4 id="举例栈溢出的情况stackoverflowerror">举例栈溢出的情况？（StackOverflowError）</h4>

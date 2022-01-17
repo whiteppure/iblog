@@ -8,9 +8,7 @@ draft: false
 
 在我看来，博客就像是一个笔记本，学了什么、读书笔记、开心的事情、难过的事情都向上边记录，这么写下来更像一个日记本而不是一个笔记本。但是目前在本博客上记录的全部都是学过的知识点，俗话说的好，好记性不如烂笔头，记下来好忘了翻一翻。
 
-本人之前在很多地方写过博客，自己也租过服务器搭建过博客，但最终选择了托管给GitHub；使用第三方的平台写博客有很多局限性，自己租服务器租的时间太长的话资金又不充足，所以最后选择了GithubPages进行搭建（还不是因为能白嫖～ 小声bb）。如果有条件的推荐大家可以自己搭建服务器，没条件的就用GitHubPages吧。
-
-看到过很多人过于关心博客的样式，弄的花里胡哨的，其实博客的样式什么的并不是特别重要，重要的是你用博客写了什么；就好比一位衣衫褴褛的人也不影响他有着放荡不羁的灵魂一般。当然这两者并不冲突，写这些的目的是为了让这些同学分清楚孰轻孰重。
+之前在很多地方写过博客，租过服务器搭建过博客，但最终选择了托管给GitHub；使用第三方的平台写博客有很多局限性，自己租服务器租的时间太长的话资金又不充足，所以最后选择了GithubPages进行搭建（还不是因为能白嫖～ 小声bb）。如果有条件的推荐大家可以自己搭建服务器，没条件的就用GitHubPages吧。
 
 ## 搭建博客
 本博客使用 [hugo](https://gohugo.io/) + GitHubPage 进行搭建，使用的主题为 [zozo](https://github.com/varkai/hugo-theme-zozo) Designed by [VarKai](https://www.varkai.com)。
@@ -21,6 +19,10 @@ draft: false
 - [hugo给文章添加目录](https://www.ariesme.com/posts/2019/add_toc_for_hugo)
 - [使用hugo搭建个人博客站点](https://blog.coderzh.com/2015/08/29/hugo)
 - [不蒜子计数统计](https://busuanzi.ibruce.info)
+
+## 附件下载
+- [huffmanZip.jar](/iblog/posts/rookie/jar/huffmanZip.jar)
+
 
 ## 其他学习参考资料
 因为本人目前主要是做Java开发相关的工作，所以这里的博客文章、参考资料大部分都和Java相关，如果您不想看到Java可以直接关闭本页面。

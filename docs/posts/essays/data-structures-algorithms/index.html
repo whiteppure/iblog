@@ -1606,7 +1606,7 @@
 <p>常见的线性结构有：数组、链表、队列、栈；常见非线性结构有：多维数组、广义表、树结构、图结构。</p>
 <h3 id="稀疏数组">稀疏数组</h3>
 <p>使用稀疏数组可以用来压缩数据。稀疏数组的第一行依次记录原数组一共有几行几列，有多少个不为零的值，之后的每行记录原数组中不为零的值所在的行数、列数以及数组中元素该值。如图所示：</p>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-001.png" alt="数据结构与算法-001"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-001.png" alt="数据结构与算法-001"></p>
 <p>二维数组转稀疏数组</p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java">    <span class="c1">// 将二维数组转换为稀疏数组
 </span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span><span class="o">[][]</span> <span class="nf">twoDimensionArrayToSparseArray</span><span class="o">(</span><span class="kt">int</span><span class="o">[][]</span> <span class="n">array</span><span class="o">)</span> <span class="o">{</span>
@@ -1669,7 +1669,7 @@
 </code></pre></div><h3 id="队列">队列</h3>
 <p>队列是一个有序列表，可以使用数组或链表来实现。队列遵循先入先出的原则。即，先存入队列的数据，要先取出。后存入的要后取出。</p>
 <p>使用数组模拟队列示意图：</p>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-002.png" alt="数据结构与算法-002"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-002.png" alt="数据结构与算法-002"></p>
 <p>数组模拟单向队列</p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java">    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">ArrayQueue</span><span class="o">{</span>
 
@@ -1814,7 +1814,7 @@
 <li>链表是以节点的方式来存储，是链式存储；data 域存放数据，next 域指向下一个节点；</li>
 <li>链表分带头节点的链表和没有头节点的链表，根据实际的需求来确定；</li>
 </ul>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-003.png" alt="数据结构与算法-003"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-003.png" alt="数据结构与算法-003"></p>
 <h4 id="单向链表">单向链表</h4>
 <p>操作单向链表：对于插入、删除操作，只能定位至待操作节点的前一个节点，如果定位至当前节点，那么其上一个节点的信息便会丢失。</p>
 <p>单向链表，链表的增、删、查、改</p>
@@ -1904,7 +1904,7 @@
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div><p>反转单向链表</p>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-004.png" alt="数据结构与算法-004"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-004.png" alt="数据结构与算法-004"></p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java">    <span class="c1">// 反转链表
 </span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">reserve</span><span class="o">(</span><span class="n">Node</span> <span class="n">head</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">if</span> <span class="o">(</span><span class="n">head</span><span class="o">.</span><span class="na">next</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">.</span><span class="na">next</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
@@ -1954,7 +1954,7 @@
 <li>单向链表，查找的方向只能是一个方向，而双向链表可以向前或者向后查找；</li>
 <li>单向链表不能自我删除，需要靠辅助节点，而双向链表，则可以自我删除；</li>
 </ul>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-005.png" alt="数据结构与算法-005"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-005.png" alt="数据结构与算法-005"></p>
 <p>双向链表，增、删、改、查</p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">DoubleLinkedList</span><span class="o">{</span>
 
@@ -2066,7 +2066,7 @@
 <p>约瑟夫问题为：设编号为 1，2，…n的n个人围坐一圈，约定编号为 k（1&lt;=k&lt;=n） 的人从 1 开始报数,数到 m 的那个人出列，它的下一位又从 1 开始报数，数到 m 的那个人又出列， 依次类推，直到所有人出列为止，由此产生一个出队编号的序列。</p>
 </blockquote>
 <p>用一个不带头结点的循环链表来处理约瑟夫问题：先构成一个有 n 个结点的单循环链表，然后由 k 结点起从 1 开始计数，计到 m 时，对应结点从链表中删除，然后再从被删除结点的下一个结点又从 1 开始计数，直到最后一个结点从链表中删除算法结束。</p>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-006.png" alt="数据结构与算法-006"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-006.png" alt="数据结构与算法-006"></p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">JoesphSingletonLinkedList</span> <span class="o">{</span>
 
     <span class="kd">private</span> <span class="n">Node</span> <span class="n">first</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
@@ -2168,7 +2168,7 @@
 <p>栈的英文为stack，是一个先入后出(FILO-First In Last Out)的有序列表，最先放入栈中元素在栈底，最后放入的元素在栈顶，而删除元素刚好相反，最后放入的元素最先删除，最先放入的元素最后删除。</p>
 <p>栈是限制线性表中元素的插入和删除只能在线性表的同一端进行的一种特殊线性表。允许插入和删除的一端，为变化的一端，称为栈顶(Top)，另一端为固定的一端，称为栈底(Bottom)。</p>
 <p>下图是出栈和入栈</p>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-007.png" alt="数据结构与算法-007"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-007.png" alt="数据结构与算法-007"></p>
 <p>栈的应用场景：</p>
 <ul>
 <li>子程序的调用： 在跳往子程序前， 会先将下个指令的地址存到堆栈中， 直到子程序执行完后再将地址取出， 以回到原来的程序中；</li>
@@ -2233,7 +2233,7 @@
 
 <span class="o">}</span>
 </code></pre></div><h4 id="栈实现中缀表达式">栈实现中缀表达式</h4>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-008.png" alt="数据结构与算法-008"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-008.png" alt="数据结构与算法-008"></p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">CalcInfixExpressions</span> <span class="o">{</span>
 
 
@@ -2382,7 +2382,7 @@
 
 <span class="o">}</span>
 </code></pre></div><h4 id="中缀表达式转后缀表达式">中缀表达式转后缀表达式</h4>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-009.png" alt="数据结构与算法-009"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-009.png" alt="数据结构与算法-009"></p>
 <p>中缀表达式转后缀表达式代码实现</p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">InfixToPolandNotation</span><span class="o">{</span>
 
@@ -2830,7 +2830,7 @@
 <blockquote>
 <p>PS: 二叉树中结点等价于节点</p>
 </blockquote>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-022.png" alt="数据结构与算法-022"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-022.png" alt="数据结构与算法-022"></p>
 <h4 id="二叉树的遍历及查找">二叉树的遍历及查找</h4>
 <p>对于二叉树来讲最主要、最基本的运算是遍历。遍历二叉树 是指以一定的次序访问二叉树中的每个结点。所谓访问结点是指对结点进行各种操作的简称。</p>
 <p>例如，查询结点数据域的内容，或输出它的值，或找出结点位置，或是执行对结点的其他操作。遍历二叉树的过程实质是把二叉树的结点进行线性排列的过程。</p>
@@ -3060,7 +3060,7 @@
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div><h4 id="二叉树的删除">二叉树的删除</h4>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-023.png" alt="数据结构与算法-023"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-023.png" alt="数据结构与算法-023"></p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">BinaryTree</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">del</span><span class="o">(</span><span class="kt">int</span> <span class="n">id</span><span class="o">){</span>
         <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
@@ -3153,9 +3153,9 @@
 <li>【2】的前驱结点为【1】，后继结点为【4】</li>
 <li>【6】的前驱结点为【3】，后继结点为 null</li>
 </ul>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-024.png" alt="数据结构与算法-024"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-024.png" alt="数据结构与算法-024"></p>
 <p>中序线索化二叉树示意图</p>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-025.png" alt="数据结构与算法-025"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-025.png" alt="数据结构与算法-025"></p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ThreadedBinaryTreeDemo</span> <span class="o">{</span>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
@@ -3290,7 +3290,7 @@
 <li>树的带权路径长度：树的带权路径长度规定为所有叶子结点的带权路径长度之和，记为WPL(weighted path length) ，权值越大的结点离根结点越近的二叉树才是最优二叉树。WPL 最小的就是赫夫曼树；</li>
 </ul>
 <p>给定n个权值作为n个叶子结点，构造一棵二叉树，若该树的带权路径长度(wpl)达到最小，称这样的二叉树为最优二叉树，称为哈夫曼树，有些资料也译为赫夫曼树。</p>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-028.png" alt="数据结构与算法-028"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-028.png" alt="数据结构与算法-028"></p>
 <p>WPL最小的就是哈夫曼树，如上图，中间的树就是哈夫曼树。</p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HuffmanTreeDemo</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
@@ -3437,7 +3437,7 @@ int m = i + j;
 </code></pre></div></li>
 <li>
 <p>对数阶 O(log2n)</p>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-012.png" alt="数据结构与算法-012"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-012.png" alt="数据结构与算法-012"></p>
 <div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">int i = 1;
 while(i&lt;n){
     i = i*2;
@@ -3591,7 +3591,7 @@ while(i&lt;n){
 <blockquote>
 <p>八皇后问题共92中解法</p>
 </blockquote>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-010.png" alt="数据结构与算法-010"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-010.png" alt="数据结构与算法-010"></p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyTest</span> <span class="o">{</span>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
@@ -3658,9 +3658,9 @@ while(i&lt;n){
 <li>内部排序：指将需要处理的所有数据都加载到内部存储器(内存)中进行排序；</li>
 <li>外部排序法：数据量过大，无法全部加载到内存中，需要借助外部存储(文件等)进行排序；</li>
 </ul>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-011.png" alt="数据结构与算法-011"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-011.png" alt="数据结构与算法-011"></p>
 <p>常见内排序算法复杂度比较</p>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-013.png" alt="数据结构与算法-013"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-013.png" alt="数据结构与算法-013"></p>
 <p>名词解释：</p>
 <ul>
 <li>n：数据规模</li>
@@ -3673,7 +3673,7 @@ while(i&lt;n){
 </ul>
 <h4 id="冒泡排序">冒泡排序</h4>
 <p>冒泡排序的基本思想是：通过对待排序序列从前向后（从下标较小的元素开始），依次比较相邻元素的值，若发现逆序（当前值大于比较的值）则交换，使值较大的元素逐渐从前移向后部，就像水底下的气泡一样逐渐向上冒。</p>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-014.gif" alt="数据结构与算法-014"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-014.gif" alt="数据结构与算法-014"></p>
 <p>优化：因为排序的过程中， 各元素不断接近自己的位置，如果一趟比较下来没有进行过交换，就说明序列有序，因此要在排序过程中设置一个标志 flag 判断元素是否进行过交换。 从而减少不必要的比较。</p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">BubbleSorting</span> <span class="o">{</span>
 
@@ -3706,7 +3706,7 @@ while(i&lt;n){
 </code></pre></div><h4 id="选择排序">选择排序</h4>
 <p>选择式排序也属于内部排序法，是从欲排序的数据中，按指定的规则选出某一元素，再依规定交换位置后达到排序的目的。</p>
 <p>首先在未排序序列中找到最小元素，存放到排序序列的起始位置，然后，再从剩余未排序元素中继续寻找最小元素，然后放到排序序列末尾。以此类推，直到所有元素均排序完毕。</p>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-015.gif" alt="数据结构与算法-015"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-015.gif" alt="数据结构与算法-015"></p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">SelectSorting</span><span class="o">{</span>
 
     <span class="kd">public</span> <span class="kt">int</span><span class="o">[]</span> <span class="nf">sort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
@@ -3735,7 +3735,7 @@ while(i&lt;n){
 <p>插入排序（Insertion Sorting） 的基本思想是：把 n 个待排序的元素看成为一个有序表和一个无序表;</p>
 <p>开始时有序表中只包含一个元素，无序表中包含有 n-1 个元素，排序过程中每次从无序表中取出第一个元素，把它的排序码依次与有序表元素的排序码进行比较， 将它插入到有序表中的适当位置，使之成为新的有序表。</p>
 <p>对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入。插入排序在实现上，通常在从后向前扫描过程中，需要反复把已排序元素逐步向后挪位，为最新元素提供插入空间。</p>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-016.gif" alt="数据结构与算法-016"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-016.gif" alt="数据结构与算法-016"></p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">InsertSorting</span><span class="o">{</span>
 
     <span class="kd">public</span> <span class="kt">int</span><span class="o">[]</span> <span class="nf">sort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
@@ -3761,7 +3761,7 @@ while(i&lt;n){
 </code></pre></div><h4 id="希尔排序">希尔排序</h4>
 <p>希尔排序是希尔（Donald Shell） 于1959年提出的一种排序算法。希尔排序也是一种插入排序，它是简单插入排序经过改进之后的一个更高效的版本，也称为缩小增量排序。</p>
 <p>希尔排序按照增量将数组进行分组，对每组使用直接插入排序算法排序；随着增量逐渐减少，每组包含的关键词越来越多，当增量减至1时，整个文件恰被分成一组，算法便终止。</p>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-017.gif" alt="数据结构与算法-017"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-017.gif" alt="数据结构与算法-017"></p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">ShellSorting</span><span class="o">{</span>
 
     <span class="c1">// 希尔排序，交换法
@@ -3817,7 +3817,7 @@ while(i&lt;n){
 <li>将大于pivot基准数放在基准数右边</li>
 <li>将小于pivot基准数放在基准数左边</li>
 </ul>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-018.gif" alt="数据结构与算法-018"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-018.gif" alt="数据结构与算法-018"></p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">QuickSorting</span> <span class="o">{</span>
 
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">data</span><span class="o">,</span> <span class="kt">int</span> <span class="n">l</span><span class="o">,</span> <span class="kt">int</span> <span class="n">r</span><span class="o">)</span> <span class="o">{</span>
@@ -3859,7 +3859,7 @@ while(i&lt;n){
 </code></pre></div><h4 id="归并排序">归并排序</h4>
 <p>归并排序是利用归并的思想实现的排序方法， 该算法采用经典的分治（divide-and-conquer）策略；分治法将问题分成一些小的问题然后递归求解， 而治的阶段则将分的阶段得到的各答案&quot;修补&quot;在一起，即分而治之。</p>
 <p>归并排序算法思路：采用分治算法思想，首先将序列使用递归进行拆分，然后进行合并；合并思路，将两个有序队列中的元素分别按顺序进行比较，将结果保存在一个临时数组中，最后将临时数组合并到最后的队列中。</p>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-019.gif" alt="数据结构与算法-019"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-019.gif" alt="数据结构与算法-019"></p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">MergeSorting</span> <span class="o">{</span>
 
     <span class="c1">// 递归拆分算法
@@ -3925,7 +3925,7 @@ while(i&lt;n){
 </code></pre></div><h4 id="基数排序">基数排序</h4>
 <p>基数排序是 1887 年赫尔曼·何乐礼发明的。基数排序属于“分配式排序”，又称“桶子法”或 bin sort，顾名思义，它是通过键值的各个位的值，将要排序的元素分配至某些“桶”中，达到排序的作用,基数排序法是属于稳定性的排序， 基数排序法的是效率高的稳定性排序法。</p>
 <p>基数排序是桶排序的扩展，它是这样实现的： 将所有待比较数值统一为同样的数位长度，数位较短的数前面补零；然后， 从最低位开始， 依次进行一次排序。这样从最低位排序一直到最高位排序完成以后, 数列就变成一个有序序列。</p>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-020.gif" alt="数据结构与算法-020"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-020.gif" alt="数据结构与算法-020"></p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">BucketSorting</span> <span class="o">{</span>
 
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">arr</span><span class="o">)</span> <span class="o">{</span>
@@ -3979,8 +3979,8 @@ while(i&lt;n){
 <p>大顶堆：每个节点的值都大于或等于其子节点的值，在堆排序算法中用于升序排列；
 小顶堆：每个节点的值都小于或等于其子节点的值，在堆排序算法中用于降序排列；</p>
 </blockquote>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-027.png" alt="数据结构与算法-027"></p>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-026.gif" alt="数据结构与算法-026"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-027.png" alt="数据结构与算法-027"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-026.gif" alt="数据结构与算法-026"></p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">HeapSorting</span> <span class="o">{</span>
 
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">arr</span><span class="o">)</span> <span class="o">{</span>
@@ -4080,7 +4080,7 @@ while(i&lt;n){
 <span class="o">}</span>
 </code></pre></div><h4 id="插值查找">插值查找</h4>
 <p>插值查找算法类似于二分查找，与二分查找不同的是插值查找每次从自适应 mid 处开始查找，而不是像二分查找那样每次都从中间开始找。</p>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-021.png" alt="数据结构与算法-021"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-021.png" alt="数据结构与算法-021"></p>
 <p>注意：对于数据量较大，关键字分布比较均匀（最好是线性分布）的查找表来说，采用插值查找，速度较快；对于关键字分布不均匀的情况下，该方法不一定比二分查找要好。</p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">InsertValueSearch</span> <span class="o">{</span>
 
@@ -4181,7 +4181,7 @@ while(i&lt;n){
 <li>以每个数值新的编码重新对字符数组进行编码，即可得到赫夫曼编码后的值；</li>
 </ol>
 <p>假如一段信息里只有A，B，C，D，E，F这6个字符，他们出现的次数依次是2次，3次，7次，9次，18次，25次，最终构建成哈夫曼编树为下图所示：</p>
-<p><img src="/iblog/posts/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-029.png" alt="数据结构与算法-029"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-029.png" alt="数据结构与算法-029"></p>
 <p>得到哈夫曼编码：</p>
 <div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">A=11100 B=11101 C=1111 D=110 E=10 F=0
 </code></pre></div><p>利用哈夫曼编码，压缩解压文件：</p>

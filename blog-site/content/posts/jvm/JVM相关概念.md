@@ -30,7 +30,7 @@ OOM异常信息变化：
 Java使用可达性分析算法来标记垃圾，最上面的数据不可达，就是需要被回收的。
 后期有一些对象不用了，按道理应该断开引用，但是存在一些链没有断开，从而导致没有办法被回收。从而造成内存泄漏。
 
-![内存泄漏](/iblog/posts/images/essays/内存泄漏.png)
+![内存泄漏](/iblog/posts/annex/images/essays/内存泄漏.png)
 
 **内存泄漏与内存溢出的关系**
 
@@ -166,7 +166,7 @@ public class MainTest {
 这4种引用强度依次逐渐减弱。除强引用外，其他3种引用均可以在`java.lang.ref`包中找到它们的身影。
 强引用为JVM内部实现。其他三类引用类型全部继承自`Reference`父类。
 
-![强软弱虚](/iblog/posts/images/essays/强软弱虚.jpg)
+![强软弱虚](/iblog/posts/annex/images/essays/强软弱虚.jpg)
 
 上述引用垃圾回收的前提条件是：对象都是可触及的(可达性分析结果为可达)，如果对象不可触及就直接被垃圾回收器回收了。
 ### 强引用

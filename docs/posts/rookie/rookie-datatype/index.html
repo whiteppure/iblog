@@ -1765,9 +1765,9 @@ JDK1.7之前方法区位于永久代.由于一些原因在JDK1.8时彻底祛除�
     }
 }
 </code></pre></div><p>不使用<code>intern</code>方法
-<img src="/iblog/posts/images/essays/%E4%B8%8D%E7%94%A8intern%E6%96%B9%E6%B3%95%E6%B5%8B%E8%AF%95.png" alt="不用intern方法测试"></p>
+<img src="/iblog/posts/annex/images/essays/%E4%B8%8D%E7%94%A8intern%E6%96%B9%E6%B3%95%E6%B5%8B%E8%AF%95.png" alt="不用intern方法测试"></p>
 <p>使用<code>intern</code>方法后
-<img src="/iblog/posts/images/essays/%E4%BD%BF%E7%94%A8intern%E6%96%B9%E6%B3%95%E6%B5%8B%E8%AF%95.png" alt="使用intern方法测试"></p>
+<img src="/iblog/posts/annex/images/essays/%E4%BD%BF%E7%94%A8intern%E6%96%B9%E6%B3%95%E6%B5%8B%E8%AF%95.png" alt="使用intern方法测试"></p>
 <h5 id="经典案例">经典案例</h5>
 <p><strong>String常量池常考的一个问题就是<code>new String(&quot;abc&quot;)</code>会创建几个对象?</strong></p>
 <p>答案: 两个字符串对象(前提是 String常量池中还没有 &ldquo;abc&rdquo; 字符串对象).</p>
@@ -1857,13 +1857,13 @@ Constant pool:
 <li>如果串池中有，则并不会放入。返回已有的串池中的对象的地址</li>
 <li>如果没有，会把此<strong>对象复制一份，放入串池</strong>，并返回串池中的对象地址</li>
 </ul>
-<p><img src="/iblog/posts/images/essays/JDK6%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F%E6%B1%A0%E6%A1%88%E4%BE%8B%E8%A7%A3%E6%9E%90.png" alt="JDK6字符串常量池案例解析"></p>
+<p><img src="/iblog/posts/annex/images/essays/JDK6%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F%E6%B1%A0%E6%A1%88%E4%BE%8B%E8%A7%A3%E6%9E%90.png" alt="JDK6字符串常量池案例解析"></p>
 <p>JDK1.7起，将这个字符串对象尝试放入串池。</p>
 <ul>
 <li>如果串池中有，则并不会放入。返回已有的串池中的对象的地址</li>
 <li>如果没有，则会把<strong>对象的引用地址复制一份，放入串池</strong>，并返回串池中的引用地址</li>
 </ul>
-<p><img src="/iblog/posts/images/essays/JDK78%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F%E6%B1%A0%E6%A1%88%E4%BE%8B%E8%A7%A3%E6%9E%90.png" alt="JDK78字符串常量池案例解析"></p>
+<p><img src="/iblog/posts/annex/images/essays/JDK78%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F%E6%B1%A0%E6%A1%88%E4%BE%8B%E8%A7%A3%E6%9E%90.png" alt="JDK78字符串常量池案例解析"></p>
 <h5 id="注意">注意</h5>
 <p>字符串常量池是不会存储相同内容的字符串的。</p>
 <p>字符串常量池其实是一个固定大小的<code>Hashtable</code>;

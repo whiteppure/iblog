@@ -160,7 +160,7 @@ Assert.notEmpty(configurations, "No auto configuration classes found in META-INF
 ```
 
 大意：在`META-INF/spring.factories`中没有发现自动配置类。如果您使用的是自定义打包，请确保该文件是正确的。
-![找到spring.factories](/iblog/posts/images/essays/找到spring.factories.png)
+![找到spring.factories](/iblog/posts/annex/images/essays/找到spring.factories.png)
 
 `spring.factories`包含了很多类，但不是全部都加载的，在某些类里面，是有一个条件`@ConditionalOnXXX`注解，只有当这个注解上的条件满足才会加载。
 
@@ -174,7 +174,7 @@ public class SpringApplicationAdminJmxAutoConfiguration
 ```
 
 ### 总结
-![@SpringbootApplication原理](/iblog/posts/images/essays/@SpringbootApplication原理.png)
+![@SpringbootApplication原理](/iblog/posts/annex/images/essays/@SpringbootApplication原理.png)
 
 当 `Springboot` 启动的时候，会执行`AutoConfigurationImportSelector`这个类中的`getCandidateConfigurations`方法，这个方法会帮我们加载`META-INF/spring.factories`文件里面的当`@ConditionXXX`注解条件满足的类。
 
@@ -731,7 +731,7 @@ public interface Aware {
 
 }
 ```
-![Aware子接口](/iblog/posts/images/essays/Aware子接口.png)
+![Aware子接口](/iblog/posts/annex/images/essays/Aware子接口.png)
 
 使用测试
 ```
@@ -1174,7 +1174,7 @@ AopConfigUtils.registerAspectJAnnotationAutoProxyCreatorIfNecessary(registry);
 ```
 可以看到该方法是给容器中注册了一个`AnnotationAwareAspectJAutoProxyCreator`组件，实际上是注册`AnnotationAwareAspectJAutoProxyCreator`组件。
 
-![AOP核心组件1](/iblog/posts/images/essays/AOP核心组件.png)
+![AOP核心组件1](/iblog/posts/annex/images/essays/AOP核心组件.png)
 
 可以看出`@EnableAspectJAutoProxy`注解最主要的作用实际上就是通过`@Import`注解把`AnnotationAwareAspectJAutoProxyCreator`这个对象注入到`spring`容器中。
 
@@ -1453,7 +1453,7 @@ SmartInstantiationAwareBeanPostProcessor
 回头在看上面的`createBean()`方法，刚才看到的是`resolveBeforeInstantiation()`方法的调用栈，所以从层次结构上看`AnnotationAwareAspectJAutoProxyCreator`组件的调用
 是在创建 `Bean`实例之前先尝试用后置处理器返回对象的。
 
-![AOP@EnableAspectJAutoProxy原理](/iblog/posts/images/essays/AOP@EnableAspectJAutoProxy原理.png)
+![AOP@EnableAspectJAutoProxy原理](/iblog/posts/annex/images/essays/AOP@EnableAspectJAutoProxy原理.png)
 
 
 

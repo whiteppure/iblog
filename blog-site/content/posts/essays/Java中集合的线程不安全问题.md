@@ -120,7 +120,7 @@ ConcurrentHashMap中的分段锁称为Segment，它即类似于HashMap的结构�
 
 - 内部结构
 ConcurrentHashMap使用分段锁技术，将数据分成一段一段的存储，然后给每一段数据配一把锁，当一个线程占用锁访问其中一个段数据的时候，其他段的数据也能被其他线程访问，能够实现真正的并发访问。如下图是ConcurrentHashMap的内部结构图：
-![CurrentHashMap](/iblog/posts/images/essays/concurrentHashMap的内部结构图.jpeg)
+![CurrentHashMap](/iblog/posts/annex/images/essays/concurrentHashMap的内部结构图.jpeg)
 
 从上面的结构我们可以了解到，`ConcurrentHashMap`定位一个元素的过程需要进行两次Hash操作。
 
@@ -140,7 +140,7 @@ Node：保存key，value及key的hash值的数据结构。其中value和next都�
 Java8 ConcurrentHashMap结构基本上和Java8的HashMap一样，不过保证线程安全性。
 
 在JDK8中ConcurrentHashMap的结构，由于引入了红黑树，使得ConcurrentHashMap的实现非常复杂，我们都知道，红黑树是一种性能非常好的二叉查找树，其查找性能为O（logN），但是其实现过程也非常复杂，而且可读性也非常差，DougLea的思维能力确实不是一般人能比的，早期完全采用链表结构时Map的查找时间复杂度为O（N），JDK8中ConcurrentHashMap在链表的长度大于某个阈值的时候会将链表转换成红黑树进一步提高其查找性能。
-![JDK1.8后的currentHashMap](/iblog/posts/images/essays/红黑树结构.jpeg)
+![JDK1.8后的currentHashMap](/iblog/posts/annex/images/essays/红黑树结构.jpeg)
 其实可以看出JDK1.8版本的`ConcurrentHashMap`的数据结构已经接近HashMap，相对而言，ConcurrentHashMap只是增加了同步的操作来控制并发，从JDK1.7版本的ReentrantLock+Segment+HashEntry，到JDK1.8版本中synchronized+CAS+HashEntry+红黑树。
 
 **CurrentHashMapJDK1.7,JDK1.8前后对比**

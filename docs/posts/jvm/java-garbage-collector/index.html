@@ -716,10 +716,10 @@ API层面：Stream API、新的日期时间、Optional、String、集合框架
 </ul>
 <h4 id="串行垃圾回收器">串行垃圾回收器</h4>
 <p>在单核cpu的硬件情况下，该收集器会在工作时冻结所有应用程序线程，这使它在所有目的和用途上都无法在服务器环境中使用。</p>
-<p><img src="/iblog/posts/images/essays/%E4%B8%B2%E8%A1%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8.png" alt="串行垃圾回收器"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E4%B8%B2%E8%A1%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8.png" alt="串行垃圾回收器"></p>
 <h4 id="并行垃圾回收器">并行垃圾回收器</h4>
 <p>在停止用户线程之后，多条GC线程并行进行垃圾回收。和串行回收相反，并行收集可以运用多个CPU同时执行垃圾回收，因此提升了应用的吞吐量。</p>
-<p><img src="/iblog/posts/images/essays/%E5%B9%B6%E8%A1%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8.png" alt="并行垃圾回收器"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E5%B9%B6%E8%A1%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8.png" alt="并行垃圾回收器"></p>
 <h3 id="按工作模式分类">按工作模式分类</h3>
 <ul>
 <li>并发式垃圾回收器</li>
@@ -727,7 +727,7 @@ API层面：Stream API、新的日期时间、Optional、String、集合框架
 </ul>
 <h4 id="并发式垃圾回收器">并发式垃圾回收器</h4>
 <p>不会出现STW现象，指多条垃圾收集线程同时进行工作，GC线程和用户线程同时运行，不会出现STW现象。
-<img src="/iblog/posts/images/essays/%E5%B9%B6%E5%8F%91%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8.png" alt="并发垃圾回收器"></p>
+<img src="/iblog/posts/annex/images/essays/%E5%B9%B6%E5%8F%91%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8.png" alt="并发垃圾回收器"></p>
 <h4 id="独占式垃圾回收器">独占式垃圾回收器</h4>
 <p>会出现STW现象，一旦运行，就停止应用程序中的所有用户线程，直到垃圾回收过程完全结束。</p>
 <h3 id="按处理方式分类">按处理方式分类</h3>
@@ -796,14 +796,14 @@ API层面：Stream API、新的日期时间、Optional、String、集合框架
 <li>并发回收器：<code>CMS</code>、<code>G1</code></li>
 </ul>
 <h4 id="垃圾回收器与垃圾分代之间的关系">垃圾回收器与垃圾分代之间的关系</h4>
-<p><img src="/iblog/posts/images/essays/%E6%94%B6%E9%9B%86%E5%99%A8%E4%B8%8E%E5%9E%83%E5%9C%BE%E5%88%86%E4%BB%A3%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB.png" alt="收集器与垃圾分代之间的关系"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%94%B6%E9%9B%86%E5%99%A8%E4%B8%8E%E5%9E%83%E5%9C%BE%E5%88%86%E4%BB%A3%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB.png" alt="收集器与垃圾分代之间的关系"></p>
 <ul>
 <li>新生代收集器：<code>Serial</code>、<code>ParNew</code>、<code>Parallel Scavenge</code></li>
 <li>老年代收集器：<code>Serial old</code>、<code>Parallel old</code>、<code>CMS</code></li>
 <li>整堆收集器：<code>G1</code></li>
 </ul>
 <h4 id="垃圾收集器的组合关系">垃圾收集器的组合关系</h4>
-<p><img src="/iblog/posts/images/essays/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8%E7%BB%84%E5%90%88%E5%85%B3%E7%B3%BB.png" alt="垃圾回收器组合关系"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8%E7%BB%84%E5%90%88%E5%85%B3%E7%B3%BB.png" alt="垃圾回收器组合关系"></p>
 <ul>
 <li>两个收集器间有连线，表明它们可以搭配使用
 <ul>
@@ -841,7 +841,7 @@ API层面：Stream API、新的日期时间、Optional、String、集合框架
 </code></pre></div><p>输出结果</p>
 <div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">-XX:InitialHeapSize=268435456 -XX:MaxHeapSize=4294967296 -XX:+PrintCommandLineFlags -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseParallelGC 
 </code></pre></div><p><strong>使用命令行指令：jinfo -flag 垃圾回收器参数 进程ID</strong>
-<img src="/iblog/posts/images/essays/jinfo%E5%91%BD%E4%BB%A4%E6%9F%A5%E7%9C%8BGC.png" alt="jinfo命令查看GC"></p>
+<img src="/iblog/posts/annex/images/essays/jinfo%E5%91%BD%E4%BB%A4%E6%9F%A5%E7%9C%8BGC.png" alt="jinfo命令查看GC"></p>
 <h2 id="serial-gc">Serial GC</h2>
 <p><code>Serial GC</code>由于弊端较大，只有放在单核CPU上才能充分发挥其作用，由于现在都是多核CPU已经不用串行收集器了，所以以下内容了解即可。</p>
 <p>对于交互较强的应用而言，这种垃圾收集器是不能接受的。一般在Java web应用程序中是不会采用串行垃圾收集器的。</p>
