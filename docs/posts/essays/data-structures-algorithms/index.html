@@ -605,6 +605,246 @@
             
         <ul class="nav">
             
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%ba%8c%e5%8f%89%e6%8e%92%e5%ba%8f%e6%a0%91">
+                    二叉排序树
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%b9%b3%e8%a1%a1%e4%ba%8c%e5%8f%89%e6%a0%91">
+                    平衡二叉树
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%a4%9a%e8%b7%af%e6%9f%a5%e6%89%be%e6%a0%91">
+                    多路查找树
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#2-3%e6%a0%91">
+                    2-3树
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#b%e6%a0%91">
+                    B树
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#b%e6%a0%91-1">
+                    B&#43;树
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#b%e6%a0%91-2">
+                    B*树
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%9b%be">
+                    图
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
             
             <li class="nav-item">
                 <a class="nav-link text-left" href="#%e7%ae%97%e6%b3%95">
@@ -1608,64 +1848,68 @@
 <p>使用稀疏数组可以用来压缩数据。稀疏数组的第一行依次记录原数组一共有几行几列，有多少个不为零的值，之后的每行记录原数组中不为零的值所在的行数、列数以及数组中元素该值。如图所示：</p>
 <p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-001.png" alt="数据结构与算法-001"></p>
 <p>二维数组转稀疏数组</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java">    <span class="c1">// 将二维数组转换为稀疏数组
-</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span><span class="o">[][]</span> <span class="nf">twoDimensionArrayToSparseArray</span><span class="o">(</span><span class="kt">int</span><span class="o">[][]</span> <span class="n">array</span><span class="o">)</span> <span class="o">{</span>
-        <span class="c1">// 记录棋盘中有效值的数量
-</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">row</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">column</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">ints</span> <span class="o">:</span> <span class="n">array</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">column</span> <span class="o">=</span> <span class="n">ints</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
-            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">item</span> <span class="o">:</span> <span class="n">ints</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">item</span> <span class="o">!=</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="n">sum</span><span class="o">++;</span>
-                <span class="o">}</span>
-            <span class="o">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">TwoDimensionArrayDemo</span> <span class="o">{</span>
+  <span class="c1">// 将二维数组转换为稀疏数组
+</span><span class="c1"></span>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span><span class="o">[][]</span> <span class="nf">twoDimensionArrayToSparseArray</span><span class="o">(</span><span class="kt">int</span><span class="o">[][]</span> <span class="n">array</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// 记录棋盘中有效值的数量
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">row</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">column</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">ints</span> <span class="o">:</span> <span class="n">array</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">column</span> <span class="o">=</span> <span class="n">ints</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+      <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">item</span> <span class="o">:</span> <span class="n">ints</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">item</span> <span class="o">!=</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+          <span class="n">sum</span><span class="o">++;</span>
         <span class="o">}</span>
-
-        <span class="c1">// 创建稀疏数组
-</span><span class="c1"></span>        <span class="kt">int</span><span class="o">[][]</span> <span class="n">sparseArray</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">sum</span> <span class="o">+</span> <span class="n">1</span><span class="o">][</span><span class="n">3</span><span class="o">];</span>
-        <span class="n">sparseArray</span><span class="o">[</span><span class="n">0</span><span class="o">][</span><span class="n">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">row</span><span class="o">;</span>
-        <span class="n">sparseArray</span><span class="o">[</span><span class="n">0</span><span class="o">][</span><span class="n">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">column</span><span class="o">;</span>
-        <span class="n">sparseArray</span><span class="o">[</span><span class="n">0</span><span class="o">][</span><span class="n">2</span><span class="o">]</span> <span class="o">=</span> <span class="n">sum</span><span class="o">;</span>
-
-        <span class="c1">// 给稀疏数组赋值
-</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">length</span><span class="o">;</span> <span class="n">j</span><span class="o">++){</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">!=</span> <span class="n">0</span><span class="o">){</span>
-                    <span class="n">count</span><span class="o">++;</span>
-                    <span class="n">sparseArray</span><span class="o">[</span><span class="n">count</span><span class="o">][</span><span class="n">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span>
-                    <span class="n">sparseArray</span><span class="o">[</span><span class="n">count</span><span class="o">][</span><span class="n">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">j</span><span class="o">;</span>
-                    <span class="n">sparseArray</span><span class="o">[</span><span class="n">count</span><span class="o">][</span><span class="n">2</span><span class="o">]</span> <span class="o">=</span> <span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">];</span>
-                <span class="o">}</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;稀疏数组====》&#34;</span><span class="o">);</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sparseArray</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%d\t%d\t%d\t\n&#34;</span><span class="o">,</span><span class="n">sparseArray</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">0</span><span class="o">],</span><span class="n">sparseArray</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">1</span><span class="o">],</span><span class="n">sparseArray</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">2</span><span class="o">]);</span>
-        <span class="o">}</span>
-        <span class="k">return</span> <span class="n">sparseArray</span><span class="o">;</span>
+      <span class="o">}</span>
     <span class="o">}</span>
+
+    <span class="c1">// 创建稀疏数组
+</span><span class="c1"></span>    <span class="kt">int</span><span class="o">[][]</span> <span class="n">sparseArray</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">sum</span> <span class="o">+</span> <span class="n">1</span><span class="o">][</span><span class="n">3</span><span class="o">];</span>
+    <span class="n">sparseArray</span><span class="o">[</span><span class="n">0</span><span class="o">][</span><span class="n">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">row</span><span class="o">;</span>
+    <span class="n">sparseArray</span><span class="o">[</span><span class="n">0</span><span class="o">][</span><span class="n">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">column</span><span class="o">;</span>
+    <span class="n">sparseArray</span><span class="o">[</span><span class="n">0</span><span class="o">][</span><span class="n">2</span><span class="o">]</span> <span class="o">=</span> <span class="n">sum</span><span class="o">;</span>
+
+    <span class="c1">// 给稀疏数组赋值
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+      <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">length</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">!=</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+          <span class="n">count</span><span class="o">++;</span>
+          <span class="n">sparseArray</span><span class="o">[</span><span class="n">count</span><span class="o">][</span><span class="n">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span>
+          <span class="n">sparseArray</span><span class="o">[</span><span class="n">count</span><span class="o">][</span><span class="n">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">j</span><span class="o">;</span>
+          <span class="n">sparseArray</span><span class="o">[</span><span class="n">count</span><span class="o">][</span><span class="n">2</span><span class="o">]</span> <span class="o">=</span> <span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">];</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;稀疏数组====》&#34;</span><span class="o">);</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sparseArray</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%d\t%d\t%d\t\n&#34;</span><span class="o">,</span> <span class="n">sparseArray</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">0</span><span class="o">],</span> <span class="n">sparseArray</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">1</span><span class="o">],</span> <span class="n">sparseArray</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">2</span><span class="o">]);</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">sparseArray</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div><p>稀疏数组转二维数组</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java">    <span class="c1">// 稀疏数组转二维数组
-</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span><span class="o">[][]</span> <span class="nf">sparseArrayToTwoDimensionArray</span><span class="o">(</span><span class="kt">int</span><span class="o">[][]</span> <span class="n">sparseArray</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span><span class="o">[][]</span> <span class="n">toTwoDimensionArray</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">sparseArray</span><span class="o">[</span><span class="n">0</span><span class="o">][</span><span class="n">0</span><span class="o">]][</span><span class="n">sparseArray</span><span class="o">[</span><span class="n">0</span><span class="o">][</span><span class="n">1</span><span class="o">]];</span>
-        <span class="c1">// 给二维数组赋值
-</span><span class="c1"></span>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sparseArray</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="n">toTwoDimensionArray</span><span class="o">[</span><span class="n">sparseArray</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">0</span><span class="o">]][</span><span class="n">sparseArray</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">1</span><span class="o">]]</span> <span class="o">=</span> <span class="n">sparseArray</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">2</span><span class="o">];</span>
-        <span class="o">}</span>
-
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;二维数组====》&#34;</span><span class="o">);</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">row</span> <span class="o">:</span> <span class="n">toTwoDimensionArray</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">data</span> <span class="o">:</span> <span class="n">row</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%d\t&#34;</span><span class="o">,</span> <span class="n">data</span><span class="o">);</span>
-            <span class="o">}</span>
-            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
-        <span class="o">}</span>
-        <span class="k">return</span> <span class="n">toTwoDimensionArray</span><span class="o">;</span>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">TwoDimensionArrayDemo</span> <span class="o">{</span>
+  <span class="c1">// 稀疏数组转二维数组
+</span><span class="c1"></span>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span><span class="o">[][]</span> <span class="nf">sparseArrayToTwoDimensionArray</span><span class="o">(</span><span class="kt">int</span><span class="o">[][]</span> <span class="n">sparseArray</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span><span class="o">[][]</span> <span class="n">toTwoDimensionArray</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">sparseArray</span><span class="o">[</span><span class="n">0</span><span class="o">][</span><span class="n">0</span><span class="o">]][</span><span class="n">sparseArray</span><span class="o">[</span><span class="n">0</span><span class="o">][</span><span class="n">1</span><span class="o">]];</span>
+    <span class="c1">// 给二维数组赋值
+</span><span class="c1"></span>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sparseArray</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+      <span class="n">toTwoDimensionArray</span><span class="o">[</span><span class="n">sparseArray</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">0</span><span class="o">]][</span><span class="n">sparseArray</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">1</span><span class="o">]]</span> <span class="o">=</span> <span class="n">sparseArray</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">2</span><span class="o">];</span>
     <span class="o">}</span>
+
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;二维数组====》&#34;</span><span class="o">);</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">row</span> <span class="o">:</span> <span class="n">toTwoDimensionArray</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">data</span> <span class="o">:</span> <span class="n">row</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%d\t&#34;</span><span class="o">,</span> <span class="n">data</span><span class="o">);</span>
+      <span class="o">}</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">toTwoDimensionArray</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div><h3 id="队列">队列</h3>
 <p>队列是一个有序列表，可以使用数组或链表来实现。队列遵循先入先出的原则。即，先存入队列的数据，要先取出。后存入的要后取出。</p>
 <p>使用数组模拟队列示意图：</p>
@@ -1905,49 +2149,54 @@
 <span class="o">}</span>
 </code></pre></div><p>反转单向链表</p>
 <p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-004.png" alt="数据结构与算法-004"></p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java">    <span class="c1">// 反转链表
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">LinkedListDemo</span><span class="o">{</span>
+    <span class="c1">// 反转链表
 </span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">reserve</span><span class="o">(</span><span class="n">Node</span> <span class="n">head</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">head</span><span class="o">.</span><span class="na">next</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">.</span><span class="na">next</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
-            <span class="k">return</span> <span class="o">;</span>
-        <span class="o">}</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">head</span><span class="o">.</span><span class="na">next</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">.</span><span class="na">next</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span><span class="o">;</span>
+      <span class="o">}</span>
 
-        <span class="n">Node</span> <span class="n">reserve</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">0</span><span class="o">,</span> <span class="s">&#34;&#34;</span><span class="o">);</span>
-        <span class="n">Node</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
-        <span class="n">Node</span> <span class="n">next</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-        <span class="c1">// 遍历链表
-</span><span class="c1"></span>        <span class="c1">// 遍历原来的链表，每遍历一个节点，就将其取出，并放在新的链表reverseHead 的最前端
-</span><span class="c1"></span>        <span class="k">while</span> <span class="o">(</span><span class="n">cur</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+      <span class="n">Node</span> <span class="n">reserve</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">0</span><span class="o">,</span> <span class="s">&#34;&#34;</span><span class="o">);</span>
+      <span class="n">Node</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+      <span class="n">Node</span> <span class="n">next</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+      <span class="c1">// 遍历链表
+</span><span class="c1"></span>      <span class="c1">// 遍历原来的链表，每遍历一个节点，就将其取出，并放在新的链表reverseHead 的最前端
+</span><span class="c1"></span>      <span class="k">while</span> <span class="o">(</span><span class="n">cur</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
 
-            <span class="c1">// 保存当前结点的下一个结点
-</span><span class="c1"></span>            <span class="n">next</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+        <span class="c1">// 保存当前结点的下一个结点
+</span><span class="c1"></span>        <span class="n">next</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
 
-            <span class="c1">// 将cur的下一个节点指向新的链表的最前端（覆盖掉）保证将最新的结点放到reseve的最前面
-</span><span class="c1"></span>            <span class="n">cur</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">reserve</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+        <span class="c1">// 将cur的下一个节点指向新的链表的最前端（覆盖掉）保证将最新的结点放到reseve的最前面
+</span><span class="c1"></span>        <span class="n">cur</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">reserve</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
 
-            <span class="c1">// 将cur 连接到新的链表上
-</span><span class="c1"></span>            <span class="n">reserve</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">cur</span><span class="o">;</span>
+        <span class="c1">// 将cur 连接到新的链表上
+</span><span class="c1"></span>        <span class="n">reserve</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">cur</span><span class="o">;</span>
 
-            <span class="c1">// 将之前保存好的结点赋值给当前结点
-</span><span class="c1"></span>            <span class="n">cur</span> <span class="o">=</span> <span class="n">next</span><span class="o">;</span>
-        <span class="o">}</span>
-</code></pre></div><p>利用栈逆序打印单向链表</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">reservePrint</span><span class="o">(</span><span class="n">Node</span> <span class="n">head</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">head</span><span class="o">.</span><span class="na">next</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">.</span><span class="na">next</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
-            <span class="k">return</span><span class="o">;</span>
-        <span class="o">}</span>
-
-        <span class="n">Stack</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span> <span class="n">nodes</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Stack</span><span class="o">&lt;&gt;();</span>
-        <span class="n">Node</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
-        <span class="k">while</span> <span class="o">(</span><span class="n">tmp</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
-            <span class="n">nodes</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="n">tmp</span><span class="o">);</span>
-            <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
-        <span class="o">}</span>
-
-        <span class="c1">// 从stack中取出结点
-</span><span class="c1"></span>        <span class="k">while</span> <span class="o">(</span><span class="n">nodes</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">){</span>
-            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">nodes</span><span class="o">.</span><span class="na">pop</span><span class="o">());</span>
-        <span class="o">}</span>
+        <span class="c1">// 将之前保存好的结点赋值给当前结点
+</span><span class="c1"></span>        <span class="n">cur</span> <span class="o">=</span> <span class="n">next</span><span class="o">;</span>
+      <span class="o">}</span>
     <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><p>利用栈逆序打印单向链表</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">LinkedListDemo</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">reservePrint</span><span class="o">(</span><span class="n">Node</span> <span class="n">head</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">head</span><span class="o">.</span><span class="na">next</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">.</span><span class="na">next</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">return</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="n">Stack</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span> <span class="n">nodes</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Stack</span><span class="o">&lt;&gt;();</span>
+    <span class="n">Node</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+    <span class="k">while</span> <span class="o">(</span><span class="n">tmp</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">nodes</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="n">tmp</span><span class="o">);</span>
+      <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 从stack中取出结点
+</span><span class="c1"></span>    <span class="k">while</span> <span class="o">(</span><span class="n">nodes</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">nodes</span><span class="o">.</span><span class="na">pop</span><span class="o">());</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div><h4 id="双向链表">双向链表</h4>
 <p>对比单向链表：</p>
 <ul>
@@ -2545,7 +2794,6 @@
     <span class="cm">/**
 </span><span class="cm">     * 匹配
 </span><span class="cm">     * @param s
-</span><span class="cm">     * @throws Exception
 </span><span class="cm">     */</span>
     <span class="kd">public</span> <span class="kd">static</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">doMatch</span> <span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span><span class="o">{</span>
         <span class="k">if</span><span class="o">(</span><span class="n">s</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="s">&#34;&#34;</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">trim</span><span class="o">()))</span> <span class="k">throw</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">(</span><span class="s">&#34;data is empty&#34;</span><span class="o">);</span>
@@ -3371,6 +3619,596 @@
                 <span class="sc">&#39;}&#39;</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
+</code></pre></div><h3 id="二叉排序树">二叉排序树</h3>
+<p>二叉排序树（Binary Sort Tree），又称二叉查找树（Binary Search Tree），亦称二叉搜索树。是数据结构中的一类。在一般情况下，查询效率比链表结构要高。</p>
+<p>对于二叉排序树的任何一个非叶子节点，要求左子节点的值比当前节点的值小，右子节点的值比当前节点的值大。如果有相同的值，可以将该节点放在左子节点或右子节点，二叉排序树的中序遍历为有序数列。</p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-030.png" alt="数据结构与算法-030"></p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">BinarySortTree</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">Node</span> <span class="n">root</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setRoot</span><span class="o">(</span><span class="n">Node</span> <span class="n">root</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">=</span> <span class="n">root</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 添加结点
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">root</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 中序遍历
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">infixOrder</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">root</span><span class="o">.</span><span class="na">infixOrder</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 查找结点
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Node</span> <span class="nf">search</span><span class="o">(</span><span class="kt">int</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">root</span><span class="o">.</span><span class="na">search</span><span class="o">(</span><span class="n">target</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 查找当前结点的父结点
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Node</span> <span class="nf">searchParentNode</span><span class="o">(</span><span class="kt">int</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">root</span><span class="o">.</span><span class="na">searchParentNode</span><span class="o">(</span><span class="n">target</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 删除结点
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delNode</span><span class="o">(</span><span class="kt">int</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="c1">// 如果删除的结点是根结点
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">root</span><span class="o">.</span><span class="na">left</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">.</span><span class="na">root</span><span class="o">.</span><span class="na">right</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">Node</span> <span class="n">targetNode</span> <span class="o">=</span> <span class="n">search</span><span class="o">(</span><span class="n">target</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">targetNode</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="c1">// 获取当前结点的父结点
+</span><span class="c1"></span>        <span class="n">Node</span> <span class="n">parentNode</span> <span class="o">=</span> <span class="n">searchParentNode</span><span class="o">(</span><span class="n">target</span><span class="o">);</span>
+        <span class="c1">// 删除的结点是叶子结点
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">targetNode</span><span class="o">.</span><span class="na">left</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">targetNode</span><span class="o">.</span><span class="na">right</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// 判断是左结点还是右结点
+</span><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">parentNode</span><span class="o">.</span><span class="na">left</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">parentNode</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">val</span> <span class="o">==</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">parentNode</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="n">parentNode</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="c1">// 删除的结点有两个结点
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">targetNode</span><span class="o">.</span><span class="na">left</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">targetNode</span><span class="o">.</span><span class="na">right</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// 从右子树找到最小的值并删除，将该值赋值给targetNode
+</span><span class="c1"></span>            <span class="n">targetNode</span><span class="o">.</span><span class="na">val</span> <span class="o">=</span> <span class="n">delRightTreeMin</span><span class="o">(</span><span class="n">targetNode</span><span class="o">.</span><span class="na">right</span><span class="o">);</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="c1">// 删除只有一颗子树的结点
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">targetNode</span><span class="o">.</span><span class="na">left</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">parentNode</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+                <span class="n">root</span> <span class="o">=</span> <span class="n">targetNode</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+                <span class="k">return</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="c1">// 当前结点存在左子树
+</span><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">parentNode</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">val</span> <span class="o">==</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">parentNode</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">targetNode</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="n">parentNode</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">targetNode</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">targetNode</span><span class="o">.</span><span class="na">right</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">parentNode</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+                <span class="n">root</span> <span class="o">=</span> <span class="n">targetNode</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+                <span class="k">return</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="c1">// 当前结点存在右子树
+</span><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">parentNode</span><span class="o">.</span><span class="na">right</span><span class="o">.</span><span class="na">val</span> <span class="o">==</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">parentNode</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">targetNode</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="n">parentNode</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">targetNode</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">int</span> <span class="nf">delRightTreeMin</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Node</span> <span class="n">target</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
+        <span class="c1">// 循环的查找左子节点，就会找到最小值
+</span><span class="c1"></span>        <span class="k">while</span> <span class="o">(</span><span class="n">target</span><span class="o">.</span><span class="na">left</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="c1">// 此时 target就指向了最小结点 删除最小结点（该节点肯定是左叶子节点）
+</span><span class="c1"></span>        <span class="n">delNode</span><span class="o">(</span><span class="n">target</span><span class="o">.</span><span class="na">val</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">target</span><span class="o">.</span><span class="na">val</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Node</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">val</span><span class="o">;</span>
+    <span class="n">Node</span> <span class="n">left</span><span class="o">;</span>
+    <span class="n">Node</span> <span class="n">right</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Node</span><span class="o">(</span><span class="kt">int</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 查找结点
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Node</span> <span class="nf">search</span><span class="o">(</span><span class="kt">int</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">val</span> <span class="o">==</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">val</span> <span class="o">&gt;</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">left</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">search</span><span class="o">(</span><span class="n">target</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">right</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">right</span><span class="o">.</span><span class="na">search</span><span class="o">(</span><span class="n">target</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 查找当前结点的父结点
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Node</span> <span class="nf">searchParentNode</span><span class="o">(</span><span class="kt">int</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">((</span><span class="k">this</span><span class="o">.</span><span class="na">left</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">val</span> <span class="o">==</span> <span class="n">target</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">right</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">.</span><span class="na">right</span><span class="o">.</span><span class="na">val</span> <span class="o">==</span> <span class="n">target</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">left</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">.</span><span class="na">val</span> <span class="o">&gt;</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">searchParentNode</span><span class="o">(</span><span class="n">target</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">right</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">.</span><span class="na">val</span> <span class="o">&lt;=</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">right</span><span class="o">.</span><span class="na">searchParentNode</span><span class="o">(</span><span class="n">target</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 添加结点
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="c1">// 如果当前待插入结点的值小于当前结点，将其插入在左子树中
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">val</span> <span class="o">&lt;</span> <span class="k">this</span><span class="o">.</span><span class="na">val</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">left</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="c1">// 将当前结点插入右子树
+</span><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">right</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">right</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 中序遍历
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">infixOrder</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">left</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">infixOrder</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">right</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">right</span><span class="o">.</span><span class="na">infixOrder</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&#34;Node{&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;val=&#34;</span> <span class="o">+</span> <span class="n">val</span> <span class="o">+</span>
+                <span class="sc">&#39;}&#39;</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="平衡二叉树">平衡二叉树</h3>
+<p>二叉搜索树一定程度上可以提高搜索效率，但是当序列构造二叉搜索树，可能会将二叉树退化成单链表，从而降低搜索效率。</p>
+<p>平衡二叉树也叫平衡二叉搜索树（Self-balancing binary search tree）又被称为AVL树，可以保证查询效率较高。</p>
+<p>平衡二叉树的特点：</p>
+<ul>
+<li>平衡二叉树一定是二叉排序；</li>
+<li>是一棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树；</li>
+</ul>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-031.gif" alt="数据结构与算法-031"></p>
+<p>将有序二叉树变为平衡二叉树代码</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">AVLTreeDemo</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">AVLTree</span> <span class="n">avlTree</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AVLTree</span><span class="o">();</span>
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">arr</span> <span class="o">=</span> <span class="o">{</span><span class="n">10</span><span class="o">,</span> <span class="n">11</span><span class="o">,</span> <span class="n">7</span><span class="o">,</span> <span class="n">6</span><span class="o">,</span> <span class="n">8</span><span class="o">,</span> <span class="n">9</span> <span class="o">};</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+            <span class="n">avlTree</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;当前树高度：&#34;</span><span class="o">+</span> <span class="n">avlTree</span><span class="o">.</span><span class="na">height</span><span class="o">());</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;当前根结点：&#34;</span> <span class="o">+</span> <span class="n">avlTree</span><span class="o">.</span><span class="na">getRoot</span><span class="o">());</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;当前左子树高度：&#34;</span><span class="o">+</span> <span class="n">avlTree</span><span class="o">.</span><span class="na">getRoot</span><span class="o">().</span><span class="na">leftHeight</span><span class="o">());</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;当前右子树高度：&#34;</span><span class="o">+</span> <span class="n">avlTree</span><span class="o">.</span><span class="na">getRoot</span><span class="o">().</span><span class="na">rightHeight</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">AVLTree</span><span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Node</span> <span class="n">root</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setRoot</span><span class="o">(</span><span class="n">Node</span> <span class="n">root</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">=</span> <span class="n">root</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Node</span> <span class="nf">getRoot</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">root</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">height</span><span class="o">(){</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">root</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="k">return</span> <span class="n">0</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">root</span><span class="o">.</span><span class="na">height</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 添加结点
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">root</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 中序遍历
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">infixOrder</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">root</span><span class="o">.</span><span class="na">infixOrder</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Node</span> <span class="o">{</span>
+
+    <span class="kt">int</span> <span class="n">value</span><span class="o">;</span>
+    <span class="n">Node</span> <span class="n">left</span><span class="o">;</span>
+    <span class="n">Node</span> <span class="n">right</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Node</span><span class="o">(</span><span class="kt">int</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="c1">// 获取当前左子树的高度
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">leftHeight</span><span class="o">(){</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">left</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="k">return</span> <span class="n">0</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">height</span><span class="o">();</span>
+    <span class="o">}</span>
+    
+    <span class="c1">// 获取当前结点右子树的高度
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">rightHeight</span><span class="o">(){</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">right</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="k">return</span> <span class="n">0</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">right</span><span class="o">.</span><span class="na">height</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 获取当前结点的高度
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">height</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span>
+                <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">left</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">?</span> <span class="n">0</span> <span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">height</span><span class="o">()),</span>
+                <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">right</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">?</span> <span class="n">0</span> <span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="na">right</span><span class="o">.</span><span class="na">height</span><span class="o">())</span>
+        <span class="o">)</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 左旋转
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">leftRote</span><span class="o">(){</span>
+        <span class="c1">// 创建一个新结点，并设置值等于当前结点的值
+</span><span class="c1"></span>        <span class="n">Node</span> <span class="n">newNode</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">value</span><span class="o">);</span>
+        <span class="c1">// 使新结点的左结点指向当前结点的左结点
+</span><span class="c1"></span>        <span class="n">newNode</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">left</span><span class="o">;</span>
+        <span class="c1">// 新结点的右结点指向当前结点的右结点的左结点
+</span><span class="c1"></span>        <span class="n">newNode</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">right</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+        <span class="c1">// 使当前结点的值指向新结点
+</span><span class="c1"></span>        <span class="n">value</span> <span class="o">=</span> <span class="n">right</span><span class="o">.</span><span class="na">value</span><span class="o">;</span>
+        <span class="c1">// 使当前结点的右结点指向当前结点的右结点的右结点
+</span><span class="c1"></span>        <span class="n">right</span> <span class="o">=</span> <span class="n">right</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+        <span class="c1">// 使当前结点的左结点指向新结点
+</span><span class="c1"></span>        <span class="n">left</span> <span class="o">=</span> <span class="n">newNode</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 右旋转
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">rightRote</span><span class="o">(){</span>
+        <span class="n">Node</span> <span class="n">newNode</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">value</span><span class="o">);</span>
+        <span class="n">newNode</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">right</span><span class="o">;</span>
+        <span class="n">newNode</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">left</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">left</span><span class="o">.</span><span class="na">value</span><span class="o">;</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="n">left</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="n">newNode</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 添加结点
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="c1">// 如果当前待插入结点的值小于当前结点，将其插入在左子树中
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">value</span> <span class="o">&lt;</span> <span class="k">this</span><span class="o">.</span><span class="na">value</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">left</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="c1">// 将当前结点插入右子树
+</span><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">right</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">right</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="c1">// 如果左子树的高度-右子树的高度 &gt; 1 进行右旋转 反之进行左旋转
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">leftHeight</span><span class="o">()</span> <span class="o">-</span> <span class="k">this</span><span class="o">.</span><span class="na">rightHeight</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">1</span><span class="o">){</span>
+            <span class="c1">// 如果当前结点的左子树的右子树的高度&gt;当前结点左子树的左子树的高度 则进行左旋转
+</span><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">left</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">rightHeight</span><span class="o">()</span> <span class="o">&gt;</span> <span class="k">this</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">leftHeight</span><span class="o">()){</span>
+                <span class="c1">// 对当前结点的左结点进行左旋转
+</span><span class="c1"></span>                <span class="k">this</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">leftRote</span><span class="o">();</span>
+                <span class="c1">// 对当前结点右旋转
+</span><span class="c1"></span>                <span class="k">this</span><span class="o">.</span><span class="na">rightRote</span><span class="o">();</span>
+            <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">rightRote</span><span class="o">();</span>
+            <span class="o">}</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">rightHeight</span><span class="o">()</span> <span class="o">-</span> <span class="k">this</span><span class="o">.</span><span class="na">leftHeight</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">1</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">right</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">.</span><span class="na">right</span><span class="o">.</span><span class="na">leftHeight</span><span class="o">()</span> <span class="o">&gt;</span> <span class="k">this</span><span class="o">.</span><span class="na">right</span><span class="o">.</span><span class="na">rightHeight</span><span class="o">()){</span>
+                <span class="c1">// 对当前结点的右结点进行右旋转
+</span><span class="c1"></span>                <span class="k">this</span><span class="o">.</span><span class="na">right</span><span class="o">.</span><span class="na">rightRote</span><span class="o">();</span>
+                <span class="c1">// 对当前结点进行左旋转
+</span><span class="c1"></span>                <span class="k">this</span><span class="o">.</span><span class="na">leftRote</span><span class="o">();</span>
+            <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">leftRote</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 中序遍历
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">infixOrder</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">left</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">infixOrder</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">right</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">right</span><span class="o">.</span><span class="na">infixOrder</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&#34;Node{&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;value=&#34;</span> <span class="o">+</span> <span class="n">value</span> <span class="o">+</span>
+                <span class="sc">&#39;}&#39;</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="多路查找树">多路查找树</h3>
+<p>在二叉树中，每个节点有数据项，最多有两个子节点。如果允许每个节点可以有更多的数据项和更多的子节点，就是多叉树（multiway tree）。多叉树通过重新组织节点，减少树的高度，能对二叉树进行优化。典型的多叉树有：2-3树、2-3-4树、红黑树和B树。</p>
+<p>多叉树的前提是有序二叉树。</p>
+<h4 id="2-3树">2-3树</h4>
+<p>2-3树是由二节点和三节点构成的树，是最简单的B树结构，2-3树的所有叶子节点都在同一层(只要是B树都满足这个条件)。</p>
+<ul>
+<li>有两个子节点的节点叫二节点，二节点要么没有子节点，要么有两个子节点；</li>
+<li>有三个子节点的节点叫三节点，三节点要么没有子节点，要么有三个子节点；</li>
+</ul>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-032.png" alt="数据结构与算法-032"></p>
+<p>2-3-4树，与2-3树类似。</p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-033.png" alt="数据结构与算法-033"></p>
+<h4 id="b树">B树</h4>
+<p>B-tree 树即 B 树，B 即 Balanced ，平衡的意思。 B树通过重新组织节点，降低树的高度，并且减少i/o读写次数来提升效率。</p>
+<p>文件系统及数据库系统的设计者利用了磁盘预读原理，将一个节点的大小设为等于一个页(页的大小通常为4k)，这样每个节点只需要一次I/O就可以完全载入。</p>
+<blockquote>
+<p>B树的阶（度）：节点的最多子节点个数。比如2-3树的阶是3，2-3-4树的阶是4。</p>
+</blockquote>
+<p>B树的搜索，从根结点开始，对结点内的关键字（有序）序列进行二分查找，如果命中则结束，否则进入查询关键字所属范围的儿子结点；重复，直到所对应的儿子指针为空，或已经是叶子结点。</p>
+<p>B树的关键字集合分布在整颗树中，即叶子节点和非叶子节点都存放数据，搜索有可能在非叶子结点结束，其搜索性能等价于在关键字全集内做一次二分查找。</p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-034.png" alt="数据结构与算法-034"></p>
+<h4 id="b树-1">B+树</h4>
+<p>B+树是B树的变体，也是一种多路搜索树。</p>
+<p>B+树的搜索与B树也基本相同，区别是B+树只有达到叶子结点才命中（B树可以在非叶子结点命中），其性能也等价于在关键字全集做一次二分查找。</p>
+<p>B+树所有关键字都出现在叶子结点的链表中（即数据只能在叶子节点【也叫稠密索引】），且链表中的关键字(数据)恰好是有序的。所以不可能在非叶子结点命中。</p>
+<p>B+树的所有叶结点构成一个有序链表，可以按照关键码排序的次序遍历全部记录， B+树更适合文件索引系统，B树和B+树各有自己的应用场景，不能说B+树完全比B树好，反之亦然。</p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-035.png" alt="数据结构与算法-035"></p>
+<h4 id="b树-2">B*树</h4>
+<p>B* 树是B+树的变体，在B+树的非根和非叶子结点再增加指向兄弟的指针。</p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-036.png" alt="数据结构与算法-036"></p>
+<h3 id="图">图</h3>
+<p>图是一种数据结构，其中结点可以具有零个或多个相邻元素。两个结点之间的连接称为边。结点也可以称为顶点。</p>
+<p>如果给图的每条边规定一个方向，那么得到的图称为有向图。在有向图中，与一个节点相关联的边有出边和入边之分。相反，边没有方向的图称为无向图。</p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-037.png" alt="数据结构与算法-037"></p>
+<p>可用二维数组表示图（邻接矩阵）；或链表表示（邻接表）。</p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-038.png" alt="数据结构与算法-038"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-039.png" alt="数据结构与算法-039"></p>
+<p>用java模拟图，包括图的深度遍历，广度遍历。</p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-040.gif" alt="数据结构与算法-040"></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-041.gif" alt="数据结构与算法-041"></p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GraphDemo</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">String</span><span class="o">[]</span> <span class="n">vertexes</span> <span class="o">=</span> <span class="o">{</span><span class="s">&#34;A&#34;</span><span class="o">,</span> <span class="s">&#34;B&#34;</span><span class="o">,</span> <span class="s">&#34;C&#34;</span><span class="o">,</span> <span class="s">&#34;D&#34;</span><span class="o">,</span> <span class="s">&#34;E&#34;</span><span class="o">};</span>
+    <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">vertexes</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+    <span class="n">Graph</span> <span class="n">graph</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Graph</span><span class="o">(</span><span class="n">n</span><span class="o">);</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">vertex</span> <span class="o">:</span> <span class="n">vertexes</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">graph</span><span class="o">.</span><span class="na">addVertex</span><span class="o">(</span><span class="n">vertex</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="n">graph</span><span class="o">.</span><span class="na">addEdge</span><span class="o">(</span><span class="n">0</span><span class="o">,</span> <span class="n">1</span><span class="o">,</span> <span class="n">1</span><span class="o">);</span> <span class="c1">// A-B
+</span><span class="c1"></span>    <span class="n">graph</span><span class="o">.</span><span class="na">addEdge</span><span class="o">(</span><span class="n">0</span><span class="o">,</span> <span class="n">2</span><span class="o">,</span> <span class="n">1</span><span class="o">);</span> <span class="c1">// A-C
+</span><span class="c1"></span>    <span class="n">graph</span><span class="o">.</span><span class="na">addEdge</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">2</span><span class="o">,</span> <span class="n">1</span><span class="o">);</span> <span class="c1">// B-C
+</span><span class="c1"></span>    <span class="n">graph</span><span class="o">.</span><span class="na">addEdge</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">3</span><span class="o">,</span> <span class="n">1</span><span class="o">);</span> <span class="c1">// B-D
+</span><span class="c1"></span>    <span class="n">graph</span><span class="o">.</span><span class="na">addEdge</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">4</span><span class="o">,</span> <span class="n">1</span><span class="o">);</span> <span class="c1">// B-E
+</span><span class="c1"></span>    <span class="c1">// 展示图转换的矩阵
+</span><span class="c1"></span>    <span class="n">graph</span><span class="o">.</span><span class="na">showEdges</span><span class="o">();</span>
+    <span class="c1">// 图的深度遍历
+</span><span class="c1"></span>    <span class="n">graph</span><span class="o">.</span><span class="na">dfs</span><span class="o">();</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+    <span class="c1">// 图的广度遍历
+</span><span class="c1"></span>    <span class="n">graph</span><span class="o">.</span><span class="na">bfs</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Graph</span> <span class="o">{</span>
+
+  <span class="c1">// 保存顶点
+</span><span class="c1"></span>  <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">vertexList</span><span class="o">;</span>
+
+  <span class="c1">// 保存边的数量
+</span><span class="c1"></span>  <span class="kd">private</span> <span class="kt">int</span> <span class="n">sideNums</span><span class="o">;</span>
+
+  <span class="c1">// 保存图的矩阵
+</span><span class="c1"></span>  <span class="kd">private</span> <span class="kt">int</span><span class="o">[][]</span> <span class="n">edges</span><span class="o">;</span>
+
+  <span class="kd">private</span> <span class="kt">boolean</span><span class="o">[]</span> <span class="n">isVisited</span><span class="o">;</span>
+
+  <span class="kd">public</span> <span class="nf">Graph</span><span class="o">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">vertexList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;(</span><span class="n">n</span><span class="o">);</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">n</span><span class="o">][</span><span class="n">n</span><span class="o">];</span>
+    <span class="n">sideNums</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// 获取第一个结点的下一个结点
+</span><span class="c1"></span>  <span class="kd">private</span> <span class="kt">int</span> <span class="nf">getFirstNeighbor</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">vertexList</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">edges</span><span class="o">[</span><span class="n">index</span><span class="o">][</span><span class="n">i</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">1</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">i</span><span class="o">;</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// 获取当前结点的下一个结点
+</span><span class="c1"></span>  <span class="kd">private</span> <span class="kt">int</span> <span class="nf">getNextNeighbor</span><span class="o">(</span><span class="kt">int</span> <span class="n">vertex</span><span class="o">,</span> <span class="kt">int</span> <span class="n">index</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">vertex</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">vertexList</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">edges</span><span class="o">[</span><span class="n">index</span><span class="o">][</span><span class="n">i</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">1</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">i</span><span class="o">;</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// 图的深度遍历
+</span><span class="c1"></span>  <span class="kd">private</span> <span class="kt">void</span> <span class="nf">dfs</span><span class="o">(</span><span class="kt">boolean</span><span class="o">[]</span> <span class="n">isVisited</span><span class="o">,</span> <span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">getVertexValByIndex</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">+</span> <span class="s">&#34;-&gt;&#34;</span><span class="o">);</span>
+    <span class="c1">// 将当前遍历后的顶点标记为true
+</span><span class="c1"></span>    <span class="n">isVisited</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="c1">// 获取当前结点的下一个结点的索引位置
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">firstNeighborIndex</span> <span class="o">=</span> <span class="n">getFirstNeighbor</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+    <span class="c1">// 如果 ！= -1 代表当前结点没有找到下一个结点，需要向下移动
+</span><span class="c1"></span>    <span class="k">while</span> <span class="o">(</span><span class="n">firstNeighborIndex</span> <span class="o">!=</span> <span class="o">-</span><span class="n">1</span><span class="o">)</span> <span class="o">{</span>
+      <span class="c1">// 判断该结点是否被遍历过
+</span><span class="c1"></span>      <span class="k">if</span> <span class="o">(!</span><span class="n">isVisited</span><span class="o">[</span><span class="n">firstNeighborIndex</span><span class="o">])</span> <span class="o">{</span>
+        <span class="n">dfs</span><span class="o">(</span><span class="n">isVisited</span><span class="o">,</span> <span class="n">firstNeighborIndex</span><span class="o">);</span>
+      <span class="o">}</span>
+      <span class="c1">// 当前结点向后移动，否则是死循环
+</span><span class="c1"></span>      <span class="n">firstNeighborIndex</span> <span class="o">=</span> <span class="n">getNextNeighbor</span><span class="o">(</span><span class="n">firstNeighborIndex</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">dfs</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">isVisited</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">boolean</span><span class="o">[</span><span class="n">vertexList</span><span class="o">.</span><span class="na">size</span><span class="o">()];</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">getVertexCount</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(!</span><span class="n">isVisited</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">{</span>
+        <span class="n">dfs</span><span class="o">(</span><span class="n">isVisited</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="c1">// 一个结点的广度优先遍历
+</span><span class="c1"></span>  <span class="kd">private</span> <span class="kt">void</span> <span class="nf">bfs</span><span class="o">(</span><span class="kt">boolean</span><span class="o">[]</span> <span class="n">isVisited</span><span class="o">,</span> <span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// 队列头结点下标索引
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">headIndex</span><span class="o">;</span>
+    <span class="c1">// 相邻结点下标索引
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">neighborIndex</span><span class="o">;</span>
+    <span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedList</span><span class="o">&lt;&gt;();</span>
+
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">getVertexValByIndex</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">+</span> <span class="s">&#34;-&gt;&#34;</span><span class="o">);</span>
+    <span class="n">isVisited</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="n">queue</span><span class="o">.</span><span class="na">addLast</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+
+    <span class="c1">// 如果队列不等于空 则需要遍历循环查找
+</span><span class="c1"></span>    <span class="k">while</span> <span class="o">(!</span><span class="n">queue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
+      <span class="n">headIndex</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="na">removeFirst</span><span class="o">();</span>
+      <span class="c1">// 得到第一个邻接结点的下标
+</span><span class="c1"></span>      <span class="n">neighborIndex</span> <span class="o">=</span> <span class="n">getFirstNeighbor</span><span class="o">(</span><span class="n">headIndex</span><span class="o">);</span>
+      <span class="k">while</span> <span class="o">(</span><span class="n">neighborIndex</span> <span class="o">!=</span> <span class="o">-</span><span class="n">1</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 是否访问过
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(!</span><span class="n">isVisited</span><span class="o">[</span><span class="n">neighborIndex</span><span class="o">])</span> <span class="o">{</span>
+          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">getVertexValByIndex</span><span class="o">(</span><span class="n">neighborIndex</span><span class="o">)</span> <span class="o">+</span> <span class="s">&#34;-&gt;&#34;</span><span class="o">);</span>
+          <span class="n">isVisited</span><span class="o">[</span><span class="n">neighborIndex</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+          <span class="n">queue</span><span class="o">.</span><span class="na">addLast</span><span class="o">(</span><span class="n">neighborIndex</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">// neighborIndex 向下找
+</span><span class="c1"></span>        <span class="n">neighborIndex</span> <span class="o">=</span> <span class="n">getNextNeighbor</span><span class="o">(</span><span class="n">headIndex</span><span class="o">,</span> <span class="n">neighborIndex</span><span class="o">);</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="c1">// 广度优先遍历
+</span><span class="c1"></span>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">bfs</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">isVisited</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">boolean</span><span class="o">[</span><span class="n">vertexList</span><span class="o">.</span><span class="na">size</span><span class="o">()];</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">getVertexCount</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(!</span><span class="n">isVisited</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">{</span>
+        <span class="n">bfs</span><span class="o">(</span><span class="n">isVisited</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="c1">// 添加顶点
+</span><span class="c1"></span>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addVertex</span><span class="o">(</span><span class="n">String</span> <span class="n">vertex</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">vertexList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">vertex</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="c1">// 添加边
+</span><span class="c1"></span>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addEdge</span><span class="o">(</span><span class="kt">int</span> <span class="n">vertex1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">vertex2</span><span class="o">,</span> <span class="kt">int</span> <span class="n">weight</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">edges</span><span class="o">[</span><span class="n">vertex1</span><span class="o">][</span><span class="n">vertex2</span><span class="o">]</span> <span class="o">=</span> <span class="n">weight</span><span class="o">;</span>
+    <span class="n">edges</span><span class="o">[</span><span class="n">vertex2</span><span class="o">][</span><span class="n">vertex1</span><span class="o">]</span> <span class="o">=</span> <span class="n">weight</span><span class="o">;</span>
+    <span class="n">sideNums</span><span class="o">++;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// 获取边的数量
+</span><span class="c1"></span>  <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getSideNums</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">sideNums</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// 遍历矩阵
+</span><span class="c1"></span>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">showEdges</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">edge</span> <span class="o">:</span> <span class="n">edges</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">edge</span><span class="o">));</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="c1">// 获取顶点数量
+</span><span class="c1"></span>  <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getVertexCount</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">vertexList</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="c1">// 获取边之间的权值
+</span><span class="c1"></span>  <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getVertexWeight</span><span class="o">(</span><span class="kt">int</span> <span class="n">vertex1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">vertex2</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">edges</span><span class="o">[</span><span class="n">vertex1</span><span class="o">][</span><span class="n">vertex2</span><span class="o">];</span>
+  <span class="o">}</span>
+
+  <span class="c1">// 根据下标获取结点的值
+</span><span class="c1"></span>  <span class="kd">public</span> <span class="n">String</span> <span class="nf">getVertexValByIndex</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">vertexList</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">index</span><span class="o">);</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
 </code></pre></div><h2 id="算法">算法</h2>
 <p>英文对应的单词是Algorithm，它的本意为：解决问题的方法，所以算法的直接理解就是解决问题的方法。在计算机领域定义的话就是：一系列解决问题的、清晰、可执行的计算机指令。</p>
 <p>一个算法的优劣可以用空间复杂度与时间复杂度来衡量。</p>
@@ -3381,7 +4219,7 @@
 <li>
 <p>事后统计法：即直接运行程序，统计需要的时间和空间。但是，这种方法有两个问题：</p>
 <ol>
-<li>结果非常依赖于测试环境。比如，用 Core i3 和用 Core i8 运行程序所需的时间是不同的;</li>
+<li>结果非常依赖于测试环境。比如，用i3和用i8运行程序所需的时间是不同的;</li>
 <li>结果受测试规模的影响特别大。比如，对有序数组进行排序的时间比对逆序数组排序的时间短；对于小规模数据而言，插入排序所需时间比快速排序要短;</li>
 </ol>
 <p>所以，就需要有一种不用具体测试数据，也能估计算法执行效率的方法，就是算法复杂度分析，包括时间、空间复杂度分析。</p>
