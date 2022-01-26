@@ -4889,6 +4889,7 @@ while(i&lt;n){
 </code></pre></div><h4 id="二分查找">二分查找</h4>
 <p>二分查找也称折半查找，它是一种效率较高的查找方法。但是，折半查找要求线性表必须采用顺序存储结构，而且表中元素按关键字有序排列。</p>
 <p><strong>二分查找算法的前提，数组必须是有序数组，如果没有有序列表，请使用<a href="/iblog/posts/essays/data-structures-algorithms/#%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95">排序算法</a>对列表进行排序。</strong></p>
+<p>递归实现二分查找</p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">BinarySearch</span> <span class="o">{</span>
 
     <span class="c1">// 使用二分查找时，arr必须为有序列表
@@ -4915,6 +4916,38 @@ while(i&lt;n){
         <span class="c1">// 使用递归不停的向下细分，当 value == arr[mid] 时 返回该值，说明此时已经找到了
 </span><span class="c1"></span>        <span class="k">return</span> <span class="n">mid</span><span class="o">;</span>
     <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><p>非递归实现二分查找</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BinarySearchDemo</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">arr</span> <span class="o">=</span> <span class="o">{</span><span class="n">1</span><span class="o">,</span> <span class="n">2</span><span class="o">,</span> <span class="n">3</span><span class="o">,</span> <span class="n">4</span><span class="o">,</span> <span class="n">5</span><span class="o">,</span> <span class="n">6</span><span class="o">,</span> <span class="n">7</span><span class="o">,</span> <span class="n">8</span><span class="o">,</span> <span class="n">9</span><span class="o">,</span> <span class="n">10</span><span class="o">};</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">new</span> <span class="n">BinarySearch</span><span class="o">().</span><span class="na">search</span><span class="o">(</span><span class="n">arr</span><span class="o">,</span> <span class="n">3</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">BinarySearch</span> <span class="o">{</span>
+
+    <span class="c1">// 使用二分查找时，arr必须为有序列表
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">search</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">arr</span><span class="o">,</span> <span class="kt">int</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">1</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">left</span> <span class="o">&lt;=</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="o">(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="o">)</span> <span class="o">&gt;&gt;</span> <span class="n">1</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">arr</span><span class="o">[</span><span class="n">mid</span><span class="o">]</span> <span class="o">==</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="n">mid</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="c1">// 如果目标值小于中间值则向左边找，反之向右边找
+</span><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">target</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="o">[</span><span class="n">mid</span><span class="o">])</span> <span class="o">{</span>
+                <span class="n">right</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="n">1</span><span class="o">;</span>
+            <span class="o">}</span>
+
+            <span class="k">if</span> <span class="o">(</span><span class="n">target</span> <span class="o">&gt;</span> <span class="n">arr</span><span class="o">[</span><span class="n">mid</span><span class="o">])</span> <span class="o">{</span>
+                <span class="n">left</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
+    <span class="o">}</span>
+
 <span class="o">}</span>
 </code></pre></div><h4 id="插值查找">插值查找</h4>
 <p>插值查找算法类似于二分查找，与二分查找不同的是插值查找每次从自适应 mid 处开始查找，而不是像二分查找那样每次都从中间开始找。</p>
