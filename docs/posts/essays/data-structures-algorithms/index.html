@@ -5683,6 +5683,10 @@ while(i&lt;n){
 <blockquote>
 <p>最小生成树：给定一个带权的无向连通图，如何选取一棵生成树，使树上所有边上权的总和为最小，这叫最小生成树。简称MST。
 求最小生成树的算法主要是普里姆算法和克鲁斯卡尔算法。</p>
+<ul>
+<li>普里姆算法：O(n^2),适合稠密图（边多的图）</li>
+<li>克鲁斯卡尔算法:O,适合稀疏图（边少的图）</li>
+</ul>
 </blockquote>
 <p>普利姆(Prim)算法求最小生成树，也就是在包含n个顶点的连通图中，找出只有(n-1)条边包含所有n个顶点的连通子图，也就是所谓的极小连通子图。</p>
 <p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-044.gif" alt="数据结构与算法-044"></p>
@@ -5786,7 +5790,211 @@ class MGraph {
     }
 }
 </code></pre></div><h3 id="克鲁斯卡尔算法">克鲁斯卡尔算法</h3>
-<h3 id="迪杰斯特拉算法">迪杰斯特拉算法</h3>
+<p>克鲁斯卡尔算法是求连通网的最小生成树的另一种方法。基本思想是， 将所有边按照权值的大小进行升序排序，然后从小到大一一判断，条件为：如果这个边不会与之前选择的所有边组成回路，就可以作为最小生成树的一部分；反之，舍去。 直到具有 n 个顶点的连通网筛选出来 n-1（n为顶点个数） 条边为止。</p>
+<blockquote>
+<p>判断是否构成回路: 当每次需要将一条边添加到最小生成树时，判断该边的两个顶点终点是否相同，相同就会构成回路。</p>
+<p>关于终点的说明：就是将所有顶点按照从小到大的顺序排列好之后；某个顶点的终点就是与它连通的最大顶点。 就是将所有顶点按照从小到大的顺序排列好之后；某个顶点的终点就是与它连通的最大顶点。</p>
+<p>举例</p>
+<ul>
+<li>首先ABCDEFG这7个顶点，在顶点集合中是按照顺序存放的；</li>
+<li>第一次选择的是EF，毫无疑问这一条边的终点是F；</li>
+<li>第二次选择的CD的终点D；</li>
+<li>第三次选择的DE，终点是F，因为此时D和E相连，D又和F相连，所以D的终点是F。而且，因为C和D是相连的，D和E相连，E和F也是相连的，所以C的终点此时变成了F。也就是说，当选择了EF、CD、DE这三条边后，C、D、E的终点都是F。当然F的终点也是F，因为F还没和后面的哪个顶点连接。</li>
+<li>本来接下来应该选择CE的，但是由于C和E的终点都是F，所以就会形成回路；</li>
+</ul>
+</blockquote>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-045.gif" alt="数据结构与算法-045"></p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">KruskalCaseDemo</span> <span class="o">{</span>
+
+    <span class="c1">//使用 INF 表示两个顶点不能连通
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">INF</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">char</span><span class="o">[]</span> <span class="n">vertexs</span> <span class="o">=</span> <span class="o">{</span><span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;B&#39;</span><span class="o">,</span> <span class="sc">&#39;C&#39;</span><span class="o">,</span> <span class="sc">&#39;D&#39;</span><span class="o">,</span> <span class="sc">&#39;E&#39;</span><span class="o">,</span> <span class="sc">&#39;F&#39;</span><span class="o">,</span> <span class="sc">&#39;G&#39;</span><span class="o">};</span>
+        <span class="kt">int</span> <span class="n">matrix</span><span class="o">[][]</span> <span class="o">=</span> <span class="o">{</span>
+                <span class="cm">/*A*//*B*//*C*//*D*//*E*//*F*//*G*/</span>
+                <span class="cm">/*A*/</span> <span class="o">{</span><span class="n">0</span><span class="o">,</span> <span class="n">12</span><span class="o">,</span> <span class="n">INF</span><span class="o">,</span> <span class="n">INF</span><span class="o">,</span> <span class="n">INF</span><span class="o">,</span> <span class="n">16</span><span class="o">,</span> <span class="n">14</span><span class="o">},</span>
+                <span class="cm">/*B*/</span> <span class="o">{</span><span class="n">12</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">10</span><span class="o">,</span> <span class="n">INF</span><span class="o">,</span> <span class="n">INF</span><span class="o">,</span> <span class="n">7</span><span class="o">,</span> <span class="n">INF</span><span class="o">},</span>
+                <span class="cm">/*C*/</span> <span class="o">{</span><span class="n">INF</span><span class="o">,</span> <span class="n">10</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">3</span><span class="o">,</span> <span class="n">5</span><span class="o">,</span> <span class="n">6</span><span class="o">,</span> <span class="n">INF</span><span class="o">},</span>
+                <span class="cm">/*D*/</span> <span class="o">{</span><span class="n">INF</span><span class="o">,</span> <span class="n">INF</span><span class="o">,</span> <span class="n">3</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">4</span><span class="o">,</span> <span class="n">INF</span><span class="o">,</span> <span class="n">INF</span><span class="o">},</span>
+                <span class="cm">/*E*/</span> <span class="o">{</span><span class="n">INF</span><span class="o">,</span> <span class="n">INF</span><span class="o">,</span> <span class="n">5</span><span class="o">,</span> <span class="n">4</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">2</span><span class="o">,</span> <span class="n">8</span><span class="o">},</span>
+                <span class="cm">/*F*/</span> <span class="o">{</span><span class="n">16</span><span class="o">,</span> <span class="n">7</span><span class="o">,</span> <span class="n">6</span><span class="o">,</span> <span class="n">INF</span><span class="o">,</span> <span class="n">2</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">9</span><span class="o">},</span>
+                <span class="cm">/*G*/</span> <span class="o">{</span><span class="n">14</span><span class="o">,</span> <span class="n">INF</span><span class="o">,</span> <span class="n">INF</span><span class="o">,</span> <span class="n">INF</span><span class="o">,</span> <span class="n">8</span><span class="o">,</span> <span class="n">9</span><span class="o">,</span> <span class="n">0</span><span class="o">}};</span>
+
+        <span class="n">KruskalCase</span> <span class="n">kruskalCase</span> <span class="o">=</span> <span class="k">new</span> <span class="n">KruskalCase</span><span class="o">(</span><span class="n">vertexs</span><span class="o">,</span> <span class="n">matrix</span><span class="o">);</span>
+        <span class="n">kruskalCase</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+        <span class="n">kruskalCase</span><span class="o">.</span><span class="na">kruskal</span><span class="o">();</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">KruskalCase</span> <span class="o">{</span>
+    <span class="c1">//使用 INF 表示两个顶点不能连通
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">INF</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">edgeNum</span><span class="o">;</span> <span class="c1">//边的个数
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="kt">char</span><span class="o">[]</span> <span class="n">vertexs</span><span class="o">;</span> <span class="c1">//顶点数组
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="kt">int</span><span class="o">[][]</span> <span class="n">matrix</span><span class="o">;</span> <span class="c1">//邻接矩阵
+</span><span class="c1"></span>
+    <span class="c1">// 构造器
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="nf">KruskalCase</span><span class="o">(</span><span class="kt">char</span><span class="o">[]</span> <span class="n">vertexs</span><span class="o">,</span> <span class="kt">int</span><span class="o">[][]</span> <span class="n">matrix</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 初始化顶点数和边的个数
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">vlen</span> <span class="o">=</span> <span class="n">vertexs</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+
+        <span class="c1">// 初始化顶点, 复制拷贝的方式
+</span><span class="c1"></span>        <span class="k">this</span><span class="o">.</span><span class="na">vertexs</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="o">[</span><span class="n">vlen</span><span class="o">];</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">vertexs</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">vertexs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">vertexs</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+        <span class="o">}</span>
+
+        <span class="c1">// 初始化边, 使用的是复制拷贝的方式
+</span><span class="c1"></span>        <span class="k">this</span><span class="o">.</span><span class="na">matrix</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">vlen</span><span class="o">][</span><span class="n">vlen</span><span class="o">];</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">vlen</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">vlen</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">matrix</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">];</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="c1">// 统计边的条数
+</span><span class="c1"></span>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">vlen</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">vlen</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">matrix</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">!=</span> <span class="n">INF</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">edgeNum</span><span class="o">++;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;邻接矩阵为: \n&#34;</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">vertexs</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">vertexs</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%12d&#34;</span><span class="o">,</span> <span class="n">matrix</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]);</span>
+            <span class="o">}</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 功能：对边进行排序处理, 冒泡排序
+</span><span class="cm">     *
+</span><span class="cm">     * @param edges 边的集合
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">sortEdges</span><span class="o">(</span><span class="n">EdgeData</span><span class="o">[]</span> <span class="n">edges</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">edges</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">edges</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">1</span> <span class="o">-</span> <span class="n">i</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">edges</span><span class="o">[</span><span class="n">j</span><span class="o">].</span><span class="na">weight</span> <span class="o">&gt;</span> <span class="n">edges</span><span class="o">[</span><span class="n">j</span> <span class="o">+</span> <span class="n">1</span><span class="o">].</span><span class="na">weight</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">EdgeData</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">edges</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+                    <span class="n">edges</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">edges</span><span class="o">[</span><span class="n">j</span> <span class="o">+</span> <span class="n">1</span><span class="o">];</span>
+                    <span class="n">edges</span><span class="o">[</span><span class="n">j</span> <span class="o">+</span> <span class="n">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * @param ch 顶点的值，比如&#39;A&#39;,&#39;B&#39;
+</span><span class="cm">     * @return 返回ch顶点对应的下标，如果找不到，返回-1
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="nf">getPosition</span><span class="o">(</span><span class="kt">char</span> <span class="n">ch</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">vertexs</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">vertexs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">==</span> <span class="n">ch</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="n">i</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="c1">// 找不到,返回-1
+</span><span class="c1"></span>        <span class="k">return</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 功能: 获取图中边，放到EData[] 数组中，后面我们需要遍历该数组
+</span><span class="cm">     * 是通过matrix 邻接矩阵来获取
+</span><span class="cm">     * EData[] 形式 [[&#39;A&#39;,&#39;B&#39;, 12], [&#39;B&#39;,&#39;F&#39;,7], .....]
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="n">EdgeData</span><span class="o">[]</span> <span class="nf">getEdges</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="n">EdgeData</span><span class="o">[]</span> <span class="n">edges</span> <span class="o">=</span> <span class="k">new</span> <span class="n">EdgeData</span><span class="o">[</span><span class="n">edgeNum</span><span class="o">];</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">vertexs</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">vertexs</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">matrix</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">!=</span> <span class="n">INF</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">edges</span><span class="o">[</span><span class="n">index</span><span class="o">++]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">EdgeData</span><span class="o">(</span><span class="n">vertexs</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">vertexs</span><span class="o">[</span><span class="n">j</span><span class="o">],</span> <span class="n">matrix</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]);</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">edges</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 功能: 获取下标为i的顶点的终点, 用于后面判断两个顶点的终点是否相同
+</span><span class="cm">     *
+</span><span class="cm">     * @param ends ： 数组就是记录了各个顶点对应的终点是哪个,ends 数组是在遍历过程中，逐步形成
+</span><span class="cm">     * @param i    : 表示传入的顶点对应的下标
+</span><span class="cm">     * @return 返回的就是 下标为i的这个顶点对应的终点的下标, 一会回头还有来理解
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="nf">getEnd</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">ends</span><span class="o">,</span> <span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// i = 4 [0,0,0,0,5,0,0,0,0,0,0,0]
+</span><span class="c1"></span>        <span class="k">while</span> <span class="o">(</span><span class="n">ends</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">!=</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">ends</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">i</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">kruskal</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="c1">// 用于保存&#34;已有最小生成树&#34; 中的每个顶点在最小生成树中的终点
+</span><span class="c1"></span>        <span class="kt">int</span><span class="o">[]</span> <span class="n">ends</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">vertexs</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
+        <span class="c1">// 创建结果数组, 保存最后的最小生成树
+</span><span class="c1"></span>        <span class="n">EdgeData</span><span class="o">[]</span> <span class="n">rets</span> <span class="o">=</span> <span class="k">new</span> <span class="n">EdgeData</span><span class="o">[</span><span class="n">edgeNum</span><span class="o">];</span>
+
+        <span class="c1">// 获取图中 所有的边的集合 ， 一共有12边
+</span><span class="c1"></span>        <span class="n">EdgeData</span><span class="o">[]</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">getEdges</span><span class="o">();</span>
+
+        <span class="c1">// 按照边的权值大小进行排序(从小到大)
+</span><span class="c1"></span>        <span class="n">sortEdges</span><span class="o">(</span><span class="n">edges</span><span class="o">);</span>
+
+        <span class="c1">// 遍历edges 数组，将边添加到最小生成树中时，判断是准备加入的边否形成了回路，如果没有，就加入 rets, 否则不能加入
+</span><span class="c1"></span>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">edgeNum</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="c1">// 获取到第i条边的第一个顶点(起点)
+</span><span class="c1"></span>            <span class="kt">int</span> <span class="n">point1</span> <span class="o">=</span> <span class="n">getPosition</span><span class="o">(</span><span class="n">edges</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">start</span><span class="o">);</span>
+            <span class="c1">// 获取到第i条边的第2个顶点
+</span><span class="c1"></span>            <span class="kt">int</span> <span class="n">point2</span> <span class="o">=</span> <span class="n">getPosition</span><span class="o">(</span><span class="n">edges</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">end</span><span class="o">);</span>
+            <span class="c1">// 获取p1这个顶点在已有最小生成树中的终点
+</span><span class="c1"></span>            <span class="kt">int</span> <span class="n">endPointOfPoint1</span> <span class="o">=</span> <span class="n">getEnd</span><span class="o">(</span><span class="n">ends</span><span class="o">,</span> <span class="n">point1</span><span class="o">);</span>
+            <span class="c1">// 获取p2这个顶点在已有最小生成树中的终点
+</span><span class="c1"></span>            <span class="kt">int</span> <span class="n">endPointOfPoint2</span> <span class="o">=</span> <span class="n">getEnd</span><span class="o">(</span><span class="n">ends</span><span class="o">,</span> <span class="n">point2</span><span class="o">);</span>
+
+            <span class="c1">// 克鲁斯卡尔核心点：判断是否构成回路
+</span><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">endPointOfPoint1</span> <span class="o">!=</span> <span class="n">endPointOfPoint2</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// 假设没有构成回路
+</span><span class="c1"></span>                <span class="c1">// 将该边上终点上的值赋值给起点位置的值
+</span><span class="c1"></span>                <span class="n">ends</span><span class="o">[</span><span class="n">endPointOfPoint1</span><span class="o">]</span> <span class="o">=</span> <span class="n">endPointOfPoint2</span><span class="o">;</span>
+                <span class="c1">// 将该边保存起来
+</span><span class="c1"></span>                <span class="n">rets</span><span class="o">[</span><span class="n">index</span><span class="o">++]</span> <span class="o">=</span> <span class="n">edges</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;最小生成树为&#34;</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">index</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">rets</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">EdgeData</span> <span class="o">{</span>
+    <span class="kt">char</span> <span class="n">start</span><span class="o">;</span> <span class="c1">// 边的一个点
+</span><span class="c1"></span>    <span class="kt">char</span> <span class="n">end</span><span class="o">;</span> <span class="c1">// 边的另外一个点
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">weight</span><span class="o">;</span> <span class="c1">// 边的权值
+</span><span class="c1"></span>
+    <span class="kd">public</span> <span class="nf">EdgeData</span><span class="o">(</span><span class="kt">char</span> <span class="n">start</span><span class="o">,</span> <span class="kt">char</span> <span class="n">end</span><span class="o">,</span> <span class="kt">int</span> <span class="n">weight</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">start</span> <span class="o">=</span> <span class="n">start</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">end</span> <span class="o">=</span> <span class="n">end</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">weight</span> <span class="o">=</span> <span class="n">weight</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 重写toString, 便于输出边信息
+</span><span class="c1"></span>    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&#34;EData [&lt;&#34;</span> <span class="o">+</span> <span class="n">start</span> <span class="o">+</span> <span class="s">&#34;, &#34;</span> <span class="o">+</span> <span class="n">end</span> <span class="o">+</span> <span class="s">&#34;&gt;= &#34;</span> <span class="o">+</span> <span class="n">weight</span> <span class="o">+</span> <span class="s">&#34;]&#34;</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="迪杰斯特拉算法">迪杰斯特拉算法</h3>
 <h3 id="弗洛伊德算法">弗洛伊德算法</h3>
 <h3 id="马踏棋盘算法">马踏棋盘算法</h3>
 </div>
