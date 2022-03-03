@@ -5995,8 +5995,259 @@ class MGraph {
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div><h3 id="迪杰斯特拉算法">迪杰斯特拉算法</h3>
-<h3 id="弗洛伊德算法">弗洛伊德算法</h3>
-<h3 id="马踏棋盘算法">马踏棋盘算法</h3>
+<p>迪杰斯特拉算法是典型最短路径算法，用于计算一个结点到其他结点的最短路径。迪杰斯特拉算法是基于贪心思想，从起始位置触发，每次寻找与起点位置距离且未访问过的顶点，以该顶点作为中间结点，更新从起点到其他顶点的距离，直到全部顶点都作为了中间结点，并完成了路径更新，算法结束。 它的主要特点是以起始点为中心向外层层扩展，即图的广度优先搜索思想，直到扩展到终点为止。</p>
+<p>视频讲解：<a href="https://www.bilibili.com/video/BV1uX4y137Hf">bilibili</a></p>
+<p><img src="/iblog/posts/annex/images/essays/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-046.gif" alt="数据结构与算法-046"></p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DijkstraAlgorithmDemo</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">char</span><span class="o">[]</span> <span class="n">vertex</span> <span class="o">=</span> <span class="o">{</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;B&#39;</span><span class="o">,</span> <span class="sc">&#39;C&#39;</span><span class="o">,</span> <span class="sc">&#39;D&#39;</span><span class="o">,</span> <span class="sc">&#39;E&#39;</span><span class="o">,</span> <span class="sc">&#39;F&#39;</span><span class="o">,</span> <span class="sc">&#39;G&#39;</span> <span class="o">};</span>
+        <span class="kt">int</span><span class="o">[][]</span> <span class="n">matrix</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">vertex</span><span class="o">.</span><span class="na">length</span><span class="o">][</span><span class="n">vertex</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
+        <span class="c1">// 表示不可以连接
+</span><span class="c1"></span>        <span class="kd">final</span> <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="n">65535</span><span class="o">;</span>
+        <span class="n">matrix</span><span class="o">[</span><span class="n">0</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span> <span class="n">N</span><span class="o">,</span> <span class="n">5</span><span class="o">,</span> <span class="n">7</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">2</span> <span class="o">};</span>
+        <span class="n">matrix</span><span class="o">[</span><span class="n">1</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span> <span class="n">5</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">9</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">3</span> <span class="o">};</span>
+        <span class="n">matrix</span><span class="o">[</span><span class="n">2</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span> <span class="n">7</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">8</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">N</span> <span class="o">};</span>
+        <span class="n">matrix</span><span class="o">[</span><span class="n">3</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span> <span class="n">N</span><span class="o">,</span> <span class="n">9</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">4</span><span class="o">,</span> <span class="n">N</span> <span class="o">};</span>
+        <span class="n">matrix</span><span class="o">[</span><span class="n">4</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span> <span class="n">N</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">8</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">5</span><span class="o">,</span> <span class="n">4</span> <span class="o">};</span>
+        <span class="n">matrix</span><span class="o">[</span><span class="n">5</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span> <span class="n">N</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">4</span><span class="o">,</span> <span class="n">5</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">6</span> <span class="o">};</span>
+        <span class="n">matrix</span><span class="o">[</span><span class="n">6</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span> <span class="n">2</span><span class="o">,</span> <span class="n">3</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">4</span><span class="o">,</span> <span class="n">6</span><span class="o">,</span> <span class="n">N</span> <span class="o">};</span>
+        <span class="n">Graph</span> <span class="n">graph</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Graph</span><span class="o">(</span><span class="n">vertex</span><span class="o">,</span> <span class="n">matrix</span><span class="o">);</span>
+        <span class="n">graph</span><span class="o">.</span><span class="na">showGraph</span><span class="o">();</span>
+        <span class="n">graph</span><span class="o">.</span><span class="na">dsj</span><span class="o">(</span><span class="n">6</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Graph</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">char</span><span class="o">[]</span> <span class="n">vertex</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span><span class="o">[][]</span> <span class="n">matrix</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">VisitedVertex</span> <span class="n">vv</span><span class="o">;</span>
+
+    <span class="c1">// 构造器
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="nf">Graph</span><span class="o">(</span><span class="kt">char</span><span class="o">[]</span> <span class="n">vertex</span><span class="o">,</span> <span class="kt">int</span><span class="o">[][]</span> <span class="n">matrix</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">vertex</span> <span class="o">=</span> <span class="n">vertex</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">matrix</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 显示结果
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">showDijkstra</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">vv</span><span class="o">.</span><span class="na">showArrays</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 显示图
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">showGraph</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">link</span> <span class="o">:</span> <span class="n">matrix</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">:</span> <span class="n">link</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%8d&#34;</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 迪杰斯特拉算法实现
+</span><span class="cm">     * @param index 表示出发顶点对应的下标
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">dsj</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">vv</span> <span class="o">=</span> <span class="k">new</span> <span class="n">VisitedVertex</span><span class="o">(</span><span class="n">vertex</span><span class="o">.</span><span class="na">length</span><span class="o">,</span> <span class="n">index</span><span class="o">);</span>
+        <span class="n">update</span><span class="o">(</span><span class="n">index</span><span class="o">);</span>
+        <span class="n">vv</span><span class="o">.</span><span class="na">showArrays</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">vertex</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">vv</span><span class="o">.</span><span class="na">findNextStartPoint</span><span class="o">();</span>
+            <span class="n">update</span><span class="o">(</span><span class="n">index</span><span class="o">);</span>
+            <span class="n">vv</span><span class="o">.</span><span class="na">showArrays</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 更新index下标顶点到周围顶点的距离和周围顶点的前驱顶点,
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="c1">// 根据遍历我们的邻接矩阵的 matrix[index]行
+</span><span class="c1"></span>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">matrix</span><span class="o">[</span><span class="n">index</span><span class="o">].</span><span class="na">length</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="c1">// len 含义是 : 出发顶点到index顶点的距离 + 从index顶点到j顶点的距离的和
+</span><span class="c1"></span>            <span class="n">len</span> <span class="o">=</span> <span class="n">vv</span><span class="o">.</span><span class="na">getDis</span><span class="o">(</span><span class="n">index</span><span class="o">)</span> <span class="o">+</span> <span class="n">matrix</span><span class="o">[</span><span class="n">index</span><span class="o">][</span><span class="n">j</span><span class="o">];</span>
+            <span class="c1">// 如果j顶点没有被访问过，并且 len 小于出发顶点到j顶点的距离，就需要更新
+</span><span class="c1"></span>            <span class="k">if</span> <span class="o">(!</span><span class="n">vv</span><span class="o">.</span><span class="na">isVisited</span><span class="o">(</span><span class="n">j</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">len</span> <span class="o">&lt;</span> <span class="n">vv</span><span class="o">.</span><span class="na">getDis</span><span class="o">(</span><span class="n">j</span><span class="o">))</span> <span class="o">{</span>
+                <span class="n">vv</span><span class="o">.</span><span class="na">updatePre</span><span class="o">(</span><span class="n">j</span><span class="o">,</span> <span class="n">index</span><span class="o">);</span>
+                <span class="n">vv</span><span class="o">.</span><span class="na">updateDis</span><span class="o">(</span><span class="n">j</span><span class="o">,</span> <span class="n">len</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">VisitedVertex</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">alreadyArr</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">preVisited</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">dis</span><span class="o">;</span>
+
+    <span class="cm">/**
+</span><span class="cm">     *
+</span><span class="cm">     * @param length :表示顶点的个数
+</span><span class="cm">     * @param index: 出发顶点对应的下标, 比如G顶点，下标就是6
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="nf">VisitedVertex</span><span class="o">(</span><span class="kt">int</span> <span class="n">length</span><span class="o">,</span> <span class="kt">int</span> <span class="n">index</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">alreadyArr</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">length</span><span class="o">];</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">preVisited</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">length</span><span class="o">];</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">dis</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">length</span><span class="o">];</span>
+        <span class="c1">// 初始化 dis数组
+</span><span class="c1"></span>        <span class="n">Arrays</span><span class="o">.</span><span class="na">fill</span><span class="o">(</span><span class="n">dis</span><span class="o">,</span> <span class="n">65535</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">dis</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">alreadyArr</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span>
+
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 功能: 判断index顶点是否被访问过
+</span><span class="cm">     * @return 如果访问过，就返回true, 否则访问false
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isVisited</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">alreadyArr</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">==</span> <span class="n">1</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 功能: 更新出发顶点到index顶点的距离
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">updateDis</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">,</span> <span class="kt">int</span> <span class="n">len</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">dis</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">=</span> <span class="n">len</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 功能: 更新pre这个顶点的前驱顶点为index顶点
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">updatePre</span><span class="o">(</span><span class="kt">int</span> <span class="n">pre</span><span class="o">,</span> <span class="kt">int</span> <span class="n">index</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">preVisited</span><span class="o">[</span><span class="n">pre</span><span class="o">]</span> <span class="o">=</span> <span class="n">index</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 功能:返回出发顶点到index顶点的距离
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getDis</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">dis</span><span class="o">[</span><span class="n">index</span><span class="o">];</span>
+    <span class="o">}</span>
+
+
+    <span class="cm">/**
+</span><span class="cm">     * 继续选择并返回新的访问顶点， 比如这里的G 完后，就是 A点作为新的访问顶点(注意不是出发顶点)
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">findNextStartPoint</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">min</span> <span class="o">=</span> <span class="n">65535</span><span class="o">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">alreadyArr</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">alreadyArr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">==</span> <span class="n">0</span> <span class="o">&amp;&amp;</span> <span class="n">dis</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">min</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">min</span> <span class="o">=</span> <span class="n">dis</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="c1">// 更新 index 顶点被访问过
+</span><span class="c1"></span>        <span class="n">alreadyArr</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">index</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">//显示最后的结果
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">showArrays</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;核心数组的值如下：&#34;</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">:</span> <span class="n">alreadyArr</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="s">&#34; &#34;</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">:</span> <span class="n">dis</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="s">&#34; &#34;</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">:</span> <span class="n">preVisited</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="s">&#34; &#34;</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+
+        <span class="kt">char</span><span class="o">[]</span> <span class="n">vertex</span> <span class="o">=</span> <span class="o">{</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;B&#39;</span><span class="o">,</span> <span class="sc">&#39;C&#39;</span><span class="o">,</span> <span class="sc">&#39;D&#39;</span><span class="o">,</span> <span class="sc">&#39;E&#39;</span><span class="o">,</span> <span class="sc">&#39;F&#39;</span><span class="o">,</span> <span class="sc">&#39;G&#39;</span> <span class="o">};</span>
+        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">:</span> <span class="n">dis</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">!=</span> <span class="n">65535</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">vertex</span><span class="o">[</span><span class="n">count</span><span class="o">]</span> <span class="o">+</span> <span class="s">&#34;(&#34;</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s">&#34;) &#34;</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&#34;N &#34;</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="n">count</span><span class="o">++;</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div><h3 id="弗洛伊德算法">弗洛伊德算法</h3>
+<p>弗洛伊德算法又称为插点法，是一种利用动态规划的思想寻找给定的加权图中多源点之间最短路径的算法，与迪杰斯特拉算法类似。</p>
+<blockquote>
+<p>迪杰斯特拉算法对比弗洛伊德算法：
+迪杰斯特拉算法通过选定的被访问顶点，求出从出发访问顶点到其他顶点的最短路径；弗洛伊德算法中每一个顶点都是出发访问点，所以需要将每一个顶点看做被访问顶点，求出从每一个顶点到其他顶点的最短路径。</p>
+<ul>
+<li>弗洛伊德算法计算图中各个顶点之间的最短路径</li>
+<li>迪杰斯特拉算法用于计算图中某一个顶点到其他顶点的最短路径</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FloydAlgorithmDemo</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">char</span><span class="o">[]</span> <span class="n">vertex</span> <span class="o">=</span> <span class="o">{</span><span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;B&#39;</span><span class="o">,</span> <span class="sc">&#39;C&#39;</span><span class="o">,</span> <span class="sc">&#39;D&#39;</span><span class="o">,</span> <span class="sc">&#39;E&#39;</span><span class="o">,</span> <span class="sc">&#39;F&#39;</span><span class="o">,</span> <span class="sc">&#39;G&#39;</span><span class="o">};</span>
+        <span class="kt">int</span><span class="o">[][]</span> <span class="n">matrix</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">vertex</span><span class="o">.</span><span class="na">length</span><span class="o">][</span><span class="n">vertex</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
+        <span class="kd">final</span> <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="n">65535</span><span class="o">;</span>
+        <span class="n">matrix</span><span class="o">[</span><span class="n">0</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="n">0</span><span class="o">,</span> <span class="n">5</span><span class="o">,</span> <span class="n">7</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">2</span><span class="o">};</span>
+        <span class="n">matrix</span><span class="o">[</span><span class="n">1</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="n">5</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">9</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">3</span><span class="o">};</span>
+        <span class="n">matrix</span><span class="o">[</span><span class="n">2</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="n">7</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">8</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">N</span><span class="o">};</span>
+        <span class="n">matrix</span><span class="o">[</span><span class="n">3</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="n">N</span><span class="o">,</span> <span class="n">9</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">4</span><span class="o">,</span> <span class="n">N</span><span class="o">};</span>
+        <span class="n">matrix</span><span class="o">[</span><span class="n">4</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="n">N</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">8</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">5</span><span class="o">,</span> <span class="n">4</span><span class="o">};</span>
+        <span class="n">matrix</span><span class="o">[</span><span class="n">5</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="n">N</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">4</span><span class="o">,</span> <span class="n">5</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">6</span><span class="o">};</span>
+        <span class="n">matrix</span><span class="o">[</span><span class="n">6</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="n">2</span><span class="o">,</span> <span class="n">3</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">N</span><span class="o">,</span> <span class="n">4</span><span class="o">,</span> <span class="n">6</span><span class="o">,</span> <span class="n">0</span><span class="o">};</span>
+
+        <span class="n">FloydGraph</span> <span class="n">graph</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FloydGraph</span><span class="o">(</span><span class="n">vertex</span><span class="o">,</span> <span class="n">vertex</span><span class="o">.</span><span class="na">length</span><span class="o">,</span> <span class="n">matrix</span><span class="o">);</span>
+        <span class="n">graph</span><span class="o">.</span><span class="na">floyd</span><span class="o">();</span>
+        <span class="n">graph</span><span class="o">.</span><span class="na">show</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">FloydGraph</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">char</span><span class="o">[]</span> <span class="n">vertex</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span><span class="o">[][]</span> <span class="n">pre</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span><span class="o">[][]</span> <span class="n">dis</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">FloydGraph</span><span class="o">(</span><span class="kt">char</span><span class="o">[]</span> <span class="n">vertex</span><span class="o">,</span> <span class="kt">int</span> <span class="n">length</span><span class="o">,</span> <span class="kt">int</span><span class="o">[][]</span> <span class="n">dis</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">vertex</span> <span class="o">=</span> <span class="n">vertex</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">dis</span> <span class="o">=</span> <span class="n">dis</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">pre</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">length</span><span class="o">][</span><span class="n">length</span><span class="o">];</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">Arrays</span><span class="o">.</span><span class="na">fill</span><span class="o">(</span><span class="n">pre</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">i</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">show</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">dis</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">k</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="c1">// 先将pre数组输出的一行
+</span><span class="c1"></span>            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">dis</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">vertex</span><span class="o">[</span><span class="n">pre</span><span class="o">[</span><span class="n">k</span><span class="o">][</span><span class="n">i</span><span class="o">]]</span> <span class="o">+</span> <span class="s">&#34; &#34;</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+            <span class="c1">// 输出dis数组的一行数据
+</span><span class="c1"></span>            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">dis</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&#34;(&#34;</span> <span class="o">+</span> <span class="n">vertex</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">+</span> <span class="s">&#34;到&#34;</span> <span class="o">+</span> <span class="n">vertex</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">+</span> <span class="s">&#34;的最短路径是&#34;</span> <span class="o">+</span> <span class="n">dis</span><span class="o">[</span><span class="n">k</span><span class="o">][</span><span class="n">i</span><span class="o">]</span> <span class="o">+</span> <span class="s">&#34;) &#34;</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">floyd</span><span class="o">(){</span>
+        <span class="kt">int</span> <span class="n">len</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">m</span> <span class="o">&lt;</span> <span class="n">dis</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">m</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">dis</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">a</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="n">dis</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">b</span><span class="o">++)</span> <span class="o">{</span>
+                    <span class="n">len</span> <span class="o">=</span> <span class="n">dis</span><span class="o">[</span><span class="n">a</span><span class="o">][</span><span class="n">m</span><span class="o">]</span> <span class="o">+</span> <span class="n">dis</span><span class="o">[</span><span class="n">m</span><span class="o">][</span><span class="n">b</span><span class="o">];</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">len</span> <span class="o">&lt;</span> <span class="n">dis</span><span class="o">[</span><span class="n">a</span><span class="o">][</span><span class="n">b</span><span class="o">]){</span>
+                        <span class="n">dis</span><span class="o">[</span><span class="n">a</span><span class="o">][</span><span class="n">b</span><span class="o">]</span> <span class="o">=</span> <span class="n">len</span><span class="o">;</span>
+                        <span class="n">pre</span><span class="o">[</span><span class="n">a</span><span class="o">][</span><span class="n">b</span><span class="o">]</span> <span class="o">=</span> <span class="n">pre</span><span class="o">[</span><span class="n">m</span><span class="o">][</span><span class="n">b</span><span class="o">];</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div><h3 id="马踏棋盘算法">马踏棋盘算法</h3>
 </div>
                     <div class="post_footer">
                         <div class="meta">
