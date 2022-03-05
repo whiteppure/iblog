@@ -6248,7 +6248,134 @@ class MGraph {
 
 <span class="o">}</span>
 </code></pre></div><h3 id="马踏棋盘算法">马踏棋盘算法</h3>
-</div>
+<p>马踏棋盘算法也被称为骑士周游问题。将马随机放在国际象棋的8×8棋盘0～7的某个方格中，马按走棋规则(马走日字)进行移动。要求每个方格只进入一次，走遍棋盘上全部64个方格。</p>
+<p>马踏棋盘问题实际上是图的深度优先搜索(DFS)的应用。</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HouseChessBoardDemo</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">HouseChessBoard</span> <span class="n">houseChessBoard</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HouseChessBoard</span><span class="o">(</span><span class="n">7</span><span class="o">,</span> <span class="n">7</span><span class="o">,</span> <span class="n">2</span><span class="o">,</span> <span class="n">4</span><span class="o">);</span>
+        <span class="n">houseChessBoard</span><span class="o">.</span><span class="na">showChessBoard</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">HouseChessBoard</span> <span class="o">{</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 表示棋盘的列
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">x</span><span class="o">;</span>
+    <span class="cm">/**
+</span><span class="cm">     * 表示棋盘的行
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">y</span><span class="o">;</span>
+    <span class="cm">/**
+</span><span class="cm">     * 创建一个数组，标记棋盘的各个位置是否被访问过，true表示已经访问过
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">visited</span><span class="o">[];</span>
+    <span class="cm">/**
+</span><span class="cm">     * 使用一个属性，标记是否棋盘的所有位置都被访问 如果为true,表示成功
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">finished</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="kt">int</span><span class="o">[][]</span> <span class="n">chessboard</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">HouseChessBoard</span><span class="o">(</span><span class="kt">int</span> <span class="n">x</span><span class="o">,</span> <span class="kt">int</span> <span class="n">y</span><span class="o">,</span> <span class="kt">int</span> <span class="n">row</span><span class="o">,</span> <span class="kt">int</span> <span class="n">column</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">visited</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">boolean</span><span class="o">[</span><span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="o">];</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">chessboard</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">x</span><span class="o">][</span><span class="n">y</span><span class="o">];</span>
+        <span class="n">traversalChess</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">chessboard</span><span class="o">,</span> <span class="n">row</span><span class="o">-</span><span class="n">1</span><span class="o">,</span> <span class="n">column</span><span class="o">-</span><span class="n">1</span><span class="o">,</span> <span class="n">1</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">showChessBoard</span><span class="o">(){</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">ints</span> <span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="na">chessboard</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">anInt</span> <span class="o">:</span> <span class="n">ints</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">anInt</span> <span class="o">+</span> <span class="s">&#34;\t&#34;</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">traversalChess</span><span class="o">(</span><span class="kt">int</span><span class="o">[][]</span> <span class="n">chessboard</span><span class="o">,</span> <span class="kt">int</span> <span class="n">row</span><span class="o">,</span> <span class="kt">int</span> <span class="n">column</span><span class="o">,</span> <span class="kt">int</span> <span class="n">step</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">chessboard</span><span class="o">[</span><span class="n">row</span><span class="o">][</span><span class="n">column</span><span class="o">]</span> <span class="o">=</span> <span class="n">step</span><span class="o">;</span>
+
+        <span class="c1">// 将当前位置标记为已经访问过
+</span><span class="c1"></span>        <span class="n">visited</span><span class="o">[</span><span class="n">row</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">column</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+
+        <span class="c1">// 获取当前位置的下一个可走通的位置的集合
+</span><span class="c1"></span>        <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Point</span><span class="o">&gt;</span> <span class="n">nextPos</span> <span class="o">=</span> <span class="n">getNext</span><span class="o">(</span><span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">column</span><span class="o">,</span> <span class="n">row</span><span class="o">));</span>
+
+        <span class="n">sort</span><span class="o">(</span><span class="n">nextPos</span><span class="o">);</span>
+
+        <span class="k">while</span> <span class="o">(</span><span class="n">nextPos</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// 获取当前可走通的位置
+</span><span class="c1"></span>            <span class="n">Point</span> <span class="n">current</span> <span class="o">=</span> <span class="n">nextPos</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+            <span class="c1">// 判断当前该点是否被访问过,如果没有被访问过则继续向下访问
+</span><span class="c1"></span>            <span class="k">if</span> <span class="o">(!</span><span class="n">visited</span><span class="o">[</span><span class="n">current</span><span class="o">.</span><span class="na">y</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">current</span><span class="o">.</span><span class="na">x</span><span class="o">])</span> <span class="o">{</span>
+                <span class="n">traversalChess</span><span class="o">(</span><span class="n">chessboard</span><span class="o">,</span> <span class="n">current</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">current</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">step</span> <span class="o">+</span> <span class="n">1</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="c1">// 当遍历完可走的位置集合后，如果发现该路不通，则进行回溯，否则标记为完成
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">step</span> <span class="o">&lt;</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">finished</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">chessboard</span><span class="o">[</span><span class="n">row</span><span class="o">][</span><span class="n">column</span><span class="o">]</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+            <span class="n">visited</span><span class="o">[</span><span class="n">row</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">column</span><span class="o">]</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">finished</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 将可走通路根据回溯次数进行从小到大排序
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Point</span><span class="o">&gt;</span> <span class="n">points</span><span class="o">){</span>
+        <span class="n">points</span><span class="o">.</span><span class="na">sort</span><span class="o">((</span><span class="n">o1</span><span class="o">,</span> <span class="n">o2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">next1</span> <span class="o">=</span> <span class="n">getNext</span><span class="o">(</span><span class="n">o1</span><span class="o">).</span><span class="na">size</span><span class="o">();</span>
+            <span class="kt">int</span> <span class="n">next2</span> <span class="o">=</span> <span class="n">getNext</span><span class="o">(</span><span class="n">o2</span><span class="o">).</span><span class="na">size</span><span class="o">();</span>
+            <span class="k">return</span> <span class="n">next1</span> <span class="o">-</span> <span class="n">next2</span><span class="o">;</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+
+
+
+    <span class="c1">// 获取下一个可走的位置
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Point</span><span class="o">&gt;</span> <span class="nf">getNext</span><span class="o">(</span><span class="n">Point</span> <span class="n">current</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Point</span><span class="o">&gt;</span> <span class="n">ps</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Point</span><span class="o">&gt;();</span>
+        <span class="n">Point</span> <span class="n">p1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">();</span>
+        <span class="c1">// 表示马儿可以走5这个位置
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">((</span><span class="n">p1</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">x</span> <span class="o">-</span> <span class="n">2</span><span class="o">)</span> <span class="o">&gt;=</span> <span class="n">0</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">p1</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">y</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">&gt;=</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">ps</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">p1</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="c1">// 判断马儿可以走6这个位置
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">((</span><span class="n">p1</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">x</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">&gt;=</span> <span class="n">0</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">p1</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">y</span> <span class="o">-</span> <span class="n">2</span><span class="o">)</span> <span class="o">&gt;=</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">ps</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">p1</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="c1">// 判断马儿可以走7这个位置
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">((</span><span class="n">p1</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="n">1</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">x</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">p1</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">y</span> <span class="o">-</span> <span class="n">2</span><span class="o">)</span> <span class="o">&gt;=</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">ps</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">p1</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="c1">// 判断马儿可以走0这个位置
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">((</span><span class="n">p1</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="n">2</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">x</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">p1</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">y</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">&gt;=</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">ps</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">p1</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="c1">// 判断马儿可以走1这个位置
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">((</span><span class="n">p1</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="n">2</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">x</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">p1</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">y</span> <span class="o">+</span> <span class="n">1</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">ps</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">p1</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="c1">// 判断马儿可以走2这个位置
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">((</span><span class="n">p1</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="n">1</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">x</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">p1</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">y</span> <span class="o">+</span> <span class="n">2</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">ps</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">p1</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="c1">// 判断马儿可以走3这个位置
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">((</span><span class="n">p1</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">x</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">&gt;=</span> <span class="n">0</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">p1</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">y</span> <span class="o">+</span> <span class="n">2</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">ps</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">p1</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="c1">// 判断马儿可以走4这个位置
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">((</span><span class="n">p1</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">x</span> <span class="o">-</span> <span class="n">2</span><span class="o">)</span> <span class="o">&gt;=</span> <span class="n">0</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">p1</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">y</span> <span class="o">+</span> <span class="n">1</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">ps</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">p1</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">ps</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
                     <div class="post_footer">
                         <div class="meta">
                             <div class="info">
