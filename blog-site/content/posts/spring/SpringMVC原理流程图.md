@@ -1,5 +1,5 @@
 ---
-title: "Springmvc原理流程图"
+title: "SpringMvc原理流程图"
 date: 2020-12-25
 draft: false
 tags: ["spring"]
