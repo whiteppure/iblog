@@ -12,9 +12,7 @@ slug: "java-springboot"
 > `SpringBoot`是由`Pivotal`团队提供的全新框架，其设计目的是用来简化新`Spring`应用的初始搭建以及开发过程。
 该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。`SpringBoot` 提供了一种新的编程范式，可以更加快速便捷地开发 `Spring` 项目，在开发过程当中可以专注于应用程序本身的功能开发，而无需在 `Spring` 配置上花太大的工夫。
 
-`SpringBoot` 基于 `Sring4` 进行设计，继承了原有 `Spring` 框架的优秀基因。
-`SpringBoot` 准确的说并不是一个框架，而是一些类库的集合。
-`maven` 或者 `gradle` 项目导入相应依赖即可使用 `SpringBoot`，而无需自行管理这些类库的版本。
+`SpringBoot` 基于 `Sring4` 进行设计，继承了原有 `Spring` 框架的优秀基因。`SpringBoot` 准确的说并不是一个框架，而是一些类库的集合。`maven` 或者 `gradle` 项目导入相应依赖即可使用 `SpringBoot`，而无需自行管理这些类库的版本。
 
 特点：
 - 独立运行的 `Spring` 项目：
@@ -179,6 +177,23 @@ public class SpringApplicationAdminJmxAutoConfiguration
 当 `Springboot` 启动的时候，会执行`AutoConfigurationImportSelector`这个类中的`getCandidateConfigurations`方法，这个方法会帮我们加载`META-INF/spring.factories`文件里面的当`@ConditionXXX`注解条件满足的类。
 
 ## Bean的自动装配
+提到Bean的自动装配就不得不说一下Spring的核心IOC，IOC全称为Inversion of Control，中文译为控制反转，是面向对象编程中的一种设计原则，可以用来减低计算机代码之间的耦合度。
+
+IOC的一个重点是在系统运行中，动态的向某个对象提供它所需要的其他对象。这一点是通过DI（Dependency Injection，依赖注入）来实现的。
+
+所谓IOC，对于spring框架来说，就是由spring来负责控制对象的生命周期和对象间的关系。IOC负责创建对象，把它们连接在一起，配置它们，并管理他们的整个生命周期从创建到销毁，所以可将IOC理解为一个大容器。IOC使用依赖注入（DI）来管理组成一个应用程序的组件。这些对象被称为 Spring Beans。
+
+一般在代码里面由这些注解体现：
+```
+@Component
+@Service
+@Repository
+@Controller
+@Autowired
+@Resource
+@Inject
+```
+
 `Spring`利用依赖注入（DI），完成对IOC容器中各个组件的依赖关系赋值。
 
 `Spring`提供三种装配方式：
@@ -186,7 +201,7 @@ public class SpringApplicationAdminJmxAutoConfiguration
 - 基于 XML 配置的显式装配
 - 基于 Java 配置的显式装配
 
-本篇博客，详细介绍基于注解的自动装配
+此处详细介绍基于注解的自动装配
 | 自动装配   | 来源                          | 支持@Primary | springboot支持属性 |
 | ---------- | ----------------------------- | ------------ | ------------------ |
 | @Autowired | Springboot原生                | 支持         | boolean required   |
@@ -1450,10 +1465,72 @@ SmartInstantiationAwareBeanPostProcessor
 ```
 到这就跟前边对上了，AOP相关的后置处理器也就是在这被调用的。
 
-回头在看上面的`createBean()`方法，刚才看到的是`resolveBeforeInstantiation()`方法的调用栈，所以从层次结构上看`AnnotationAwareAspectJAutoProxyCreator`组件的调用
-是在创建 `Bean`实例之前先尝试用后置处理器返回对象的。
+回头在看上面的`createBean()`方法，刚才看到的是`resolveBeforeInstantiation()`方法的调用栈，所以从层次结构上看`AnnotationAwareAspectJAutoProxyCreator`组件的调用是在创建 `Bean`实例之前先尝试用后置处理器返回对象的。
 
 ![AOP@EnableAspectJAutoProxy原理](/iblog/posts/annex/images/essays/AOP@EnableAspectJAutoProxy原理.png)
 
+## Spring事务
+Spring 为事务管理提供了丰富的功能支持。Spring 事务管理分为编码式和声明式的两种方式。编程式事务指的是通过编码方式实现事务；声明式事务基于 AOP,将具体业务逻辑与事务处理解耦。声明式事务管理使业务代码逻辑不受污染, 因此在实际使用中声明式事务用的比较多。
+
+### Spring事务的隔离级别
+事务隔离级别指的是一个事务对数据的修改与另一个并行的事务的隔离程度，当多个事务同时访问相同数据时，如果没有采取必要的隔离机制，就可能发生以下问题：
+
+|问题     | 描述                                                                                                                                         |
+|-----|--------------------------------------------------------------------------------------------------------------------------------------------|
+|脏读     | 个事务读到另一个事务未提交的更新数据。比如银行取钱，事务A开启事务，此时切换到事务B，事务B开启事务–>取走100元，此时切换回事务A，事务A读取的肯定是数据库里面的原始数据，因为事务B取走了100块钱，并没有提交，数据库里面的账务余额肯定还是原始余额，这就是脏读。      |
+|幻读     | 是指当事务不是独立执行时发生的一种现象。如第一个事务对一个表中的数据进行了修改，这种修改涉及到表中的全部数据行。 同时，第二个事务也修改这个表中的数据，这种修改是向表中插入一行新数据。那么，以后就会发生操作第一个事务的用户发现表中还有没有修改的数据行，就好象 发生了幻觉一样。 |
+|不可重复读     | 在一个事务里面的操作中发现了未被操作的数据。 比方说在同一个事务中先后执行两条一模一样的select语句，期间在此次事务中没有执行过任何DDL语句，但先后得到的结果不一致，这就是不可重复读。                                            |
+
+Spring支持的隔离级别：
+
+|隔离级别     | 描述                                                                                          |
+|-----|---------------------------------------------------------------------------------------------|
+|DEFAULT     | 使用数据库本身使用的隔离级别。ORACLE（读已提交） MySQL（可重复读）                                                     |
+|READ_UNCOMITTED     | 读未提交（脏读）最低的隔离级别，一切皆有可能。                                                                     |
+|READ_COMMITED     | 读已提交，ORACLE默认隔离级别，有幻读以及不可重复读风险。                                                             |
+|REPEATABLE_READ     | 可重复读，解决不可重复读的隔离级别，但还是有幻读风险。                                                                 |
+|SERLALIZABLE     | 串行化，所有事务请求串行执行，最高的事务隔离级别，不管多少事务，挨个运行完一个事务的所有子事务之后才可以执行另外一个事务里面的所有子事务，这样就解决了脏读、不可重复读和幻读的问题了。 |
+
+不是事务隔离级别设置得越高越好，事务隔离级别设置得越高，意味着势必要花手段去加锁用以保证事务的正确性，那么效率就要降低，因此实际开发中往往要在效率和并发正确性之间做一个取舍，一般情况下会设置为READ_COMMITED，此时避免了脏读，并发性也还不错，之后再通过一些别的手段去解决不可重复读和幻读的问题就好了。
+
+Spring建议的是使用DEFAULT，即数据库本身的隔离级别，配置好数据库本身的隔离级别，无论在哪个框架中读写数据都不用操心了。
+
+### Spring事务的传播
+事务传播行为指当一个事务方法被另一个事务方法调用时，这个事务方法应该如何进行。
+
+Spring定义了七种传播行为：
+
+| 名称                      | 值   | 描述                                                         |
+| ------------------------- | ---- |------------------------------------------------------------|
+| PROPAGATION_REQUIRED      | 0    | 支持当前事务，如果当前没有事务，就新建一个事务。这是最常见的选择，也是Spring默认的事务的传播。         |
+| PROPAGATION_SUPPORTS      | 1    | 支持当前事务，如果当前没有事务，就以非事务方式执行。                                 |
+| PROPAGATION_MANDATORY     | 2    | 支持当前事务，如果当前没有事务，就抛出异常。                                     |
+| PROPAGATION_REQUIRES_NEW  | 3    | 新建事务，如果当前存在事务，把当前事务挂起。                                     |
+| PROPAGATION_NOT_SUPPORTED | 4    | 以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。                 |
+| PROPAGATION_NEVER         | 5    | 以非事务方式执行，如果当前存在事务，则抛出异常。                                   |
+| PROPAGATION_NESTED        | 6    | 如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则进行与PROPAGATION_REQUIRED类似的操作。 |
+
+- @Transactional(propagation=Propagation.REQUIRED)：如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
+- @Transactional(propagation=Propagation.NOT_SUPPORTED)：容器不为这个方法开启事务
+- @Transactional(propagation=Propagation.REQUIRES_NEW)：不管是否存在事务,都创建一个新的事务,原来的挂起,新的执行完毕,继续执行老的事务
+- @Transactional(propagation=Propagation.MANDATORY)：必须在一个已有的事务中执行,否则抛出异常
+- @Transactional(propagation=Propagation.NEVER)：必须在一个没有的事务中执行,否则抛出异常(与Propagation.MANDATORY相反)
+- @Transactional(propagation=Propagation.SUPPORTS)：如果其他bean调用这个方法,在其他bean中声明事务,那就用事务.如果其他bean没有声明事务,那就不用事务.
+
+### @Transactional注解
+
+@Transactional注解失效：
+1. 如果某个方法是非public的，那么@Transactional就会失效，因为底层cglib是基于父子类来实现的，子类是不能重载父类的private方法，所以无法很好利用代理，这种情况下会导致@Transactional失效
+2. 使用的数据库引擎不支持事务，例如在使用mysql的时候使用MyISAM引擎不支持事务，InnoDB支持，并且从mysql5.5之后开始默认的存储引擎就为InnoDB 。
+3. 调用的问题，因为Spring事务是基于代理来实现的，所以某个加了@Transactional的方法只有是被代理对象调用时，那么这个注解才会生效，所以当被代理对象来调用这个方法那么事务就不会生效，简单的可以理解为添加了@Transactional注解的方法不能在同一个类中调用，否则会使事务失效。
+4. @Transactional 注解属性 propagation 设置错误，若是错误的配置以下三种 propagation ，事务将不会发生回滚：
+   - TransactionDefinition.PROPAGATION_SUPPORTS：如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。
+   - TransactionDefinition.PROPAGATION_NOT_SUPPORTED：以非事务方式运行，如果当前存在事务，则把当前事务挂起。
+   - TransactionDefinition.PROPAGATION_NEVER：以非事务方式运行，如果当前存在事务，则抛出异常。
+5. @Transactional 注解属性 rollbackFor 设置错误：rollbackFor 可以指定能够触发事务回滚的异常类型。Spring默认抛出了未检查unchecked异常（继承自RuntimeException 的异常）或者 Error才回滚事务；其他异常不会触发回滚事务。如果在事务中抛出其他类型的异常，但却期望 Spring 能够回滚事务，就需要指定 rollbackFor属性。
+6. 异常被 catch 了 导致@Transactional失效：当事务方法中抛出一个异常后，应该是需要表示当前事务需要 rollback ，如果在事务方法中手动捕获了该异常，那么事务方法则会任务当前事务应该正常 commit，此时就会出现事务方法中明明有报错信息表示当前事务需要 rollback 但是事务方法任务是正常，出现了前后不一致，也是因为这样就会抛出 UnexpectedRollbackException异常。
+
+
+@Transactional注解原理： 利用Spring Aop实现的。 当一个方法使用了@Transactional注解，在运行时，JVM为该Bean创建一个代理对象，并且在调用该方法的时候进行使用TransactionInterceptor拦截，在方法执行之前会开启一个事务，然后执行方法的逻辑。 方法执行成功，则提交事务。如果执行方法中出现异常，则回滚事务。
 
 
