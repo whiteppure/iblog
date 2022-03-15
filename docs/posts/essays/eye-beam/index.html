@@ -909,6 +909,34 @@
             
             
             <li class="nav-item">
+                <a class="nav-link text-left" href="#jvm%e8%b0%83%e4%bc%98">
+                    JVM调优
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
                 <a class="nav-link text-left" href="#java%e7%a8%8b%e5%ba%8fshell%e8%84%9a%e6%9c%ac%e7%a4%ba%e4%be%8b">
                     Java程序shell脚本示例
                 </a>
@@ -2675,6 +2703,27 @@ select o from instanceof 0x741012748 o
 </tr>
 </tbody>
 </table>
+<h3 id="jvm调优">JVM调优</h3>
+<p>JVM优化是到最后不得已才采用的手段，对JVM内存的系统级的调优主要的目的是减少GC的频率和Full GC的次数。</p>
+<p>何时调优：</p>
+<ol>
+<li>Full GC 次数频繁</li>
+<li>GC 停顿时间过长</li>
+<li>应用出现OutOfMemory 等内存异常</li>
+<li>堆内存持续上涨达到设置的最大内存值</li>
+</ol>
+<p>调优原则：</p>
+<ol>
+<li>多数导致GC问题的Java应用，都不是因为我们参数设置错误，而是代码问题</li>
+<li>在实际使用中，分析GC情况优化代码比优化JVM参数更好</li>
+<li>减少创建对象的数量、减少使用全局变量和大对象</li>
+</ol>
+<p>调优思路：</p>
+<ol>
+<li>分析GC日志及dump文件，判断是否需要优化，确定瓶颈问题点。如果各项参数设置合理，系统没有超时日志出现，GC频率不高，GC耗时不高，那么没有必要进行GC优化，如果GC时间超过1-3秒，或者频繁GC，则必须优化。</li>
+<li>确定JVM调优目标。如果内存分配过大或过小，或者采用的GC收集器比较慢，则应该优先调整这些参数，并且先找1台或几台机器进行测试，然后比较优化过的机器和没有优化的机器的性能对比，并有针对性的做出最后选择。</li>
+<li>不断的分析和调整，直到找到合适的JVM参数配置。</li>
+</ol>
 <h3 id="java程序shell脚本示例">Java程序shell脚本示例</h3>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/sh
 </span><span class="cp"></span>

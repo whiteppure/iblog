@@ -1708,7 +1708,7 @@ public class MainTest {
 
 
 #### [AQS](https://www.bilibili.com/video/BV1xt411S7xy?p=159)
-AQS是指`ava.util.concurrent.locks`包下的一个抽象类`AbstractQueuedSynchronizer`译为：抽象的队列同步器。
+AQS是指`java.util.concurrent.locks`包下的一个抽象类`AbstractQueuedSynchronizer`译为：抽象的队列同步器。
 
 在JUC包下，能够看到有许多类都继承了AQS，例如，`ReentrantLock 、CountDownLatch 、 ReentrantReadWriteLock 、 Semaphore `；
 所以AQS是JUC内容中重要的基础。
@@ -2940,7 +2940,7 @@ public class MainTest {
 }
 ```
 
-由于T`hreadLocal`里设置的值，只有当前线程自己看得见，这意味着你不可能通过其他线程为它初始化值。
+由于`ThreadLocal`里设置的值，只有当前线程自己看得见，这意味着你不可能通过其他线程为它初始化值。
 为了弥补这一点，`ThreadLocal`提供了一个`withInitial()`方法统一初始化所有线程的`ThreadLocal`的值：
 ```
 public class MainTest {

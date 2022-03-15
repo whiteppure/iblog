@@ -1675,8 +1675,7 @@ public class MainTest {
 ## [Netty](https://dongzl.github.io/netty-handbook/#/)
 
 ### 概述
-> [Netty is an asynchronous event-driven network application framework 
-  for rapid development of maintainable high performance protocol servers & clients.](https://netty.io)
+> [Netty is an asynchronous event-driven network application framework for rapid development of maintainable high performance protocol servers & clients.](https://netty.io)
 
 1. Netty 是一个异步的、基于事件驱动的网络应用框架，用以快速开发高性能、高可靠性的网络 IO 程序。
 2. Netty 主要针对在 TCP 协议下，面向 Client 端的高并发应用，或者 Peer-to-Peer 场景下的大量数据持续传输的应用。
@@ -1699,13 +1698,11 @@ Netty 主要基于主从 Reactor 多线程模型做了一定的改进。
 当并发数很大，就会创建大量的线程，占用很大系统资源，连接创建后，如果当前线程暂时没有数据可读，该线程会阻塞在 read 操作，造成线程资源浪费。
 
 #### Reactor 模型
-基于 I/O 复用模型，多个连接共用一个阻塞对象，应用程序只需要在一个阻塞对象等待，无需阻塞等待所有连接。
-当某个连接有新的数据可以处理时，操作系统通知应用程序，线程从阻塞状态返回，开始进行业务处理。
+基于 I/O 复用模型，多个连接共用一个阻塞对象，应用程序只需要在一个阻塞对象等待，无需阻塞等待所有连接。 当某个连接有新的数据可以处理时，操作系统通知应用程序，线程从阻塞状态返回，开始进行业务处理。
 
 ![Reactor模式](/iblog/posts/annex/images/essays/Reactor模式.png)
 
-为了避免浪费可以创建一个线程池，当客户端发起请求时，通过`DispatcherHandler`进行分发请求处理到线程池，线程池中在使用具体的线程进行事件处理。
-服务器端程序处理传入的多个请求,并将它们同步分派到相应的处理线程，因此 Reactor 模式也叫 Dispatcher 模式。
+为了避免浪费可以创建一个线程池，当客户端发起请求时，通过`DispatcherHandler`进行分发请求处理到线程池，线程池中在使用具体的线程进行事件处理。 服务器端程序处理传入的多个请求,并将它们同步分派到相应的处理线程，因此 Reactor 模式也叫 Dispatcher 模式。
 
 Reactor 模式使用 IO 复用监听事件，收到事件后，分发给某个线程（进程），这点就是网络服务器高并发处理关键。
 
@@ -1775,15 +1772,16 @@ Reactor 主线程可以对应多个 Reactor 子线程，即 MainRecator 可以�
 
 - Netty 抽象出两组线程池 `BossGroup` 专门负责接收客户端的连接，`WorkerGroup` 专门负责网络的读写；`BossGroup` 和 `WorkerGroup` 类型都是 `NioEventLoopGroup`
 - `NioEventLoopGroup` 相当于一个事件循环组，这个组中含有多个事件循环，每一个事件循环是 `NioEventLoop`，每个 `NioEventLoop` 都有一个 `Selector`，用于监听绑定在其上的 `socket` 的网络通讯
+- `NioEventLoopGroup` 可指定多个 `NioEventLoop`
 - 每个 `BossNioEventLoop` 循环执行的步骤
     - 轮询 accept 事件
     - 处理 `accept` 事件，与 client 建立连接，生成 `NioSocketChannel`，并将其注册到某个 `workerNioEventLoop` 上的 `Selector`
     - 处理任务队列的任务，即 `runAllTasks`
-- 每个 Worker `NioEventLoop` 循环执行的步骤
+- 每个 `WorkerNioEventLoop` 循环执行的步骤
     - 轮询 `read，write` 事件
     - 处理 I/O 事件，即 `read，write` 事件，在对应 `NioSocketChannel` 处理
     - 处理任务队列的任务，即 `runAllTasks`
-- 每个 Worker `NioEventLoop` 处理业务时，会使用 `pipeline`（管道），`pipeline` 中包含了 `channel`(通道)，即通过 `pipeline` 可以获取到对应通道，管道中维护了很多的处理器
+- 每个 `WorkerNioEventLoop` 处理业务时，会使用 `pipeline`（管道），`pipeline` 中包含了 `channel`(通道)，即通过 `pipeline` 可以获取到对应通道，管道中维护了很多的处理器
 
 
 ### 简单使用
@@ -2042,8 +2040,8 @@ public class MainTestServer {
 ```
 ### 异步模型
 异步的概念和同步相对。当一个异步过程调用发出后，调用者不能立刻得到结果。实际处理这个调用的组件在完成后，通过状态、通知和回调来通知调用者。
-`Netty` 中的 I/O 操作是异步的，包括 `Bind、Write、Connect` 等操作会简单的返回一个 `ChannelFuture`。
-调用者并不能立刻获得结果，而是通过 `Future-Listener` 机制，用户可以方便的主动获取或者通过通知机制获得 IO 操作结果。
+
+`Netty` 中的 I/O 操作是异步的，包括 `Bind、Write、Connect` 等操作会简单的返回一个 `ChannelFuture`。 调用者并不能立刻获得结果，而是通过 `Future-Listener` 机制，用户可以方便的主动获取或者通过通知机制获得 IO 操作结果。
 
 当 `Future` 对象刚刚创建时，处于非完成状态，调用者可以通过返回的 `ChannelFuture` 来获取操作执行的状态，注册监听函数来执行完成后的操作。
 
@@ -2165,6 +2163,327 @@ public class MainTestServer {
 }
 ```
 ### TCP粘包、拆包及解决方案
+TCP 是面向连接的，面向流的，提供高可靠性服务。收发两端（客户端和服务器端）都要有一一成对的 socket，因此，发送端为了将多个发给接收端的包，更有效的发给对方，使用了优化方法（Nagle 算法），将多次间隔较小且数据量小的数据，合并成一个大的数据块，然后进行封包。这样做虽然提高了效率，但是接收端就难于分辨出完整的数据包了，由于 TCP 无消息保护边界,需要在接收端处理消息边界问题，也就是我们所说的粘包、拆包问题。
+
+拆包和粘包是在socket编程中经常出现的情况，在socket通讯过程中，如果通讯的一端一次性连续发送多条数据包，tcp协议会将多个数据包打包成一个tcp报文发送出去，这就是所谓的粘包。而如果通讯的一端发送的数据包超过一次tcp报文所能传输的最大值时，就会将一个数据包拆成多个最大tcp长度的tcp报文分开传输，这就叫做拆包。
+
+对于粘包的情况，要对粘在一起的包进行拆包。对于拆包的情况，要对被拆开的包进行粘包，即将一个被拆开的完整应用包再组合成一个完整包。比较通用的做法就是每次发送一个应用数据包前在前面加上四个字节的包长度值，指明这个应用包的真实长度。
+
+使用netty解决拆包、粘包问题代码示例：
+
+客户端代码
+````
+@SpringBootApplication
+public class NettyClientApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(NettyClientApplication.class, args);
+    }
+}
+
+@Slf4j
+@Component
+public class StartNetty implements CommandLineRunner {
+
+    private final NettyClient nettyClient;
+
+    public StartNetty(NettyClient nettyClient) {
+        this.nettyClient = nettyClient;
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        log.info("启动netty客户端 ...");
+        nettyClient.start();
+    }
+}
+
+@Slf4j
+@Component
+public class NettyClient {
+    /**
+     * Netty客户端启动
+     */
+    public void start() {
+        EventLoopGroup group = new NioEventLoopGroup();
+        Bootstrap bootstrap = new Bootstrap()
+                .group(group)
+                //该参数的作用就是禁止使用Nagle算法，使用于小数据即时传输
+                .option(ChannelOption.TCP_NODELAY, true)
+                .channel(NioSocketChannel.class)
+                .handler(new NettyClientInitializer());
+        try {
+            ChannelFuture future = bootstrap.connect("127.0.0.1", 9000).sync();
+            log.info("客户端成功....");
+            //发送消息
+            future.channel().writeAndFlush("客户端请求数据");
+            // 等待连接被关闭
+            future.channel().closeFuture().sync();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            group.shutdownGracefully();
+        }
+    }
+}
+
+
+
+public class NettyClientInitializer extends ChannelInitializer<SocketChannel> {
+    @Override
+    protected void initChannel(SocketChannel socketChannel) throws Exception {
+        socketChannel.pipeline().addLast("decoder", new MyMessageDecoder());
+        socketChannel.pipeline().addLast("encoder", new MyMessageEncoder());
+        socketChannel.pipeline().addLast(new NettyClientHandler());
+    }
+}
+
+
+@Slf4j
+public class NettyClientHandler extends ChannelInboundHandlerAdapter {
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        log.info("客户端Active .....");
+        // 模拟tcp粘包
+        for (int i = 0; i < 5; i++) {
+            String mes = "今天天气冷，吃火锅";
+            byte[] content = mes.getBytes(Charset.forName("utf-8"));
+            int length = mes.getBytes(Charset.forName("utf-8")).length;
+
+            //  解决tcp粘包问题
+            MessageProtocol messageProtocol = new MessageProtocol();
+            messageProtocol.setLen(length);
+            messageProtocol.setContent(content);
+            ctx.writeAndFlush(messageProtocol);
+        }
+    }
+
+    /**
+     * 收到服务端的消息
+     */
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        log.info("客户端收到消息: {}", msg.toString());
+        MessageProtocol mp = (MessageProtocol)msg;
+        int len = mp.getLen();
+        byte[] content = mp.getContent();
+
+        System.out.println("客户端接收到消息如下");
+        System.out.println("长度=" + len);
+        System.out.println("内容=" + new String(content, StandardCharsets.UTF_8));
+
+
+    }
+
+    /**
+     * 客户端异常时触发
+     */
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        cause.printStackTrace();
+        ctx.close();
+    }
+}
+````
+
+服务端代码
+````
+@SpringBootApplication
+public class NettyServerApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(NettyServerApplication.class, args);
+    }
+}
+
+@Slf4j
+@Component
+public class StartNetty implements CommandLineRunner {
+
+    private final NettyServer nettyServer;
+
+    public StartNetty(NettyServer nettyServer) {
+        this.nettyServer = nettyServer;
+    }
+
+    /**
+     * 启动netty 让netty随着项目一起启动
+     */
+    @Override
+    public void run(String... args) throws Exception {
+        log.info("netty 服务端启动 ...");
+        nettyServer.start(new InetSocketAddress("127.0.0.1", 9000));
+    }
+}
+
+@Slf4j
+@Component
+public class NettyServer  {
+
+    /**
+     * Netty服务启动
+     */
+    public void start(InetSocketAddress socketAddress) {
+        //new 一个主线程组
+        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+        //new 一个工作线程组
+        EventLoopGroup workGroup = new NioEventLoopGroup(200);
+
+        ServerBootstrap bootstrap = new ServerBootstrap()
+                .group(bossGroup, workGroup)
+                .channel(NioServerSocketChannel.class)
+                .childHandler(new ServerChannelInitializer())
+                .localAddress(socketAddress)
+                //设置队列大小
+                .option(ChannelOption.SO_BACKLOG, 1024)
+                // 两小时内没有数据的通信时,TCP会自动发送一个活动探测数据报文
+                .childOption(ChannelOption.SO_KEEPALIVE, true);
+        //绑定端口,开始接收进来的连接
+        try {
+            // 绑定端口 生成一个ChannelFuture 对象 启动服务器
+            ChannelFuture future = bootstrap.bind(socketAddress).sync();
+            log.info("服务器启动开始监听端口: {}", socketAddress.getPort());
+            // 对关闭通道进行监听
+            future.channel().closeFuture().sync();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            //关闭主线程组
+            bossGroup.shutdownGracefully();
+            //关闭工作线程组
+            workGroup.shutdownGracefully();
+        }
+    }
+}
+
+public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> {
+
+    @Override
+    protected void initChannel(SocketChannel socketChannel) throws Exception {
+        socketChannel.pipeline().addLast("decoder", new MyMessageDecoder());
+        socketChannel.pipeline().addLast("encoder", new MyMessageEncoder());
+        socketChannel.pipeline().addLast(new NettyServerHandler());
+    }
+}
+
+@Slf4j
+public class NettyServerHandler extends ChannelInboundHandlerAdapter {
+    /**
+     * 客户端连接会触发
+     */
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        log.info("服务端 Active......");
+    }
+
+    /**
+     * 客户端发消息会触发
+     */
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        log.info("服务器收到消息: {}", msg.toString());
+        MessageProtocol mp = (MessageProtocol)msg;
+        int len = mp.getLen();
+        byte[] content = mp.getContent();
+
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println("服务器接收到信息如下");
+        System.out.println("长度=" + len);
+        System.out.println("内容=" + new String(content, Charset.forName("utf-8")));
+
+        //回复消息
+        String responseContent = UUID.randomUUID().toString();
+        int responseLen = responseContent.getBytes("utf-8").length;
+        byte[] responseContent2 = responseContent.getBytes("utf-8");
+        //构建一个协议包
+        MessageProtocol messageProtocol = new MessageProtocol();
+        messageProtocol.setLen(responseLen);
+        messageProtocol.setContent(responseContent2);
+
+        ctx.writeAndFlush(messageProtocol);
+    }
+
+    /**
+     * 给客户端发送消息
+     */
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+        ctx.writeAndFlush("hello client");
+    }
+
+    /**
+     * 发生异常触发
+     */
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        cause.printStackTrace();
+        ctx.close();
+    }
+}
+````
+
+公共代码部分
+````
+public class MessageProtocol {
+
+    private int len;
+
+    private byte[] content;
+
+    public int getLen() {
+        return len;
+    }
+
+    public void setLen(int len) {
+        this.len = len;
+    }
+
+    public byte[] getContent() {
+        return content;
+    }
+
+    public void setContent(byte[] content) {
+        this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "MessageProtocol{" +
+                "len=" + len +
+                ", content=" + new String(content) +
+                '}';
+    }
+}
+
+public class MyMessageDecoder extends ReplayingDecoder<Void> {
+
+    @Override
+    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+        //需要将得到二进制字节码-> MessageProtocol 数据包(对象)
+        int length = in.readInt();
+        byte[] content = new byte[length];
+        in.readBytes(content);
+
+        //封装成 MessageProtocol 对象，放入 out， 传递下一个handler业务处理
+        MessageProtocol messageProtocol = new MessageProtocol();
+        messageProtocol.setLen(length);
+        messageProtocol.setContent(content);
+        out.add(messageProtocol);
+    }
+}
+
+public class MyMessageEncoder extends MessageToByteEncoder<MessageProtocol> {
+
+    @Override
+    protected void encode(ChannelHandlerContext ctx, MessageProtocol msg, ByteBuf out) throws Exception {
+        System.out.println("MyMessageEncoder encode 方法被调用");
+        out.writeInt(msg.getLen());
+        out.writeBytes(msg.getContent());
+    }
+}
+````
 
 
 

@@ -3927,7 +3927,7 @@ class MyCache {
 <p>因为凭证的数量最多为1，连续调用两次<code>unpark</code>和调用一次<code>unpark</code>效果一样，只会增加一个凭证;
 而调用两次park却需要消费两个凭证，证不够，不能放行。</p>
 <h4 id="aqshttpswwwbilibilicomvideobv1xt411s7xyp159"><a href="https://www.bilibili.com/video/BV1xt411S7xy?p=159">AQS</a></h4>
-<p>AQS是指<code>ava.util.concurrent.locks</code>包下的一个抽象类<code>AbstractQueuedSynchronizer</code>译为：抽象的队列同步器。</p>
+<p>AQS是指<code>java.util.concurrent.locks</code>包下的一个抽象类<code>AbstractQueuedSynchronizer</code>译为：抽象的队列同步器。</p>
 <p>在JUC包下，能够看到有许多类都继承了AQS，例如，<code>ReentrantLock 、CountDownLatch 、 ReentrantReadWriteLock 、 Semaphore </code>；
 所以AQS是JUC内容中重要的基础。</p>
 <p><img src="/iblog/posts/annex/images/essays/JUC.locks%E5%8C%85UML.png" alt="JUC.locks包UML"></p>
@@ -5084,7 +5084,7 @@ public void remove()
         return localInt.get();
     }
 }
-</code></pre></div><p>由于T<code>hreadLocal</code>里设置的值，只有当前线程自己看得见，这意味着你不可能通过其他线程为它初始化值。
+</code></pre></div><p>由于<code>ThreadLocal</code>里设置的值，只有当前线程自己看得见，这意味着你不可能通过其他线程为它初始化值。
 为了弥补这一点，<code>ThreadLocal</code>提供了一个<code>withInitial()</code>方法统一初始化所有线程的<code>ThreadLocal</code>的值：</p>
 <div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
 
