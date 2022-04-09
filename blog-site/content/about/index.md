@@ -14,10 +14,6 @@ draft: false
 - [使用hugo搭建个人博客站点](https://blog.coderzh.com/2015/08/29/hugo)
 - [不蒜子计数统计](https://busuanzi.ibruce.info)
 
-## 附件下载
-- [huffmanZip.jar](/iblog/posts/rookie/jar/huffmanZip.jar)
-
-
 ## 其他学习参考资料
 因为本人目前主要是做Java开发相关的工作，所以这里的博客文章、参考资料大部分都和Java相关，如果您不想看到Java可以直接关闭本页面。
 
@@ -33,7 +29,7 @@ draft: false
 - 芋道源码：[https://www.iocoder.cn](https://www.iocoder.cn)
 
 ### 常用Java官方资料
-- Java SE规范：[https://docs.oracle.com/javase/specs](https://docs.oracle.com/javase/specs)
+- JavaSE规范：[https://docs.oracle.com/javase/specs](https://docs.oracle.com/javase/specs)
 - JVM8文档：[https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html)
 - JVM7文档：[https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/java.html](https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/java.html)
 - OpenJDK相关链接：[https://blog.csdn.net/qq_23091073/article/details/83178848](https://blog.csdn.net/qq_23091073/article/details/83178848)
@@ -58,8 +54,5 @@ draft: false
 - 阮一峰博客：[http://www.ruanyifeng.com/blog](http://www.ruanyifeng.com/blog)
 - hollis博客：[https://www.hollischuang.com](https://www.hollischuang.com)
 - deepinmind的技术博客：[http://it.deepinmind.com](http://it.deepinmind.com)
-- xkcoding博客：[https://xkcoding.com](https://xkcoding.com)
-- 朱小厮的博客：[https://honeypps.com](https://honeypps.com)
-- 蘑菇博客：[http://www.moguit.cn](http://www.moguit.cn)
 - 并发编程网：[http://ifeve.com](http://ifeve.com)
 - iMySql老叶茶馆：[https://imysql.com](https://imysql.com)

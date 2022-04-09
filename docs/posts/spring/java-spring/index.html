@@ -1,0 +1,2777 @@
+<!DOCTYPE html>
+<html lang="zh" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="whitepure" />
+	
+	
+	
+	<title>Spring详解 ｜ 泊客</title>
+	
+    
+    
+    <meta name="description" content="概览 Spring是一个轻量级的Java开源框架，为了解决企业应用开发的复杂性而创建的。Spring的核心是控制反转（IOC）和面向切面（AOP）。 简单来说，Sp" />
+    
+
+    
+    
+    <meta name="keywords" content="whitepure博客, whiteppure, whitepure" />
+    
+
+	
+    
+    <link rel="shortcut icon" href="https://whiteppure.github.io/iblog/images/favicon.ico" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/zozo.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/highlight.css" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/toc.css" />
+
+    
+    
+</head>
+
+<body>
+    
+    
+    
+
+
+
+
+
+
+
+
+
+<div class="toc">
+
+    <div class="page-header"><strong>- CATALOG -</strong></div>
+
+    <div id="page-scrollspy" class="toc-nav">
+
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%a6%82%e8%a7%88">
+                    概览
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#spring%e5%90%af%e5%8a%a8%e6%b5%81%e7%a8%8b">
+                    Spring启动流程
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#bean%e7%9a%84%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f">
+                    Bean的生命周期
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#spring%e4%b8%89%e7%ba%a7%e7%bc%93%e5%ad%98">
+                    Spring三级缓存
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#spring%e5%be%aa%e7%8e%af%e4%be%9d%e8%b5%96">
+                    Spring循环依赖
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#factorybean%e4%b8%8ebeanfactory">
+                    FactoryBean与BeanFactory
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#springboot">
+                    SpringBoot
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#springbootapplication">
+                    @SpringBootApplication
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#springbootconfiguration">
+                    @SpringBootConfiguration
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#enableautoconfiguration">
+                    @EnableAutoConfiguration
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%80%bb%e7%bb%93">
+                    总结
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#bean%e7%9a%84%e8%87%aa%e5%8a%a8%e8%a3%85%e9%85%8d">
+                    Bean的自动装配
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#autowired">
+                    @Autowired
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%8a%a0%e5%9c%a8%e5%b1%9e%e6%80%a7%e4%b8%8a">
+                    加在属性上
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%8a%a0%e5%9c%a8%e6%96%b9%e6%b3%95%e5%8f%82%e6%95%b0%e4%b8%8a">
+                    加在方法、参数上
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%8e%9f%e7%90%86">
+                    原理
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#resourceinject">
+                    @Resource、@Inject
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8spring%e5%ba%95%e5%b1%82%e7%bb%84%e4%bb%b6">
+                    使用Spring底层组件
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#bean%e7%9a%84%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f-1">
+                    Bean的生命周期
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%b3%a8%e5%85%a5bean">
+                    注入Bean
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#initializingbeandisposablebean">
+                    InitializingBean、DisposableBean
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#postconstructpredestroy">
+                    @PostConstruct、@PreDestroy
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#beanpostprocessor">
+                    BeanPostProcessor
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%8e%9f%e7%90%86-1">
+                    原理
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#aop">
+                    AOP
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%8a%a8%e6%80%81%e4%bb%a3%e7%90%86">
+                    动态代理
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8">
+                    使用
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#enableaspectjautoproxy">
+                    @EnableAspectJAutoProxy
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#registerbeanpostprocessors">
+                    registerBeanPostProcessors
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#finishbeanfactoryinitialization">
+                    finishBeanFactoryInitialization
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#spring%e4%ba%8b%e5%8a%a1">
+                    Spring事务
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#spring%e4%ba%8b%e5%8a%a1%e7%9a%84%e9%9a%94%e7%a6%bb%e7%ba%a7%e5%88%ab">
+                    Spring事务的隔离级别
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#spring%e4%ba%8b%e5%8a%a1%e7%9a%84%e4%bc%a0%e6%92%ad">
+                    Spring事务的传播
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#transactional%e6%b3%a8%e8%a7%a3">
+                    @Transactional注解
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+
+    </div>
+
+</div>
+
+
+
+    
+    <div class="main animate__animated animate__fadeInDown" id="pdf_content">
+        <div class="nav_container animated fadeInDown">
+    <div class="site_nav" id="site_nav">
+        <ul><li class="">
+                <a href="https://whiteppure.github.io/iblog/">首页</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/iblog/posts/">归档</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/iblog/tags/">标签</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/iblog/about/">关于</a>
+            </li>
+        </ul>
+    </div>
+    <div class="menu_icon">
+        <a id="menu_icon"><i class="ri-menu-line"></i></a>
+    </div>
+</div>
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/">
+                    <span>泊客</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">
+                大道至简
+            </p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
+
+
+
+            </div>
+            
+            <div class="post">
+                <div class="post_title post_detail_title">
+                    <span class="date" id="busuanzi_container_site_pv">访问量 <span id="busuanzi_value_site_pv"></span>次</span>
+                </div>
+                <div class="post_title post_detail_title">
+                    <span class="date" id="busuanzi_container_site_uv">访客数 <span id="busuanzi_value_site_uv"></span>人</span>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+        <div class="content">
+            <div class="post_page">
+                <div class="post animate__animated animate__fadeInDown">
+                    <div class="post_title post_detail_title">
+                        <h2><a href='/iblog/posts/spring/java-spring/'>Spring详解</a></h2>
+                        <span class="date">2021.05.13</span>
+                    </div>
+                    <div class="post_content markdown"><h2 id="概览">概览</h2>
+<p>Spring是一个轻量级的Java开源框架，为了解决企业应用开发的复杂性而创建的。Spring的核心是控制反转（IOC）和面向切面（AOP）。</p>
+<p>简单来说，Spring是一个分层的JavaSE/EE 一站式轻量级开源框架。在每一层都提供支持。</p>
+<ul>
+<li>表示层：spring mvc</li>
+<li>业务层：spring</li>
+<li>持久层：jdbctemplate、spring data</li>
+</ul>
+<p><img src="/iblog/posts/annex/images/spring/Spring%E8%AF%A6%E8%A7%A3-001.png" alt="Spring详解-001"></p>
+<h2 id="spring启动流程">Spring启动流程</h2>
+<h2 id="bean的生命周期">Bean的生命周期</h2>
+<h2 id="spring三级缓存">Spring三级缓存</h2>
+<h2 id="spring循环依赖">Spring循环依赖</h2>
+<h2 id="factorybean与beanfactory">FactoryBean与BeanFactory</h2>
+<h2 id="springboot">SpringBoot</h2>
+<p>官网地址：<a href="https://spring.io/projects/spring-boot">https://spring.io/projects/spring-boot</a></p>
+<blockquote>
+<p><code>SpringBoot</code>是由<code>Pivotal</code>团队提供的全新框架，其设计目的是用来简化新<code>Spring</code>应用的初始搭建以及开发过程。
+该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。<code>SpringBoot</code> 提供了一种新的编程范式，可以更加快速便捷地开发 <code>Spring</code> 项目，在开发过程当中可以专注于应用程序本身的功能开发，而无需在 <code>Spring</code> 配置上花太大的工夫。</p>
+</blockquote>
+<p><code>SpringBoot</code> 基于 <code>Sring4</code> 进行设计，继承了原有 <code>Spring</code> 框架的优秀基因。<code>SpringBoot</code> 准确的说并不是一个框架，而是一些类库的集合。<code>maven</code> 或者 <code>gradle</code> 项目导入相应依赖即可使用 <code>SpringBoot</code>，而无需自行管理这些类库的版本。</p>
+<p>特点：</p>
+<ul>
+<li>独立运行的 <code>Spring</code> 项目：
+<code>SpringBoot</code> 可以以 jar 包的形式独立运行，运行一个 <code>SpringBoot</code> 项目只需通过 <code>java–jar xx.jar</code> 来运行。</li>
+<li>内嵌 <code>Servlet</code> 容器：
+<code>SpringBoot</code> 可选择内嵌 <code>Tomcat</code>、<code>Jetty</code> 或者 <code>Undertow</code>，这样我们无须以 <code>war</code> 包形式部署项目。</li>
+<li>提供 <code>starter</code> 简化 <code>Maven</code> 配置：
+<code>Spring</code> 提供了一系列的 <code>starter</code> pom 来简化 <code>Maven</code> 的依赖加载，例如，当你使用了<code>spring-boot-starter-web</code> 时，会自动加入依赖包。</li>
+<li>自动配置 <code>Spring</code>：
+<code>SpringBoot</code> 会根据在类路径中的 jar 包、类，为 jar 包里的类自动配置 Bean，这样会极大地减少我们要使用的配置。当然，<code>SpringBoot</code> 只是考虑了大多数的开发场景，并不是所有的场景，若在实际开发中我们需要自动配置 <code>Bean</code>，而 <code>SpringBoot</code> 没有提供支持，则可以自定义自动配置。</li>
+<li>准生产的应用监控：
+<code>SpringBoot</code> 提供基于 <code>http、ssh、telnet</code> 对运行时的项目进行监控。</li>
+<li>无代码生成和 xml 配置：
+<code>SpringBoot</code> 的神奇的不是借助于代码生成来实现的，而是通过条件注解来实现的，这是 <code>Spring 4.x</code> 提供的新特性。<code>Spring 4.x</code> 提倡使用 Java 配置和注解配置组合，而 <code>SpringBoot</code> 不需要任何 xml 配置即可实现 <code>Spring</code> 的所有配置。</li>
+</ul>
+<h3 id="springbootapplication">@SpringBootApplication</h3>
+<p><code>@SpringBootApplication</code>这个注解通常标注在启动类上：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@SpringBootApplication
+public class SpringBootExampleApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(SpringBootExampleApplication.class, args);
+    }
+}
+</code></pre></div><p><code>@SpringBootApplication</code>是一个复合注解，即由其他注解构成。核心注解是<code>@SpringBootConfiguration</code>和<code>@EnableAutoConfiguration</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Inherited
+@SpringBootConfiguration
+@EnableAutoConfiguration
+@ComponentScan(
+    excludeFilters = {@Filter(
+    type = FilterType.CUSTOM,
+    classes = {TypeExcludeFilter.class}
+), @Filter(
+    type = FilterType.CUSTOM,
+    classes = {AutoConfigurationExcludeFilter.class}
+)}
+)
+public @interface SpringBootApplication{
+}
+</code></pre></div><h4 id="springbootconfiguration">@SpringBootConfiguration</h4>
+<p><code>@SpringBootConfiguration</code>核心注解是<code>@Configuration</code>代表自己是一个<code>Spring</code>的配置类</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Configuration
+public @interface SpringBootConfiguration {
+}
+</code></pre></div><p><code>@Configuration</code>底层实现就是一个<code>Component</code></p>
+<blockquote>
+<p>指示带注释的类是一个“组件”。
+在使用基于注释的配置和类路径扫描时，这些类被视为自动检测的候选类。</p>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">/**
+ * Indicates that an annotated class is a &#34;component&#34;.
+ * Such classes are considered as candidates for auto-detection
+ * when using annotation-based configuration and classpath scanning.
+ *
+ */
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Indexed
+public @interface Component 
+</code></pre></div><h4 id="enableautoconfiguration">@EnableAutoConfiguration</h4>
+<p>核心注解是<code>@AutoConfigurationPackage</code>和<code>@Import({AutoConfigurationImportSelector.class})</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Inherited
+@AutoConfigurationPackage
+@Import({AutoConfigurationImportSelector.class})
+public @interface EnableAutoConfiguration {
+}
+</code></pre></div><p><code>@AutoConfigurationPackage</code>注解核心是引入了一个<code>@Import(AutoConfigurationPackages.Registrar.class)</code>配置类,该类实现了<code>ImportBeanDefinitionRegistrar</code>接口</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go">	<span class="cm">/**
+</span><span class="cm">	 * {@link ImportBeanDefinitionRegistrar} to store the base package from the importing
+</span><span class="cm">	 * configuration.
+</span><span class="cm">	 */</span>
+	<span class="nx">static</span> <span class="nx">class</span> <span class="nx">Registrar</span> <span class="nx">implements</span> <span class="nx">ImportBeanDefinitionRegistrar</span><span class="p">,</span> <span class="nx">DeterminableImports</span> <span class="p">{</span>
+		<span class="err">@</span><span class="nx">Override</span>
+		<span class="nx">public</span> <span class="nx">void</span> <span class="nf">registerBeanDefinitions</span><span class="p">(</span><span class="nx">AnnotationMetadata</span> <span class="nx">metadata</span><span class="p">,</span> <span class="nx">BeanDefinitionRegistry</span> <span class="nx">registry</span><span class="p">)</span> <span class="p">{</span>
+			<span class="nf">register</span><span class="p">(</span><span class="nx">registry</span><span class="p">,</span> <span class="nx">new</span> <span class="nf">PackageImports</span><span class="p">(</span><span class="nx">metadata</span><span class="p">).</span><span class="nf">getPackageNames</span><span class="p">().</span><span class="nf">toArray</span><span class="p">(</span><span class="nx">new</span> <span class="nx">String</span><span class="p">[</span><span class="mi">0</span><span class="p">]));</span>
+		<span class="p">}</span>
+		<span class="err">@</span><span class="nx">Override</span>
+		<span class="nx">public</span> <span class="nx">Set</span><span class="p">&lt;</span><span class="nx">Object</span><span class="p">&gt;</span> <span class="nf">determineImports</span><span class="p">(</span><span class="nx">AnnotationMetadata</span> <span class="nx">metadata</span><span class="p">)</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="nx">Collections</span><span class="p">.</span><span class="nf">singleton</span><span class="p">(</span><span class="nx">new</span> <span class="nf">PackageImports</span><span class="p">(</span><span class="nx">metadata</span><span class="p">));</span>
+		<span class="p">}</span>
+
+	<span class="p">}</span>
+</code></pre></div><blockquote>
+<p>这里可以打断点自己看一下</p>
+</blockquote>
+<p><code>@AutoConfigurationPackage</code> 这个注解本身的含义就是将主配置类（<code>@SpringBootApplication</code>标注的类）所在的包下面所有的组件都扫描到 <code>spring</code> 容器中。</p>
+<p><code>AutoConfigurationImportSelector</code>核心代码如下</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">	/**
+	 * Return the auto-configuration class names that should be considered. By default
+	 * this method will load candidates using {@link SpringFactoriesLoader} with
+	 * {@link #getSpringFactoriesLoaderFactoryClass()}.
+	 * @param metadata the source metadata
+	 * @param attributes the {@link #getAttributes(AnnotationMetadata) annotation
+	 * attributes}
+	 * @return a list of candidate configurations
+	 */
+	protected List&lt;String&gt; getCandidateConfigurations(AnnotationMetadata metadata, AnnotationAttributes attributes) {
+		List&lt;String&gt; configurations = SpringFactoriesLoader.loadFactoryNames(getSpringFactoriesLoaderFactoryClass(),
+				getBeanClassLoader());
+		Assert.notEmpty(configurations, &#34;No auto configuration classes found in META-INF/spring.factories. If you &#34;
+				+ &#34;are using a custom packaging, make sure that file is correct.&#34;);
+		return configurations;
+	}
+
+	/**
+	 * Return the class used by {@link SpringFactoriesLoader} to load configuration
+	 * candidates.
+	 * @return the factory class
+	 */
+	protected Class&lt;?&gt; getSpringFactoriesLoaderFactoryClass() {
+		return EnableAutoConfiguration.class;
+	}
+	protected ClassLoader getBeanClassLoader() {
+		return this.beanClassLoader;
+	}
+</code></pre></div><p><code>getSpringFactoriesLoaderFactoryClass</code>方法返回<code>EnableAutoConfiguration.class</code>目的就是为了将启动类所需的所有资源导入。</p>
+<p>在<code>getCandidateConfigurations</code>中有如下代码</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">Assert.notEmpty(configurations, &#34;No auto configuration classes found in META-INF/spring.factories. If you are using a custom packaging, make sure that file is correct.&#34;);
+</code></pre></div><p>大意：在<code>META-INF/spring.factories</code>中没有发现自动配置类。如果您使用的是自定义打包，请确保该文件是正确的。
+<img src="/iblog/posts/annex/images/essays/%E6%89%BE%E5%88%B0spring.factories.png" alt="找到spring.factories"></p>
+<p><code>spring.factories</code>包含了很多类，但不是全部都加载的，在某些类里面，是有一个条件<code>@ConditionalOnXXX</code>注解，只有当这个注解上的条件满足才会加载。</p>
+<p>例如：<code>SpringApplicationAdminJmxAutoConfiguration</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Configuration(proxyBeanMethods = false)
+@AutoConfigureAfter(JmxAutoConfiguration.class)
+@ConditionalOnProperty(prefix = &#34;spring.application.admin&#34;, value = &#34;enabled&#34;, havingValue = &#34;true&#34;,
+		matchIfMissing = false)
+public class SpringApplicationAdminJmxAutoConfiguration 
+</code></pre></div><h4 id="总结">总结</h4>
+<p><img src="/iblog/posts/annex/images/essays/@SpringbootApplication%E5%8E%9F%E7%90%86.png" alt="@SpringbootApplication原理"></p>
+<p>当 <code>Springboot</code> 启动的时候，会执行<code>AutoConfigurationImportSelector</code>这个类中的<code>getCandidateConfigurations</code>方法，这个方法会帮我们加载<code>META-INF/spring.factories</code>文件里面的当<code>@ConditionXXX</code>注解条件满足的类。</p>
+<h2 id="bean的自动装配">Bean的自动装配</h2>
+<p>提到Bean的自动装配就不得不说一下Spring的核心IOC，IOC全称为Inversion of Control，中文译为控制反转，是面向对象编程中的一种设计原则，可以用来减低计算机代码之间的耦合度。</p>
+<p>IOC的一个重点是在系统运行中，动态的向某个对象提供它所需要的其他对象。这一点是通过DI（Dependency Injection，依赖注入）来实现的。</p>
+<p>所谓IOC，对于spring框架来说，就是由spring来负责控制对象的生命周期和对象间的关系。IOC负责创建对象，把它们连接在一起，配置它们，并管理他们的整个生命周期从创建到销毁，所以可将IOC理解为一个大容器。IOC使用依赖注入（DI）来管理组成一个应用程序的组件。这些对象被称为 Spring Beans。</p>
+<p>一般在代码里面由这些注解体现：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Component
+@Service
+@Repository
+@Controller
+@Autowired
+@Resource
+@Inject
+</code></pre></div><p><code>Spring</code>利用依赖注入（DI），完成对IOC容器中各个组件的依赖关系赋值。</p>
+<p><code>Spring</code>提供三种装配方式：</p>
+<ul>
+<li>基于注解的自动装配</li>
+<li>基于 XML 配置的显式装配</li>
+<li>基于 Java 配置的显式装配</li>
+</ul>
+<p>此处详细介绍基于注解的自动装配</p>
+<table>
+<thead>
+<tr>
+<th>自动装配</th>
+<th>来源</th>
+<th>支持@Primary</th>
+<th>springboot支持属性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@Autowired</td>
+<td>Springboot原生</td>
+<td>支持</td>
+<td>boolean required</td>
+</tr>
+<tr>
+<td>@Resource</td>
+<td>JSR-250，JDK自带</td>
+<td>不支持</td>
+<td>String name</td>
+</tr>
+<tr>
+<td>@Inject</td>
+<td>JSR-330，需要导入javax.inject</td>
+<td>支持</td>
+<td>无其他属性</td>
+</tr>
+</tbody>
+</table>
+<h3 id="autowired">@Autowired</h3>
+<p>可以放在构造器、参数、方法、属性上</p>
+<p>源码如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Target({ElementType.CONSTRUCTOR, ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface Autowired {
+
+	/**
+	 * Declares whether the annotated dependency is required.
+	 * &lt;p&gt;Defaults to {@code true}.
+	 */
+	boolean required() default true;
+
+}
+</code></pre></div><h4 id="加在属性上">加在属性上</h4>
+<p>使用<code>@Autowired</code>注解通常将其加载属性上或者构造器上，让其自动注入；默认是按照类型去容器中寻找对应的组件，例如：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">
+public class SpringBootExampleApplication {
+
+
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(TestConfig.class);
+
+        TestService testService = annotationConfigApplicationContext.getBean(TestService.class);
+        // TestService 实例=====&gt;TestService(testDao=TestDao(name=default))
+        System.out.println(&#34;TestService 实例=====&gt;&#34; +testService);
+
+    }
+
+}
+
+
+// 扫描的包名称
+@ComponentScan({&#34;com.example.springboot.example.task&#34;})
+@Configuration
+class TestConfig{
+
+}
+
+
+@ToString
+@Service
+class TestService {
+
+    @Autowired
+    TestDao testDao;
+
+}
+
+@ToString
+@Repository
+class TestDao{
+
+    @Getter
+    @Setter
+    private String name = &#34;default&#34;;
+
+}
+</code></pre></div><p>如果容器中有多个组件的名称相同,可以通过<code>@Qualifier</code>来进行选择注入；</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class SpringBootExampleApplication {
+
+
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(TestConfig.class);
+
+        TestService testService = annotationConfigApplicationContext.getBean(TestService.class);
+        // TestService 实例=====&gt;TestService(testDao=TestDao(name=我是默认的TestDao))
+        System.out.println(&#34;TestService 实例=====&gt;&#34; +testService);
+
+    }
+
+}
+
+
+@ComponentScan({&#34;com.example.springboot.example.task&#34;})
+@Configuration
+class TestConfig{
+
+    @Bean(name = &#34;testDao2&#34;)
+     public TestDao testDao(){
+        TestDao testDao = new TestDao();
+        testDao.setName(&#34;我是testDao2&#34;);
+        return testDao;
+    }
+}
+
+@ToString
+@Service
+class TestService {
+
+    @Autowired
+    @Qualifier(&#34;testDao&#34;)
+    TestDao testDao;
+
+}
+
+@ToString
+@Repository
+class TestDao{
+
+    @Getter
+    @Setter
+    private String name = &#34;我是默认的TestDao&#34;;
+
+}
+</code></pre></div><p>除了使用<code>@Qualifier</code>来进行选择注入外，也可以使用<code>@Primary</code>来设置 bean 的优先级，默认情况下指定让哪个 bean 优先注入；</p>
+<p><code>@Primary</code>注解是在没有明确指定的情况下，默认使用的 bean，如果你明确用<code>@Qualifier</code>指定，则会使用<code>@Qualifier</code>指定的bean；
+确保测试结果准确，在使用<code>@Primary</code>时，将<code>@Qualifier</code>去掉。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class SpringBootExampleTaskApplication {
+
+
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(TestConfig.class);
+
+        TestService testService = annotationConfigApplicationContext.getBean(TestService.class);
+//        TestService 实例=====&gt;TestService(testDao=TestDao(name=我是testDao2))
+        System.out.println(&#34;TestService 实例=====&gt;&#34; +testService);
+
+    }
+
+}
+
+
+@ComponentScan({&#34;com.example.springboot.example.task&#34;})
+@Configuration
+class TestConfig{
+
+    @Primary
+    @Bean(name = &#34;testDao2&#34;)
+     public TestDao testDao(){
+        TestDao testDao = new TestDao();
+        testDao.setName(&#34;我是testDao2&#34;);
+        return testDao;
+    }
+}
+
+@ToString
+@Service
+class TestService {
+
+    @Autowired
+    TestDao testDao;
+
+}
+
+@ToString
+@Repository
+class TestDao{
+
+    @Getter
+    @Setter
+    private String name = &#34;我是默认的TestDao&#34;;
+
+}
+</code></pre></div><p>如果使用<code>@Autowired</code>在容器中没有对应的组件名称，默认情况下会报错。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException
+</code></pre></div><p>如果没有找到对应的 bean 不报错，可以通过<code>@Autowired(required = false)</code>来进行设置</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@ToString
+@Service
+class TestService {
+    
+    // TestService 实例=====&gt;TestService(testDao=null)
+
+    @Autowired(required = false)
+    TestDao testDao;
+
+}
+</code></pre></div><h4 id="加在方法参数上">加在方法、参数上</h4>
+<p><code>@Autowired</code>注解不仅可以标注在属性上，也可以标注在方法上，当标注在方法上时，Spring容器创建当前对象，就会调用该方法完成赋值，方法使用的参数从IOC容器中获取。</p>
+<p>通过测试打印对象的地址可以看到，方法中的参数确实是从IOC容器中获取的。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class SpringBootExampleTaskApplication {
+
+
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(TestConfig.class);
+
+        TestService testService = annotationConfigApplicationContext.getBean(TestService.class);
+        System.out.println(&#34;TestService 中的实例=====&gt;&#34; +testService);
+
+        TestDao testDao = annotationConfigApplicationContext.getBean(TestDao.class);
+        System.out.println(&#34;TestDao 中的实例=====&gt;&#34; +testDao);
+        
+        // TestService 中的实例=====&gt;TestService(testDao=com.example.springboot.example.task.TestDao@5fe94a96)
+        //TestDao 中的实例=====&gt;com.example.springboot.example.task.TestDao@5fe94a96
+
+
+    }
+
+}
+
+
+@ComponentScan({&#34;com.example.springboot.example.task&#34;})
+@Configuration
+class TestConfig{
+}
+
+@ToString
+@Service
+class TestService {
+
+
+    TestDao testDao;
+
+    @Autowired
+    public void setTestDao(TestDao testDao) {
+        this.testDao = testDao;
+    }
+}
+
+
+@Repository
+class TestDao{
+
+    private String name = &#34;我是默认的TestDao&#34;;
+
+}
+</code></pre></div><p>也可以加在参数上，与加在方法上类似也是从IOC容器中获取该对象。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@ToString
+@Service
+class TestService {
+
+
+    TestDao testDao;
+
+    public void setTestDao(@Autowired TestDao testDao) {
+        this.testDao = testDao;
+    }
+}
+</code></pre></div><p>在<code>Spring</code>创建对象的时候会默认调用组件的无参构造方法，如果只有一个有参构造，如果想要创建对象，则必须调用该有参构造；
+所以当一个组件只有一个有参构造时，则可以不用写<code>@Autowired</code>注解。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@ToString
+@Service
+class TestService {
+
+
+    TestDao testDao;
+    
+     // @Autowired
+    public TestService(TestDao testDao) {
+        this.testDao = testDao;
+    }
+
+}
+</code></pre></div><p>除了通过构造方法的方式实例化组件，也可以通过用bean标注的形式，来实例化容器中的组件。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class SpringBootExampleTaskApplication {
+
+
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(TestConfig.class);
+
+        TestService testService = annotationConfigApplicationContext.getBean(TestService.class);
+        System.out.println(&#34;TestService 中的实例=====&gt;&#34; +testService);
+
+        TestDao testDao = annotationConfigApplicationContext.getBean(TestDao.class);
+        System.out.println(&#34;TestDao 中的实例=====&gt;&#34; +testDao);
+
+        TestDao1 testDao1 = annotationConfigApplicationContext.getBean(TestDao1.class);
+        System.out.println(&#34;TestDao1 中的实例=====&gt;&#34; +testDao);
+        
+        // TestService 中的实例=====&gt;TestService(testDao=com.example.springboot.example.task.TestDao@639c2c1d)
+        //TestDao 中的实例=====&gt;com.example.springboot.example.task.TestDao@639c2c1d
+        //TestDao1 中的实例=====&gt;com.example.springboot.example.task.TestDao@639c2c1d
+
+    }
+
+}
+
+
+@ComponentScan({&#34;com.example.springboot.example.task&#34;})
+@Configuration
+class TestConfig{
+
+    @Bean
+    public TestDao1 testDao1(TestDao testDao){
+        TestDao1 testDao1 = new TestDao1();
+        testDao1.setTestDao(testDao);
+        return testDao1;
+    }
+}
+
+@ToString
+@Service
+class TestService {
+
+
+    TestDao testDao;
+
+    @Autowired
+    public TestService(TestDao testDao) {
+        this.testDao = testDao;
+    }
+
+}
+
+
+@Component
+class TestDao{
+}
+
+class TestDao1{
+    @Setter
+    TestDao testDao;
+}
+</code></pre></div><h4 id="原理">原理</h4>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">/
+ * @see AutowiredAnnotationBeanPostProcessor
+ */
+@Target({ElementType.CONSTRUCTOR, ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface Autowired{}
+</code></pre></div><p>在<code>@Autowired</code>注解文档注释上面，可以看到与之息息相关的一个类<code>AutowiredAnnotationBeanPostProcessor</code>，即<code>@Autowired</code>后置处理器；
+可以看到该类实现了<code>MergedBeanDefinitionPostProcessor</code>接口，在<code>postProcessMergedBeanDefinition</code>方法上打一个断点，就可以看到<code>@Autowired</code>的调用栈。</p>
+<p><code>@Autowired</code>注解调用栈：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">AbstractApplicationContext.refresh(容器初始化)
+---&gt; registerBeanPostProcessors (注册AutowiredAnnotationBeanPostProcessor) 
+---&gt; finishBeanFactoryInitialization
+---&gt; AbstractAutowireCapableBeanFactory.doCreateBean
+---&gt; AbstractAutowireCapableBeanFactory.applyMergedBeanDefinitionPostProcessors
+---&gt; MergedBeanDefinitionPostProcessor.postProcessMergedBeanDefinition
+---&gt; AutowiredAnnotationBeanPostProcessor.findAutowiringMetadata
+</code></pre></div><p>核心调用：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">postProcessMergedBeanDefinition`-&gt;`findAutowiringMetadata`-&gt;`buildAutowiringMetadata
+</code></pre></div><p>相关源码：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Override
+public void postProcessMergedBeanDefinition(RootBeanDefinition beanDefinition, Class&lt;?&gt; beanType, String beanName) {
+    // 调用 findAutowiringMetadata
+    InjectionMetadata metadata = findAutowiringMetadata(beanName, beanType, null);
+    metadata.checkConfigMembers(beanDefinition);
+}
+
+private InjectionMetadata findAutowiringMetadata(String beanName, Class&lt;?&gt; clazz, @Nullable PropertyValues pvs) {
+		// Fall back to class name as cache key, for backwards compatibility with custom callers.
+		String cacheKey = (StringUtils.hasLength(beanName) ? beanName : clazz.getName());
+		// Quick check on the concurrent map first, with minimal locking.
+		InjectionMetadata metadata = this.injectionMetadataCache.get(cacheKey);
+		if (InjectionMetadata.needsRefresh(metadata, clazz)) {
+			synchronized (this.injectionMetadataCache) {
+				metadata = this.injectionMetadataCache.get(cacheKey);
+				if (InjectionMetadata.needsRefresh(metadata, clazz)) {
+					if (metadata != null) {
+						metadata.clear(pvs);
+					}
+                    // 调用buildAutowiringMetadata
+					metadata = buildAutowiringMetadata(clazz);
+					this.injectionMetadataCache.put(cacheKey, metadata);
+				}
+			}
+		}
+		return metadata;
+	}
+
+
+
+private InjectionMetadata buildAutowiringMetadata(final Class&lt;?&gt; clazz) {
+		LinkedList&lt;InjectionMetadata.InjectedElement&gt; elements = new LinkedList&lt;&gt;();
+		Class&lt;?&gt; targetClass = clazz;//需要处理的目标类
+       
+		do {
+			final LinkedList&lt;InjectionMetadata.InjectedElement&gt; currElements = new LinkedList&lt;&gt;();
+ 
+            /*通过反射获取该类所有的字段，并遍历每一个字段，并通过方法findAutowiredAnnotation遍历每一个字段的所用注解，并如果用autowired修饰了，则返回auotowired相关属性*/  
+ 
+			ReflectionUtils.doWithLocalFields(targetClass, field -&gt; {
+				AnnotationAttributes ann = findAutowiredAnnotation(field);
+				if (ann != null) {//校验autowired注解是否用在了static方法上
+					if (Modifier.isStatic(field.getModifiers())) {
+						if (logger.isWarnEnabled()) {
+							logger.warn(&#34;Autowired annotation is not supported on static fields: &#34; + field);
+						}
+						return;
+					}//判断是否指定了required
+					boolean required = determineRequiredStatus(ann);
+					currElements.add(new AutowiredFieldElement(field, required));
+				}
+			});
+            //和上面一样的逻辑，但是是通过反射处理类的method
+			ReflectionUtils.doWithLocalMethods(targetClass, method -&gt; {
+				Method bridgedMethod = BridgeMethodResolver.findBridgedMethod(method);
+				if (!BridgeMethodResolver.isVisibilityBridgeMethodPair(method, bridgedMethod)) {
+					return;
+				}
+				AnnotationAttributes ann = findAutowiredAnnotation(bridgedMethod);
+				if (ann != null &amp;&amp; method.equals(ClassUtils.getMostSpecificMethod(method, clazz))) {
+					if (Modifier.isStatic(method.getModifiers())) {
+						if (logger.isWarnEnabled()) {
+							logger.warn(&#34;Autowired annotation is not supported on static methods: &#34; + method);
+						}
+						return;
+					}
+					if (method.getParameterCount() == 0) {
+						if (logger.isWarnEnabled()) {
+							logger.warn(&#34;Autowired annotation should only be used on methods with parameters: &#34; +
+									method);
+						}
+					}
+					boolean required = determineRequiredStatus(ann);
+					PropertyDescriptor pd = BeanUtils.findPropertyForMethod(bridgedMethod, clazz);
+              	    currElements.add(new AutowiredMethodElement(method, required, pd));
+				}
+			});
+    //用@Autowired修饰的注解可能不止一个，因此都加在currElements这个容器里面，一起处理		
+			elements.addAll(0, currElements);
+			targetClass = targetClass.getSuperclass();
+		}
+		while (targetClass != null &amp;&amp; targetClass != Object.class);
+ 
+		return new InjectionMetadata(clazz, elements);
+	}
+</code></pre></div><p>当<code>Spring</code> 容器启动时，<code>AutowiredAnnotationBeanPostProcessor</code> 组件会被注册到容器中，然后扫描代码，如果带有 <code>@Autowired</code> 注解，则将依赖注入信息封装到 <code>InjectionMetadata</code> 中。</p>
+<p>最后创建 <code>bean</code>，即实例化对象和调用初始化方法，会调用各种 <code>XXXBeanPostProcessor</code> 对 <code>bean</code> 初始化，其中包括<code>AutowiredAnnotationBeanPostProcessor</code>，它负责将相关的依赖注入到容器中。</p>
+<h3 id="resourceinject">@Resource、@Inject</h3>
+<p>Spring 自动装配除了<code>@Autowired</code>注解外，也支持JSR-250中的<code>@Resource</code>和JSR-330中的<code>@Inject</code>注解，来进行自动装配；</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class SpringBootExampleTaskApplication {
+
+
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(TestConfig.class);
+
+        TestService testService = annotationConfigApplicationContext.getBean(TestService.class);
+//        TestService 实例=====&gt;TestService(testDao=TestDao(name=我是默认的TestDao))
+        System.out.println(&#34;TestService 实例=====&gt;&#34; +testService);
+
+    }
+
+}
+
+
+@ComponentScan({&#34;com.example.springboot.example.task&#34;})
+@Configuration
+class TestConfig{
+
+    @Bean(name = &#34;testDao2&#34;)
+     public TestDao testDao(){
+        TestDao testDao = new TestDao();
+        testDao.setName(&#34;我是testDao2&#34;);
+        return testDao;
+    }
+}
+
+@ToString
+@Service
+class TestService {
+
+
+    @Resource
+    TestDao testDao;
+
+}
+
+
+@ToString
+@Repository
+class TestDao{
+
+    @Getter
+    @Setter
+    private String name = &#34;我是默认的TestDao&#34;;
+
+}
+</code></pre></div><p>使用<code>@Inject</code>注解需要导入:</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;dependency&gt;
+    &lt;groupId&gt;javax.inject&lt;/groupId&gt;
+    &lt;artifactId&gt;javax.inject&lt;/artifactId&gt;
+    &lt;version&gt;1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@ToString
+@Service
+class TestService {
+
+    // TestService 实例=====&gt;TestService(testDao=TestDao(name=我是默认的TestDao))
+    @Inject
+    TestDao testDao;
+
+}
+</code></pre></div><h3 id="使用spring底层组件">使用Spring底层组件</h3>
+<p>通过实现<code>Aware</code>接口的子接口，来使用Spring的底层的组件。<code>Aware</code>接口类似于回调方法的形式在 Spring 加载的时候将我们自定以的组件加载。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">/**
+ * A marker superinterface indicating that a bean is eligible to be notified by the
+ * Spring container of a particular framework object through a callback-style method.
+ * The actual method signature is determined by individual subinterfaces but should
+ * typically consist of just one void-returning method that accepts a single argument.
+ */
+public interface Aware {
+
+}
+</code></pre></div><p><img src="/iblog/posts/annex/images/essays/Aware%E5%AD%90%E6%8E%A5%E5%8F%A3.png" alt="Aware子接口"></p>
+<p>使用测试</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Component
+class TestService implements ApplicationContextAware, EmbeddedValueResolverAware, BeanFactoryAware {
+
+    public TestService() {
+    }
+
+    ApplicationContext applicationContext;
+
+
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        System.out.println(&#34;获取实例名称===&gt;&#34; + beanFactory.getBean(&#34;TestService&#34;));
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+        System.out.println(&#34;获取容器对象===&gt; &#34;+ applicationContext);
+    }
+
+    @Override
+    public void setEmbeddedValueResolver(StringValueResolver resolver) {
+        System.out.println(resolver.resolveStringValue(&#34;我是${os.name}，今年${10*2.1}岁&#34;));
+    }
+}
+</code></pre></div><p>关于这些<code>Aware</code>都是使用<code>AwareProcessor</code>进行处理的,比如:<code>ApplicationContextAwareProcessor</code>就是处理<code>ApplicationContextAware</code>接口的。</p>
+<h2 id="bean的生命周期-1">Bean的生命周期</h2>
+<p><code>Bean</code>的生命周期，即<code>Bean</code>的创建-&gt;初始化-&gt;销毁的过程。</p>
+<h3 id="注入bean">注入Bean</h3>
+<p>我们可以使用 xml 配置的方式来指定，<code>bean</code> 在初始化、销毁的时候调用对应的方法：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;bean id=&#34;getDemoEntity&#34; class=&#34;com.my.demo&#34; init-method=&#34;init&#34; destroy-method=&#34;destroy&#34; /&gt;
+</code></pre></div><p>也可以使用注解的方式，来调用bean在初始化、销毁的时候调用对应的方法：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
+    public static void main(String[] args) {
+        // 获取Spring IOC容器
+        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(DemoConfiguration.class);
+        System.out.println(&#34;容器初始化完成...&#34;);
+
+        annotationConfigApplicationContext.close();
+        System.out.println(&#34;容器销毁了...&#34;);
+    }
+}
+
+@Configuration
+class DemoConfiguration {
+    @Bean(initMethod = &#34;init&#34;, destroyMethod = &#34;destroy&#34;)
+    public DemoEntity getDemoEntity() {
+        return new DemoEntity();
+    }
+}
+
+class DemoEntity {
+    public DemoEntity(){
+        System.out.println(&#34;调用了构造器...&#34;);
+    }
+
+    public void init(){
+        System.out.println(&#34;调用了初始化方法...&#34;);
+    }
+
+    public void destroy(){
+        System.out.println(&#34;调用了销毁方法...&#34;);
+    }
+}
+</code></pre></div><p>需要注意的是，上面演示的是单实例 <code>bean</code>，如果是多实例 <code>bean</code>，初始化和销毁会不一样。</p>
+<p>单实例 <code>bean</code>：</p>
+<ul>
+<li>在容器启动的时候创建对象；</li>
+<li>在容器关闭的时候销毁；</li>
+</ul>
+<p>多实例 <code>bean</code>：</p>
+<ul>
+<li>在每次获取bean的时候创建对象；</li>
+<li>容器不会自动帮你处理，需要手动销毁 <code>bean</code>；</li>
+</ul>
+<p>多实例注解代码：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Scope(&#34;prototype&#34;)
+@Bean(initMethod=&#34;init&#34;,destroyMethod=&#34;destroy&#34;)
+public Test test（）{}
+</code></pre></div><h3 id="initializingbeandisposablebean">InitializingBean、DisposableBean</h3>
+<p>通过让<code>Bean</code>实现 <code>InitializingBean</code>(定义初始化逻辑)和实现<code>DisposableBean</code>(销毁逻辑)实现初始化<code>bean</code>和销毁<code>bean</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
+    public static void main(String[] args) {
+        // 获取Spring IOC容器
+        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(DemoEntity.class);
+        System.out.println(&#34;容器初始化完成...&#34;);
+
+        annotationConfigApplicationContext.close();
+        System.out.println(&#34;容器销毁了...&#34;);
+    }
+}
+
+@Component
+class DemoEntity implements InitializingBean, DisposableBean {
+    public DemoEntity(){
+        System.out.println(&#34;调用了构造器...&#34;);
+    }
+
+    @Override
+    public void destroy(){
+        System.out.println(&#34;调用了销毁方法...&#34;);
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.out.println(&#34;调用了初始化方法...&#34;);
+    }
+}
+</code></pre></div><h3 id="postconstructpredestroy">@PostConstruct、@PreDestroy</h3>
+<p>Java提供了对应的注解，也可以调用<code>Bean</code>的初始化方法和销毁方法：</p>
+<ul>
+<li><code>@PostConstruct</code> 标注该注解的方法，在<code>bean</code>创建完成并且属性赋值完成 来执行初始化方法;</li>
+<li><code>@PreDestroy</code>， 在容器销毁<code>bean</code>之前通知我们进行<code>bean</code>的清理工作;</li>
+</ul>
+<p>这两个注解不是<code>spring</code>的注解是<code>JSR250</code>JDK带的注解。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
+    public static void main(String[] args) {
+        // 获取Spring IOC容器
+        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(DemoEntity.class);
+        System.out.println(&#34;容器初始化完成...&#34;);
+
+        annotationConfigApplicationContext.close();
+        System.out.println(&#34;容器销毁了...&#34;);
+    }
+}
+
+@Component
+class DemoEntity  {
+    public DemoEntity(){
+        System.out.println(&#34;调用了构造器...&#34;);
+    }
+
+    // 销毁之前调用
+    @PreDestroy
+    public void destroy(){
+        System.out.println(&#34;调用了销毁方法...&#34;);
+    }
+
+    // 对象创建并赋值之后调用
+    @PostConstruct
+    public void init() {
+        System.out.println(&#34;调用了初始化方法...&#34;);
+    }
+}
+</code></pre></div><h3 id="beanpostprocessor">BeanPostProcessor</h3>
+<p>除了上面的几种方法，也可以使用<code>BeanPostProcessor</code>,<code>Bean</code>的后置处理器，在初始化前后进行处理工作。</p>
+<p><code>postProcessBeforeInitialization</code>：会在初始化完成之前调用
+<code>postProcessAfterInitialization</code>：会在初始化完成之后调用</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
+    public static void main(String[] args) {
+        // 获取Spring IOC容器
+        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(DemoConfiguration.class);
+        System.out.println(&#34;容器初始化完成...&#34;);
+
+        annotationConfigApplicationContext.close();
+        System.out.println(&#34;容器销毁了...&#34;);
+    }
+}
+
+@Configuration
+class DemoConfiguration implements BeanPostProcessor {
+
+    @Bean(initMethod = &#34;init&#34;, destroyMethod = &#34;destroy&#34;)
+    public DemoEntity getDemoEntity(){
+       return new DemoEntity();
+    }
+
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+        System.out.println(&#34;调用了 postProcessBeforeInitialization&#34;);
+        return bean;
+    }
+
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        System.out.println(&#34;调用了 postProcessAfterInitialization&#34;);
+        return bean;
+    }
+}
+
+@Component
+class DemoEntity  {
+    public DemoEntity(){
+        System.out.println(&#34;调用了构造器...&#34;);
+    }
+
+    public void destroy(){
+        System.out.println(&#34;调用了销毁方法...&#34;);
+    }
+
+    public void init() {
+        System.out.println(&#34;调用了初始化方法...&#34;);
+    }
+}
+</code></pre></div><p>调用顺序：</p>
+<blockquote>
+<p>创建对象 &ndash;&gt; postProcessBeforeInitialization &ndash;&gt; 初始化 &ndash;&gt; postProcessAfterInitialization &ndash;&gt; 销毁</p>
+</blockquote>
+<h4 id="原理-1">原理</h4>
+<p>通过打断点，可以看到，在创建<code>bean</code>的时候会，会调用<code>AbstractAutowireCapableBeanFactory</code>类的<code>doCreateBean</code>方法，这也是创建<code>bean</code>的核心方法。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    try {
+        populateBean(beanName, mbd, instanceWrapper);
+        exposedObject = initializeBean(beanName, exposedObject, mbd);
+    }
+
+    // ======= initializeBean  =======
+    if (mbd == null || !mbd.isSynthetic()) {
+        wrappedBean = applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);
+    }
+
+    try {
+        invokeInitMethods(beanName, wrappedBean, mbd);
+    }
+    catch (Throwable ex) {
+        throw new BeanCreationException(
+                (mbd != null ? mbd.getResourceDescription() : null),
+                beanName, &#34;Invocation of init method failed&#34;, ex);
+    }
+    if (mbd == null || !mbd.isSynthetic()) {
+        wrappedBean = applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
+    }
+</code></pre></div><p>调用栈大致如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">populateBean()
+{
+    applyBeanPostProcessorsBeforeInitialization() -&gt; invokeInitMethods() -&gt; applyBeanPostProcessorsAfterInitialization()
+}
+</code></pre></div><p>在初始化之前调用<code>populateBean()</code>方法,给<code>bean</code>进行属性赋值,之后在调用<code>applyBeanPostProcessorsBeforeInitialization</code>方法；</p>
+<p><code>applyBeanPostProcessorsBeforeInitialization</code>源码：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">	public Object applyBeanPostProcessorsBeforeInitialization(Object existingBean, String beanName)
+			throws BeansException {
+
+		Object result = existingBean;
+		for (BeanPostProcessor processor : getBeanPostProcessors()) {
+			Object current = processor.postProcessBeforeInitialization(result, beanName);
+			if (current == null) {
+				return result;
+			}
+			result = current;
+		}
+		return result;
+	}
+</code></pre></div><p>该方法作用，遍历容器中所有的<code>BeanPostProcessor</code>挨个执行<code>postProcessBeforeInitialization</code>方法，一旦返回<code>null</code>，将不会执行后面<code>bean</code>的<code>postProcessBeforeInitialization</code>方法。</p>
+<p>之后在调用<code>invokeInitMethods</code>方法，进行<code>bean</code>的初始化，最后在执行<code>applyBeanPostProcessorsAfterInitialization</code>方法，执行一些初始化之后的工作。</p>
+<h2 id="aop">AOP</h2>
+<p>AOP,全称：<code>Aspect-Oriented Programming</code>，译为面向切面编程 。AOP可以说是对OOP的补充和完善。在程序原有的纵向执行流程中,针对某一个或某些方法添加通知(方法),形成横切面的过程就叫做面向切面编程。</p>
+<p>实现AOP的技术，主要分为两大类： 一是采用动态代理技术，利用截取消息的方式，对该消息进行装饰，以取代原有对象行为的执行；二是采用静态织入的方式，引入特定的语法创建“切面”，从而使得编译器可以在编译期间织入有关“切面”的代码，属于静态代理。</p>
+<p>作用：</p>
+<ul>
+<li>将复杂的需求分解出不同的方面，将公共功能集中解决。例如：处理日志。</li>
+<li>采用代理机制组装起来运行，在不改变原程序的基础上对代码段进行增强处理，增加新的功能。</li>
+</ul>
+<h3 id="动态代理">动态代理</h3>
+<p>动态代理，可以说是AOP的核心了。在<code>Spring</code>中主要使用了两种<a href="/iblog/posts/rookie/rookie-object-oriented/#%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86">动态代理</a>：</p>
+<ul>
+<li>JDK 动态代理技术</li>
+<li>CGLib 动态代理技术</li>
+</ul>
+<p>JDK的动态代理时基于Java 的反射机制来实现的，是Java 原生的一种代理方式。他的实现原理就是让代理类和被代理类实现同一接口，代理类持有目标对象来达到方法拦截的作用。
+通过接口的方式有两个弊端一个就是必须保证被代理类有接口，另一个就是如果相对被代理类的方法进行代理拦截，那么就要保证这些方法都要在接口中声明。接口继承的是<code>java.lang.reflect.InvocationHandler</code>。</p>
+<p>CGLib 动态代理使用的 ASM 这个非常强大的 Java 字节码生成框架来生成<code>class</code> ，基于继承的实现动态代理，可以直接通过 super 关键字来调用被代理类的方法.子类可以调用父类的方法,不要求有接口。</p>
+<h3 id="使用">使用</h3>
+<p>使用AOP大致可以分为三步：</p>
+<ol>
+<li>将业务逻辑组件和切面类都加入到容器中，并用<code>@Aspect</code>注解标注切面类。</li>
+<li>在切面类的通知方法上，要注意切面表达式的写法，标注通知注解，告诉<code>Spring</code>何时何地的运行：
+<ul>
+<li><code>@Before</code>:前置通知，在目标方法运行之前执行；</li>
+<li><code>@After</code>: 后置通知，在目标方法运行之后执行，无论方法是否出现异常都会执行；</li>
+<li><code>@Around</code>: 环绕通知，通过<code>joinPoint.proceed()</code>方法手动控制目标方法的执行；</li>
+<li><code>@AfterThrowing</code>: 异常通知，在目标方法出现异常之后执行；</li>
+<li><code>@AfterReturning</code>: 返回通知，在目标方法返回之后执行；</li>
+</ul>
+</li>
+<li>使用<code>@EnableAspectJAutoProxy</code>开启基于注解的AOP模式。</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
+    public static void main(String[] args) {
+        // 获取Spring IOC容器
+        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(DemoConfiguration.class);
+
+        DemoEntity demoEntity = annotationConfigApplicationContext.getBean(DemoEntity.class);
+        demoEntity.myAspectTest(&#34;123&#34;);
+
+        annotationConfigApplicationContext.close();
+    }
+}
+
+@EnableAspectJAutoProxy
+@Configuration
+class DemoConfiguration{
+
+    @Bean
+    public DemoEntity getDemoEntity(){
+        return new DemoEntity();
+    }
+
+    @Bean
+    public DemoAspect gerDemoAspect(){
+        return new DemoAspect();
+    }
+
+}
+
+@Aspect
+class DemoAspect {
+
+    @Pointcut(&#34;execution(* com.lilian.ticket.image.exchange.DemoEntity.myAspectTest(..))&#34;)
+    public void pointer() {}
+
+    @Before(&#34;pointer()&#34;)
+    public void beforeTest(JoinPoint joinPoint) {
+        System.out.println(&#34;调用了AOP，前置通知&#34;);
+        Object[] args = joinPoint.getArgs();
+        System.out.println(&#34;前置通知:目标方法参数：[&#34; + args[0] + &#34;]&#34;);
+    }
+
+    @After(&#34;pointer()&#34;)
+    public void afterTest(JoinPoint joinPoint){
+        System.out.println(&#34;调用了AOP，后置通知&#34;);
+        Object[] args = joinPoint.getArgs();
+        System.out.println(&#34;后置通知:目标方法参数：[&#34; + args[0] + &#34;]&#34;);
+    }
+
+    @Around(&#34;pointer()&#34;)
+    public Object aroundTest(ProceedingJoinPoint joinPoint) {
+        System.out.println(&#34;===调用了AOP，环绕通知===&#34;);
+        System.out.println(&#34;环绕通知目标方法执行前&#34;);
+        Object[] args = joinPoint.getArgs();
+        System.out.println(&#34;环绕通知:目标方法参数：[&#34; + args[0] + &#34;]&#34;);
+        Object proceed = null;
+        try {
+             proceed = joinPoint.proceed();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+        System.out.println(&#34;环绕通知目标方法执行后\n&#34;);
+        return proceed;
+    }
+
+    @AfterThrowing(pointcut=&#34;pointer()&#34;, throwing=&#34;ex&#34;)
+    public void afterThrowingTest(JoinPoint joinPoint, Exception ex) {
+        System.out.println(&#34;异常通知==&gt;[&#34;+ex.getMessage()+&#34;]\n&#34;);
+    }
+
+    @AfterReturning(&#34;pointer()&#34;)
+    public void afterReturnTest(JoinPoint joinPoint){
+        Object[] args = joinPoint.getArgs();
+        System.out.println(&#34;有返回值的后置通知:目标方法参数：[&#34; + args[0] + &#34;]&#34;);
+    }
+
+}
+
+class DemoEntity {
+
+    public String myAspectTest(String name) {
+        System.out.println(&#34;调用了 myAspectTest 方法;\t name=[&#34; + name + &#34;]&#34;);
+        // 当name传入null时，模拟异常
+        name.split(&#34;123&#34;);
+        return name;
+    }
+}
+</code></pre></div><h3 id="enableaspectjautoproxy">@EnableAspectJAutoProxy</h3>
+<p>要想AOP起作用，就要加<code>@EnableAspectJAutoProxy</code>注解，所以AOP的原理可以从<code>@EnableAspectJAutoProxy</code>入手研究。</p>
+<p>它是一个复合注解，启动的时候，给容器中导入了一个<code>AspectJAutoProxyRegistrar</code>组件：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Import(AspectJAutoProxyRegistrar.class)
+public @interface EnableAspectJAutoProxy {}
+</code></pre></div><p>发现该类实现了<code>ImportBeanDefinitionRegistrar</code>接口，而该接口的作用是给容器中注册<code>bean</code>的；所以<code>AspectJAutoProxyRegistrar</code>作用是，添加自定义组件给容器中注册<code>bean</code>。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">class AspectJAutoProxyRegistrar implements ImportBeanDefinitionRegistrar {
+
+	/**
+	 * Register, escalate, and configure the AspectJ auto proxy creator based on the value
+	 * of the @{@link EnableAspectJAutoProxy#proxyTargetClass()} attribute on the importing
+	 * {@code @Configuration} class.
+	 */
+	@Override
+	public void registerBeanDefinitions(
+			AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
+
+        // 注册了 AnnotationAwareAspectJAutoProxyCreator 组件
+		AopConfigUtils.registerAspectJAnnotationAutoProxyCreatorIfNecessary(registry);
+
+		AnnotationAttributes enableAspectJAutoProxy =
+				AnnotationConfigUtils.attributesFor(importingClassMetadata, EnableAspectJAutoProxy.class);
+        // 获取 @EnableAspectJAutoProxy 中的属性，做一些工作
+		if (enableAspectJAutoProxy != null) {
+			if (enableAspectJAutoProxy.getBoolean(&#34;proxyTargetClass&#34;)) {
+				AopConfigUtils.forceAutoProxyCreatorToUseClassProxying(registry);
+			}
+			if (enableAspectJAutoProxy.getBoolean(&#34;exposeProxy&#34;)) {
+				AopConfigUtils.forceAutoProxyCreatorToExposeProxy(registry);
+			}
+		}
+	}
+}
+</code></pre></div><p><strong><code>AspectJAutoProxyRegistrar</code>组件何时注册？</strong></p>
+<p>通过对下面代码打断点</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">AopConfigUtils.registerAspectJAnnotationAutoProxyCreatorIfNecessary(registry);
+</code></pre></div><p>可以看到该方法是给容器中注册了一个<code>AnnotationAwareAspectJAutoProxyCreator</code>组件，实际上是注册<code>AnnotationAwareAspectJAutoProxyCreator</code>组件。</p>
+<p><img src="/iblog/posts/annex/images/essays/AOP%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6.png" alt="AOP核心组件1"></p>
+<p>可以看出<code>@EnableAspectJAutoProxy</code>注解最主要的作用实际上就是通过<code>@Import</code>注解把<code>AnnotationAwareAspectJAutoProxyCreator</code>这个对象注入到<code>spring</code>容器中。</p>
+<p>现在只要把<code>AnnotationAwareAspectJAutoProxyCreator</code>组件何时注册搞懂，<code>AspectJAutoProxyRegistrar</code>组件何时注册也就明白了。</p>
+<p><code>AnnotationAwareAspectJAutoProxyCreator</code>继承关系：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">AnnotationAwareAspectJAutoProxyCreator
+    extends AspectJAwareAdvisorAutoProxyCreator
+        extends AbstractAdvisorAutoProxyCreator
+            extends AbstractAutoProxyCreator
+                extends ProxyProcessorSupport implements SmartInstantiationAwareBeanPostProcessor,BeanFactoryAware
+                    extends ProxyConfig implements Ordered, BeanClassLoaderAware, AopInfrastructureBean 
+</code></pre></div><p>可以看到其中的一个父类<code>AbstractAutoProxyCreator</code>这个父类实现了<code>SmartInstantiationAwareBeanPostProcessor</code>接口，该接口是一个后置处理器接口；同样实现了<code>BeanFactoryAware</code>接口，这意味着，该类可以通过接口中的方法进行自动装配<code>BeanFactory</code>。</p>
+<p>这两个接口的在AOP体系中具体的实现方法：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">1.AbstractAutoProxyCreator
+BeanFactoryAware重写：
+- AbstractAutoProxyCreator.setBeanFactory
+
+SmartInstantiationAwareBeanPostProcessor重写:
+- AbstractAutoProxyCreator.postProcessBeforeInstantiation
+- AbstractAutoProxyCreator.postProcessAfterInitialization
+
+2.AbstractAdvisorAutoProxyCreator
+BeanFactoryAware重写：
+- AbstractAdvisorAutoProxyCreator.setBeanFactory -&gt; initBeanFactory
+
+3. AnnotationAwareAspectJAutoProxyCreator
+BeanFactoryAware重写：
+- AnnotationAwareAspectJAutoProxyCreator.initBeanFactory
+</code></pre></div><p>在上面的任何方法搭上断点即可看到类似下面的方法调用栈：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">AnnotationConfigApplicationContext.AnnotationConfigApplicationContext()
+    -&gt;AbstractApplicationContext.refresh() //刷新容器，给容器初始化bean
+        -&gt;AbstractApplicationContext.finishBeanFactoryInitialization()
+            -&gt;DefaultListableBeanFactory.preInstantiateSingletons()
+                -&gt;AbstractBeanFactory.getBean()
+                    -&gt;AbstractBeanFactory.doGetBean()
+                        -&gt;DefaultSingletonBeanRegistry.getSingleton()
+                            -&gt;AbstractBeanFactory.createBean()
+                                -&gt;AbstractAutowireCapableBeanFactory.resolveBeforeInstantiation()
+                                    -&gt;AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation()
+                                        -&gt;AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation()
+                                            -&gt;调用AOP相关的后置处理器
+</code></pre></div><p>其中 <code>AbstractApplicationContext.refresh()</code> 方法，调用了 <code>registerBeanPostProcessors()</code>方法 ，它是用来注册后置处理器，以拦截 <code>bean</code> 的创建。也是在这个方法中完成了对 <code>AnnotationAwareAspectJAutoProxyCreator</code> 的注册。
+在下面详细的展开。</p>
+<p>注册完 <code>BeanPostProcessor</code> 后，还调用了方法 <code>finishBeanFactoryInitialization()</code> ，完成 <code>BeanFactory</code> 初始化工作，并创建剩下的单实例 <code>bean</code>。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Override
+public void refresh() throws BeansException, IllegalStateException {
+    
+    // .....
+
+    // Register bean processors that intercept bean creation.
+    registerBeanPostProcessors(beanFactory);
+
+    // .....
+
+    // Instantiate all remaining (non-lazy-init) singletons.
+    finishBeanFactoryInitialization(beanFactory);
+
+    // .....
+
+}
+</code></pre></div><h4 id="registerbeanpostprocessors">registerBeanPostProcessors</h4>
+<p><code>registerBeanPostProcessors</code>方法中注册了所有的<code>BeanPostProcessor</code>;注册顺序是：</p>
+<ol>
+<li>注册实现了<code>PriorityOrdered</code>接口的<code>BeanPostProcessor</code>;</li>
+<li>注册实现了 <code>Ordered</code> 接口的 <code>BeanPostProcessor</code>;</li>
+<li>注册常规的 <code>BeanPostProcessor</code> ,也就是没有实现优先级接口的 <code>BeanPostProcessor</code>;</li>
+<li>注册 <code>Spring</code> 内部 <code>BeanPostProcessor</code>;</li>
+</ol>
+<p>由于<code>AnnotationAwareAspectJAutoProxyCreator</code>类间接实现了<code>Ordered</code>接口。所以它是在注册实现<code>Ordered</code>接口的<code>BeanPostProcessor</code>中完成注册。</p>
+<p>注册时会调用<code>AbstractBeanFactory.getBean() -&gt; AbstractBeanFactory.doGetBean()</code>创建<code>bean</code>。</p>
+<p><code>doGetBean()</code>方法作用：</p>
+<ul>
+<li>创建<code>bean</code>：<code>createBeanInstance()</code>;</li>
+<li>给<code>bean</code>中的属性赋值：<code>populateBean()</code>;</li>
+<li>初始化<code>bean</code>：<code>initializeBean()</code>;</li>
+</ul>
+<p>初始化<code>bean</code>时，<code>initializeBean</code>方法会调用<code>BeanPostProcessor</code>和<code>BeanFactory</code>以及<code>Aware</code>接口的相关方法。这也是<code>BeanPostProcessor</code>发挥初始化<code>bean</code>的原理。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">protected Object initializeBean(final String beanName, final Object bean, RootBeanDefinition mbd) {
+    
+    // ...
+
+    invokeAwareMethods(beanName, bean);   //处理Aware接口的方法回调
+
+    Object wrappedBean = bean;
+    if (mbd == null || !mbd.isSynthetic()) {
+        // 执行后置处理器的postProcessBeforeInitialization方法
+        wrappedBean = applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);
+    }
+    try {
+        // 执行自定义的初始化方法，也就是在这执行 setBeanFactory方法
+        invokeInitMethods(beanName, wrappedBean, mbd);  
+    }
+
+    // ...
+
+    if (mbd == null || !mbd.isSynthetic()) {
+        // 执行后置处理器的postProcessAfterInitialization方法
+        wrappedBean = applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
+    }
+    return wrappedBean;
+}
+
+// ...invokeAwareMethods方法简要 ...
+private void invokeAwareMethods(String beanName, Object bean) {
+    if (bean instanceof Aware) {
+        if (bean instanceof BeanFactoryAware) {
+            ((BeanFactoryAware) bean).setBeanFactory(AbstractAutowireCapableBeanFactory.this);
+        }
+    }
+}
+</code></pre></div><p><code>initializeBean</code>作用：</p>
+<ul>
+<li>处理 <code>Aware</code> 接口的方法回调：<code>invokeAwareMethods()</code>;</li>
+<li>执行后置处理器的<code>postProcessBeforeInitialization()</code>方法；</li>
+<li>执行自定义的初始化方法：<code>invokeInitMethods()</code>;</li>
+<li>执行后置处理器的<code>postProcessAfterInitialization()</code>方法;</li>
+</ul>
+<p><code>initializeBean</code>方法执行成功，<code>AnnotationAwareAspectJAutoProxyCreator</code>组件才会注册和初始化成功。</p>
+<h4 id="finishbeanfactoryinitialization">finishBeanFactoryInitialization</h4>
+<p>除了弄懂<code>AnnotationAwareAspectJAutoProxyCreator</code>组件何时注册，也需要知道它什么时候被调用，这就涉及到<code>finishBeanFactoryInitialization</code>方法。</p>
+<p>继续看方法的调用：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">AnnotationConfigApplicationContext.AnnotationConfigApplicationContext()
+    -&gt;AbstractApplicationContext.refresh() // 刷新容器，给容器初始化bean
+        -&gt;AbstractApplicationContext.finishBeanFactoryInitialization() // 从这继续
+            -&gt;DefaultListableBeanFactory.preInstantiateSingletons()
+                -&gt;AbstractBeanFactory.getBean()
+                    -&gt;AbstractBeanFactory.doGetBean()
+                        -&gt;DefaultSingletonBeanRegistry.getSingleton()
+                            -&gt;AbstractBeanFactory.createBean()
+                                -&gt;AbstractAutowireCapableBeanFactory.resolveBeforeInstantiation()
+                                    -&gt;AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation()
+                                        -&gt;AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation()
+                                            -&gt;调用AOP相关的后置处理器
+</code></pre></div><p><code>finishBeanFactoryInitialization</code>源码简要：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">protected void finishBeanFactoryInitialization(ConfigurableListableBeanFactory beanFactory) {
+
+    // ...
+    
+    // 注释大意： 实例化所有剩余的(非lazy-init)单例。
+    // Instantiate all remaining (non-lazy-init) singletons.
+    beanFactory.preInstantiateSingletons(); // 断点停在这里
+}
+</code></pre></div><p><code>finishBeanFactoryInitialization</code> 方法也需要注册<code>Bean</code>。它会调用 <code>preInstantiateSingletons()</code> 方法遍历获取容器中所有的 <code>Bean</code>，实例化所有剩余的非懒加载初始化单例 <code>Bean</code>。</p>
+<p><code>preInstantiateSingletons()</code>方法源码简要：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">	@Override
+	public void preInstantiateSingletons() throws BeansException {
+
+		// Iterate over a copy to allow for init methods which in turn register new bean definitions.
+		// While this may not be part of the regular factory bootstrap, it does otherwise work fine.
+		List&lt;String&gt; beanNames = new ArrayList&lt;&gt;(this.beanDefinitionNames);
+
+		// Trigger initialization of all non-lazy singleton beans...
+		for (String beanName : beanNames) {
+			RootBeanDefinition bd = getMergedLocalBeanDefinition(beanName);
+            // 获取，非抽象、单例、非懒加载Bean
+			if (!bd.isAbstract() &amp;&amp; bd.isSingleton() &amp;&amp; !bd.isLazyInit()) {
+                // 是否 是FactoryBean类型
+				if (isFactoryBean(beanName)) {
+                    // ...
+				}
+				else {
+					getBean(beanName); // 断点停在这
+				}
+			}
+		}
+
+        // ...
+	}
+</code></pre></div><p><code>preInstantiateSingletons()</code> 调用 <code>getBean()</code> 方法，获取<code>Bean</code>实例，执行过程<code>getBean()-&gt;doGetBean()-&gt;getSingleton()-&gt;createBean()</code>，又回到了上面注册<code>Bean</code>的步骤。</p>
+<p>这里要注意<code>createBean()</code>方法中的<code>resolveBeforeInstantiation()</code>方法，这里可以理解为缓存<code>Bean</code>,如果被创建了就拿来直接用，如果没有则创建<code>Bean</code>。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">protected Object createBean(String beanName, RootBeanDefinition mbd, @Nullable Object[] args)
+        throws BeanCreationException {
+
+    // ...
+
+    try {
+        // 注释大意：给 BeanPostProcessors 一个返回代理而不是目标bean实例的机会。
+        // Give BeanPostProcessors a chance to return a proxy instead of the target bean instance.
+        Object bean = resolveBeforeInstantiation(beanName, mbdToUse); // 断点停在这里
+        if (bean != null) {
+            return bean;
+        }
+    }
+
+    // ...
+
+    try {
+        Object beanInstance = doCreateBean(beanName, mbdToUse, args);
+        if (logger.isTraceEnabled()) {
+            logger.trace(&#34;Finished creating instance of bean &#39;&#34; + beanName + &#34;&#39;&#34;);
+        }
+        return beanInstance;
+    }
+
+    // ...
+}
+</code></pre></div><p><code>resolveBeforeInstantiation()</code>、<code>applyBeanPostProcessorsBeforeInstantiation()</code>方法源码：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">protected Object resolveBeforeInstantiation(String beanName, RootBeanDefinition mbd) {
+    Object bean = null;
+    if (!Boolean.FALSE.equals(mbd.beforeInstantiationResolved)) {
+        // Make sure bean class is actually resolved at this point.
+        if (!mbd.isSynthetic() &amp;&amp; hasInstantiationAwareBeanPostProcessors()) {
+            Class&lt;?&gt; targetType = determineTargetType(beanName, mbd);
+            if (targetType != null) {
+                // 调用 applyBeanPostProcessorsBeforeInstantiation 方法
+                bean = applyBeanPostProcessorsBeforeInstantiation(targetType, beanName); // 断点停在这
+                if (bean != null) {
+                    bean = applyBeanPostProcessorsAfterInitialization(bean, beanName);
+                }
+            }
+        }
+        mbd.beforeInstantiationResolved = (bean != null);
+    }
+    return bean;
+}
+
+// ... 上面代码调用的方法 ...
+
+protected Object applyBeanPostProcessorsBeforeInstantiation(Class&lt;?&gt; beanClass, String beanName) {
+    // 遍历所有的 BeanPostProcessor
+    for (BeanPostProcessor bp : getBeanPostProcessors()) {
+
+        // //如果是 InstantiationAwareBeanPostProcessor 类型
+        if (bp instanceof InstantiationAwareBeanPostProcessor) {
+            InstantiationAwareBeanPostProcessor ibp = (InstantiationAwareBeanPostProcessor) bp;
+
+            // 调用 postProcessBeforeInstantiation 方法
+            Object result = ibp.postProcessBeforeInstantiation(beanClass, beanName); // 断点停在这
+            if (result != null) {
+                return result;
+            }
+        }
+    }
+    return null;
+}
+</code></pre></div><p>到了这里在回过头来看一下<code>AnnotationAwareAspectJAutoProxyCreator</code>组件实现的<code>SmartInstantiationAwareBeanPostProcessor</code>接口，继承关系：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">SmartInstantiationAwareBeanPostProcessor 
+    -&gt;extends InstantiationAwareBeanPostProcessor
+        -&gt;extends BeanPostProcessor
+</code></pre></div><p>到这就跟前边对上了，AOP相关的后置处理器也就是在这被调用的。</p>
+<p>回头在看上面的<code>createBean()</code>方法，刚才看到的是<code>resolveBeforeInstantiation()</code>方法的调用栈，所以从层次结构上看<code>AnnotationAwareAspectJAutoProxyCreator</code>组件的调用是在创建 <code>Bean</code>实例之前先尝试用后置处理器返回对象的。</p>
+<p><img src="/iblog/posts/annex/images/essays/AOP@EnableAspectJAutoProxy%E5%8E%9F%E7%90%86.png" alt="AOP@EnableAspectJAutoProxy原理"></p>
+<h2 id="spring事务">Spring事务</h2>
+<p>Spring 为事务管理提供了丰富的功能支持。Spring 事务管理分为编码式和声明式的两种方式。编程式事务指的是通过编码方式实现事务；声明式事务基于 AOP,将具体业务逻辑与事务处理解耦。声明式事务管理使业务代码逻辑不受污染, 因此在实际使用中声明式事务用的比较多。</p>
+<h3 id="spring事务的隔离级别">Spring事务的隔离级别</h3>
+<p>事务隔离级别指的是一个事务对数据的修改与另一个并行的事务的隔离程度，当多个事务同时访问相同数据时，如果没有采取必要的隔离机制，就可能发生以下问题：</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>脏读</td>
+<td>一个事务读到另一个事务未提交的更新数据。比如银行取钱，事务A开启事务，此时切换到事务B，事务B开启事务–&gt;取走100元，此时切换回事务A，事务A读取的肯定是数据库里面的原始数据，因为事务B取走了100块钱，并没有提交，数据库里面的账务余额肯定还是原始余额，这就是脏读。</td>
+</tr>
+<tr>
+<td>幻读</td>
+<td>是指当事务不是独立执行时发生的一种现象。如第一个事务对一个表中的数据进行了修改，这种修改涉及到表中的全部数据行。 同时，第二个事务也修改这个表中的数据，这种修改是向表中插入一行新数据。那么，以后就会发生操作第一个事务的用户发现表中还有没有修改的数据行，就好象 发生了幻觉一样。</td>
+</tr>
+<tr>
+<td>不可重复读</td>
+<td>在一个事务里面的操作中发现了未被操作的数据。 比方说在同一个事务中先后执行两条一模一样的select语句，期间在此次事务中没有执行过任何DDL语句，但先后得到的结果不一致，这就是不可重复读。</td>
+</tr>
+</tbody>
+</table>
+<p>Spring支持的隔离级别：</p>
+<table>
+<thead>
+<tr>
+<th>隔离级别</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DEFAULT</td>
+<td>使用数据库本身使用的隔离级别。ORACLE（读已提交） MySQL（可重复读）</td>
+</tr>
+<tr>
+<td>READ_UNCOMITTED</td>
+<td>读未提交（脏读）最低的隔离级别，一切皆有可能。</td>
+</tr>
+<tr>
+<td>READ_COMMITED</td>
+<td>读已提交，ORACLE默认隔离级别，有幻读以及不可重复读风险。</td>
+</tr>
+<tr>
+<td>REPEATABLE_READ</td>
+<td>可重复读，解决不可重复读的隔离级别，但还是有幻读风险。</td>
+</tr>
+<tr>
+<td>SERLALIZABLE</td>
+<td>串行化，所有事务请求串行执行，最高的事务隔离级别，不管多少事务，挨个运行完一个事务的所有子事务之后才可以执行另外一个事务里面的所有子事务，这样就解决了脏读、不可重复读和幻读的问题了。</td>
+</tr>
+</tbody>
+</table>
+<p>不是事务隔离级别设置得越高越好，事务隔离级别设置得越高，意味着势必要花手段去加锁用以保证事务的正确性，那么效率就要降低，因此实际开发中往往要在效率和并发正确性之间做一个取舍，一般情况下会设置为READ_COMMITED，此时避免了脏读，并发性也还不错，之后再通过一些别的手段去解决不可重复读和幻读的问题就好了。</p>
+<p>Spring建议的是使用DEFAULT，即数据库本身的隔离级别，配置好数据库本身的隔离级别，无论在哪个框架中读写数据都不用操心了。</p>
+<h3 id="spring事务的传播">Spring事务的传播</h3>
+<p>事务传播行为指当一个事务方法被另一个事务方法调用时，这个事务方法应该如何进行。</p>
+<p>Spring定义了七种传播行为：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PROPAGATION_REQUIRED</td>
+<td>0</td>
+<td>支持当前事务，如果当前没有事务，就新建一个事务。这是最常见的选择，也是Spring默认的事务的传播。</td>
+</tr>
+<tr>
+<td>PROPAGATION_SUPPORTS</td>
+<td>1</td>
+<td>支持当前事务，如果当前没有事务，就以非事务方式执行。</td>
+</tr>
+<tr>
+<td>PROPAGATION_MANDATORY</td>
+<td>2</td>
+<td>支持当前事务，如果当前没有事务，就抛出异常。</td>
+</tr>
+<tr>
+<td>PROPAGATION_REQUIRES_NEW</td>
+<td>3</td>
+<td>新建事务，如果当前存在事务，把当前事务挂起。</td>
+</tr>
+<tr>
+<td>PROPAGATION_NOT_SUPPORTED</td>
+<td>4</td>
+<td>以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。</td>
+</tr>
+<tr>
+<td>PROPAGATION_NEVER</td>
+<td>5</td>
+<td>以非事务方式执行，如果当前存在事务，则抛出异常。</td>
+</tr>
+<tr>
+<td>PROPAGATION_NESTED</td>
+<td>6</td>
+<td>如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则进行与PROPAGATION_REQUIRED类似的操作。</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>@Transactional(propagation=Propagation.REQUIRED)：如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)</li>
+<li>@Transactional(propagation=Propagation.NOT_SUPPORTED)：容器不为这个方法开启事务</li>
+<li>@Transactional(propagation=Propagation.REQUIRES_NEW)：不管是否存在事务,都创建一个新的事务,原来的挂起,新的执行完毕,继续执行老的事务</li>
+<li>@Transactional(propagation=Propagation.MANDATORY)：必须在一个已有的事务中执行,否则抛出异常</li>
+<li>@Transactional(propagation=Propagation.NEVER)：必须在一个没有的事务中执行,否则抛出异常(与Propagation.MANDATORY相反)</li>
+<li>@Transactional(propagation=Propagation.SUPPORTS)：如果其他bean调用这个方法,在其他bean中声明事务,那就用事务.如果其他bean没有声明事务,那就不用事务.</li>
+</ul>
+<h3 id="transactional注解">@Transactional注解</h3>
+<p>@Transactional注解失效：</p>
+<ol>
+<li>如果某个方法是非public的，那么@Transactional就会失效，因为底层cglib是基于父子类来实现的，子类是不能重载父类的private方法，所以无法很好利用代理，这种情况下会导致@Transactional失效</li>
+<li>使用的数据库引擎不支持事务，例如在使用mysql的时候使用MyISAM引擎不支持事务，InnoDB支持，并且从mysql5.5之后开始默认的存储引擎就为InnoDB 。</li>
+<li>调用的问题，因为Spring事务是基于代理来实现的，所以某个加了@Transactional的方法只有是被代理对象调用时，那么这个注解才会生效，所以当被代理对象来调用这个方法那么事务就不会生效，简单的可以理解为添加了@Transactional注解的方法不能在同一个类中调用，否则会使事务失效。</li>
+<li>@Transactional 注解属性 propagation 设置错误，若是错误的配置以下三种 propagation ，事务将不会发生回滚：
+<ul>
+<li>TransactionDefinition.PROPAGATION_SUPPORTS：如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。</li>
+<li>TransactionDefinition.PROPAGATION_NOT_SUPPORTED：以非事务方式运行，如果当前存在事务，则把当前事务挂起。</li>
+<li>TransactionDefinition.PROPAGATION_NEVER：以非事务方式运行，如果当前存在事务，则抛出异常。</li>
+</ul>
+</li>
+<li>@Transactional 注解属性 rollbackFor 设置错误：rollbackFor 可以指定能够触发事务回滚的异常类型。Spring默认抛出了未检查unchecked异常（继承自RuntimeException 的异常）或者 Error才回滚事务；其他异常不会触发回滚事务。如果在事务中抛出其他类型的异常，但却期望 Spring 能够回滚事务，就需要指定 rollbackFor属性。</li>
+<li>异常被 catch 了 导致@Transactional失效：当事务方法中抛出一个异常后，应该是需要表示当前事务需要 rollback ，如果在事务方法中手动捕获了该异常，那么事务方法则会任务当前事务应该正常 commit，此时就会出现事务方法中明明有报错信息表示当前事务需要 rollback 但是事务方法任务是正常，出现了前后不一致，也是因为这样就会抛出 UnexpectedRollbackException异常。</li>
+</ol>
+<p>@Transactional注解原理： 利用Spring Aop实现的。 当一个方法使用了@Transactional注解，在运行时，JVM为该Bean创建一个代理对象，并且在调用该方法的时候进行使用TransactionInterceptor拦截，在方法执行之前会开启一个事务，然后执行方法的逻辑。 方法执行成功，则提交事务。如果执行方法中出现异常，则回滚事务。</p>
+</div>
+                    <div class="post_footer">
+                        <div class="meta">
+                            <div class="info">
+                                <span class="field tags">
+                                    <i class="ri-stack-line"></i>
+                                    
+                                    
+                                    <a href="https://whiteppure.github.io/iblog/tags/java/">Java</a>
+                                    
+                                    <a href="https://whiteppure.github.io/iblog/tags/spring/">spring</a>
+                                    
+                                    
+                                    
+                                    <span id="busuanzi_container_page_pv">
+                                      阅读量<span id="busuanzi_value_page_pv"></span>次
+                                    </span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/iblog/css/comments.css" />
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+        
+        emojiCDN: '//i0.hdslb.com/bfs/emote/',
+        
+        emojiMaps: {
+            "tv_doge": "6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png",
+            "tv_亲亲": "a8111ad55953ef5e3be3327ef94eb4a39d535d06.png",
+            "tv_偷笑": "bb690d4107620f1c15cff29509db529a73aee261.png",
+            "tv_再见": "180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png",
+            "tv_冷漠": "b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png",
+            "tv_发怒": "34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png",
+            "tv_发财": "34db290afd2963723c6eb3c4560667db7253a21a.png",
+            "tv_可爱": "9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png",
+            "tv_吐血": "09dd16a7aa59b77baa1155d47484409624470c77.png",
+            "tv_呆": "fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png",
+            "tv_呕吐": "9f996894a39e282ccf5e66856af49483f81870f3.png",
+            "tv_困": "241ee304e44c0af029adceb294399391e4737ef2.png",
+            "tv_坏笑": "1f0b87f731a671079842116e0991c91c2c88645a.png",
+            "tv_大佬": "093c1e2c490161aca397afc45573c877cdead616.png",
+            "tv_大哭": "23269aeb35f99daee28dda129676f6e9ea87934f.png",
+            "tv_委屈": "d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png",
+            "tv_害羞": "a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png",
+            "tv_尴尬": "7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png",
+            "tv_微笑": "70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png",
+            "tv_思考": "90cf159733e558137ed20aa04d09964436f618a1.png",
+            "tv_惊吓": "0d15c7e2ee58e935adc6a7193ee042388adc22af.png",
+            "tv_打脸": "56ab10b624063e966bfcb76ea5dc4794d87dfd47.png",
+            "tv_抓狂": "fe31c08edad661d63762b04e17b8d5ae3c71a757.png",
+            "tv_抠鼻": "c666f55e88d471e51bbd9fab9bb308110824a6eb.png",
+            "tv_斜眼笑": "911f987aa8bc1bee12d52aafe62bc41ef4474e6c.png",
+            "tv_无奈": "ea8ed89ee9878f2fece2dda0ea8a5dbfe21b5751.png",
+            "tv_晕": "5443c22b4d07fb1907ccc610c8e6db254f2461b7.png",
+            "tv_流汗": "cead1c351ab8d79e9f369605beb90148db0fbed3.png",
+            "tv_流泪": "7e71cde7858f0cd50d74b0264aa26db612a8a167.png",
+            "tv_流鼻血": "c32d39db2737f89b904ca32700d140a9241b0767.png",
+            "tv_点赞": "f85c354995bd99e28fc76c869bfe42ba6438eff4.png",
+            "tv_生气": "26702dcafdab5e8225b43ffd23c94ac1ff932654.png",
+            "tv_生病": "8b0ec90e6b86771092a498c54f09fc94621c1900.png",
+            "tv_疑问": "0793d949b18d7be716078349c202c15ff166f314.png",
+            "tv_白眼": "c1d59f439e379ee50eef488bcb5e5378e5044ea4.png",
+            "tv_皱眉": "72ccad6679fea0d14cce648b4d818e09b8ffea2d.png",
+            "tv_目瞪口呆": "0b8cb81a68de5d5365212c99375e7ace3e7891b7.png",
+            "tv_睡着": "8b196675b53af58264f383c50ad0945048290b33.png",
+            "tv_笑哭": "1abc628f6d4f4caf9d0e7800878f4697abbc8273.png",
+            "tv_腼腆": "89712c0d4af73e67f89e35cbc518420380a7f6f4.png",
+            "tv_色": "61822c7e9aae5da76475e7892534545336b23a6f.png",
+            "tv_调侃": "4bc022533ef31544ca0d72c12c808cf4a1cce3e3.png",
+            "tv_调皮": "b9c41de8e82dd7a8515ae5e3cb63e898bf245186.png",
+            "tv_鄙视": "6e72339f346a692a495b123174b49e4e8e781303.png",
+            "tv_闭嘴": "c9e990da7f6e93975e25fd8b70e2e290aa4086ef.png",
+            "tv_难过": "87f46748d3f142ebc6586ff58860d0e2fc8263ba.png",
+            "tv_馋": "fc7e829b845c43c623c8b490ee3602b7f0e76a31.png",
+            "tv_鬼脸": "0ffbbddf8a94d124ca2f54b360bbc04feb6bbfea.png",
+            "tv_黑人问号": "45821a01f51bc867da9edbaa2e070410819a95b2.png",
+            "tv_鼓掌": "1d21793f96ef4e6f48b23e53e3b9e42da833a0f6.png"
+        }
+    })
+</script>
+
+                
+            </div>
+        </div>
+    </div>
+    <a id="back_to_top" href="#" class="back_to_top"><i class="ri-arrow-up-s-line"></i></a>
+    <footer class="footer">
+    <div class="powered_by">
+        <a href="https://varkai.com">Designed by VarKai,</a>
+        <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+    </div>
+
+    <div class="footer_slogan">
+        <span>whitepure@2021</span>
+    </div>
+</footer>
+    <script src="https://whiteppure.github.io/iblog/js/jquery-3.5.1.min.js"></script>
+<link href="https://whiteppure.github.io/iblog/css/fancybox.min.css" rel="stylesheet">
+<script src="https://whiteppure.github.io/iblog/js/fancybox.min.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/zozo.js"></script>
+
+
+<script type="text/javascript" async
+    src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\[\[', '\]\]']],
+                processEscapes: true,
+                processEnvironments: true,
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+                TeX: {
+                    equationNumbers: { autoNumber: "AMS" },
+                    extensions: ["AMSmath.js", "AMSsymbols.js"]
+                }
+            }
+        });
+
+        MathJax.Hub.Queue(function () {
+            
+            
+            
+            var all = MathJax.Hub.getAllJax(), i;
+            for (i = 0; i < all.length; i += 1) {
+                all[i].SourceElement().parentNode.className += ' has-jax';
+            }
+        });
+    </script>
+
+<style>
+    code.has-jax {
+        font: inherit;
+        font-size: 100%;
+        background: inherit;
+        border: inherit;
+        color: #515151;
+    }
+</style>
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jspdf/1.0.106/jspdf.debug.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

@@ -1,12 +1,31 @@
 ---
-title: "SpringBoot详解"
+title: "Spring详解"
 date: 2021-05-13
 draft: false
-tags: ["Java", "springboot"]
-slug: "java-springboot"
+tags: ["Java", "spring"]
+slug: "java-spring"
 ---
 
-## 概述
+
+## 概览
+Spring是一个轻量级的Java开源框架，为了解决企业应用开发的复杂性而创建的。Spring的核心是控制反转（IOC）和面向切面（AOP）。
+
+简单来说，Spring是一个分层的JavaSE/EE 一站式轻量级开源框架。在每一层都提供支持。
+- 表示层：spring mvc
+- 业务层：spring
+- 持久层：jdbctemplate、spring data
+
+![Spring详解-001](/iblog/posts/annex/images/spring/Spring详解-001.png)
+
+
+## Spring启动流程
+## Bean的生命周期
+## Spring三级缓存
+## Spring循环依赖
+## FactoryBean与BeanFactory
+
+
+## SpringBoot
 官网地址：[https://spring.io/projects/spring-boot](https://spring.io/projects/spring-boot)
 
 > `SpringBoot`是由`Pivotal`团队提供的全新框架，其设计目的是用来简化新`Spring`应用的初始搭建以及开发过程。
@@ -28,7 +47,7 @@ slug: "java-springboot"
 - 无代码生成和 xml 配置：
 `SpringBoot` 的神奇的不是借助于代码生成来实现的，而是通过条件注解来实现的，这是 `Spring 4.x` 提供的新特性。`Spring 4.x` 提倡使用 Java 配置和注解配置组合，而 `SpringBoot` 不需要任何 xml 配置即可实现 `Spring` 的所有配置。
 
-## @SpringBootApplication原理
+### @SpringBootApplication
 `@SpringBootApplication`这个注解通常标注在启动类上：
 ```
 @SpringBootApplication
@@ -58,7 +77,7 @@ public class SpringBootExampleApplication {
 public @interface SpringBootApplication{
 }
 ```
-### @SpringBootConfiguration
+#### @SpringBootConfiguration
 `@SpringBootConfiguration`核心注解是`@Configuration`代表自己是一个`Spring`的配置类
 ```
 @Target({ElementType.TYPE})
@@ -85,7 +104,7 @@ public @interface SpringBootConfiguration {
 public @interface Component 
 ```
 
-### @EnableAutoConfiguration
+#### @EnableAutoConfiguration
 核心注解是`@AutoConfigurationPackage`和`@Import({AutoConfigurationImportSelector.class})`
 ```
 @Target({ElementType.TYPE})
@@ -171,7 +190,7 @@ Assert.notEmpty(configurations, "No auto configuration classes found in META-INF
 public class SpringApplicationAdminJmxAutoConfiguration 
 ```
 
-### 总结
+#### 总结
 ![@SpringbootApplication原理](/iblog/posts/annex/images/essays/@SpringbootApplication原理.png)
 
 当 `Springboot` 启动的时候，会执行`AutoConfigurationImportSelector`这个类中的`getCandidateConfigurations`方法，这个方法会帮我们加载`META-INF/spring.factories`文件里面的当`@ConditionXXX`注解条件满足的类。

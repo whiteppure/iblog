@@ -11,9 +11,10 @@ slug: "interview-junior-javaer"
 ### [你有什么职业规划](/iblog/posts/resume/interview-questions-and-answers/#你的职业规划是什么)
 ### [你为什么要离职](/iblog/posts/resume/interview-questions-and-answers/#你从上一家公司离职的原因)
 ### [说一下你的优缺点](/iblog/posts/resume/interview-questions-and-answers/#优缺点)
-### [你的期望薪资是多少](/iblog/posts/resume/interview-questions-and-answers/#面试如何谈薪资)
+### [你的期望薪资是多少](/iblog/posts/resume/interview-questions-and-answers/#面试如何谈薪资httpswwwbilibilicomvideobv1ou411f7r4)
 ### [你为什么要选择我们公司](/iblog/posts/resume/interview-questions-and-answers/#你为什么要选择我们公司)
 ### [你是否接受加班](/iblog/posts/resume/interview-questions-and-answers/#你能否接受加班)
+### 你有对象了吗
 ### [你还有什么问题要问的吗](/iblog/posts/resume/interview-questions-and-answers/#你还有什么想问的吗)
 
 
@@ -30,15 +31,21 @@ slug: "interview-junior-javaer"
 ### [说一下你对JVM的认识](/iblog/posts/jvm/jvm-start/#jvm整体结构)
 ### [介绍一下JVM中的堆](/iblog/posts/jvm/jvm-heap/#堆)
 ### [JVM垃圾收集算法](/iblog/posts/jvm/java-garbage-collection/#垃圾回收相关算法思想)
-### [MySQL优化相关](/iblog/posts/essays/sql-select-fast/#mysqlsql优化)
+### [MySQL如何优化索引](/iblog/posts/essays/sql-select-fast/#mysqlsql优化)
+### MySQL索引种类
 ### [手写一个排序算法和查找算法](/iblog/posts/essays/data-structures-algorithms/#排序算法)
 
 
 ## 分布式基础
 ### [为什么要进行系统拆分](/iblog/posts/essays/java-small-service/#为什么要使用微服务)
+### SpringBoot与SSM对比优势
 ### [分布式注册中心、熔断降级、网关知道吗](/iblog/posts/essays/java-small-service/)
 ### [SpringBoot自动配置原理](/iblog/posts/spring/java-springboot/#springbootapplication原理)
+### Spring IOC容器启动流程
 ### [知道分布式事务吗(CAP、BASE理论)](/iblog/posts/essays/java-transaction/)
+### 分布式事务与传统事务对比有什么不同和相同
+### 什么情况下导致Spring事务失效
+### Spring提供了几种事务的传播行为
 ### [kafka如何保证消息不丢失](/iblog/posts/essays/java-mq/#生产者数据可靠性保证)
 ### [kafka如何避免重复消费](/iblog/posts/essays/java-mq/#消费者消费数据问题)
 ### [Redis分布式锁有了解吗](/iblog/posts/essays/java-redis/#redis分布式锁)
