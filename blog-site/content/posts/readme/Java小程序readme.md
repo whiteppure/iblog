@@ -9,6 +9,10 @@ slug: "java-gadget"
 ## 写在前面
 本文中所涉及的程序均为Java开发，如果您想要直接使用这些工具需要提前配置Java环境。所涉及到的程序均提供完整代码，如果您有兴趣可以尝试运行。
 
+使用`java -jar`命令启动
+
+![readme-009](/iblog/posts/annex/images/readme/readme-009.png)
+
 某些程序功能并不是很完善，但是也可以凑合着用，写这些程序的主要目的是为了方便理解一些常用软件的实现逻辑。
 
 ## 强密码生成器
@@ -1324,6 +1328,7 @@ public class TranslationMainStarter {
 }
 ```
 
+字典文件dict.txt
 ```txt
 i=我
 me=我

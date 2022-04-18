@@ -6,7 +6,6 @@ tags: ["Java", "spring"]
 slug: "java-spring"
 ---
 
-
 ## 概览
 Spring是一个轻量级的Java开源框架，为了解决企业应用开发的复杂性而创建的。Spring的核心是控制反转（IOC）和面向切面（AOP）。
 
@@ -16,7 +15,6 @@ Spring是一个轻量级的Java开源框架，为了解决企业应用开发的�
 - 持久层：jdbctemplate、spring data
 
 ![Spring详解-001](/iblog/posts/annex/images/spring/Spring详解-001.png)
-
 
 ## Spring启动流程
 ## Bean的生命周期

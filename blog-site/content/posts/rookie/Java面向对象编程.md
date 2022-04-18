@@ -598,12 +598,13 @@ Java的封装可以通过修改属性的可见性限制对属性的访问来体�
 **Java 中有三个访问权限修饰符：private、protected 以及 public，如果不加访问修饰符，表示包级可见(default)。**
 
 
-修饰符 | 当前类 | 同一包下 | 其他包的子类|  不同包的子类 | 其他包
----|---|---|---|---|---
-public | Y | Y | Y | Y | Y 
-protected | Y | Y | Y | Y/N | N
-default | Y | Y | Y | N | N
-private | Y | N | N | N | N
+| 修饰符       | 当前类 | 同一包下 | 其他包的子类 | 不同包的子类 | 其他包 |
+|-----------|-----|------|--------|--------|-----|
+| public    | Y   | Y    | Y      | Y      | Y   |
+| protected | Y   | Y    | Y      | Y/N    | N   |
+| default   | Y   | Y    | Y      | N      | N   |
+| private   | Y   | N    | N      | N      | N   |
+
 这四种访问权限的控制符能够控制类中成员的可见性.当然需要满足在不使用Java反射的情况下.
 
 **注意**
