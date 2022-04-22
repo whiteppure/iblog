@@ -16,11 +16,31 @@ Spring是一个轻量级的Java开源框架，为了解决企业应用开发的�
 
 ![Spring详解-001](/iblog/posts/annex/images/spring/Spring详解-001.png)
 
+## 对Spring的理解
+Spring是一个轻量级的框架，简化我们的开发，里面重点包含两个模块分别是IOC和AOP。
+
+- IOC叫控制反转，在没用IOC之前都要手动new创建对象，使用IOC之后由容器进行对象的创建，并且由容器来管理对象，减去了开发上的成本，提高了工作效率。
+- AOP叫面向切面编程，在实际项目开发中需要嵌入一些与业务不想关的代码的时候就可以使用AOP。比如，权限日志的增加。
+
+Spring虽然把它当成框架来使用，但其本质是一个容器，即IOC容器，里面最核心是如何[创建对象和管理对象](#Bean的创建流程),里面包含了Bean的生命周期和Spring的一些扩展点，包含对AOP的应用。
+除此之外，Spring真正的强大之处在于其生态，它包含了Spring Framework、Spring Boot、Spring Cloud等一些列框架，极大提高了开发效率。
+
 ## Spring启动流程
-## Bean的生命周期
-## Spring三级缓存
-## Spring循环依赖
-## FactoryBean与BeanFactory
+
+## Spring循环依赖与三级缓存
+![Spring详解-003](/iblog/posts/annex/images/spring/Spring详解-003.png)
+
+Spring循环依赖调用流程：
+
+在BeanA中注入BeanB，BeanB中注入BeanA，在BeanA创建的过程中，会先判断容器中A是否存在，如果不存在会先初始化BeanA，然后给BeanA赋值，此时会给BeanA里的BeanB属性赋值，在赋值之前会将创建BeanA的流程放到三级缓存中（三级缓存为Map结构，key为String，value为函数式接口）； 由于BeanA里面包含BeanB,所以接下来给BeanB执行创建流程，判断容器中是否存在BeanB，给属性B赋值,此时会给BeanB里的BeanA属性赋值。
+
+在判断容器中是否存在该Bean时，查找顺序为：一级缓存->二级缓存->三级缓存，经历过上面的步骤后，此时三级缓存中A和B都有值（为BeanA、B的创建流程），不需要再进行初始化操作，然后将会执行BeanA的创建流程并将其放入二级缓存中并删除三级缓存中的值，但是此时BeanA中的BeanB还未赋值进行完全的初始化，
+BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB已经完全赋值，然后将完全赋值的BeanB放入一级缓存中并删除三级缓存中的值，由于BeanB已经完全赋值，此时将其赋值给BeanA，将BeanA放入一级缓存并删除二级缓存，至此循环依赖问题解决。
+
+Spring循环依赖大致调用思路：
+- 第一次：A,容器是否存在？（一级缓存->二级缓存->三级缓存）初始化A，-> 将A的创建流程加入三级缓存 -> 给A赋值 ->
+- 第二次：B，容器中是否存在？（一级缓存->二级缓存->三级缓存）初始化B -> 将B的创建流程加入三级缓存 -> 给B赋值
+- 第三次：A的三级缓存中有值，不需要进行初始化操作，执行创建A的流程,将其放入二级缓存，返回值给到创建B，此时B已经创建完全，将其加入一级缓存，然后将该返回值给到A，将A加入一级缓存，至此循环依赖问题解决。
 
 
 ## SpringBoot
@@ -796,8 +816,26 @@ class TestService implements ApplicationContextAware, EmbeddedValueResolverAware
 
 关于这些`Aware`都是使用`AwareProcessor`进行处理的,比如:`ApplicationContextAwareProcessor`就是处理`ApplicationContextAware`接口的。
 
+
+## Bean的创建流程
+![Spring详解-002](/iblog/posts/annex/images/spring/Spring详解-002.png)
+
+1. 在xml或注解上标注定义Bean；
+2. 使用IO流读取文件并使用dom4j或其他技术来解析xml，将其转换为document对象，并设置到BeanDefinition对象（注解则需要读取哪些类标注了该注解最终转换为BeanDefinition对象）；
+3. 判断是否需要扩展，执行多个BeanFactoryProcessor方法，其目的在于获取一个完整的BeanDefinition对象。例如在xml中定义`{jdbc.username}`此处就可以进行替换操作；
+4. bean的实例化，执行createBeanInstance方法，通过反射来创建对象；
+5. bean的初始化：
+   1. 设置对象属性包括设置自定义属性和通过调用Aware接口给容器中的属性赋值；
+   2. 判断是否需要扩展，如需要可执行前置处理方法；
+   3. 调用初始化方法执行invokeInitMethods方法，判断当前是否实现了InitialzingBean接口，如果实现该接口则调用afterPropertiesSet方法；
+   4. 判断是否需要扩展，如需要可执行后置处理方法；
+   5. 最终将对象交给容器来管理；
+6. 使用对象
+7. 销毁对象
+
+
 ## Bean的生命周期
-`Bean`的生命周期，即`Bean`的创建->初始化->销毁的过程。
+`Bean`的生命周期，即`Bean`的 `实例化->初始化->使用->销毁` 的过程。
 
 ### 注入Bean
 我们可以使用 xml 配置的方式来指定，`bean` 在初始化、销毁的时候调用对应的方法：

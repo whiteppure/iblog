@@ -8,7 +8,7 @@
 	
 	
 	
-	<title>面向对象 ｜ whiteppure</title>
+	<title>面向对象 ｜ whitepure</title>
 	
     
     
@@ -1911,7 +1911,7 @@
         <div class="site_title">
             <h1>
                 <a href="https://whiteppure.github.io/iblog/">
-                    <span>whiteppure</span>
+                    <span>whitepure</span>
                 </a>
             </h1>
         </div>
@@ -2576,16 +2576,9 @@ class SchoolManager {
 <td>N</td>
 <td>N</td>
 </tr>
-<tr>
-<td>这四种访问权限的控制符能够控制类中成员的可见性.当然需要满足在不使用Java反射的情况下.</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
 </tbody>
 </table>
+<p>这四种访问权限的控制符能够控制类中成员的可见性.当然需要满足在不使用Java反射的情况下.</p>
 <p><strong>注意</strong></p>
 <ul>
 <li><code>protected</code>用于修饰成员,表示在继承体系中成员对于子类可见.如果不存在继承关系则不能访问<code>protected</code>修饰的实例.</li>
@@ -2870,12 +2863,9 @@ System.out.println(InterfaceExample.x);//123
 	// to do ...
 }
 </code></pre></div><h5 id="比较-1">比较</h5>
-<ul>
-<li>从设计层面上看，抽象类提供了一种<code>is-a</code>关系，那么就必须满足里式替换原则，即子类对象必须能够替换掉所有父类对象。而接口更像是一种 <code>like-a</code> 关系，它只是提供一种方法实现契约，并不要求接口和实现接口的类具有 <code>is-a</code> 关系。</li>
-<li>从使用上来看，一个类可以实现多个接口，但是不能继承多个抽象类。</li>
-<li>接口的字段只能是<code>static</code>和<code>final</code>类型的，而抽象类的字段没有这种限制。</li>
-<li>接口的成员只能是<code>public</code>的，而抽象类的成员可以有多种访问权限。</li>
-</ul>
+<p>从设计层面上看，抽象类提供了一种<code>is-a</code>关系，那么就必须满足里式替换原则，即子类对象必须能够替换掉所有父类对象。而接口更像是一种 <code>like-a</code> 关系，它只是提供一种方法实现契约，并不要求接口和实现接口的类具有 <code>is-a</code> 关系。
+抽象类是一种自下而上的思想，而接口是一种自上而下的思想。抽象类是将多个类的公共特点聚合到同一个类中，然后实现父类的方法；接口更像是对类的一种约束，其他类调用实现某接口的类。</p>
+<p>从语法角度来看，一个类可以实现多个接口，但是不能继承多个抽象类；接口的字段只能是<code>static</code>和<code>final</code>类型的，而抽象类的字段没有这种限制，接口的成员只能是<code>public</code>的，而抽象类的成员可以有多种访问权限。</p>
 <h5 id="使用选择-1">使用选择</h5>
 <p><strong>使用接口</strong></p>
 <ul>

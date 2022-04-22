@@ -8,7 +8,7 @@
 	
 	
 	
-	<title>Spring详解 ｜ whiteppure</title>
+	<title>Spring详解 ｜ whitepure</title>
 	
     
     
@@ -91,6 +91,30 @@
             
             
             <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%af%b9spring%e7%9a%84%e7%90%86%e8%a7%a3">
+                    对Spring的理解
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
                 <a class="nav-link text-left" href="#spring%e5%90%af%e5%8a%a8%e6%b5%81%e7%a8%8b">
                     Spring启动流程
                 </a>
@@ -115,80 +139,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#bean%e7%9a%84%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f">
-                    Bean的生命周期
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#spring%e4%b8%89%e7%ba%a7%e7%bc%93%e5%ad%98">
-                    Spring三级缓存
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#spring%e5%be%aa%e7%8e%af%e4%be%9d%e8%b5%96">
-                    Spring循环依赖
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#factorybean%e4%b8%8ebeanfactory">
-                    FactoryBean与BeanFactory
+                <a class="nav-link text-left" href="#spring%e5%be%aa%e7%8e%af%e4%be%9d%e8%b5%96%e4%b8%8e%e4%b8%89%e7%ba%a7%e7%bc%93%e5%ad%98">
+                    Spring循环依赖与三级缓存
                 </a>
             </li>
             
@@ -563,7 +515,31 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#bean%e7%9a%84%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f-1">
+                <a class="nav-link text-left" href="#bean%e7%9a%84%e5%88%9b%e5%bb%ba%e6%b5%81%e7%a8%8b">
+                    Bean的创建流程
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#bean%e7%9a%84%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f">
                     Bean的生命周期
                 </a>
             </li>
@@ -1031,7 +1007,7 @@
         <div class="site_title">
             <h1>
                 <a href="https://whiteppure.github.io/iblog/">
-                    <span>whiteppure</span>
+                    <span>whitepure</span>
                 </a>
             </h1>
         </div>
@@ -1084,11 +1060,27 @@
 <li>持久层：jdbctemplate、spring data</li>
 </ul>
 <p><img src="/iblog/posts/annex/images/spring/Spring%E8%AF%A6%E8%A7%A3-001.png" alt="Spring详解-001"></p>
+<h2 id="对spring的理解">对Spring的理解</h2>
+<p>Spring是一个轻量级的框架，简化我们的开发，里面重点包含两个模块分别是IOC和AOP。</p>
+<ul>
+<li>IOC叫控制反转，在没用IOC之前都要手动new创建对象，使用IOC之后由容器进行对象的创建，并且由容器来管理对象，减去了开发上的成本，提高了工作效率。</li>
+<li>AOP叫面向切面编程，在实际项目开发中需要嵌入一些与业务不想关的代码的时候就可以使用AOP。比如，权限日志的增加。</li>
+</ul>
+<p>Spring虽然把它当成框架来使用，但其本质是一个容器，即IOC容器，里面最核心是如何<a href="#Bean%E7%9A%84%E5%88%9B%E5%BB%BA%E6%B5%81%E7%A8%8B">创建对象和管理对象</a>,里面包含了Bean的生命周期和Spring的一些扩展点，包含对AOP的应用。
+除此之外，Spring真正的强大之处在于其生态，它包含了Spring Framework、Spring Boot、Spring Cloud等一些列框架，极大提高了开发效率。</p>
 <h2 id="spring启动流程">Spring启动流程</h2>
-<h2 id="bean的生命周期">Bean的生命周期</h2>
-<h2 id="spring三级缓存">Spring三级缓存</h2>
-<h2 id="spring循环依赖">Spring循环依赖</h2>
-<h2 id="factorybean与beanfactory">FactoryBean与BeanFactory</h2>
+<h2 id="spring循环依赖与三级缓存">Spring循环依赖与三级缓存</h2>
+<p><img src="/iblog/posts/annex/images/spring/Spring%E8%AF%A6%E8%A7%A3-003.png" alt="Spring详解-003"></p>
+<p>Spring循环依赖调用流程：</p>
+<p>在BeanA中注入BeanB，BeanB中注入BeanA，在BeanA创建的过程中，会先判断容器中A是否存在，如果不存在会先初始化BeanA，然后给BeanA赋值，此时会给BeanA里的BeanB属性赋值，在赋值之前会将创建BeanA的流程放到三级缓存中（三级缓存为Map结构，key为String，value为函数式接口）； 由于BeanA里面包含BeanB,所以接下来给BeanB执行创建流程，判断容器中是否存在BeanB，给属性B赋值,此时会给BeanB里的BeanA属性赋值。</p>
+<p>在判断容器中是否存在该Bean时，查找顺序为：一级缓存-&gt;二级缓存-&gt;三级缓存，经历过上面的步骤后，此时三级缓存中A和B都有值（为BeanA、B的创建流程），不需要再进行初始化操作，然后将会执行BeanA的创建流程并将其放入二级缓存中并删除三级缓存中的值，但是此时BeanA中的BeanB还未赋值进行完全的初始化，
+BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB已经完全赋值，然后将完全赋值的BeanB放入一级缓存中并删除三级缓存中的值，由于BeanB已经完全赋值，此时将其赋值给BeanA，将BeanA放入一级缓存并删除二级缓存，至此循环依赖问题解决。</p>
+<p>Spring循环依赖大致调用思路：</p>
+<ul>
+<li>第一次：A,容器是否存在？（一级缓存-&gt;二级缓存-&gt;三级缓存）初始化A，-&gt; 将A的创建流程加入三级缓存 -&gt; 给A赋值 -&gt;</li>
+<li>第二次：B，容器中是否存在？（一级缓存-&gt;二级缓存-&gt;三级缓存）初始化B -&gt; 将B的创建流程加入三级缓存 -&gt; 给B赋值</li>
+<li>第三次：A的三级缓存中有值，不需要进行初始化操作，执行创建A的流程,将其放入二级缓存，返回值给到创建B，此时B已经创建完全，将其加入一级缓存，然后将该返回值给到A，将A加入一级缓存，至此循环依赖问题解决。</li>
+</ul>
 <h2 id="springboot">SpringBoot</h2>
 <p>官网地址：<a href="https://spring.io/projects/spring-boot">https://spring.io/projects/spring-boot</a></p>
 <blockquote>
@@ -1800,8 +1792,27 @@ class TestService implements ApplicationContextAware, EmbeddedValueResolverAware
     }
 }
 </code></pre></div><p>关于这些<code>Aware</code>都是使用<code>AwareProcessor</code>进行处理的,比如:<code>ApplicationContextAwareProcessor</code>就是处理<code>ApplicationContextAware</code>接口的。</p>
-<h2 id="bean的生命周期-1">Bean的生命周期</h2>
-<p><code>Bean</code>的生命周期，即<code>Bean</code>的创建-&gt;初始化-&gt;销毁的过程。</p>
+<h2 id="bean的创建流程">Bean的创建流程</h2>
+<p><img src="/iblog/posts/annex/images/spring/Spring%E8%AF%A6%E8%A7%A3-002.png" alt="Spring详解-002"></p>
+<ol>
+<li>在xml或注解上标注定义Bean；</li>
+<li>使用IO流读取文件并使用dom4j或其他技术来解析xml，将其转换为document对象，并设置到BeanDefinition对象（注解则需要读取哪些类标注了该注解最终转换为BeanDefinition对象）；</li>
+<li>判断是否需要扩展，执行多个BeanFactoryProcessor方法，其目的在于获取一个完整的BeanDefinition对象。例如在xml中定义<code>{jdbc.username}</code>此处就可以进行替换操作；</li>
+<li>bean的实例化，执行createBeanInstance方法，通过反射来创建对象；</li>
+<li>bean的初始化：
+<ol>
+<li>设置对象属性包括设置自定义属性和通过调用Aware接口给容器中的属性赋值；</li>
+<li>判断是否需要扩展，如需要可执行前置处理方法；</li>
+<li>调用初始化方法执行invokeInitMethods方法，判断当前是否实现了InitialzingBean接口，如果实现该接口则调用afterPropertiesSet方法；</li>
+<li>判断是否需要扩展，如需要可执行后置处理方法；</li>
+<li>最终将对象交给容器来管理；</li>
+</ol>
+</li>
+<li>使用对象</li>
+<li>销毁对象</li>
+</ol>
+<h2 id="bean的生命周期">Bean的生命周期</h2>
+<p><code>Bean</code>的生命周期，即<code>Bean</code>的 <code>实例化-&gt;初始化-&gt;使用-&gt;销毁</code> 的过程。</p>
 <h3 id="注入bean">注入Bean</h3>
 <p>我们可以使用 xml 配置的方式来指定，<code>bean</code> 在初始化、销毁的时候调用对应的方法：</p>
 <div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;bean id=&#34;getDemoEntity&#34; class=&#34;com.my.demo&#34; init-method=&#34;init&#34; destroy-method=&#34;destroy&#34; /&gt;
