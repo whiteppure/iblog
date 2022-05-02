@@ -25,7 +25,15 @@ Spring是一个轻量级的框架，简化我们的开发，里面重点包含�
 Spring虽然把它当成框架来使用，但其本质是一个容器，即IOC容器，里面最核心是如何[创建对象和管理对象](#Bean的创建流程),里面包含了Bean的生命周期和Spring的一些扩展点，包含对AOP的应用。
 除此之外，Spring真正的强大之处在于其生态，它包含了Spring Framework、Spring Boot、Spring Cloud等一些列框架，极大提高了开发效率。
 
+
+## Spring注入方式
+
+
+
 ## Spring启动流程
+
+
+
 
 ## Spring循环依赖与三级缓存
 ![Spring详解-003](/iblog/posts/annex/images/spring/Spring详解-003.png)
@@ -41,7 +49,6 @@ Spring循环依赖大致调用思路：
 - 第一次：A,容器是否存在？（一级缓存->二级缓存->三级缓存）初始化A，-> 将A的创建流程加入三级缓存 -> 给A赋值 ->
 - 第二次：B，容器中是否存在？（一级缓存->二级缓存->三级缓存）初始化B -> 将B的创建流程加入三级缓存 -> 给B赋值
 - 第三次：A的三级缓存中有值，不需要进行初始化操作，执行创建A的流程,将其放入二级缓存，返回值给到创建B，此时B已经创建完全，将其加入一级缓存，然后将该返回值给到A，将A加入一级缓存，至此循环依赖问题解决。
-
 
 ## SpringBoot
 官网地址：[https://spring.io/projects/spring-boot](https://spring.io/projects/spring-boot)
