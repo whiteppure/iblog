@@ -1561,17 +1561,6 @@ Spring建议的是使用DEFAULT，即数据库本身的隔离级别，配置好�
 事务传播行为指当一个事务方法被另一个事务方法调用时，这个事务方法应该如何进行。
 
 Spring定义了七种传播行为：
-
-| 名称                      | 值   | 描述                                                         |
-| ------------------------- | ---- |------------------------------------------------------------|
-| PROPAGATION_REQUIRED      | 0    | 支持当前事务，如果当前没有事务，就新建一个事务。这是最常见的选择，也是Spring默认的事务的传播。         |
-| PROPAGATION_SUPPORTS      | 1    | 支持当前事务，如果当前没有事务，就以非事务方式执行。                                 |
-| PROPAGATION_MANDATORY     | 2    | 支持当前事务，如果当前没有事务，就抛出异常。                                     |
-| PROPAGATION_REQUIRES_NEW  | 3    | 新建事务，如果当前存在事务，把当前事务挂起。                                     |
-| PROPAGATION_NOT_SUPPORTED | 4    | 以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。                 |
-| PROPAGATION_NEVER         | 5    | 以非事务方式执行，如果当前存在事务，则抛出异常。                                   |
-| PROPAGATION_NESTED        | 6    | 如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则进行与PROPAGATION_REQUIRED类似的操作。 |
-
 - @Transactional(propagation=Propagation.REQUIRED)：如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
 - @Transactional(propagation=Propagation.NOT_SUPPORTED)：容器不为这个方法开启事务
 - @Transactional(propagation=Propagation.REQUIRES_NEW)：不管是否存在事务,都创建一个新的事务,原来的挂起,新的执行完毕,继续执行老的事务
@@ -1580,8 +1569,49 @@ Spring定义了七种传播行为：
 - @Transactional(propagation=Propagation.SUPPORTS)：如果其他bean调用这个方法,在其他bean中声明事务,那就用事务.如果其他bean没有声明事务,那就不用事务.
 
 ### @Transactional注解
+```java
+@Target({ElementType.TYPE, ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Inherited
+@Documented
+public @interface Transactional {
+    @AliasFor("transactionManager")
+    String value() default "";
 
-@Transactional注解失效：
+    @AliasFor("value")
+    String transactionManager() default "";
+
+    // 事务的传播行为
+    Propagation propagation() default Propagation.REQUIRED;
+
+    // 事务的隔离级别
+    Isolation isolation() default Isolation.DEFAULT;
+
+    // 超时时间
+    // 事务需要在一定时间内提交，如不提交则进行回滚
+    // 默认-1，设置时间以秒单位进行计算 
+    int timeout() default -1;
+
+    // 是否只读
+    // 读：查询操作；写：添加、修改、删除操作
+    // 默认值false，表示可以进行读、写操作
+    // 设置true后 只能查询
+    boolean readOnly() default false;
+
+    // 回滚
+    // 设置出现哪些异常进行回滚 
+    Class<? extends Throwable>[] rollbackFor() default {};
+
+    String[] rollbackForClassName() default {};
+
+    // 不回滚
+    // 设置出现哪些异常不进行回滚 
+    Class<? extends Throwable>[] noRollbackFor() default {};
+
+    String[] noRollbackForClassName() default {};
+}
+```
+#### 失效情况
 1. 如果某个方法是非public的，那么@Transactional就会失效，因为底层cglib是基于父子类来实现的，子类是不能重载父类的private方法，所以无法很好利用代理，这种情况下会导致@Transactional失效
 2. 使用的数据库引擎不支持事务，例如在使用mysql的时候使用MyISAM引擎不支持事务，InnoDB支持，并且从mysql5.5之后开始默认的存储引擎就为InnoDB 。
 3. 调用的问题，因为Spring事务是基于代理来实现的，所以某个加了@Transactional的方法只有是被代理对象调用时，那么这个注解才会生效，所以当被代理对象来调用这个方法那么事务就不会生效，简单的可以理解为添加了@Transactional注解的方法不能在同一个类中调用，否则会使事务失效。
@@ -1593,6 +1623,7 @@ Spring定义了七种传播行为：
 6. 异常被 catch 了 导致@Transactional失效：当事务方法中抛出一个异常后，应该是需要表示当前事务需要 rollback ，如果在事务方法中手动捕获了该异常，那么事务方法则会任务当前事务应该正常 commit，此时就会出现事务方法中明明有报错信息表示当前事务需要 rollback 但是事务方法任务是正常，出现了前后不一致，也是因为这样就会抛出 UnexpectedRollbackException异常。
 
 
-@Transactional注解原理： 利用Spring Aop实现的。 当一个方法使用了@Transactional注解，在运行时，JVM为该Bean创建一个代理对象，并且在调用该方法的时候进行使用TransactionInterceptor拦截，在方法执行之前会开启一个事务，然后执行方法的逻辑。 方法执行成功，则提交事务。如果执行方法中出现异常，则回滚事务。
+#### 原理
+利用Spring Aop实现的。 当一个方法使用了@Transactional注解，在运行时，JVM为该Bean创建一个代理对象，并且在调用该方法的时候进行使用TransactionInterceptor拦截，在方法执行之前会开启一个事务，然后执行方法的逻辑。 方法执行成功，则提交事务。如果执行方法中出现异常，则回滚事务。
 
 

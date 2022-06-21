@@ -1000,6 +1000,70 @@
         
         
         
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%a4%b1%e6%95%88%e6%83%85%e5%86%b5">
+                    失效情况
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%8e%9f%e7%90%86-2">
+                    原理
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
 
     </div>
 
@@ -2514,52 +2578,6 @@ protected Object applyBeanPostProcessorsBeforeInstantiation(Class&lt;?&gt; beanC
 <h3 id="spring事务的传播">Spring事务的传播</h3>
 <p>事务传播行为指当一个事务方法被另一个事务方法调用时，这个事务方法应该如何进行。</p>
 <p>Spring定义了七种传播行为：</p>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>值</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>PROPAGATION_REQUIRED</td>
-<td>0</td>
-<td>支持当前事务，如果当前没有事务，就新建一个事务。这是最常见的选择，也是Spring默认的事务的传播。</td>
-</tr>
-<tr>
-<td>PROPAGATION_SUPPORTS</td>
-<td>1</td>
-<td>支持当前事务，如果当前没有事务，就以非事务方式执行。</td>
-</tr>
-<tr>
-<td>PROPAGATION_MANDATORY</td>
-<td>2</td>
-<td>支持当前事务，如果当前没有事务，就抛出异常。</td>
-</tr>
-<tr>
-<td>PROPAGATION_REQUIRES_NEW</td>
-<td>3</td>
-<td>新建事务，如果当前存在事务，把当前事务挂起。</td>
-</tr>
-<tr>
-<td>PROPAGATION_NOT_SUPPORTED</td>
-<td>4</td>
-<td>以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。</td>
-</tr>
-<tr>
-<td>PROPAGATION_NEVER</td>
-<td>5</td>
-<td>以非事务方式执行，如果当前存在事务，则抛出异常。</td>
-</tr>
-<tr>
-<td>PROPAGATION_NESTED</td>
-<td>6</td>
-<td>如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则进行与PROPAGATION_REQUIRED类似的操作。</td>
-</tr>
-</tbody>
-</table>
 <ul>
 <li>@Transactional(propagation=Propagation.REQUIRED)：如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)</li>
 <li>@Transactional(propagation=Propagation.NOT_SUPPORTED)：容器不为这个方法开启事务</li>
@@ -2569,7 +2587,47 @@ protected Object applyBeanPostProcessorsBeforeInstantiation(Class&lt;?&gt; beanC
 <li>@Transactional(propagation=Propagation.SUPPORTS)：如果其他bean调用这个方法,在其他bean中声明事务,那就用事务.如果其他bean没有声明事务,那就不用事务.</li>
 </ul>
 <h3 id="transactional注解">@Transactional注解</h3>
-<p>@Transactional注解失效：</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Target</span><span class="o">({</span><span class="n">ElementType</span><span class="o">.</span><span class="na">TYPE</span><span class="o">,</span> <span class="n">ElementType</span><span class="o">.</span><span class="na">METHOD</span><span class="o">})</span>
+<span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+<span class="nd">@Inherited</span>
+<span class="nd">@Documented</span>
+<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">Transactional</span> <span class="o">{</span>
+    <span class="nd">@AliasFor</span><span class="o">(</span><span class="s">&#34;transactionManager&#34;</span><span class="o">)</span>
+    <span class="n">String</span> <span class="nf">value</span><span class="o">()</span> <span class="k">default</span> <span class="s">&#34;&#34;</span><span class="o">;</span>
+
+    <span class="nd">@AliasFor</span><span class="o">(</span><span class="s">&#34;value&#34;</span><span class="o">)</span>
+    <span class="n">String</span> <span class="nf">transactionManager</span><span class="o">()</span> <span class="k">default</span> <span class="s">&#34;&#34;</span><span class="o">;</span>
+
+    <span class="c1">// 事务的传播行为
+</span><span class="c1"></span>    <span class="n">Propagation</span> <span class="nf">propagation</span><span class="o">()</span> <span class="k">default</span> <span class="n">Propagation</span><span class="o">.</span><span class="na">REQUIRED</span><span class="o">;</span>
+
+    <span class="c1">// 事务的隔离级别
+</span><span class="c1"></span>    <span class="n">Isolation</span> <span class="nf">isolation</span><span class="o">()</span> <span class="k">default</span> <span class="n">Isolation</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">;</span>
+
+    <span class="c1">// 超时时间
+</span><span class="c1"></span>    <span class="c1">// 事务需要在一定时间内提交，如不提交则进行回滚
+</span><span class="c1"></span>    <span class="c1">// 默认-1，设置时间以秒单位进行计算 
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="nf">timeout</span><span class="o">()</span> <span class="k">default</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
+
+    <span class="c1">// 是否只读
+</span><span class="c1"></span>    <span class="c1">// 读：查询操作；写：添加、修改、删除操作
+</span><span class="c1"></span>    <span class="c1">// 默认值false，表示可以进行读、写操作
+</span><span class="c1"></span>    <span class="c1">// 设置true后 只能查询
+</span><span class="c1"></span>    <span class="kt">boolean</span> <span class="nf">readOnly</span><span class="o">()</span> <span class="k">default</span> <span class="kc">false</span><span class="o">;</span>
+
+    <span class="c1">// 回滚
+</span><span class="c1"></span>    <span class="c1">// 设置出现哪些异常进行回滚 
+</span><span class="c1"></span>    <span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Throwable</span><span class="o">&gt;[]</span> <span class="nf">rollbackFor</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
+
+    <span class="n">String</span><span class="o">[]</span> <span class="nf">rollbackForClassName</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
+
+    <span class="c1">// 不回滚
+</span><span class="c1"></span>    <span class="c1">// 设置出现哪些异常不进行回滚 
+</span><span class="c1"></span>    <span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Throwable</span><span class="o">&gt;[]</span> <span class="nf">noRollbackFor</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
+
+    <span class="n">String</span><span class="o">[]</span> <span class="nf">noRollbackForClassName</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
+<span class="o">}</span>
+</code></pre></div><h4 id="失效情况">失效情况</h4>
 <ol>
 <li>如果某个方法是非public的，那么@Transactional就会失效，因为底层cglib是基于父子类来实现的，子类是不能重载父类的private方法，所以无法很好利用代理，这种情况下会导致@Transactional失效</li>
 <li>使用的数据库引擎不支持事务，例如在使用mysql的时候使用MyISAM引擎不支持事务，InnoDB支持，并且从mysql5.5之后开始默认的存储引擎就为InnoDB 。</li>
@@ -2584,7 +2642,8 @@ protected Object applyBeanPostProcessorsBeforeInstantiation(Class&lt;?&gt; beanC
 <li>@Transactional 注解属性 rollbackFor 设置错误：rollbackFor 可以指定能够触发事务回滚的异常类型。Spring默认抛出了未检查unchecked异常（继承自RuntimeException 的异常）或者 Error才回滚事务；其他异常不会触发回滚事务。如果在事务中抛出其他类型的异常，但却期望 Spring 能够回滚事务，就需要指定 rollbackFor属性。</li>
 <li>异常被 catch 了 导致@Transactional失效：当事务方法中抛出一个异常后，应该是需要表示当前事务需要 rollback ，如果在事务方法中手动捕获了该异常，那么事务方法则会任务当前事务应该正常 commit，此时就会出现事务方法中明明有报错信息表示当前事务需要 rollback 但是事务方法任务是正常，出现了前后不一致，也是因为这样就会抛出 UnexpectedRollbackException异常。</li>
 </ol>
-<p>@Transactional注解原理： 利用Spring Aop实现的。 当一个方法使用了@Transactional注解，在运行时，JVM为该Bean创建一个代理对象，并且在调用该方法的时候进行使用TransactionInterceptor拦截，在方法执行之前会开启一个事务，然后执行方法的逻辑。 方法执行成功，则提交事务。如果执行方法中出现异常，则回滚事务。</p>
+<h4 id="原理-2">原理</h4>
+<p>利用Spring Aop实现的。 当一个方法使用了@Transactional注解，在运行时，JVM为该Bean创建一个代理对象，并且在调用该方法的时候进行使用TransactionInterceptor拦截，在方法执行之前会开启一个事务，然后执行方法的逻辑。 方法执行成功，则提交事务。如果执行方法中出现异常，则回滚事务。</p>
 </div>
                     <div class="post_footer">
                         <div class="meta">
