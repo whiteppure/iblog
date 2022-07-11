@@ -30,7 +30,80 @@ Spring虽然把它当成框架来使用，但其本质是一个容器，即IOC�
 
 
 
-## Spring启动流程
+## Spring IOC启动流程
+核心方法`AbstractApplicationContext#refresh()`
+
+```
+	public void refresh() throws BeansException, IllegalStateException {
+		synchronized (this.startupShutdownMonitor) {
+			// Prepare this context for refreshing.
+			prepareRefresh();
+
+			// Tell the subclass to refresh the internal bean factory.
+			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
+
+			// Prepare the bean factory for use in this context.
+			prepareBeanFactory(beanFactory);
+
+			try {
+				// Allows post-processing of the bean factory in context subclasses.
+				postProcessBeanFactory(beanFactory);
+
+				// Invoke factory processors registered as beans in the context.
+				invokeBeanFactoryPostProcessors(beanFactory);
+
+				// Register bean processors that intercept bean creation.
+				registerBeanPostProcessors(beanFactory);
+
+				// Initialize message source for this context.
+				initMessageSource();
+
+				// Initialize event multicaster for this context.
+				initApplicationEventMulticaster();
+
+				// Initialize other special beans in specific context subclasses.
+				onRefresh();
+
+				// Check for listener beans and register them.
+				registerListeners();
+
+				// Instantiate all remaining (non-lazy-init) singletons.
+				finishBeanFactoryInitialization(beanFactory);
+
+				// Last step: publish corresponding event.
+				finishRefresh();
+			}
+
+			catch (BeansException ex) {
+				if (logger.isWarnEnabled()) {
+					logger.warn("Exception encountered during context initialization - " +
+							"cancelling refresh attempt: " + ex);
+				}
+
+				// Destroy already created singletons to avoid dangling resources.
+				destroyBeans();
+
+				// Reset 'active' flag.
+				cancelRefresh(ex);
+
+				// Propagate exception to caller.
+				throw ex;
+			}
+
+			finally {
+				// Reset common introspection caches in Spring's core, since we
+				// might not ever need metadata for singleton beans anymore...
+				resetCommonCaches();
+			}
+		}
+	}
+```
+1. prepareRefresh 准备刷新容器，此方法做一些刷新容器的准备工作：
+- 设置开启时间和对应标志位
+- 获取环境对象
+- 设置监听器和一些时间的集合对象
+2. obtainFreshBeanFactory 创建容器对象：DefaultListableBeanFactory
+- 加载xml配置文件属性值到工厂中，最重要的是BeanDefinition
 
 
 
@@ -46,7 +119,7 @@ Spring循环依赖调用流程：
 BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB已经完全赋值，然后将完全赋值的BeanB放入一级缓存中并删除三级缓存中的值，由于BeanB已经完全赋值，此时将其赋值给BeanA，将BeanA放入一级缓存并删除二级缓存，至此循环依赖问题解决。
 
 Spring循环依赖大致调用思路：
-- 第一次：A,容器是否存在？（一级缓存->二级缓存->三级缓存）初始化A，-> 将A的创建流程加入三级缓存 -> 给A赋值 ->
+- 第一次：A,容器是否存在？（一级缓存->二级缓存->三级缓存）初始化A，-> 将A的创建流程加入三级缓存 -> 给A赋值
 - 第二次：B，容器中是否存在？（一级缓存->二级缓存->三级缓存）初始化B -> 将B的创建流程加入三级缓存 -> 给B赋值
 - 第三次：A的三级缓存中有值，不需要进行初始化操作，执行创建A的流程,将其放入二级缓存，返回值给到创建B，此时B已经创建完全，将其加入一级缓存，然后将该返回值给到A，将A加入一级缓存，至此循环依赖问题解决。
 

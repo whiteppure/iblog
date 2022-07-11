@@ -139,8 +139,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#spring%e5%90%af%e5%8a%a8%e6%b5%81%e7%a8%8b">
-                    Spring启动流程
+                <a class="nav-link text-left" href="#spring-ioc%e5%90%af%e5%8a%a8%e6%b5%81%e7%a8%8b">
+                    Spring IOC启动流程
                 </a>
             </li>
             
@@ -1157,7 +1157,85 @@
 <p>Spring虽然把它当成框架来使用，但其本质是一个容器，即IOC容器，里面最核心是如何<a href="#Bean%E7%9A%84%E5%88%9B%E5%BB%BA%E6%B5%81%E7%A8%8B">创建对象和管理对象</a>,里面包含了Bean的生命周期和Spring的一些扩展点，包含对AOP的应用。
 除此之外，Spring真正的强大之处在于其生态，它包含了Spring Framework、Spring Boot、Spring Cloud等一些列框架，极大提高了开发效率。</p>
 <h2 id="spring注入方式">Spring注入方式</h2>
-<h2 id="spring启动流程">Spring启动流程</h2>
+<h2 id="spring-ioc启动流程">Spring IOC启动流程</h2>
+<p>核心方法<code>AbstractApplicationContext#refresh()</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">	public void refresh() throws BeansException, IllegalStateException {
+		synchronized (this.startupShutdownMonitor) {
+			// Prepare this context for refreshing.
+			prepareRefresh();
+
+			// Tell the subclass to refresh the internal bean factory.
+			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
+
+			// Prepare the bean factory for use in this context.
+			prepareBeanFactory(beanFactory);
+
+			try {
+				// Allows post-processing of the bean factory in context subclasses.
+				postProcessBeanFactory(beanFactory);
+
+				// Invoke factory processors registered as beans in the context.
+				invokeBeanFactoryPostProcessors(beanFactory);
+
+				// Register bean processors that intercept bean creation.
+				registerBeanPostProcessors(beanFactory);
+
+				// Initialize message source for this context.
+				initMessageSource();
+
+				// Initialize event multicaster for this context.
+				initApplicationEventMulticaster();
+
+				// Initialize other special beans in specific context subclasses.
+				onRefresh();
+
+				// Check for listener beans and register them.
+				registerListeners();
+
+				// Instantiate all remaining (non-lazy-init) singletons.
+				finishBeanFactoryInitialization(beanFactory);
+
+				// Last step: publish corresponding event.
+				finishRefresh();
+			}
+
+			catch (BeansException ex) {
+				if (logger.isWarnEnabled()) {
+					logger.warn(&#34;Exception encountered during context initialization - &#34; +
+							&#34;cancelling refresh attempt: &#34; + ex);
+				}
+
+				// Destroy already created singletons to avoid dangling resources.
+				destroyBeans();
+
+				// Reset &#39;active&#39; flag.
+				cancelRefresh(ex);
+
+				// Propagate exception to caller.
+				throw ex;
+			}
+
+			finally {
+				// Reset common introspection caches in Spring&#39;s core, since we
+				// might not ever need metadata for singleton beans anymore...
+				resetCommonCaches();
+			}
+		}
+	}
+</code></pre></div><ol>
+<li>prepareRefresh 准备刷新容器，此方法做一些刷新容器的准备工作：</li>
+</ol>
+<ul>
+<li>设置开启时间和对应标志位</li>
+<li>获取环境对象</li>
+<li>设置监听器和一些时间的集合对象</li>
+</ul>
+<ol start="2">
+<li>obtainFreshBeanFactory 创建容器对象：DefaultListableBeanFactory</li>
+</ol>
+<ul>
+<li>加载xml配置文件属性值到工厂中，最重要的是BeanDefinition</li>
+</ul>
 <h2 id="spring循环依赖与三级缓存">Spring循环依赖与三级缓存</h2>
 <p><img src="/iblog/posts/annex/images/spring/Spring%E8%AF%A6%E8%A7%A3-003.png" alt="Spring详解-003"></p>
 <p>Spring循环依赖调用流程：</p>
@@ -1166,7 +1244,7 @@
 BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB已经完全赋值，然后将完全赋值的BeanB放入一级缓存中并删除三级缓存中的值，由于BeanB已经完全赋值，此时将其赋值给BeanA，将BeanA放入一级缓存并删除二级缓存，至此循环依赖问题解决。</p>
 <p>Spring循环依赖大致调用思路：</p>
 <ul>
-<li>第一次：A,容器是否存在？（一级缓存-&gt;二级缓存-&gt;三级缓存）初始化A，-&gt; 将A的创建流程加入三级缓存 -&gt; 给A赋值 -&gt;</li>
+<li>第一次：A,容器是否存在？（一级缓存-&gt;二级缓存-&gt;三级缓存）初始化A，-&gt; 将A的创建流程加入三级缓存 -&gt; 给A赋值</li>
 <li>第二次：B，容器中是否存在？（一级缓存-&gt;二级缓存-&gt;三级缓存）初始化B -&gt; 将B的创建流程加入三级缓存 -&gt; 给B赋值</li>
 <li>第三次：A的三级缓存中有值，不需要进行初始化操作，执行创建A的流程,将其放入二级缓存，返回值给到创建B，此时B已经创建完全，将其加入一级缓存，然后将该返回值给到A，将A加入一级缓存，至此循环依赖问题解决。</li>
 </ul>
