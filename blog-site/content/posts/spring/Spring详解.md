@@ -25,87 +25,89 @@ Spring是一个轻量级的框架，简化我们的开发，里面重点包含�
 Spring虽然把它当成框架来使用，但其本质是一个容器，即IOC容器，里面最核心是如何[创建对象和管理对象](#Bean的创建流程),里面包含了Bean的生命周期和Spring的一些扩展点，包含对AOP的应用。
 除此之外，Spring真正的强大之处在于其生态，它包含了Spring Framework、Spring Boot、Spring Cloud等一些列框架，极大提高了开发效率。
 
+## Spring 启动流程
+参考：[https://blog.csdn.net/scjava/article/details/109587619](https://blog.csdn.net/scjava/article/details/109587619)
 
-## Spring注入方式
+![Spring详解-004](/iblog/posts/annex/images/spring/Spring详解-004.png)
 
 
-
-## Spring IOC启动流程
 核心方法`AbstractApplicationContext#refresh()`
-
 ```
-	public void refresh() throws BeansException, IllegalStateException {
-		synchronized (this.startupShutdownMonitor) {
-			// Prepare this context for refreshing.
-			prepareRefresh();
+public void refresh() throws BeansException, IllegalStateException {
+  synchronized (this.startupShutdownMonitor) {
+      // Prepare this context for refreshing.
+      prepareRefresh();
 
-			// Tell the subclass to refresh the internal bean factory.
-			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
+      // Tell the subclass to refresh the internal bean factory.
+      ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
-			// Prepare the bean factory for use in this context.
-			prepareBeanFactory(beanFactory);
+      // Prepare the bean factory for use in this context.
+      prepareBeanFactory(beanFactory);
 
-			try {
-				// Allows post-processing of the bean factory in context subclasses.
-				postProcessBeanFactory(beanFactory);
+      try {
+          // Allows post-processing of the bean factory in context subclasses.
+          postProcessBeanFactory(beanFactory);
 
-				// Invoke factory processors registered as beans in the context.
-				invokeBeanFactoryPostProcessors(beanFactory);
+          // Invoke factory processors registered as beans in the context.
+          invokeBeanFactoryPostProcessors(beanFactory);
 
-				// Register bean processors that intercept bean creation.
-				registerBeanPostProcessors(beanFactory);
+          // Register bean processors that intercept bean creation.
+          registerBeanPostProcessors(beanFactory);
 
-				// Initialize message source for this context.
-				initMessageSource();
+          // Initialize message source for this context.
+          initMessageSource();
 
-				// Initialize event multicaster for this context.
-				initApplicationEventMulticaster();
+          // Initialize event multicaster for this context.
+          initApplicationEventMulticaster();
 
-				// Initialize other special beans in specific context subclasses.
-				onRefresh();
+          // Initialize other special beans in specific context subclasses.
+          onRefresh();
 
-				// Check for listener beans and register them.
-				registerListeners();
+          // Check for listener beans and register them.
+          registerListeners();
 
-				// Instantiate all remaining (non-lazy-init) singletons.
-				finishBeanFactoryInitialization(beanFactory);
+          // Instantiate all remaining (non-lazy-init) singletons.
+          finishBeanFactoryInitialization(beanFactory);
 
-				// Last step: publish corresponding event.
-				finishRefresh();
-			}
+          // Last step: publish corresponding event.
+          finishRefresh();
+      }
 
-			catch (BeansException ex) {
-				if (logger.isWarnEnabled()) {
-					logger.warn("Exception encountered during context initialization - " +
-							"cancelling refresh attempt: " + ex);
-				}
+      catch (BeansException ex) {
+         // ... 
+      }
 
-				// Destroy already created singletons to avoid dangling resources.
-				destroyBeans();
-
-				// Reset 'active' flag.
-				cancelRefresh(ex);
-
-				// Propagate exception to caller.
-				throw ex;
-			}
-
-			finally {
-				// Reset common introspection caches in Spring's core, since we
-				// might not ever need metadata for singleton beans anymore...
-				resetCommonCaches();
-			}
-		}
-	}
+      finally {
+         // ...
+      }
+  }
+}
 ```
 1. prepareRefresh 准备刷新容器，此方法做一些刷新容器的准备工作：
 - 设置开启时间和对应标志位
 - 获取环境对象
 - 设置监听器和一些时间的集合对象
-2. obtainFreshBeanFactory 创建容器对象：DefaultListableBeanFactory
-- 加载xml配置文件属性值到工厂中，最重要的是BeanDefinition
-
-
+2. obtainFreshBeanFactory 创建容器对象：DefaultListableBeanFactory；加载xml配置文件属性值到工厂中，最重要的是BeanDefinition
+3. prepareBeanFactory 完成bean工厂的某些初始化操作
+- 设置BeanDefinition的类加载器
+- 设置spring容器默认的类型转换器
+- 设置spring解析el表达式的解析器
+- 添加一个Bean的后置处理器ApplicationContextAwareProcessor
+- 将bean工厂的一些类，比如ApplicationContext直接注册到单例池中
+- 去除一些在byType或者byName的时候需要过滤掉的一些bean（spring在依赖注入的时候会先在这些默认注册的bean中进行byType找，如果找到了，就加入到列表中，简单来说就是比如你在bean中依赖注入了ApplicationContext context,那么spring会把默认注册的这些bean中找到然后进行注册）
+- 将系统的环境信息、spring容器的启动环境信息、操作系统的环境信息直接注册成一个单例的bean
+4. postProcessBeanFactory 这里是一个空壳方法，spring目前还没有对他进行实现;这个方法是留给子类进行实现的，后续可以添加一些用户自定义的或者默认的一些特殊的后置处理器工程到beanFactory中去
+5. invokeBeanFactoryPostProcessors 调用后置处理器；将系统中所有符合条件的普通类都扫描成了一个BeanDefinition 并且放入到了beanDefinitionMap中，包括业务的bean，ban的后置处理器、bean工厂的后置处理器等等
+- 将标记为容器单例类扫描成BeanDefinition放入BeanDefinition Map
+- 处理@Import注解
+- 如果我们的配置类是@Configuration的，那么会生成这个配置类的CGLIB代理类，如果没有加@Configuration，则就是一个普通Bean
+6. registerBeanPostProcessors 从beanDefinitionMap中取出bean的后置处理器然后放入到后置处理器的缓存列表中
+7. initMessageSource 初始化国际化资源信息
+8. initApplicationEventMulticaster 事件注册器初始化
+9. onRefresh 空壳方法，留给子类实现
+10. registerListeners 将容器中和BeanDefinitionMap中的监听器添加到事件监听器中
+11. finishBeanFactoryInitialization 创建单例池，将容器中非懒加载的Bean，单例bean创建对象放入单例池中，包括容器的依赖注入
+12. finishRefresh 容器启动过后，发布事件
 
 
 ## Spring循环依赖与三级缓存
@@ -1156,7 +1158,7 @@ populateBean()
 之后在调用`invokeInitMethods`方法，进行`bean`的初始化，最后在执行`applyBeanPostProcessorsAfterInitialization`方法，执行一些初始化之后的工作。
 
 ## AOP
-AOP,全称：`Aspect-Oriented Programming`，译为面向切面编程 。AOP可以说是对OOP的补充和完善。在程序原有的纵向执行流程中,针对某一个或某些方法添加通知(方法),形成横切面的过程就叫做面向切面编程。
+AOP全称：`Aspect-Oriented Programming`，译为面向切面编程 。AOP可以说是对OOP的补充和完善。在程序原有的纵向执行流程中,针对某一个或某些方法添加通知(方法),形成横切面的过程就叫做面向切面编程。
 
 实现AOP的技术，主要分为两大类： 一是采用动态代理技术，利用截取消息的方式，对该消息进行装饰，以取代原有对象行为的执行；二是采用静态织入的方式，引入特定的语法创建“切面”，从而使得编译器可以在编译期间织入有关“切面”的代码，属于静态代理。
 
