@@ -84,23 +84,23 @@ public void refresh() throws BeansException, IllegalStateException {
 }
 ```
 1. prepareRefresh 准备刷新容器，此方法做一些刷新容器的准备工作：
-- 设置开启时间和对应标志位
-- 获取环境对象
-- 设置监听器和一些时间的集合对象
+   - 设置开启时间和对应标志位
+   - 获取环境对象
+   - 设置监听器和一些时间的集合对象
 2. obtainFreshBeanFactory 创建容器对象：DefaultListableBeanFactory；加载xml配置文件属性值到工厂中，最重要的是BeanDefinition
 3. prepareBeanFactory 完成bean工厂的某些初始化操作
-- 设置BeanDefinition的类加载器
-- 设置spring容器默认的类型转换器
-- 设置spring解析el表达式的解析器
-- 添加一个Bean的后置处理器ApplicationContextAwareProcessor
-- 将bean工厂的一些类，比如ApplicationContext直接注册到单例池中
-- 去除一些在byType或者byName的时候需要过滤掉的一些bean（spring在依赖注入的时候会先在这些默认注册的bean中进行byType找，如果找到了，就加入到列表中，简单来说就是比如你在bean中依赖注入了ApplicationContext context,那么spring会把默认注册的这些bean中找到然后进行注册）
-- 将系统的环境信息、spring容器的启动环境信息、操作系统的环境信息直接注册成一个单例的bean
+   - 设置BeanDefinition的类加载器
+   - 设置spring容器默认的类型转换器
+   - 设置spring解析el表达式的解析器
+   - 添加一个Bean的后置处理器ApplicationContextAwareProcessor
+   - 将bean工厂的一些类，比如ApplicationContext直接注册到单例池中
+   - 去除一些在byType或者byName的时候需要过滤掉的一些bean（spring在依赖注入的时候会先在这些默认注册的bean中进行byType找，如果找到了，就加入到列表中，简单来说就是比如你在bean中依赖注入了ApplicationContext context,那么spring会把默认注册的这些bean中找到然后进行注册）
+   - 将系统的环境信息、spring容器的启动环境信息、操作系统的环境信息直接注册成一个单例的bean
 4. postProcessBeanFactory 这里是一个空壳方法，spring目前还没有对他进行实现;这个方法是留给子类进行实现的，后续可以添加一些用户自定义的或者默认的一些特殊的后置处理器工程到beanFactory中去
 5. invokeBeanFactoryPostProcessors 调用后置处理器；将系统中所有符合条件的普通类都扫描成了一个BeanDefinition 并且放入到了beanDefinitionMap中，包括业务的bean，ban的后置处理器、bean工厂的后置处理器等等
-- 将标记为容器单例类扫描成BeanDefinition放入BeanDefinition Map
-- 处理@Import注解
-- 如果我们的配置类是@Configuration的，那么会生成这个配置类的CGLIB代理类，如果没有加@Configuration，则就是一个普通Bean
+   - 将标记为容器单例类扫描成BeanDefinition放入BeanDefinition Map
+   - 处理@Import注解
+   - 如果我们的配置类是@Configuration的，那么会生成这个配置类的CGLIB代理类，如果没有加@Configuration，则就是一个普通Bean
 6. registerBeanPostProcessors 从beanDefinitionMap中取出bean的后置处理器然后放入到后置处理器的缓存列表中
 7. initMessageSource 初始化国际化资源信息
 8. initApplicationEventMulticaster 事件注册器初始化
