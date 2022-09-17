@@ -369,24 +369,24 @@
 </ul>
 <p>并发包<code>ReentrantLock</code>的创建可以指定构造函数的boolean类型来得到公平锁或者非公平锁 默认是非公平锁,<code>synchronized</code>也是非公平锁.
 源码如下:</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">   /**
-     * Creates an instance of {@code ReentrantLock}.
-     * This is equivalent to using {@code ReentrantLock(false)}.
-     */
-    public ReentrantLock() {
-        sync = new NonfairSync();
-    }
-
-    /**
-     * Creates an instance of {@code ReentrantLock} with the
-     * given fairness policy.
-     *
-     * @param fair {@code true} if this lock should use a fair ordering policy
-     */
-    public ReentrantLock(boolean fair) {
-        sync = fair ? new FairSync() : new NonfairSync();
-    }
-</code></pre></div><h2 id="可重入锁递归锁">可重入锁(递归锁)</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">   /**
+</span></span><span class="line"><span class="cl">     * Creates an instance of {@code ReentrantLock}.
+</span></span><span class="line"><span class="cl">     * This is equivalent to using {@code ReentrantLock(false)}.
+</span></span><span class="line"><span class="cl">     */
+</span></span><span class="line"><span class="cl">    public ReentrantLock() {
+</span></span><span class="line"><span class="cl">        sync = new NonfairSync();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /**
+</span></span><span class="line"><span class="cl">     * Creates an instance of {@code ReentrantLock} with the
+</span></span><span class="line"><span class="cl">     * given fairness policy.
+</span></span><span class="line"><span class="cl">     *
+</span></span><span class="line"><span class="cl">     * @param fair {@code true} if this lock should use a fair ordering policy
+</span></span><span class="line"><span class="cl">     */
+</span></span><span class="line"><span class="cl">    public ReentrantLock(boolean fair) {
+</span></span><span class="line"><span class="cl">        sync = fair ? new FairSync() : new NonfairSync();
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><h2 id="可重入锁递归锁">可重入锁(递归锁)</h2>
 <p>指同一个线程外层函数获得锁之后，内层仍然能获取到该锁，在同一个线程在外层方法获取锁的时候，在进入内层方法或会自动获取该锁.
 <strong>可重入锁最大的作用就是避免死锁</strong></p>
 <h2 id="不可重入锁">不可重入锁</h2>
@@ -400,200 +400,197 @@
 </li>
 </ul>
 <h3 id="synchronized">synchronized</h3>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class SynchronziedDemo {
-
-   private synchronized void print() {
-       doAdd();
-   }
-   private synchronized void doAdd() {
-       System.out.println(&#34;doAdd...&#34;);
-   }
-
-   public static void main(String[] args) {
-       SynchronziedDemo synchronziedDemo = new SynchronziedDemo();
-       synchronziedDemo.print(); // doAdd...
-   }
-}
-</code></pre></div><h3 id="reentrantlock">ReentrantLock</h3>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class ReentrantLockDemo {
-    private Lock lock = new ReentrantLock();
-
-    private void print() {
-        lock.lock();
-        doAdd();
-        lock.unlock();
-    }
-
-    private void doAdd() {
-	// doAdd 方法中加两次锁和解两次锁也可以,不会报错
-	// 如果少了一个unlock()也不会报错,会形成死锁
-        lock.lock();
-        lock.lock();
-        System.out.println(&#34;doAdd...&#34;);
-        lock.unlock();
-        lock.unlock();
-    }
-
-    public static void main(String[] args) {
-        ReentrantLockDemo reentrantLockDemo = new ReentrantLockDemo();
-        reentrantLockDemo.print();
-    }
-}
-
-</code></pre></div><h2 id="自旋锁">自旋锁</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class SynchronziedDemo {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   private synchronized void print() {
+</span></span><span class="line"><span class="cl">       doAdd();
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   private synchronized void doAdd() {
+</span></span><span class="line"><span class="cl">       System.out.println(&#34;doAdd...&#34;);
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">       SynchronziedDemo synchronziedDemo = new SynchronziedDemo();
+</span></span><span class="line"><span class="cl">       synchronziedDemo.print(); // doAdd...
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h3 id="reentrantlock">ReentrantLock</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class ReentrantLockDemo {
+</span></span><span class="line"><span class="cl">    private Lock lock = new ReentrantLock();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private void print() {
+</span></span><span class="line"><span class="cl">        lock.lock();
+</span></span><span class="line"><span class="cl">        doAdd();
+</span></span><span class="line"><span class="cl">        lock.unlock();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private void doAdd() {
+</span></span><span class="line"><span class="cl">	// doAdd 方法中加两次锁和解两次锁也可以,不会报错
+</span></span><span class="line"><span class="cl">	// 如果少了一个unlock()也不会报错,会形成死锁
+</span></span><span class="line"><span class="cl">        lock.lock();
+</span></span><span class="line"><span class="cl">        lock.lock();
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;doAdd...&#34;);
+</span></span><span class="line"><span class="cl">        lock.unlock();
+</span></span><span class="line"><span class="cl">        lock.unlock();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        ReentrantLockDemo reentrantLockDemo = new ReentrantLockDemo();
+</span></span><span class="line"><span class="cl">        reentrantLockDemo.print();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h2 id="自旋锁">自旋锁</h2>
 <p>自旋锁（spin lock）是一种非阻塞锁，也就是说，如果某线程需要获取锁，但该锁已经被其他线程占用时，该线程不会被挂起，而是在不断的消耗CPU的时间，不停的试图获取锁.这样的好处是减少线程上线文切换的消耗，缺点就是循环会消耗 CPU.原理是<a href="./../cas-principle">CAS原理</a></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class SpinLock {
-    private AtomicReference&lt;Thread&gt; atomicReference = new AtomicReference&lt;&gt;();
-    private void lock () {
-        System.out.println(Thread.currentThread() + &#34; coming...&#34;);
-        while (!atomicReference.compareAndSet(null, Thread.currentThread())) {
-            // loop
-        }
-    }
-
-    private void unlock() {
-        Thread thread = Thread.currentThread();
-        atomicReference.compareAndSet(thread, null);
-        System.out.println(thread + &#34; unlock...&#34;);
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        SpinLock spinLock = new SpinLock();
-        new Thread(() -&gt; {
-            spinLock.lock();
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            System.out.println(&#34;hahaha&#34;);
-            spinLock.unlock();
-
-        }).start();
-
-        Thread.sleep(1);
-
-        new Thread(() -&gt; {
-            spinLock.lock();
-            System.out.println(&#34;hehehe&#34;);
-            spinLock.unlock();
-        }).start();
-    }
-}
-
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">Thread[Thread-0,5,main] coming...
-Thread[Thread-1,5,main] coming...
-hahaha
-Thread[Thread-0,5,main] unlock...
-hehehe
-Thread[Thread-1,5,main] unlock...
-</code></pre></div><h2 id="独占锁写锁">独占锁(写锁)</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class SpinLock {
+</span></span><span class="line"><span class="cl">    private AtomicReference&lt;Thread&gt; atomicReference = new AtomicReference&lt;&gt;();
+</span></span><span class="line"><span class="cl">    private void lock () {
+</span></span><span class="line"><span class="cl">        System.out.println(Thread.currentThread() + &#34; coming...&#34;);
+</span></span><span class="line"><span class="cl">        while (!atomicReference.compareAndSet(null, Thread.currentThread())) {
+</span></span><span class="line"><span class="cl">            // loop
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private void unlock() {
+</span></span><span class="line"><span class="cl">        Thread thread = Thread.currentThread();
+</span></span><span class="line"><span class="cl">        atomicReference.compareAndSet(thread, null);
+</span></span><span class="line"><span class="cl">        System.out.println(thread + &#34; unlock...&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) throws InterruptedException {
+</span></span><span class="line"><span class="cl">        SpinLock spinLock = new SpinLock();
+</span></span><span class="line"><span class="cl">        new Thread(() -&gt; {
+</span></span><span class="line"><span class="cl">            spinLock.lock();
+</span></span><span class="line"><span class="cl">            try {
+</span></span><span class="line"><span class="cl">                Thread.sleep(3000);
+</span></span><span class="line"><span class="cl">            } catch (InterruptedException e) {
+</span></span><span class="line"><span class="cl">                e.printStackTrace();
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">            System.out.println(&#34;hahaha&#34;);
+</span></span><span class="line"><span class="cl">            spinLock.unlock();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        }).start();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        Thread.sleep(1);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        new Thread(() -&gt; {
+</span></span><span class="line"><span class="cl">            spinLock.lock();
+</span></span><span class="line"><span class="cl">            System.out.println(&#34;hehehe&#34;);
+</span></span><span class="line"><span class="cl">            spinLock.unlock();
+</span></span><span class="line"><span class="cl">        }).start();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Thread[Thread-0,5,main] coming...
+</span></span><span class="line"><span class="cl">Thread[Thread-1,5,main] coming...
+</span></span><span class="line"><span class="cl">hahaha
+</span></span><span class="line"><span class="cl">Thread[Thread-0,5,main] unlock...
+</span></span><span class="line"><span class="cl">hehehe
+</span></span><span class="line"><span class="cl">Thread[Thread-1,5,main] unlock...
+</span></span></code></pre></div><h2 id="独占锁写锁">独占锁(写锁)</h2>
 <p>指该锁一次只能被一个线程独占,所持有.对于<code>synchronized</code>和<code>ReentrantLock</code>而言都是独占锁</p>
 <h2 id="共享锁读锁">共享锁(读锁)</h2>
 <p>该锁可以被多个线程持有.对于 <code>ReentrantLock</code>和 <code>synchronized</code>都是独占锁；对与 <code>ReentrantReadWriteLock </code>其读锁是共享锁而写锁是独占锁。
 读锁的共享可保证并发读是非常高效的，<strong>读写、写读和写写的过程是互斥的.</strong></p>
 <p><strong>读写锁案例</strong></p>
 <p>`ReentrantReadWriteLock 能保证读写、写读和写写的过程是互斥的时候是独享的，读读的时候是共享的</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">class MyCache {
-
-    private volatile Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();
-
-    private ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();
-
-    public void put(String key, Object value) {
-        rwLock.writeLock().lock();
-        try {
-            System.out.println(&#34;开始 写入 ...&#34; + key);
-            map.put(key, value);
-            System.out.println(&#34;写入完成 ...&#34;);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            rwLock.writeLock().unlock();
-        }
-
-    }
-
-    public Object get(String key) {
-        Object obj = null;
-        rwLock.writeLock().lock();
-        try {
-            System.out.println(&#34;开始读取 ...&#34; + key);
-            obj = map.get(key);
-            System.out.println(&#34;读取完成 ...&#34; + obj);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            rwLock.writeLock().unlock();
-        }
-        return obj;
-    }
-
-}
-
-public class Test {
-
-    public static void main(String[] args) {
-        MyCache myCache = new MyCache();
-        for (int i = 0; i &lt; 10; i++) {
-            int finalI = i;
-            new Thread(() -&gt; {
-                myCache.put(finalI + &#34;&#34;, finalI + &#34;&#34;);
-            }, String.valueOf(i)).start();
-        }
-
-        System.out.println(&#34;---------------&#34;);
-
-        for (int i = 0; i &lt; 10; i++) {
-            int finalI = i;
-            new Thread(() -&gt; {
-                myCache.get(finalI + &#34;&#34;);
-            }, String.valueOf(i)).start();
-        }
-    }
-}
-
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">开始 写入 ...0
-写入完成 ...
-开始 写入 ...1
-写入完成 ...
-开始 写入 ...2
-写入完成 ...
-开始 写入 ...3
-写入完成 ...
-开始 写入 ...4
-写入完成 ...
-开始 写入 ...6
-写入完成 ...
-开始 写入 ...5
-写入完成 ...
-开始 写入 ...7
-写入完成 ...
-开始读取 ...0
-读取完成 ...0
-开始读取 ...3
-读取完成 ...3
-开始读取 ...4
-读取完成 ...4
-开始读取 ...5
-读取完成 ...5
-开始读取 ...7
-读取完成 ...7
-开始读取 ...9
-读取完成 ...null
-开始 写入 ...8
-写入完成 ...
-开始读取 ...1
-读取完成 ...1
-开始读取 ...2
-读取完成 ...2
-开始读取 ...6
-读取完成 ...6
-开始读取 ...8
-读取完成 ...8
-开始 写入 ...9
-写入完成 ...
-</code></pre></div></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">class MyCache {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private volatile Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public void put(String key, Object value) {
+</span></span><span class="line"><span class="cl">        rwLock.writeLock().lock();
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            System.out.println(&#34;开始 写入 ...&#34; + key);
+</span></span><span class="line"><span class="cl">            map.put(key, value);
+</span></span><span class="line"><span class="cl">            System.out.println(&#34;写入完成 ...&#34;);
+</span></span><span class="line"><span class="cl">        } catch (Exception e) {
+</span></span><span class="line"><span class="cl">            e.printStackTrace();
+</span></span><span class="line"><span class="cl">        } finally {
+</span></span><span class="line"><span class="cl">            rwLock.writeLock().unlock();
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public Object get(String key) {
+</span></span><span class="line"><span class="cl">        Object obj = null;
+</span></span><span class="line"><span class="cl">        rwLock.writeLock().lock();
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            System.out.println(&#34;开始读取 ...&#34; + key);
+</span></span><span class="line"><span class="cl">            obj = map.get(key);
+</span></span><span class="line"><span class="cl">            System.out.println(&#34;读取完成 ...&#34; + obj);
+</span></span><span class="line"><span class="cl">        } catch (Exception e) {
+</span></span><span class="line"><span class="cl">            e.printStackTrace();
+</span></span><span class="line"><span class="cl">        } finally {
+</span></span><span class="line"><span class="cl">            rwLock.writeLock().unlock();
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        return obj;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">public class Test {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        MyCache myCache = new MyCache();
+</span></span><span class="line"><span class="cl">        for (int i = 0; i &lt; 10; i++) {
+</span></span><span class="line"><span class="cl">            int finalI = i;
+</span></span><span class="line"><span class="cl">            new Thread(() -&gt; {
+</span></span><span class="line"><span class="cl">                myCache.put(finalI + &#34;&#34;, finalI + &#34;&#34;);
+</span></span><span class="line"><span class="cl">            }, String.valueOf(i)).start();
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;---------------&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        for (int i = 0; i &lt; 10; i++) {
+</span></span><span class="line"><span class="cl">            int finalI = i;
+</span></span><span class="line"><span class="cl">            new Thread(() -&gt; {
+</span></span><span class="line"><span class="cl">                myCache.get(finalI + &#34;&#34;);
+</span></span><span class="line"><span class="cl">            }, String.valueOf(i)).start();
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">开始 写入 ...0
+</span></span><span class="line"><span class="cl">写入完成 ...
+</span></span><span class="line"><span class="cl">开始 写入 ...1
+</span></span><span class="line"><span class="cl">写入完成 ...
+</span></span><span class="line"><span class="cl">开始 写入 ...2
+</span></span><span class="line"><span class="cl">写入完成 ...
+</span></span><span class="line"><span class="cl">开始 写入 ...3
+</span></span><span class="line"><span class="cl">写入完成 ...
+</span></span><span class="line"><span class="cl">开始 写入 ...4
+</span></span><span class="line"><span class="cl">写入完成 ...
+</span></span><span class="line"><span class="cl">开始 写入 ...6
+</span></span><span class="line"><span class="cl">写入完成 ...
+</span></span><span class="line"><span class="cl">开始 写入 ...5
+</span></span><span class="line"><span class="cl">写入完成 ...
+</span></span><span class="line"><span class="cl">开始 写入 ...7
+</span></span><span class="line"><span class="cl">写入完成 ...
+</span></span><span class="line"><span class="cl">开始读取 ...0
+</span></span><span class="line"><span class="cl">读取完成 ...0
+</span></span><span class="line"><span class="cl">开始读取 ...3
+</span></span><span class="line"><span class="cl">读取完成 ...3
+</span></span><span class="line"><span class="cl">开始读取 ...4
+</span></span><span class="line"><span class="cl">读取完成 ...4
+</span></span><span class="line"><span class="cl">开始读取 ...5
+</span></span><span class="line"><span class="cl">读取完成 ...5
+</span></span><span class="line"><span class="cl">开始读取 ...7
+</span></span><span class="line"><span class="cl">读取完成 ...7
+</span></span><span class="line"><span class="cl">开始读取 ...9
+</span></span><span class="line"><span class="cl">读取完成 ...null
+</span></span><span class="line"><span class="cl">开始 写入 ...8
+</span></span><span class="line"><span class="cl">写入完成 ...
+</span></span><span class="line"><span class="cl">开始读取 ...1
+</span></span><span class="line"><span class="cl">读取完成 ...1
+</span></span><span class="line"><span class="cl">开始读取 ...2
+</span></span><span class="line"><span class="cl">读取完成 ...2
+</span></span><span class="line"><span class="cl">开始读取 ...6
+</span></span><span class="line"><span class="cl">读取完成 ...6
+</span></span><span class="line"><span class="cl">开始读取 ...8
+</span></span><span class="line"><span class="cl">读取完成 ...8
+</span></span><span class="line"><span class="cl">开始 写入 ...9
+</span></span><span class="line"><span class="cl">写入完成 ...
+</span></span></code></pre></div></div>
                     <div class="post_footer">
                         <div class="meta">
                             <div class="info">

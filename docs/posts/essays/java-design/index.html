@@ -357,7 +357,7 @@
 <ul>
 <li>缓存结构是否合理 redis结构选择(string、hash、 list、set)：
 <ul>
-<li>对于C端高并发接口，hash结构要慎重用，key不能用固定的key，防止key倾 斜，可以采用string结构，value尽可能压缩下，比如 {&ldquo;groupId:&quot;:&ldquo;536363737&rdquo;， &ldquo;groupId&rdquo;:&ldquo;989898989&rdquo;}改为&quot;536363737#989898989&rdquo;，大大节省redis空间。</li>
+<li>对于C端高并发接口，hash结构要慎重用，key不能用固定的key，防止key倾 斜，可以采用string结构，value尽可能压缩下，比如 {&ldquo;groupId:&rdquo;:&ldquo;536363737&rdquo;， &ldquo;groupId&rdquo;:&ldquo;989898989&rdquo;}改为&quot;536363737#989898989&quot;，大大节省redis空间。</li>
 <li>对于数据量很大，单条valve报文很大的业务，如果经常判断某个值是否存在，可以考虑采用set结构，利用sismember方法，时间复杂度O(1)</li>
 </ul>
 </li>

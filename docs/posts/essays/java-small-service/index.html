@@ -804,19 +804,19 @@ There is a bare minimum of centralized management of these services, which may b
 <li>OpenFeign是Spring Cloud在Feign的基础上支持了SpringMVC的注解，如@RequesMapping等等。OpenFeign的@Feignclient可以解析SpringMVc的@RequestMapping注解下的接口，并通过动态代理的方式产生实现类，实现类中做负载均衡并调用其他服务；</li>
 </ul>
 <p>通过使用<code>OpenFeign</code>可以使代码变得更加简洁，减轻程序员负担：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> // 伪代码
- @Component
- // 括号中，为在注册中心注册的服务名称
- @FeignClient(&#34;CLOUD-PAYMENT-SERVICE&#34;)
- public interface PaymentFeignService {
- 
-     @GetMapping(&#34;/payment/get/{id}&#34;)
-     CommonResult&lt;Payment&gt; getPayment(@PathVariable(&#34;id&#34;) Long id);
- 
-     @PostMapping(&#34;/payment/timeout&#34;)
-     String feignTimeoutTest();
- }
-</code></pre></div><p>openFeign工作原理：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> // 伪代码
+</span></span><span class="line"><span class="cl"> @Component
+</span></span><span class="line"><span class="cl"> // 括号中，为在注册中心注册的服务名称
+</span></span><span class="line"><span class="cl"> @FeignClient(&#34;CLOUD-PAYMENT-SERVICE&#34;)
+</span></span><span class="line"><span class="cl"> public interface PaymentFeignService {
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">     @GetMapping(&#34;/payment/get/{id}&#34;)
+</span></span><span class="line"><span class="cl">     CommonResult&lt;Payment&gt; getPayment(@PathVariable(&#34;id&#34;) Long id);
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">     @PostMapping(&#34;/payment/timeout&#34;)
+</span></span><span class="line"><span class="cl">     String feignTimeoutTest();
+</span></span><span class="line"><span class="cl"> }
+</span></span></code></pre></div><p>openFeign工作原理：</p>
 <p><img src="/iblog/posts/annex/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84-008.png" alt="分布式架构-008"></p>
 <ol>
 <li>使用注解<code>@FeignClient</code>注册<code>FactoryBean</code>到IOC容器, 最终产生了一个虚假的实现类代理;</li>
@@ -847,61 +847,61 @@ There is a bare minimum of centralized management of these services, which may b
 <p><img src="/iblog/posts/annex/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84-007.png" alt="分布式架构-007"></p>
 <p>消费方和服务方在注册中心注册服务，当消费方发起请求时，Ribbon会去注册中心寻找请求的服务名，即服务方集群，Ribbon默认负载算法会根据<code>接口第几次请求 % 服务器集群总数量</code>算出实际消费方服务器的位置，每次服务重启动后rest接口计数从1开始。</p>
 <p>模拟Ribbon默认负载均衡算法：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public interface ILoadBalance {
-    ServiceInstance instance(List&lt;ServiceInstance&gt; instances); 
-}
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Component
-public class MyLoadBalance implements ILoadBalance{
-
-    /**
-     * 轮询索引
-     */
-    private final AtomicInteger index = new AtomicInteger(0);
-
-    /**
-     * 负载均衡算法：rest接口第几次请求数 % 服务器集群总数量 = 实际调用服务器位置下标，每次服务重启动后rest接口计数从1开始。
-     * @param instances 服务器集群数量
-     * @return 实际服务器的下标
-     */
-    @Override
-    public ServiceInstance instance(List&lt;ServiceInstance&gt; instances) {
-        return instances.get(incrementAndGet() % instances.size());
-    }
-
-    public final int incrementAndGet() {
-        int current = 0;
-        int next = 0;
-        do {
-            current = index.get();
-            // 当最大数量超过 Integer.MAX_VALUE 归0
-            next = current &gt;= 2147483647 ? 0 : current + 1;
-        }while (!index.compareAndSet(current,next));
-        return next;
-    }
-}
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> @Resource
- private RestTemplate restTemplate;
-
- @Resource
- private DiscoveryClient discoveryClient;
-
- @Resource
- private ILoadBalance iLoadBalance;
-
- @GetMapping(&#34;/myLoadBalance&#34;)
- public String myLoadBalanceTest() {
-
-     List&lt;ServiceInstance&gt; instances = discoveryClient.getInstances(&#34;CLOUD-PAYMENT-SERVICE&#34;);
-     ServiceInstance instance = iLoadBalance.instance(instances);
-
-     URI uri = instance.getUri();
-     String finalUri = String.format(&#34;%s/%s&#34;, uri, PaymentConstant.PAYMENT_GETPORT_API);
-
-     log.info(&#34;自定义负载均衡,请求地址：{}&#34;, finalUri);
-
-     return restTemplate.getForObject(finalUri, String.class);
- }
-</code></pre></div><h3 id="服务配置中心">服务配置中心</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public interface ILoadBalance {
+</span></span><span class="line"><span class="cl">    ServiceInstance instance(List&lt;ServiceInstance&gt; instances); 
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Component
+</span></span><span class="line"><span class="cl">public class MyLoadBalance implements ILoadBalance{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /**
+</span></span><span class="line"><span class="cl">     * 轮询索引
+</span></span><span class="line"><span class="cl">     */
+</span></span><span class="line"><span class="cl">    private final AtomicInteger index = new AtomicInteger(0);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /**
+</span></span><span class="line"><span class="cl">     * 负载均衡算法：rest接口第几次请求数 % 服务器集群总数量 = 实际调用服务器位置下标，每次服务重启动后rest接口计数从1开始。
+</span></span><span class="line"><span class="cl">     * @param instances 服务器集群数量
+</span></span><span class="line"><span class="cl">     * @return 实际服务器的下标
+</span></span><span class="line"><span class="cl">     */
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    public ServiceInstance instance(List&lt;ServiceInstance&gt; instances) {
+</span></span><span class="line"><span class="cl">        return instances.get(incrementAndGet() % instances.size());
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public final int incrementAndGet() {
+</span></span><span class="line"><span class="cl">        int current = 0;
+</span></span><span class="line"><span class="cl">        int next = 0;
+</span></span><span class="line"><span class="cl">        do {
+</span></span><span class="line"><span class="cl">            current = index.get();
+</span></span><span class="line"><span class="cl">            // 当最大数量超过 Integer.MAX_VALUE 归0
+</span></span><span class="line"><span class="cl">            next = current &gt;= 2147483647 ? 0 : current + 1;
+</span></span><span class="line"><span class="cl">        }while (!index.compareAndSet(current,next));
+</span></span><span class="line"><span class="cl">        return next;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> @Resource
+</span></span><span class="line"><span class="cl"> private RestTemplate restTemplate;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> @Resource
+</span></span><span class="line"><span class="cl"> private DiscoveryClient discoveryClient;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> @Resource
+</span></span><span class="line"><span class="cl"> private ILoadBalance iLoadBalance;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> @GetMapping(&#34;/myLoadBalance&#34;)
+</span></span><span class="line"><span class="cl"> public String myLoadBalanceTest() {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     List&lt;ServiceInstance&gt; instances = discoveryClient.getInstances(&#34;CLOUD-PAYMENT-SERVICE&#34;);
+</span></span><span class="line"><span class="cl">     ServiceInstance instance = iLoadBalance.instance(instances);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     URI uri = instance.getUri();
+</span></span><span class="line"><span class="cl">     String finalUri = String.format(&#34;%s/%s&#34;, uri, PaymentConstant.PAYMENT_GETPORT_API);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     log.info(&#34;自定义负载均衡,请求地址：{}&#34;, finalUri);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     return restTemplate.getForObject(finalUri, String.class);
+</span></span><span class="line"><span class="cl"> }
+</span></span></code></pre></div><h3 id="服务配置中心">服务配置中心</h3>
 <p>在分布式微服务意味着要将单体应用中的业务拆分成一个个子服务，每个服务的粒度相对较小，因此系统中会出现大量的服务。由于每个服务都需要必要的配置信息才能运行，所以一套集中式的、动态的配置管理设施是必不可少的。</p>
 <p>配置中心应运而生。配置中心，顾名思义，就是来统一管理项目中所有配置的系统。对于单机版，我们称之为配置文件；对于分布式集群系统，我们称之为配置中心。</p>
 <p>配置中心作用：</p>
@@ -927,15 +927,15 @@ public class MyLoadBalance implements ILoadBalance{
 <ol>
 <li>引入依赖就不说了，首先将分布式中系统中的配置放到git或svn上，在服务端配置文件里配置好git或svn用户名密码、配置文件所在的分支及配置文件的目录，再将服务端启动类加上<code>@EnableConfigServer</code>注解，就大功告成了；</li>
 <li>放在git或svn上的配置文件名称要符合规则，才能通过配置中心访问得到该文件。一些常用的配置文件规则，其中，label：分支、profiles：环境(dev/test/prod)、application：服务名：
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> ## http://127.0.0.1:3344/master/config-dev.yml
- 1. /{label}/{application}-{profile}.yml
-   
- ## http://127.0.0.1:3344/config-dev.yml
- 2. /{application}-{profile}.yml
-   
- ## http://127.0.0.1:3344/config/dev/master
- 3. /{application}/{profile}[/{label}]
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> ## http://127.0.0.1:3344/master/config-dev.yml
+</span></span><span class="line"><span class="cl"> 1. /{label}/{application}-{profile}.yml
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> ## http://127.0.0.1:3344/config-dev.yml
+</span></span><span class="line"><span class="cl"> 2. /{application}-{profile}.yml
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> ## http://127.0.0.1:3344/config/dev/master
+</span></span><span class="line"><span class="cl"> 3. /{application}/{profile}[/{label}]
+</span></span></code></pre></div></li>
 <li>在客户端也要引入依赖和进行相关配置：配置中心地址、分支名称、配置文件名称、环境，需要注意的是要将客户端模块下的<code>application.yml</code>文件改为<code>bootstrap.yml</code>，再将主启动类加上<code>@EnableEurekaClient</code>注解；
 <blockquote>
 <p>当配置客户端启动时，它绑定到配置服务器(通过spring.cloud.config.uri引导配置属性)，并使用远程属性源初始化Spring Environment。
@@ -945,9 +945,9 @@ public class MyLoadBalance implements ILoadBalance{
 </li>
 </ol>
 <p>当将<code>SpringCloud Config</code>客户端服务端都配置好之后，修改配置时会发现修改的配置文件不能实时生效；针对这个问题，可以将服务重启或者调用<code>actuator</code>的刷新接口使其生效，使用之前需要引入<code>actuator</code>的依赖：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> # 使用SpringCloud Config修改完配置后，调用刷新接口使客户端配置生效
- curl -X POST &#34;http://localhost:3355/actuator/refresh&#34;
-</code></pre></div><p>为了避免手动的调用刷新接口，可以使用<code>SpringCloud Bus</code>配合<code>SpringCloud Config</code>实现配置的动态刷新。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> # 使用SpringCloud Config修改完配置后，调用刷新接口使客户端配置生效
+</span></span><span class="line"><span class="cl"> curl -X POST &#34;http://localhost:3355/actuator/refresh&#34;
+</span></span></code></pre></div><p>为了避免手动的调用刷新接口，可以使用<code>SpringCloud Bus</code>配合<code>SpringCloud Config</code>实现配置的动态刷新。</p>
 <h3 id="服务开发">服务开发</h3>
 <p>长期以来 Java 的开发一直让人所诟病：项目开发复杂度极其高、项目的维护非常困难；即便使用了大量的开发框架，发现我们的开发也没少多少。为了解决让开发更佳简单，项目更容易管理，SpringBoot诞生了。</p>
 <p>Spring Boot是一个广泛用来构建Java微服务的框架，它基于Spring依赖注入框架来进行工作。</p>

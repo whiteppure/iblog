@@ -1136,56 +1136,56 @@
 <p>参考：<a href="https://blog.csdn.net/scjava/article/details/109587619">https://blog.csdn.net/scjava/article/details/109587619</a></p>
 <p><img src="/iblog/posts/annex/images/spring/Spring%E8%AF%A6%E8%A7%A3-004.png" alt="Spring详解-004"></p>
 <p>核心方法<code>AbstractApplicationContext#refresh()</code></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public void refresh() throws BeansException, IllegalStateException {
-  synchronized (this.startupShutdownMonitor) {
-      // Prepare this context for refreshing.
-      prepareRefresh();
-
-      // Tell the subclass to refresh the internal bean factory.
-      ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
-
-      // Prepare the bean factory for use in this context.
-      prepareBeanFactory(beanFactory);
-
-      try {
-          // Allows post-processing of the bean factory in context subclasses.
-          postProcessBeanFactory(beanFactory);
-
-          // Invoke factory processors registered as beans in the context.
-          invokeBeanFactoryPostProcessors(beanFactory);
-
-          // Register bean processors that intercept bean creation.
-          registerBeanPostProcessors(beanFactory);
-
-          // Initialize message source for this context.
-          initMessageSource();
-
-          // Initialize event multicaster for this context.
-          initApplicationEventMulticaster();
-
-          // Initialize other special beans in specific context subclasses.
-          onRefresh();
-
-          // Check for listener beans and register them.
-          registerListeners();
-
-          // Instantiate all remaining (non-lazy-init) singletons.
-          finishBeanFactoryInitialization(beanFactory);
-
-          // Last step: publish corresponding event.
-          finishRefresh();
-      }
-
-      catch (BeansException ex) {
-         // ... 
-      }
-
-      finally {
-         // ...
-      }
-  }
-}
-</code></pre></div><ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public void refresh() throws BeansException, IllegalStateException {
+</span></span><span class="line"><span class="cl">  synchronized (this.startupShutdownMonitor) {
+</span></span><span class="line"><span class="cl">      // Prepare this context for refreshing.
+</span></span><span class="line"><span class="cl">      prepareRefresh();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      // Tell the subclass to refresh the internal bean factory.
+</span></span><span class="line"><span class="cl">      ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      // Prepare the bean factory for use in this context.
+</span></span><span class="line"><span class="cl">      prepareBeanFactory(beanFactory);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      try {
+</span></span><span class="line"><span class="cl">          // Allows post-processing of the bean factory in context subclasses.
+</span></span><span class="line"><span class="cl">          postProcessBeanFactory(beanFactory);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">          // Invoke factory processors registered as beans in the context.
+</span></span><span class="line"><span class="cl">          invokeBeanFactoryPostProcessors(beanFactory);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">          // Register bean processors that intercept bean creation.
+</span></span><span class="line"><span class="cl">          registerBeanPostProcessors(beanFactory);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">          // Initialize message source for this context.
+</span></span><span class="line"><span class="cl">          initMessageSource();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">          // Initialize event multicaster for this context.
+</span></span><span class="line"><span class="cl">          initApplicationEventMulticaster();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">          // Initialize other special beans in specific context subclasses.
+</span></span><span class="line"><span class="cl">          onRefresh();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">          // Check for listener beans and register them.
+</span></span><span class="line"><span class="cl">          registerListeners();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">          // Instantiate all remaining (non-lazy-init) singletons.
+</span></span><span class="line"><span class="cl">          finishBeanFactoryInitialization(beanFactory);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">          // Last step: publish corresponding event.
+</span></span><span class="line"><span class="cl">          finishRefresh();
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      catch (BeansException ex) {
+</span></span><span class="line"><span class="cl">         // ... 
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      finally {
+</span></span><span class="line"><span class="cl">         // ...
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><ol>
 <li>prepareRefresh 准备刷新容器，此方法做一些刷新容器的准备工作：
 <ul>
 <li>设置开启时间和对应标志位</li>
@@ -1257,126 +1257,126 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 </ul>
 <h3 id="springbootapplication">@SpringBootApplication</h3>
 <p><code>@SpringBootApplication</code>这个注解通常标注在启动类上：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@SpringBootApplication
-public class SpringBootExampleApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(SpringBootExampleApplication.class, args);
-    }
-}
-</code></pre></div><p><code>@SpringBootApplication</code>是一个复合注解，即由其他注解构成。核心注解是<code>@SpringBootConfiguration</code>和<code>@EnableAutoConfiguration</code></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Target({ElementType.TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Inherited
-@SpringBootConfiguration
-@EnableAutoConfiguration
-@ComponentScan(
-    excludeFilters = {@Filter(
-    type = FilterType.CUSTOM,
-    classes = {TypeExcludeFilter.class}
-), @Filter(
-    type = FilterType.CUSTOM,
-    classes = {AutoConfigurationExcludeFilter.class}
-)}
-)
-public @interface SpringBootApplication{
-}
-</code></pre></div><h4 id="springbootconfiguration">@SpringBootConfiguration</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@SpringBootApplication
+</span></span><span class="line"><span class="cl">public class SpringBootExampleApplication {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        SpringApplication.run(SpringBootExampleApplication.class, args);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p><code>@SpringBootApplication</code>是一个复合注解，即由其他注解构成。核心注解是<code>@SpringBootConfiguration</code>和<code>@EnableAutoConfiguration</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Target({ElementType.TYPE})
+</span></span><span class="line"><span class="cl">@Retention(RetentionPolicy.RUNTIME)
+</span></span><span class="line"><span class="cl">@Documented
+</span></span><span class="line"><span class="cl">@Inherited
+</span></span><span class="line"><span class="cl">@SpringBootConfiguration
+</span></span><span class="line"><span class="cl">@EnableAutoConfiguration
+</span></span><span class="line"><span class="cl">@ComponentScan(
+</span></span><span class="line"><span class="cl">    excludeFilters = {@Filter(
+</span></span><span class="line"><span class="cl">    type = FilterType.CUSTOM,
+</span></span><span class="line"><span class="cl">    classes = {TypeExcludeFilter.class}
+</span></span><span class="line"><span class="cl">), @Filter(
+</span></span><span class="line"><span class="cl">    type = FilterType.CUSTOM,
+</span></span><span class="line"><span class="cl">    classes = {AutoConfigurationExcludeFilter.class}
+</span></span><span class="line"><span class="cl">)}
+</span></span><span class="line"><span class="cl">)
+</span></span><span class="line"><span class="cl">public @interface SpringBootApplication{
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h4 id="springbootconfiguration">@SpringBootConfiguration</h4>
 <p><code>@SpringBootConfiguration</code>核心注解是<code>@Configuration</code>代表自己是一个<code>Spring</code>的配置类</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Target({ElementType.TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Configuration
-public @interface SpringBootConfiguration {
-}
-</code></pre></div><p><code>@Configuration</code>底层实现就是一个<code>Component</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Target({ElementType.TYPE})
+</span></span><span class="line"><span class="cl">@Retention(RetentionPolicy.RUNTIME)
+</span></span><span class="line"><span class="cl">@Documented
+</span></span><span class="line"><span class="cl">@Configuration
+</span></span><span class="line"><span class="cl">public @interface SpringBootConfiguration {
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p><code>@Configuration</code>底层实现就是一个<code>Component</code></p>
 <blockquote>
 <p>指示带注释的类是一个“组件”。
 在使用基于注释的配置和类路径扫描时，这些类被视为自动检测的候选类。</p>
 </blockquote>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">/**
- * Indicates that an annotated class is a &#34;component&#34;.
- * Such classes are considered as candidates for auto-detection
- * when using annotation-based configuration and classpath scanning.
- *
- */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Indexed
-public @interface Component 
-</code></pre></div><h4 id="enableautoconfiguration">@EnableAutoConfiguration</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * Indicates that an annotated class is a &#34;component&#34;.
+</span></span><span class="line"><span class="cl"> * Such classes are considered as candidates for auto-detection
+</span></span><span class="line"><span class="cl"> * when using annotation-based configuration and classpath scanning.
+</span></span><span class="line"><span class="cl"> *
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">@Target(ElementType.TYPE)
+</span></span><span class="line"><span class="cl">@Retention(RetentionPolicy.RUNTIME)
+</span></span><span class="line"><span class="cl">@Documented
+</span></span><span class="line"><span class="cl">@Indexed
+</span></span><span class="line"><span class="cl">public @interface Component 
+</span></span></code></pre></div><h4 id="enableautoconfiguration">@EnableAutoConfiguration</h4>
 <p>核心注解是<code>@AutoConfigurationPackage</code>和<code>@Import({AutoConfigurationImportSelector.class})</code></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Target({ElementType.TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Inherited
-@AutoConfigurationPackage
-@Import({AutoConfigurationImportSelector.class})
-public @interface EnableAutoConfiguration {
-}
-</code></pre></div><p><code>@AutoConfigurationPackage</code>注解核心是引入了一个<code>@Import(AutoConfigurationPackages.Registrar.class)</code>配置类,该类实现了<code>ImportBeanDefinitionRegistrar</code>接口</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go">	<span class="cm">/**
-</span><span class="cm">	 * {@link ImportBeanDefinitionRegistrar} to store the base package from the importing
-</span><span class="cm">	 * configuration.
-</span><span class="cm">	 */</span>
-	<span class="nx">static</span> <span class="nx">class</span> <span class="nx">Registrar</span> <span class="nx">implements</span> <span class="nx">ImportBeanDefinitionRegistrar</span><span class="p">,</span> <span class="nx">DeterminableImports</span> <span class="p">{</span>
-		<span class="err">@</span><span class="nx">Override</span>
-		<span class="nx">public</span> <span class="nx">void</span> <span class="nf">registerBeanDefinitions</span><span class="p">(</span><span class="nx">AnnotationMetadata</span> <span class="nx">metadata</span><span class="p">,</span> <span class="nx">BeanDefinitionRegistry</span> <span class="nx">registry</span><span class="p">)</span> <span class="p">{</span>
-			<span class="nf">register</span><span class="p">(</span><span class="nx">registry</span><span class="p">,</span> <span class="nx">new</span> <span class="nf">PackageImports</span><span class="p">(</span><span class="nx">metadata</span><span class="p">).</span><span class="nf">getPackageNames</span><span class="p">().</span><span class="nf">toArray</span><span class="p">(</span><span class="nx">new</span> <span class="nx">String</span><span class="p">[</span><span class="mi">0</span><span class="p">]));</span>
-		<span class="p">}</span>
-		<span class="err">@</span><span class="nx">Override</span>
-		<span class="nx">public</span> <span class="nx">Set</span><span class="p">&lt;</span><span class="nx">Object</span><span class="p">&gt;</span> <span class="nf">determineImports</span><span class="p">(</span><span class="nx">AnnotationMetadata</span> <span class="nx">metadata</span><span class="p">)</span> <span class="p">{</span>
-			<span class="k">return</span> <span class="nx">Collections</span><span class="p">.</span><span class="nf">singleton</span><span class="p">(</span><span class="nx">new</span> <span class="nf">PackageImports</span><span class="p">(</span><span class="nx">metadata</span><span class="p">));</span>
-		<span class="p">}</span>
-
-	<span class="p">}</span>
-</code></pre></div><blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Target({ElementType.TYPE})
+</span></span><span class="line"><span class="cl">@Retention(RetentionPolicy.RUNTIME)
+</span></span><span class="line"><span class="cl">@Documented
+</span></span><span class="line"><span class="cl">@Inherited
+</span></span><span class="line"><span class="cl">@AutoConfigurationPackage
+</span></span><span class="line"><span class="cl">@Import({AutoConfigurationImportSelector.class})
+</span></span><span class="line"><span class="cl">public @interface EnableAutoConfiguration {
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p><code>@AutoConfigurationPackage</code>注解核心是引入了一个<code>@Import(AutoConfigurationPackages.Registrar.class)</code>配置类,该类实现了<code>ImportBeanDefinitionRegistrar</code>接口</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl">	<span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">	 * {@link ImportBeanDefinitionRegistrar} to store the base package from the importing
+</span></span></span><span class="line"><span class="cl"><span class="cm">	 * configuration.
+</span></span></span><span class="line"><span class="cl"><span class="cm">	 */</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">static</span> <span class="nx">class</span> <span class="nx">Registrar</span> <span class="nx">implements</span> <span class="nx">ImportBeanDefinitionRegistrar</span><span class="p">,</span> <span class="nx">DeterminableImports</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="err">@</span><span class="nx">Override</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">public</span> <span class="nx">void</span> <span class="nf">registerBeanDefinitions</span><span class="p">(</span><span class="nx">AnnotationMetadata</span> <span class="nx">metadata</span><span class="p">,</span> <span class="nx">BeanDefinitionRegistry</span> <span class="nx">registry</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nf">register</span><span class="p">(</span><span class="nx">registry</span><span class="p">,</span> <span class="nx">new</span> <span class="nf">PackageImports</span><span class="p">(</span><span class="nx">metadata</span><span class="p">).</span><span class="nf">getPackageNames</span><span class="p">().</span><span class="nf">toArray</span><span class="p">(</span><span class="nx">new</span> <span class="nx">String</span><span class="p">[</span><span class="mi">0</span><span class="p">]));</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="err">@</span><span class="nx">Override</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">public</span> <span class="nx">Set</span><span class="p">&lt;</span><span class="nx">Object</span><span class="p">&gt;</span> <span class="nf">determineImports</span><span class="p">(</span><span class="nx">AnnotationMetadata</span> <span class="nx">metadata</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nx">Collections</span><span class="p">.</span><span class="nf">singleton</span><span class="p">(</span><span class="nx">new</span> <span class="nf">PackageImports</span><span class="p">(</span><span class="nx">metadata</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span></code></pre></div><blockquote>
 <p>这里可以打断点自己看一下</p>
 </blockquote>
 <p><code>@AutoConfigurationPackage</code> 这个注解本身的含义就是将主配置类（<code>@SpringBootApplication</code>标注的类）所在的包下面所有的组件都扫描到 <code>spring</code> 容器中。</p>
 <p><code>AutoConfigurationImportSelector</code>核心代码如下</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">	/**
-	 * Return the auto-configuration class names that should be considered. By default
-	 * this method will load candidates using {@link SpringFactoriesLoader} with
-	 * {@link #getSpringFactoriesLoaderFactoryClass()}.
-	 * @param metadata the source metadata
-	 * @param attributes the {@link #getAttributes(AnnotationMetadata) annotation
-	 * attributes}
-	 * @return a list of candidate configurations
-	 */
-	protected List&lt;String&gt; getCandidateConfigurations(AnnotationMetadata metadata, AnnotationAttributes attributes) {
-		List&lt;String&gt; configurations = SpringFactoriesLoader.loadFactoryNames(getSpringFactoriesLoaderFactoryClass(),
-				getBeanClassLoader());
-		Assert.notEmpty(configurations, &#34;No auto configuration classes found in META-INF/spring.factories. If you &#34;
-				+ &#34;are using a custom packaging, make sure that file is correct.&#34;);
-		return configurations;
-	}
-
-	/**
-	 * Return the class used by {@link SpringFactoriesLoader} to load configuration
-	 * candidates.
-	 * @return the factory class
-	 */
-	protected Class&lt;?&gt; getSpringFactoriesLoaderFactoryClass() {
-		return EnableAutoConfiguration.class;
-	}
-	protected ClassLoader getBeanClassLoader() {
-		return this.beanClassLoader;
-	}
-</code></pre></div><p><code>getSpringFactoriesLoaderFactoryClass</code>方法返回<code>EnableAutoConfiguration.class</code>目的就是为了将启动类所需的所有资源导入。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">	/**
+</span></span><span class="line"><span class="cl">	 * Return the auto-configuration class names that should be considered. By default
+</span></span><span class="line"><span class="cl">	 * this method will load candidates using {@link SpringFactoriesLoader} with
+</span></span><span class="line"><span class="cl">	 * {@link #getSpringFactoriesLoaderFactoryClass()}.
+</span></span><span class="line"><span class="cl">	 * @param metadata the source metadata
+</span></span><span class="line"><span class="cl">	 * @param attributes the {@link #getAttributes(AnnotationMetadata) annotation
+</span></span><span class="line"><span class="cl">	 * attributes}
+</span></span><span class="line"><span class="cl">	 * @return a list of candidate configurations
+</span></span><span class="line"><span class="cl">	 */
+</span></span><span class="line"><span class="cl">	protected List&lt;String&gt; getCandidateConfigurations(AnnotationMetadata metadata, AnnotationAttributes attributes) {
+</span></span><span class="line"><span class="cl">		List&lt;String&gt; configurations = SpringFactoriesLoader.loadFactoryNames(getSpringFactoriesLoaderFactoryClass(),
+</span></span><span class="line"><span class="cl">				getBeanClassLoader());
+</span></span><span class="line"><span class="cl">		Assert.notEmpty(configurations, &#34;No auto configuration classes found in META-INF/spring.factories. If you &#34;
+</span></span><span class="line"><span class="cl">				+ &#34;are using a custom packaging, make sure that file is correct.&#34;);
+</span></span><span class="line"><span class="cl">		return configurations;
+</span></span><span class="line"><span class="cl">	}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	/**
+</span></span><span class="line"><span class="cl">	 * Return the class used by {@link SpringFactoriesLoader} to load configuration
+</span></span><span class="line"><span class="cl">	 * candidates.
+</span></span><span class="line"><span class="cl">	 * @return the factory class
+</span></span><span class="line"><span class="cl">	 */
+</span></span><span class="line"><span class="cl">	protected Class&lt;?&gt; getSpringFactoriesLoaderFactoryClass() {
+</span></span><span class="line"><span class="cl">		return EnableAutoConfiguration.class;
+</span></span><span class="line"><span class="cl">	}
+</span></span><span class="line"><span class="cl">	protected ClassLoader getBeanClassLoader() {
+</span></span><span class="line"><span class="cl">		return this.beanClassLoader;
+</span></span><span class="line"><span class="cl">	}
+</span></span></code></pre></div><p><code>getSpringFactoriesLoaderFactoryClass</code>方法返回<code>EnableAutoConfiguration.class</code>目的就是为了将启动类所需的所有资源导入。</p>
 <p>在<code>getCandidateConfigurations</code>中有如下代码</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">Assert.notEmpty(configurations, &#34;No auto configuration classes found in META-INF/spring.factories. If you are using a custom packaging, make sure that file is correct.&#34;);
-</code></pre></div><p>大意：在<code>META-INF/spring.factories</code>中没有发现自动配置类。如果您使用的是自定义打包，请确保该文件是正确的。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Assert.notEmpty(configurations, &#34;No auto configuration classes found in META-INF/spring.factories. If you are using a custom packaging, make sure that file is correct.&#34;);
+</span></span></code></pre></div><p>大意：在<code>META-INF/spring.factories</code>中没有发现自动配置类。如果您使用的是自定义打包，请确保该文件是正确的。
 <img src="/iblog/posts/annex/images/essays/%E6%89%BE%E5%88%B0spring.factories.png" alt="找到spring.factories"></p>
 <p><code>spring.factories</code>包含了很多类，但不是全部都加载的，在某些类里面，是有一个条件<code>@ConditionalOnXXX</code>注解，只有当这个注解上的条件满足才会加载。</p>
 <p>例如：<code>SpringApplicationAdminJmxAutoConfiguration</code></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Configuration(proxyBeanMethods = false)
-@AutoConfigureAfter(JmxAutoConfiguration.class)
-@ConditionalOnProperty(prefix = &#34;spring.application.admin&#34;, value = &#34;enabled&#34;, havingValue = &#34;true&#34;,
-		matchIfMissing = false)
-public class SpringApplicationAdminJmxAutoConfiguration 
-</code></pre></div><h4 id="总结">总结</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Configuration(proxyBeanMethods = false)
+</span></span><span class="line"><span class="cl">@AutoConfigureAfter(JmxAutoConfiguration.class)
+</span></span><span class="line"><span class="cl">@ConditionalOnProperty(prefix = &#34;spring.application.admin&#34;, value = &#34;enabled&#34;, havingValue = &#34;true&#34;,
+</span></span><span class="line"><span class="cl">		matchIfMissing = false)
+</span></span><span class="line"><span class="cl">public class SpringApplicationAdminJmxAutoConfiguration 
+</span></span></code></pre></div><h4 id="总结">总结</h4>
 <p><img src="/iblog/posts/annex/images/essays/@SpringbootApplication%E5%8E%9F%E7%90%86.png" alt="@SpringbootApplication原理"></p>
 <p>当 <code>Springboot</code> 启动的时候，会执行<code>AutoConfigurationImportSelector</code>这个类中的<code>getCandidateConfigurations</code>方法，这个方法会帮我们加载<code>META-INF/spring.factories</code>文件里面的当<code>@ConditionXXX</code>注解条件满足的类。</p>
 <h2 id="bean的自动装配">Bean的自动装配</h2>
@@ -1384,14 +1384,14 @@ public class SpringApplicationAdminJmxAutoConfiguration
 <p>IOC的一个重点是在系统运行中，动态的向某个对象提供它所需要的其他对象。这一点是通过DI（Dependency Injection，依赖注入）来实现的。</p>
 <p>所谓IOC，对于spring框架来说，就是由spring来负责控制对象的生命周期和对象间的关系。IOC负责创建对象，把它们连接在一起，配置它们，并管理他们的整个生命周期从创建到销毁，所以可将IOC理解为一个大容器。IOC使用依赖注入（DI）来管理组成一个应用程序的组件。这些对象被称为 Spring Beans。</p>
 <p>一般在代码里面由这些注解体现：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Component
-@Service
-@Repository
-@Controller
-@Autowired
-@Resource
-@Inject
-</code></pre></div><p><code>Spring</code>利用依赖注入（DI），完成对IOC容器中各个组件的依赖关系赋值。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Component
+</span></span><span class="line"><span class="cl">@Service
+</span></span><span class="line"><span class="cl">@Repository
+</span></span><span class="line"><span class="cl">@Controller
+</span></span><span class="line"><span class="cl">@Autowired
+</span></span><span class="line"><span class="cl">@Resource
+</span></span><span class="line"><span class="cl">@Inject
+</span></span></code></pre></div><p><code>Spring</code>利用依赖注入（DI），完成对IOC容器中各个组件的依赖关系赋值。</p>
 <p><code>Spring</code>提供三种装配方式：</p>
 <ul>
 <li>基于注解的自动装配</li>
@@ -1432,518 +1432,518 @@ public class SpringApplicationAdminJmxAutoConfiguration
 <h3 id="autowired">@Autowired</h3>
 <p>可以放在构造器、参数、方法、属性上</p>
 <p>源码如下：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Target({ElementType.CONSTRUCTOR, ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface Autowired {
-
-	/**
-	 * Declares whether the annotated dependency is required.
-	 * &lt;p&gt;Defaults to {@code true}.
-	 */
-	boolean required() default true;
-
-}
-</code></pre></div><h4 id="加在属性上">加在属性上</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Target({ElementType.CONSTRUCTOR, ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+</span></span><span class="line"><span class="cl">@Retention(RetentionPolicy.RUNTIME)
+</span></span><span class="line"><span class="cl">@Documented
+</span></span><span class="line"><span class="cl">public @interface Autowired {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	/**
+</span></span><span class="line"><span class="cl">	 * Declares whether the annotated dependency is required.
+</span></span><span class="line"><span class="cl">	 * &lt;p&gt;Defaults to {@code true}.
+</span></span><span class="line"><span class="cl">	 */
+</span></span><span class="line"><span class="cl">	boolean required() default true;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h4 id="加在属性上">加在属性上</h4>
 <p>使用<code>@Autowired</code>注解通常将其加载属性上或者构造器上，让其自动注入；默认是按照类型去容器中寻找对应的组件，例如：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">
-public class SpringBootExampleApplication {
-
-
-    public static void main(String[] args) {
-        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(TestConfig.class);
-
-        TestService testService = annotationConfigApplicationContext.getBean(TestService.class);
-        // TestService 实例=====&gt;TestService(testDao=TestDao(name=default))
-        System.out.println(&#34;TestService 实例=====&gt;&#34; +testService);
-
-    }
-
-}
-
-
-// 扫描的包名称
-@ComponentScan({&#34;com.example.springboot.example.task&#34;})
-@Configuration
-class TestConfig{
-
-}
-
-
-@ToString
-@Service
-class TestService {
-
-    @Autowired
-    TestDao testDao;
-
-}
-
-@ToString
-@Repository
-class TestDao{
-
-    @Getter
-    @Setter
-    private String name = &#34;default&#34;;
-
-}
-</code></pre></div><p>如果容器中有多个组件的名称相同,可以通过<code>@Qualifier</code>来进行选择注入；</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class SpringBootExampleApplication {
-
-
-    public static void main(String[] args) {
-        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(TestConfig.class);
-
-        TestService testService = annotationConfigApplicationContext.getBean(TestService.class);
-        // TestService 实例=====&gt;TestService(testDao=TestDao(name=我是默认的TestDao))
-        System.out.println(&#34;TestService 实例=====&gt;&#34; +testService);
-
-    }
-
-}
-
-
-@ComponentScan({&#34;com.example.springboot.example.task&#34;})
-@Configuration
-class TestConfig{
-
-    @Bean(name = &#34;testDao2&#34;)
-     public TestDao testDao(){
-        TestDao testDao = new TestDao();
-        testDao.setName(&#34;我是testDao2&#34;);
-        return testDao;
-    }
-}
-
-@ToString
-@Service
-class TestService {
-
-    @Autowired
-    @Qualifier(&#34;testDao&#34;)
-    TestDao testDao;
-
-}
-
-@ToString
-@Repository
-class TestDao{
-
-    @Getter
-    @Setter
-    private String name = &#34;我是默认的TestDao&#34;;
-
-}
-</code></pre></div><p>除了使用<code>@Qualifier</code>来进行选择注入外，也可以使用<code>@Primary</code>来设置 bean 的优先级，默认情况下指定让哪个 bean 优先注入；</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">public class SpringBootExampleApplication {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(TestConfig.class);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        TestService testService = annotationConfigApplicationContext.getBean(TestService.class);
+</span></span><span class="line"><span class="cl">        // TestService 实例=====&gt;TestService(testDao=TestDao(name=default))
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;TestService 实例=====&gt;&#34; +testService);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 扫描的包名称
+</span></span><span class="line"><span class="cl">@ComponentScan({&#34;com.example.springboot.example.task&#34;})
+</span></span><span class="line"><span class="cl">@Configuration
+</span></span><span class="line"><span class="cl">class TestConfig{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@ToString
+</span></span><span class="line"><span class="cl">@Service
+</span></span><span class="line"><span class="cl">class TestService {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Autowired
+</span></span><span class="line"><span class="cl">    TestDao testDao;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@ToString
+</span></span><span class="line"><span class="cl">@Repository
+</span></span><span class="line"><span class="cl">class TestDao{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Getter
+</span></span><span class="line"><span class="cl">    @Setter
+</span></span><span class="line"><span class="cl">    private String name = &#34;default&#34;;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>如果容器中有多个组件的名称相同,可以通过<code>@Qualifier</code>来进行选择注入；</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class SpringBootExampleApplication {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(TestConfig.class);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        TestService testService = annotationConfigApplicationContext.getBean(TestService.class);
+</span></span><span class="line"><span class="cl">        // TestService 实例=====&gt;TestService(testDao=TestDao(name=我是默认的TestDao))
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;TestService 实例=====&gt;&#34; +testService);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@ComponentScan({&#34;com.example.springboot.example.task&#34;})
+</span></span><span class="line"><span class="cl">@Configuration
+</span></span><span class="line"><span class="cl">class TestConfig{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Bean(name = &#34;testDao2&#34;)
+</span></span><span class="line"><span class="cl">     public TestDao testDao(){
+</span></span><span class="line"><span class="cl">        TestDao testDao = new TestDao();
+</span></span><span class="line"><span class="cl">        testDao.setName(&#34;我是testDao2&#34;);
+</span></span><span class="line"><span class="cl">        return testDao;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@ToString
+</span></span><span class="line"><span class="cl">@Service
+</span></span><span class="line"><span class="cl">class TestService {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Autowired
+</span></span><span class="line"><span class="cl">    @Qualifier(&#34;testDao&#34;)
+</span></span><span class="line"><span class="cl">    TestDao testDao;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@ToString
+</span></span><span class="line"><span class="cl">@Repository
+</span></span><span class="line"><span class="cl">class TestDao{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Getter
+</span></span><span class="line"><span class="cl">    @Setter
+</span></span><span class="line"><span class="cl">    private String name = &#34;我是默认的TestDao&#34;;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>除了使用<code>@Qualifier</code>来进行选择注入外，也可以使用<code>@Primary</code>来设置 bean 的优先级，默认情况下指定让哪个 bean 优先注入；</p>
 <p><code>@Primary</code>注解是在没有明确指定的情况下，默认使用的 bean，如果你明确用<code>@Qualifier</code>指定，则会使用<code>@Qualifier</code>指定的bean；
 确保测试结果准确，在使用<code>@Primary</code>时，将<code>@Qualifier</code>去掉。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class SpringBootExampleTaskApplication {
-
-
-    public static void main(String[] args) {
-        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(TestConfig.class);
-
-        TestService testService = annotationConfigApplicationContext.getBean(TestService.class);
-//        TestService 实例=====&gt;TestService(testDao=TestDao(name=我是testDao2))
-        System.out.println(&#34;TestService 实例=====&gt;&#34; +testService);
-
-    }
-
-}
-
-
-@ComponentScan({&#34;com.example.springboot.example.task&#34;})
-@Configuration
-class TestConfig{
-
-    @Primary
-    @Bean(name = &#34;testDao2&#34;)
-     public TestDao testDao(){
-        TestDao testDao = new TestDao();
-        testDao.setName(&#34;我是testDao2&#34;);
-        return testDao;
-    }
-}
-
-@ToString
-@Service
-class TestService {
-
-    @Autowired
-    TestDao testDao;
-
-}
-
-@ToString
-@Repository
-class TestDao{
-
-    @Getter
-    @Setter
-    private String name = &#34;我是默认的TestDao&#34;;
-
-}
-</code></pre></div><p>如果使用<code>@Autowired</code>在容器中没有对应的组件名称，默认情况下会报错。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException
-</code></pre></div><p>如果没有找到对应的 bean 不报错，可以通过<code>@Autowired(required = false)</code>来进行设置</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@ToString
-@Service
-class TestService {
-    
-    // TestService 实例=====&gt;TestService(testDao=null)
-
-    @Autowired(required = false)
-    TestDao testDao;
-
-}
-</code></pre></div><h4 id="加在方法参数上">加在方法、参数上</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class SpringBootExampleTaskApplication {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(TestConfig.class);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        TestService testService = annotationConfigApplicationContext.getBean(TestService.class);
+</span></span><span class="line"><span class="cl">//        TestService 实例=====&gt;TestService(testDao=TestDao(name=我是testDao2))
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;TestService 实例=====&gt;&#34; +testService);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@ComponentScan({&#34;com.example.springboot.example.task&#34;})
+</span></span><span class="line"><span class="cl">@Configuration
+</span></span><span class="line"><span class="cl">class TestConfig{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Primary
+</span></span><span class="line"><span class="cl">    @Bean(name = &#34;testDao2&#34;)
+</span></span><span class="line"><span class="cl">     public TestDao testDao(){
+</span></span><span class="line"><span class="cl">        TestDao testDao = new TestDao();
+</span></span><span class="line"><span class="cl">        testDao.setName(&#34;我是testDao2&#34;);
+</span></span><span class="line"><span class="cl">        return testDao;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@ToString
+</span></span><span class="line"><span class="cl">@Service
+</span></span><span class="line"><span class="cl">class TestService {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Autowired
+</span></span><span class="line"><span class="cl">    TestDao testDao;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@ToString
+</span></span><span class="line"><span class="cl">@Repository
+</span></span><span class="line"><span class="cl">class TestDao{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Getter
+</span></span><span class="line"><span class="cl">    @Setter
+</span></span><span class="line"><span class="cl">    private String name = &#34;我是默认的TestDao&#34;;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>如果使用<code>@Autowired</code>在容器中没有对应的组件名称，默认情况下会报错。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException
+</span></span></code></pre></div><p>如果没有找到对应的 bean 不报错，可以通过<code>@Autowired(required = false)</code>来进行设置</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@ToString
+</span></span><span class="line"><span class="cl">@Service
+</span></span><span class="line"><span class="cl">class TestService {
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    // TestService 实例=====&gt;TestService(testDao=null)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Autowired(required = false)
+</span></span><span class="line"><span class="cl">    TestDao testDao;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h4 id="加在方法参数上">加在方法、参数上</h4>
 <p><code>@Autowired</code>注解不仅可以标注在属性上，也可以标注在方法上，当标注在方法上时，Spring容器创建当前对象，就会调用该方法完成赋值，方法使用的参数从IOC容器中获取。</p>
 <p>通过测试打印对象的地址可以看到，方法中的参数确实是从IOC容器中获取的。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class SpringBootExampleTaskApplication {
-
-
-    public static void main(String[] args) {
-        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(TestConfig.class);
-
-        TestService testService = annotationConfigApplicationContext.getBean(TestService.class);
-        System.out.println(&#34;TestService 中的实例=====&gt;&#34; +testService);
-
-        TestDao testDao = annotationConfigApplicationContext.getBean(TestDao.class);
-        System.out.println(&#34;TestDao 中的实例=====&gt;&#34; +testDao);
-        
-        // TestService 中的实例=====&gt;TestService(testDao=com.example.springboot.example.task.TestDao@5fe94a96)
-        //TestDao 中的实例=====&gt;com.example.springboot.example.task.TestDao@5fe94a96
-
-
-    }
-
-}
-
-
-@ComponentScan({&#34;com.example.springboot.example.task&#34;})
-@Configuration
-class TestConfig{
-}
-
-@ToString
-@Service
-class TestService {
-
-
-    TestDao testDao;
-
-    @Autowired
-    public void setTestDao(TestDao testDao) {
-        this.testDao = testDao;
-    }
-}
-
-
-@Repository
-class TestDao{
-
-    private String name = &#34;我是默认的TestDao&#34;;
-
-}
-</code></pre></div><p>也可以加在参数上，与加在方法上类似也是从IOC容器中获取该对象。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@ToString
-@Service
-class TestService {
-
-
-    TestDao testDao;
-
-    public void setTestDao(@Autowired TestDao testDao) {
-        this.testDao = testDao;
-    }
-}
-</code></pre></div><p>在<code>Spring</code>创建对象的时候会默认调用组件的无参构造方法，如果只有一个有参构造，如果想要创建对象，则必须调用该有参构造；
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class SpringBootExampleTaskApplication {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(TestConfig.class);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        TestService testService = annotationConfigApplicationContext.getBean(TestService.class);
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;TestService 中的实例=====&gt;&#34; +testService);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        TestDao testDao = annotationConfigApplicationContext.getBean(TestDao.class);
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;TestDao 中的实例=====&gt;&#34; +testDao);
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        // TestService 中的实例=====&gt;TestService(testDao=com.example.springboot.example.task.TestDao@5fe94a96)
+</span></span><span class="line"><span class="cl">        //TestDao 中的实例=====&gt;com.example.springboot.example.task.TestDao@5fe94a96
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@ComponentScan({&#34;com.example.springboot.example.task&#34;})
+</span></span><span class="line"><span class="cl">@Configuration
+</span></span><span class="line"><span class="cl">class TestConfig{
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@ToString
+</span></span><span class="line"><span class="cl">@Service
+</span></span><span class="line"><span class="cl">class TestService {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    TestDao testDao;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Autowired
+</span></span><span class="line"><span class="cl">    public void setTestDao(TestDao testDao) {
+</span></span><span class="line"><span class="cl">        this.testDao = testDao;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@Repository
+</span></span><span class="line"><span class="cl">class TestDao{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private String name = &#34;我是默认的TestDao&#34;;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>也可以加在参数上，与加在方法上类似也是从IOC容器中获取该对象。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@ToString
+</span></span><span class="line"><span class="cl">@Service
+</span></span><span class="line"><span class="cl">class TestService {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    TestDao testDao;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public void setTestDao(@Autowired TestDao testDao) {
+</span></span><span class="line"><span class="cl">        this.testDao = testDao;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>在<code>Spring</code>创建对象的时候会默认调用组件的无参构造方法，如果只有一个有参构造，如果想要创建对象，则必须调用该有参构造；
 所以当一个组件只有一个有参构造时，则可以不用写<code>@Autowired</code>注解。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@ToString
-@Service
-class TestService {
-
-
-    TestDao testDao;
-    
-     // @Autowired
-    public TestService(TestDao testDao) {
-        this.testDao = testDao;
-    }
-
-}
-</code></pre></div><p>除了通过构造方法的方式实例化组件，也可以通过用bean标注的形式，来实例化容器中的组件。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class SpringBootExampleTaskApplication {
-
-
-    public static void main(String[] args) {
-        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(TestConfig.class);
-
-        TestService testService = annotationConfigApplicationContext.getBean(TestService.class);
-        System.out.println(&#34;TestService 中的实例=====&gt;&#34; +testService);
-
-        TestDao testDao = annotationConfigApplicationContext.getBean(TestDao.class);
-        System.out.println(&#34;TestDao 中的实例=====&gt;&#34; +testDao);
-
-        TestDao1 testDao1 = annotationConfigApplicationContext.getBean(TestDao1.class);
-        System.out.println(&#34;TestDao1 中的实例=====&gt;&#34; +testDao);
-        
-        // TestService 中的实例=====&gt;TestService(testDao=com.example.springboot.example.task.TestDao@639c2c1d)
-        //TestDao 中的实例=====&gt;com.example.springboot.example.task.TestDao@639c2c1d
-        //TestDao1 中的实例=====&gt;com.example.springboot.example.task.TestDao@639c2c1d
-
-    }
-
-}
-
-
-@ComponentScan({&#34;com.example.springboot.example.task&#34;})
-@Configuration
-class TestConfig{
-
-    @Bean
-    public TestDao1 testDao1(TestDao testDao){
-        TestDao1 testDao1 = new TestDao1();
-        testDao1.setTestDao(testDao);
-        return testDao1;
-    }
-}
-
-@ToString
-@Service
-class TestService {
-
-
-    TestDao testDao;
-
-    @Autowired
-    public TestService(TestDao testDao) {
-        this.testDao = testDao;
-    }
-
-}
-
-
-@Component
-class TestDao{
-}
-
-class TestDao1{
-    @Setter
-    TestDao testDao;
-}
-</code></pre></div><h4 id="原理">原理</h4>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">/
- * @see AutowiredAnnotationBeanPostProcessor
- */
-@Target({ElementType.CONSTRUCTOR, ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface Autowired{}
-</code></pre></div><p>在<code>@Autowired</code>注解文档注释上面，可以看到与之息息相关的一个类<code>AutowiredAnnotationBeanPostProcessor</code>，即<code>@Autowired</code>后置处理器；
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@ToString
+</span></span><span class="line"><span class="cl">@Service
+</span></span><span class="line"><span class="cl">class TestService {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    TestDao testDao;
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">     // @Autowired
+</span></span><span class="line"><span class="cl">    public TestService(TestDao testDao) {
+</span></span><span class="line"><span class="cl">        this.testDao = testDao;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>除了通过构造方法的方式实例化组件，也可以通过用bean标注的形式，来实例化容器中的组件。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class SpringBootExampleTaskApplication {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(TestConfig.class);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        TestService testService = annotationConfigApplicationContext.getBean(TestService.class);
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;TestService 中的实例=====&gt;&#34; +testService);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        TestDao testDao = annotationConfigApplicationContext.getBean(TestDao.class);
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;TestDao 中的实例=====&gt;&#34; +testDao);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        TestDao1 testDao1 = annotationConfigApplicationContext.getBean(TestDao1.class);
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;TestDao1 中的实例=====&gt;&#34; +testDao);
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        // TestService 中的实例=====&gt;TestService(testDao=com.example.springboot.example.task.TestDao@639c2c1d)
+</span></span><span class="line"><span class="cl">        //TestDao 中的实例=====&gt;com.example.springboot.example.task.TestDao@639c2c1d
+</span></span><span class="line"><span class="cl">        //TestDao1 中的实例=====&gt;com.example.springboot.example.task.TestDao@639c2c1d
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@ComponentScan({&#34;com.example.springboot.example.task&#34;})
+</span></span><span class="line"><span class="cl">@Configuration
+</span></span><span class="line"><span class="cl">class TestConfig{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Bean
+</span></span><span class="line"><span class="cl">    public TestDao1 testDao1(TestDao testDao){
+</span></span><span class="line"><span class="cl">        TestDao1 testDao1 = new TestDao1();
+</span></span><span class="line"><span class="cl">        testDao1.setTestDao(testDao);
+</span></span><span class="line"><span class="cl">        return testDao1;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@ToString
+</span></span><span class="line"><span class="cl">@Service
+</span></span><span class="line"><span class="cl">class TestService {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    TestDao testDao;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Autowired
+</span></span><span class="line"><span class="cl">    public TestService(TestDao testDao) {
+</span></span><span class="line"><span class="cl">        this.testDao = testDao;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@Component
+</span></span><span class="line"><span class="cl">class TestDao{
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">class TestDao1{
+</span></span><span class="line"><span class="cl">    @Setter
+</span></span><span class="line"><span class="cl">    TestDao testDao;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h4 id="原理">原理</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/
+</span></span><span class="line"><span class="cl"> * @see AutowiredAnnotationBeanPostProcessor
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">@Target({ElementType.CONSTRUCTOR, ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+</span></span><span class="line"><span class="cl">@Retention(RetentionPolicy.RUNTIME)
+</span></span><span class="line"><span class="cl">@Documented
+</span></span><span class="line"><span class="cl">public @interface Autowired{}
+</span></span></code></pre></div><p>在<code>@Autowired</code>注解文档注释上面，可以看到与之息息相关的一个类<code>AutowiredAnnotationBeanPostProcessor</code>，即<code>@Autowired</code>后置处理器；
 可以看到该类实现了<code>MergedBeanDefinitionPostProcessor</code>接口，在<code>postProcessMergedBeanDefinition</code>方法上打一个断点，就可以看到<code>@Autowired</code>的调用栈。</p>
 <p><code>@Autowired</code>注解调用栈：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">AbstractApplicationContext.refresh(容器初始化)
----&gt; registerBeanPostProcessors (注册AutowiredAnnotationBeanPostProcessor) 
----&gt; finishBeanFactoryInitialization
----&gt; AbstractAutowireCapableBeanFactory.doCreateBean
----&gt; AbstractAutowireCapableBeanFactory.applyMergedBeanDefinitionPostProcessors
----&gt; MergedBeanDefinitionPostProcessor.postProcessMergedBeanDefinition
----&gt; AutowiredAnnotationBeanPostProcessor.findAutowiringMetadata
-</code></pre></div><p>核心调用：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">postProcessMergedBeanDefinition`-&gt;`findAutowiringMetadata`-&gt;`buildAutowiringMetadata
-</code></pre></div><p>相关源码：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Override
-public void postProcessMergedBeanDefinition(RootBeanDefinition beanDefinition, Class&lt;?&gt; beanType, String beanName) {
-    // 调用 findAutowiringMetadata
-    InjectionMetadata metadata = findAutowiringMetadata(beanName, beanType, null);
-    metadata.checkConfigMembers(beanDefinition);
-}
-
-private InjectionMetadata findAutowiringMetadata(String beanName, Class&lt;?&gt; clazz, @Nullable PropertyValues pvs) {
-		// Fall back to class name as cache key, for backwards compatibility with custom callers.
-		String cacheKey = (StringUtils.hasLength(beanName) ? beanName : clazz.getName());
-		// Quick check on the concurrent map first, with minimal locking.
-		InjectionMetadata metadata = this.injectionMetadataCache.get(cacheKey);
-		if (InjectionMetadata.needsRefresh(metadata, clazz)) {
-			synchronized (this.injectionMetadataCache) {
-				metadata = this.injectionMetadataCache.get(cacheKey);
-				if (InjectionMetadata.needsRefresh(metadata, clazz)) {
-					if (metadata != null) {
-						metadata.clear(pvs);
-					}
-                    // 调用buildAutowiringMetadata
-					metadata = buildAutowiringMetadata(clazz);
-					this.injectionMetadataCache.put(cacheKey, metadata);
-				}
-			}
-		}
-		return metadata;
-	}
-
-
-
-private InjectionMetadata buildAutowiringMetadata(final Class&lt;?&gt; clazz) {
-		LinkedList&lt;InjectionMetadata.InjectedElement&gt; elements = new LinkedList&lt;&gt;();
-		Class&lt;?&gt; targetClass = clazz;//需要处理的目标类
-       
-		do {
-			final LinkedList&lt;InjectionMetadata.InjectedElement&gt; currElements = new LinkedList&lt;&gt;();
- 
-            /*通过反射获取该类所有的字段，并遍历每一个字段，并通过方法findAutowiredAnnotation遍历每一个字段的所用注解，并如果用autowired修饰了，则返回auotowired相关属性*/  
- 
-			ReflectionUtils.doWithLocalFields(targetClass, field -&gt; {
-				AnnotationAttributes ann = findAutowiredAnnotation(field);
-				if (ann != null) {//校验autowired注解是否用在了static方法上
-					if (Modifier.isStatic(field.getModifiers())) {
-						if (logger.isWarnEnabled()) {
-							logger.warn(&#34;Autowired annotation is not supported on static fields: &#34; + field);
-						}
-						return;
-					}//判断是否指定了required
-					boolean required = determineRequiredStatus(ann);
-					currElements.add(new AutowiredFieldElement(field, required));
-				}
-			});
-            //和上面一样的逻辑，但是是通过反射处理类的method
-			ReflectionUtils.doWithLocalMethods(targetClass, method -&gt; {
-				Method bridgedMethod = BridgeMethodResolver.findBridgedMethod(method);
-				if (!BridgeMethodResolver.isVisibilityBridgeMethodPair(method, bridgedMethod)) {
-					return;
-				}
-				AnnotationAttributes ann = findAutowiredAnnotation(bridgedMethod);
-				if (ann != null &amp;&amp; method.equals(ClassUtils.getMostSpecificMethod(method, clazz))) {
-					if (Modifier.isStatic(method.getModifiers())) {
-						if (logger.isWarnEnabled()) {
-							logger.warn(&#34;Autowired annotation is not supported on static methods: &#34; + method);
-						}
-						return;
-					}
-					if (method.getParameterCount() == 0) {
-						if (logger.isWarnEnabled()) {
-							logger.warn(&#34;Autowired annotation should only be used on methods with parameters: &#34; +
-									method);
-						}
-					}
-					boolean required = determineRequiredStatus(ann);
-					PropertyDescriptor pd = BeanUtils.findPropertyForMethod(bridgedMethod, clazz);
-              	    currElements.add(new AutowiredMethodElement(method, required, pd));
-				}
-			});
-    //用@Autowired修饰的注解可能不止一个，因此都加在currElements这个容器里面，一起处理		
-			elements.addAll(0, currElements);
-			targetClass = targetClass.getSuperclass();
-		}
-		while (targetClass != null &amp;&amp; targetClass != Object.class);
- 
-		return new InjectionMetadata(clazz, elements);
-	}
-</code></pre></div><p>当<code>Spring</code> 容器启动时，<code>AutowiredAnnotationBeanPostProcessor</code> 组件会被注册到容器中，然后扫描代码，如果带有 <code>@Autowired</code> 注解，则将依赖注入信息封装到 <code>InjectionMetadata</code> 中。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">AbstractApplicationContext.refresh(容器初始化)
+</span></span><span class="line"><span class="cl">---&gt; registerBeanPostProcessors (注册AutowiredAnnotationBeanPostProcessor) 
+</span></span><span class="line"><span class="cl">---&gt; finishBeanFactoryInitialization
+</span></span><span class="line"><span class="cl">---&gt; AbstractAutowireCapableBeanFactory.doCreateBean
+</span></span><span class="line"><span class="cl">---&gt; AbstractAutowireCapableBeanFactory.applyMergedBeanDefinitionPostProcessors
+</span></span><span class="line"><span class="cl">---&gt; MergedBeanDefinitionPostProcessor.postProcessMergedBeanDefinition
+</span></span><span class="line"><span class="cl">---&gt; AutowiredAnnotationBeanPostProcessor.findAutowiringMetadata
+</span></span></code></pre></div><p>核心调用：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="n">postProcessMergedBeanDefinition</span><span class="o">`-&gt;`</span><span class="n">findAutowiringMetadata</span><span class="o">`-&gt;`</span><span class="n">buildAutowiringMetadata</span><span class="w">
+</span></span></span></code></pre></div><p>相关源码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Override
+</span></span><span class="line"><span class="cl">public void postProcessMergedBeanDefinition(RootBeanDefinition beanDefinition, Class&lt;?&gt; beanType, String beanName) {
+</span></span><span class="line"><span class="cl">    // 调用 findAutowiringMetadata
+</span></span><span class="line"><span class="cl">    InjectionMetadata metadata = findAutowiringMetadata(beanName, beanType, null);
+</span></span><span class="line"><span class="cl">    metadata.checkConfigMembers(beanDefinition);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">private InjectionMetadata findAutowiringMetadata(String beanName, Class&lt;?&gt; clazz, @Nullable PropertyValues pvs) {
+</span></span><span class="line"><span class="cl">		// Fall back to class name as cache key, for backwards compatibility with custom callers.
+</span></span><span class="line"><span class="cl">		String cacheKey = (StringUtils.hasLength(beanName) ? beanName : clazz.getName());
+</span></span><span class="line"><span class="cl">		// Quick check on the concurrent map first, with minimal locking.
+</span></span><span class="line"><span class="cl">		InjectionMetadata metadata = this.injectionMetadataCache.get(cacheKey);
+</span></span><span class="line"><span class="cl">		if (InjectionMetadata.needsRefresh(metadata, clazz)) {
+</span></span><span class="line"><span class="cl">			synchronized (this.injectionMetadataCache) {
+</span></span><span class="line"><span class="cl">				metadata = this.injectionMetadataCache.get(cacheKey);
+</span></span><span class="line"><span class="cl">				if (InjectionMetadata.needsRefresh(metadata, clazz)) {
+</span></span><span class="line"><span class="cl">					if (metadata != null) {
+</span></span><span class="line"><span class="cl">						metadata.clear(pvs);
+</span></span><span class="line"><span class="cl">					}
+</span></span><span class="line"><span class="cl">                    // 调用buildAutowiringMetadata
+</span></span><span class="line"><span class="cl">					metadata = buildAutowiringMetadata(clazz);
+</span></span><span class="line"><span class="cl">					this.injectionMetadataCache.put(cacheKey, metadata);
+</span></span><span class="line"><span class="cl">				}
+</span></span><span class="line"><span class="cl">			}
+</span></span><span class="line"><span class="cl">		}
+</span></span><span class="line"><span class="cl">		return metadata;
+</span></span><span class="line"><span class="cl">	}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">private InjectionMetadata buildAutowiringMetadata(final Class&lt;?&gt; clazz) {
+</span></span><span class="line"><span class="cl">		LinkedList&lt;InjectionMetadata.InjectedElement&gt; elements = new LinkedList&lt;&gt;();
+</span></span><span class="line"><span class="cl">		Class&lt;?&gt; targetClass = clazz;//需要处理的目标类
+</span></span><span class="line"><span class="cl">       
+</span></span><span class="line"><span class="cl">		do {
+</span></span><span class="line"><span class="cl">			final LinkedList&lt;InjectionMetadata.InjectedElement&gt; currElements = new LinkedList&lt;&gt;();
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">            /*通过反射获取该类所有的字段，并遍历每一个字段，并通过方法findAutowiredAnnotation遍历每一个字段的所用注解，并如果用autowired修饰了，则返回auotowired相关属性*/  
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">			ReflectionUtils.doWithLocalFields(targetClass, field -&gt; {
+</span></span><span class="line"><span class="cl">				AnnotationAttributes ann = findAutowiredAnnotation(field);
+</span></span><span class="line"><span class="cl">				if (ann != null) {//校验autowired注解是否用在了static方法上
+</span></span><span class="line"><span class="cl">					if (Modifier.isStatic(field.getModifiers())) {
+</span></span><span class="line"><span class="cl">						if (logger.isWarnEnabled()) {
+</span></span><span class="line"><span class="cl">							logger.warn(&#34;Autowired annotation is not supported on static fields: &#34; + field);
+</span></span><span class="line"><span class="cl">						}
+</span></span><span class="line"><span class="cl">						return;
+</span></span><span class="line"><span class="cl">					}//判断是否指定了required
+</span></span><span class="line"><span class="cl">					boolean required = determineRequiredStatus(ann);
+</span></span><span class="line"><span class="cl">					currElements.add(new AutowiredFieldElement(field, required));
+</span></span><span class="line"><span class="cl">				}
+</span></span><span class="line"><span class="cl">			});
+</span></span><span class="line"><span class="cl">            //和上面一样的逻辑，但是是通过反射处理类的method
+</span></span><span class="line"><span class="cl">			ReflectionUtils.doWithLocalMethods(targetClass, method -&gt; {
+</span></span><span class="line"><span class="cl">				Method bridgedMethod = BridgeMethodResolver.findBridgedMethod(method);
+</span></span><span class="line"><span class="cl">				if (!BridgeMethodResolver.isVisibilityBridgeMethodPair(method, bridgedMethod)) {
+</span></span><span class="line"><span class="cl">					return;
+</span></span><span class="line"><span class="cl">				}
+</span></span><span class="line"><span class="cl">				AnnotationAttributes ann = findAutowiredAnnotation(bridgedMethod);
+</span></span><span class="line"><span class="cl">				if (ann != null &amp;&amp; method.equals(ClassUtils.getMostSpecificMethod(method, clazz))) {
+</span></span><span class="line"><span class="cl">					if (Modifier.isStatic(method.getModifiers())) {
+</span></span><span class="line"><span class="cl">						if (logger.isWarnEnabled()) {
+</span></span><span class="line"><span class="cl">							logger.warn(&#34;Autowired annotation is not supported on static methods: &#34; + method);
+</span></span><span class="line"><span class="cl">						}
+</span></span><span class="line"><span class="cl">						return;
+</span></span><span class="line"><span class="cl">					}
+</span></span><span class="line"><span class="cl">					if (method.getParameterCount() == 0) {
+</span></span><span class="line"><span class="cl">						if (logger.isWarnEnabled()) {
+</span></span><span class="line"><span class="cl">							logger.warn(&#34;Autowired annotation should only be used on methods with parameters: &#34; +
+</span></span><span class="line"><span class="cl">									method);
+</span></span><span class="line"><span class="cl">						}
+</span></span><span class="line"><span class="cl">					}
+</span></span><span class="line"><span class="cl">					boolean required = determineRequiredStatus(ann);
+</span></span><span class="line"><span class="cl">					PropertyDescriptor pd = BeanUtils.findPropertyForMethod(bridgedMethod, clazz);
+</span></span><span class="line"><span class="cl">              	    currElements.add(new AutowiredMethodElement(method, required, pd));
+</span></span><span class="line"><span class="cl">				}
+</span></span><span class="line"><span class="cl">			});
+</span></span><span class="line"><span class="cl">    //用@Autowired修饰的注解可能不止一个，因此都加在currElements这个容器里面，一起处理		
+</span></span><span class="line"><span class="cl">			elements.addAll(0, currElements);
+</span></span><span class="line"><span class="cl">			targetClass = targetClass.getSuperclass();
+</span></span><span class="line"><span class="cl">		}
+</span></span><span class="line"><span class="cl">		while (targetClass != null &amp;&amp; targetClass != Object.class);
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">		return new InjectionMetadata(clazz, elements);
+</span></span><span class="line"><span class="cl">	}
+</span></span></code></pre></div><p>当<code>Spring</code> 容器启动时，<code>AutowiredAnnotationBeanPostProcessor</code> 组件会被注册到容器中，然后扫描代码，如果带有 <code>@Autowired</code> 注解，则将依赖注入信息封装到 <code>InjectionMetadata</code> 中。</p>
 <p>最后创建 <code>bean</code>，即实例化对象和调用初始化方法，会调用各种 <code>XXXBeanPostProcessor</code> 对 <code>bean</code> 初始化，其中包括<code>AutowiredAnnotationBeanPostProcessor</code>，它负责将相关的依赖注入到容器中。</p>
 <h3 id="resourceinject">@Resource、@Inject</h3>
 <p>Spring 自动装配除了<code>@Autowired</code>注解外，也支持JSR-250中的<code>@Resource</code>和JSR-330中的<code>@Inject</code>注解，来进行自动装配；</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class SpringBootExampleTaskApplication {
-
-
-    public static void main(String[] args) {
-        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(TestConfig.class);
-
-        TestService testService = annotationConfigApplicationContext.getBean(TestService.class);
-//        TestService 实例=====&gt;TestService(testDao=TestDao(name=我是默认的TestDao))
-        System.out.println(&#34;TestService 实例=====&gt;&#34; +testService);
-
-    }
-
-}
-
-
-@ComponentScan({&#34;com.example.springboot.example.task&#34;})
-@Configuration
-class TestConfig{
-
-    @Bean(name = &#34;testDao2&#34;)
-     public TestDao testDao(){
-        TestDao testDao = new TestDao();
-        testDao.setName(&#34;我是testDao2&#34;);
-        return testDao;
-    }
-}
-
-@ToString
-@Service
-class TestService {
-
-
-    @Resource
-    TestDao testDao;
-
-}
-
-
-@ToString
-@Repository
-class TestDao{
-
-    @Getter
-    @Setter
-    private String name = &#34;我是默认的TestDao&#34;;
-
-}
-</code></pre></div><p>使用<code>@Inject</code>注解需要导入:</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;dependency&gt;
-    &lt;groupId&gt;javax.inject&lt;/groupId&gt;
-    &lt;artifactId&gt;javax.inject&lt;/artifactId&gt;
-    &lt;version&gt;1&lt;/version&gt;
-&lt;/dependency&gt;
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@ToString
-@Service
-class TestService {
-
-    // TestService 实例=====&gt;TestService(testDao=TestDao(name=我是默认的TestDao))
-    @Inject
-    TestDao testDao;
-
-}
-</code></pre></div><h3 id="使用spring底层组件">使用Spring底层组件</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class SpringBootExampleTaskApplication {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(TestConfig.class);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        TestService testService = annotationConfigApplicationContext.getBean(TestService.class);
+</span></span><span class="line"><span class="cl">//        TestService 实例=====&gt;TestService(testDao=TestDao(name=我是默认的TestDao))
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;TestService 实例=====&gt;&#34; +testService);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@ComponentScan({&#34;com.example.springboot.example.task&#34;})
+</span></span><span class="line"><span class="cl">@Configuration
+</span></span><span class="line"><span class="cl">class TestConfig{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Bean(name = &#34;testDao2&#34;)
+</span></span><span class="line"><span class="cl">     public TestDao testDao(){
+</span></span><span class="line"><span class="cl">        TestDao testDao = new TestDao();
+</span></span><span class="line"><span class="cl">        testDao.setName(&#34;我是testDao2&#34;);
+</span></span><span class="line"><span class="cl">        return testDao;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@ToString
+</span></span><span class="line"><span class="cl">@Service
+</span></span><span class="line"><span class="cl">class TestService {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Resource
+</span></span><span class="line"><span class="cl">    TestDao testDao;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@ToString
+</span></span><span class="line"><span class="cl">@Repository
+</span></span><span class="line"><span class="cl">class TestDao{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Getter
+</span></span><span class="line"><span class="cl">    @Setter
+</span></span><span class="line"><span class="cl">    private String name = &#34;我是默认的TestDao&#34;;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>使用<code>@Inject</code>注解需要导入:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;dependency&gt;
+</span></span><span class="line"><span class="cl">    &lt;groupId&gt;javax.inject&lt;/groupId&gt;
+</span></span><span class="line"><span class="cl">    &lt;artifactId&gt;javax.inject&lt;/artifactId&gt;
+</span></span><span class="line"><span class="cl">    &lt;version&gt;1&lt;/version&gt;
+</span></span><span class="line"><span class="cl">&lt;/dependency&gt;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@ToString
+</span></span><span class="line"><span class="cl">@Service
+</span></span><span class="line"><span class="cl">class TestService {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // TestService 实例=====&gt;TestService(testDao=TestDao(name=我是默认的TestDao))
+</span></span><span class="line"><span class="cl">    @Inject
+</span></span><span class="line"><span class="cl">    TestDao testDao;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h3 id="使用spring底层组件">使用Spring底层组件</h3>
 <p>通过实现<code>Aware</code>接口的子接口，来使用Spring的底层的组件。<code>Aware</code>接口类似于回调方法的形式在 Spring 加载的时候将我们自定以的组件加载。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">/**
- * A marker superinterface indicating that a bean is eligible to be notified by the
- * Spring container of a particular framework object through a callback-style method.
- * The actual method signature is determined by individual subinterfaces but should
- * typically consist of just one void-returning method that accepts a single argument.
- */
-public interface Aware {
-
-}
-</code></pre></div><p><img src="/iblog/posts/annex/images/essays/Aware%E5%AD%90%E6%8E%A5%E5%8F%A3.png" alt="Aware子接口"></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * A marker superinterface indicating that a bean is eligible to be notified by the
+</span></span><span class="line"><span class="cl"> * Spring container of a particular framework object through a callback-style method.
+</span></span><span class="line"><span class="cl"> * The actual method signature is determined by individual subinterfaces but should
+</span></span><span class="line"><span class="cl"> * typically consist of just one void-returning method that accepts a single argument.
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">public interface Aware {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p><img src="/iblog/posts/annex/images/essays/Aware%E5%AD%90%E6%8E%A5%E5%8F%A3.png" alt="Aware子接口"></p>
 <p>使用测试</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Component
-class TestService implements ApplicationContextAware, EmbeddedValueResolverAware, BeanFactoryAware {
-
-    public TestService() {
-    }
-
-    ApplicationContext applicationContext;
-
-
-    @Override
-    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-        System.out.println(&#34;获取实例名称===&gt;&#34; + beanFactory.getBean(&#34;TestService&#34;));
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
-        System.out.println(&#34;获取容器对象===&gt; &#34;+ applicationContext);
-    }
-
-    @Override
-    public void setEmbeddedValueResolver(StringValueResolver resolver) {
-        System.out.println(resolver.resolveStringValue(&#34;我是${os.name}，今年${10*2.1}岁&#34;));
-    }
-}
-</code></pre></div><p>关于这些<code>Aware</code>都是使用<code>AwareProcessor</code>进行处理的,比如:<code>ApplicationContextAwareProcessor</code>就是处理<code>ApplicationContextAware</code>接口的。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Component
+</span></span><span class="line"><span class="cl">class TestService implements ApplicationContextAware, EmbeddedValueResolverAware, BeanFactoryAware {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public TestService() {
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    ApplicationContext applicationContext;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;获取实例名称===&gt;&#34; + beanFactory.getBean(&#34;TestService&#34;));
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+</span></span><span class="line"><span class="cl">        this.applicationContext = applicationContext;
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;获取容器对象===&gt; &#34;+ applicationContext);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    public void setEmbeddedValueResolver(StringValueResolver resolver) {
+</span></span><span class="line"><span class="cl">        System.out.println(resolver.resolveStringValue(&#34;我是${os.name}，今年${10*2.1}岁&#34;));
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>关于这些<code>Aware</code>都是使用<code>AwareProcessor</code>进行处理的,比如:<code>ApplicationContextAwareProcessor</code>就是处理<code>ApplicationContextAware</code>接口的。</p>
 <h2 id="bean的创建流程">Bean的创建流程</h2>
 <p><img src="/iblog/posts/annex/images/spring/Spring%E8%AF%A6%E8%A7%A3-002.png" alt="Spring详解-002"></p>
 <ol>
@@ -1967,41 +1967,41 @@ class TestService implements ApplicationContextAware, EmbeddedValueResolverAware
 <p><code>Bean</code>的生命周期，即<code>Bean</code>的 <code>实例化-&gt;初始化-&gt;使用-&gt;销毁</code> 的过程。</p>
 <h3 id="注入bean">注入Bean</h3>
 <p>我们可以使用 xml 配置的方式来指定，<code>bean</code> 在初始化、销毁的时候调用对应的方法：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;bean id=&#34;getDemoEntity&#34; class=&#34;com.my.demo&#34; init-method=&#34;init&#34; destroy-method=&#34;destroy&#34; /&gt;
-</code></pre></div><p>也可以使用注解的方式，来调用bean在初始化、销毁的时候调用对应的方法：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) {
-        // 获取Spring IOC容器
-        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(DemoConfiguration.class);
-        System.out.println(&#34;容器初始化完成...&#34;);
-
-        annotationConfigApplicationContext.close();
-        System.out.println(&#34;容器销毁了...&#34;);
-    }
-}
-
-@Configuration
-class DemoConfiguration {
-    @Bean(initMethod = &#34;init&#34;, destroyMethod = &#34;destroy&#34;)
-    public DemoEntity getDemoEntity() {
-        return new DemoEntity();
-    }
-}
-
-class DemoEntity {
-    public DemoEntity(){
-        System.out.println(&#34;调用了构造器...&#34;);
-    }
-
-    public void init(){
-        System.out.println(&#34;调用了初始化方法...&#34;);
-    }
-
-    public void destroy(){
-        System.out.println(&#34;调用了销毁方法...&#34;);
-    }
-}
-</code></pre></div><p>需要注意的是，上面演示的是单实例 <code>bean</code>，如果是多实例 <code>bean</code>，初始化和销毁会不一样。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;bean id=&#34;getDemoEntity&#34; class=&#34;com.my.demo&#34; init-method=&#34;init&#34; destroy-method=&#34;destroy&#34; /&gt;
+</span></span></code></pre></div><p>也可以使用注解的方式，来调用bean在初始化、销毁的时候调用对应的方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        // 获取Spring IOC容器
+</span></span><span class="line"><span class="cl">        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(DemoConfiguration.class);
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;容器初始化完成...&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        annotationConfigApplicationContext.close();
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;容器销毁了...&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@Configuration
+</span></span><span class="line"><span class="cl">class DemoConfiguration {
+</span></span><span class="line"><span class="cl">    @Bean(initMethod = &#34;init&#34;, destroyMethod = &#34;destroy&#34;)
+</span></span><span class="line"><span class="cl">    public DemoEntity getDemoEntity() {
+</span></span><span class="line"><span class="cl">        return new DemoEntity();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">class DemoEntity {
+</span></span><span class="line"><span class="cl">    public DemoEntity(){
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;调用了构造器...&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public void init(){
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;调用了初始化方法...&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public void destroy(){
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;调用了销毁方法...&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>需要注意的是，上面演示的是单实例 <code>bean</code>，如果是多实例 <code>bean</code>，初始化和销毁会不一样。</p>
 <p>单实例 <code>bean</code>：</p>
 <ul>
 <li>在容器启动的时候创建对象；</li>
@@ -2013,172 +2013,172 @@ class DemoEntity {
 <li>容器不会自动帮你处理，需要手动销毁 <code>bean</code>；</li>
 </ul>
 <p>多实例注解代码：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Scope(&#34;prototype&#34;)
-@Bean(initMethod=&#34;init&#34;,destroyMethod=&#34;destroy&#34;)
-public Test test（）{}
-</code></pre></div><h3 id="initializingbeandisposablebean">InitializingBean、DisposableBean</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Scope(&#34;prototype&#34;)
+</span></span><span class="line"><span class="cl">@Bean(initMethod=&#34;init&#34;,destroyMethod=&#34;destroy&#34;)
+</span></span><span class="line"><span class="cl">public Test test（）{}
+</span></span></code></pre></div><h3 id="initializingbeandisposablebean">InitializingBean、DisposableBean</h3>
 <p>通过让<code>Bean</code>实现 <code>InitializingBean</code>(定义初始化逻辑)和实现<code>DisposableBean</code>(销毁逻辑)实现初始化<code>bean</code>和销毁<code>bean</code>:</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) {
-        // 获取Spring IOC容器
-        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(DemoEntity.class);
-        System.out.println(&#34;容器初始化完成...&#34;);
-
-        annotationConfigApplicationContext.close();
-        System.out.println(&#34;容器销毁了...&#34;);
-    }
-}
-
-@Component
-class DemoEntity implements InitializingBean, DisposableBean {
-    public DemoEntity(){
-        System.out.println(&#34;调用了构造器...&#34;);
-    }
-
-    @Override
-    public void destroy(){
-        System.out.println(&#34;调用了销毁方法...&#34;);
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        System.out.println(&#34;调用了初始化方法...&#34;);
-    }
-}
-</code></pre></div><h3 id="postconstructpredestroy">@PostConstruct、@PreDestroy</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        // 获取Spring IOC容器
+</span></span><span class="line"><span class="cl">        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(DemoEntity.class);
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;容器初始化完成...&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        annotationConfigApplicationContext.close();
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;容器销毁了...&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@Component
+</span></span><span class="line"><span class="cl">class DemoEntity implements InitializingBean, DisposableBean {
+</span></span><span class="line"><span class="cl">    public DemoEntity(){
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;调用了构造器...&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    public void destroy(){
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;调用了销毁方法...&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    public void afterPropertiesSet() throws Exception {
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;调用了初始化方法...&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h3 id="postconstructpredestroy">@PostConstruct、@PreDestroy</h3>
 <p>Java提供了对应的注解，也可以调用<code>Bean</code>的初始化方法和销毁方法：</p>
 <ul>
 <li><code>@PostConstruct</code> 标注该注解的方法，在<code>bean</code>创建完成并且属性赋值完成 来执行初始化方法;</li>
 <li><code>@PreDestroy</code>， 在容器销毁<code>bean</code>之前通知我们进行<code>bean</code>的清理工作;</li>
 </ul>
 <p>这两个注解不是<code>spring</code>的注解是<code>JSR250</code>JDK带的注解。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) {
-        // 获取Spring IOC容器
-        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(DemoEntity.class);
-        System.out.println(&#34;容器初始化完成...&#34;);
-
-        annotationConfigApplicationContext.close();
-        System.out.println(&#34;容器销毁了...&#34;);
-    }
-}
-
-@Component
-class DemoEntity  {
-    public DemoEntity(){
-        System.out.println(&#34;调用了构造器...&#34;);
-    }
-
-    // 销毁之前调用
-    @PreDestroy
-    public void destroy(){
-        System.out.println(&#34;调用了销毁方法...&#34;);
-    }
-
-    // 对象创建并赋值之后调用
-    @PostConstruct
-    public void init() {
-        System.out.println(&#34;调用了初始化方法...&#34;);
-    }
-}
-</code></pre></div><h3 id="beanpostprocessor">BeanPostProcessor</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        // 获取Spring IOC容器
+</span></span><span class="line"><span class="cl">        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(DemoEntity.class);
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;容器初始化完成...&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        annotationConfigApplicationContext.close();
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;容器销毁了...&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@Component
+</span></span><span class="line"><span class="cl">class DemoEntity  {
+</span></span><span class="line"><span class="cl">    public DemoEntity(){
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;调用了构造器...&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 销毁之前调用
+</span></span><span class="line"><span class="cl">    @PreDestroy
+</span></span><span class="line"><span class="cl">    public void destroy(){
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;调用了销毁方法...&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 对象创建并赋值之后调用
+</span></span><span class="line"><span class="cl">    @PostConstruct
+</span></span><span class="line"><span class="cl">    public void init() {
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;调用了初始化方法...&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h3 id="beanpostprocessor">BeanPostProcessor</h3>
 <p>除了上面的几种方法，也可以使用<code>BeanPostProcessor</code>,<code>Bean</code>的后置处理器，在初始化前后进行处理工作。</p>
 <p><code>postProcessBeforeInitialization</code>：会在初始化完成之前调用
 <code>postProcessAfterInitialization</code>：会在初始化完成之后调用</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) {
-        // 获取Spring IOC容器
-        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(DemoConfiguration.class);
-        System.out.println(&#34;容器初始化完成...&#34;);
-
-        annotationConfigApplicationContext.close();
-        System.out.println(&#34;容器销毁了...&#34;);
-    }
-}
-
-@Configuration
-class DemoConfiguration implements BeanPostProcessor {
-
-    @Bean(initMethod = &#34;init&#34;, destroyMethod = &#34;destroy&#34;)
-    public DemoEntity getDemoEntity(){
-       return new DemoEntity();
-    }
-
-    @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        System.out.println(&#34;调用了 postProcessBeforeInitialization&#34;);
-        return bean;
-    }
-
-    @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        System.out.println(&#34;调用了 postProcessAfterInitialization&#34;);
-        return bean;
-    }
-}
-
-@Component
-class DemoEntity  {
-    public DemoEntity(){
-        System.out.println(&#34;调用了构造器...&#34;);
-    }
-
-    public void destroy(){
-        System.out.println(&#34;调用了销毁方法...&#34;);
-    }
-
-    public void init() {
-        System.out.println(&#34;调用了初始化方法...&#34;);
-    }
-}
-</code></pre></div><p>调用顺序：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        // 获取Spring IOC容器
+</span></span><span class="line"><span class="cl">        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(DemoConfiguration.class);
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;容器初始化完成...&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        annotationConfigApplicationContext.close();
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;容器销毁了...&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@Configuration
+</span></span><span class="line"><span class="cl">class DemoConfiguration implements BeanPostProcessor {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Bean(initMethod = &#34;init&#34;, destroyMethod = &#34;destroy&#34;)
+</span></span><span class="line"><span class="cl">    public DemoEntity getDemoEntity(){
+</span></span><span class="line"><span class="cl">       return new DemoEntity();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;调用了 postProcessBeforeInitialization&#34;);
+</span></span><span class="line"><span class="cl">        return bean;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;调用了 postProcessAfterInitialization&#34;);
+</span></span><span class="line"><span class="cl">        return bean;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@Component
+</span></span><span class="line"><span class="cl">class DemoEntity  {
+</span></span><span class="line"><span class="cl">    public DemoEntity(){
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;调用了构造器...&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public void destroy(){
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;调用了销毁方法...&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public void init() {
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;调用了初始化方法...&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>调用顺序：</p>
 <blockquote>
 <p>创建对象 &ndash;&gt; postProcessBeforeInitialization &ndash;&gt; 初始化 &ndash;&gt; postProcessAfterInitialization &ndash;&gt; 销毁</p>
 </blockquote>
 <h4 id="原理-1">原理</h4>
 <p>通过打断点，可以看到，在创建<code>bean</code>的时候会，会调用<code>AbstractAutowireCapableBeanFactory</code>类的<code>doCreateBean</code>方法，这也是创建<code>bean</code>的核心方法。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    try {
-        populateBean(beanName, mbd, instanceWrapper);
-        exposedObject = initializeBean(beanName, exposedObject, mbd);
-    }
-
-    // ======= initializeBean  =======
-    if (mbd == null || !mbd.isSynthetic()) {
-        wrappedBean = applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);
-    }
-
-    try {
-        invokeInitMethods(beanName, wrappedBean, mbd);
-    }
-    catch (Throwable ex) {
-        throw new BeanCreationException(
-                (mbd != null ? mbd.getResourceDescription() : null),
-                beanName, &#34;Invocation of init method failed&#34;, ex);
-    }
-    if (mbd == null || !mbd.isSynthetic()) {
-        wrappedBean = applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
-    }
-</code></pre></div><p>调用栈大致如下：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">populateBean()
-{
-    applyBeanPostProcessorsBeforeInitialization() -&gt; invokeInitMethods() -&gt; applyBeanPostProcessorsAfterInitialization()
-}
-</code></pre></div><p>在初始化之前调用<code>populateBean()</code>方法,给<code>bean</code>进行属性赋值,之后在调用<code>applyBeanPostProcessorsBeforeInitialization</code>方法；</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    try {
+</span></span><span class="line"><span class="cl">        populateBean(beanName, mbd, instanceWrapper);
+</span></span><span class="line"><span class="cl">        exposedObject = initializeBean(beanName, exposedObject, mbd);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // ======= initializeBean  =======
+</span></span><span class="line"><span class="cl">    if (mbd == null || !mbd.isSynthetic()) {
+</span></span><span class="line"><span class="cl">        wrappedBean = applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    try {
+</span></span><span class="line"><span class="cl">        invokeInitMethods(beanName, wrappedBean, mbd);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    catch (Throwable ex) {
+</span></span><span class="line"><span class="cl">        throw new BeanCreationException(
+</span></span><span class="line"><span class="cl">                (mbd != null ? mbd.getResourceDescription() : null),
+</span></span><span class="line"><span class="cl">                beanName, &#34;Invocation of init method failed&#34;, ex);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    if (mbd == null || !mbd.isSynthetic()) {
+</span></span><span class="line"><span class="cl">        wrappedBean = applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><p>调用栈大致如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">populateBean()
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    applyBeanPostProcessorsBeforeInitialization() -&gt; invokeInitMethods() -&gt; applyBeanPostProcessorsAfterInitialization()
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>在初始化之前调用<code>populateBean()</code>方法,给<code>bean</code>进行属性赋值,之后在调用<code>applyBeanPostProcessorsBeforeInitialization</code>方法；</p>
 <p><code>applyBeanPostProcessorsBeforeInitialization</code>源码：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">	public Object applyBeanPostProcessorsBeforeInitialization(Object existingBean, String beanName)
-			throws BeansException {
-
-		Object result = existingBean;
-		for (BeanPostProcessor processor : getBeanPostProcessors()) {
-			Object current = processor.postProcessBeforeInitialization(result, beanName);
-			if (current == null) {
-				return result;
-			}
-			result = current;
-		}
-		return result;
-	}
-</code></pre></div><p>该方法作用，遍历容器中所有的<code>BeanPostProcessor</code>挨个执行<code>postProcessBeforeInitialization</code>方法，一旦返回<code>null</code>，将不会执行后面<code>bean</code>的<code>postProcessBeforeInitialization</code>方法。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">	public Object applyBeanPostProcessorsBeforeInitialization(Object existingBean, String beanName)
+</span></span><span class="line"><span class="cl">			throws BeansException {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		Object result = existingBean;
+</span></span><span class="line"><span class="cl">		for (BeanPostProcessor processor : getBeanPostProcessors()) {
+</span></span><span class="line"><span class="cl">			Object current = processor.postProcessBeforeInitialization(result, beanName);
+</span></span><span class="line"><span class="cl">			if (current == null) {
+</span></span><span class="line"><span class="cl">				return result;
+</span></span><span class="line"><span class="cl">			}
+</span></span><span class="line"><span class="cl">			result = current;
+</span></span><span class="line"><span class="cl">		}
+</span></span><span class="line"><span class="cl">		return result;
+</span></span><span class="line"><span class="cl">	}
+</span></span></code></pre></div><p>该方法作用，遍历容器中所有的<code>BeanPostProcessor</code>挨个执行<code>postProcessBeforeInitialization</code>方法，一旦返回<code>null</code>，将不会执行后面<code>bean</code>的<code>postProcessBeforeInitialization</code>方法。</p>
 <p>之后在调用<code>invokeInitMethods</code>方法，进行<code>bean</code>的初始化，最后在执行<code>applyBeanPostProcessorsAfterInitialization</code>方法，执行一些初始化之后的工作。</p>
 <h2 id="aop">AOP</h2>
 <p>AOP全称：<code>Aspect-Oriented Programming</code>，译为面向切面编程 。AOP可以说是对OOP的补充和完善。在程序原有的纵向执行流程中,针对某一个或某些方法添加通知(方法),形成横切面的过程就叫做面向切面编程。</p>
@@ -2212,192 +2212,192 @@ class DemoEntity  {
 </li>
 <li>使用<code>@EnableAspectJAutoProxy</code>开启基于注解的AOP模式。</li>
 </ol>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) {
-        // 获取Spring IOC容器
-        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(DemoConfiguration.class);
-
-        DemoEntity demoEntity = annotationConfigApplicationContext.getBean(DemoEntity.class);
-        demoEntity.myAspectTest(&#34;123&#34;);
-
-        annotationConfigApplicationContext.close();
-    }
-}
-
-@EnableAspectJAutoProxy
-@Configuration
-class DemoConfiguration{
-
-    @Bean
-    public DemoEntity getDemoEntity(){
-        return new DemoEntity();
-    }
-
-    @Bean
-    public DemoAspect gerDemoAspect(){
-        return new DemoAspect();
-    }
-
-}
-
-@Aspect
-class DemoAspect {
-
-    @Pointcut(&#34;execution(* com.lilian.ticket.image.exchange.DemoEntity.myAspectTest(..))&#34;)
-    public void pointer() {}
-
-    @Before(&#34;pointer()&#34;)
-    public void beforeTest(JoinPoint joinPoint) {
-        System.out.println(&#34;调用了AOP，前置通知&#34;);
-        Object[] args = joinPoint.getArgs();
-        System.out.println(&#34;前置通知:目标方法参数：[&#34; + args[0] + &#34;]&#34;);
-    }
-
-    @After(&#34;pointer()&#34;)
-    public void afterTest(JoinPoint joinPoint){
-        System.out.println(&#34;调用了AOP，后置通知&#34;);
-        Object[] args = joinPoint.getArgs();
-        System.out.println(&#34;后置通知:目标方法参数：[&#34; + args[0] + &#34;]&#34;);
-    }
-
-    @Around(&#34;pointer()&#34;)
-    public Object aroundTest(ProceedingJoinPoint joinPoint) {
-        System.out.println(&#34;===调用了AOP，环绕通知===&#34;);
-        System.out.println(&#34;环绕通知目标方法执行前&#34;);
-        Object[] args = joinPoint.getArgs();
-        System.out.println(&#34;环绕通知:目标方法参数：[&#34; + args[0] + &#34;]&#34;);
-        Object proceed = null;
-        try {
-             proceed = joinPoint.proceed();
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
-        System.out.println(&#34;环绕通知目标方法执行后\n&#34;);
-        return proceed;
-    }
-
-    @AfterThrowing(pointcut=&#34;pointer()&#34;, throwing=&#34;ex&#34;)
-    public void afterThrowingTest(JoinPoint joinPoint, Exception ex) {
-        System.out.println(&#34;异常通知==&gt;[&#34;+ex.getMessage()+&#34;]\n&#34;);
-    }
-
-    @AfterReturning(&#34;pointer()&#34;)
-    public void afterReturnTest(JoinPoint joinPoint){
-        Object[] args = joinPoint.getArgs();
-        System.out.println(&#34;有返回值的后置通知:目标方法参数：[&#34; + args[0] + &#34;]&#34;);
-    }
-
-}
-
-class DemoEntity {
-
-    public String myAspectTest(String name) {
-        System.out.println(&#34;调用了 myAspectTest 方法;\t name=[&#34; + name + &#34;]&#34;);
-        // 当name传入null时，模拟异常
-        name.split(&#34;123&#34;);
-        return name;
-    }
-}
-</code></pre></div><h3 id="enableaspectjautoproxy">@EnableAspectJAutoProxy</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        // 获取Spring IOC容器
+</span></span><span class="line"><span class="cl">        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(DemoConfiguration.class);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        DemoEntity demoEntity = annotationConfigApplicationContext.getBean(DemoEntity.class);
+</span></span><span class="line"><span class="cl">        demoEntity.myAspectTest(&#34;123&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        annotationConfigApplicationContext.close();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@EnableAspectJAutoProxy
+</span></span><span class="line"><span class="cl">@Configuration
+</span></span><span class="line"><span class="cl">class DemoConfiguration{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Bean
+</span></span><span class="line"><span class="cl">    public DemoEntity getDemoEntity(){
+</span></span><span class="line"><span class="cl">        return new DemoEntity();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Bean
+</span></span><span class="line"><span class="cl">    public DemoAspect gerDemoAspect(){
+</span></span><span class="line"><span class="cl">        return new DemoAspect();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@Aspect
+</span></span><span class="line"><span class="cl">class DemoAspect {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Pointcut(&#34;execution(* com.lilian.ticket.image.exchange.DemoEntity.myAspectTest(..))&#34;)
+</span></span><span class="line"><span class="cl">    public void pointer() {}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Before(&#34;pointer()&#34;)
+</span></span><span class="line"><span class="cl">    public void beforeTest(JoinPoint joinPoint) {
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;调用了AOP，前置通知&#34;);
+</span></span><span class="line"><span class="cl">        Object[] args = joinPoint.getArgs();
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;前置通知:目标方法参数：[&#34; + args[0] + &#34;]&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @After(&#34;pointer()&#34;)
+</span></span><span class="line"><span class="cl">    public void afterTest(JoinPoint joinPoint){
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;调用了AOP，后置通知&#34;);
+</span></span><span class="line"><span class="cl">        Object[] args = joinPoint.getArgs();
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;后置通知:目标方法参数：[&#34; + args[0] + &#34;]&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Around(&#34;pointer()&#34;)
+</span></span><span class="line"><span class="cl">    public Object aroundTest(ProceedingJoinPoint joinPoint) {
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;===调用了AOP，环绕通知===&#34;);
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;环绕通知目标方法执行前&#34;);
+</span></span><span class="line"><span class="cl">        Object[] args = joinPoint.getArgs();
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;环绕通知:目标方法参数：[&#34; + args[0] + &#34;]&#34;);
+</span></span><span class="line"><span class="cl">        Object proceed = null;
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">             proceed = joinPoint.proceed();
+</span></span><span class="line"><span class="cl">        } catch (Throwable throwable) {
+</span></span><span class="line"><span class="cl">            throwable.printStackTrace();
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;环绕通知目标方法执行后\n&#34;);
+</span></span><span class="line"><span class="cl">        return proceed;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @AfterThrowing(pointcut=&#34;pointer()&#34;, throwing=&#34;ex&#34;)
+</span></span><span class="line"><span class="cl">    public void afterThrowingTest(JoinPoint joinPoint, Exception ex) {
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;异常通知==&gt;[&#34;+ex.getMessage()+&#34;]\n&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @AfterReturning(&#34;pointer()&#34;)
+</span></span><span class="line"><span class="cl">    public void afterReturnTest(JoinPoint joinPoint){
+</span></span><span class="line"><span class="cl">        Object[] args = joinPoint.getArgs();
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;有返回值的后置通知:目标方法参数：[&#34; + args[0] + &#34;]&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">class DemoEntity {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public String myAspectTest(String name) {
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;调用了 myAspectTest 方法;\t name=[&#34; + name + &#34;]&#34;);
+</span></span><span class="line"><span class="cl">        // 当name传入null时，模拟异常
+</span></span><span class="line"><span class="cl">        name.split(&#34;123&#34;);
+</span></span><span class="line"><span class="cl">        return name;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h3 id="enableaspectjautoproxy">@EnableAspectJAutoProxy</h3>
 <p>要想AOP起作用，就要加<code>@EnableAspectJAutoProxy</code>注解，所以AOP的原理可以从<code>@EnableAspectJAutoProxy</code>入手研究。</p>
 <p>它是一个复合注解，启动的时候，给容器中导入了一个<code>AspectJAutoProxyRegistrar</code>组件：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Import(AspectJAutoProxyRegistrar.class)
-public @interface EnableAspectJAutoProxy {}
-</code></pre></div><p>发现该类实现了<code>ImportBeanDefinitionRegistrar</code>接口，而该接口的作用是给容器中注册<code>bean</code>的；所以<code>AspectJAutoProxyRegistrar</code>作用是，添加自定义组件给容器中注册<code>bean</code>。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">class AspectJAutoProxyRegistrar implements ImportBeanDefinitionRegistrar {
-
-	/**
-	 * Register, escalate, and configure the AspectJ auto proxy creator based on the value
-	 * of the @{@link EnableAspectJAutoProxy#proxyTargetClass()} attribute on the importing
-	 * {@code @Configuration} class.
-	 */
-	@Override
-	public void registerBeanDefinitions(
-			AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
-
-        // 注册了 AnnotationAwareAspectJAutoProxyCreator 组件
-		AopConfigUtils.registerAspectJAnnotationAutoProxyCreatorIfNecessary(registry);
-
-		AnnotationAttributes enableAspectJAutoProxy =
-				AnnotationConfigUtils.attributesFor(importingClassMetadata, EnableAspectJAutoProxy.class);
-        // 获取 @EnableAspectJAutoProxy 中的属性，做一些工作
-		if (enableAspectJAutoProxy != null) {
-			if (enableAspectJAutoProxy.getBoolean(&#34;proxyTargetClass&#34;)) {
-				AopConfigUtils.forceAutoProxyCreatorToUseClassProxying(registry);
-			}
-			if (enableAspectJAutoProxy.getBoolean(&#34;exposeProxy&#34;)) {
-				AopConfigUtils.forceAutoProxyCreatorToExposeProxy(registry);
-			}
-		}
-	}
-}
-</code></pre></div><p><strong><code>AspectJAutoProxyRegistrar</code>组件何时注册？</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Target(ElementType.TYPE)
+</span></span><span class="line"><span class="cl">@Retention(RetentionPolicy.RUNTIME)
+</span></span><span class="line"><span class="cl">@Documented
+</span></span><span class="line"><span class="cl">@Import(AspectJAutoProxyRegistrar.class)
+</span></span><span class="line"><span class="cl">public @interface EnableAspectJAutoProxy {}
+</span></span></code></pre></div><p>发现该类实现了<code>ImportBeanDefinitionRegistrar</code>接口，而该接口的作用是给容器中注册<code>bean</code>的；所以<code>AspectJAutoProxyRegistrar</code>作用是，添加自定义组件给容器中注册<code>bean</code>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">class AspectJAutoProxyRegistrar implements ImportBeanDefinitionRegistrar {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	/**
+</span></span><span class="line"><span class="cl">	 * Register, escalate, and configure the AspectJ auto proxy creator based on the value
+</span></span><span class="line"><span class="cl">	 * of the @{@link EnableAspectJAutoProxy#proxyTargetClass()} attribute on the importing
+</span></span><span class="line"><span class="cl">	 * {@code @Configuration} class.
+</span></span><span class="line"><span class="cl">	 */
+</span></span><span class="line"><span class="cl">	@Override
+</span></span><span class="line"><span class="cl">	public void registerBeanDefinitions(
+</span></span><span class="line"><span class="cl">			AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // 注册了 AnnotationAwareAspectJAutoProxyCreator 组件
+</span></span><span class="line"><span class="cl">		AopConfigUtils.registerAspectJAnnotationAutoProxyCreatorIfNecessary(registry);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		AnnotationAttributes enableAspectJAutoProxy =
+</span></span><span class="line"><span class="cl">				AnnotationConfigUtils.attributesFor(importingClassMetadata, EnableAspectJAutoProxy.class);
+</span></span><span class="line"><span class="cl">        // 获取 @EnableAspectJAutoProxy 中的属性，做一些工作
+</span></span><span class="line"><span class="cl">		if (enableAspectJAutoProxy != null) {
+</span></span><span class="line"><span class="cl">			if (enableAspectJAutoProxy.getBoolean(&#34;proxyTargetClass&#34;)) {
+</span></span><span class="line"><span class="cl">				AopConfigUtils.forceAutoProxyCreatorToUseClassProxying(registry);
+</span></span><span class="line"><span class="cl">			}
+</span></span><span class="line"><span class="cl">			if (enableAspectJAutoProxy.getBoolean(&#34;exposeProxy&#34;)) {
+</span></span><span class="line"><span class="cl">				AopConfigUtils.forceAutoProxyCreatorToExposeProxy(registry);
+</span></span><span class="line"><span class="cl">			}
+</span></span><span class="line"><span class="cl">		}
+</span></span><span class="line"><span class="cl">	}
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p><strong><code>AspectJAutoProxyRegistrar</code>组件何时注册？</strong></p>
 <p>通过对下面代码打断点</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">AopConfigUtils.registerAspectJAnnotationAutoProxyCreatorIfNecessary(registry);
-</code></pre></div><p>可以看到该方法是给容器中注册了一个<code>AnnotationAwareAspectJAutoProxyCreator</code>组件，实际上是注册<code>AnnotationAwareAspectJAutoProxyCreator</code>组件。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">AopConfigUtils.registerAspectJAnnotationAutoProxyCreatorIfNecessary(registry);
+</span></span></code></pre></div><p>可以看到该方法是给容器中注册了一个<code>AnnotationAwareAspectJAutoProxyCreator</code>组件，实际上是注册<code>AnnotationAwareAspectJAutoProxyCreator</code>组件。</p>
 <p><img src="/iblog/posts/annex/images/essays/AOP%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6.png" alt="AOP核心组件1"></p>
 <p>可以看出<code>@EnableAspectJAutoProxy</code>注解最主要的作用实际上就是通过<code>@Import</code>注解把<code>AnnotationAwareAspectJAutoProxyCreator</code>这个对象注入到<code>spring</code>容器中。</p>
 <p>现在只要把<code>AnnotationAwareAspectJAutoProxyCreator</code>组件何时注册搞懂，<code>AspectJAutoProxyRegistrar</code>组件何时注册也就明白了。</p>
 <p><code>AnnotationAwareAspectJAutoProxyCreator</code>继承关系：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">AnnotationAwareAspectJAutoProxyCreator
-    extends AspectJAwareAdvisorAutoProxyCreator
-        extends AbstractAdvisorAutoProxyCreator
-            extends AbstractAutoProxyCreator
-                extends ProxyProcessorSupport implements SmartInstantiationAwareBeanPostProcessor,BeanFactoryAware
-                    extends ProxyConfig implements Ordered, BeanClassLoaderAware, AopInfrastructureBean 
-</code></pre></div><p>可以看到其中的一个父类<code>AbstractAutoProxyCreator</code>这个父类实现了<code>SmartInstantiationAwareBeanPostProcessor</code>接口，该接口是一个后置处理器接口；同样实现了<code>BeanFactoryAware</code>接口，这意味着，该类可以通过接口中的方法进行自动装配<code>BeanFactory</code>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">AnnotationAwareAspectJAutoProxyCreator
+</span></span><span class="line"><span class="cl">    extends AspectJAwareAdvisorAutoProxyCreator
+</span></span><span class="line"><span class="cl">        extends AbstractAdvisorAutoProxyCreator
+</span></span><span class="line"><span class="cl">            extends AbstractAutoProxyCreator
+</span></span><span class="line"><span class="cl">                extends ProxyProcessorSupport implements SmartInstantiationAwareBeanPostProcessor,BeanFactoryAware
+</span></span><span class="line"><span class="cl">                    extends ProxyConfig implements Ordered, BeanClassLoaderAware, AopInfrastructureBean 
+</span></span></code></pre></div><p>可以看到其中的一个父类<code>AbstractAutoProxyCreator</code>这个父类实现了<code>SmartInstantiationAwareBeanPostProcessor</code>接口，该接口是一个后置处理器接口；同样实现了<code>BeanFactoryAware</code>接口，这意味着，该类可以通过接口中的方法进行自动装配<code>BeanFactory</code>。</p>
 <p>这两个接口的在AOP体系中具体的实现方法：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">1.AbstractAutoProxyCreator
-BeanFactoryAware重写：
-- AbstractAutoProxyCreator.setBeanFactory
-
-SmartInstantiationAwareBeanPostProcessor重写:
-- AbstractAutoProxyCreator.postProcessBeforeInstantiation
-- AbstractAutoProxyCreator.postProcessAfterInitialization
-
-2.AbstractAdvisorAutoProxyCreator
-BeanFactoryAware重写：
-- AbstractAdvisorAutoProxyCreator.setBeanFactory -&gt; initBeanFactory
-
-3. AnnotationAwareAspectJAutoProxyCreator
-BeanFactoryAware重写：
-- AnnotationAwareAspectJAutoProxyCreator.initBeanFactory
-</code></pre></div><p>在上面的任何方法搭上断点即可看到类似下面的方法调用栈：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">AnnotationConfigApplicationContext.AnnotationConfigApplicationContext()
-    -&gt;AbstractApplicationContext.refresh() //刷新容器，给容器初始化bean
-        -&gt;AbstractApplicationContext.finishBeanFactoryInitialization()
-            -&gt;DefaultListableBeanFactory.preInstantiateSingletons()
-                -&gt;AbstractBeanFactory.getBean()
-                    -&gt;AbstractBeanFactory.doGetBean()
-                        -&gt;DefaultSingletonBeanRegistry.getSingleton()
-                            -&gt;AbstractBeanFactory.createBean()
-                                -&gt;AbstractAutowireCapableBeanFactory.resolveBeforeInstantiation()
-                                    -&gt;AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation()
-                                        -&gt;AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation()
-                                            -&gt;调用AOP相关的后置处理器
-</code></pre></div><p>其中 <code>AbstractApplicationContext.refresh()</code> 方法，调用了 <code>registerBeanPostProcessors()</code>方法 ，它是用来注册后置处理器，以拦截 <code>bean</code> 的创建。也是在这个方法中完成了对 <code>AnnotationAwareAspectJAutoProxyCreator</code> 的注册。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1.AbstractAutoProxyCreator
+</span></span><span class="line"><span class="cl">BeanFactoryAware重写：
+</span></span><span class="line"><span class="cl">- AbstractAutoProxyCreator.setBeanFactory
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">SmartInstantiationAwareBeanPostProcessor重写:
+</span></span><span class="line"><span class="cl">- AbstractAutoProxyCreator.postProcessBeforeInstantiation
+</span></span><span class="line"><span class="cl">- AbstractAutoProxyCreator.postProcessAfterInitialization
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">2.AbstractAdvisorAutoProxyCreator
+</span></span><span class="line"><span class="cl">BeanFactoryAware重写：
+</span></span><span class="line"><span class="cl">- AbstractAdvisorAutoProxyCreator.setBeanFactory -&gt; initBeanFactory
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">3. AnnotationAwareAspectJAutoProxyCreator
+</span></span><span class="line"><span class="cl">BeanFactoryAware重写：
+</span></span><span class="line"><span class="cl">- AnnotationAwareAspectJAutoProxyCreator.initBeanFactory
+</span></span></code></pre></div><p>在上面的任何方法搭上断点即可看到类似下面的方法调用栈：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">AnnotationConfigApplicationContext.AnnotationConfigApplicationContext()
+</span></span><span class="line"><span class="cl">    -&gt;AbstractApplicationContext.refresh() //刷新容器，给容器初始化bean
+</span></span><span class="line"><span class="cl">        -&gt;AbstractApplicationContext.finishBeanFactoryInitialization()
+</span></span><span class="line"><span class="cl">            -&gt;DefaultListableBeanFactory.preInstantiateSingletons()
+</span></span><span class="line"><span class="cl">                -&gt;AbstractBeanFactory.getBean()
+</span></span><span class="line"><span class="cl">                    -&gt;AbstractBeanFactory.doGetBean()
+</span></span><span class="line"><span class="cl">                        -&gt;DefaultSingletonBeanRegistry.getSingleton()
+</span></span><span class="line"><span class="cl">                            -&gt;AbstractBeanFactory.createBean()
+</span></span><span class="line"><span class="cl">                                -&gt;AbstractAutowireCapableBeanFactory.resolveBeforeInstantiation()
+</span></span><span class="line"><span class="cl">                                    -&gt;AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation()
+</span></span><span class="line"><span class="cl">                                        -&gt;AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation()
+</span></span><span class="line"><span class="cl">                                            -&gt;调用AOP相关的后置处理器
+</span></span></code></pre></div><p>其中 <code>AbstractApplicationContext.refresh()</code> 方法，调用了 <code>registerBeanPostProcessors()</code>方法 ，它是用来注册后置处理器，以拦截 <code>bean</code> 的创建。也是在这个方法中完成了对 <code>AnnotationAwareAspectJAutoProxyCreator</code> 的注册。
 在下面详细的展开。</p>
 <p>注册完 <code>BeanPostProcessor</code> 后，还调用了方法 <code>finishBeanFactoryInitialization()</code> ，完成 <code>BeanFactory</code> 初始化工作，并创建剩下的单实例 <code>bean</code>。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Override
-public void refresh() throws BeansException, IllegalStateException {
-    
-    // .....
-
-    // Register bean processors that intercept bean creation.
-    registerBeanPostProcessors(beanFactory);
-
-    // .....
-
-    // Instantiate all remaining (non-lazy-init) singletons.
-    finishBeanFactoryInitialization(beanFactory);
-
-    // .....
-
-}
-</code></pre></div><h4 id="registerbeanpostprocessors">registerBeanPostProcessors</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Override
+</span></span><span class="line"><span class="cl">public void refresh() throws BeansException, IllegalStateException {
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    // .....
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // Register bean processors that intercept bean creation.
+</span></span><span class="line"><span class="cl">    registerBeanPostProcessors(beanFactory);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // .....
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // Instantiate all remaining (non-lazy-init) singletons.
+</span></span><span class="line"><span class="cl">    finishBeanFactoryInitialization(beanFactory);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // .....
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h4 id="registerbeanpostprocessors">registerBeanPostProcessors</h4>
 <p><code>registerBeanPostProcessors</code>方法中注册了所有的<code>BeanPostProcessor</code>;注册顺序是：</p>
 <ol>
 <li>注册实现了<code>PriorityOrdered</code>接口的<code>BeanPostProcessor</code>;</li>
@@ -2414,40 +2414,40 @@ public void refresh() throws BeansException, IllegalStateException {
 <li>初始化<code>bean</code>：<code>initializeBean()</code>;</li>
 </ul>
 <p>初始化<code>bean</code>时，<code>initializeBean</code>方法会调用<code>BeanPostProcessor</code>和<code>BeanFactory</code>以及<code>Aware</code>接口的相关方法。这也是<code>BeanPostProcessor</code>发挥初始化<code>bean</code>的原理。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">protected Object initializeBean(final String beanName, final Object bean, RootBeanDefinition mbd) {
-    
-    // ...
-
-    invokeAwareMethods(beanName, bean);   //处理Aware接口的方法回调
-
-    Object wrappedBean = bean;
-    if (mbd == null || !mbd.isSynthetic()) {
-        // 执行后置处理器的postProcessBeforeInitialization方法
-        wrappedBean = applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);
-    }
-    try {
-        // 执行自定义的初始化方法，也就是在这执行 setBeanFactory方法
-        invokeInitMethods(beanName, wrappedBean, mbd);  
-    }
-
-    // ...
-
-    if (mbd == null || !mbd.isSynthetic()) {
-        // 执行后置处理器的postProcessAfterInitialization方法
-        wrappedBean = applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
-    }
-    return wrappedBean;
-}
-
-// ...invokeAwareMethods方法简要 ...
-private void invokeAwareMethods(String beanName, Object bean) {
-    if (bean instanceof Aware) {
-        if (bean instanceof BeanFactoryAware) {
-            ((BeanFactoryAware) bean).setBeanFactory(AbstractAutowireCapableBeanFactory.this);
-        }
-    }
-}
-</code></pre></div><p><code>initializeBean</code>作用：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">protected Object initializeBean(final String beanName, final Object bean, RootBeanDefinition mbd) {
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    // ...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    invokeAwareMethods(beanName, bean);   //处理Aware接口的方法回调
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    Object wrappedBean = bean;
+</span></span><span class="line"><span class="cl">    if (mbd == null || !mbd.isSynthetic()) {
+</span></span><span class="line"><span class="cl">        // 执行后置处理器的postProcessBeforeInitialization方法
+</span></span><span class="line"><span class="cl">        wrappedBean = applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    try {
+</span></span><span class="line"><span class="cl">        // 执行自定义的初始化方法，也就是在这执行 setBeanFactory方法
+</span></span><span class="line"><span class="cl">        invokeInitMethods(beanName, wrappedBean, mbd);  
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // ...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    if (mbd == null || !mbd.isSynthetic()) {
+</span></span><span class="line"><span class="cl">        // 执行后置处理器的postProcessAfterInitialization方法
+</span></span><span class="line"><span class="cl">        wrappedBean = applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    return wrappedBean;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// ...invokeAwareMethods方法简要 ...
+</span></span><span class="line"><span class="cl">private void invokeAwareMethods(String beanName, Object bean) {
+</span></span><span class="line"><span class="cl">    if (bean instanceof Aware) {
+</span></span><span class="line"><span class="cl">        if (bean instanceof BeanFactoryAware) {
+</span></span><span class="line"><span class="cl">            ((BeanFactoryAware) bean).setBeanFactory(AbstractAutowireCapableBeanFactory.this);
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p><code>initializeBean</code>作用：</p>
 <ul>
 <li>处理 <code>Aware</code> 接口的方法回调：<code>invokeAwareMethods()</code>;</li>
 <li>执行后置处理器的<code>postProcessBeforeInitialization()</code>方法；</li>
@@ -2458,125 +2458,125 @@ private void invokeAwareMethods(String beanName, Object bean) {
 <h4 id="finishbeanfactoryinitialization">finishBeanFactoryInitialization</h4>
 <p>除了弄懂<code>AnnotationAwareAspectJAutoProxyCreator</code>组件何时注册，也需要知道它什么时候被调用，这就涉及到<code>finishBeanFactoryInitialization</code>方法。</p>
 <p>继续看方法的调用：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">AnnotationConfigApplicationContext.AnnotationConfigApplicationContext()
-    -&gt;AbstractApplicationContext.refresh() // 刷新容器，给容器初始化bean
-        -&gt;AbstractApplicationContext.finishBeanFactoryInitialization() // 从这继续
-            -&gt;DefaultListableBeanFactory.preInstantiateSingletons()
-                -&gt;AbstractBeanFactory.getBean()
-                    -&gt;AbstractBeanFactory.doGetBean()
-                        -&gt;DefaultSingletonBeanRegistry.getSingleton()
-                            -&gt;AbstractBeanFactory.createBean()
-                                -&gt;AbstractAutowireCapableBeanFactory.resolveBeforeInstantiation()
-                                    -&gt;AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation()
-                                        -&gt;AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation()
-                                            -&gt;调用AOP相关的后置处理器
-</code></pre></div><p><code>finishBeanFactoryInitialization</code>源码简要：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">protected void finishBeanFactoryInitialization(ConfigurableListableBeanFactory beanFactory) {
-
-    // ...
-    
-    // 注释大意： 实例化所有剩余的(非lazy-init)单例。
-    // Instantiate all remaining (non-lazy-init) singletons.
-    beanFactory.preInstantiateSingletons(); // 断点停在这里
-}
-</code></pre></div><p><code>finishBeanFactoryInitialization</code> 方法也需要注册<code>Bean</code>。它会调用 <code>preInstantiateSingletons()</code> 方法遍历获取容器中所有的 <code>Bean</code>，实例化所有剩余的非懒加载初始化单例 <code>Bean</code>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">AnnotationConfigApplicationContext.AnnotationConfigApplicationContext()
+</span></span><span class="line"><span class="cl">    -&gt;AbstractApplicationContext.refresh() // 刷新容器，给容器初始化bean
+</span></span><span class="line"><span class="cl">        -&gt;AbstractApplicationContext.finishBeanFactoryInitialization() // 从这继续
+</span></span><span class="line"><span class="cl">            -&gt;DefaultListableBeanFactory.preInstantiateSingletons()
+</span></span><span class="line"><span class="cl">                -&gt;AbstractBeanFactory.getBean()
+</span></span><span class="line"><span class="cl">                    -&gt;AbstractBeanFactory.doGetBean()
+</span></span><span class="line"><span class="cl">                        -&gt;DefaultSingletonBeanRegistry.getSingleton()
+</span></span><span class="line"><span class="cl">                            -&gt;AbstractBeanFactory.createBean()
+</span></span><span class="line"><span class="cl">                                -&gt;AbstractAutowireCapableBeanFactory.resolveBeforeInstantiation()
+</span></span><span class="line"><span class="cl">                                    -&gt;AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation()
+</span></span><span class="line"><span class="cl">                                        -&gt;AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation()
+</span></span><span class="line"><span class="cl">                                            -&gt;调用AOP相关的后置处理器
+</span></span></code></pre></div><p><code>finishBeanFactoryInitialization</code>源码简要：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">protected void finishBeanFactoryInitialization(ConfigurableListableBeanFactory beanFactory) {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // ...
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    // 注释大意： 实例化所有剩余的(非lazy-init)单例。
+</span></span><span class="line"><span class="cl">    // Instantiate all remaining (non-lazy-init) singletons.
+</span></span><span class="line"><span class="cl">    beanFactory.preInstantiateSingletons(); // 断点停在这里
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p><code>finishBeanFactoryInitialization</code> 方法也需要注册<code>Bean</code>。它会调用 <code>preInstantiateSingletons()</code> 方法遍历获取容器中所有的 <code>Bean</code>，实例化所有剩余的非懒加载初始化单例 <code>Bean</code>。</p>
 <p><code>preInstantiateSingletons()</code>方法源码简要：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">	@Override
-	public void preInstantiateSingletons() throws BeansException {
-
-		// Iterate over a copy to allow for init methods which in turn register new bean definitions.
-		// While this may not be part of the regular factory bootstrap, it does otherwise work fine.
-		List&lt;String&gt; beanNames = new ArrayList&lt;&gt;(this.beanDefinitionNames);
-
-		// Trigger initialization of all non-lazy singleton beans...
-		for (String beanName : beanNames) {
-			RootBeanDefinition bd = getMergedLocalBeanDefinition(beanName);
-            // 获取，非抽象、单例、非懒加载Bean
-			if (!bd.isAbstract() &amp;&amp; bd.isSingleton() &amp;&amp; !bd.isLazyInit()) {
-                // 是否 是FactoryBean类型
-				if (isFactoryBean(beanName)) {
-                    // ...
-				}
-				else {
-					getBean(beanName); // 断点停在这
-				}
-			}
-		}
-
-        // ...
-	}
-</code></pre></div><p><code>preInstantiateSingletons()</code> 调用 <code>getBean()</code> 方法，获取<code>Bean</code>实例，执行过程<code>getBean()-&gt;doGetBean()-&gt;getSingleton()-&gt;createBean()</code>，又回到了上面注册<code>Bean</code>的步骤。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">	@Override
+</span></span><span class="line"><span class="cl">	public void preInstantiateSingletons() throws BeansException {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		// Iterate over a copy to allow for init methods which in turn register new bean definitions.
+</span></span><span class="line"><span class="cl">		// While this may not be part of the regular factory bootstrap, it does otherwise work fine.
+</span></span><span class="line"><span class="cl">		List&lt;String&gt; beanNames = new ArrayList&lt;&gt;(this.beanDefinitionNames);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		// Trigger initialization of all non-lazy singleton beans...
+</span></span><span class="line"><span class="cl">		for (String beanName : beanNames) {
+</span></span><span class="line"><span class="cl">			RootBeanDefinition bd = getMergedLocalBeanDefinition(beanName);
+</span></span><span class="line"><span class="cl">            // 获取，非抽象、单例、非懒加载Bean
+</span></span><span class="line"><span class="cl">			if (!bd.isAbstract() &amp;&amp; bd.isSingleton() &amp;&amp; !bd.isLazyInit()) {
+</span></span><span class="line"><span class="cl">                // 是否 是FactoryBean类型
+</span></span><span class="line"><span class="cl">				if (isFactoryBean(beanName)) {
+</span></span><span class="line"><span class="cl">                    // ...
+</span></span><span class="line"><span class="cl">				}
+</span></span><span class="line"><span class="cl">				else {
+</span></span><span class="line"><span class="cl">					getBean(beanName); // 断点停在这
+</span></span><span class="line"><span class="cl">				}
+</span></span><span class="line"><span class="cl">			}
+</span></span><span class="line"><span class="cl">		}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // ...
+</span></span><span class="line"><span class="cl">	}
+</span></span></code></pre></div><p><code>preInstantiateSingletons()</code> 调用 <code>getBean()</code> 方法，获取<code>Bean</code>实例，执行过程<code>getBean()-&gt;doGetBean()-&gt;getSingleton()-&gt;createBean()</code>，又回到了上面注册<code>Bean</code>的步骤。</p>
 <p>这里要注意<code>createBean()</code>方法中的<code>resolveBeforeInstantiation()</code>方法，这里可以理解为缓存<code>Bean</code>,如果被创建了就拿来直接用，如果没有则创建<code>Bean</code>。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">protected Object createBean(String beanName, RootBeanDefinition mbd, @Nullable Object[] args)
-        throws BeanCreationException {
-
-    // ...
-
-    try {
-        // 注释大意：给 BeanPostProcessors 一个返回代理而不是目标bean实例的机会。
-        // Give BeanPostProcessors a chance to return a proxy instead of the target bean instance.
-        Object bean = resolveBeforeInstantiation(beanName, mbdToUse); // 断点停在这里
-        if (bean != null) {
-            return bean;
-        }
-    }
-
-    // ...
-
-    try {
-        Object beanInstance = doCreateBean(beanName, mbdToUse, args);
-        if (logger.isTraceEnabled()) {
-            logger.trace(&#34;Finished creating instance of bean &#39;&#34; + beanName + &#34;&#39;&#34;);
-        }
-        return beanInstance;
-    }
-
-    // ...
-}
-</code></pre></div><p><code>resolveBeforeInstantiation()</code>、<code>applyBeanPostProcessorsBeforeInstantiation()</code>方法源码：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">protected Object resolveBeforeInstantiation(String beanName, RootBeanDefinition mbd) {
-    Object bean = null;
-    if (!Boolean.FALSE.equals(mbd.beforeInstantiationResolved)) {
-        // Make sure bean class is actually resolved at this point.
-        if (!mbd.isSynthetic() &amp;&amp; hasInstantiationAwareBeanPostProcessors()) {
-            Class&lt;?&gt; targetType = determineTargetType(beanName, mbd);
-            if (targetType != null) {
-                // 调用 applyBeanPostProcessorsBeforeInstantiation 方法
-                bean = applyBeanPostProcessorsBeforeInstantiation(targetType, beanName); // 断点停在这
-                if (bean != null) {
-                    bean = applyBeanPostProcessorsAfterInitialization(bean, beanName);
-                }
-            }
-        }
-        mbd.beforeInstantiationResolved = (bean != null);
-    }
-    return bean;
-}
-
-// ... 上面代码调用的方法 ...
-
-protected Object applyBeanPostProcessorsBeforeInstantiation(Class&lt;?&gt; beanClass, String beanName) {
-    // 遍历所有的 BeanPostProcessor
-    for (BeanPostProcessor bp : getBeanPostProcessors()) {
-
-        // //如果是 InstantiationAwareBeanPostProcessor 类型
-        if (bp instanceof InstantiationAwareBeanPostProcessor) {
-            InstantiationAwareBeanPostProcessor ibp = (InstantiationAwareBeanPostProcessor) bp;
-
-            // 调用 postProcessBeforeInstantiation 方法
-            Object result = ibp.postProcessBeforeInstantiation(beanClass, beanName); // 断点停在这
-            if (result != null) {
-                return result;
-            }
-        }
-    }
-    return null;
-}
-</code></pre></div><p>到了这里在回过头来看一下<code>AnnotationAwareAspectJAutoProxyCreator</code>组件实现的<code>SmartInstantiationAwareBeanPostProcessor</code>接口，继承关系：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">SmartInstantiationAwareBeanPostProcessor 
-    -&gt;extends InstantiationAwareBeanPostProcessor
-        -&gt;extends BeanPostProcessor
-</code></pre></div><p>到这就跟前边对上了，AOP相关的后置处理器也就是在这被调用的。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">protected Object createBean(String beanName, RootBeanDefinition mbd, @Nullable Object[] args)
+</span></span><span class="line"><span class="cl">        throws BeanCreationException {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // ...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    try {
+</span></span><span class="line"><span class="cl">        // 注释大意：给 BeanPostProcessors 一个返回代理而不是目标bean实例的机会。
+</span></span><span class="line"><span class="cl">        // Give BeanPostProcessors a chance to return a proxy instead of the target bean instance.
+</span></span><span class="line"><span class="cl">        Object bean = resolveBeforeInstantiation(beanName, mbdToUse); // 断点停在这里
+</span></span><span class="line"><span class="cl">        if (bean != null) {
+</span></span><span class="line"><span class="cl">            return bean;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // ...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    try {
+</span></span><span class="line"><span class="cl">        Object beanInstance = doCreateBean(beanName, mbdToUse, args);
+</span></span><span class="line"><span class="cl">        if (logger.isTraceEnabled()) {
+</span></span><span class="line"><span class="cl">            logger.trace(&#34;Finished creating instance of bean &#39;&#34; + beanName + &#34;&#39;&#34;);
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        return beanInstance;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // ...
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p><code>resolveBeforeInstantiation()</code>、<code>applyBeanPostProcessorsBeforeInstantiation()</code>方法源码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">protected Object resolveBeforeInstantiation(String beanName, RootBeanDefinition mbd) {
+</span></span><span class="line"><span class="cl">    Object bean = null;
+</span></span><span class="line"><span class="cl">    if (!Boolean.FALSE.equals(mbd.beforeInstantiationResolved)) {
+</span></span><span class="line"><span class="cl">        // Make sure bean class is actually resolved at this point.
+</span></span><span class="line"><span class="cl">        if (!mbd.isSynthetic() &amp;&amp; hasInstantiationAwareBeanPostProcessors()) {
+</span></span><span class="line"><span class="cl">            Class&lt;?&gt; targetType = determineTargetType(beanName, mbd);
+</span></span><span class="line"><span class="cl">            if (targetType != null) {
+</span></span><span class="line"><span class="cl">                // 调用 applyBeanPostProcessorsBeforeInstantiation 方法
+</span></span><span class="line"><span class="cl">                bean = applyBeanPostProcessorsBeforeInstantiation(targetType, beanName); // 断点停在这
+</span></span><span class="line"><span class="cl">                if (bean != null) {
+</span></span><span class="line"><span class="cl">                    bean = applyBeanPostProcessorsAfterInitialization(bean, beanName);
+</span></span><span class="line"><span class="cl">                }
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        mbd.beforeInstantiationResolved = (bean != null);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    return bean;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// ... 上面代码调用的方法 ...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">protected Object applyBeanPostProcessorsBeforeInstantiation(Class&lt;?&gt; beanClass, String beanName) {
+</span></span><span class="line"><span class="cl">    // 遍历所有的 BeanPostProcessor
+</span></span><span class="line"><span class="cl">    for (BeanPostProcessor bp : getBeanPostProcessors()) {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // //如果是 InstantiationAwareBeanPostProcessor 类型
+</span></span><span class="line"><span class="cl">        if (bp instanceof InstantiationAwareBeanPostProcessor) {
+</span></span><span class="line"><span class="cl">            InstantiationAwareBeanPostProcessor ibp = (InstantiationAwareBeanPostProcessor) bp;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            // 调用 postProcessBeforeInstantiation 方法
+</span></span><span class="line"><span class="cl">            Object result = ibp.postProcessBeforeInstantiation(beanClass, beanName); // 断点停在这
+</span></span><span class="line"><span class="cl">            if (result != null) {
+</span></span><span class="line"><span class="cl">                return result;
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    return null;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>到了这里在回过头来看一下<code>AnnotationAwareAspectJAutoProxyCreator</code>组件实现的<code>SmartInstantiationAwareBeanPostProcessor</code>接口，继承关系：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">SmartInstantiationAwareBeanPostProcessor 
+</span></span><span class="line"><span class="cl">    -&gt;extends InstantiationAwareBeanPostProcessor
+</span></span><span class="line"><span class="cl">        -&gt;extends BeanPostProcessor
+</span></span></code></pre></div><p>到这就跟前边对上了，AOP相关的后置处理器也就是在这被调用的。</p>
 <p>回头在看上面的<code>createBean()</code>方法，刚才看到的是<code>resolveBeforeInstantiation()</code>方法的调用栈，所以从层次结构上看<code>AnnotationAwareAspectJAutoProxyCreator</code>组件的调用是在创建 <code>Bean</code>实例之前先尝试用后置处理器返回对象的。</p>
 <p><img src="/iblog/posts/annex/images/essays/AOP@EnableAspectJAutoProxy%E5%8E%9F%E7%90%86.png" alt="AOP@EnableAspectJAutoProxy原理"></p>
 <h2 id="spring事务">Spring事务</h2>
@@ -2650,47 +2650,47 @@ protected Object applyBeanPostProcessorsBeforeInstantiation(Class&lt;?&gt; beanC
 <li>@Transactional(propagation=Propagation.SUPPORTS)：如果其他bean调用这个方法,在其他bean中声明事务,那就用事务.如果其他bean没有声明事务,那就不用事务.</li>
 </ul>
 <h3 id="transactional注解">@Transactional注解</h3>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Target</span><span class="o">({</span><span class="n">ElementType</span><span class="o">.</span><span class="na">TYPE</span><span class="o">,</span> <span class="n">ElementType</span><span class="o">.</span><span class="na">METHOD</span><span class="o">})</span>
-<span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
-<span class="nd">@Inherited</span>
-<span class="nd">@Documented</span>
-<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">Transactional</span> <span class="o">{</span>
-    <span class="nd">@AliasFor</span><span class="o">(</span><span class="s">&#34;transactionManager&#34;</span><span class="o">)</span>
-    <span class="n">String</span> <span class="nf">value</span><span class="o">()</span> <span class="k">default</span> <span class="s">&#34;&#34;</span><span class="o">;</span>
-
-    <span class="nd">@AliasFor</span><span class="o">(</span><span class="s">&#34;value&#34;</span><span class="o">)</span>
-    <span class="n">String</span> <span class="nf">transactionManager</span><span class="o">()</span> <span class="k">default</span> <span class="s">&#34;&#34;</span><span class="o">;</span>
-
-    <span class="c1">// 事务的传播行为
-</span><span class="c1"></span>    <span class="n">Propagation</span> <span class="nf">propagation</span><span class="o">()</span> <span class="k">default</span> <span class="n">Propagation</span><span class="o">.</span><span class="na">REQUIRED</span><span class="o">;</span>
-
-    <span class="c1">// 事务的隔离级别
-</span><span class="c1"></span>    <span class="n">Isolation</span> <span class="nf">isolation</span><span class="o">()</span> <span class="k">default</span> <span class="n">Isolation</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">;</span>
-
-    <span class="c1">// 超时时间
-</span><span class="c1"></span>    <span class="c1">// 事务需要在一定时间内提交，如不提交则进行回滚
-</span><span class="c1"></span>    <span class="c1">// 默认-1，设置时间以秒单位进行计算 
-</span><span class="c1"></span>    <span class="kt">int</span> <span class="nf">timeout</span><span class="o">()</span> <span class="k">default</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
-
-    <span class="c1">// 是否只读
-</span><span class="c1"></span>    <span class="c1">// 读：查询操作；写：添加、修改、删除操作
-</span><span class="c1"></span>    <span class="c1">// 默认值false，表示可以进行读、写操作
-</span><span class="c1"></span>    <span class="c1">// 设置true后 只能查询
-</span><span class="c1"></span>    <span class="kt">boolean</span> <span class="nf">readOnly</span><span class="o">()</span> <span class="k">default</span> <span class="kc">false</span><span class="o">;</span>
-
-    <span class="c1">// 回滚
-</span><span class="c1"></span>    <span class="c1">// 设置出现哪些异常进行回滚 
-</span><span class="c1"></span>    <span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Throwable</span><span class="o">&gt;[]</span> <span class="nf">rollbackFor</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
-
-    <span class="n">String</span><span class="o">[]</span> <span class="nf">rollbackForClassName</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
-
-    <span class="c1">// 不回滚
-</span><span class="c1"></span>    <span class="c1">// 设置出现哪些异常不进行回滚 
-</span><span class="c1"></span>    <span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Throwable</span><span class="o">&gt;[]</span> <span class="nf">noRollbackFor</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
-
-    <span class="n">String</span><span class="o">[]</span> <span class="nf">noRollbackForClassName</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
-<span class="o">}</span>
-</code></pre></div><h4 id="失效情况">失效情况</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Target</span><span class="o">({</span><span class="n">ElementType</span><span class="o">.</span><span class="na">TYPE</span><span class="o">,</span> <span class="n">ElementType</span><span class="o">.</span><span class="na">METHOD</span><span class="o">})</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@Inherited</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@Documented</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">Transactional</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@AliasFor</span><span class="o">(</span><span class="s">&#34;transactionManager&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">String</span> <span class="nf">value</span><span class="o">()</span> <span class="k">default</span> <span class="s">&#34;&#34;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@AliasFor</span><span class="o">(</span><span class="s">&#34;value&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">String</span> <span class="nf">transactionManager</span><span class="o">()</span> <span class="k">default</span> <span class="s">&#34;&#34;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 事务的传播行为
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Propagation</span> <span class="nf">propagation</span><span class="o">()</span> <span class="k">default</span> <span class="n">Propagation</span><span class="o">.</span><span class="na">REQUIRED</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 事务的隔离级别
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Isolation</span> <span class="nf">isolation</span><span class="o">()</span> <span class="k">default</span> <span class="n">Isolation</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 超时时间
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 事务需要在一定时间内提交，如不提交则进行回滚
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 默认-1，设置时间以秒单位进行计算 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="nf">timeout</span><span class="o">()</span> <span class="k">default</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 是否只读
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 读：查询操作；写：添加、修改、删除操作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 默认值false，表示可以进行读、写操作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 设置true后 只能查询
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">boolean</span> <span class="nf">readOnly</span><span class="o">()</span> <span class="k">default</span> <span class="kc">false</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 回滚
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 设置出现哪些异常进行回滚 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Throwable</span><span class="o">&gt;[]</span> <span class="nf">rollbackFor</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">String</span><span class="o">[]</span> <span class="nf">rollbackForClassName</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 不回滚
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 设置出现哪些异常不进行回滚 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Throwable</span><span class="o">&gt;[]</span> <span class="nf">noRollbackFor</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">String</span><span class="o">[]</span> <span class="nf">noRollbackForClassName</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><h4 id="失效情况">失效情况</h4>
 <ol>
 <li>如果某个方法是非public的，那么@Transactional就会失效，因为底层cglib是基于父子类来实现的，子类是不能重载父类的private方法，所以无法很好利用代理，这种情况下会导致@Transactional失效</li>
 <li>使用的数据库引擎不支持事务，例如在使用mysql的时候使用MyISAM引擎不支持事务，InnoDB支持，并且从mysql5.5之后开始默认的存储引擎就为InnoDB 。</li>

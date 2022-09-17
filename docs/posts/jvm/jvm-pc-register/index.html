@@ -244,45 +244,43 @@ JVM中的PC寄存器是对物理PC寄存器的一种抽象模拟。</p>
 <p>由于Java的多线程是通过线程轮流切换完成的，一个线程没有执行完时就需要一个东西记录它执行到哪了，下次抢占到了CPU资源时再从这开始，
 这个东西就是程序计数器，正是因为这样，所以它也是“线程私有”的内存。</p>
 <p><strong>代码演示</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) {
-        int i = 10;
-        int j = 20;
-        int k = i + j;
-
-        String str = &#34;abc&#34;;
-        System.out.println(str);
-        System.out.println(k);
-    }
-}
-
-</code></pre></div><p>通过<code>javap -verbose MainTest.class</code>命令反编译<code>.class</code>文件，得到如下</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// ...
- public static void main(java.lang.String[]);
-    descriptor: ([Ljava/lang/String;)V
-    flags: ACC_PUBLIC, ACC_STATIC
-    Code:
-      stack=2, locals=5, args_size=1
-         0: bipush        10
-         2: istore_1
-         3: bipush        20
-         5: istore_2
-         6: iload_1
-         7: iload_2
-         8: iadd
-         9: istore_3
-        10: ldc           #2                  // String abc
-        12: astore        4
-        14: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;
-        17: aload         4
-        19: invokevirtual #4                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
-        22: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;
-        25: iload_3
-        26: invokevirtual #5                  // Method java/io/PrintStream.println:(I)V
-        29: return
-// ...
-
-</code></pre></div><p>通过PC寄存器，我们就可以知道当前程序执行到哪一步了。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        int i = 10;
+</span></span><span class="line"><span class="cl">        int j = 20;
+</span></span><span class="line"><span class="cl">        int k = i + j;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        String str = &#34;abc&#34;;
+</span></span><span class="line"><span class="cl">        System.out.println(str);
+</span></span><span class="line"><span class="cl">        System.out.println(k);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>通过<code>javap -verbose MainTest.class</code>命令反编译<code>.class</code>文件，得到如下</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// ...
+</span></span><span class="line"><span class="cl"> public static void main(java.lang.String[]);
+</span></span><span class="line"><span class="cl">    descriptor: ([Ljava/lang/String;)V
+</span></span><span class="line"><span class="cl">    flags: ACC_PUBLIC, ACC_STATIC
+</span></span><span class="line"><span class="cl">    Code:
+</span></span><span class="line"><span class="cl">      stack=2, locals=5, args_size=1
+</span></span><span class="line"><span class="cl">         0: bipush        10
+</span></span><span class="line"><span class="cl">         2: istore_1
+</span></span><span class="line"><span class="cl">         3: bipush        20
+</span></span><span class="line"><span class="cl">         5: istore_2
+</span></span><span class="line"><span class="cl">         6: iload_1
+</span></span><span class="line"><span class="cl">         7: iload_2
+</span></span><span class="line"><span class="cl">         8: iadd
+</span></span><span class="line"><span class="cl">         9: istore_3
+</span></span><span class="line"><span class="cl">        10: ldc           #2                  // String abc
+</span></span><span class="line"><span class="cl">        12: astore        4
+</span></span><span class="line"><span class="cl">        14: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;
+</span></span><span class="line"><span class="cl">        17: aload         4
+</span></span><span class="line"><span class="cl">        19: invokevirtual #4                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+</span></span><span class="line"><span class="cl">        22: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;
+</span></span><span class="line"><span class="cl">        25: iload_3
+</span></span><span class="line"><span class="cl">        26: invokevirtual #5                  // Method java/io/PrintStream.println:(I)V
+</span></span><span class="line"><span class="cl">        29: return
+</span></span><span class="line"><span class="cl">// ...
+</span></span></code></pre></div><p>通过PC寄存器，我们就可以知道当前程序执行到哪一步了。
 <img src="/iblog/posts/annex/images/essays/PC%E5%AF%84%E5%AD%98%E5%99%A8%E4%BF%9D%E5%AD%98%E6%8C%87%E4%BB%A4%E7%A4%BA%E6%84%8F.png" alt="PC寄存器保存指令示意"></p>
 <h3 id="常见问题">常见问题</h3>
 <p><em><strong>使用PC寄存器存储字节码指令地址有什么用呢？</strong></em></p>

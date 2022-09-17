@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="zh" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="whitepure" />
+	
+	
+	
+	<title>整洁的代码 ｜ whitepure</title>
+	
+    
+    
+    <meta name="description" content="为什么要写整洁的代码 为什么要写整洁的代码,回答这个问题之前,也许应该想想写糟糕的代码的原因 是想快点完成吗?还是要赶时间吗?有可能.或许你觉得自己要干好所需要的时" />
+    
+
+    
+    
+    <meta name="keywords" content="whitepure博客, whiteppure, whitepure" />
+    
+
+	
+    
+    <link rel="shortcut icon" href="https://whiteppure.github.io/iblog/images/favicon.ico" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/zozo.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/highlight.css" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/toc.css" />
+
+    
+    
+</head>
+
+<body>
+    
+    
+    
+
+
+
+
+
+
+
+
+
+<div class="toc">
+
+    <div class="page-header"><strong>- CATALOG -</strong></div>
+
+    <div id="page-scrollspy" class="toc-nav">
+
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e8%a6%81%e5%86%99%e6%95%b4%e6%b4%81%e7%9a%84%e4%bb%a3%e7%a0%81">
+                    为什么要写整洁的代码
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%bb%80%e4%b9%88%e6%98%af%e6%95%b4%e6%b4%81%e7%9a%84%e4%bb%a3%e7%a0%81">
+                    什么是整洁的代码
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%8f%af%e8%af%bb%e6%80%a7">
+                    可读性
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e8%bf%90%e8%a1%8c%e6%95%88%e7%8e%87">
+                    运行效率
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%89%a9%e5%b1%95%e6%80%a7">
+                    扩展性
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%80%8e%e4%b9%88%e5%86%99%e6%95%b4%e6%b4%81%e7%9a%84%e4%bb%a3%e7%a0%81">
+                    怎么写整洁的代码
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%b3%a8%e9%87%8a%e5%91%bd%e5%90%8d">
+                    注释&amp;命名
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%87%bd%e6%95%b0%e7%b1%bb">
+                    函数&amp;类
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%bb%a3%e7%a0%81%e7%bb%93%e6%9e%84">
+                    代码结构
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+
+    </div>
+
+</div>
+
+
+
+    
+    <div class="main animate__animated animate__fadeInDown" id="pdf_content">
+        <div class="nav_container animated fadeInDown">
+    <div class="site_nav" id="site_nav">
+        <ul><li class="">
+                <a href="https://whiteppure.github.io/iblog/">首页</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/iblog/posts/">归档</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/iblog/tags/">标签</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/iblog/about/">关于</a>
+            </li>
+        </ul>
+    </div>
+    <div class="menu_icon">
+        <a id="menu_icon"><i class="ri-menu-line"></i></a>
+    </div>
+</div>
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/">
+                    <span>whitepure</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">
+                知行合一
+            </p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                    <i class="ri-github-fill"></i>
+                </a>
+                
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
+
+
+
+            </div>
+            
+            <div class="post">
+                <div class="post_title post_detail_title">
+                    <span class="date" id="busuanzi_container_site_pv">访问量 <span id="busuanzi_value_site_pv"></span>次</span>
+                </div>
+                <div class="post_title post_detail_title">
+                    <span class="date" id="busuanzi_container_site_uv">访客数 <span id="busuanzi_value_site_uv"></span>人</span>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+        <div class="content">
+            <div class="post_page">
+                <div class="post animate__animated animate__fadeInDown">
+                    <div class="post_title post_detail_title">
+                        <h2><a href='/iblog/posts/essays/clean-code/'>整洁的代码</a></h2>
+                        <span class="date">2022.09.01</span>
+                    </div>
+                    <div class="post_content markdown"><h2 id="为什么要写整洁的代码">为什么要写整洁的代码</h2>
+<p>为什么要写整洁的代码,回答这个问题之前,也许应该想想写糟糕的代码的原因</p>
+<p>是想快点完成吗?还是要赶时间吗?有可能.或许你觉得自己要干好所需要的时间不够;假使花时间清理代码,老板就会大发雷霆.或许你只是不耐烦再搞这套程序,期望早点结束.或许你看了看,自己承诺要做的其他事情,意识到得赶紧弄完手上的东西,好接着做下一件工作.这种事情我们都干过.</p>
+<p>&ldquo;只要你干过编程,就有可能曾经被某人的糟糕代码绊倒过.如果你编程不止两三年,有可能被这种代码拖过腿.进度延缓的程度非常严重.有些团队在项目初期进展迅速,但是有那么一两年的时间却慢如蜗行.如对代码的每次修改都影响到了其他两三处代码.修改无小事.每次修改或添加代码都对那对扭纹柴了然于心,这样才能网上扔更多的扭纹柴.这团乱麻越来越大,在也无法清理,最后束手无策.</p>
+<blockquote>
+<p>扭纹柴: 喻不受教的孩子</p>
+</blockquote>
+<p>随着混乱的增加,团队生产力也持续下降,趋势余零.当生产力下降时,管理层就只有一件事情可做了:增加更多的人手到项目中,期望提高生产力.可新人不熟悉系统的设计.他们搞不清什么样的修改符合设计的意图,什么样的修改违背设计意图.而且,他们以及团队中的其他人都背负着提高生产力的压力.于是,他们制造了更多的混乱,驱动生产力向零的那端不断下降.</p>
+<p>最后,开发团队造反了,他们告诉管理层,再也无法在这令人生厌的代码基础上做开发.他们要求全新设计.管理层不愿意投入资源完全重启炉灶,他们也不能否认生产力低得可怕.他们只好同意开发者的要求,授权去做一套看上去很美的华丽新设计.</p>
+<p>于是就组建了一只新军.谁都想加入这个团队,因为它是张白纸.他们可以重新来过,搞出点真正漂亮的东西来.但只有最优秀,最聪明的家伙被选中.其余人则继续维护现有的系统.</p>
+<p>现在有两支队伍在竞赛.新团队必须搭建一套新系统,要求实现旧系统的所有功能.另外,还得跟得上旧系统的持续改动.在新系统功能足以对抗旧系统之前,管理层就不会替换掉旧的系统.</p>
+<p>竞赛可能会持续极长的时间.到了完成的时候,新团队的老成员已不知去向,而现有成员则需求重新设计一套新系统,因为这套系统太烂了.</p>
+<p>假如你经历过哪怕是一小段我谈到的这种事,那么你一定知道,花时间保持整洁的代码不但有关于效率,还有关于生存. &quot;</p>
+<p>有时我们抱怨需求变化背离了初期设计.哀叹进度太紧张,没法好好干活.我们把问题归咎于那些愚蠢的经理,苛刻的用户,没用的营销方式.</p>
+<p>经理和营销人员指望从我们这里得到必须的信息，然后才能做出承诺和保证；即便他们没开口问，我们也不该羞于告知自己的想法。用户指望我们验证需求是否都在系统中实现了。项目经理指望我们遵守进度。我们与项目的规划脱不了干系，对失败负有极大的责任：特别是当失败与糟糕的代码有关时尤为如此！
+“且慢！”你说。“不听经理的，我就会被炒鱿鱼。”多半不会。多数经理想要知道实情，即便他们看起来不喜欢实情。多数经理想要好代码，即便他们总是痴缠于进度。他们会奋力卫护进度和需求；那是他们该干的。你则当以同等的热情卫护代码。</p>
+<p>再说明白些，假使你是位医生，病人请求你在给他做手术前别洗手，因为那会花太多时间，你会照办吗？本该是病人说了算；但医生却绝对应该拒绝遵从。为什么？因为医生比病人更了解疾病和感染的风险。医生如果按病人说的办，就是一种不专业的态度,更别说是犯罪了。同理，程序员遵从不了解混乱风险的经理的意愿，也是不专业的做法。我们应该加强这方面的意识。</p>
+<p>程序员面临着一种基础价值谜题。有那么几年经验的开发者都知道，之前的混乱拖了自己的后腿。但开发者们背负期限的压力，只好制造混乱。简言之，他们没花时间让自己做得更快！真正的专业人士明白，这道谜题的第二部分说错了。制造混乱无助于赶上期限。混乱只会立刻拖慢你，叫你错过期限。赶上期限的唯一方法一做得快的唯一方法就是始终尽可能保持代码整洁。</p>
+<p>&ldquo;如果你不明白整洁对于代码有何意义,尝试去写整洁代码就会毫无所益.&rdquo;</p>
+<p><strong>截取自《代码整洁之道》</strong></p>
+<h2 id="什么是整洁的代码">什么是整洁的代码</h2>
+<p>每个人对于整洁的代码理解肯定不同,在我看来,满足业务场景的情况下,可读性强,运行效率高,细节处理好,易扩展的代码就是整洁代码. 抛开业务场景不谈,只谈所谓的&quot;整洁代码&quot;就是所谓的耍流氓。</p>
+<p>整洁的代码总是看起来总是像是某位特别在意它的人写的.几乎没有改进的余地.代码的作者什么都想到了.如果你想改进它,总会回到原点。</p>
+<p>代码的作用是为了解决人们的某种需求,什么语言不重要(但是总有人非要争个高低),问题解决了才重要.在规定的业务场景下,写出能解决用户需求的代码就是程序员的日常工作,而需求并不是一成不变的,需求会变代码也会改变,所以我们就需要再这个特定的业务场景中尽量把代码变得灵活起来,之后增加需求或者修改需求时,会变的容易一些。</p>
+<p>至于方法的规范命名,可读性,注释等.这些也很重要,毕竟开发的时候一般都是团队一起来开发,代码不止你自己看,还需要别人看,说简单一些就是别人好接手你的代码,即代码的维护</p>
+<h3 id="可读性">可读性</h3>
+<p>在一个产品的周期中,开发其实只占了一小段时间,绝大多数时间都在维护代码.代码写出来首先是给人看的,其次是给电脑看,所以代码的可读性至关重要.所以,如果我非要在代码的可读性和运行效率之间选择一个,非可读性莫属.一般来说,要权衡代码的可读性和运行效率,如果差距太大,要看实际的业务场景来决定,毕竟写程序的最终目的是为了解决用户的某些问题.</p>
+<p>可读性通常表现在代码易于理解</p>
+<ul>
+<li>容易理解整个应用程序的执行流程</li>
+<li>容易理解不同对象之间的协作方式</li>
+<li>容易理解每个类的作用和责任</li>
+<li>容易理解每个方法的作用</li>
+<li>容易理解每个表达式和变量的目的是什么</li>
+</ul>
+<p>如果一个方法的行数过多也会影响代码的可读性,一般控制在80行左右。过多无用的注释、API,只会加重使用者的认知负担,过多无用的信息读起来只会浪费时间，所以要尽量保持API的精简，代码注释的合理，保持规范的命名，使注释看起来没那么臃肿。要知道代码有人维护，可注释没有人维护。</p>
+<p>代码依赖性导致了变化的放大和高认知负荷。模糊性造成了未知的不可知性，导致了认知负荷。从而使得代码更加难以理解,从而不能很好的维护. 所以整洁的代码总是复杂性低的。</p>
+<h3 id="运行效率">运行效率</h3>
+<p>运行效率即代码的运行效率，包括运行所占用的时间和空间。如果数据量不是很大（单表在300w左右）可能几乎不用考虑这个问题，空间就更不用说了，现在大多数公司都是用空间来换时间的，即通过增加服务器的配置或数量来提高程序运算速度。所以很多人并不关心程序运行的效率。</p>
+<p>诚然，我也不是很关心软件的运行效率，因为软件的运行效率主要还是取决与硬件的发展水平，现在硬件发展比软件发展快了一个档次，不然现在也不能一下子涌起那么多的软件公司。</p>
+<p>但是，如果业务量非常大，电脑的运行效率也是有限的，当服务器达到一定数量后，企业就会考虑成本毕竟不能一直毫无节制的增加下去，这时候就需要考虑程序的运行效率了。</p>
+<p>作为一个好的程序员，你不得不具备这项技能。</p>
+<p>怎样提高程序的运行效率，有没有想过？程序是算法和数据结构组成的，数据结构决定一个程序的空间复杂度，算法则决定一个程序的时间复杂度。 想要程序跑的更快，空间占用更少，可以从这两个维度来进行探索。</p>
+<p>一个好的算法离不开一个好的想法，这对于一个程序来说是至关重要的，因为它是决定了程序运行速度的关键原因。可能很多人都有一个误区，就是代码越少执行效率就越高，在改进算法的时候会通过删减代码来进行。举个例子：匹配字符串，在数据量很大的情况下，暴力匹配的方式无论你怎么改，都会比那些运用了好的算法的程序慢。</p>
+<p>不整洁的代码是混乱的，代码混乱到一定程度就会对程序的运行速度产生影响。所以，代码的整洁程度一定程度上影响了代码的运行速度。</p>
+<h3 id="扩展性">扩展性</h3>
+<p>整洁的代码除了是可读性强、运行效率高还有最重要的一点是它是容易扩展的。扩展性可理解为易于修改的代码。程序的扩展性代表了维护该程序程度的难易，当然可读性也是，二者都很重要。</p>
+<p>在所有的设计模式中，几乎所有的设计模式都是为了符合开闭原则，即保持程序的扩展性，重要程度可见一斑。</p>
+<p>代码都是为了一定的需求服务的，但是这些需求并不是一成不变的，当需求变更了，如果我们代码的扩展性很好，我们可能只需要简单的添加或者删除模块就行了，如果扩展性不好，可能所有代码都需要重写，那就是一场灾难了，所以提高代码的扩展性是很重要的。</p>
+<p>衡量代码扩展性可以从高内聚，低耦合这两个方面来衡量。</p>
+<blockquote>
+<p>高内聚：一个软件单位内部的关联紧密程度；有关联的事务应该放在一起。
+低耦合：两个或多个软件单位之间的关联紧密程度；软件单位之间尽可能的不要相互影响。</p>
+</blockquote>
+<h2 id="怎么写整洁的代码">怎么写整洁的代码</h2>
+<p>好的代码是不断的迭代出来的,没有人能一下子写完整 ,需求会变代码也会改变 第一次迭代可能写的代码很糟糕,这时一定要再次回头去看之前的代码,去优化,重构,让代码变得易于维护.</p>
+<p>如何写出整洁的代码,那就看你怎么理解整洁的代码,理解的不一样写出来的肯定就不一样.下面是我的几点建议</p>
+<h3 id="注释命名">注释&amp;命名</h3>
+<p>注释只是二手的信息,它和代码所传达的信息并不等价.所以，不要写没有意义的注释(冗余注释,废弃注释,等一些没有意义的信息和不恰当的信息),要知道代码有人维护,可注释没有人维护,最好的办法就是规范变量,方法的命名,做到见名知意; 如果你的方法命名足够明确就可以不用写注释了，当然一段好的注释一定是包含代码中没有体现的信息。</p>
+<p>如果要编写一条注释,就花时间尽量保证写出最好的注释 不要画蛇添足,要保持注释的简洁。比如，无用的代码直接删掉,不要注释它,不用担心会丢,版本服务会有记录能找回。编写注释和迭代代码是一样的道理。但是一般注释是没有人来维护的，因为它不会影响程序的正常运行。</p>
+<p>同样的，命名也不会影响程序的正常运行。注释和命名是不会影响程序的执行的，但是这两个因素是会影响到开发者编写代码的。它会导致开发者的认知负荷增加，从而降低编写代码的效率。</p>
+<p>“ 好的代码本身就是注释，我们要尽量规范和美化自己的代码来减少不必要的注释。若编程语言足够有表达力，就不需要注释，尽量通过代码来阐述。”编程语言的表达力很大程度上就取决于方法的命名。</p>
+<p>那什么是好的命名呢？说实话这也是我编程一直头疼的原因，总觉得命名不够好。在网络上看到一种方法觉得很不错: 把你的变量名拎出来，问别人，你看到这个名字会想到什么，他说的和你想的一致，就用，否则就改。改到基本上不懂程序的人都能大概看懂你写的是什么，那大概就是好的命名了。</p>
+<p>程序的命名我认为是约定俗成的，最初开始编程的开发者们，他们一定会遇到这个问题的，久而久之就会建立一套规则将这些命名进行统一。到了现在一定是有很多成熟的命名规则的，所以我们可以踩着前辈们的肩膀前行。</p>
+<p>虽然是约定俗成的,但是事物的发展一定不是一成不变的,我并不知道在我写下这么多文字后是否适用于未来,或许大概只有思想会适用,而那些具体的方法是一定不会适用的,但是现在我们需要具体的解决方案,或许我能给你提点建议,如果能帮到你我会很高兴的.</p>
+<p>注释</p>
+<ul>
+<li>尽量保持代码的简洁,能不用注释尽量不用注释,切记注释应该展示代码中没有展示的信息</li>
+<li>注释代码,那么应该在注释代码的上方详细的说明,而不是简单的注释,如果没有用则应该删除</li>
+<li>注释也要随着程序的修改而不断更新，一个误导的注释往往比没有注释更糟糕</li>
+</ul>
+<p>命名</p>
+<ul>
+<li>命名尽量不要使用缩写,因为意义不明确,除非缩写是外界公认的,比如: EN,CH</li>
+<li>在Java中较为适用的是驼峰命名法,如: helloWord,HelloWord ,但是这种方法如果命名过长也不能很直观的展示信息,所以尽量不要起太长的名字,否则什么方法都不管用,如果一个方法的名字过长那么很可能这个方法不止做了一件事,这时候我们需要将它拆分.</li>
+<li>接口和类的名称首字母大写(MyClass/MyInterface) ,方法的名称首字母小写(myMethod),常量的命名全部大写(MY _CONSTANT)同时用蛇形命名法,单词的分割用下划线隔开</li>
+<li>方法的命名用动词,类的命名用名词,属性的命名用名词,接口的命名用形容词或动词,抽象类的命名应以Abstract/Base为前缀,实现类命名要以impl结尾,异常类以Exception结尾</li>
+</ul>
+<h3 id="函数类">函数&amp;类</h3>
+<p>最好的方法入参参数是0个,其次是1,最多建议不超过3个,大于三个建议封装成对象,这样做的好处是方便扩展管理;在一个方法中声明变量应该在方法的最前面,我们应该降低方法的复杂度,避免出现if..else多层嵌套的情况，当然,如果一个方法过于复杂可将该方法进行拆分；还应当注意方法中异常块的处理,一般情况下是不会写的,因为有全局异常处理,如果非要写那么可能代码看起来不是那么简洁清晰.注意方法的封装.在方法调用本地方法的时候,本地的方法尽量使用基础类型作为返回值,好处是避免空指针判断和隐式拆包和打包.当我们写方法返回值的时候,如果返回值类型是数组或集合,我们应该避免返回null,否则调用方就有可能出现空指针.可以避免不必要的空指针判断。</p>
+<p>或许我应该更加细致的标出</p>
+<ul>
+<li>减少函数的入参数量，控制在三个以内，超过三个封装成对象</li>
+<li>使用卫语句，策略模式，职责链模式来减少if..else多层嵌套和不必要的else；用三元运算符代替简单if&hellip;else（根据不同的情境使用，可能会影响代码的可读性）</li>
+<li>拆分超长函数(函数行数阈值80~100行左右就要考虑拆分)；复杂的条件表达式，循环语句，代码块，lambda匿名内部类，都可以单独将其封装成方法；如果是方法内部调用方法的返回值应尽量用基础类型 （并不是方法越多越好，方法之间的互相调用也会影响性能，增加复杂度，请根据实际情况拆分）</li>
+<li>方法的返回值如果是集合或者数组，不要返回null，尽量返回空值，这样可以避免空指针的判断，从而精简代码</li>
+</ul>
+<p>除了上述的几点以外，在写函数的时候还要遵循单一职责原则，即每个方法只做一件事，好处是方便管理,代码可读性会提高,复杂度降低 易于维护。也要遵循开闭原则，这会使你的代码更加灵活。当然这些代码肯定不是一次就写出来的，好的代码需要迭代，需要打磨。在你写完几个函数之后，可能会发现重复的地方，这时候就需要将他们抽象出来。</p>
+<p>许许多多的函数组成了类,当函数之间相互调用的时候，就会存在多个类之间的联系，所以在编写类的时候要注意类之间的依赖关系，使它们别那么耦合，一般会遵循迪米特法则。</p>
+<p>属性的存在使类中的元素更加丰富，一般情况下属性在类中都是私有的，会对外提供set，get方法供外部调用修改；这样做的好处是方便控制外部调用，假如你想公共处理某个属性给它加个前缀，就可以通过调用该类中涉及到该属性的方法进行修改，如果你直接修改属性那么改起来会很麻烦。</p>
+<p>极少数情况是公共的，比如定义一个常量类，公共的资源属性。还有多数情况下是受保护的，该种情况一般是用来给子类使用的，当然同一个包下也能访问得到。</p>
+<h3 id="代码结构">代码结构</h3>
+<p>高内聚低耦合，这是我们写代码应该遵循的标准。内聚代表着职责的专一，这是整洁的一个很重要准则。从大的方面来说，系统的使用与构造需要明确的区分开，才不会将整个结构混杂在一起。与此同时，决定了系统的数据流走向也是决定了整个系统的层级划分，不同的层级也需要明确的区分开来。</p>
+<p>那么应该怎么划分代码的结构?最简单的应该同类型的相关联的表需要放在一个类中,写一些方法对外提供api,供其他方法调用。</p>
+</div>
+                    <div class="post_footer">
+                        <div class="meta">
+                            <div class="info">
+                                <span class="field tags">
+                                    <i class="ri-stack-line"></i>
+                                    
+                                    
+                                    <a href="https://whiteppure.github.io/iblog/tags/code/">code</a>
+                                    
+                                    
+                                    
+                                    <span id="busuanzi_container_page_pv">
+                                      阅读量<span id="busuanzi_value_page_pv"></span>次
+                                    </span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/iblog/css/comments.css" />
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+        
+        emojiCDN: '//i0.hdslb.com/bfs/emote/',
+        
+        emojiMaps: {
+            "tv_doge": "6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png",
+            "tv_亲亲": "a8111ad55953ef5e3be3327ef94eb4a39d535d06.png",
+            "tv_偷笑": "bb690d4107620f1c15cff29509db529a73aee261.png",
+            "tv_再见": "180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png",
+            "tv_冷漠": "b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png",
+            "tv_发怒": "34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png",
+            "tv_发财": "34db290afd2963723c6eb3c4560667db7253a21a.png",
+            "tv_可爱": "9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png",
+            "tv_吐血": "09dd16a7aa59b77baa1155d47484409624470c77.png",
+            "tv_呆": "fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png",
+            "tv_呕吐": "9f996894a39e282ccf5e66856af49483f81870f3.png",
+            "tv_困": "241ee304e44c0af029adceb294399391e4737ef2.png",
+            "tv_坏笑": "1f0b87f731a671079842116e0991c91c2c88645a.png",
+            "tv_大佬": "093c1e2c490161aca397afc45573c877cdead616.png",
+            "tv_大哭": "23269aeb35f99daee28dda129676f6e9ea87934f.png",
+            "tv_委屈": "d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png",
+            "tv_害羞": "a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png",
+            "tv_尴尬": "7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png",
+            "tv_微笑": "70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png",
+            "tv_思考": "90cf159733e558137ed20aa04d09964436f618a1.png",
+            "tv_惊吓": "0d15c7e2ee58e935adc6a7193ee042388adc22af.png",
+            "tv_打脸": "56ab10b624063e966bfcb76ea5dc4794d87dfd47.png",
+            "tv_抓狂": "fe31c08edad661d63762b04e17b8d5ae3c71a757.png",
+            "tv_抠鼻": "c666f55e88d471e51bbd9fab9bb308110824a6eb.png",
+            "tv_斜眼笑": "911f987aa8bc1bee12d52aafe62bc41ef4474e6c.png",
+            "tv_无奈": "ea8ed89ee9878f2fece2dda0ea8a5dbfe21b5751.png",
+            "tv_晕": "5443c22b4d07fb1907ccc610c8e6db254f2461b7.png",
+            "tv_流汗": "cead1c351ab8d79e9f369605beb90148db0fbed3.png",
+            "tv_流泪": "7e71cde7858f0cd50d74b0264aa26db612a8a167.png",
+            "tv_流鼻血": "c32d39db2737f89b904ca32700d140a9241b0767.png",
+            "tv_点赞": "f85c354995bd99e28fc76c869bfe42ba6438eff4.png",
+            "tv_生气": "26702dcafdab5e8225b43ffd23c94ac1ff932654.png",
+            "tv_生病": "8b0ec90e6b86771092a498c54f09fc94621c1900.png",
+            "tv_疑问": "0793d949b18d7be716078349c202c15ff166f314.png",
+            "tv_白眼": "c1d59f439e379ee50eef488bcb5e5378e5044ea4.png",
+            "tv_皱眉": "72ccad6679fea0d14cce648b4d818e09b8ffea2d.png",
+            "tv_目瞪口呆": "0b8cb81a68de5d5365212c99375e7ace3e7891b7.png",
+            "tv_睡着": "8b196675b53af58264f383c50ad0945048290b33.png",
+            "tv_笑哭": "1abc628f6d4f4caf9d0e7800878f4697abbc8273.png",
+            "tv_腼腆": "89712c0d4af73e67f89e35cbc518420380a7f6f4.png",
+            "tv_色": "61822c7e9aae5da76475e7892534545336b23a6f.png",
+            "tv_调侃": "4bc022533ef31544ca0d72c12c808cf4a1cce3e3.png",
+            "tv_调皮": "b9c41de8e82dd7a8515ae5e3cb63e898bf245186.png",
+            "tv_鄙视": "6e72339f346a692a495b123174b49e4e8e781303.png",
+            "tv_闭嘴": "c9e990da7f6e93975e25fd8b70e2e290aa4086ef.png",
+            "tv_难过": "87f46748d3f142ebc6586ff58860d0e2fc8263ba.png",
+            "tv_馋": "fc7e829b845c43c623c8b490ee3602b7f0e76a31.png",
+            "tv_鬼脸": "0ffbbddf8a94d124ca2f54b360bbc04feb6bbfea.png",
+            "tv_黑人问号": "45821a01f51bc867da9edbaa2e070410819a95b2.png",
+            "tv_鼓掌": "1d21793f96ef4e6f48b23e53e3b9e42da833a0f6.png"
+        }
+    })
+</script>
+
+                
+            </div>
+        </div>
+    </div>
+    <a id="back_to_top" href="#" class="back_to_top"><i class="ri-arrow-up-s-line"></i></a>
+    <footer class="footer">
+    <div class="powered_by">
+        <a href="https://varkai.com">Designed by VarKai,</a>
+        <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+    </div>
+
+    <div class="footer_slogan">
+        <span>whitepure@2022</span>
+    </div>
+</footer>
+    <script src="https://whiteppure.github.io/iblog/js/jquery-3.5.1.min.js"></script>
+<link href="https://whiteppure.github.io/iblog/css/fancybox.min.css" rel="stylesheet">
+<script src="https://whiteppure.github.io/iblog/js/fancybox.min.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/zozo.js"></script>
+
+
+<script type="text/javascript" async
+    src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\[\[', '\]\]']],
+                processEscapes: true,
+                processEnvironments: true,
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+                TeX: {
+                    equationNumbers: { autoNumber: "AMS" },
+                    extensions: ["AMSmath.js", "AMSsymbols.js"]
+                }
+            }
+        });
+
+        MathJax.Hub.Queue(function () {
+            
+            
+            
+            var all = MathJax.Hub.getAllJax(), i;
+            for (i = 0; i < all.length; i += 1) {
+                all[i].SourceElement().parentNode.className += ' has-jax';
+            }
+        });
+    </script>
+
+<style>
+    code.has-jax {
+        font: inherit;
+        font-size: 100%;
+        background: inherit;
+        border: inherit;
+        color: #515151;
+    }
+</style>
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jspdf/1.0.106/jspdf.debug.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

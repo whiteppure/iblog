@@ -513,52 +513,52 @@
 <p>在Java中，创建一个线程，有且仅有一种方式: 创建一个<code>Thread</code>类实例，并调用它的<code>start</code>方法。</p>
 <h3 id="thread类">Thread类</h3>
 <p>通过继承<code>Thread</code>类，重写<code>run()</code>方法来创建线程。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) {
-        ThreadDemo thread1 = new ThreadDemo();
-        thread1.start();
-    }
-}
-class ThreadDemo extends Thread {
-    @Override
-    public void run() {
-        System.out.printf(&#34;通过继承Thread类的方式创建线程,线程 %s 启动&#34;,Thread.currentThread().getName());
-    }
-}
-</code></pre></div><h3 id="runnable接口">Runnable接口</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        ThreadDemo thread1 = new ThreadDemo();
+</span></span><span class="line"><span class="cl">        thread1.start();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">class ThreadDemo extends Thread {
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    public void run() {
+</span></span><span class="line"><span class="cl">        System.out.printf(&#34;通过继承Thread类的方式创建线程,线程 %s 启动&#34;,Thread.currentThread().getName());
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h3 id="runnable接口">Runnable接口</h3>
 <p>实现 <code>Runnale</code> 接口，将它作为 <code>target</code> 参数传递给 <code>Thread</code> 类构造函数的方式创建线程。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) {
-        new Thread(() -&gt; {
-            System.out.printf(&#34;通过实现Runnable接口的方式，重写run方法创建线程；线程 %s 启动&#34;,Thread.currentThread().getName());
-        }).start();
-    }
-}
-</code></pre></div><h3 id="callable接口">Callable接口</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        new Thread(() -&gt; {
+</span></span><span class="line"><span class="cl">            System.out.printf(&#34;通过实现Runnable接口的方式，重写run方法创建线程；线程 %s 启动&#34;,Thread.currentThread().getName());
+</span></span><span class="line"><span class="cl">        }).start();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h3 id="callable接口">Callable接口</h3>
 <p>通过实现 <code>Callable</code>接口，来创建一个带有返回值的线程。</p>
 <p>在Callable执行完之前的这段时间，主线程可以先去做一些其他的事情，事情都做完之后，再获取Callable的返回结果。可以通过isDone()来判断子线程是否执行完。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
-        FutureTask&lt;String&gt; futureTask = new FutureTask&lt;&gt;(() -&gt; {
-            System.out.printf(&#34;通过实现Callable接口的方式，重写call方法创建线程；线程 %s 启动&#34;, Thread.currentThread().getName());
-            System.out.println();
-            Thread.sleep(10000);
-            return &#34;我是call方法返回值&#34;;
-        });
-        new Thread(futureTask).start();
-
-        System.out.println(&#34;主线程工作中 ...&#34;);
-        String callRet = null;
-        while (callRet == null){
-            if(futureTask.isDone()){
-                callRet = futureTask.get();
-            }
-            System.out.println(&#34;主线程继续工作 ...&#34;);
-        }
-        System.out.println(&#34;获取call方法返回值：&#34;+ callRet);
-    }
-}
-</code></pre></div><h3 id="线程池">线程池</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) throws ExecutionException, InterruptedException {
+</span></span><span class="line"><span class="cl">        FutureTask&lt;String&gt; futureTask = new FutureTask&lt;&gt;(() -&gt; {
+</span></span><span class="line"><span class="cl">            System.out.printf(&#34;通过实现Callable接口的方式，重写call方法创建线程；线程 %s 启动&#34;, Thread.currentThread().getName());
+</span></span><span class="line"><span class="cl">            System.out.println();
+</span></span><span class="line"><span class="cl">            Thread.sleep(10000);
+</span></span><span class="line"><span class="cl">            return &#34;我是call方法返回值&#34;;
+</span></span><span class="line"><span class="cl">        });
+</span></span><span class="line"><span class="cl">        new Thread(futureTask).start();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;主线程工作中 ...&#34;);
+</span></span><span class="line"><span class="cl">        String callRet = null;
+</span></span><span class="line"><span class="cl">        while (callRet == null){
+</span></span><span class="line"><span class="cl">            if(futureTask.isDone()){
+</span></span><span class="line"><span class="cl">                callRet = futureTask.get();
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">            System.out.println(&#34;主线程继续工作 ...&#34;);
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;获取call方法返回值：&#34;+ callRet);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h3 id="线程池">线程池</h3>
 <p>线程池做的工作主要是控制运行的线程的数量，处理过程中将任务放入队列，然后在线程创建后启动这些任务，如果线程数量超过了最大数量超出数量的线程排队等候，等其它线程执行完毕，再从队列中取出任务来执行。</p>
 <p>它的主要特点为：线程复用，控制最大并发数，管理线程。</p>
 <p>优点：</p>
@@ -581,93 +581,93 @@ class ThreadDemo extends Thread {
 <li><code>newSingleThreadExecutor</code> 将 <code>corePoolSize</code> 和 <code>maximumPoolSize</code> 都设置为1，它使用的 <code>LinkedBlockingQueue</code>。</li>
 </ul>
 <p>源代码</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public static ExecutorService newSingleThreadExecutor() {
-        return new FinalizableDelegatedExecutorService
-            (new ThreadPoolExecutor(1, 1,
-                                    0L, TimeUnit.MILLISECONDS,
-                                    new LinkedBlockingQueue&lt;Runnable&gt;()));
-    }
-</code></pre></div><p>代码演示</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) {
-        ExecutorService executor1 = null;
-        try {
-            executor1 = Executors.newSingleThreadExecutor();
-            for (int i = 1; i &lt;= 10; i++) {
-                executor1.execute(() -&gt; {
-                    System.out.println(Thread.currentThread().getName() + &#34;执行了&#34;);
-                });
-            }
-        } finally {
-            executor1.shutdown();
-        }
-    }
-}
-</code></pre></div><h5 id="fixedthreadpool">FixedThreadPool</h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static ExecutorService newSingleThreadExecutor() {
+</span></span><span class="line"><span class="cl">        return new FinalizableDelegatedExecutorService
+</span></span><span class="line"><span class="cl">            (new ThreadPoolExecutor(1, 1,
+</span></span><span class="line"><span class="cl">                                    0L, TimeUnit.MILLISECONDS,
+</span></span><span class="line"><span class="cl">                                    new LinkedBlockingQueue&lt;Runnable&gt;()));
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><p>代码演示</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        ExecutorService executor1 = null;
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            executor1 = Executors.newSingleThreadExecutor();
+</span></span><span class="line"><span class="cl">            for (int i = 1; i &lt;= 10; i++) {
+</span></span><span class="line"><span class="cl">                executor1.execute(() -&gt; {
+</span></span><span class="line"><span class="cl">                    System.out.println(Thread.currentThread().getName() + &#34;执行了&#34;);
+</span></span><span class="line"><span class="cl">                });
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        } finally {
+</span></span><span class="line"><span class="cl">            executor1.shutdown();
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h5 id="fixedthreadpool">FixedThreadPool</h5>
 <ul>
 <li>使用<code>Executors.newFixedThreadPool(int)</code>创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待</li>
 <li><code>newFixedThreadPool</code> 创建的线程池 <code>corePoolSize</code> 和 <code>maximumPoolSize</code> 值是相等的，它使用的 <code>LinkedBlockingQueue</code>。</li>
 </ul>
 <p>源代码</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public static ExecutorService newFixedThreadPool(int nThreads) {
-        return new ThreadPoolExecutor(nThreads, nThreads,
-                                      0L, TimeUnit.MILLISECONDS,
-                                      new LinkedBlockingQueue&lt;Runnable&gt;());
-    }
-</code></pre></div><p>代码演示</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) {
-        ExecutorService executor1 = null;
-        try {
-            executor1 = Executors.newFixedThreadPool(10);
-            for (int i = 1; i &lt;= 10; i++) {
-                executor1.execute(() -&gt; {
-                    System.out.println(Thread.currentThread().getName() + &#34;执行了&#34;);
-                });
-            }
-        } finally {
-            executor1.shutdown();
-        }
-    }
-}
-</code></pre></div><h5 id="cachedthreadpool">CachedThreadPool</h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static ExecutorService newFixedThreadPool(int nThreads) {
+</span></span><span class="line"><span class="cl">        return new ThreadPoolExecutor(nThreads, nThreads,
+</span></span><span class="line"><span class="cl">                                      0L, TimeUnit.MILLISECONDS,
+</span></span><span class="line"><span class="cl">                                      new LinkedBlockingQueue&lt;Runnable&gt;());
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><p>代码演示</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        ExecutorService executor1 = null;
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            executor1 = Executors.newFixedThreadPool(10);
+</span></span><span class="line"><span class="cl">            for (int i = 1; i &lt;= 10; i++) {
+</span></span><span class="line"><span class="cl">                executor1.execute(() -&gt; {
+</span></span><span class="line"><span class="cl">                    System.out.println(Thread.currentThread().getName() + &#34;执行了&#34;);
+</span></span><span class="line"><span class="cl">                });
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        } finally {
+</span></span><span class="line"><span class="cl">            executor1.shutdown();
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h5 id="cachedthreadpool">CachedThreadPool</h5>
 <ul>
 <li>使用<code>Executors.newCachedThreadPool()</code>创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。</li>
 <li><code>newCachedThreadPool</code> 将 <code>corePoolSize</code> 设置为0，将 <code>maximumPoolSize</code> 设置为 <code>Integer.MAX_VALUE</code>，使用的 <code>SynchronousQueue</code>，也就是说来了任务就创建线程运行，当线程空闲超过60秒，就销毁线程。</li>
 </ul>
 <p>源代码</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public static ExecutorService newCachedThreadPool() {
-        return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
-                                      60L, TimeUnit.SECONDS,
-                                      new SynchronousQueue&lt;Runnable&gt;());
-    }
-</code></pre></div><p>代码演示</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) {
-        ExecutorService executor1 = null;
-        try {
-            executor1 = Executors.newCachedThreadPool();
-            for (int i = 1; i &lt;= 10; i++) {
-                executor1.execute(() -&gt; {
-                    System.out.println(Thread.currentThread().getName() + &#34;执行了&#34;);
-                });
-            }
-        } finally {
-            executor1.shutdown();
-        }
-    }
-}
-</code></pre></div><h4 id="线程池参数">线程池参数</h4>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public ThreadPoolExecutor(int corePoolSize,
-                              int maximumPoolSize,
-                              long keepAliveTime,
-                              TimeUnit unit,
-                              BlockingQueue&lt;Runnable&gt; workQueue,
-                              ThreadFactory threadFactory,
-                              RejectedExecutionHandler handler) {
-                 // ...
-    }
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static ExecutorService newCachedThreadPool() {
+</span></span><span class="line"><span class="cl">        return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
+</span></span><span class="line"><span class="cl">                                      60L, TimeUnit.SECONDS,
+</span></span><span class="line"><span class="cl">                                      new SynchronousQueue&lt;Runnable&gt;());
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><p>代码演示</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        ExecutorService executor1 = null;
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            executor1 = Executors.newCachedThreadPool();
+</span></span><span class="line"><span class="cl">            for (int i = 1; i &lt;= 10; i++) {
+</span></span><span class="line"><span class="cl">                executor1.execute(() -&gt; {
+</span></span><span class="line"><span class="cl">                    System.out.println(Thread.currentThread().getName() + &#34;执行了&#34;);
+</span></span><span class="line"><span class="cl">                });
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        } finally {
+</span></span><span class="line"><span class="cl">            executor1.shutdown();
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h4 id="线程池参数">线程池参数</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public ThreadPoolExecutor(int corePoolSize,
+</span></span><span class="line"><span class="cl">                              int maximumPoolSize,
+</span></span><span class="line"><span class="cl">                              long keepAliveTime,
+</span></span><span class="line"><span class="cl">                              TimeUnit unit,
+</span></span><span class="line"><span class="cl">                              BlockingQueue&lt;Runnable&gt; workQueue,
+</span></span><span class="line"><span class="cl">                              ThreadFactory threadFactory,
+</span></span><span class="line"><span class="cl">                              RejectedExecutionHandler handler) {
+</span></span><span class="line"><span class="cl">                 // ...
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><ul>
 <li><code>corePoolSize</code>: 线程池中的常驻核心线程数,可理解为初始化线程数</li>
 <li><code>maximumPoolSize</code>：线程池能够容纳同时执行的最大线程数，此值必须大于等于1</li>
 <li><code>threadFactory</code>：线程工厂；表示生成线程池中工作线程的线程工厂，用于创建线程，一般用默认的即可</li>
@@ -712,29 +712,29 @@ class ThreadDemo extends Thread {
 2） <code>CachedThreadPool</code>： 允许的创建线程数量为 <code>Integer.MAX_VALUE</code>，可能会创建大量的线程，从而导致 OOM。</p>
 </blockquote>
 <p>自定义线程池代码演示</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) {
-        ExecutorService executor1 = null;
-        try {
-            executor1 = new ThreadPoolExecutor(
-                    2,
-                    5,
-                    1L,
-                    TimeUnit.SECONDS,
-                    new LinkedBlockingQueue&lt;&gt;(3),
-                    Executors.defaultThreadFactory(),
-                    new ThreadPoolExecutor.CallerRunsPolicy());
-            for (int i = 1; i &lt;= 20; i++) {
-                executor1.execute(() -&gt; {
-                    System.out.println(Thread.currentThread().getName() + &#34;执行了&#34;);
-                });
-            }
-        } finally {
-            executor1.shutdown();
-        }
-    }
-}
-</code></pre></div><h4 id="合理配置线程池参数">合理配置线程池参数</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        ExecutorService executor1 = null;
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            executor1 = new ThreadPoolExecutor(
+</span></span><span class="line"><span class="cl">                    2,
+</span></span><span class="line"><span class="cl">                    5,
+</span></span><span class="line"><span class="cl">                    1L,
+</span></span><span class="line"><span class="cl">                    TimeUnit.SECONDS,
+</span></span><span class="line"><span class="cl">                    new LinkedBlockingQueue&lt;&gt;(3),
+</span></span><span class="line"><span class="cl">                    Executors.defaultThreadFactory(),
+</span></span><span class="line"><span class="cl">                    new ThreadPoolExecutor.CallerRunsPolicy());
+</span></span><span class="line"><span class="cl">            for (int i = 1; i &lt;= 20; i++) {
+</span></span><span class="line"><span class="cl">                executor1.execute(() -&gt; {
+</span></span><span class="line"><span class="cl">                    System.out.println(Thread.currentThread().getName() + &#34;执行了&#34;);
+</span></span><span class="line"><span class="cl">                });
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        } finally {
+</span></span><span class="line"><span class="cl">            executor1.shutdown();
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h4 id="合理配置线程池参数">合理配置线程池参数</h4>
 <p>合理配置线程池参数，可以分为以下两种情况</p>
 <ul>
 <li>
@@ -747,38 +747,38 @@ CPU密集型任务配置尽可能少的线程数量：<code>参考公式：（CP
 </li>
 </ul>
 <p>代码演示</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) {
-        ExecutorService executor1 = null;
-        try {
-            // 获取cpu核心数
-            int coreNum = Runtime.getRuntime().availableProcessors();
-            /*
-             * 1. IO密集型: CPU核数/ (1-阻塞系数) 阻塞系数在0.8~0.9之间
-             * 2. CPU密集型: CPU核数+1
-             */
-//            int maximumPoolSize = coreNum + 1;
-            int maximumPoolSize = (int) (coreNum / (1 - 0.9));
-            System.out.println(&#34;当前线程池最大允许存放：&#34; + maximumPoolSize + &#34;个线程&#34;);
-            executor1 = new ThreadPoolExecutor(
-                    2,
-                    maximumPoolSize,
-                    1L,
-                    TimeUnit.SECONDS,
-                    new LinkedBlockingQueue&lt;&gt;(3),
-                    Executors.defaultThreadFactory(),
-                    new ThreadPoolExecutor.CallerRunsPolicy());
-            for (int i = 1; i &lt;= 20; i++) {
-                executor1.execute(() -&gt; {
-                    System.out.println(Thread.currentThread().getName() + &#34;执行了&#34;);
-                });
-            }
-        } finally {
-            executor1.shutdown();
-        }
-    }
-}
-</code></pre></div></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        ExecutorService executor1 = null;
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            // 获取cpu核心数
+</span></span><span class="line"><span class="cl">            int coreNum = Runtime.getRuntime().availableProcessors();
+</span></span><span class="line"><span class="cl">            /*
+</span></span><span class="line"><span class="cl">             * 1. IO密集型: CPU核数/ (1-阻塞系数) 阻塞系数在0.8~0.9之间
+</span></span><span class="line"><span class="cl">             * 2. CPU密集型: CPU核数+1
+</span></span><span class="line"><span class="cl">             */
+</span></span><span class="line"><span class="cl">//            int maximumPoolSize = coreNum + 1;
+</span></span><span class="line"><span class="cl">            int maximumPoolSize = (int) (coreNum / (1 - 0.9));
+</span></span><span class="line"><span class="cl">            System.out.println(&#34;当前线程池最大允许存放：&#34; + maximumPoolSize + &#34;个线程&#34;);
+</span></span><span class="line"><span class="cl">            executor1 = new ThreadPoolExecutor(
+</span></span><span class="line"><span class="cl">                    2,
+</span></span><span class="line"><span class="cl">                    maximumPoolSize,
+</span></span><span class="line"><span class="cl">                    1L,
+</span></span><span class="line"><span class="cl">                    TimeUnit.SECONDS,
+</span></span><span class="line"><span class="cl">                    new LinkedBlockingQueue&lt;&gt;(3),
+</span></span><span class="line"><span class="cl">                    Executors.defaultThreadFactory(),
+</span></span><span class="line"><span class="cl">                    new ThreadPoolExecutor.CallerRunsPolicy());
+</span></span><span class="line"><span class="cl">            for (int i = 1; i &lt;= 20; i++) {
+</span></span><span class="line"><span class="cl">                executor1.execute(() -&gt; {
+</span></span><span class="line"><span class="cl">                    System.out.println(Thread.currentThread().getName() + &#34;执行了&#34;);
+</span></span><span class="line"><span class="cl">                });
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        } finally {
+</span></span><span class="line"><span class="cl">            executor1.shutdown();
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div></div>
                     <div class="post_footer">
                         <div class="meta">
                             <div class="info">

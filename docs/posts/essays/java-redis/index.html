@@ -2168,7 +2168,7 @@ NoSql 不依赖业务逻辑方式存储，而以简单的key-value模式存储�
 <h4 id="bitmaps">Bitmaps</h4>
 <p>Bitmaps 并不是一种数据结构，实际上它就是字符串，但是可以对字符串的位进行操作。</p>
 <blockquote>
-<p>bit（位）简介：<br>
+<p>bit（位）简介：<br> 
 现代计算机用二进制（位） 作为信息的基础单位， 1个字节等于8位， 例如“abc”字符串是由3个字节组成， 但实际在计算机存储时将其用二进制表示， “abc”分别对应的ASCII码分别是97、 98、 99， 对应的二进制分别是01100001、 01100010和01100011。</p>
 </blockquote>
 <p>Bitmaps单独提供了一套命令， 所以在Redis中使用Bitmaps和使用字符串的方法不太相同。 可以把Bitmaps想象成一个以位为单位的数组， 数组的每个单元只能存储0和1， 数组的下标在Bitmaps中叫做偏移量。</p>
@@ -2292,54 +2292,54 @@ NoSql 不依赖业务逻辑方式存储，而以简单的key-value模式存储�
 <p>从输入Multi命令开始，输入的命令都会依次进入命令队列中，但不会执行，直到输入Exec后，Redis会将之前的命令队列中的命令依次执行。组队的过程中可以通过discard来放弃组队。
 可以将exec命令理解为提交操作，discard理解为回滚操作。</p>
 <p>multi，exec组队成功，提交成功举例：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">127.0.0.1:6379&gt; multi
-OK
-127.0.0.1:6379(TX)&gt; set k1 v1
-QUEUED
-127.0.0.1:6379(TX)&gt; set k2 v2
-QUEUED
-127.0.0.1:6379(TX)&gt; set k3 v3
-QUEUED
-127.0.0.1:6379(TX)&gt; exec
-1) OK
-2) OK
-3) OK
-</code></pre></div><p>multi，discard组队失败举例：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">127.0.0.1:6379&gt; multi
-OK
-127.0.0.1:6379(TX)&gt; set k1 v1
-QUEUED
-127.0.0.1:6379(TX)&gt; set k2 v2
-QUEUED
-127.0.0.1:6379(TX)&gt; set k3 v3
-QUEUED
-127.0.0.1:6379(TX)&gt; discard
-OK
-</code></pre></div><p>如果在组队过程中执行某个命令失败了，则认为组队失败整个队列都会被取消：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">127.0.0.1:6379&gt; multi
+</span></span><span class="line"><span class="cl">OK
+</span></span><span class="line"><span class="cl">127.0.0.1:6379(TX)&gt; set k1 v1
+</span></span><span class="line"><span class="cl">QUEUED
+</span></span><span class="line"><span class="cl">127.0.0.1:6379(TX)&gt; set k2 v2
+</span></span><span class="line"><span class="cl">QUEUED
+</span></span><span class="line"><span class="cl">127.0.0.1:6379(TX)&gt; set k3 v3
+</span></span><span class="line"><span class="cl">QUEUED
+</span></span><span class="line"><span class="cl">127.0.0.1:6379(TX)&gt; exec
+</span></span><span class="line"><span class="cl">1) OK
+</span></span><span class="line"><span class="cl">2) OK
+</span></span><span class="line"><span class="cl">3) OK
+</span></span></code></pre></div><p>multi，discard组队失败举例：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">127.0.0.1:6379&gt; multi
+</span></span><span class="line"><span class="cl">OK
+</span></span><span class="line"><span class="cl">127.0.0.1:6379(TX)&gt; set k1 v1
+</span></span><span class="line"><span class="cl">QUEUED
+</span></span><span class="line"><span class="cl">127.0.0.1:6379(TX)&gt; set k2 v2
+</span></span><span class="line"><span class="cl">QUEUED
+</span></span><span class="line"><span class="cl">127.0.0.1:6379(TX)&gt; set k3 v3
+</span></span><span class="line"><span class="cl">QUEUED
+</span></span><span class="line"><span class="cl">127.0.0.1:6379(TX)&gt; discard
+</span></span><span class="line"><span class="cl">OK
+</span></span></code></pre></div><p>如果在组队过程中执行某个命令失败了，则认为组队失败整个队列都会被取消：</p>
 <p><img src="/iblog/posts/annex/images/essays/Redis%E8%AF%A6%E8%A7%A3-015.png" alt="Redis详解-015"></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">127.0.0.1:6379&gt; multi
-OK
-127.0.0.1:6379(TX)&gt; set k1 v1
-QUEUED
-127.0.0.1:6379(TX)&gt; set k2
-(error) ERR wrong number of arguments for &#39;set&#39; command
-127.0.0.1:6379(TX)&gt; exec
-(error) EXECABORT Transaction discarded because of previous errors.
-</code></pre></div><p>如果执行阶段某个命令出了错，则只有报错的命令不会被执行，而其他的命令都会执行且不会回滚：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">127.0.0.1:6379&gt; multi
+</span></span><span class="line"><span class="cl">OK
+</span></span><span class="line"><span class="cl">127.0.0.1:6379(TX)&gt; set k1 v1
+</span></span><span class="line"><span class="cl">QUEUED
+</span></span><span class="line"><span class="cl">127.0.0.1:6379(TX)&gt; set k2
+</span></span><span class="line"><span class="cl">(error) ERR wrong number of arguments for &#39;set&#39; command
+</span></span><span class="line"><span class="cl">127.0.0.1:6379(TX)&gt; exec
+</span></span><span class="line"><span class="cl">(error) EXECABORT Transaction discarded because of previous errors.
+</span></span></code></pre></div><p>如果执行阶段某个命令出了错，则只有报错的命令不会被执行，而其他的命令都会执行且不会回滚：</p>
 <p><img src="/iblog/posts/annex/images/essays/Redis%E8%AF%A6%E8%A7%A3-016.png" alt="Redis详解-016"></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">127.0.0.1:6379&gt; multi 
-OK
-127.0.0.1:6379(TX)&gt; set k1 v1
-QUEUED
-127.0.0.1:6379(TX)&gt; incr k1
-QUEUED
-127.0.0.1:6379(TX)&gt; set k2 v2
-QUEUED
-127.0.0.1:6379(TX)&gt; exec
-1) OK
-2) (error) ERR value is not an integer or out of range
-3) OK
-</code></pre></div><h3 id="redis事务特性">Redis事务特性</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">127.0.0.1:6379&gt; multi 
+</span></span><span class="line"><span class="cl">OK
+</span></span><span class="line"><span class="cl">127.0.0.1:6379(TX)&gt; set k1 v1
+</span></span><span class="line"><span class="cl">QUEUED
+</span></span><span class="line"><span class="cl">127.0.0.1:6379(TX)&gt; incr k1
+</span></span><span class="line"><span class="cl">QUEUED
+</span></span><span class="line"><span class="cl">127.0.0.1:6379(TX)&gt; set k2 v2
+</span></span><span class="line"><span class="cl">QUEUED
+</span></span><span class="line"><span class="cl">127.0.0.1:6379(TX)&gt; exec
+</span></span><span class="line"><span class="cl">1) OK
+</span></span><span class="line"><span class="cl">2) (error) ERR value is not an integer or out of range
+</span></span><span class="line"><span class="cl">3) OK
+</span></span></code></pre></div><h3 id="redis事务特性">Redis事务特性</h3>
 <ul>
 <li>单独的隔离操作：事务中的所有命令都会序列化、按顺序地执行。事务在执行的过程中，不会被其他客户端发送来的命令请求所打断。</li>
 <li>没有隔离级别的概念：队列中的命令没有提交之前都不会实际被执行，因为事务提交前任何指令都不会被实际执行</li>
@@ -2384,79 +2384,79 @@ QUEUED
 <ul>
 <li>对空值缓存：如果一个查询返回的数据为空，不管是数据是否不存在，我们仍然把这个空结果进行缓存，设置空结果的过期时间会很短，最长不超过五分钟；</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    @Resource
-    private RedisTemplate&lt;Long, String&gt; redisTemplate;
-    
-    @Resource
-    private TestMapper testMapper;
-
-    public Test findById(Long id) {
-        String testStr = redisTemplate.opsForValue().get(id);
-        //判断缓存是否存在，是否为空对象
-        if (StringUtils.isEmpty(testStr)) {
-            // 这里的锁，使用的时候注意锁的力度，这里建议换成分布式锁，这里做演示
-            synchronized (TestServiceImpl.class){
-                testStr = redisTemplate.opsForValue().get(id);
-                if (StringUtils.isEmpty(testStr)) {
-                    Test test = testMapper.findById(id);
-                    if(test == null){
-                        //构建一个空对象
-                        test= new Test();
-                    }
-                    testStr = JSON.toJSONString(test);
-                    // 存入Redis中，下次再次访问就不访问数据库
-                    redisTemplate.opsForValue().set(id, testStr);
-                }
-            }
-        }
-        Test test = JSON.parseObject(testStr, Test.class);
-        //空对象处理
-        if(test.getId() == null){
-            return null;
-        }
-        return JSON.parseObject(testStr, Test.class);
-    }
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    @Resource
+</span></span><span class="line"><span class="cl">    private RedisTemplate&lt;Long, String&gt; redisTemplate;
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    @Resource
+</span></span><span class="line"><span class="cl">    private TestMapper testMapper;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public Test findById(Long id) {
+</span></span><span class="line"><span class="cl">        String testStr = redisTemplate.opsForValue().get(id);
+</span></span><span class="line"><span class="cl">        //判断缓存是否存在，是否为空对象
+</span></span><span class="line"><span class="cl">        if (StringUtils.isEmpty(testStr)) {
+</span></span><span class="line"><span class="cl">            // 这里的锁，使用的时候注意锁的力度，这里建议换成分布式锁，这里做演示
+</span></span><span class="line"><span class="cl">            synchronized (TestServiceImpl.class){
+</span></span><span class="line"><span class="cl">                testStr = redisTemplate.opsForValue().get(id);
+</span></span><span class="line"><span class="cl">                if (StringUtils.isEmpty(testStr)) {
+</span></span><span class="line"><span class="cl">                    Test test = testMapper.findById(id);
+</span></span><span class="line"><span class="cl">                    if(test == null){
+</span></span><span class="line"><span class="cl">                        //构建一个空对象
+</span></span><span class="line"><span class="cl">                        test= new Test();
+</span></span><span class="line"><span class="cl">                    }
+</span></span><span class="line"><span class="cl">                    testStr = JSON.toJSONString(test);
+</span></span><span class="line"><span class="cl">                    // 存入Redis中，下次再次访问就不访问数据库
+</span></span><span class="line"><span class="cl">                    redisTemplate.opsForValue().set(id, testStr);
+</span></span><span class="line"><span class="cl">                }
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        Test test = JSON.parseObject(testStr, Test.class);
+</span></span><span class="line"><span class="cl">        //空对象处理
+</span></span><span class="line"><span class="cl">        if(test.getId() == null){
+</span></span><span class="line"><span class="cl">            return null;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        return JSON.parseObject(testStr, Test.class);
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><ul>
 <li>设置可访问的白名单：使用bitmaps类型定义一个可以访问的名单，名单id作为bitmaps的偏移量，每次访问和bitmap里面的id进行比较，如果访问id不在bitmaps里面，进行拦截，不允许访问。</li>
 <li>使用布隆过滤器：布隆过滤器（Bloom Filter）是1970年由布隆提出的。它实际上是一个很长的二进制向量(位图)和一系列随机映射函数（哈希函数）。布隆过滤器可以用于检索一个元素是否在一个集合中。它的优点是空间效率和查询时间都远远超过一般的算法，缺点是有一定的误识别率和删除困难。将所有可能存在的数据哈希到一个足够大的bitmaps中，一个一定不存在的数据会被 这个bitmaps拦截掉，从而避免了对底层存储系统的查询压力。</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    @Resource
-    private TestMapper testMapper;
-
-    @Resource
-    private RedisTemplate&lt;Long, String&gt; redisTemplate;
-
-    private static BloomFilter&lt;Long&gt; bloomFilter = BloomFilter.create(Funnels.longFunnel(), 1000000000L);
-
-    @Override
-    public Test findById(Long id) {
-        String testStr = redisTemplate.opsForValue().get(id);
-        if (StringUtils.isEmpty(testStr)) {
-            //校验是否在布隆过滤器中
-            if(bloomFilter.mightContain(id)){
-                return null;
-            }
-            // 这里的锁，使用的时候注意锁的力度，这里建议换成分布式锁，这里做演示
-            synchronized (TestServiceImpl.class){
-                testStr = redisTemplate.opsForValue().get(id);
-                if (StringUtils.isEmpty(testStr) ) {
-                    if(bloomFilter.mightContain(id)){
-                        return null;
-                    }
-                    Test test = testMapper.findById(id);
-                    if(test == null){
-                        //放入布隆过滤器中
-                        bloomFilter.put(id);
-                        return null;
-                    }
-                    testStr = JSON.toJSONString(test);
-                    redisTemplate.opsForValue().set(id, testStr);
-                }
-            }
-        }
-        return JSON.parseObject(testStr, Test.class);
-    }
-</code></pre></div><h3 id="缓存击穿">缓存击穿</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    @Resource
+</span></span><span class="line"><span class="cl">    private TestMapper testMapper;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Resource
+</span></span><span class="line"><span class="cl">    private RedisTemplate&lt;Long, String&gt; redisTemplate;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private static BloomFilter&lt;Long&gt; bloomFilter = BloomFilter.create(Funnels.longFunnel(), 1000000000L);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    public Test findById(Long id) {
+</span></span><span class="line"><span class="cl">        String testStr = redisTemplate.opsForValue().get(id);
+</span></span><span class="line"><span class="cl">        if (StringUtils.isEmpty(testStr)) {
+</span></span><span class="line"><span class="cl">            //校验是否在布隆过滤器中
+</span></span><span class="line"><span class="cl">            if(bloomFilter.mightContain(id)){
+</span></span><span class="line"><span class="cl">                return null;
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">            // 这里的锁，使用的时候注意锁的力度，这里建议换成分布式锁，这里做演示
+</span></span><span class="line"><span class="cl">            synchronized (TestServiceImpl.class){
+</span></span><span class="line"><span class="cl">                testStr = redisTemplate.opsForValue().get(id);
+</span></span><span class="line"><span class="cl">                if (StringUtils.isEmpty(testStr) ) {
+</span></span><span class="line"><span class="cl">                    if(bloomFilter.mightContain(id)){
+</span></span><span class="line"><span class="cl">                        return null;
+</span></span><span class="line"><span class="cl">                    }
+</span></span><span class="line"><span class="cl">                    Test test = testMapper.findById(id);
+</span></span><span class="line"><span class="cl">                    if(test == null){
+</span></span><span class="line"><span class="cl">                        //放入布隆过滤器中
+</span></span><span class="line"><span class="cl">                        bloomFilter.put(id);
+</span></span><span class="line"><span class="cl">                        return null;
+</span></span><span class="line"><span class="cl">                    }
+</span></span><span class="line"><span class="cl">                    testStr = JSON.toJSONString(test);
+</span></span><span class="line"><span class="cl">                    redisTemplate.opsForValue().set(id, testStr);
+</span></span><span class="line"><span class="cl">                }
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        return JSON.parseObject(testStr, Test.class);
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><h3 id="缓存击穿">缓存击穿</h3>
 <p><img src="/iblog/posts/annex/images/essays/Redis%E8%AF%A6%E8%A7%A3-028.png" alt="Redis详解-028"></p>
 <p>key对应的数据存在，但在redis中过期，此时若有大量并发请求过来，这些请求发现缓存过期一般都会从后端数据库加载数据并回设到缓存，大并发集中对这一个点进行访问，当这个key在失效的瞬间，持续的大并发就穿破缓存，直接请求数据库，就像在一个屏障上凿开了一个洞。这个时候大并发的请求可能会瞬间把后端数据源压垮。</p>
 <p><strong>解决方法</strong></p>
@@ -2465,37 +2465,37 @@ QUEUED
 <li>实时调整：现场监控哪些数据热门，实时调整key的过期时长；</li>
 <li>使用锁：在缓存失效的时候判断拿出来的值为空，先使用缓存工具的某些带成功操作返回值的操作,去set一个mutex key,而不是立即去访问数据源；当操作返回成功时，再进行访问数据库的操作，并回设缓存,最后删除mutex key；当操作返回失败，证明有线程在访问数据源，当前线程睡眠一段时间再重试整个get缓存的方法；</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> @Resource
- private RedisTemplate&lt;String,Long&gt; template;
- 
- @Resource
- private TestMapper testMapper;
- 
- public Long findById(Long id){
-     Long value = template.opsForValue().get(id);
-     
-     if (StringUtils.isEmpty(value)){
-         String key = id + &#34;:nx&#34;;
-         // 使用 redis setnx 命令如果设置为 1 则代表成功
-         if (template.opsForValue().setIfAbsent(key, 1L, 3 * 60, TimeUnit.SECONDS)){
-             value = testMapper.findById(id);
-             template.opsForValue().set(id.toString(),value,30 * 60);
-             template.delete(key);
-         }else {
-             try {
-                 // 睡眠50ms后重试
-                 Thread.sleep(50);
-                 value = template.opsForValue().get(id);
-             } catch (InterruptedException e) {
-                 Thread.interrupted();
-             }
-         }
-         return value;
-     }else {
-         return value;
-     }
- }
-</code></pre></div><h3 id="缓存雪崩">缓存雪崩</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> @Resource
+</span></span><span class="line"><span class="cl"> private RedisTemplate&lt;String,Long&gt; template;
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> @Resource
+</span></span><span class="line"><span class="cl"> private TestMapper testMapper;
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> public Long findById(Long id){
+</span></span><span class="line"><span class="cl">     Long value = template.opsForValue().get(id);
+</span></span><span class="line"><span class="cl">     
+</span></span><span class="line"><span class="cl">     if (StringUtils.isEmpty(value)){
+</span></span><span class="line"><span class="cl">         String key = id + &#34;:nx&#34;;
+</span></span><span class="line"><span class="cl">         // 使用 redis setnx 命令如果设置为 1 则代表成功
+</span></span><span class="line"><span class="cl">         if (template.opsForValue().setIfAbsent(key, 1L, 3 * 60, TimeUnit.SECONDS)){
+</span></span><span class="line"><span class="cl">             value = testMapper.findById(id);
+</span></span><span class="line"><span class="cl">             template.opsForValue().set(id.toString(),value,30 * 60);
+</span></span><span class="line"><span class="cl">             template.delete(key);
+</span></span><span class="line"><span class="cl">         }else {
+</span></span><span class="line"><span class="cl">             try {
+</span></span><span class="line"><span class="cl">                 // 睡眠50ms后重试
+</span></span><span class="line"><span class="cl">                 Thread.sleep(50);
+</span></span><span class="line"><span class="cl">                 value = template.opsForValue().get(id);
+</span></span><span class="line"><span class="cl">             } catch (InterruptedException e) {
+</span></span><span class="line"><span class="cl">                 Thread.interrupted();
+</span></span><span class="line"><span class="cl">             }
+</span></span><span class="line"><span class="cl">         }
+</span></span><span class="line"><span class="cl">         return value;
+</span></span><span class="line"><span class="cl">     }else {
+</span></span><span class="line"><span class="cl">         return value;
+</span></span><span class="line"><span class="cl">     }
+</span></span><span class="line"><span class="cl"> }
+</span></span></code></pre></div><h3 id="缓存雪崩">缓存雪崩</h3>
 <p><img src="/iblog/posts/annex/images/essays/Redis%E8%AF%A6%E8%A7%A3-029.png" alt="Redis详解-029"></p>
 <p>key对应的数据存在，但在redis中过期，此时若有大量并发请求过来，这些请求发现缓存过期一般都会从后端数据源加载数据并回设到缓存，这个时候大并发的请求可能会瞬间把后端数据源压垮，简单理解为,在某一个时间段,缓存key大面积失效,集中过期.可能会导致服务器宕机。</p>
 <p><strong>解决方法</strong></p>
@@ -2505,14 +2505,14 @@ QUEUED
 <li>设置缓存key永不过期，异步更新；虽然这种方式不会堵塞线程，但是不保证数据一致性，代码复杂度较大，容易堆积垃圾数据；</li>
 <li>将缓存失效时间分散开：比如我们可以在原有的失效时间基础上增加一个随机值，比如1-5分钟随机，这样每一个缓存的过期时间的重复率就会降低，就很难引发集体失效的事件；</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    @Resource
-    private RedisTemplate&lt;String,Long&gt; template;
-
-    public void setKeys(){
-        template.opsForValue().set(&#34;k1&#34;,1L,30 * 60 + (new Random().nextInt(9999)));
-        template.opsForValue().set(&#34;k2&#34;,2L,30 * 60 + (new Random().nextInt(9999)));
-    }
-</code></pre></div><h2 id="redis部署策略">Redis部署策略</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    @Resource
+</span></span><span class="line"><span class="cl">    private RedisTemplate&lt;String,Long&gt; template;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public void setKeys(){
+</span></span><span class="line"><span class="cl">        template.opsForValue().set(&#34;k1&#34;,1L,30 * 60 + (new Random().nextInt(9999)));
+</span></span><span class="line"><span class="cl">        template.opsForValue().set(&#34;k2&#34;,2L,30 * 60 + (new Random().nextInt(9999)));
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><h2 id="redis部署策略">Redis部署策略</h2>
 <h3 id="redis主从复制">Redis主从复制</h3>
 <p><img src="/iblog/posts/annex/images/essays/Redis%E8%AF%A6%E8%A7%A3-022.png" alt="Redis详解-022"></p>
 <p>主从复制，是指将一台Redis服务器的数据，复制到其他的Redis服务器。前者称为主节点(master)，后者称为从节点(slave)；数据的复制是单向的，只能由主节点到从节点。Master以写为主，Slave以读为主。</p>
@@ -2657,10 +2657,10 @@ redis-cli &ndash;cluster create &ndash;cluster-replicas 1 192.168.11.101:6379 19
 <h4 id="操作redis集群">操作Redis集群</h4>
 <ul>
 <li>执行写入一个键值操作：
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">set k1 v1
--&gt;Redirected to slot [12706] located at 192.168.137.3:6381
-OK
-</code></pre></div><blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">set k1 v1
+</span></span><span class="line"><span class="cl">-&gt;Redirected to slot [12706] located at 192.168.137.3:6381
+</span></span><span class="line"><span class="cl">OK
+</span></span></code></pre></div><blockquote>
 <p>这里的slot是插槽：
 一个 Redis 集群包含 16384 个插槽（hash slot），数据库中的每个键都属于这 16384 个插槽的其中一个；集群使用公式 CRC16(key) % 16384 来计算键 key 属于哪个槽， 其中 CRC16(key) 语句用于计算键 key 的 CRC16 校验和。集群中的每个节点负责处理一部分插槽。
 在redis客户端每次录入、查询键值，redis都会计算出该key应该送往的插槽。</p>
@@ -2668,11 +2668,11 @@ OK
 </blockquote>
 </li>
 <li>执行写入多个键值操作：
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">mset k1 v1 k2 v2 k3 v3
-(error) CORSSSLOT Keys in request don&#39;t hash to the same slot 
-</code></pre></div><p>不在一个slot下的键值，是不能使用mget,mset等多键操作,但是可以可以通过{}来定义组的概念，从而使key中{}内相同内容的键值对放到一个slot中去：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">mset k1{cust} v1 k2{cust} v2 k3{cust} v3
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mset k1 v1 k2 v2 k3 v3
+</span></span><span class="line"><span class="cl">(error) CORSSSLOT Keys in request don&#39;t hash to the same slot 
+</span></span></code></pre></div>不在一个slot下的键值，是不能使用mget,mset等多键操作,但是可以可以通过{}来定义组的概念，从而使key中{}内相同内容的键值对放到一个slot中去：
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mset k1{cust} v1 k2{cust} v2 k3{cust} v3
+</span></span></code></pre></div></li>
 <li>查询集群中的值：
 <ul>
 <li>查询count个slot槽中的键：<code>cluster getkeysinslot &lt;slot&gt; &lt;count&gt;</code></li>
@@ -2684,20 +2684,20 @@ OK
 <h2 id="redis分布式锁">Redis分布式锁</h2>
 <p>在代码里面我们常用<code>ReetrantLock、synchronized</code>保证线程安全。通过上面的锁，在某个时刻只能保证一个线程执行锁作用域内的代码。</p>
 <p>类似这样：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-
-    private static final  ReentrantLock lock = new ReentrantLock();
-    
-    public static void main(String[] args) {
-        lock.lock();
-        try {
-            System.out.println(&#34;hello world&#34;);
-        }finally {
-            lock.unlock();
-        }
-    }
-}
-</code></pre></div><p>但是，当项目采用分布式部署方式之后，再使用<code>ReetrantLock、synchronized</code>就不能保证数据的准确性，可能会出现严重bug。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private static final  ReentrantLock lock = new ReentrantLock();
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        lock.lock();
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            System.out.println(&#34;hello world&#34;);
+</span></span><span class="line"><span class="cl">        }finally {
+</span></span><span class="line"><span class="cl">            lock.unlock();
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>但是，当项目采用分布式部署方式之后，再使用<code>ReetrantLock、synchronized</code>就不能保证数据的准确性，可能会出现严重bug。
 <img src="/iblog/posts/annex/images/essays/Redis%E8%AF%A6%E8%A7%A3-010.png" alt="Redis详解-010"></p>
 <p>举个例子，当很多个请求过来的时候，会先经过<code>Nginx</code>,然后<code>Nginx</code>再根据算法分发请求，到哪些服务器的程序上。
 此时商品的库存为一件，有两个请求，到达不同服务器上的不同程序的相同代码，先后执行了查询SQL，查出来的数据是相同的，然后依次执行库存减一操作，此时库存会变成-1件。这就造成了超卖问题。</p>
@@ -2708,192 +2708,192 @@ OK
 <blockquote>
 <p>SETNX 是SET IF NOT EXISTS的简写.日常命令格式是SETNX key value，如果 key不存在，则SETNX成功返回1，如果这个key已经存在了，则返回0。</p>
 </blockquote>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    @Autowired
-    private RedisTemplate redisTemplate;
-
-    // 保证value值唯一,这里是伪代码
-    final String value = &#34;&#34;;
-    final String REDIS_LOCK = &#34;redis_lock_demo&#34;;
-    public void context(){
-        try {
-            Boolean flag =  redisTemplate.opsForValue().setIfAbsent(REDIS_LOCK,value);
-            if (!flag) {
-                System.out.println(&#34;抢锁失败！&#34;);
-            }
-            String redisKey =  redisTemplate.opsForvalue().get(&#34;redis_key&#34;);
-            int num0 = redisKey == null ? 0 : Integer.parseInt(redisKey);
-    
-            if (num0 &lt;= 0){
-                System.out.println(&#34;商品已售完！&#34;);
-                return;
-            }
-    
-            // 卖出商品，存入Redis中
-            int num1  = num0 - 1;
-            redisTemplate.opsForvalue().set(&#34;redis_key&#34;,num1);
-        }finally {
-            redisTemplate.delete(REDIS_LOCK);
-        }
-    }
-</code></pre></div><p>需要注意的是<code>redisTemplate.delete()</code>方法要加在<code>finally</code>中是为了程序出现异常不释放锁。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    @Autowired
+</span></span><span class="line"><span class="cl">    private RedisTemplate redisTemplate;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 保证value值唯一,这里是伪代码
+</span></span><span class="line"><span class="cl">    final String value = &#34;&#34;;
+</span></span><span class="line"><span class="cl">    final String REDIS_LOCK = &#34;redis_lock_demo&#34;;
+</span></span><span class="line"><span class="cl">    public void context(){
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            Boolean flag =  redisTemplate.opsForValue().setIfAbsent(REDIS_LOCK,value);
+</span></span><span class="line"><span class="cl">            if (!flag) {
+</span></span><span class="line"><span class="cl">                System.out.println(&#34;抢锁失败！&#34;);
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">            String redisKey =  redisTemplate.opsForvalue().get(&#34;redis_key&#34;);
+</span></span><span class="line"><span class="cl">            int num0 = redisKey == null ? 0 : Integer.parseInt(redisKey);
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">            if (num0 &lt;= 0){
+</span></span><span class="line"><span class="cl">                System.out.println(&#34;商品已售完！&#34;);
+</span></span><span class="line"><span class="cl">                return;
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">            // 卖出商品，存入Redis中
+</span></span><span class="line"><span class="cl">            int num1  = num0 - 1;
+</span></span><span class="line"><span class="cl">            redisTemplate.opsForvalue().set(&#34;redis_key&#34;,num1);
+</span></span><span class="line"><span class="cl">        }finally {
+</span></span><span class="line"><span class="cl">            redisTemplate.delete(REDIS_LOCK);
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><p>需要注意的是<code>redisTemplate.delete()</code>方法要加在<code>finally</code>中是为了程序出现异常不释放锁。</p>
 <p>但是这种写法会有一个问题，如果Redis服务器宕机了，或Redis服务被其他人kill掉了，此时恰好没有执行<code>finally</code>中的代码，就会造成Redis中永远都会存在这把锁，不会释放。</p>
 <h4 id="方式二">方式二</h4>
 <p>针对上面Redis宕机的问题，我们可以对这个key加一个过期时间，来解决：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    @Autowired
-    private RedisTemplate redisTemplate;
-
-    // 保证value值唯一,这里是伪代码
-    final String value = &#34;&#34;;
-    final String REDIS_LOCK = &#34;redis_lock_demo&#34;;
-    public void context(){
-        try {   
-            // 加锁
-            Boolean flag =  redisTemplate.opsForValue().setIfAbsent(REDIS_LOCK,value);
-            // 设置过期时间，假设为10s
-            redisTemplate.expire(REDIS_LOCK,10, TimeUnit.SECONDS);
-    
-            if (!flag) {
-                System.out.println(&#34;抢锁失败！&#34;);
-            }
-            String redisKey =  redisTemplate.opsForvalue().get(&#34;redis_key&#34;);
-            int num0 = redisKey == null ? 0 : Integer.parseInt(redisKey);
-    
-            if (num0 &lt;= 0){
-                System.out.println(&#34;商品已售完！&#34;);
-                return;
-            }
-    
-            // 卖出商品，存入Redis中
-            int num1  = num0 - 1;
-            redisTemplate.opsForvalue().set(&#34;redis_key&#34;,num1);
-        }finally {
-            redisTemplate.delete(REDIS_LOCK);
-        }
-    }
-</code></pre></div><p>上面的代码虽然解决了Redis宕机的问题，但是也带来了一个新的问题：设置过期时间和加锁并不再一行，即是非原子操作。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    @Autowired
+</span></span><span class="line"><span class="cl">    private RedisTemplate redisTemplate;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 保证value值唯一,这里是伪代码
+</span></span><span class="line"><span class="cl">    final String value = &#34;&#34;;
+</span></span><span class="line"><span class="cl">    final String REDIS_LOCK = &#34;redis_lock_demo&#34;;
+</span></span><span class="line"><span class="cl">    public void context(){
+</span></span><span class="line"><span class="cl">        try {   
+</span></span><span class="line"><span class="cl">            // 加锁
+</span></span><span class="line"><span class="cl">            Boolean flag =  redisTemplate.opsForValue().setIfAbsent(REDIS_LOCK,value);
+</span></span><span class="line"><span class="cl">            // 设置过期时间，假设为10s
+</span></span><span class="line"><span class="cl">            redisTemplate.expire(REDIS_LOCK,10, TimeUnit.SECONDS);
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">            if (!flag) {
+</span></span><span class="line"><span class="cl">                System.out.println(&#34;抢锁失败！&#34;);
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">            String redisKey =  redisTemplate.opsForvalue().get(&#34;redis_key&#34;);
+</span></span><span class="line"><span class="cl">            int num0 = redisKey == null ? 0 : Integer.parseInt(redisKey);
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">            if (num0 &lt;= 0){
+</span></span><span class="line"><span class="cl">                System.out.println(&#34;商品已售完！&#34;);
+</span></span><span class="line"><span class="cl">                return;
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">            // 卖出商品，存入Redis中
+</span></span><span class="line"><span class="cl">            int num1  = num0 - 1;
+</span></span><span class="line"><span class="cl">            redisTemplate.opsForvalue().set(&#34;redis_key&#34;,num1);
+</span></span><span class="line"><span class="cl">        }finally {
+</span></span><span class="line"><span class="cl">            redisTemplate.delete(REDIS_LOCK);
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><p>上面的代码虽然解决了Redis宕机的问题，但是也带来了一个新的问题：设置过期时间和加锁并不再一行，即是非原子操作。</p>
 <p>举个例子，如果执行完<code>setnx</code>加锁，正要执行<code>expire</code>设置过期时间时，进程要重启维护了，那么这个锁就“长生不老”了，别的线程永远获取不到锁了。</p>
 <h4 id="方式三">方式三</h4>
 <p>针对上面加锁和设置过期时间的问题，我们可以使用Redis提供的一个方法，使其具备原子性：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    @Autowired
-    private RedisTemplate redisTemplate;
-
-    // 保证value值唯一,这里是伪代码
-    final String value = &#34;&#34;;
-    final String REDIS_LOCK = &#34;redis_lock_demo&#34;;
-    public void context(){
-        try {
-            Boolean flag =  redisTemplate.opsForValue().setIfAbsent(REDIS_LOCK,value, 10, TimeUnit.SECONDS);
-
-            if (!flag) {
-                System.out.println(&#34;抢锁失败！&#34;);
-            }
-            String redisKey =  redisTemplate.opsForvalue().get(&#34;redis_key&#34;);
-            int num0 = redisKey == null ? 0 : Integer.parseInt(redisKey);
-
-            if (num0 &lt;= 0){
-                System.out.println(&#34;商品已售完！&#34;);
-                return;
-            }
-
-            // 卖出商品，存入Redis中
-            int num1  = num0 - 1;
-            redisTemplate.opsForvalue().set(&#34;redis_key&#34;,num1);
-        }finally {
-            redisTemplate.delete(REDIS_LOCK);
-        }
-    }
-</code></pre></div><p>加过期时间释放锁的这种方式会带来另一个问题，某个线程加锁，然后执行业务代码，业务代码执行的时间超过了限定时间，此时Redis会释放锁，然后第二个请求就进来了，此时第一个线程业务代码执行完毕，执行释放锁步骤。这就造成误删除其他线程的锁。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    @Autowired
+</span></span><span class="line"><span class="cl">    private RedisTemplate redisTemplate;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 保证value值唯一,这里是伪代码
+</span></span><span class="line"><span class="cl">    final String value = &#34;&#34;;
+</span></span><span class="line"><span class="cl">    final String REDIS_LOCK = &#34;redis_lock_demo&#34;;
+</span></span><span class="line"><span class="cl">    public void context(){
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            Boolean flag =  redisTemplate.opsForValue().setIfAbsent(REDIS_LOCK,value, 10, TimeUnit.SECONDS);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            if (!flag) {
+</span></span><span class="line"><span class="cl">                System.out.println(&#34;抢锁失败！&#34;);
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">            String redisKey =  redisTemplate.opsForvalue().get(&#34;redis_key&#34;);
+</span></span><span class="line"><span class="cl">            int num0 = redisKey == null ? 0 : Integer.parseInt(redisKey);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            if (num0 &lt;= 0){
+</span></span><span class="line"><span class="cl">                System.out.println(&#34;商品已售完！&#34;);
+</span></span><span class="line"><span class="cl">                return;
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            // 卖出商品，存入Redis中
+</span></span><span class="line"><span class="cl">            int num1  = num0 - 1;
+</span></span><span class="line"><span class="cl">            redisTemplate.opsForvalue().set(&#34;redis_key&#34;,num1);
+</span></span><span class="line"><span class="cl">        }finally {
+</span></span><span class="line"><span class="cl">            redisTemplate.delete(REDIS_LOCK);
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><p>加过期时间释放锁的这种方式会带来另一个问题，某个线程加锁，然后执行业务代码，业务代码执行的时间超过了限定时间，此时Redis会释放锁，然后第二个请求就进来了，此时第一个线程业务代码执行完毕，执行释放锁步骤。这就造成误删除其他线程的锁。</p>
 <p>简单说就是，张冠李戴，当前线程删除了其他线程的锁。</p>
 <h4 id="方式四">方式四</h4>
 <p>针对方式三带来的问题，需要加一个判断，来避免误删除其他线程的锁：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    @Autowired
-    private RedisTemplate redisTemplate;
-
-    final String REDIS_LOCK = &#34;redis_lock_demo&#34;;
-    // 保证value值唯一,这里是伪代码
-    final String value = &#34;&#34;;
-    public void context(){
-        try {
-            Boolean flag =  redisTemplate.opsForValue().setIfAbsent(REDIS_LOCK,value, 10, TimeUnit.SECONDS);
-
-            if (!flag) {
-                System.out.println(&#34;抢锁失败！&#34;);
-            }
-            String redisKey =  redisTemplate.opsForvalue().get(&#34;redis_key&#34;);
-            int num0 = redisKey == null ? 0 : Integer.parseInt(redisKey);
-
-            if (num0 &lt;= 0){
-                System.out.println(&#34;商品已售完！&#34;);
-                return;
-            }
-
-            // 卖出商品，存入Redis中
-            int num1  = num0 - 1;
-            redisTemplate.opsForvalue().set(&#34;redis_key&#34;,num1);
-        }finally {
-            // 判断是否是当前线程，如果是当前线程则允许释放锁
-            if (redisTemplate.opsForvalue().get(REDIS_LOCK).equalsIgnoreCase(value)){
-                redisTemplate.delete(REDIS_LOCK);
-            }
-        }
-    }
-</code></pre></div><p>实际上这种方式判断和删除的操作不是原子的，不是原子性的就会出现问题。即该锁没有保存持有者的唯一标识，可能被别的客户端解锁。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    @Autowired
+</span></span><span class="line"><span class="cl">    private RedisTemplate redisTemplate;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    final String REDIS_LOCK = &#34;redis_lock_demo&#34;;
+</span></span><span class="line"><span class="cl">    // 保证value值唯一,这里是伪代码
+</span></span><span class="line"><span class="cl">    final String value = &#34;&#34;;
+</span></span><span class="line"><span class="cl">    public void context(){
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            Boolean flag =  redisTemplate.opsForValue().setIfAbsent(REDIS_LOCK,value, 10, TimeUnit.SECONDS);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            if (!flag) {
+</span></span><span class="line"><span class="cl">                System.out.println(&#34;抢锁失败！&#34;);
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">            String redisKey =  redisTemplate.opsForvalue().get(&#34;redis_key&#34;);
+</span></span><span class="line"><span class="cl">            int num0 = redisKey == null ? 0 : Integer.parseInt(redisKey);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            if (num0 &lt;= 0){
+</span></span><span class="line"><span class="cl">                System.out.println(&#34;商品已售完！&#34;);
+</span></span><span class="line"><span class="cl">                return;
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            // 卖出商品，存入Redis中
+</span></span><span class="line"><span class="cl">            int num1  = num0 - 1;
+</span></span><span class="line"><span class="cl">            redisTemplate.opsForvalue().set(&#34;redis_key&#34;,num1);
+</span></span><span class="line"><span class="cl">        }finally {
+</span></span><span class="line"><span class="cl">            // 判断是否是当前线程，如果是当前线程则允许释放锁
+</span></span><span class="line"><span class="cl">            if (redisTemplate.opsForvalue().get(REDIS_LOCK).equalsIgnoreCase(value)){
+</span></span><span class="line"><span class="cl">                redisTemplate.delete(REDIS_LOCK);
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><p>实际上这种方式判断和删除的操作不是原子的，不是原子性的就会出现问题。即该锁没有保存持有者的唯一标识，可能被别的客户端解锁。</p>
 <h4 id="方式五">方式五</h4>
 <p>针对方式四的问题，Redis官网有推荐的解决方法，即，使用<a href="http://www.redis.cn/commands/set">Lua脚本</a>：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">if redis.call(&#39;setnx&#39;,KEYS[1],ARGV[1]) == 1 then
-   redis.call(&#39;expire&#39;,KEYS[1],ARGV[2])
-else
-   return 0
-end;
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    @Autowired
-    private RedisTemplate redisTemplate;
-
-    final String REDIS_LOCK = &#34;redis_lock_demo&#34;;
-    // 保证value值唯一,这里是伪代码
-    final String value = &#34;&#34;;
-    public void context(){
-        try {
-            Boolean flag =  redisTemplate.opsForValue().setIfAbsent(REDIS_LOCK,value, 10, TimeUnit.SECONDS);
-
-            if (!flag) {
-                System.out.println(&#34;抢锁失败！&#34;);
-            }
-            String redisKey =  redisTemplate.opsForvalue().get(&#34;redis_key&#34;);
-            int num0 = redisKey == null ? 0 : Integer.parseInt(redisKey);
-
-            if (num0 &lt;= 0){
-                System.out.println(&#34;商品已售完！&#34;);
-                return;
-            }
-
-            // 卖出商品，存入Redis中
-            int num1  = num0 - 1;
-            redisTemplate.opsForvalue().set(&#34;redis_key&#34;,num1);
-        }finally {
-            // 伪代码
-            JRedis = jedis = JRedisUtils.getJRedis();
-
-            String lua_scripts =
-                    &#34;if redis.call(&#39;setnx&#39;,KEYS[1],ARGV[1]) == 1 then\n&#34; +
-                    &#34;   redis.call(&#39;expire&#39;,KEYS[1],ARGV[2])\n&#34; +
-                    &#34;else\n&#34; +
-                    &#34;   return 0\n&#34; +
-                    &#34;end;&#34;;
-            Object result = jedis.eval(lua_scripts, Collections.singletonList(REDIS_LOCK), Collections.singletonList(value))
-            if (result.equals(&#34;1&#34;)) {
-                System.out.println(&#34;删除key成功&#34;);
-            }
-                    
-            if (jedis != null) {
-                jedis.close();
-            }
-
-            if (redisTemplate.opsForvalue().get(REDIS_LOCK).equalsIgnoreCase(value)){
-                redisTemplate.delete(REDIS_LOCK);
-            }
-        }
-    }
-</code></pre></div><p>除了用这中方式，也可以用Redis事务来处理方式四带来的问题。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">if redis.call(&#39;setnx&#39;,KEYS[1],ARGV[1]) == 1 then
+</span></span><span class="line"><span class="cl">   redis.call(&#39;expire&#39;,KEYS[1],ARGV[2])
+</span></span><span class="line"><span class="cl">else
+</span></span><span class="line"><span class="cl">   return 0
+</span></span><span class="line"><span class="cl">end;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    @Autowired
+</span></span><span class="line"><span class="cl">    private RedisTemplate redisTemplate;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    final String REDIS_LOCK = &#34;redis_lock_demo&#34;;
+</span></span><span class="line"><span class="cl">    // 保证value值唯一,这里是伪代码
+</span></span><span class="line"><span class="cl">    final String value = &#34;&#34;;
+</span></span><span class="line"><span class="cl">    public void context(){
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            Boolean flag =  redisTemplate.opsForValue().setIfAbsent(REDIS_LOCK,value, 10, TimeUnit.SECONDS);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            if (!flag) {
+</span></span><span class="line"><span class="cl">                System.out.println(&#34;抢锁失败！&#34;);
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">            String redisKey =  redisTemplate.opsForvalue().get(&#34;redis_key&#34;);
+</span></span><span class="line"><span class="cl">            int num0 = redisKey == null ? 0 : Integer.parseInt(redisKey);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            if (num0 &lt;= 0){
+</span></span><span class="line"><span class="cl">                System.out.println(&#34;商品已售完！&#34;);
+</span></span><span class="line"><span class="cl">                return;
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            // 卖出商品，存入Redis中
+</span></span><span class="line"><span class="cl">            int num1  = num0 - 1;
+</span></span><span class="line"><span class="cl">            redisTemplate.opsForvalue().set(&#34;redis_key&#34;,num1);
+</span></span><span class="line"><span class="cl">        }finally {
+</span></span><span class="line"><span class="cl">            // 伪代码
+</span></span><span class="line"><span class="cl">            JRedis = jedis = JRedisUtils.getJRedis();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            String lua_scripts =
+</span></span><span class="line"><span class="cl">                    &#34;if redis.call(&#39;setnx&#39;,KEYS[1],ARGV[1]) == 1 then\n&#34; +
+</span></span><span class="line"><span class="cl">                    &#34;   redis.call(&#39;expire&#39;,KEYS[1],ARGV[2])\n&#34; +
+</span></span><span class="line"><span class="cl">                    &#34;else\n&#34; +
+</span></span><span class="line"><span class="cl">                    &#34;   return 0\n&#34; +
+</span></span><span class="line"><span class="cl">                    &#34;end;&#34;;
+</span></span><span class="line"><span class="cl">            Object result = jedis.eval(lua_scripts, Collections.singletonList(REDIS_LOCK), Collections.singletonList(value))
+</span></span><span class="line"><span class="cl">            if (result.equals(&#34;1&#34;)) {
+</span></span><span class="line"><span class="cl">                System.out.println(&#34;删除key成功&#34;);
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">                    
+</span></span><span class="line"><span class="cl">            if (jedis != null) {
+</span></span><span class="line"><span class="cl">                jedis.close();
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            if (redisTemplate.opsForvalue().get(REDIS_LOCK).equalsIgnoreCase(value)){
+</span></span><span class="line"><span class="cl">                redisTemplate.delete(REDIS_LOCK);
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><p>除了用这中方式，也可以用Redis事务来处理方式四带来的问题。</p>
 <p>对于上面的解决方法，其实并没有真正的解决缓存续期的问题，还是会带来能存在锁过期释放，业务没执行完的问题。</p>
 <h4 id="方式六">方式六</h4>
 <p>参考文章：</p>
@@ -2902,86 +2902,86 @@ end;
 </ul>
 <p>针对缓存续期的问题，我们可以开一个守护线程，每隔一段时间检查锁是否还存在，存在则对锁的过期时间延长，防止锁过期提前释放。</p>
 <p><code>Redisson</code>框架解决了这个问题：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    @Autowired
-    private RedisTemplate redisTemplate;
-
-    @Autowired
-    private RedissonClient redisson;
-
-    final String REDIS_LOCK = &#34;redis_lock_demo&#34;;
-    // 保证value值唯一,这里是伪代码
-    final String value = &#34;&#34;;
-    public void context(){
-        RLock lock = redisson.getLock(REDIS_LOCK);
-        try {
-            lock.lock(REDIS_LOCK);
-
-            String redisKey =  redisTemplate.opsForvalue().get(&#34;redis_key&#34;);
-            int num0 = redisKey == null ? 0 : Integer.parseInt(redisKey);
-
-            if (num0 &lt;= 0){
-                System.out.println(&#34;商品已售完！&#34;);
-                return;
-            }
-
-            // 卖出商品，存入Redis中
-            int num1  = num0 - 1;
-            redisTemplate.opsForvalue().set(&#34;redis_key&#34;,num1);
-        }finally {
-            lock.unlock();
-        }
-    }
-</code></pre></div><p><code>Redisson</code>大致工作原理：只要线程一加锁成功，就会启动一个<code>watch dog</code>看门狗，它是一个后台线程，会每隔10秒检查一下，如果线程一还持有锁，那么就会不断的延长锁key的生存时间。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    @Autowired
+</span></span><span class="line"><span class="cl">    private RedisTemplate redisTemplate;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Autowired
+</span></span><span class="line"><span class="cl">    private RedissonClient redisson;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    final String REDIS_LOCK = &#34;redis_lock_demo&#34;;
+</span></span><span class="line"><span class="cl">    // 保证value值唯一,这里是伪代码
+</span></span><span class="line"><span class="cl">    final String value = &#34;&#34;;
+</span></span><span class="line"><span class="cl">    public void context(){
+</span></span><span class="line"><span class="cl">        RLock lock = redisson.getLock(REDIS_LOCK);
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            lock.lock(REDIS_LOCK);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            String redisKey =  redisTemplate.opsForvalue().get(&#34;redis_key&#34;);
+</span></span><span class="line"><span class="cl">            int num0 = redisKey == null ? 0 : Integer.parseInt(redisKey);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            if (num0 &lt;= 0){
+</span></span><span class="line"><span class="cl">                System.out.println(&#34;商品已售完！&#34;);
+</span></span><span class="line"><span class="cl">                return;
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            // 卖出商品，存入Redis中
+</span></span><span class="line"><span class="cl">            int num1  = num0 - 1;
+</span></span><span class="line"><span class="cl">            redisTemplate.opsForvalue().set(&#34;redis_key&#34;,num1);
+</span></span><span class="line"><span class="cl">        }finally {
+</span></span><span class="line"><span class="cl">            lock.unlock();
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><p><code>Redisson</code>大致工作原理：只要线程一加锁成功，就会启动一个<code>watch dog</code>看门狗，它是一个后台线程，会每隔10秒检查一下，如果线程一还持有锁，那么就会不断的延长锁key的生存时间。
 因此，<code>Redisson</code>解决了锁过期释放，业务没执行完问题。</p>
 <p><img src="/iblog/posts/annex/images/essays/Redis%E8%AF%A6%E8%A7%A3-011.png" alt="Redis详解-011"></p>
 <p>看似完美的解决方案，但是在高并发下可能也会出现下面的异常：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">Caused by: java.lang.IllegalMonitorStateException: attempt to unlock lock, not locked by current thread by node id: 32caba49-5799-491b-aa7b-47d789dbca93 thread-id: 1
-</code></pre></div><p>异常出现的原因，加锁和解锁的线程不是同一个。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Caused by: java.lang.IllegalMonitorStateException: attempt to unlock lock, not locked by current thread by node id: 32caba49-5799-491b-aa7b-47d789dbca93 thread-id: 1
+</span></span></code></pre></div><p>异常出现的原因，加锁和解锁的线程不是同一个。</p>
 <h4 id="方式七">方式七</h4>
 <p>针对上面的异常，需要判断当前线程是否持有锁，如果还持有，则释放，如果未持有，则说明已被释放:</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    @Autowired
-    private RedisTemplate redisTemplate;
-
-    @Autowired
-    private RedissonClient redisson;
-
-    final String REDIS_LOCK = &#34;redis_lock_demo&#34;;
-    // 保证value值唯一,这里是伪代码
-    final String value = &#34;&#34;;
-    public void context(){
-         RLock lock = redisson.getLock(REDIS_LOCK);
-        try {
-            lock.lock(REDIS_LOCK);
-
-            String redisKey =  redisTemplate.opsForvalue().get(&#34;redis_key&#34;);
-            int num0 = redisKey == null ? 0 : Integer.parseInt(redisKey);
-
-            if (num0 &lt;= 0){
-                System.out.println(&#34;商品已售完！&#34;);
-                return;
-            }
-
-            // 卖出商品，存入Redis中
-            int num1  = num0 - 1;
-            redisTemplate.opsForvalue().set(&#34;redis_key&#34;,num1);
-        }finally {
-            // 查询当前线程是否持有此锁
-            if (lock.isLocked() &amp;&amp; lock.isHeldByCurrentThread()) {
-                lock.unlock();
-            }
-        }
-    }
-</code></pre></div><p>这样写，程序的健壮性会更好，代码会更加严谨。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    @Autowired
+</span></span><span class="line"><span class="cl">    private RedisTemplate redisTemplate;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Autowired
+</span></span><span class="line"><span class="cl">    private RedissonClient redisson;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    final String REDIS_LOCK = &#34;redis_lock_demo&#34;;
+</span></span><span class="line"><span class="cl">    // 保证value值唯一,这里是伪代码
+</span></span><span class="line"><span class="cl">    final String value = &#34;&#34;;
+</span></span><span class="line"><span class="cl">    public void context(){
+</span></span><span class="line"><span class="cl">         RLock lock = redisson.getLock(REDIS_LOCK);
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            lock.lock(REDIS_LOCK);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            String redisKey =  redisTemplate.opsForvalue().get(&#34;redis_key&#34;);
+</span></span><span class="line"><span class="cl">            int num0 = redisKey == null ? 0 : Integer.parseInt(redisKey);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            if (num0 &lt;= 0){
+</span></span><span class="line"><span class="cl">                System.out.println(&#34;商品已售完！&#34;);
+</span></span><span class="line"><span class="cl">                return;
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            // 卖出商品，存入Redis中
+</span></span><span class="line"><span class="cl">            int num1  = num0 - 1;
+</span></span><span class="line"><span class="cl">            redisTemplate.opsForvalue().set(&#34;redis_key&#34;,num1);
+</span></span><span class="line"><span class="cl">        }finally {
+</span></span><span class="line"><span class="cl">            // 查询当前线程是否持有此锁
+</span></span><span class="line"><span class="cl">            if (lock.isLocked() &amp;&amp; lock.isHeldByCurrentThread()) {
+</span></span><span class="line"><span class="cl">                lock.unlock();
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><p>这样写，程序的健壮性会更好，代码会更加严谨。</p>
 <h2 id="redis内存淘汰策略">Redis内存淘汰策略</h2>
 <p>长期把Redis做缓存用，总有一天Redis内存总会满的。有没有相关这个问题，Redis内存满了会怎么样？</p>
 <p>在<code>redis.conf</code>中把Redis内存设置为1个字节，做一个测试：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// 默认单位就是字节
-maxmemory 1 
-</code></pre></div><p>设置完之后重启为了确保测试的准确性，重启一下Redis，之后在用下面的命令，向Redis中存入键值对,模拟Redis打满的情况：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">set k1 v1
-</code></pre></div><p>执行完后会看到下面的信息：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">(error) OOM command not allowed when used memory &gt; &#39;maxmemory&#39;.
-</code></pre></div><p>大意：OOM，当当前内存大于最大内存时，这个命令不允许被执行。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// 默认单位就是字节
+</span></span><span class="line"><span class="cl">maxmemory 1 
+</span></span></code></pre></div><p>设置完之后重启为了确保测试的准确性，重启一下Redis，之后在用下面的命令，向Redis中存入键值对,模拟Redis打满的情况：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">set k1 v1
+</span></span></code></pre></div><p>执行完后会看到下面的信息：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">(error) OOM command not allowed when used memory &gt; &#39;maxmemory&#39;.
+</span></span></code></pre></div><p>大意：OOM，当当前内存大于最大内存时，这个命令不允许被执行。</p>
 <p>是的，Redis也会出现OOM，正因如此，我们才要避免这种情况发生，正常情况下，不考虑极端业务，Redis不是MySql数据库，不能什么都往里边写，一般情况下Redis只存放热点数据。</p>
 <p>Redis默认最大内存是全部的内存，我们在实际配置的时候，一般配实际服务器内存的3/4也就足够了。</p>
 <h3 id="删除策略">删除策略</h3>
@@ -3002,9 +3002,9 @@ maxmemory 1
 <p>在 <code>Redis 4.0</code> 版本之前有 6 种策略，4.0 增加了 2种，主要新增了 <code>LFU</code> 算法。下图为 <code>Redis 6.2.0</code> 版本的配置文件：</p>
 <p><img src="/iblog/posts/annex/images/essays/Redis%E8%AF%A6%E8%A7%A3-012.png" alt="Redis详解-012"></p>
 <p>淘汰策略默认,使用<code>noeviction</code>，意思是不再驱逐的，即等着内存被打满。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">The default is:
-maxmemory-policy noeviction
-</code></pre></div><table>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">The default is:
+</span></span><span class="line"><span class="cl">maxmemory-policy noeviction
+</span></span></code></pre></div><table>
 <thead>
 <tr>
 <th>策略名称</th>
@@ -3040,14 +3040,14 @@ maxmemory-policy noeviction
 </table>
 <p>假如在Redis中的数据有一部分是热点数据，而剩下的数据是冷门数据，或者我们不太清楚我们应用的缓存访问分布状况，这时可以使用<code>allkeys-lru</code>。</p>
 <p>可以在<code>redis.conf</code>配置文件中配置:</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">maxmemory-policy allkeys-lru   // 淘汰策略名字
-</code></pre></div><p>当然也可以动态的配置，在Redis运行时修改：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// 设置内存淘汰策略
-config set maxmemory-policy allkeys-lru
-
-// 查看内存淘汰策略
-config get maxmemory-policy
-</code></pre></div><h3 id="lru算法及实现">LRU算法及实现</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">maxmemory-policy allkeys-lru   // 淘汰策略名字
+</span></span></code></pre></div><p>当然也可以动态的配置，在Redis运行时修改：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// 设置内存淘汰策略
+</span></span><span class="line"><span class="cl">config set maxmemory-policy allkeys-lru
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 查看内存淘汰策略
+</span></span><span class="line"><span class="cl">config get maxmemory-policy
+</span></span></code></pre></div><h3 id="lru算法及实现">LRU算法及实现</h3>
 <p>LRU是，<code>Least Recently Used</code>的缩写，即最近最少使用，是一种常用的页面置换算法。</p>
 <blockquote>
 <p>页面置换算法：
@@ -3063,197 +3063,197 @@ config get maxmemory-policy
 </blockquote>
 <p>大意：<code>{@link #LinkedHashMap(int,float,boolean)}</code>提供了一个特殊的构造器来创建一个链表散列映射，其迭代顺序为其条目最后访问的顺序，从最近最少访问到最近最近(<code>access-order</code>)。这种映射非常适合构建LRU缓存。</p>
 <p>参照<code>LinkedHashMap</code>实现LRU算法：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-
-    public static void main(String[] args) {
-        LRUDemo&lt;Integer,String&gt; list0 = new LRUDemo&lt;&gt;(3,true);
-        System.out.println(&#34;-------------accessOrder等于true-------------&#34;);
-        context(list0);
-        System.out.println(&#34;-------------accessOrder等于false-------------&#34;);
-        LRUDemo&lt;Integer,String&gt; list1 = new LRUDemo&lt;&gt;(3,false);
-        context(list1);
-    }
-    
-    public static void context(LRUDemo&lt;Integer,String&gt; list){
-        list.put(1,&#34;a&#34;);
-        list.put(2,&#34;b&#34;);
-        list.put(3,&#34;c&#34;);
-        System.out.println(list.keySet());
-
-        list.put(4,&#34;d&#34;);
-        System.out.println(list.keySet());
-        System.out.println();
-
-        list.put(3,&#34;123&#34;);
-        System.out.println(list.keySet());
-
-        list.put(3,&#34;1234&#34;);
-        System.out.println(list.keySet());
-
-        list.put(3,&#34;12345&#34;);
-        System.out.println(list.keySet());
-        System.out.println();
-
-        list.put(5,&#34;123456&#34;);
-        System.out.println(list.keySet());
-    }
-}
-
-class LRUDemo&lt;K,V&gt; extends LinkedHashMap&lt;K,V&gt;{
-
-    private int capacity;
-
-    public LRUDemo(int capacity, boolean accessOrder) {
-        /**
-         * accessOrder the ordering mode -
-         * &lt;tt&gt;true&lt;/tt&gt; for access-order 存取顺序:如果存贮集合中有相同的元素，再次插入时先删除在插入
-         * &lt;tt&gt;false&lt;/tt&gt; for insertion-order 插入顺序：不会因为集合中有相同元素，再次插入该元素就会打乱位置
-         */
-        super(capacity,0.75f,accessOrder);
-        this.capacity = capacity;
-    }
-
-    @Override
-    protected boolean removeEldestEntry(Map.Entry&lt;K, V&gt; eldest) {
-        return super.size() &gt; capacity;
-    }
-}
-</code></pre></div><h4 id="方式二-1">方式二</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        LRUDemo&lt;Integer,String&gt; list0 = new LRUDemo&lt;&gt;(3,true);
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;-------------accessOrder等于true-------------&#34;);
+</span></span><span class="line"><span class="cl">        context(list0);
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;-------------accessOrder等于false-------------&#34;);
+</span></span><span class="line"><span class="cl">        LRUDemo&lt;Integer,String&gt; list1 = new LRUDemo&lt;&gt;(3,false);
+</span></span><span class="line"><span class="cl">        context(list1);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    public static void context(LRUDemo&lt;Integer,String&gt; list){
+</span></span><span class="line"><span class="cl">        list.put(1,&#34;a&#34;);
+</span></span><span class="line"><span class="cl">        list.put(2,&#34;b&#34;);
+</span></span><span class="line"><span class="cl">        list.put(3,&#34;c&#34;);
+</span></span><span class="line"><span class="cl">        System.out.println(list.keySet());
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        list.put(4,&#34;d&#34;);
+</span></span><span class="line"><span class="cl">        System.out.println(list.keySet());
+</span></span><span class="line"><span class="cl">        System.out.println();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        list.put(3,&#34;123&#34;);
+</span></span><span class="line"><span class="cl">        System.out.println(list.keySet());
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        list.put(3,&#34;1234&#34;);
+</span></span><span class="line"><span class="cl">        System.out.println(list.keySet());
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        list.put(3,&#34;12345&#34;);
+</span></span><span class="line"><span class="cl">        System.out.println(list.keySet());
+</span></span><span class="line"><span class="cl">        System.out.println();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        list.put(5,&#34;123456&#34;);
+</span></span><span class="line"><span class="cl">        System.out.println(list.keySet());
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">class LRUDemo&lt;K,V&gt; extends LinkedHashMap&lt;K,V&gt;{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private int capacity;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public LRUDemo(int capacity, boolean accessOrder) {
+</span></span><span class="line"><span class="cl">        /**
+</span></span><span class="line"><span class="cl">         * accessOrder the ordering mode -
+</span></span><span class="line"><span class="cl">         * &lt;tt&gt;true&lt;/tt&gt; for access-order 存取顺序:如果存贮集合中有相同的元素，再次插入时先删除在插入
+</span></span><span class="line"><span class="cl">         * &lt;tt&gt;false&lt;/tt&gt; for insertion-order 插入顺序：不会因为集合中有相同元素，再次插入该元素就会打乱位置
+</span></span><span class="line"><span class="cl">         */
+</span></span><span class="line"><span class="cl">        super(capacity,0.75f,accessOrder);
+</span></span><span class="line"><span class="cl">        this.capacity = capacity;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    protected boolean removeEldestEntry(Map.Entry&lt;K, V&gt; eldest) {
+</span></span><span class="line"><span class="cl">        return super.size() &gt; capacity;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h4 id="方式二-1">方式二</h4>
 <p>除了可以参照<code>LinkedHashMap</code>，也可以自己手动实现：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-
-    public static void main(String[] args) {
-        LRUDemo&lt;Integer,String&gt; list0 = new LRUDemo&lt;&gt;(3);
-        context(list0);
-    }
-
-    public static void context(LRUDemo&lt;Integer,String&gt; list){
-        list.put(1,&#34;a&#34;);
-        list.put(2,&#34;b&#34;);
-        list.put(3,&#34;c&#34;);
-        System.out.println(list.getMap().keySet());
-
-        list.put(4,&#34;d&#34;);
-        System.out.println(list.getMap().keySet());
-        System.out.println();
-
-        list.put(3,&#34;123&#34;);
-        System.out.println(list.getMap().keySet());
-
-        list.put(3,&#34;1234&#34;);
-        System.out.println(list.getMap().keySet());
-
-        list.put(3,&#34;12345&#34;);
-        System.out.println(list.getMap().keySet());
-        System.out.println();
-
-        list.put(5,&#34;123456&#34;);
-        System.out.println(list.getMap().keySet());
-    }
-}
-
-class LRUDemo&lt;K, V&gt; {
-
-    static class Node&lt;K,V&gt;{
-        K key;
-        V value;
-        Node&lt;K,V&gt; prev;
-        Node&lt;K, V&gt; next;
-
-        public Node(){
-            prev = next = null;
-        }
-
-        public Node(K key,V value){
-            this.key = key;
-            this.value = value;
-        }
-    }
-
-    static class DoubleLinkedList&lt;K,V&gt;{
-        Node&lt;K,V&gt; head;
-        Node&lt;K, V&gt; tail;
-
-        public DoubleLinkedList(){
-            head = new Node&lt;&gt;();
-            tail = new Node&lt;&gt;();
-            
-            // 如果变成尾插法，需要调换头、尾指针的指向
-            head.next = tail;
-            tail.prev = head;
-        }
-
-        public void putHead(Node&lt;K, V&gt; node){
-            node.next = head.next;
-            node.prev = head; // 将新结点插到头部
-            head.next.prev = node;
-            head.next = node;
-        }
-
-        public void remove(Node&lt;K, V&gt; node){
-            node.prev.next = node.next;
-            node.next.prev = node.prev;
-            node.prev = node.next = null;
-        }
-
-        public Node&lt;K,V&gt; getLastNode(){
-            return tail.prev;
-        }
-    }
-
-    private int capacity;
-    private Map&lt;K, Node&lt;K,V&gt;&gt; map;
-    private DoubleLinkedList&lt;K,V&gt; doubleLinkedList;
-
-    public Map&lt;K, Node&lt;K, V&gt;&gt; getMap() {
-        return map;
-    }
-
-    public LRUDemo(int capacity){
-        this.capacity = capacity;
-        this.map = new HashMap&lt;&gt;();
-        doubleLinkedList = new DoubleLinkedList&lt;&gt;();
-    }
-
-    public void put(K key,V val){
-        if (key == null || val == null){
-            return;
-        }
-        // 如果集合中key已经存在，则先删除
-        if (map.containsKey(key)){
-            Node&lt;K, V&gt; node = map.get(key);
-            node.value = val;
-            map.put(key,node);
-
-            // 刷新node
-            doubleLinkedList.remove(node);
-            doubleLinkedList.putHead(node);
-        }else {
-            // 删除最少使用的key
-            if (map.size() == capacity){
-                Node&lt;K, V&gt; lastNode = doubleLinkedList.getLastNode();
-                doubleLinkedList.remove(lastNode);
-                map.remove(lastNode.key);
-            }
-            Node&lt;K, V&gt; newNode = new Node&lt;&gt;(key,val);
-            map.put(key,newNode);
-            doubleLinkedList.putHead(newNode);
-        }
-    }
-
-    public V get(K key){
-        if (!map.containsKey(key)){
-            return null;
-        }
-        Node&lt;K, V&gt; node = map.get(key);
-
-        // 刷新结点位置，将该key移动到队列头部
-        doubleLinkedList.remove(node);
-        doubleLinkedList.putHead(node);
-        return node.value;
-    }
-}
-</code></pre></div><h2 id="redis持久化">Redis持久化</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        LRUDemo&lt;Integer,String&gt; list0 = new LRUDemo&lt;&gt;(3);
+</span></span><span class="line"><span class="cl">        context(list0);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void context(LRUDemo&lt;Integer,String&gt; list){
+</span></span><span class="line"><span class="cl">        list.put(1,&#34;a&#34;);
+</span></span><span class="line"><span class="cl">        list.put(2,&#34;b&#34;);
+</span></span><span class="line"><span class="cl">        list.put(3,&#34;c&#34;);
+</span></span><span class="line"><span class="cl">        System.out.println(list.getMap().keySet());
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        list.put(4,&#34;d&#34;);
+</span></span><span class="line"><span class="cl">        System.out.println(list.getMap().keySet());
+</span></span><span class="line"><span class="cl">        System.out.println();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        list.put(3,&#34;123&#34;);
+</span></span><span class="line"><span class="cl">        System.out.println(list.getMap().keySet());
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        list.put(3,&#34;1234&#34;);
+</span></span><span class="line"><span class="cl">        System.out.println(list.getMap().keySet());
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        list.put(3,&#34;12345&#34;);
+</span></span><span class="line"><span class="cl">        System.out.println(list.getMap().keySet());
+</span></span><span class="line"><span class="cl">        System.out.println();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        list.put(5,&#34;123456&#34;);
+</span></span><span class="line"><span class="cl">        System.out.println(list.getMap().keySet());
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">class LRUDemo&lt;K, V&gt; {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    static class Node&lt;K,V&gt;{
+</span></span><span class="line"><span class="cl">        K key;
+</span></span><span class="line"><span class="cl">        V value;
+</span></span><span class="line"><span class="cl">        Node&lt;K,V&gt; prev;
+</span></span><span class="line"><span class="cl">        Node&lt;K, V&gt; next;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        public Node(){
+</span></span><span class="line"><span class="cl">            prev = next = null;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        public Node(K key,V value){
+</span></span><span class="line"><span class="cl">            this.key = key;
+</span></span><span class="line"><span class="cl">            this.value = value;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    static class DoubleLinkedList&lt;K,V&gt;{
+</span></span><span class="line"><span class="cl">        Node&lt;K,V&gt; head;
+</span></span><span class="line"><span class="cl">        Node&lt;K, V&gt; tail;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        public DoubleLinkedList(){
+</span></span><span class="line"><span class="cl">            head = new Node&lt;&gt;();
+</span></span><span class="line"><span class="cl">            tail = new Node&lt;&gt;();
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            // 如果变成尾插法，需要调换头、尾指针的指向
+</span></span><span class="line"><span class="cl">            head.next = tail;
+</span></span><span class="line"><span class="cl">            tail.prev = head;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        public void putHead(Node&lt;K, V&gt; node){
+</span></span><span class="line"><span class="cl">            node.next = head.next;
+</span></span><span class="line"><span class="cl">            node.prev = head; // 将新结点插到头部
+</span></span><span class="line"><span class="cl">            head.next.prev = node;
+</span></span><span class="line"><span class="cl">            head.next = node;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        public void remove(Node&lt;K, V&gt; node){
+</span></span><span class="line"><span class="cl">            node.prev.next = node.next;
+</span></span><span class="line"><span class="cl">            node.next.prev = node.prev;
+</span></span><span class="line"><span class="cl">            node.prev = node.next = null;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        public Node&lt;K,V&gt; getLastNode(){
+</span></span><span class="line"><span class="cl">            return tail.prev;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private int capacity;
+</span></span><span class="line"><span class="cl">    private Map&lt;K, Node&lt;K,V&gt;&gt; map;
+</span></span><span class="line"><span class="cl">    private DoubleLinkedList&lt;K,V&gt; doubleLinkedList;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public Map&lt;K, Node&lt;K, V&gt;&gt; getMap() {
+</span></span><span class="line"><span class="cl">        return map;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public LRUDemo(int capacity){
+</span></span><span class="line"><span class="cl">        this.capacity = capacity;
+</span></span><span class="line"><span class="cl">        this.map = new HashMap&lt;&gt;();
+</span></span><span class="line"><span class="cl">        doubleLinkedList = new DoubleLinkedList&lt;&gt;();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public void put(K key,V val){
+</span></span><span class="line"><span class="cl">        if (key == null || val == null){
+</span></span><span class="line"><span class="cl">            return;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        // 如果集合中key已经存在，则先删除
+</span></span><span class="line"><span class="cl">        if (map.containsKey(key)){
+</span></span><span class="line"><span class="cl">            Node&lt;K, V&gt; node = map.get(key);
+</span></span><span class="line"><span class="cl">            node.value = val;
+</span></span><span class="line"><span class="cl">            map.put(key,node);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            // 刷新node
+</span></span><span class="line"><span class="cl">            doubleLinkedList.remove(node);
+</span></span><span class="line"><span class="cl">            doubleLinkedList.putHead(node);
+</span></span><span class="line"><span class="cl">        }else {
+</span></span><span class="line"><span class="cl">            // 删除最少使用的key
+</span></span><span class="line"><span class="cl">            if (map.size() == capacity){
+</span></span><span class="line"><span class="cl">                Node&lt;K, V&gt; lastNode = doubleLinkedList.getLastNode();
+</span></span><span class="line"><span class="cl">                doubleLinkedList.remove(lastNode);
+</span></span><span class="line"><span class="cl">                map.remove(lastNode.key);
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">            Node&lt;K, V&gt; newNode = new Node&lt;&gt;(key,val);
+</span></span><span class="line"><span class="cl">            map.put(key,newNode);
+</span></span><span class="line"><span class="cl">            doubleLinkedList.putHead(newNode);
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public V get(K key){
+</span></span><span class="line"><span class="cl">        if (!map.containsKey(key)){
+</span></span><span class="line"><span class="cl">            return null;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        Node&lt;K, V&gt; node = map.get(key);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // 刷新结点位置，将该key移动到队列头部
+</span></span><span class="line"><span class="cl">        doubleLinkedList.remove(node);
+</span></span><span class="line"><span class="cl">        doubleLinkedList.putHead(node);
+</span></span><span class="line"><span class="cl">        return node.value;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h2 id="redis持久化">Redis持久化</h2>
 <p><strong>什么是Redis持久化？</strong> 持久化就是把内存的数据写到磁盘中去，防止服务宕机了内存数据丢失。Redis 提供了两种持久化方式:RDB（默认） 和AOF。</p>
 <ul>
 <li>RDB，简而言之，就是在指定的时间间隔内，将 redis 存储的数据生成快照并存储到磁盘等介质上；</li>
@@ -3265,25 +3265,25 @@ class LRUDemo&lt;K, V&gt; {
 <h4 id="相关配置">相关配置</h4>
 <ul>
 <li>在redis.conf中配置文件名称,默认是dump.rdb：
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">dbfilename dump.rdb
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">dbfilename dump.rdb
+</span></span></code></pre></div></li>
 <li>rdb文件的保存路径，也可以修改。默认为Redis启动时命令行所在的目录下：
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">dir ./
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">dir ./
+</span></span></code></pre></div></li>
 <li>默认的快照配置：
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">save 3600 1
-save 30 10
-save 60 10000
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">save 3600 1
+</span></span><span class="line"><span class="cl">save 30 10
+</span></span><span class="line"><span class="cl">save 60 10000
+</span></span></code></pre></div></li>
 <li>当Redis无法写入磁盘的话，直接关掉Redis的写操作,默认yes：
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">stop-writes-on-bgsave-error yes
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">stop-writes-on-bgsave-error yes
+</span></span></code></pre></div></li>
 <li>对于存储到磁盘中的快照，可以设置是否进行压缩存储。如果是的话，redis会采用LZF算法进行压缩：
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">rdbcompression yes
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">rdbcompression yes
+</span></span></code></pre></div></li>
 <li>检查数据完整性,在存储快照后，还可以让redis使用CRC64算法来进行数据校验，但是这样做会增加大约10%的性能消耗，如果希望获取到最大的性能提升，可以关闭此功能，推荐yes：
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">rdbchecksum yes
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">rdbchecksum yes
+</span></span></code></pre></div></li>
 </ul>
 <h4 id="执行过程">执行过程</h4>
 <p>redis 在进行数据持久化的过程中，会先将数据写入到一个临时文件中，待持久化过程都结束了，才会用这个临时文件替换上次持久化好的文件。正是这种特性，让我们可以随时来进行备份，因为快照文件总是完整可用的。对于 RDB 方式，redis 会单独创建（fork）一个子进程来进行持久化，而主进程是不会进行任何 IO 操作的，这样就确保了 redis 极高的性能。</p>
@@ -3302,38 +3302,38 @@ save 60 10000
 <ul>
 <li>
 <p>在redis中AOF默认时不开启的：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">appendonly no
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">appendonly no
+</span></span></code></pre></div></li>
 <li>
 <p>AOF文件名称,文件路径与rdb保持一致：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">appendfilename &#34;appendonly.aof&#34;
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">appendfilename &#34;appendonly.aof&#34;
+</span></span></code></pre></div></li>
 <li>
 <p>AOF同步频率设置：默认的 AOF 持久化策略是每秒钟 fsync 一次（fsync 是指把缓存中的写指令记录到磁盘中），因为在这种情况下，redis 仍然可以保持很好的处理性能，即使 redis 故障，也只会丢失最近 1 秒钟的数据。</p>
 <ol>
 <li>始终同步，每次Redis的写入都会立刻记入日志；性能较差但数据完整性比较好：</li>
 </ol>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">appendfsync always
-</code></pre></div><ol start="2">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">appendfsync always
+</span></span></code></pre></div><ol start="2">
 <li>每秒同步，每秒记入日志一次，如果宕机，本秒的数据可能丢失：</li>
 </ol>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">appendfsync everysec
-</code></pre></div><ol start="3">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">appendfsync everysec
+</span></span></code></pre></div><ol start="3">
 <li>redis不主动进行同步，把同步时机交给操作系统：</li>
 </ol>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">appendfsync no
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">appendfsync no
+</span></span></code></pre></div></li>
 <li>
 <p>Rewrite压缩：AOF采用文件追加方式，文件会越来越大为避免出现此种情况，新增了重写机制,当AOF文件的大小超过所设定的阈值时，Redis就会启动AOF文件的内容压缩，只保留可以恢复数据的最小指令集。举个例子或许更形象，假如我们调用了 100 次 INCR 指令，在 AOF 文件中就要存储 100 条指令，但这明显是很低效的，完全可以把这 100 条指令合并成一条 SET 指令，这就是重写机制的原理。在进行 AOF 重写时，仍然是采用先写临时文件，全部完成后再替换的流程，所以断电、磁盘满等问题都不会影响 AOF 文件的可用性。</p>
 <ol>
 <li>设置重写的基准值，文件达到100%时开始重写：</li>
 </ol>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">auto-aof-rewrite-percentage
-</code></pre></div><ol start="2">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">auto-aof-rewrite-percentage
+</span></span></code></pre></div><ol start="2">
 <li>设置重写的基准值，最小文件64MB。达到这个值开始重写：</li>
 </ol>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">auto-aof-rewrite-min-size
-</code></pre></div><blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">auto-aof-rewrite-min-size
+</span></span></code></pre></div><blockquote>
 <p>例如：文件达到70MB开始重写，降到50MB，下次什么时候开始重写？
 系统载入时或者上次重写完毕时，Redis会记录此时AOF大小，设为base_size,如果Redis的AOF文件当前大小&gt;= base_size +base_size*100% (默认)且当前大小&gt;=64mb(默认)的情况下，Redis会对AOF进行重写。</p>
 <p>当前base_size为50MB，根据公式：base_size +base_size*100% = 100MB</p>
@@ -3341,8 +3341,8 @@ save 60 10000
 </li>
 <li>
 <p>如果在追加日志时，恰好遇到磁盘空间满或断电等情况导致日志写入不完整，也没有关系，可以进行恢复：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">redis-check-aof --fix AOP文件名称
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">redis-check-aof --fix AOP文件名称
+</span></span></code></pre></div></li>
 </ul>
 <h4 id="执行过程-1">执行过程</h4>
 <p><img src="/iblog/posts/annex/images/essays/Redis%E8%AF%A6%E8%A7%A3-021.png" alt="Redis详解-021"></p>

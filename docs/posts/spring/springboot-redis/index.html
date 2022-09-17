@@ -557,82 +557,82 @@
 </ul>
 <p>参考<a href="https://www.runoob.com/redis/redis-intro.html">菜鸟教程</a></p>
 <h2 id="导入依赖">导入依赖</h2>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
-    &lt;version&gt;2.1.3.RELEASE&lt;/version&gt;
-&lt;/dependency&gt;
-</code></pre></div><h2 id="配置redis">配置redis</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;dependency&gt;
+</span></span><span class="line"><span class="cl">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+</span></span><span class="line"><span class="cl">    &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
+</span></span><span class="line"><span class="cl">    &lt;version&gt;2.1.3.RELEASE&lt;/version&gt;
+</span></span><span class="line"><span class="cl">&lt;/dependency&gt;
+</span></span></code></pre></div><h2 id="配置redis">配置redis</h2>
 <h3 id="redisconfigclass">RedisConfig.class</h3>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Configuration
-public class RedisConfig {
-
-    //用于解决注解操作redis 序列话的问题
-    @Bean(name = &#34;myCacheManager&#34;)
-    public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
-
-        RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);
-        RedisSerializer&lt;Object&gt; jsonSerializer = new GenericJackson2JsonRedisSerializer();
-        RedisSerializationContext.SerializationPair&lt;Object&gt; pair = RedisSerializationContext.SerializationPair
-                .fromSerializer(jsonSerializer);
-        RedisCacheConfiguration defaultCacheConfig= RedisCacheConfiguration.defaultCacheConfig()
-                .serializeValuesWith(pair);
-        defaultCacheConfig.entryTtl(Duration.ofMinutes(30));
-        return new RedisCacheManager(redisCacheWriter, defaultCacheConfig);
-    }
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    /**
- * 解决用redisTemplate操作的序列化的问题
- *
- * @param factory RedisConnectionFactory
- * @return redisTemplate
- */
-    @Bean
-    @ConditionalOnMissingBean(name = &#34;redisTemplate&#34;)
-    public RedisTemplate&lt;String,Object&gt; redisTemplate(RedisConnectionFactory factory){
-        // 配置redisTemplate
-        RedisTemplate&lt;String, Object&gt; redisTemplate = new RedisTemplate&lt;&gt;();
-        redisTemplate.setConnectionFactory(factory);
-        // key序列化
-        redisTemplate.setKeySerializer(STRING_SERIALIZER);
-        // value序列化
-        redisTemplate.setValueSerializer(JACKSON__SERIALIZER);
-        // Hash key序列化
-        redisTemplate.setHashKeySerializer(STRING_SERIALIZER);
-        // Hash value序列化
-        redisTemplate.setHashValueSerializer(JACKSON__SERIALIZER);
-        redisTemplate.afterPropertiesSet();
-        return redisTemplate;
-    }
-
-}
-</code></pre></div><h3 id="启动类配置">启动类配置</h3>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@EnableCaching  //允许注解操作缓存
-@SpringBootApplication
-public class RedisExampleApplication {
-   public static void main(String[] args) {
-      SpringApplication.run(RedisExampleApplication.class, args);
-   }
-}
-</code></pre></div><h3 id="applicationyml-配置">application.yml 配置</h3>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">#redis 缓存配置
-redis:
-  database: 0
-  host: @ip
-  port: 6379
-  timeout: 8000
-  #如果没有可不写
-  password:
-  jedis:
-    pool:
-      #连接池最大连接数量
-      max-active: 10
-      #连接池最大堵塞时间
-      max-wait: -1
-      #连接池最小空闲连接
-      min-idle: 0
-      #连接池最大空闲连接
-      max-idle: 8
-</code></pre></div><h2 id="缓存注解介绍">缓存注解介绍</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Configuration
+</span></span><span class="line"><span class="cl">public class RedisConfig {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    //用于解决注解操作redis 序列话的问题
+</span></span><span class="line"><span class="cl">    @Bean(name = &#34;myCacheManager&#34;)
+</span></span><span class="line"><span class="cl">    public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);
+</span></span><span class="line"><span class="cl">        RedisSerializer&lt;Object&gt; jsonSerializer = new GenericJackson2JsonRedisSerializer();
+</span></span><span class="line"><span class="cl">        RedisSerializationContext.SerializationPair&lt;Object&gt; pair = RedisSerializationContext.SerializationPair
+</span></span><span class="line"><span class="cl">                .fromSerializer(jsonSerializer);
+</span></span><span class="line"><span class="cl">        RedisCacheConfiguration defaultCacheConfig= RedisCacheConfiguration.defaultCacheConfig()
+</span></span><span class="line"><span class="cl">                .serializeValuesWith(pair);
+</span></span><span class="line"><span class="cl">        defaultCacheConfig.entryTtl(Duration.ofMinutes(30));
+</span></span><span class="line"><span class="cl">        return new RedisCacheManager(redisCacheWriter, defaultCacheConfig);
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    /**
+</span></span><span class="line"><span class="cl"> * 解决用redisTemplate操作的序列化的问题
+</span></span><span class="line"><span class="cl"> *
+</span></span><span class="line"><span class="cl"> * @param factory RedisConnectionFactory
+</span></span><span class="line"><span class="cl"> * @return redisTemplate
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">    @Bean
+</span></span><span class="line"><span class="cl">    @ConditionalOnMissingBean(name = &#34;redisTemplate&#34;)
+</span></span><span class="line"><span class="cl">    public RedisTemplate&lt;String,Object&gt; redisTemplate(RedisConnectionFactory factory){
+</span></span><span class="line"><span class="cl">        // 配置redisTemplate
+</span></span><span class="line"><span class="cl">        RedisTemplate&lt;String, Object&gt; redisTemplate = new RedisTemplate&lt;&gt;();
+</span></span><span class="line"><span class="cl">        redisTemplate.setConnectionFactory(factory);
+</span></span><span class="line"><span class="cl">        // key序列化
+</span></span><span class="line"><span class="cl">        redisTemplate.setKeySerializer(STRING_SERIALIZER);
+</span></span><span class="line"><span class="cl">        // value序列化
+</span></span><span class="line"><span class="cl">        redisTemplate.setValueSerializer(JACKSON__SERIALIZER);
+</span></span><span class="line"><span class="cl">        // Hash key序列化
+</span></span><span class="line"><span class="cl">        redisTemplate.setHashKeySerializer(STRING_SERIALIZER);
+</span></span><span class="line"><span class="cl">        // Hash value序列化
+</span></span><span class="line"><span class="cl">        redisTemplate.setHashValueSerializer(JACKSON__SERIALIZER);
+</span></span><span class="line"><span class="cl">        redisTemplate.afterPropertiesSet();
+</span></span><span class="line"><span class="cl">        return redisTemplate;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h3 id="启动类配置">启动类配置</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@EnableCaching  //允许注解操作缓存
+</span></span><span class="line"><span class="cl">@SpringBootApplication
+</span></span><span class="line"><span class="cl">public class RedisExampleApplication {
+</span></span><span class="line"><span class="cl">   public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">      SpringApplication.run(RedisExampleApplication.class, args);
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h3 id="applicationyml-配置">application.yml 配置</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#redis 缓存配置
+</span></span><span class="line"><span class="cl">redis:
+</span></span><span class="line"><span class="cl">  database: 0
+</span></span><span class="line"><span class="cl">  host: @ip
+</span></span><span class="line"><span class="cl">  port: 6379
+</span></span><span class="line"><span class="cl">  timeout: 8000
+</span></span><span class="line"><span class="cl">  #如果没有可不写
+</span></span><span class="line"><span class="cl">  password:
+</span></span><span class="line"><span class="cl">  jedis:
+</span></span><span class="line"><span class="cl">    pool:
+</span></span><span class="line"><span class="cl">      #连接池最大连接数量
+</span></span><span class="line"><span class="cl">      max-active: 10
+</span></span><span class="line"><span class="cl">      #连接池最大堵塞时间
+</span></span><span class="line"><span class="cl">      max-wait: -1
+</span></span><span class="line"><span class="cl">      #连接池最小空闲连接
+</span></span><span class="line"><span class="cl">      min-idle: 0
+</span></span><span class="line"><span class="cl">      #连接池最大空闲连接
+</span></span><span class="line"><span class="cl">      max-idle: 8
+</span></span></code></pre></div><h2 id="缓存注解介绍">缓存注解介绍</h2>
 <h3 id="cacheable">@Cacheable</h3>
 <p><code>@Cacheable</code>作用将方法的运行结果进行缓存,以后要相同的数据,直接从缓存中获取.
 cacheNames 和 key 都必须填，如果不填 key ，默认的 key 是当前的方法名，更新缓存时会因为方法名不同而更新失败.</p>
@@ -647,67 +647,67 @@ cacheNames 和 key 都必须填，如果不填 key ，默认的 key 是当前的
 <li>sync:  是否异步, 不支持unless</li>
 </ul>
 <p>key 也可以动态设置为方法的参数(支持EL)</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Cacheable(cacheNames = &#34;xxx&#34;, key = &#34;#openid&#34;)
-public Response detail(@RequestParam(&#34;openid&#34;) String openid){
-      //to do sthing
-}
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Cacheable(cacheNames = &#34;xxx&#34;, key = &#34;xxx&#34;,keyGenerator = &#34;xxx&#34;, CacheManager = &#34;xxx&#34;, condition = &#34;xxx&#34;, unless = &#34;xxx&#34;, sync = &#34;xxx&#34;)
-</code></pre></div><h3 id="cacheput">@CachePut</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Cacheable(cacheNames = &#34;xxx&#34;, key = &#34;#openid&#34;)
+</span></span><span class="line"><span class="cl">public Response detail(@RequestParam(&#34;openid&#34;) String openid){
+</span></span><span class="line"><span class="cl">      //to do sthing
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Cacheable(cacheNames = &#34;xxx&#34;, key = &#34;xxx&#34;,keyGenerator = &#34;xxx&#34;, CacheManager = &#34;xxx&#34;, condition = &#34;xxx&#34;, unless = &#34;xxx&#34;, sync = &#34;xxx&#34;)
+</span></span></code></pre></div><h3 id="cacheput">@CachePut</h3>
 <p>既调用方法又更新缓存修改了数据库某个数据.
 更新缓存,先调用目标方法将目标方法缓存起来,更新时要注意,要和查询时的key相同,否则缓存不会更新,属性和 @Cacheable 相同</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@CachePut(cacheNames = &#34;xxx&#34;, key = &#34;xxx&#34;,keyGenerator = &#34;xxx&#34;, CacheManager = &#34;xxx&#34;, condition = &#34;xxx&#34;, unless = &#34;xxx&#34;, sync = &#34;xxx&#34;)
-</code></pre></div><h3 id="cacheevict">@CacheEvict</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@CachePut(cacheNames = &#34;xxx&#34;, key = &#34;xxx&#34;,keyGenerator = &#34;xxx&#34;, CacheManager = &#34;xxx&#34;, condition = &#34;xxx&#34;, unless = &#34;xxx&#34;, sync = &#34;xxx&#34;)
+</span></span></code></pre></div><h3 id="cacheevict">@CacheEvict</h3>
 <p>该注解作用是删除缓存，需要指定 key</p>
 <ul>
 <li>allEntries:是否删除所有字段的缓存</li>
 <li>beforeInvocation:是否在方法之前执行</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@CacheEvict(cacheNames = &#34;xxx&#34;, key = &#34;xxx&#34;, allEntries = &#34;xxx&#34;, beforeInvocation=&#34;xxx&#34;)
-</code></pre></div><h3 id="cacheconfig">@CacheConfig</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@CacheEvict(cacheNames = &#34;xxx&#34;, key = &#34;xxx&#34;, allEntries = &#34;xxx&#34;, beforeInvocation=&#34;xxx&#34;)
+</span></span></code></pre></div><h3 id="cacheconfig">@CacheConfig</h3>
 <p><code>@CacheConfig </code>可指定公共key的生成策略</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// 公共的cacheNames (value) 可以统一写在类上面 这样就不用每缓存一个就起名字了
-// 公共的CacheManager
-@CacheConfig(cacheNames = &#34;xxx&#34;)
-public class RedisExampleController {
-  
-    @Caching(cacheable = {@Cacheable}, put = {@CachePut})
-    public Response&lt;Map&lt;String, Object&gt;&gt; test(){
-          //to do
-    }
-}
-</code></pre></div><h3 id="复合注解">复合注解</h3>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// 查询数据时 先去更新数据 在放到缓存中
-@Caching(cacheable = {@Cacheable}, put = {@CachePut})
-@Caching(cacheable = {@Cacheable}, put = {@CachePut}, evict = {@CacheEvict})
-</code></pre></div><h2 id="测试">测试</h2>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Autowired
-private RedisTemplate redisTemplate;
-
- @Test 
-public void demo(){
-
-    //常见redis类型数据操作 set zset 未列出
-        
-    //string 类型数据
-    redisTemplate.opsForValue().set(&#34;test&#34;,&#34;123&#34;);
-    redisTemplate.opsForValue().get(&#34;test&#34;) // 输出结果为123
-    
-   //list 数据类型
-   redisTemplate.opsForList().rightPushAll(&#34;list&#34;,new String[]{&#34;1&#34;,&#34;2&#34;,&#34;3&#34;});//从右边插入元素
-   redisTemplate.opsForList().range(&#34;list&#34;,0,-1);//获取所有元素
-   redisTemplate.opsForList().index(&#34;listRight&#34;,1);//获取下标为2的元素
-   redisTemplate.opsForList().rightPush(&#34;listRiht&#34;,&#34;1&#34;);//从右边插入 也可从左边插
-   redisTemplate.opsForList().leftPop(&#34;list&#34;);//从左边弹出元素 元素弹出将不存在
-
-   //hash
-   redisTemplate.opsForHash().hasKey(&#34;redisHash&#34;,&#34;111&#34;);//判断该hash key 是否存在
-   redisTemplate.opsForHash().put(&#34;redisHash&#34;,&#34;name&#34;,&#34;111&#34;);//存放 hash 数据
-   redisTemplate.opsForHash().keys(&#34;redisHash&#34;);//获取该key对应的hash值
-   redisTemplate.opsForHash().get(&#34;redisHash&#34;,&#34;age&#34;);//给定key 获取 hash 值
- 
- 
-}
-</code></pre></div></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// 公共的cacheNames (value) 可以统一写在类上面 这样就不用每缓存一个就起名字了
+</span></span><span class="line"><span class="cl">// 公共的CacheManager
+</span></span><span class="line"><span class="cl">@CacheConfig(cacheNames = &#34;xxx&#34;)
+</span></span><span class="line"><span class="cl">public class RedisExampleController {
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">    @Caching(cacheable = {@Cacheable}, put = {@CachePut})
+</span></span><span class="line"><span class="cl">    public Response&lt;Map&lt;String, Object&gt;&gt; test(){
+</span></span><span class="line"><span class="cl">          //to do
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h3 id="复合注解">复合注解</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// 查询数据时 先去更新数据 在放到缓存中
+</span></span><span class="line"><span class="cl">@Caching(cacheable = {@Cacheable}, put = {@CachePut})
+</span></span><span class="line"><span class="cl">@Caching(cacheable = {@Cacheable}, put = {@CachePut}, evict = {@CacheEvict})
+</span></span></code></pre></div><h2 id="测试">测试</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Autowired
+</span></span><span class="line"><span class="cl">private RedisTemplate redisTemplate;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> @Test 
+</span></span><span class="line"><span class="cl">public void demo(){
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    //常见redis类型数据操作 set zset 未列出
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    //string 类型数据
+</span></span><span class="line"><span class="cl">    redisTemplate.opsForValue().set(&#34;test&#34;,&#34;123&#34;);
+</span></span><span class="line"><span class="cl">    redisTemplate.opsForValue().get(&#34;test&#34;) // 输出结果为123
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">   //list 数据类型
+</span></span><span class="line"><span class="cl">   redisTemplate.opsForList().rightPushAll(&#34;list&#34;,new String[]{&#34;1&#34;,&#34;2&#34;,&#34;3&#34;});//从右边插入元素
+</span></span><span class="line"><span class="cl">   redisTemplate.opsForList().range(&#34;list&#34;,0,-1);//获取所有元素
+</span></span><span class="line"><span class="cl">   redisTemplate.opsForList().index(&#34;listRight&#34;,1);//获取下标为2的元素
+</span></span><span class="line"><span class="cl">   redisTemplate.opsForList().rightPush(&#34;listRiht&#34;,&#34;1&#34;);//从右边插入 也可从左边插
+</span></span><span class="line"><span class="cl">   redisTemplate.opsForList().leftPop(&#34;list&#34;);//从左边弹出元素 元素弹出将不存在
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   //hash
+</span></span><span class="line"><span class="cl">   redisTemplate.opsForHash().hasKey(&#34;redisHash&#34;,&#34;111&#34;);//判断该hash key 是否存在
+</span></span><span class="line"><span class="cl">   redisTemplate.opsForHash().put(&#34;redisHash&#34;,&#34;name&#34;,&#34;111&#34;);//存放 hash 数据
+</span></span><span class="line"><span class="cl">   redisTemplate.opsForHash().keys(&#34;redisHash&#34;);//获取该key对应的hash值
+</span></span><span class="line"><span class="cl">   redisTemplate.opsForHash().get(&#34;redisHash&#34;,&#34;age&#34;);//给定key 获取 hash 值
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div></div>
                     <div class="post_footer">
                         <div class="meta">
                             <div class="info">

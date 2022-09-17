@@ -663,17 +663,17 @@
 <h3 id="早期垃圾回收">早期垃圾回收</h3>
 <p>在早期的C/C++时代，垃圾回收基本上是手工进行的。
 开发人员可以使用 <code>new</code> 关键字进行内存申请，并使用 <code>delete</code> 关键字进行内存释放。比如以下代码：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">MibBridge *pBridge= new cmBaseGroupBridge();
-//如果注册失败，使用Delete释放该对象所占内存区域
-if(pBridge-&gt;Register (kDestroy) != NO ERROR）
-	delete pBridge;
-</code></pre></div><p>这种方式可以灵活控制内存释放的时间，但是会给开发人员带来频繁申请和释放内存的管理负担。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">MibBridge *pBridge= new cmBaseGroupBridge();
+</span></span><span class="line"><span class="cl">//如果注册失败，使用Delete释放该对象所占内存区域
+</span></span><span class="line"><span class="cl">if(pBridge-&gt;Register (kDestroy) != NO ERROR）
+</span></span><span class="line"><span class="cl">	delete pBridge;
+</span></span></code></pre></div><p>这种方式可以灵活控制内存释放的时间，但是会给开发人员带来频繁申请和释放内存的管理负担。</p>
 <p>倘若有一处内存区间由于程序员编码的问题忘记被回收，那么就会产生<strong>内存泄漏</strong>;
 垃圾对象永远无法被清除，随着系统运行时间的不断增长，垃圾对象所耗内存可能持续上升，直到出现内存溢出并造成应用程序崩溃。</p>
 <p>有了垃圾回收机制后，上述代码极有可能变成这样</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">MibBridge *pBridge=new cmBaseGroupBridge(); 
-pBridge-&gt;Register(kDestroy);
-</code></pre></div><p>现在，除了Java以外，C#、Python、Ruby等语言都使用了自动垃圾回收的思想，也是未来发展趋势，可以说这种自动化的内存分配和来及回收方式已经成为了线代开发语言必备的标准。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">MibBridge *pBridge=new cmBaseGroupBridge(); 
+</span></span><span class="line"><span class="cl">pBridge-&gt;Register(kDestroy);
+</span></span></code></pre></div><p>现在，除了Java以外，C#、Python、Ruby等语言都使用了自动垃圾回收的思想，也是未来发展趋势，可以说这种自动化的内存分配和来及回收方式已经成为了线代开发语言必备的标准。</p>
 <h3 id="java垃圾回收机制httpsdocsoraclecomjavase8docstechnotesguidesvmgctuningtochtml"><a href="https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/toc.html">Java垃圾回收机制</a></h3>
 <p>自动内存管理，无需开发人员手动参与内存的分配与回收，这样降低<strong>内存泄漏</strong>和<strong>内存溢出</strong>的风险;
 没有垃圾回收器，java也会和c++一样，各种悬垂指针，野指针，泄露问题让你头疼不已。</p>

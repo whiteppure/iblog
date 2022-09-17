@@ -966,16 +966,16 @@
 例如：用户注册送积分事务、创建订单减少库存、银行转账事务。</p>
 <p>本地事务与分布式事务理解：</p>
 <p>1.本地事务：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">begin transation;
-// 1.本地数据库操作：张三减少金额
-// 2.本地数据库操作：李四增加金额
-commit transation;
-</code></pre></div><p>2.分布式事务：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">begin transation;
-// 1.本地数据库操作：张三减少金额
-// 2.远程调用：李四增加金额
-commit transation;
-</code></pre></div><p>在<code>2.分布式事务</code>中如果李四增加金额成功，但是由于网络原因，远程调用并没有返回，此时本地事务提交失败就会回滚张三减少金额的操作，此时张三李四的金额就不一致了。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">begin transation;
+</span></span><span class="line"><span class="cl">// 1.本地数据库操作：张三减少金额
+</span></span><span class="line"><span class="cl">// 2.本地数据库操作：李四增加金额
+</span></span><span class="line"><span class="cl">commit transation;
+</span></span></code></pre></div><p>2.分布式事务：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">begin transation;
+</span></span><span class="line"><span class="cl">// 1.本地数据库操作：张三减少金额
+</span></span><span class="line"><span class="cl">// 2.远程调用：李四增加金额
+</span></span><span class="line"><span class="cl">commit transation;
+</span></span></code></pre></div><p>在<code>2.分布式事务</code>中如果李四增加金额成功，但是由于网络原因，远程调用并没有返回，此时本地事务提交失败就会回滚张三减少金额的操作，此时张三李四的金额就不一致了。</p>
 <p>因此在分布式架构的基础上，传统数据库事务就无法使用了，张三和李四的账户不在同一个数据库中甚至不在一个系统中，实现转账事务需要通过远程调用，由于网络的问题就会导致分布式事务的问题。</p>
 <h3 id="分布式事务产生场景">分布式事务产生场景</h3>
 <ol>

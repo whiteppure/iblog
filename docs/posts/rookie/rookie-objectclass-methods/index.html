@@ -698,14 +698,14 @@
                     <div class="post_content markdown"><h2 id="概览">概览</h2>
 <p>Object 类位于 <code>java.lang</code> 包中，编译时会自动导入，我们创建一个类时，如果没有明确继承一个父类，那么它就会自动继承<code>Object</code>，成为<code>Object</code>的子类。</p>
 <p><code>Object</code>类可以显示继承，也可以隐式继承,效果都是一样的。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">class A extends Object{
-    // to do
-}
-
-class A {
-    // to do
-}
-</code></pre></div><p>Java <code>Object</code>类是所有类的父类，也就是说 Java 的所有类都继承了<code>Object</code>，子类可以使用<code>Object</code>的所有方法。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">class A extends Object{
+</span></span><span class="line"><span class="cl">    // to do
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">class A {
+</span></span><span class="line"><span class="cl">    // to do
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>Java <code>Object</code>类是所有类的父类，也就是说 Java 的所有类都继承了<code>Object</code>，子类可以使用<code>Object</code>的所有方法。</p>
 <table>
 <thead>
 <tr>
@@ -755,10 +755,10 @@ class A {
 <h2 id="equals">equals</h2>
 <p><code>Object</code>类中的<code>equals()</code>方法作用是比较两个对象，是判断两个对象引用指向的是同一个对象，即比较两个对象的内存地址是否相等。</p>
 <p><code>Object</code>类中的<code>equals()</code>源码如下</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public boolean equals(Object obj) {
-        return (this == obj);
-    }
-</code></pre></div><h3 id="等价关系">等价关系</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public boolean equals(Object obj) {
+</span></span><span class="line"><span class="cl">        return (this == obj);
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><h3 id="等价关系">等价关系</h3>
 <p>在Java规范中，<code>equals()</code>方法的使用存在如下特性：</p>
 <ul>
 <li>自反性：<code>x.equals(x); // true</code></li>
@@ -772,11 +772,11 @@ class A {
 <li>对于基本类型，<code>==</code> 判断两个值是否相等，基本类型没有 <code>equals() </code>方法。</li>
 <li>对于引用类型，<code>==</code> 判断两个变量是否引用同一个对象，而 <code>equals()</code>判断引用的对象是否等价。</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">Integer x = new Integer(1);
-Integer y = new Integer(1);
-System.out.println(x.equals(y)); // true
-System.out.println(x == y);      // false
-</code></pre></div><p><code>equals()</code>作用是判断两个对象是否相等,但一般有两种情况:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Integer x = new Integer(1);
+</span></span><span class="line"><span class="cl">Integer y = new Integer(1);
+</span></span><span class="line"><span class="cl">System.out.println(x.equals(y)); // true
+</span></span><span class="line"><span class="cl">System.out.println(x == y);      // false
+</span></span></code></pre></div><p><code>equals()</code>作用是判断两个对象是否相等,但一般有两种情况:</p>
 <ol>
 <li>类没有覆盖<code>equals</code>方法,则相当于通过 <code>==</code>来比较这两个对象的地址;</li>
 <li>类覆盖<code>equals</code>方法,一般我们通过<code>equals()</code>来比较两个对象的内容是否相等,相等则返回true；</li>
@@ -790,31 +790,31 @@ System.out.println(x == y);      // false
 <li>将<code>Object</code>对象进行转型；</li>
 <li>判断每个关键域是否相等;</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class EqualExample {
-
-    private int x;
-    private int y;
-    private int z;
-
-    public EqualExample(int x, int y, int z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        EqualExample that = (EqualExample) o;
-
-        if (x != that.x) return false;
-        if (y != that.y) return false;
-        return z == that.z;
-    }
-}
-</code></pre></div><h2 id="hashcode">hashCode</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class EqualExample {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private int x;
+</span></span><span class="line"><span class="cl">    private int y;
+</span></span><span class="line"><span class="cl">    private int z;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public EqualExample(int x, int y, int z) {
+</span></span><span class="line"><span class="cl">        this.x = x;
+</span></span><span class="line"><span class="cl">        this.y = y;
+</span></span><span class="line"><span class="cl">        this.z = z;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    public boolean equals(Object o) {
+</span></span><span class="line"><span class="cl">        if (this == o) return true;
+</span></span><span class="line"><span class="cl">        if (o == null || getClass() != o.getClass()) return false;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        EqualExample that = (EqualExample) o;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        if (x != that.x) return false;
+</span></span><span class="line"><span class="cl">        if (y != that.y) return false;
+</span></span><span class="line"><span class="cl">        return z == that.z;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h2 id="hashcode">hashCode</h2>
 <p>在Java中<code>hashcode</code>方法是<code>Object</code>类的<code>native</code>方法，返回值为int类型，根据一定的规则将与对象相关的信息（比如对象的存储地址，对象的字段等）映射成一个数值，这个数值称作为hash值(散列值)。</p>
 <blockquote>
 <p><code>hashCode</code>通用约定:</p>
@@ -825,8 +825,8 @@ System.out.println(x == y);      // false
 </ul>
 </blockquote>
 <p><code>hashCode</code>方法源码：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public native int hashCode();
-</code></pre></div><p>根据这个方法的声明可知，该方法返回一个<code>int</code>类型的数值，并且是本地方法，因此在<code>Object</code>类中并没有给出具体的实现。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public native int hashCode();
+</span></span></code></pre></div><p>根据这个方法的声明可知，该方法返回一个<code>int</code>类型的数值，并且是本地方法，因此在<code>Object</code>类中并没有给出具体的实现。</p>
 <h3 id="使用场景">使用场景</h3>
 <p>对于包含容器类型的程序设计语言来说，基本上都会涉及到<code>hashCode</code>。在Java中也一样，<code>hashCode</code>方法的主要作用是为了配合基于散列的集合一起正常运行，这样的散列集合包括<code>HashSet、HashMap</code>以及<code>HashTable</code>。</p>
 <p>在集合中已经存在上万条数据或者更多的数据场景下向集合中插入对象时，如何判别在集合中是否已经存在该对象了？</p>
@@ -840,63 +840,61 @@ System.out.println(x == y);      // false
 <p><strong>所以在重写<code>hashCode</code>方法和<code>equals</code>方法的时候，如果对象中的数据易变，则最好在<code>equals</code>方法和<code>hashCode</code>方法中不要依赖于该字段。</strong></p>
 </blockquote>
 <p>如下代码</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) {
-        Person p1 = new Person(&#34;lucy&#34;, 22);
-        // 85134311
-        System.out.println(p1.hashCode());
-        HashMap&lt;Person, Integer&gt; hashMap = new HashMap&lt;&gt;();
-        hashMap.put(p1, 1);
-        p1.setAge(13);
-        // null
-        System.out.println(hashMap.get(p1));
-    }
-}
-
-class Person {
-    private String name;
-    private int age;
-
-    public Person(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    @Override
-    public int hashCode() {
-        return name.hashCode() * 37 + age;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return this.name.equals(((Person) obj).name) &amp;&amp; this.age == ((Person) obj).age;
-    }
-}
-
-</code></pre></div><h3 id="hashcode与equals">hashCode与equals</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        Person p1 = new Person(&#34;lucy&#34;, 22);
+</span></span><span class="line"><span class="cl">        // 85134311
+</span></span><span class="line"><span class="cl">        System.out.println(p1.hashCode());
+</span></span><span class="line"><span class="cl">        HashMap&lt;Person, Integer&gt; hashMap = new HashMap&lt;&gt;();
+</span></span><span class="line"><span class="cl">        hashMap.put(p1, 1);
+</span></span><span class="line"><span class="cl">        p1.setAge(13);
+</span></span><span class="line"><span class="cl">        // null
+</span></span><span class="line"><span class="cl">        System.out.println(hashMap.get(p1));
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">class Person {
+</span></span><span class="line"><span class="cl">    private String name;
+</span></span><span class="line"><span class="cl">    private int age;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public Person(String name, int age) {
+</span></span><span class="line"><span class="cl">        this.name = name;
+</span></span><span class="line"><span class="cl">        this.age = age;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public void setAge(int age) {
+</span></span><span class="line"><span class="cl">        this.age = age;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    public int hashCode() {
+</span></span><span class="line"><span class="cl">        return name.hashCode() * 37 + age;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    public boolean equals(Object obj) {
+</span></span><span class="line"><span class="cl">        return this.name.equals(((Person) obj).name) &amp;&amp; this.age == ((Person) obj).age;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h3 id="hashcode与equals">hashCode与equals</h3>
 <p><code>hashCode()</code>返回散列值，而<code>equals()</code>是用来判断两个对象是否等价。等价的两个对象散列值一定相同，但是散列值相同的两个对象不一定等价。</p>
 <p><code>equals()</code>地址比较是通过对象的哈希值来比较的。<code>hash</code>值是由<code>hashCode</code>方法产生的，<code>hashCode</code>属于<code>Object</code>类的本地方法,默认使用<code>==</code>比较两个对象,如果<code>equals()</code>相等<code>,hashcode</code>一定相等,如果<code>hashcode</code>相等,<code>equals</code>不一定相等。</p>
 <p>所以在覆盖 <code>equals()</code> 方法时应当总是覆盖<code>hashCode()</code>方法，保证等价的两个对象散列值也相等。</p>
 <p>下面的代码中，新建了两个等价的对象，并将它们添加到<code>HashSet</code>中。我们希望将这两个对象当成一样的，只在集合中添加一个对象，但是<strong>因为<code>EqualExample</code>没有实现<code>hashCode()</code>方法，因此这两个对象的散列值是不同的，最终导致集合添加了两个等价的对象。</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) {
-        EqualExample e1 = new EqualExample(1, 1, 1);
-        EqualExample e2 = new EqualExample(1, 1, 1);
-        // true
-        System.out.println(e1.equals(e2));
-        HashSet&lt;EqualExample&gt; set = new HashSet&lt;&gt;();
-        set.add(e1);
-        set.add(e2);
-        // 2
-        System.out.println(set.size());
-    }
-}
-
-</code></pre></div><p>所以<strong>在覆盖 <code>equals()</code>方法时应当总是覆盖<code>hashCode()</code>方法，保证等价的两个对象散列值也相等。</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        EqualExample e1 = new EqualExample(1, 1, 1);
+</span></span><span class="line"><span class="cl">        EqualExample e2 = new EqualExample(1, 1, 1);
+</span></span><span class="line"><span class="cl">        // true
+</span></span><span class="line"><span class="cl">        System.out.println(e1.equals(e2));
+</span></span><span class="line"><span class="cl">        HashSet&lt;EqualExample&gt; set = new HashSet&lt;&gt;();
+</span></span><span class="line"><span class="cl">        set.add(e1);
+</span></span><span class="line"><span class="cl">        set.add(e2);
+</span></span><span class="line"><span class="cl">        // 2
+</span></span><span class="line"><span class="cl">        System.out.println(set.size());
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>所以<strong>在覆盖 <code>equals()</code>方法时应当总是覆盖<code>hashCode()</code>方法，保证等价的两个对象散列值也相等。</strong></p>
 <h3 id="重写hashcode方法">重写hashCode方法</h3>
 <p>重写<code>hashCode</code>方法规则：</p>
 <ul>
@@ -914,150 +912,150 @@ class Person {
 <li>代入公式<code>result = result * 31 + c</code>，返回<code>result</code></li>
 </ul>
 <p>《Effective Java》的作者推荐使用基于17和31的散列码的算法:</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Override
-public int hashCode() {
-    int result = 17;
-    result = 31 * result + x;
-    result = 31 * result + y;
-    result = 31 * result + z;
-    return result;
-}
-</code></pre></div><p>Java 7新增的<code>Objects</code>类提供了计算<code>hashCode</code>的通用方法，可以很简洁实现<code>hashCode</code>方法：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Override
-public int hashCode() {
-    return Objects.hash(name,age);
-}
-</code></pre></div><h2 id="tostring">toString</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Override
+</span></span><span class="line"><span class="cl">public int hashCode() {
+</span></span><span class="line"><span class="cl">    int result = 17;
+</span></span><span class="line"><span class="cl">    result = 31 * result + x;
+</span></span><span class="line"><span class="cl">    result = 31 * result + y;
+</span></span><span class="line"><span class="cl">    result = 31 * result + z;
+</span></span><span class="line"><span class="cl">    return result;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>Java 7新增的<code>Objects</code>类提供了计算<code>hashCode</code>的通用方法，可以很简洁实现<code>hashCode</code>方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Override
+</span></span><span class="line"><span class="cl">public int hashCode() {
+</span></span><span class="line"><span class="cl">    return Objects.hash(name,age);
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h2 id="tostring">toString</h2>
 <p><code>toString</code>方法是<code>Object</code>类里定义的，返回只类型是<code>String</code>默认返回类名和它的引用地址:<code>ToStringExample@4554617c</code>这种形式，其中@后面的数值为散列码的无符号十六进制表示。</p>
 <p><code>Object</code>类<code>toString</code>源代码如下：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public String toString() {
-        return getClass().getName() + &#34;@&#34; + Integer.toHexString(hashCode());
-    }
-</code></pre></div><h3 id="重写tostring方法">重写toString方法</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public String toString() {
+</span></span><span class="line"><span class="cl">        return getClass().getName() + &#34;@&#34; + Integer.toHexString(hashCode());
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><h3 id="重写tostring方法">重写toString方法</h3>
 <p>当我们打印一个对象的引用时，实际是默认调用这个对象的<code>toString()</code>方法,当打印的对象所在类没有重写<code>Object</code>中的<code>toString()</code>方法时，默认调用的是<code>Object</code>类中<code>toString()</code>方法.返回此对象所在的类及对应的堆空间对象实体的首地址值。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) {
-        // object.ToStringDemo@511d50c0
-        System.out.println(new ToStringDemo());
-    }
-}
-class ToStringDemo {
-    private String name;
-}
-</code></pre></div><p>当我们打印对象所在类重写了<code>toString()</code>，调用的就是已经重写了的<code>toString()</code>方法，一般重写是将类对象的属性信息返回。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) {
-        ToStringDemo toStringDemo = new ToStringDemo();
-        toStringDemo.setName(&#34;lucy&#34;);
-        // ToStringDemo{name=&#39;lucy&#39;}
-        System.out.println(toStringDemo);
-    }
-}
-class ToStringDemo {
-    private String name;
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return &#34;ToStringDemo{&#34; +
-                &#34;name=&#39;&#34; + name + &#39;\&#39;&#39; +
-                &#39;}&#39;;
-    }
-}
-</code></pre></div><h3 id="使用">使用</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        // object.ToStringDemo@511d50c0
+</span></span><span class="line"><span class="cl">        System.out.println(new ToStringDemo());
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">class ToStringDemo {
+</span></span><span class="line"><span class="cl">    private String name;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>当我们打印对象所在类重写了<code>toString()</code>，调用的就是已经重写了的<code>toString()</code>方法，一般重写是将类对象的属性信息返回。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        ToStringDemo toStringDemo = new ToStringDemo();
+</span></span><span class="line"><span class="cl">        toStringDemo.setName(&#34;lucy&#34;);
+</span></span><span class="line"><span class="cl">        // ToStringDemo{name=&#39;lucy&#39;}
+</span></span><span class="line"><span class="cl">        System.out.println(toStringDemo);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">class ToStringDemo {
+</span></span><span class="line"><span class="cl">    private String name;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public void setName(String name) {
+</span></span><span class="line"><span class="cl">        this.name = name;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    public String toString() {
+</span></span><span class="line"><span class="cl">        return &#34;ToStringDemo{&#34; +
+</span></span><span class="line"><span class="cl">                &#34;name=&#39;&#34; + name + &#39;\&#39;&#39; +
+</span></span><span class="line"><span class="cl">                &#39;}&#39;;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h3 id="使用">使用</h3>
 <p>在进行String类与其他类型的连接操作时，自动调用<code>toString()</code>方法：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) {
-        Date time = new Date();
-        System.out.println(&#34;time = &#34; + time);//相当于下一行代码
-        System.out.println(&#34;time = &#34; + time.toString());
-    }
-}
-</code></pre></div><p>在实际应用中，可以根据需要在用户自定义类型中重写<code>toString()</code>方法:</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) {
-        // null 没有toString()方法 *会报错*
-        Object var0 = null;
-        System.out.println(var0.toString());
-
-        // 布尔型数据true和false返回对应的&#39;true&#39;和&#39;false&#39;
-        Boolean var1 = false;
-        Boolean var2 = true;
-        System.out.println(var1.toString());
-        System.out.println(var2.toString());
-
-        // 字符串类型原值返回
-        String var3 = &#34;string&#34;;
-        System.out.println(var3.toString());
-
-        // 正浮点数及NaN、Infinity加引号返回
-        Double var4 = 1.23d;
-        System.out.println(var4.toString());
-        Double nan = Double.NaN;
-        System.out.println(nan.toString());
-        Double negativeInfinity = Double.NEGATIVE_INFINITY;
-        Double positiveInfinity = Double.POSITIVE_INFINITY;
-        System.out.println(negativeInfinity.toString());
-        System.out.println(positiveInfinity.toString());
-
-        // 负浮点数或加&#39;+&#39;号的正浮点数直接跟上.toString()，相当于先运行toString()方法，再添加正负号，转换为数字
-        Double var5 = -1.23d;
-        Double var6 = +1.23d;
-        System.out.println(var5.toString());
-        System.out.println(var6.toString());
-    }
-}
-</code></pre></div><p>基本数据类型转换为<code>String</code>类型就是调用了对应包装类的<code>toString()</code>方法：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">int i = 10;
-System.out.println(&#34;i=&#34; + i);
-</code></pre></div><h2 id="clone">clone</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        Date time = new Date();
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;time = &#34; + time);//相当于下一行代码
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;time = &#34; + time.toString());
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>在实际应用中，可以根据需要在用户自定义类型中重写<code>toString()</code>方法:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        // null 没有toString()方法 *会报错*
+</span></span><span class="line"><span class="cl">        Object var0 = null;
+</span></span><span class="line"><span class="cl">        System.out.println(var0.toString());
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // 布尔型数据true和false返回对应的&#39;true&#39;和&#39;false&#39;
+</span></span><span class="line"><span class="cl">        Boolean var1 = false;
+</span></span><span class="line"><span class="cl">        Boolean var2 = true;
+</span></span><span class="line"><span class="cl">        System.out.println(var1.toString());
+</span></span><span class="line"><span class="cl">        System.out.println(var2.toString());
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // 字符串类型原值返回
+</span></span><span class="line"><span class="cl">        String var3 = &#34;string&#34;;
+</span></span><span class="line"><span class="cl">        System.out.println(var3.toString());
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // 正浮点数及NaN、Infinity加引号返回
+</span></span><span class="line"><span class="cl">        Double var4 = 1.23d;
+</span></span><span class="line"><span class="cl">        System.out.println(var4.toString());
+</span></span><span class="line"><span class="cl">        Double nan = Double.NaN;
+</span></span><span class="line"><span class="cl">        System.out.println(nan.toString());
+</span></span><span class="line"><span class="cl">        Double negativeInfinity = Double.NEGATIVE_INFINITY;
+</span></span><span class="line"><span class="cl">        Double positiveInfinity = Double.POSITIVE_INFINITY;
+</span></span><span class="line"><span class="cl">        System.out.println(negativeInfinity.toString());
+</span></span><span class="line"><span class="cl">        System.out.println(positiveInfinity.toString());
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // 负浮点数或加&#39;+&#39;号的正浮点数直接跟上.toString()，相当于先运行toString()方法，再添加正负号，转换为数字
+</span></span><span class="line"><span class="cl">        Double var5 = -1.23d;
+</span></span><span class="line"><span class="cl">        Double var6 = +1.23d;
+</span></span><span class="line"><span class="cl">        System.out.println(var5.toString());
+</span></span><span class="line"><span class="cl">        System.out.println(var6.toString());
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>基本数据类型转换为<code>String</code>类型就是调用了对应包装类的<code>toString()</code>方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">int i = 10;
+</span></span><span class="line"><span class="cl">System.out.println(&#34;i=&#34; + i);
+</span></span></code></pre></div><h2 id="clone">clone</h2>
 <p>在Java中可以使用<code>clone</code>方法来创建对象：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> protected native Object clone() throws CloneNotSupportedException;
-</code></pre></div><p>如何对对象进行克隆:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> protected native Object clone() throws CloneNotSupportedException;
+</span></span></code></pre></div><p>如何对对象进行克隆:</p>
 <ul>
 <li>实现<code>Cloneable</code>接口，这是一个标记接口，自身没有方法</li>
 <li>覆盖<code>clone()</code>方法，可见性提升为<code>public</code></li>
 </ul>
 <h3 id="cloneable接口">Cloneable接口</h3>
 <p><code>clone()</code>是 <code>Object</code> 的 <code>protected</code> 方法，它不是被 <code>public</code>修饰；一个类不显式的去重写<code>clone()</code>，其它类就不能直接去调用该类实例的 <code>clone()</code>方法：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class CloneExample {
-    private int a;
-    private int b;
-}
-CloneExample e1 = new CloneExample();
-// CloneExample e2 = e1.clone(); // &#39;clone()&#39; has protected access in &#39;java.lang.Object&#39;
-</code></pre></div><p>重写<code>clone()</code>方法得到以下实现：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class CloneExample {
-    private int a;
-    private int b;
-
-    @Override
-    public CloneExample clone() throws CloneNotSupportedException {
-        return (CloneExample)super.clone();
-    }
-}
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">CloneExample e1 = new CloneExample();
-try {
-    CloneExample e2 = e1.clone();
-} catch (CloneNotSupportedException e) {
-    e.printStackTrace();
-}
-</code></pre></div><p>以上抛出了 <code>java.lang.CloneNotSupportedException: CloneExample</code>，这是因为 <code>CloneExample</code> 没有实现 <code>Cloneable</code> 接口。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class CloneExample {
+</span></span><span class="line"><span class="cl">    private int a;
+</span></span><span class="line"><span class="cl">    private int b;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">CloneExample e1 = new CloneExample();
+</span></span><span class="line"><span class="cl">// CloneExample e2 = e1.clone(); // &#39;clone()&#39; has protected access in &#39;java.lang.Object&#39;
+</span></span></code></pre></div><p>重写<code>clone()</code>方法得到以下实现：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class CloneExample {
+</span></span><span class="line"><span class="cl">    private int a;
+</span></span><span class="line"><span class="cl">    private int b;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    public CloneExample clone() throws CloneNotSupportedException {
+</span></span><span class="line"><span class="cl">        return (CloneExample)super.clone();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">CloneExample e1 = new CloneExample();
+</span></span><span class="line"><span class="cl">try {
+</span></span><span class="line"><span class="cl">    CloneExample e2 = e1.clone();
+</span></span><span class="line"><span class="cl">} catch (CloneNotSupportedException e) {
+</span></span><span class="line"><span class="cl">    e.printStackTrace();
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>以上抛出了 <code>java.lang.CloneNotSupportedException: CloneExample</code>，这是因为 <code>CloneExample</code> 没有实现 <code>Cloneable</code> 接口。</p>
 <p>应该注意的是，<code>clone()</code> 方法并不是 <code>Cloneable</code> 接口的方法，而是 <code>Object</code> 的一个 <code>protected</code> 方法。</p>
 <p><code>Cloneable</code> 接口只是规定，如果一个类没有实现 <code>Cloneable</code> 接口又调用了 <code>clone()</code> 方法，就会抛出 <code>CloneNotSupportedException</code>。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class CloneExample implements Cloneable {
-    private int a;
-    private int b;
-
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-}
-</code></pre></div><h3 id="浅拷贝与深拷贝">浅拷贝与深拷贝</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class CloneExample implements Cloneable {
+</span></span><span class="line"><span class="cl">    private int a;
+</span></span><span class="line"><span class="cl">    private int b;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    public Object clone() throws CloneNotSupportedException {
+</span></span><span class="line"><span class="cl">        return super.clone();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h3 id="浅拷贝与深拷贝">浅拷贝与深拷贝</h3>
 <ul>
 <li>浅拷贝：被复制对象的所有值属性都含有与原来对象的相同，而所有的对象引用属性仍然指向原来的对象。</li>
 <li>深拷贝：在浅拷贝的基础上，所有引用其他对象的变量也进行了<code>clone</code>，并指向被复制过的新对象。</li>
@@ -1065,125 +1063,122 @@ try {
 <p>如果一个被复制的属性都是基本类型，那么只需要实现当前类的<code>cloneable</code>机制就可以了，此为浅拷贝。</p>
 <p>如果被复制对象的属性包含其他实体类对象引用，那么这些实体类对象都需要实现<code>cloneable</code>接口并覆盖<code>clone()</code>方法。</p>
 <h4 id="浅拷贝">浅拷贝</h4>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class ShallowCloneExample implements Cloneable {
-
-    private int[] arr;
-
-    public ShallowCloneExample() {
-        arr = new int[10];
-        for (int i = 0; i &lt; arr.length; i++) {
-            arr[i] = i;
-        }
-    }
-
-    public void set(int index, int value) {
-        arr[index] = value;
-    }
-
-    public int get(int index) {
-        return arr[index];
-    }
-
-    @Override
-    protected ShallowCloneExample clone() throws CloneNotSupportedException {
-        return (ShallowCloneExample) super.clone();
-    }
-}
-
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">ShallowCloneExample e1 = new ShallowCloneExample();
-ShallowCloneExample e2 = null;
-try {
-    e2 = e1.clone();
-} catch (CloneNotSupportedException e) {
-    e.printStackTrace();
-}
-e1.set(2, 222);
-System.out.println(e2.get(2)); // 222
-</code></pre></div><h4 id="深拷贝">深拷贝</h4>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class DeepCloneExample implements Cloneable {
-
-    private int[] arr;
-
-    public DeepCloneExample() {
-        arr = new int[10];
-        for (int i = 0; i &lt; arr.length; i++) {
-            arr[i] = i;
-        }
-    }
-
-    public void set(int index, int value) {
-        arr[index] = value;
-    }
-
-    public int get(int index) {
-        return arr[index];
-    }
-
-    @Override
-    protected DeepCloneExample clone() throws CloneNotSupportedException {
-        DeepCloneExample result = (DeepCloneExample) super.clone();
-        result.arr = new int[arr.length];
-        for (int i = 0; i &lt; arr.length; i++) {
-            result.arr[i] = arr[i];
-        }
-        return result;
-    }
-}
-
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">DeepCloneExample e1 = new DeepCloneExample();
-DeepCloneExample e2 = null;
-try {
-    e2 = e1.clone();
-} catch (CloneNotSupportedException e) {
-    e.printStackTrace();
-}
-e1.set(2, 222);
-System.out.println(e2.get(2)); // 2
-</code></pre></div><h3 id="clone的替代">clone的替代</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class ShallowCloneExample implements Cloneable {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private int[] arr;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public ShallowCloneExample() {
+</span></span><span class="line"><span class="cl">        arr = new int[10];
+</span></span><span class="line"><span class="cl">        for (int i = 0; i &lt; arr.length; i++) {
+</span></span><span class="line"><span class="cl">            arr[i] = i;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public void set(int index, int value) {
+</span></span><span class="line"><span class="cl">        arr[index] = value;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public int get(int index) {
+</span></span><span class="line"><span class="cl">        return arr[index];
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    protected ShallowCloneExample clone() throws CloneNotSupportedException {
+</span></span><span class="line"><span class="cl">        return (ShallowCloneExample) super.clone();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ShallowCloneExample e1 = new ShallowCloneExample();
+</span></span><span class="line"><span class="cl">ShallowCloneExample e2 = null;
+</span></span><span class="line"><span class="cl">try {
+</span></span><span class="line"><span class="cl">    e2 = e1.clone();
+</span></span><span class="line"><span class="cl">} catch (CloneNotSupportedException e) {
+</span></span><span class="line"><span class="cl">    e.printStackTrace();
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">e1.set(2, 222);
+</span></span><span class="line"><span class="cl">System.out.println(e2.get(2)); // 222
+</span></span></code></pre></div><h4 id="深拷贝">深拷贝</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class DeepCloneExample implements Cloneable {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private int[] arr;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public DeepCloneExample() {
+</span></span><span class="line"><span class="cl">        arr = new int[10];
+</span></span><span class="line"><span class="cl">        for (int i = 0; i &lt; arr.length; i++) {
+</span></span><span class="line"><span class="cl">            arr[i] = i;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public void set(int index, int value) {
+</span></span><span class="line"><span class="cl">        arr[index] = value;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public int get(int index) {
+</span></span><span class="line"><span class="cl">        return arr[index];
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    protected DeepCloneExample clone() throws CloneNotSupportedException {
+</span></span><span class="line"><span class="cl">        DeepCloneExample result = (DeepCloneExample) super.clone();
+</span></span><span class="line"><span class="cl">        result.arr = new int[arr.length];
+</span></span><span class="line"><span class="cl">        for (int i = 0; i &lt; arr.length; i++) {
+</span></span><span class="line"><span class="cl">            result.arr[i] = arr[i];
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        return result;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">DeepCloneExample e1 = new DeepCloneExample();
+</span></span><span class="line"><span class="cl">DeepCloneExample e2 = null;
+</span></span><span class="line"><span class="cl">try {
+</span></span><span class="line"><span class="cl">    e2 = e1.clone();
+</span></span><span class="line"><span class="cl">} catch (CloneNotSupportedException e) {
+</span></span><span class="line"><span class="cl">    e.printStackTrace();
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">e1.set(2, 222);
+</span></span><span class="line"><span class="cl">System.out.println(e2.get(2)); // 2
+</span></span></code></pre></div><h3 id="clone的替代">clone的替代</h3>
 <p>使用 <code>clone()</code> 方法来拷贝一个对象即复杂又有风险，它会抛出异常，并且还需要类型转换。《Effective Java》 书上讲到，最好不要去使用 <code>clone()</code>，可以使用拷贝构造函数或者拷贝工厂来拷贝一个对象。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class CloneConstructorExample {
-
-    private int[] arr;
-
-    public CloneConstructorExample() {
-        arr = new int[10];
-        for (int i = 0; i &lt; arr.length; i++) {
-            arr[i] = i;
-        }
-    }
-
-    public CloneConstructorExample(CloneConstructorExample original) {
-        arr = new int[original.arr.length];
-        for (int i = 0; i &lt; original.arr.length; i++) {
-            arr[i] = original.arr[i];
-        }
-    }
-
-    public void set(int index, int value) {
-        arr[index] = value;
-    }
-
-    public int get(int index) {
-        return arr[index];
-    }
-}
-
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">CloneConstructorExample e1 = new CloneConstructorExample();
-CloneConstructorExample e2 = new CloneConstructorExample(e1);
-e1.set(2, 222);
-System.out.println(e2.get(2)); // 2
-</code></pre></div><h2 id="finalize">finalize</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class CloneConstructorExample {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private int[] arr;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public CloneConstructorExample() {
+</span></span><span class="line"><span class="cl">        arr = new int[10];
+</span></span><span class="line"><span class="cl">        for (int i = 0; i &lt; arr.length; i++) {
+</span></span><span class="line"><span class="cl">            arr[i] = i;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public CloneConstructorExample(CloneConstructorExample original) {
+</span></span><span class="line"><span class="cl">        arr = new int[original.arr.length];
+</span></span><span class="line"><span class="cl">        for (int i = 0; i &lt; original.arr.length; i++) {
+</span></span><span class="line"><span class="cl">            arr[i] = original.arr[i];
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public void set(int index, int value) {
+</span></span><span class="line"><span class="cl">        arr[index] = value;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public int get(int index) {
+</span></span><span class="line"><span class="cl">        return arr[index];
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">CloneConstructorExample e1 = new CloneConstructorExample();
+</span></span><span class="line"><span class="cl">CloneConstructorExample e2 = new CloneConstructorExample(e1);
+</span></span><span class="line"><span class="cl">e1.set(2, 222);
+</span></span><span class="line"><span class="cl">System.out.println(e2.get(2)); // 2
+</span></span></code></pre></div><h2 id="finalize">finalize</h2>
 <p><code>finalize()</code>方法是Java提供的对象终止机制，允许开发人员提供对象被销毁之前的自定义处理逻辑。当垃圾回收器发现没有引用指向一个对象，即：垃圾回收此对象之前，总会先调用这个对象的<code>finalize()</code>方法。</p>
 <p><code>finalize()</code> 方法允许在子类中被重写，用于在对象被回收时进行资源释放。通常在这个方法中进行一些资源释放和清理的工作，比如关闭文件、套接字和数据库连接等。</p>
 <p>文档注释大意：当GC确定不再有对对象的引用时，由垃圾收集器在对象上调用。子类重写<code>finalize</code>方法来释放系统资源或执行其他清理。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">   /**
-     * Called by the garbage collector on an object when garbage collection
-     * determines that there are no more references to the object.
-     * A subclass overrides the {@code finalize} method to dispose of
-     * system resources or to perform other cleanup.
-     */
-    protected void finalize() throws Throwable { }
-</code></pre></div><p>简而言之，<code>finalize</code>方法是与Java中的垃圾回收器有关系。即：当一个对象变成一个垃圾对象的时候，如果此对象的内存被回收，那么就会调用该类中定义的<code>finalize</code>方法。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">   /**
+</span></span><span class="line"><span class="cl">     * Called by the garbage collector on an object when garbage collection
+</span></span><span class="line"><span class="cl">     * determines that there are no more references to the object.
+</span></span><span class="line"><span class="cl">     * A subclass overrides the {@code finalize} method to dispose of
+</span></span><span class="line"><span class="cl">     * system resources or to perform other cleanup.
+</span></span><span class="line"><span class="cl">     */
+</span></span><span class="line"><span class="cl">    protected void finalize() throws Throwable { }
+</span></span></code></pre></div><p>简而言之，<code>finalize</code>方法是与Java中的垃圾回收器有关系。即：当一个对象变成一个垃圾对象的时候，如果此对象的内存被回收，那么就会调用该类中定义的<code>finalize</code>方法。</p>
 <p>当一个对象可被回收时，就需要执行该对象的 <code>finalize()</code> 方法，那么就有可能在该方法中让对象重新被引用，从而实现自救。自救只能进行一次，如果回收的对象之前调用了 <code>finalize()</code> 方法自救，后面回收时不会再调用该方法。</p>
 <p><strong>永远不要主动调用某个对象的<code>finalize</code>方法应该交给垃圾回收机制调用的原因：</strong></p>
 <ul>
@@ -1212,57 +1207,57 @@ System.out.println(e2.get(2)); // 2
 </li>
 </ul>
 <p>代码演示对象能否被回收：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-
-    public static MainTest var;
-
-    /**
-     * 此方法只能被调用一次
-     * 可对该方法进行注释，来测试finalize方法是否能复活对象
-     */
-    @Override
-    protected void finalize() throws Throwable {
-        System.out.println(&#34;调用当前类重写的finalize()方法&#34;);
-        // 复活对象 让当前带回收对象重新与引用链中的对象建立联系
-        var = this;
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        var = new MainTest();
-        var = null;
-        System.gc();
-        System.out.println(&#34;-----------------第一次gc操作------------&#34;);
-        // 因为Finalizer线程的优先级比较低，暂停2秒，以等待它
-        Thread.sleep(2000);
-        if (var == null) {
-            System.out.println(&#34;对象已经死了&#34;);
-            // 如果第一次对象就死亡了 就终止
-            return;
-        } else {
-            System.out.println(&#34;对象还活着&#34;);
-        }
-
-        System.out.println(&#34;-----------------第二次gc操作------------&#34;);
-        var = null;
-        System.gc();
-        // 下面代码和上面代码是一样的，但是 对象却自救失败了
-        Thread.sleep(2000);
-        if (var == null) {
-            System.out.println(&#34;对象已经死了&#34;);
-        } else {
-            System.out.println(&#34;对象还活着&#34;);
-        }
-    }
-
-}
-</code></pre></div><h2 id="getclass">getClass</h2>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    /**
-     * Returns the runtime class of this {@code Object}. The returned
-     * {@code Class} object is the object that is locked by {@code
-     * static synchronized} methods of the represented class.
-     */
-     public final native Class&lt;?&gt; getClass();
-</code></pre></div><p>大意：返回这个对象的运行时类。返回的<code>Class</code>对象是被表示类的<code>static synchronized</code>方法锁定的对象。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static MainTest var;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /**
+</span></span><span class="line"><span class="cl">     * 此方法只能被调用一次
+</span></span><span class="line"><span class="cl">     * 可对该方法进行注释，来测试finalize方法是否能复活对象
+</span></span><span class="line"><span class="cl">     */
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    protected void finalize() throws Throwable {
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;调用当前类重写的finalize()方法&#34;);
+</span></span><span class="line"><span class="cl">        // 复活对象 让当前带回收对象重新与引用链中的对象建立联系
+</span></span><span class="line"><span class="cl">        var = this;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) throws InterruptedException {
+</span></span><span class="line"><span class="cl">        var = new MainTest();
+</span></span><span class="line"><span class="cl">        var = null;
+</span></span><span class="line"><span class="cl">        System.gc();
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;-----------------第一次gc操作------------&#34;);
+</span></span><span class="line"><span class="cl">        // 因为Finalizer线程的优先级比较低，暂停2秒，以等待它
+</span></span><span class="line"><span class="cl">        Thread.sleep(2000);
+</span></span><span class="line"><span class="cl">        if (var == null) {
+</span></span><span class="line"><span class="cl">            System.out.println(&#34;对象已经死了&#34;);
+</span></span><span class="line"><span class="cl">            // 如果第一次对象就死亡了 就终止
+</span></span><span class="line"><span class="cl">            return;
+</span></span><span class="line"><span class="cl">        } else {
+</span></span><span class="line"><span class="cl">            System.out.println(&#34;对象还活着&#34;);
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;-----------------第二次gc操作------------&#34;);
+</span></span><span class="line"><span class="cl">        var = null;
+</span></span><span class="line"><span class="cl">        System.gc();
+</span></span><span class="line"><span class="cl">        // 下面代码和上面代码是一样的，但是 对象却自救失败了
+</span></span><span class="line"><span class="cl">        Thread.sleep(2000);
+</span></span><span class="line"><span class="cl">        if (var == null) {
+</span></span><span class="line"><span class="cl">            System.out.println(&#34;对象已经死了&#34;);
+</span></span><span class="line"><span class="cl">        } else {
+</span></span><span class="line"><span class="cl">            System.out.println(&#34;对象还活着&#34;);
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h2 id="getclass">getClass</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    /**
+</span></span><span class="line"><span class="cl">     * Returns the runtime class of this {@code Object}. The returned
+</span></span><span class="line"><span class="cl">     * {@code Class} object is the object that is locked by {@code
+</span></span><span class="line"><span class="cl">     * static synchronized} methods of the represented class.
+</span></span><span class="line"><span class="cl">     */
+</span></span><span class="line"><span class="cl">     public final native Class&lt;?&gt; getClass();
+</span></span></code></pre></div><p>大意：返回这个对象的运行时类。返回的<code>Class</code>对象是被表示类的<code>static synchronized</code>方法锁定的对象。</p>
 <p><code>getClass</code>方法返回对象运行时的类。返回的类型是<code>Class</code>类型的对象。可以通过这个<code>Class</code>对象来创建调用这个方法的对象和执行一些其他操作，这便是反射的入口。</p>
 <p>除了可以使用<code>getClass</code>来获取反射入口外，还有一种方法与<code>getClass()</code>方法极为相似：获取对象的<code>.class</code>属性。</p>
 <p>二者区别：</p>

@@ -315,63 +315,63 @@ Docker 将应用程序与该程序的依赖，打包在一个文件里面。运�
 <h2 id="安装">安装</h2>
 <p>以linux上安装为例</p>
 <p>1.安装依赖,docker依赖于系统的一些必要的工具</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">yum install -y yum-utils device-mapper-persistent-data lvm2
-</code></pre></div><p>2.添加软件源, 阿里云镜像(在阿里云镜像站上面可以找到docker-ce的软件源，使用国内的源速度比较快)</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
-</code></pre></div><p><a href="https://blog.csdn.net/zhuzz1030/article/details/80097553">3.安装docker-ce(社区版,免费)</a></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">yum clean allyum makecache fastyum -y install docker-ce
-</code></pre></div><p>4.启动服务</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> #service 命令的用法
-$ sudo service docker start
-
-#systemctl 命令的用法
-$ sudo systemctl start docker
-</code></pre></div><p>5.查看安装版</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">docker version
-</code></pre></div><p>6.测试,检查 docker 是否正确安装并运行 hello-world 镜像</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">docker run hello-world
-</code></pre></div><p>7.Docker 需要用户具有 sudo 权限，为了避免每次命令都输入sudo，可以把用户加入 Docker 用户组</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">sudo usermod -aG docker $USER
-</code></pre></div><h2 id="docker架构">docker架构</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">yum install -y yum-utils device-mapper-persistent-data lvm2
+</span></span></code></pre></div><p>2.添加软件源, 阿里云镜像(在阿里云镜像站上面可以找到docker-ce的软件源，使用国内的源速度比较快)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+</span></span></code></pre></div><p><a href="https://blog.csdn.net/zhuzz1030/article/details/80097553">3.安装docker-ce(社区版,免费)</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">yum clean allyum makecache fastyum -y install docker-ce
+</span></span></code></pre></div><p>4.启动服务</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> #service 命令的用法
+</span></span><span class="line"><span class="cl">$ sudo service docker start
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#systemctl 命令的用法
+</span></span><span class="line"><span class="cl">$ sudo systemctl start docker
+</span></span></code></pre></div><p>5.查看安装版</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker version
+</span></span></code></pre></div><p>6.测试,检查 docker 是否正确安装并运行 hello-world 镜像</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker run hello-world
+</span></span></code></pre></div><p>7.Docker 需要用户具有 sudo 权限，为了避免每次命令都输入sudo，可以把用户加入 Docker 用户组</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo usermod -aG docker $USER
+</span></span></code></pre></div><h2 id="docker架构">docker架构</h2>
 <p>docker架构分为三部分客户端,宿主机,注册中心</p>
 <p><img src="/iblog/posts/annex/images/application/docker%E6%9E%B6%E6%9E%84.png" alt="docker架构"></p>
 <p>例如：输入 <code>docker run mysql:5.6</code>命令,docker程序会从docker_host去找对应的镜像,
 如果mysql不存在则会去从register下载,下载完成后docker会自动给该镜像分配一个contains,mysql就会运行起来</p>
 <h2 id="docker基本操作">docker基本操作</h2>
 <p>以安装运行<code>nginx</code>为例</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// docker run 包括下载镜像(pull),创建容器(create),运行容器(start) 可用dock -h查看帮助
-// --rm 表明这是一个临时的容器,关闭的话会自动删除
-// --name 容器名称
-// -p 外部服务器端口映射docker容器端口
-docker run --rm --name myNginx -p 80:80 nginx:版本
-
-// 查看容器日志
-docker logs myNginx
-
-// 进入容器
-docker exec -it myNginx bash
-</code></pre></div><h3 id="docker常用命令">docker常用命令</h3>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// 查看当前运行的镜像
-docker ps
-
-//查看所有镜像
-docker ps -a
-
-//停止容器
-docker stop 容器名称
-
-// 删除镜像
-docker rmi 镜像名称
-
-//下载镜像 若不指定版本为最新版本
-docker pull 镜像:版本
-
-//查看当前本地仓库的镜像
-docker images
-
-//查看远程仓库镜像
-docker search 镜像名
-</code></pre></div><h2 id="相关链接">相关链接</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// docker run 包括下载镜像(pull),创建容器(create),运行容器(start) 可用dock -h查看帮助
+</span></span><span class="line"><span class="cl">// --rm 表明这是一个临时的容器,关闭的话会自动删除
+</span></span><span class="line"><span class="cl">// --name 容器名称
+</span></span><span class="line"><span class="cl">// -p 外部服务器端口映射docker容器端口
+</span></span><span class="line"><span class="cl">docker run --rm --name myNginx -p 80:80 nginx:版本
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 查看容器日志
+</span></span><span class="line"><span class="cl">docker logs myNginx
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 进入容器
+</span></span><span class="line"><span class="cl">docker exec -it myNginx bash
+</span></span></code></pre></div><h3 id="docker常用命令">docker常用命令</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// 查看当前运行的镜像
+</span></span><span class="line"><span class="cl">docker ps
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">//查看所有镜像
+</span></span><span class="line"><span class="cl">docker ps -a
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">//停止容器
+</span></span><span class="line"><span class="cl">docker stop 容器名称
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 删除镜像
+</span></span><span class="line"><span class="cl">docker rmi 镜像名称
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">//下载镜像 若不指定版本为最新版本
+</span></span><span class="line"><span class="cl">docker pull 镜像:版本
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">//查看当前本地仓库的镜像
+</span></span><span class="line"><span class="cl">docker images
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">//查看远程仓库镜像
+</span></span><span class="line"><span class="cl">docker search 镜像名
+</span></span></code></pre></div><h2 id="相关链接">相关链接</h2>
 <ul>
 <li>入门参考:https://baijiahao.baidu.com/s?id=1626633654476933953&amp;wfr=spider&amp;for=pc</li>
 <li>安装docker菜鸟教程: <a href="https://www.runoob.com/docker/centos-docker.install.html">https://www.runoob.com/docker/centos-docker.install.html</a></li>

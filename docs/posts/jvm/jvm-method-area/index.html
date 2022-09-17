@@ -793,27 +793,27 @@ JDK 1.8后，元空间存放在直接内存中。</p>
 <h3 id="oom">OOM</h3>
 <p>JDK8 方法区/元空间 OOM代码演示</p>
 <p>设置虚拟机参数</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">-XX:MetaspaceSize=10m -XX:MaxMetaspaceSize=10m
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest  extends ClassLoader{
-    public static void main(String[] args) {
-        MainTest mainTest = new MainTest();
-        int count = 0;
-        try {
-            for (int i = 0; i &lt; 1000; i++) {
-
-                ClassWriter classWriter = new ClassWriter(0);
-                classWriter.visit(Opcodes.V1_8,Opcodes.ACC_PUBLIC ,&#34;Class&#34; + i,null,&#34;java/lang/Object&#34;,null);
-
-                byte[] bytes = classWriter.toByteArray();
-                mainTest.defineClass(&#34;Class&#34; + i, bytes, 0, bytes.length);
-                count ++;
-            }
-        }finally {
-            System.out.println(count);
-        }
-    }
-}
-</code></pre></div><p><strong>如何解决OOM？</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-XX:MetaspaceSize=10m -XX:MaxMetaspaceSize=10m
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest  extends ClassLoader{
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        MainTest mainTest = new MainTest();
+</span></span><span class="line"><span class="cl">        int count = 0;
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            for (int i = 0; i &lt; 1000; i++) {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                ClassWriter classWriter = new ClassWriter(0);
+</span></span><span class="line"><span class="cl">                classWriter.visit(Opcodes.V1_8,Opcodes.ACC_PUBLIC ,&#34;Class&#34; + i,null,&#34;java/lang/Object&#34;,null);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                byte[] bytes = classWriter.toByteArray();
+</span></span><span class="line"><span class="cl">                mainTest.defineClass(&#34;Class&#34; + i, bytes, 0, bytes.length);
+</span></span><span class="line"><span class="cl">                count ++;
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        }finally {
+</span></span><span class="line"><span class="cl">            System.out.println(count);
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p><strong>如何解决OOM？</strong></p>
 <ol>
 <li>
 <p>要解决ooM异常或heap space的异常，一般的手段是首先通过内存映像分析工具（如Ec1ipse Memory Analyzer）对dump出来的堆转储快照进行分析，
@@ -838,30 +838,30 @@ JDK 1.8后，元空间存放在直接内存中。</p>
 <p>方法区用于存储已被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等。</p>
 </blockquote>
 <p>展示方法区内部结构，演示代码</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-
-    private String string = &#34;awsl&#34;;
-
-    public static void context() {
-        try {
-            int a = 0;
-            int b = 20/a;
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private String context2() {
-        return string;
-    }
-
-    public static void main(String[] args) {
-        new MainTest().context2();
-        context();
-    }
-
-}
-</code></pre></div><p>编译该类，找到该类的class文件，打开终端执行<code>javap -v MainTest.class &gt; test.txt</code>命令，在当前目录会生成<code>test.txt</code>文件.
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private String string = &#34;awsl&#34;;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void context() {
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            int a = 0;
+</span></span><span class="line"><span class="cl">            int b = 20/a;
+</span></span><span class="line"><span class="cl">        }catch (Exception e) {
+</span></span><span class="line"><span class="cl">            e.printStackTrace();
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private String context2() {
+</span></span><span class="line"><span class="cl">        return string;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        new MainTest().context2();
+</span></span><span class="line"><span class="cl">        context();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>编译该类，找到该类的class文件，打开终端执行<code>javap -v MainTest.class &gt; test.txt</code>命令，在当前目录会生成<code>test.txt</code>文件.
 打开即可查看反编译后的字节码信息。</p>
 <h4 id="类型信息">类型信息</h4>
 <p>对每个加载的类型（类class、接口interface、枚举enum、注解annotation），Jvm必须在方法区中存储以下类型信息：</p>
@@ -871,23 +871,23 @@ JDK 1.8后，元空间存放在直接内存中。</p>
 <li>这个类型的修饰符（public，abstract，final的某个子集）</li>
 <li>这个类型直接接口的一个有序列表</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// ...
-public class content.posts.jvm.MainTest
-  minor version: 0
-  major version: 52
-  flags: ACC_PUBLIC, ACC_SUPER
-//...
-</code></pre></div><h4 id="域信息">域信息</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// ...
+</span></span><span class="line"><span class="cl">public class content.posts.jvm.MainTest
+</span></span><span class="line"><span class="cl">  minor version: 0
+</span></span><span class="line"><span class="cl">  major version: 52
+</span></span><span class="line"><span class="cl">  flags: ACC_PUBLIC, ACC_SUPER
+</span></span><span class="line"><span class="cl">//...
+</span></span></code></pre></div><h4 id="域信息">域信息</h4>
 <p>JVM必须在方法区中保存类型的所有域的相关信息以及域的声明顺序。</p>
 <p>域的相关信息包括：域名称、域类型、域修饰符（public，private，protected，static，final，volatile，transient的某个子集）</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// ...
-Constant pool:
-   #1 = Methodref          #10.#35        // java/lang/Object.&#34;&lt;init&gt;&#34;:()V
-   #2 = String             #36            // awsl
-   #3 = Fieldref           #6.#37         // content/posts/jvm/MainTest.string:Ljava/lang/String;
-
-// ...
-</code></pre></div><h4 id="方法信息">方法信息</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// ...
+</span></span><span class="line"><span class="cl">Constant pool:
+</span></span><span class="line"><span class="cl">   #1 = Methodref          #10.#35        // java/lang/Object.&#34;&lt;init&gt;&#34;:()V
+</span></span><span class="line"><span class="cl">   #2 = String             #36            // awsl
+</span></span><span class="line"><span class="cl">   #3 = Fieldref           #6.#37         // content/posts/jvm/MainTest.string:Ljava/lang/String;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// ...
+</span></span></code></pre></div><h4 id="方法信息">方法信息</h4>
 <p>JVM必须保存所有方法的以下信息，同域信息一样包括声明顺序：</p>
 <ul>
 <li>方法名称</li>
@@ -898,118 +898,118 @@ Constant pool:
 <li>异常表（<code>abstract和native</code>方法除外）</li>
 </ul>
 <p>每个异常处理的开始位置、结束位置、代码处理在程序计数器中的偏移地址、被捕获的异常类的常量池索引</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> public static void context();
-    descriptor: ()V
-    flags: ACC_PUBLIC, ACC_STATIC
-    Code:
-      stack=2, locals=2, args_size=0
-         0: iconst_0
-         1: istore_0
-         2: bipush        20
-         4: iload_0
-         5: idiv
-         6: istore_1
-         7: goto          15
-        10: astore_0
-        11: aload_0
-        12: invokevirtual #5                  // Method java/lang/Exception.printStackTrace:()V
-        15: return
-       // 异常表
-      Exception table:
-         from    to  target type
-             0     7    10   Class java/lang/Exception
-       // 代码字节码指令行号对照表
-      LineNumberTable:
-        line 11: 0
-        line 12: 2
-        line 15: 7
-        line 13: 10
-        line 14: 11
-        line 16: 15
-        // 局部变量表
-      LocalVariableTable:
-        Start  Length  Slot  Name   Signature
-            2       5     0     a   I
-           11       4     0     e   Ljava/lang/Exception;
-      StackMapTable: number_of_entries = 2
-        frame_type = 74 /* same_locals_1_stack_item */
-          stack = [ class java/lang/Exception ]
-        frame_type = 4 /* same */
-</code></pre></div><h4 id="non-final的类变量">non-final的类变量</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> public static void context();
+</span></span><span class="line"><span class="cl">    descriptor: ()V
+</span></span><span class="line"><span class="cl">    flags: ACC_PUBLIC, ACC_STATIC
+</span></span><span class="line"><span class="cl">    Code:
+</span></span><span class="line"><span class="cl">      stack=2, locals=2, args_size=0
+</span></span><span class="line"><span class="cl">         0: iconst_0
+</span></span><span class="line"><span class="cl">         1: istore_0
+</span></span><span class="line"><span class="cl">         2: bipush        20
+</span></span><span class="line"><span class="cl">         4: iload_0
+</span></span><span class="line"><span class="cl">         5: idiv
+</span></span><span class="line"><span class="cl">         6: istore_1
+</span></span><span class="line"><span class="cl">         7: goto          15
+</span></span><span class="line"><span class="cl">        10: astore_0
+</span></span><span class="line"><span class="cl">        11: aload_0
+</span></span><span class="line"><span class="cl">        12: invokevirtual #5                  // Method java/lang/Exception.printStackTrace:()V
+</span></span><span class="line"><span class="cl">        15: return
+</span></span><span class="line"><span class="cl">       // 异常表
+</span></span><span class="line"><span class="cl">      Exception table:
+</span></span><span class="line"><span class="cl">         from    to  target type
+</span></span><span class="line"><span class="cl">             0     7    10   Class java/lang/Exception
+</span></span><span class="line"><span class="cl">       // 代码字节码指令行号对照表
+</span></span><span class="line"><span class="cl">      LineNumberTable:
+</span></span><span class="line"><span class="cl">        line 11: 0
+</span></span><span class="line"><span class="cl">        line 12: 2
+</span></span><span class="line"><span class="cl">        line 15: 7
+</span></span><span class="line"><span class="cl">        line 13: 10
+</span></span><span class="line"><span class="cl">        line 14: 11
+</span></span><span class="line"><span class="cl">        line 16: 15
+</span></span><span class="line"><span class="cl">        // 局部变量表
+</span></span><span class="line"><span class="cl">      LocalVariableTable:
+</span></span><span class="line"><span class="cl">        Start  Length  Slot  Name   Signature
+</span></span><span class="line"><span class="cl">            2       5     0     a   I
+</span></span><span class="line"><span class="cl">           11       4     0     e   Ljava/lang/Exception;
+</span></span><span class="line"><span class="cl">      StackMapTable: number_of_entries = 2
+</span></span><span class="line"><span class="cl">        frame_type = 74 /* same_locals_1_stack_item */
+</span></span><span class="line"><span class="cl">          stack = [ class java/lang/Exception ]
+</span></span><span class="line"><span class="cl">        frame_type = 4 /* same */
+</span></span></code></pre></div><h4 id="non-final的类变量">non-final的类变量</h4>
 <p>静态变量和类关联在一起，随着类的加载而加载，他们成为类数据在逻辑上的一部分。</p>
 <p>类变量被类的所有实例共享，即使没有类实例时，也可以访问它：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-
-    public static void main(String[] args) {
-        Test test = null;
-        // 相当于 Test.hello();
-        test.hello();
-        // Test.count;
-        System.out.println(test.count);
-    }
-}
-
-class Test {
-    public static int count = 1;
-    public static final int number = 2;
-
-    public static void hello() {
-        System.out.println(&#34;hello!&#34;);
-    }
-}
-</code></pre></div><p>全局常量就是使用 static final 进行修饰</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        Test test = null;
+</span></span><span class="line"><span class="cl">        // 相当于 Test.hello();
+</span></span><span class="line"><span class="cl">        test.hello();
+</span></span><span class="line"><span class="cl">        // Test.count;
+</span></span><span class="line"><span class="cl">        System.out.println(test.count);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">class Test {
+</span></span><span class="line"><span class="cl">    public static int count = 1;
+</span></span><span class="line"><span class="cl">    public static final int number = 2;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void hello() {
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;hello!&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>全局常量就是使用 static final 进行修饰</p>
 <p>被声明为final的类变量的处理方法则不同，每个全局常量在编译的时候就会被分配了。</p>
 <h4 id="运行时常量池iblogpostsrookierookie-datatype常量池"><a href="/iblog/posts/rookie/rookie-datatype/#%E5%B8%B8%E9%87%8F%E6%B1%A0">运行时常量池</a></h4>
 <h3 id="字节码指令解析">字节码指令解析</h3>
 <p>代码如下</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MethodAreaDemo {
-    public static void main(String args[]) {
-        int x = 500;
-        int y = 100;
-        int a = x / y;
-        int b = 50;
-        System.out.println(a+b);
-    }
-}
-</code></pre></div><p>反编译后该方法字节码指令</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// ....
-     // 栈的最大深度为3 局部变量表长度为5 参数长度为1
-      stack=3, locals=5, args_size=1
-         // 将500压入操作数栈
-         0: sipush        500
-         // 在局部变量表里存放 500
-         3: istore_1
-         // 将100压入栈
-         4: bipush        100
-         // 在局部变量表里存放 100 
-         6: istore_2
-         // 将 500 从局部变量表里边取出，并压入操作数栈
-         7: iload_1
-         // 将 100 从局部变量表里边取出，并压入操作数栈
-         8: iload_2
-         // 调用 CPU 执行除法 500/100=5
-         9: idiv
-        // 存储在局部变量表里
-        10: istore_3
-        // 将50压入栈中
-        11: bipush        50
-        // 将 50 存储在局部变量表中
-        13: istore        4
-        // 获取 #2 地址上类或接口字段的值并将其推入操作数栈
-        15: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
-        // 将 5 从本地变量表取出放到栈中
-        18: iload_3
-        // 将50从本地变量表，压入栈
-        19: iload         4
-        // 调用cpu执行加法 5 + 50=55
-        21: iadd
-        // 虚方法调用 #3 中的方法 
-        // JVM会根据这个方法的描述，创建新的栈桢，方法的参数从操作数栈中弹出来，压入虚拟机栈，然后虚拟机会开始执行虚拟机栈上最上面的栈桢
-        22: invokevirtual #3                  // Method java/io/PrintStream.println:(I)V
-        // void 类型返回 main方法执行结束
-        25: return
-// ...
-</code></pre></div><h3 id="方法区演进细节">方法区演进细节</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MethodAreaDemo {
+</span></span><span class="line"><span class="cl">    public static void main(String args[]) {
+</span></span><span class="line"><span class="cl">        int x = 500;
+</span></span><span class="line"><span class="cl">        int y = 100;
+</span></span><span class="line"><span class="cl">        int a = x / y;
+</span></span><span class="line"><span class="cl">        int b = 50;
+</span></span><span class="line"><span class="cl">        System.out.println(a+b);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>反编译后该方法字节码指令</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// ....
+</span></span><span class="line"><span class="cl">     // 栈的最大深度为3 局部变量表长度为5 参数长度为1
+</span></span><span class="line"><span class="cl">      stack=3, locals=5, args_size=1
+</span></span><span class="line"><span class="cl">         // 将500压入操作数栈
+</span></span><span class="line"><span class="cl">         0: sipush        500
+</span></span><span class="line"><span class="cl">         // 在局部变量表里存放 500
+</span></span><span class="line"><span class="cl">         3: istore_1
+</span></span><span class="line"><span class="cl">         // 将100压入栈
+</span></span><span class="line"><span class="cl">         4: bipush        100
+</span></span><span class="line"><span class="cl">         // 在局部变量表里存放 100 
+</span></span><span class="line"><span class="cl">         6: istore_2
+</span></span><span class="line"><span class="cl">         // 将 500 从局部变量表里边取出，并压入操作数栈
+</span></span><span class="line"><span class="cl">         7: iload_1
+</span></span><span class="line"><span class="cl">         // 将 100 从局部变量表里边取出，并压入操作数栈
+</span></span><span class="line"><span class="cl">         8: iload_2
+</span></span><span class="line"><span class="cl">         // 调用 CPU 执行除法 500/100=5
+</span></span><span class="line"><span class="cl">         9: idiv
+</span></span><span class="line"><span class="cl">        // 存储在局部变量表里
+</span></span><span class="line"><span class="cl">        10: istore_3
+</span></span><span class="line"><span class="cl">        // 将50压入栈中
+</span></span><span class="line"><span class="cl">        11: bipush        50
+</span></span><span class="line"><span class="cl">        // 将 50 存储在局部变量表中
+</span></span><span class="line"><span class="cl">        13: istore        4
+</span></span><span class="line"><span class="cl">        // 获取 #2 地址上类或接口字段的值并将其推入操作数栈
+</span></span><span class="line"><span class="cl">        15: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+</span></span><span class="line"><span class="cl">        // 将 5 从本地变量表取出放到栈中
+</span></span><span class="line"><span class="cl">        18: iload_3
+</span></span><span class="line"><span class="cl">        // 将50从本地变量表，压入栈
+</span></span><span class="line"><span class="cl">        19: iload         4
+</span></span><span class="line"><span class="cl">        // 调用cpu执行加法 5 + 50=55
+</span></span><span class="line"><span class="cl">        21: iadd
+</span></span><span class="line"><span class="cl">        // 虚方法调用 #3 中的方法 
+</span></span><span class="line"><span class="cl">        // JVM会根据这个方法的描述，创建新的栈桢，方法的参数从操作数栈中弹出来，压入虚拟机栈，然后虚拟机会开始执行虚拟机栈上最上面的栈桢
+</span></span><span class="line"><span class="cl">        22: invokevirtual #3                  // Method java/io/PrintStream.println:(I)V
+</span></span><span class="line"><span class="cl">        // void 类型返回 main方法执行结束
+</span></span><span class="line"><span class="cl">        25: return
+</span></span><span class="line"><span class="cl">// ...
+</span></span></code></pre></div><h3 id="方法区演进细节">方法区演进细节</h3>
 <p>只有<code>Hotspot</code>才有永久代（方法区具体实现）。<code>BEA JRockit、IBMJ9</code>等来说，是不存在永久代的概念的。</p>
 <p>Hotspot中方法区的变化</p>
 <table>

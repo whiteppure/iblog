@@ -472,10 +472,10 @@
 <h3 id="安装kafka">安装kafka</h3>
 <p>kafka依赖Java和zookeeper，安装前请先安装Java和zookeeper。</p>
 <p>安装zookeeper</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">brew install zookeeper
-</code></pre></div><p>安装kafka</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">brew install kafka
-</code></pre></div><h3 id="启动kafka">启动kafka</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">brew install zookeeper
+</span></span></code></pre></div><p>安装kafka</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">brew install kafka
+</span></span></code></pre></div><h3 id="启动kafka">启动kafka</h3>
 <p>假定你是按照上边的方法安装的kafka,接下来启动kafka</p>
 <p>因为kafka依赖zk，所以首先要启动zookeeper</p>
 <ul>
@@ -509,128 +509,128 @@
 </div>
 <h2 id="springboot整合kafka">Springboot整合kafka</h2>
 <h3 id="引入pom依赖">引入pom依赖</h3>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    &lt;dependency&gt;
-        &lt;groupId&gt;org.springframework.kafka&lt;/groupId&gt;
-        &lt;artifactId&gt;spring-kafka&lt;/artifactId&gt;
-    &lt;/dependency&gt;
-</code></pre></div><h3 id="配置applicationyml">配置application.yml</h3>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">server:
-  port: 8080
-  servlet:
-    context-path: /demo
-spring:
-  kafka:
-    bootstrap-servers: localhost:9092
-    producer:
-      retries: 0
-      batch-size: 16384
-      buffer-memory: 33554432
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-    consumer:
-      group-id: spring-boot-demo
-      # 手动提交
-      enable-auto-commit: false
-      auto-offset-reset: latest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      properties:
-        session.timeout.ms: 60000
-    listener:
-      log-container-config: false
-      concurrency: 5
-      # 手动提交
-      ack-mode: manual_immediate
-</code></pre></div><h3 id="创建kafka配置类">创建kafka配置类</h3>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public interface KafkaConsts {
-    /**
-     * 默认分区大小
-     */
-    Integer DEFAULT_PARTITION_NUM = 3;
-
-    /**
-     * Topic 名称
-     */
-    String TOPIC_TEST = &#34;test&#34;;
-}
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Configuration
-@EnableConfigurationProperties({KafkaProperties.class})
-@EnableKafka
-@AllArgsConstructor
-public class KafkaConfig {
-    private final KafkaProperties kafkaProperties;
-
-    @Bean
-    public KafkaTemplate&lt;String, String&gt; kafkaTemplate() {
-        return new KafkaTemplate&lt;&gt;(producerFactory());
-    }
-
-    @Bean
-    public ProducerFactory&lt;String, String&gt; producerFactory() {
-        return new DefaultKafkaProducerFactory&lt;&gt;(kafkaProperties.buildProducerProperties());
-    }
-
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory&lt;String, String&gt; kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory&lt;String, String&gt; factory = new ConcurrentKafkaListenerContainerFactory&lt;&gt;();
-        factory.setConsumerFactory(consumerFactory());
-        factory.setConcurrency(KafkaConsts.DEFAULT_PARTITION_NUM);
-        factory.setBatchListener(true);
-        factory.getContainerProperties().setPollTimeout(3000);
-        return factory;
-    }
-
-    @Bean
-    public ConsumerFactory&lt;String, String&gt; consumerFactory() {
-        return new DefaultKafkaConsumerFactory&lt;&gt;(kafkaProperties.buildConsumerProperties());
-    }
-
-    @Bean(&#34;ackContainerFactory&#34;)
-    public ConcurrentKafkaListenerContainerFactory&lt;String, String&gt; ackContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory&lt;String, String&gt; factory = new ConcurrentKafkaListenerContainerFactory&lt;&gt;();
-        factory.setConsumerFactory(consumerFactory());
-        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
-        factory.setConcurrency(KafkaConsts.DEFAULT_PARTITION_NUM);
-        return factory;
-    }
-
-}
-</code></pre></div><h3 id="创建消息处理器">创建消息处理器</h3>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@Component
-@Slf4j
-public class MessageHandler {
-
-    @KafkaListener(topics = KafkaConsts.TOPIC_TEST, containerFactory = &#34;ackContainerFactory&#34;)
-    public void handleMessage(ConsumerRecord record, Acknowledgment acknowledgment) {
-        try {
-            String message = (String) record.value();
-            log.info(&#34;收到消息: {}&#34;, message);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        } finally {
-            // 手动提交 offset
-            acknowledgment.acknowledge();
-        }
-    }
-}
-</code></pre></div><h3 id="创建测试类">创建测试类</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    &lt;dependency&gt;
+</span></span><span class="line"><span class="cl">        &lt;groupId&gt;org.springframework.kafka&lt;/groupId&gt;
+</span></span><span class="line"><span class="cl">        &lt;artifactId&gt;spring-kafka&lt;/artifactId&gt;
+</span></span><span class="line"><span class="cl">    &lt;/dependency&gt;
+</span></span></code></pre></div><h3 id="配置applicationyml">配置application.yml</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">server:
+</span></span><span class="line"><span class="cl">  port: 8080
+</span></span><span class="line"><span class="cl">  servlet:
+</span></span><span class="line"><span class="cl">    context-path: /demo
+</span></span><span class="line"><span class="cl">spring:
+</span></span><span class="line"><span class="cl">  kafka:
+</span></span><span class="line"><span class="cl">    bootstrap-servers: localhost:9092
+</span></span><span class="line"><span class="cl">    producer:
+</span></span><span class="line"><span class="cl">      retries: 0
+</span></span><span class="line"><span class="cl">      batch-size: 16384
+</span></span><span class="line"><span class="cl">      buffer-memory: 33554432
+</span></span><span class="line"><span class="cl">      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+</span></span><span class="line"><span class="cl">      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+</span></span><span class="line"><span class="cl">    consumer:
+</span></span><span class="line"><span class="cl">      group-id: spring-boot-demo
+</span></span><span class="line"><span class="cl">      # 手动提交
+</span></span><span class="line"><span class="cl">      enable-auto-commit: false
+</span></span><span class="line"><span class="cl">      auto-offset-reset: latest
+</span></span><span class="line"><span class="cl">      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+</span></span><span class="line"><span class="cl">      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+</span></span><span class="line"><span class="cl">      properties:
+</span></span><span class="line"><span class="cl">        session.timeout.ms: 60000
+</span></span><span class="line"><span class="cl">    listener:
+</span></span><span class="line"><span class="cl">      log-container-config: false
+</span></span><span class="line"><span class="cl">      concurrency: 5
+</span></span><span class="line"><span class="cl">      # 手动提交
+</span></span><span class="line"><span class="cl">      ack-mode: manual_immediate
+</span></span></code></pre></div><h3 id="创建kafka配置类">创建kafka配置类</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public interface KafkaConsts {
+</span></span><span class="line"><span class="cl">    /**
+</span></span><span class="line"><span class="cl">     * 默认分区大小
+</span></span><span class="line"><span class="cl">     */
+</span></span><span class="line"><span class="cl">    Integer DEFAULT_PARTITION_NUM = 3;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /**
+</span></span><span class="line"><span class="cl">     * Topic 名称
+</span></span><span class="line"><span class="cl">     */
+</span></span><span class="line"><span class="cl">    String TOPIC_TEST = &#34;test&#34;;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Configuration
+</span></span><span class="line"><span class="cl">@EnableConfigurationProperties({KafkaProperties.class})
+</span></span><span class="line"><span class="cl">@EnableKafka
+</span></span><span class="line"><span class="cl">@AllArgsConstructor
+</span></span><span class="line"><span class="cl">public class KafkaConfig {
+</span></span><span class="line"><span class="cl">    private final KafkaProperties kafkaProperties;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Bean
+</span></span><span class="line"><span class="cl">    public KafkaTemplate&lt;String, String&gt; kafkaTemplate() {
+</span></span><span class="line"><span class="cl">        return new KafkaTemplate&lt;&gt;(producerFactory());
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Bean
+</span></span><span class="line"><span class="cl">    public ProducerFactory&lt;String, String&gt; producerFactory() {
+</span></span><span class="line"><span class="cl">        return new DefaultKafkaProducerFactory&lt;&gt;(kafkaProperties.buildProducerProperties());
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Bean
+</span></span><span class="line"><span class="cl">    public ConcurrentKafkaListenerContainerFactory&lt;String, String&gt; kafkaListenerContainerFactory() {
+</span></span><span class="line"><span class="cl">        ConcurrentKafkaListenerContainerFactory&lt;String, String&gt; factory = new ConcurrentKafkaListenerContainerFactory&lt;&gt;();
+</span></span><span class="line"><span class="cl">        factory.setConsumerFactory(consumerFactory());
+</span></span><span class="line"><span class="cl">        factory.setConcurrency(KafkaConsts.DEFAULT_PARTITION_NUM);
+</span></span><span class="line"><span class="cl">        factory.setBatchListener(true);
+</span></span><span class="line"><span class="cl">        factory.getContainerProperties().setPollTimeout(3000);
+</span></span><span class="line"><span class="cl">        return factory;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Bean
+</span></span><span class="line"><span class="cl">    public ConsumerFactory&lt;String, String&gt; consumerFactory() {
+</span></span><span class="line"><span class="cl">        return new DefaultKafkaConsumerFactory&lt;&gt;(kafkaProperties.buildConsumerProperties());
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Bean(&#34;ackContainerFactory&#34;)
+</span></span><span class="line"><span class="cl">    public ConcurrentKafkaListenerContainerFactory&lt;String, String&gt; ackContainerFactory() {
+</span></span><span class="line"><span class="cl">        ConcurrentKafkaListenerContainerFactory&lt;String, String&gt; factory = new ConcurrentKafkaListenerContainerFactory&lt;&gt;();
+</span></span><span class="line"><span class="cl">        factory.setConsumerFactory(consumerFactory());
+</span></span><span class="line"><span class="cl">        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
+</span></span><span class="line"><span class="cl">        factory.setConcurrency(KafkaConsts.DEFAULT_PARTITION_NUM);
+</span></span><span class="line"><span class="cl">        return factory;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h3 id="创建消息处理器">创建消息处理器</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Component
+</span></span><span class="line"><span class="cl">@Slf4j
+</span></span><span class="line"><span class="cl">public class MessageHandler {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @KafkaListener(topics = KafkaConsts.TOPIC_TEST, containerFactory = &#34;ackContainerFactory&#34;)
+</span></span><span class="line"><span class="cl">    public void handleMessage(ConsumerRecord record, Acknowledgment acknowledgment) {
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            String message = (String) record.value();
+</span></span><span class="line"><span class="cl">            log.info(&#34;收到消息: {}&#34;, message);
+</span></span><span class="line"><span class="cl">        } catch (Exception e) {
+</span></span><span class="line"><span class="cl">            log.error(e.getMessage(), e);
+</span></span><span class="line"><span class="cl">        } finally {
+</span></span><span class="line"><span class="cl">            // 手动提交 offset
+</span></span><span class="line"><span class="cl">            acknowledgment.acknowledge();
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h3 id="创建测试类">创建测试类</h3>
 <p>测试之前请确保kafka已启动</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">@RunWith(SpringRunner.class)
-@SpringBootTest
-public class SpringBootDemoMqKafkaApplicationTests {
-    @Autowired
-    private KafkaTemplate&lt;String, String&gt; kafkaTemplate;
-
-    /**
-     * 测试发送消息
-     */
-    @Test
-    public void testSend() {
-        kafkaTemplate.send(KafkaConsts.TOPIC_TEST, &#34;hello,kafka...&#34;);
-    }
-
-}
-</code></pre></div></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@RunWith(SpringRunner.class)
+</span></span><span class="line"><span class="cl">@SpringBootTest
+</span></span><span class="line"><span class="cl">public class SpringBootDemoMqKafkaApplicationTests {
+</span></span><span class="line"><span class="cl">    @Autowired
+</span></span><span class="line"><span class="cl">    private KafkaTemplate&lt;String, String&gt; kafkaTemplate;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /**
+</span></span><span class="line"><span class="cl">     * 测试发送消息
+</span></span><span class="line"><span class="cl">     */
+</span></span><span class="line"><span class="cl">    @Test
+</span></span><span class="line"><span class="cl">    public void testSend() {
+</span></span><span class="line"><span class="cl">        kafkaTemplate.send(KafkaConsts.TOPIC_TEST, &#34;hello,kafka...&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div></div>
                     <div class="post_footer">
                         <div class="meta">
                             <div class="info">

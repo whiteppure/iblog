@@ -496,12 +496,12 @@
 </ul>
 <h3 id="对象的创建步骤">对象的创建步骤</h3>
 <p>创建对象代码演示及字节码指令</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) {
-        Object obj = new Object();
-    }
-}
-</code></pre></div><p><img src="/iblog/posts/annex/images/essays/%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4.png" alt="创建对象字节码指令"></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        Object obj = new Object();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p><img src="/iblog/posts/annex/images/essays/%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4.png" alt="创建对象字节码指令"></p>
 <p>创建对象步骤：</p>
 <ol>
 <li>加载类元信息</li>
@@ -553,30 +553,30 @@
 <p><img src="/iblog/posts/annex/images/essays/Java%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B8%83%E5%B1%80.png" alt="Java对象的布局"></p>
 <h3 id="查看对象的组成">查看对象的组成</h3>
 <p><strong>引入依赖</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;!-- 引入查看对象布局的依赖 --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.openjdk.jol&lt;/groupId&gt;
-    &lt;artifactId&gt;jol-core&lt;/artifactId&gt;
-    &lt;version&gt;0.9&lt;/version&gt;
-&lt;/dependency&gt;
-</code></pre></div><p><strong>测试代码</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    public static void main(String[] args) {
-        //这个对象里面是空的什么都没有
-        T t = new T();
-        System.out.println(ClassLayout.parseInstance(t).toPrintable());
-    }
-}
-class T{}
-</code></pre></div><p><strong>测试结果</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> OFFSET  SIZE   TYPE DESCRIPTION                               VALUE
-      0     4        (object header)                           01 00 00 00 (00000001 00000000 00000000 00000000) (1)
-      4     4        (object header)                           00 00 00 00 (00000000 00000000 00000000 00000000) (0)
-      8     4        (object header)                           a1 2c 01 20 (10100001 00101100 00000001 00100000) (536947873)
-     12     4        (loss due to the next object alignment)
-Instance size: 16 bytes
-Space losses: 0 bytes internal + 4 bytes external = 4 bytes total
-</code></pre></div><p>在64位JVM下,通过测试的结果我们可以看到Java对象的布局对象头占12byte,因为Jvm规定内存分配的字节必须是8的倍数,否则无法分配内存，所以就出现了，4byte的对齐数据。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;!-- 引入查看对象布局的依赖 --&gt;
+</span></span><span class="line"><span class="cl">&lt;dependency&gt;
+</span></span><span class="line"><span class="cl">    &lt;groupId&gt;org.openjdk.jol&lt;/groupId&gt;
+</span></span><span class="line"><span class="cl">    &lt;artifactId&gt;jol-core&lt;/artifactId&gt;
+</span></span><span class="line"><span class="cl">    &lt;version&gt;0.9&lt;/version&gt;
+</span></span><span class="line"><span class="cl">&lt;/dependency&gt;
+</span></span></code></pre></div><p><strong>测试代码</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        //这个对象里面是空的什么都没有
+</span></span><span class="line"><span class="cl">        T t = new T();
+</span></span><span class="line"><span class="cl">        System.out.println(ClassLayout.parseInstance(t).toPrintable());
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">class T{}
+</span></span></code></pre></div><p><strong>测试结果</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> OFFSET  SIZE   TYPE DESCRIPTION                               VALUE
+</span></span><span class="line"><span class="cl">      0     4        (object header)                           01 00 00 00 (00000001 00000000 00000000 00000000) (1)
+</span></span><span class="line"><span class="cl">      4     4        (object header)                           00 00 00 00 (00000000 00000000 00000000 00000000) (0)
+</span></span><span class="line"><span class="cl">      8     4        (object header)                           a1 2c 01 20 (10100001 00101100 00000001 00100000) (536947873)
+</span></span><span class="line"><span class="cl">     12     4        (loss due to the next object alignment)
+</span></span><span class="line"><span class="cl">Instance size: 16 bytes
+</span></span><span class="line"><span class="cl">Space losses: 0 bytes internal + 4 bytes external = 4 bytes total
+</span></span></code></pre></div><p>在64位JVM下,通过测试的结果我们可以看到Java对象的布局对象头占12byte,因为Jvm规定内存分配的字节必须是8的倍数,否则无法分配内存，所以就出现了，4byte的对齐数据。</p>
 <p>通过测试发现，Java的对象布局包括：</p>
 <ul>
 <li>必定存在一个对象头</li>
@@ -586,10 +586,10 @@ Space losses: 0 bytes internal + 4 bytes external = 4 bytes total
 <h3 id="对象头">对象头</h3>
 <p><a href="http://openjdk.java.net/groups/hotspot/docs/HotSpotGlossary.html">官方文档</a>对于对象头的解释</p>
 <blockquote>
-<p>object header
+<p>object header 
 Common structure at the beginning of every GC-managed heap object.
 (Every oop points to an object header.) Includes fundamental information about the heap object&rsquo;s layout, type, GC state, synchronization state, and identity hash code.
-Consists of two words. In arrays it is immediately followed by a length field.
+Consists of two words. In arrays it is immediately followed by a length field. 
 Note that both Java objects and VM-internal objects have a common object header format.</p>
 </blockquote>
 <p>大意：每个GC管理堆对象开始处的公共结构。(每个oop都指向一个对象头。)包括关于堆对象布局、类型、GC状态、同步状态和标识散列代码的基本信息。
@@ -598,7 +598,7 @@ Note that both Java objects and VM-internal objects have a common object header 
 <blockquote>
 <p>mark word
 The first word of every object header. Usually a set of bitfields including synchronization state and identity hash code.
-May also be a pointer (with characteristic low bit encoding) to synchronization related information.
+May also be a pointer (with characteristic low bit encoding) to synchronization related information. 
 During GC, may contain GC state bits.</p>
 </blockquote>
 <p>大意：每个对象头文件的第一个字。通常是一组位域，包括同步状态和身份散列码。也可以是一个用于同步相关信息的指针(具有特征的低位编码)。在GC期间，可能包含GC状态位。</p>
@@ -613,25 +613,25 @@ For Java objects, the &ldquo;klass&rdquo; contains a C++ style &ldquo;vtable&rdq
 <p>类型指针，是对象指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例。</p>
 </blockquote>
 <p>引用上面在64位虚拟机下的测试结果，对象头中的这些二进制数字代表什么呢？</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> OFFSET  SIZE   TYPE DESCRIPTION                               VALUE
-      0     4        (object header)                           01 00 00 00 (00000001 00000000 00000000 00000000) (1)
-      4     4        (object header)                           00 00 00 00 (00000000 00000000 00000000 00000000) (0)
-      8     4        (object header)                           a1 2c 01 20 (10100001 00101100 00000001 00100000) (536947873)
-</code></pre></div><p>在<code>openjdk8-master</code>中<code>markOop.hpp</code>，有对<code>mark word</code>的描述</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">//  32 bits:
-//  --------
-//             hash:25 ------------&gt;| age:4    biased_lock:1 lock:2 (normal object)
-//             JavaThread*:23 epoch:2 age:4    biased_lock:1 lock:2 (biased object)
-//             size:32 ------------------------------------------&gt;| (CMS free block)
-//             PromotedObject*:29 ----------&gt;| promo_bits:3 -----&gt;| (CMS promoted object)
-//
-//  64 bits:
-//  --------
-//  unused:25 hash:31 --&gt;| unused:1   age:4    biased_lock:1 lock:2 (normal object)
-//  JavaThread*:54 epoch:2 unused:1   age:4    biased_lock:1 lock:2 (biased object)
-//  PromotedObject*:61 ---------------------&gt;| promo_bits:3 -----&gt;| (CMS promoted object)
-//  size:64 -----------------------------------------------------&gt;| (CMS free block)
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> OFFSET  SIZE   TYPE DESCRIPTION                               VALUE
+</span></span><span class="line"><span class="cl">      0     4        (object header)                           01 00 00 00 (00000001 00000000 00000000 00000000) (1)
+</span></span><span class="line"><span class="cl">      4     4        (object header)                           00 00 00 00 (00000000 00000000 00000000 00000000) (0)
+</span></span><span class="line"><span class="cl">      8     4        (object header)                           a1 2c 01 20 (10100001 00101100 00000001 00100000) (536947873)
+</span></span></code></pre></div><p>在<code>openjdk8-master</code>中<code>markOop.hpp</code>，有对<code>mark word</code>的描述</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">//  32 bits:
+</span></span><span class="line"><span class="cl">//  --------
+</span></span><span class="line"><span class="cl">//             hash:25 ------------&gt;| age:4    biased_lock:1 lock:2 (normal object)
+</span></span><span class="line"><span class="cl">//             JavaThread*:23 epoch:2 age:4    biased_lock:1 lock:2 (biased object)
+</span></span><span class="line"><span class="cl">//             size:32 ------------------------------------------&gt;| (CMS free block)
+</span></span><span class="line"><span class="cl">//             PromotedObject*:29 ----------&gt;| promo_bits:3 -----&gt;| (CMS promoted object)
+</span></span><span class="line"><span class="cl">//
+</span></span><span class="line"><span class="cl">//  64 bits:
+</span></span><span class="line"><span class="cl">//  --------
+</span></span><span class="line"><span class="cl">//  unused:25 hash:31 --&gt;| unused:1   age:4    biased_lock:1 lock:2 (normal object)
+</span></span><span class="line"><span class="cl">//  JavaThread*:54 epoch:2 unused:1   age:4    biased_lock:1 lock:2 (biased object)
+</span></span><span class="line"><span class="cl">//  PromotedObject*:61 ---------------------&gt;| promo_bits:3 -----&gt;| (CMS promoted object)
+</span></span><span class="line"><span class="cl">//  size:64 -----------------------------------------------------&gt;| (CMS free block)
+</span></span></code></pre></div><ul>
 <li>在32位虚拟机下，正常的对象对象头的<code>mark word</code>，从前到后的顺序，25个位表示hash值，4位表示GC分代的年龄，1位偏向锁的信息，2位锁的状态；</li>
 <li>在64位虚拟机下，正常的对象对象头的<code>mark word</code>，从前到后的顺序，25个未使用，31个位表示hash值，未使用1位，4位表示GC分代的年龄，1位偏向锁的信息，2位锁的状态；</li>
 </ul>
@@ -745,14 +745,14 @@ For Java objects, the &ldquo;klass&rdquo; contains a C++ style &ldquo;vtable&rdq
 <p><code>finalize()</code> 方法允许在子类中被重写，用于在对象被回收时进行资源释放。
 通常在这个方法中进行一些资源释放和清理的工作，比如关闭文件、套接字和数据库连接等。</p>
 <p>文档注释大意：当GC确定不再有对对象的引用时，由垃圾收集器在对象上调用。子类重写<code>finalize</code>方法来释放系统资源或执行其他清理。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">   /**
-     * Called by the garbage collector on an object when garbage collection
-     * determines that there are no more references to the object.
-     * A subclass overrides the {@code finalize} method to dispose of
-     * system resources or to perform other cleanup.
-     */
-    protected void finalize() throws Throwable { }
-</code></pre></div><p>简而言之，<code>finalize</code>方法是与Java中的垃圾回收器有关系。即：当一个对象变成一个垃圾对象的时候，如果此对象的内存被回收，那么就会调用该类中定义的<code>finalize</code>方法。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">   /**
+</span></span><span class="line"><span class="cl">     * Called by the garbage collector on an object when garbage collection
+</span></span><span class="line"><span class="cl">     * determines that there are no more references to the object.
+</span></span><span class="line"><span class="cl">     * A subclass overrides the {@code finalize} method to dispose of
+</span></span><span class="line"><span class="cl">     * system resources or to perform other cleanup.
+</span></span><span class="line"><span class="cl">     */
+</span></span><span class="line"><span class="cl">    protected void finalize() throws Throwable { }
+</span></span></code></pre></div><p>简而言之，<code>finalize</code>方法是与Java中的垃圾回收器有关系。即：当一个对象变成一个垃圾对象的时候，如果此对象的内存被回收，那么就会调用该类中定义的<code>finalize</code>方法。</p>
 <p>当一个对象可被回收时，就需要执行该对象的 <code>finalize()</code> 方法，那么就有可能在该方法中让对象重新被引用，从而实现自救。自救只能进行一次，如果回收的对象之前调用了 <code>finalize()</code> 方法自救，后面回收时不会再调用该方法。</p>
 <p><strong>永远不要主动调用某个对象的<code>finalize</code>方法应该交给垃圾回收机制调用的原因：</strong></p>
 <ul>
@@ -783,50 +783,50 @@ For Java objects, the &ldquo;klass&rdquo; contains a C++ style &ldquo;vtable&rdq
 </li>
 </ul>
 <p>代码演示对象能否被回收：</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-
-    public static MainTest var;
-
-    /**
-     * 此方法只能被调用一次
-     * 可对该方法进行注释，来测试finalize方法是否能复活对象
-     */
-    @Override
-    protected void finalize() throws Throwable {
-        System.out.println(&#34;调用当前类重写的finalize()方法&#34;);
-        // 复活对象 让当前带回收对象重新与引用链中的对象建立联系
-        var = this;
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        var = new MainTest();
-        var = null;
-        System.gc();
-        System.out.println(&#34;-----------------第一次gc操作------------&#34;);
-        // 因为Finalizer线程的优先级比较低，暂停2秒，以等待它
-        Thread.sleep(2000);
-        if (var == null) {
-            System.out.println(&#34;对象已经死了&#34;);
-            // 如果第一次对象就死亡了 就终止
-            return;
-        } else {
-            System.out.println(&#34;对象还活着&#34;);
-        }
-
-        System.out.println(&#34;-----------------第二次gc操作------------&#34;);
-        var = null;
-        System.gc();
-        // 下面代码和上面代码是一样的，但是 对象却自救失败了
-        Thread.sleep(2000);
-        if (var == null) {
-            System.out.println(&#34;对象已经死了&#34;);
-        } else {
-            System.out.println(&#34;对象还活着&#34;);
-        }
-    }
-
-}
-</code></pre></div></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static MainTest var;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /**
+</span></span><span class="line"><span class="cl">     * 此方法只能被调用一次
+</span></span><span class="line"><span class="cl">     * 可对该方法进行注释，来测试finalize方法是否能复活对象
+</span></span><span class="line"><span class="cl">     */
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    protected void finalize() throws Throwable {
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;调用当前类重写的finalize()方法&#34;);
+</span></span><span class="line"><span class="cl">        // 复活对象 让当前带回收对象重新与引用链中的对象建立联系
+</span></span><span class="line"><span class="cl">        var = this;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) throws InterruptedException {
+</span></span><span class="line"><span class="cl">        var = new MainTest();
+</span></span><span class="line"><span class="cl">        var = null;
+</span></span><span class="line"><span class="cl">        System.gc();
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;-----------------第一次gc操作------------&#34;);
+</span></span><span class="line"><span class="cl">        // 因为Finalizer线程的优先级比较低，暂停2秒，以等待它
+</span></span><span class="line"><span class="cl">        Thread.sleep(2000);
+</span></span><span class="line"><span class="cl">        if (var == null) {
+</span></span><span class="line"><span class="cl">            System.out.println(&#34;对象已经死了&#34;);
+</span></span><span class="line"><span class="cl">            // 如果第一次对象就死亡了 就终止
+</span></span><span class="line"><span class="cl">            return;
+</span></span><span class="line"><span class="cl">        } else {
+</span></span><span class="line"><span class="cl">            System.out.println(&#34;对象还活着&#34;);
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;-----------------第二次gc操作------------&#34;);
+</span></span><span class="line"><span class="cl">        var = null;
+</span></span><span class="line"><span class="cl">        System.gc();
+</span></span><span class="line"><span class="cl">        // 下面代码和上面代码是一样的，但是 对象却自救失败了
+</span></span><span class="line"><span class="cl">        Thread.sleep(2000);
+</span></span><span class="line"><span class="cl">        if (var == null) {
+</span></span><span class="line"><span class="cl">            System.out.println(&#34;对象已经死了&#34;);
+</span></span><span class="line"><span class="cl">        } else {
+</span></span><span class="line"><span class="cl">            System.out.println(&#34;对象还活着&#34;);
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div></div>
                     <div class="post_footer">
                         <div class="meta">
                             <div class="info">

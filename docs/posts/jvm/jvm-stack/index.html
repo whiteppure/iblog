@@ -1097,24 +1097,24 @@
 <p>Java 虚拟机规范允许Java栈的大小是动态的或者是固定不变的。</p>
 <p>如果采用固定大小的Java虚拟机栈，那每一个线程的Java虚拟机栈容量可以在线程创建的时候独立选定。
 如果线程请求分配的栈容量超过Java虚拟机栈允许的最大容量，Java虚拟机将会抛出一个<code>StackOverflowError</code>异常。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-    private static int count = 1;
-    public static void main(String[] args) {
-        System.out.println(count++);
-        main(args);
-    }
-}
-</code></pre></div><p>抛出异常栈内存不足</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">// ...
-9377*** 
-Exception in thread &#34;main&#34; java.lang.StackOverflowError
-// ...
-</code></pre></div><p>在使用递归的情况下，如果线程请求的栈的深度超过虚拟机所允许栈的深度就会抛出<code>StackOverflowError</code>；
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    private static int count = 1;
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        System.out.println(count++);
+</span></span><span class="line"><span class="cl">        main(args);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>抛出异常栈内存不足</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// ...
+</span></span><span class="line"><span class="cl">9377*** 
+</span></span><span class="line"><span class="cl">Exception in thread &#34;main&#34; java.lang.StackOverflowError
+</span></span><span class="line"><span class="cl">// ...
+</span></span></code></pre></div><p>在使用递归的情况下，如果线程请求的栈的深度超过虚拟机所允许栈的深度就会抛出<code>StackOverflowError</code>；
 但是大部分虚拟机栈的深度都可以动态扩展，HotSpot中使用 Xss 可以设置栈的深度，如果扩展时无法请求到足够的内存就会抛出<code>OutOfMemoryError</code>。</p>
 <p>可以设置栈的内存大小，使用参数 -Xss选项来设置线程的最大栈空间，栈的大小直接决定了函数调用的最大可达深度。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">-Xss256m
--Xss256k
-</code></pre></div><h3 id="栈的存储结构">栈的存储结构</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-Xss256m
+</span></span><span class="line"><span class="cl">-Xss256k
+</span></span></code></pre></div><h3 id="栈的存储结构">栈的存储结构</h3>
 <h4 id="栈的存储单位">栈的存储单位</h4>
 <ul>
 <li>每个线程都有自己的栈，栈中的数据都是以栈帧（Stack Frame）的格式存在。</li>
@@ -1132,34 +1132,34 @@ Exception in thread &#34;main&#34; java.lang.StackOverflowError
 <p>如果在该方法中调用了其他方法，对应的新的栈帧会被创建出来，放在栈的顶端，成为新的当前帧。
 <img src="/iblog/posts/annex/images/essays/%E6%A0%88%E4%B8%AD%E5%AD%98%E5%82%A8%E5%86%85%E5%AE%B9.png" alt="栈中存储内容"></p>
 <p>代码演示</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class MainTest {
-
-    public static void main(String[] args) {
-        method01();
-    }
-
-    private static int method01() {
-        System.out.println(&#34;方法1的开始&#34;);
-        int i = method02();
-        System.out.println(&#34;方法1的结束&#34;);
-        return i;
-    }
-
-    private static int method02() {
-        System.out.println(&#34;方法2的开始&#34;);
-        int i = method03();;
-        System.out.println(&#34;方法2的结束&#34;);
-        return i;
-    }
-    private static int method03() {
-        System.out.println(&#34;方法3的开始&#34;);
-        int i = 30;
-        System.out.println(&#34;方法3的结束&#34;);
-        return i;
-    }
-
-}
-</code></pre></div><h4 id="栈的运行原理">栈的运行原理</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        method01();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private static int method01() {
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;方法1的开始&#34;);
+</span></span><span class="line"><span class="cl">        int i = method02();
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;方法1的结束&#34;);
+</span></span><span class="line"><span class="cl">        return i;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private static int method02() {
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;方法2的开始&#34;);
+</span></span><span class="line"><span class="cl">        int i = method03();;
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;方法2的结束&#34;);
+</span></span><span class="line"><span class="cl">        return i;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    private static int method03() {
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;方法3的开始&#34;);
+</span></span><span class="line"><span class="cl">        int i = 30;
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;方法3的结束&#34;);
+</span></span><span class="line"><span class="cl">        return i;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h4 id="栈的运行原理">栈的运行原理</h4>
 <p>不同线程中所包含的栈帧是不允许存在相互引用的，即不可能在一个栈帧之中引用另外一个线程的栈帧。</p>
 <p>如果当前方法调用了其他方法，方法返回之际，当前栈帧会传回此方法的执行结果给前一个栈帧，接着，虚拟机会丢弃当前栈帧，使得前一个栈帧重新成为当前栈帧。</p>
 <p>Java方法有两种返回函数的方式，一种是正常的函数返回，使用return指令；另外一种是抛出异常。不管使用哪种方式，都会导致栈帧被弹出。</p>
@@ -1202,16 +1202,15 @@ JVM会为局部变量表中的每一个Slot都分配一个访问索引，通过�
 <p>栈帧中的局部变量表中的槽位是可以重用的，如果一个局部变量过了其作用域，那么在其作用域之后申明的新的局部变就很有可能会复用过期局部变量的槽位，
 从而达到节省资源的目的。</p>
 <p>代码演示</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">    public void test() {
-        int a = 0;
-        {
-            int b = 0;
-            b = a + 1;
-        }
-        int c = a + 1;
-    }
-
-</code></pre></div><p><img src="/iblog/posts/annex/images/essays/slot%E9%87%8D%E5%A4%8D%E5%88%A9%E7%94%A8.png" alt="slot重复利用"></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public void test() {
+</span></span><span class="line"><span class="cl">        int a = 0;
+</span></span><span class="line"><span class="cl">        {
+</span></span><span class="line"><span class="cl">            int b = 0;
+</span></span><span class="line"><span class="cl">            b = a + 1;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        int c = a + 1;
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><p><img src="/iblog/posts/annex/images/essays/slot%E9%87%8D%E5%A4%8D%E5%88%A9%E7%94%A8.png" alt="slot重复利用"></p>
 <h5 id="静态变量与局部变量">静态变量与局部变量</h5>
 <p>变量的分类：</p>
 <ul>
@@ -1414,53 +1413,53 @@ JVM会为局部变量表中的每一个Slot都分配一个访问索引，通过�
 如果有多个线程操作，则此数据是共享数据，如果不考虑共享机制，则为线程不安全</p>
 </blockquote>
 <p>如果对象是在内部产生，并在内部消亡，没有返回到外部，那么它就是线程安全的，反之则是线程不安全的。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">public class StringBuilderTest {
-
-    // s1的声明方式是线程安全的
-    public static void method01() {
-        // 线程内部创建的，属于局部变量
-        StringBuilder s1 = new StringBuilder();
-        s1.append(&#34;a&#34;);
-        s1.append(&#34;b&#34;);
-    }
-
-    // 这个也是线程不安全的，因为有返回值，有可能被其它的程序所调用
-    public static StringBuilder method04() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(&#34;a&#34;);
-        stringBuilder.append(&#34;b&#34;);
-        return stringBuilder;
-    }
-
-    // stringBuilder 是线程不安全的，操作的是共享数据
-    public static void method02(StringBuilder stringBuilder) {
-        stringBuilder.append(&#34;a&#34;);
-        stringBuilder.append(&#34;b&#34;);
-    }
-
-
-    /**
-     * 同时并发的执行，会出现线程不安全的问题
-     */
-    public static void method03() {
-        StringBuilder stringBuilder = new StringBuilder();
-        new Thread(() -&gt; {
-            stringBuilder.append(&#34;a&#34;);
-            stringBuilder.append(&#34;b&#34;);
-        }, &#34;t1&#34;).start();
-
-        method02(stringBuilder);
-    }
-
-    // StringBuilder是线程安全的，但是String也可能线程不安全的
-    public static String method05() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(&#34;a&#34;);
-        stringBuilder.append(&#34;b&#34;);
-        return stringBuilder.toString();
-    }
-}
-</code></pre></div></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class StringBuilderTest {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // s1的声明方式是线程安全的
+</span></span><span class="line"><span class="cl">    public static void method01() {
+</span></span><span class="line"><span class="cl">        // 线程内部创建的，属于局部变量
+</span></span><span class="line"><span class="cl">        StringBuilder s1 = new StringBuilder();
+</span></span><span class="line"><span class="cl">        s1.append(&#34;a&#34;);
+</span></span><span class="line"><span class="cl">        s1.append(&#34;b&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 这个也是线程不安全的，因为有返回值，有可能被其它的程序所调用
+</span></span><span class="line"><span class="cl">    public static StringBuilder method04() {
+</span></span><span class="line"><span class="cl">        StringBuilder stringBuilder = new StringBuilder();
+</span></span><span class="line"><span class="cl">        stringBuilder.append(&#34;a&#34;);
+</span></span><span class="line"><span class="cl">        stringBuilder.append(&#34;b&#34;);
+</span></span><span class="line"><span class="cl">        return stringBuilder;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // stringBuilder 是线程不安全的，操作的是共享数据
+</span></span><span class="line"><span class="cl">    public static void method02(StringBuilder stringBuilder) {
+</span></span><span class="line"><span class="cl">        stringBuilder.append(&#34;a&#34;);
+</span></span><span class="line"><span class="cl">        stringBuilder.append(&#34;b&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /**
+</span></span><span class="line"><span class="cl">     * 同时并发的执行，会出现线程不安全的问题
+</span></span><span class="line"><span class="cl">     */
+</span></span><span class="line"><span class="cl">    public static void method03() {
+</span></span><span class="line"><span class="cl">        StringBuilder stringBuilder = new StringBuilder();
+</span></span><span class="line"><span class="cl">        new Thread(() -&gt; {
+</span></span><span class="line"><span class="cl">            stringBuilder.append(&#34;a&#34;);
+</span></span><span class="line"><span class="cl">            stringBuilder.append(&#34;b&#34;);
+</span></span><span class="line"><span class="cl">        }, &#34;t1&#34;).start();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        method02(stringBuilder);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // StringBuilder是线程安全的，但是String也可能线程不安全的
+</span></span><span class="line"><span class="cl">    public static String method05() {
+</span></span><span class="line"><span class="cl">        StringBuilder stringBuilder = new StringBuilder();
+</span></span><span class="line"><span class="cl">        stringBuilder.append(&#34;a&#34;);
+</span></span><span class="line"><span class="cl">        stringBuilder.append(&#34;b&#34;);
+</span></span><span class="line"><span class="cl">        return stringBuilder.toString();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div></div>
                     <div class="post_footer">
                         <div class="meta">
                             <div class="info">
