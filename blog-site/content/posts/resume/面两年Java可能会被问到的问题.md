@@ -43,7 +43,6 @@ slug: "interview-junior-javaer"
 ### [Spring IOC容器启动流程](/iblog/posts/spring/java-spring/#spring-启动流程)
 ### [Spring中的事务你了解吗](/iblog/posts/spring/java-spring/#spring事务)
 ### [知道分布式事务吗(CAP、BASE理论)](/iblog/posts/essays/java-transaction/)
-### 分布式事务与传统事务对比有什么不同和相同
 ### [kafka如何保证消息不丢失](/iblog/posts/essays/java-mq/#生产者数据可靠性保证)
 ### [kafka如何避免重复消费](/iblog/posts/essays/java-mq/#消费者消费数据问题)
 ### [Redis分布式锁有了解吗](/iblog/posts/essays/java-redis/#redis分布式锁)

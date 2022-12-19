@@ -17,7 +17,7 @@ slug: "dev-idea"
 一些实用的插件,能
 
 ### JRebel and XRebel
-代码调试热部署插件,使用需要花钱; [破解教程供参考](https://blog.csdn.net/qq_38721537/article/details/117103460).
+代码调试热部署插件,使用需要花钱; [破解教程供参考](https://blog.csdn.net/lamedunk/article/details/124780925).
 
 启动完成需要改动代码调试,编译(快捷键: ctrl+b)一下即完成热部署,非常方便.
 
@@ -120,3 +120,61 @@ Maven Helper插件可以帮助我们分析依赖关系，从而解决依赖冲�
 
 ![idea常用配置](/iblog/posts/annex/images/essays/idea常用配置-19.jpg)
 
+## 配置及技巧
+
+### 自定义模板
+配置一些常用代码字母缩写，在输入简写时可以出现你预定义的固定模式的代码，使得开发效率大大提高，同时也可以增加个性化。例如: 输入 `sout` 会出现 `System.out.println();`
+
+![idea常用配置](/iblog/posts/annex/images/essays/idea常用配置-20.jpg)
+
+### Idea快捷键及设置
+>本人Idea设置(windows版)供参考 [下载](/iblog/posts/annex/zip/idea-settings.zip)
+
+IDEA windows 版本常用快捷键如下:
+
+| 快捷键            | 介绍             |
+|----------------|----------------|
+| Ctrl+Shift+V   | 粘贴板列表          |
+| Ctrl+G         | 转到行&列          |
+| Ctrl+F         | 在当前文件进行文本查找    |
+| Ctrl+Y         | 删除光标所在行或删除选中的行 |
+| Shift+Shift    | 随处搜索,常用查找接口    |
+| Ctrl+Shift+F   | 按照文本的内容查找,行内搜索 |
+| Ctrl+D         | 复制当前行          |
+| Alt+Enter      | 代码提示补全         |
+| Ctrl+Tab       | 切换文件           |
+| Alt+Insert     | 代码自动生成         |
+| Ctrl+Shift+L   | 格式化代码          |
+| Ctrl+Shift+R   | 全局重命名          |
+| Alt+鼠标左键选中     | 修改多行           |
+| Ctrl+鼠标左键点击    | 快速找到成员变量的出处    |
+| Ctrl+B         | 编译(配合热部署插件使用)  |
+| Ctrl+Shift+F10 | 运行快捷键          |
+
+除此之外,根据自己的使用习惯,可以用[Key Promoter X](#Key Promoter X)插件来配置你自己的快捷键.
+
+
+在这个地方可以自己设置快捷键,如果你之前用的是eclipse,那么可以使用eclipse映射的快捷键,大大降低了学习成本
+![idea常用配置](/iblog/posts/annex/images/essays/idea常用配置-21.jpg)
+
+### 快速发起请求
+一般写完接口,我们会使用Postman等其他测试接口工具来发起请求,看符不符合自己的预期. 这里不是在介绍Postman，而是介绍IDEA中的一个插件，它也能做到Postman的功能，而且由于集成到了idea中使开发效率大大增加.
+
+`HTTP Client` 是 IDEA 自带的一款简洁轻量级的接口调用插件，通过它，我们能在 IDEA 上开发、调试、测试`Restful Web`服务.有了它 Postman 可以扔掉了
+
+![idea常用配置](/iblog/posts/annex/images/essays/idea常用配置-23.jpg)
+![idea常用配置](/iblog/posts/annex/images/essays/idea常用配置-22.jpg)
+![idea常用配置](/iblog/posts/annex/images/essays/idea常用配置-24.jpg)
+
+### 快速开发
+配置maven项目骨架(模板),可以快速开发,可自定义项目模板,参考[教程](https://blog.csdn.net/qq_42986107/article/details/83421811),maven骨架[下载地址](https://repository.apache.org/content/repositories/releases/archetype-catalog.xml)
+> Maven骨架简单的来说就是一种模型 (结构)，Maven根据我们的不同的项目和需求，提供了不同的模型，这样就不需要我们自己建模型了。举个简单的例子：就比如我们要做一套普通的楼房，我们使用Maven就不需要我们自己打地基，直接把使用Maven打好的地基就可以了。同时种类的楼房(写字楼，商场，套房，别墅) 就有不同的地基，因此，Maven就有很多种模型。
+
+配置maven骨架
+![idea常用配置](/iblog/posts/annex/images/essays/idea常用配置-26.jpg)
+
+设置自动导入包,清除无用的包,使代码更加整洁
+
+![idea常用配置](/iblog/posts/annex/images/essays/idea常用配置-25.jpg)
+
+在开发一些功能时需要的某些类库 https://www.21doc.net/ 这个网站做了一个导航供参考
