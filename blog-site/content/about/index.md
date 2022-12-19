@@ -4,6 +4,7 @@ date: 2021-02-20
 hidden: true
 draft: false
 ---
+
 ## 关于博客
 本博客使用 [hugo](https://gohugo.io) + GitHubPage 进行搭建，使用的主题为 [zozo](https://github.com/varkai/hugo-theme-zozo) Designed by [VarKai](https://www.varkai.com)。
  
@@ -21,27 +22,11 @@ draft: false
 - 菜鸟教程：[https://www.runoob.com/java/java-tutorial.html](https://www.runoob.com/java/java-tutorial.html)
 - JavaSchool：[http://www.51gjie.com](http://www.51gjie.com)
 - Java技术驿站：[http://cmsblogs.com](http://cmsblogs.com)
-- php中文网：[https://www.php.cn](https://www.php.cn)
-- C语言中文网：[http://c.biancheng.net](http://c.biancheng.net)
-- Web前端导航: [http://www.alloyteam.com/nav](http://www.alloyteam.com/nav)
 - 五分钟学算法：[https://www.cxyxiaowu.com](https://www.cxyxiaowu.com)
 - AlgoMooc：[https://www.algomooc.com](https://www.algomooc.com)
 - 芋道源码：[https://www.iocoder.cn](https://www.iocoder.cn)
-
-### 常用Java官方资料
-- JavaSE规范：[https://docs.oracle.com/javase/specs](https://docs.oracle.com/javase/specs)
-- JVM8文档：[https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html)
-- JVM7文档：[https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/java.html](https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/java.html)
-- OpenJDK相关链接：[https://blog.csdn.net/qq_23091073/article/details/83178848](https://blog.csdn.net/qq_23091073/article/details/83178848)
-
-
-### 公司组织博客文章
-- Oracle博客：[https://blogs.oracle.com/poonam](https://blogs.oracle.com/poonam)
-- 美团技术团队: [https://tech.meituan.com](https://tech.meituan.com)
-- 淘宝前端团队：[https://fed.taobao.org/blogs](https://fed.taobao.org/blogs)
-
-
-### 参考资料
+- 常用Java类库大全: [https://www.21doc.net/java/awesomejava](https://www.21doc.net/java/awesomejava)
+- Java论坛: [http://bbs.chinaunix.net/forum-26-1.html](http://bbs.chinaunix.net/forum-26-1.html)
 - Java工程师成神之路：[https://hollischuang.github.io/toBeTopJavaer](https://hollischuang.github.io/toBeTopJavaer)
 - CyC2018：[http://www.cyc2018.xyz](http://www.cyc2018.xyz)
 - 史上最全设计模式: [https://blog.csdn.net/LoveLion/article/details/17517213](https://blog.csdn.net/LoveLion/article/details/17517213)
@@ -57,10 +42,16 @@ draft: false
 - 并发编程网：[http://ifeve.com](http://ifeve.com)
 - iMySql老叶茶馆：[https://imysql.com](https://imysql.com)
 
-## 关于我自己
-其实没什么好介绍的，Java程序猿一只，目前没有拿得出手的作品，还在持续学习Java中，偶尔写写博客，看看视频，开发一些小玩意，有什么新点子我会在这个网站持续分享下去。
+### 常用Java官方资料
+- JavaSE规范：[https://docs.oracle.com/javase/specs](https://docs.oracle.com/javase/specs)
+- JVM8文档：[https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html)
+- JVM7文档：[https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/java.html](https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/java.html)
+- OpenJDK相关链接：[https://blog.csdn.net/qq_23091073/article/details/83178848](https://blog.csdn.net/qq_23091073/article/details/83178848)
 
-之前自己搭建过博客，无奈成本太高，无法长时间维持，也在其他第三方博客网站上写过，都有各种个样的问题，都不随心。所以就选择了这种把代码托管到github或码云上，算是白嫖吧，不给钱就不算嫖喽，哈哈哈...
 
+### 公司组织博客文章
+- Oracle博客：[https://blogs.oracle.com/poonam](https://blogs.oracle.com/poonam)
+- 美团技术团队: [https://tech.meituan.com](https://tech.meituan.com)
+- 淘宝前端团队：[https://fed.taobao.org/blogs](https://fed.taobao.org/blogs)
 
 
