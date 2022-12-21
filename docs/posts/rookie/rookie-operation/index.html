@@ -50,11 +50,8 @@
 
 
 <div class="toc">
-
     <div class="page-header"><strong></strong></div>
-
     <div id="page-scrollspy" class="toc-nav">
-
         
         
         
@@ -680,9 +677,7 @@
         
         
         
-
     </div>
-
 </div>
 
 
@@ -2705,20 +2700,21 @@ NaN表示非数值，例如：0.0/0结果为NAN，负数的平方根结果也为
 
 
 <script>
-    var options = {
-        right: '32px', 
-        bottom: 'unset', 
-        
-        time: '0.8s', 
-        mixColor: '#f7f7f7', 
-        backgroundColor: '#f7f7f7', 
-        buttonColorDark: '#212121', 
-        buttonColorLight: '#f7f7f7', 
-        saveInCookies: false, 
-        autoMatchOsTheme: true 
+    function addDarkmodeWidget() {
+        new Darkmode({
+            right: '32px', 
+            bottom: 'unset', 
+            
+            time: '0.5s', 
+            mixColor: '#f7f7f7', 
+            backgroundColor: '#f7f7f7', 
+            buttonColorDark: '#212121', 
+            buttonColorLight: '#f7f7f7', 
+            saveInCookies: false, 
+            autoMatchOsTheme: true 
+        }).showWidget();
     }
-    const darkmode = new Darkmode(options);
-    darkmode.showWidget();
+    window.addEventListener('load', addDarkmodeWidget);
 </script>
 </body>
 
