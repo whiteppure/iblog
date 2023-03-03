@@ -830,6 +830,34 @@
             
             
             <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%88%86%e5%b8%83%e5%bc%8f%e6%9e%b6%e6%9e%84%e5%8e%9f%e7%90%86">
+                    分布式架构原理
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
                 <a class="nav-link text-left" href="#%e6%95%85%e9%9a%9c%e8%bd%ac%e7%a7%bb">
                     故障转移
                 </a>
@@ -916,6 +944,34 @@
             <li class="nav-item">
                 <a class="nav-link text-left" href="#%e8%af%bb%e6%95%b0%e6%8d%ae%e6%b5%81%e7%a8%8b">
                     读数据流程
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%90%9c%e7%b4%a2%e6%95%b0%e6%8d%ae%e8%bf%87%e7%a8%8b">
+                    搜索数据过程
                 </a>
             </li>
             
@@ -1173,7 +1229,6 @@
 </blockquote>
 <p>Elasticsearch 是面向文档型数据库，一条数据在这里就是一个文档。 Elasticsearch 里存储文档数据和关系型数据库 MySQL 存储数据的概念进行一个类比,如图:
 <img src="/iblog/posts/annex/images/essays/Elasticsearch%E8%AF%A6%E8%A7%A3-01.png" alt="Elasticsearch详解-01"></p>
-<p>ElasticSearch 设计的理念就是分布式搜索引擎，底层其实还是基于 lucene 的。核心思想就是在多台机器上启动多个 ES 进程实例，组成了一个 ES 集群。</p>
 <p>ES 里的 Index 可以看做一个库，而 Types 相当于表， Documents 则相当于表的行。这里 Types 的概念已经被逐渐弱化， Elasticsearch 6.X 中，一个 index 下已经只能包含一个type， Elasticsearch 7.X 中, Type 的概念已经被删除了。</p>
 <p>官网下载地址: <a href="https://www.elastic.co/cn/downloads/past-releases">https://www.elastic.co/cn/downloads/past-releases</a></p>
 <h2 id="使用">使用</h2>
@@ -2077,6 +2132,17 @@
 </ol>
 <p>如果启动不起来可能原因是分配内存不足，需要修改 config\jvm.options 文件中的内存属性</p>
 <p>启动之后使用ES可视化工具查看,可使用<a href="https://github.com/mobz/elasticsearch-head">elasticsearch-head</a>,<a href="https://gitee.com/farmerx/ElasticHD">ElasticHD</a></p>
+<h3 id="分布式架构原理">分布式架构原理</h3>
+<p>ElasticSearch 设计的理念就是分布式搜索引擎，底层其实还是基于 lucene 的。核心思想就是在多台机器上启动多个 ES 进程实例，组成了一个 ES 集群。</p>
+<p>ES分布式架构实际上就是对index的拆分,将index拆分成多个分片(shard),将分片分别放到不同的ES上实现集群部署.</p>
+<p><img src="/iblog/posts/annex/images/essays/Elasticsearch%E8%AF%A6%E8%A7%A3-05.png" alt="Elasticsearch详解-05"></p>
+<p>分片优点:</p>
+<ul>
+<li>支持横向扩展: 比如你数据量是 3T，3 个 shard，每个 shard 就 1T 的数据，若现在数据量增加到 4T,怎么扩展，很简单，重新建一个有 4 个 shard 的索引，将数据导进去;</li>
+<li>提高性能: 数据分布在多个 shard，即多台服务器上，所有的操作，都会在多台机器上并行分布式执行，提高了吞吐量和性能;</li>
+</ul>
+<p>分片的数据实际上是有多个备份存在的,会存在一个主分片,还有几个副本分片. 当写入数据的时候先写入主分片,然后并行将数据同步到副本分片上;当读数据的时候会获取到所有分片,负载均衡轮询读取.</p>
+<p>当某个节点宕机了,还有其他分片副本保存在其他的机器上,从而实现了高可用. 如果是非主节点宕机了，那么会由主节点，让那个宕机节点上的主分片的数据转移到其他机器上的副本数据。接着你要是修复了那个宕机机器，重启了之后，主节点会控制将缺失的副本数据分配过去，同步后续修改的数据之类的，让集群恢复正常. 如果是主节点宕机,那么会重新选举一个节点为主节点.</p>
 <h3 id="故障转移">故障转移</h3>
 <p>在一个网络环境里，失败随时都可能发生，在某个分片/节点不知怎么的就处于离线状态，或者由于任何原因消失了，这种情况下，有一个故障转移机制是非常有用并且是强烈推荐的。为此目的，Elasticsearch 允许你创建分片的一份或多份拷贝，这些拷贝叫做复制分片。</p>
 <p>当集群中只有一个节点在运行时，意味着会有一个单点故障问题——没有冗余。 幸运的是，我们只需再启动一个节点即可防止数据丢失。当你在同一台机器上启动了第二个节点时，只要它和第一个节点有同样的 cluster.name 配置，它就会自动发现集群并加入到其中。</p>
@@ -2096,6 +2162,7 @@
 <p>这也就是创建索引的时候主分片的数量永远也不会改变的原因,如果数量变化了,那么所有之前路由的值都会无效,文档也再也找不到了.</p>
 <p>用户可以访问任何一个节点获取数据,因为存放的规则一致(副本和主分片存放的数据一致),这个节点称之为协调节点.如果当前节点访问量较大可能被转到其他节点上,所以当发送请求的时候,为了扩展负载,更好的做法是轮询集群中所有的节点.</p>
 <h3 id="写数据流程">写数据流程</h3>
+<p><img src="/iblog/posts/annex/images/essays/Elasticsearch%E8%AF%A6%E8%A7%A3-06.png" alt="Elasticsearch详解-06"></p>
 <ol>
 <li>客户端请请求任意集群节点(协调节点);</li>
 <li>协调节点将请求转换到指定节点(路由计算);</li>
@@ -2121,6 +2188,13 @@
 <li>节点返回查询结果,将结果返回给客户端;</li>
 </ol>
 <p>在处理读取请求时，协调结点在每次请求的时候都会通过轮询所有的副本分片来达到负载均衡。在文档被检索时，已经保存的数据可能已经存在于主分片上但是还没有复制到副本分片。 在这种情况下，副本分片可能会报告文档不存在，但是主分片可能成功返回文档。 一旦索引请求成功返回给用户，文档在主分片和副本分片都是可用的。</p>
+<h3 id="搜索数据过程">搜索数据过程</h3>
+<ol>
+<li>客户端发送请求到一个协调节点;</li>
+<li>协调节点计算数据所在的分片及全部的副本位置;</li>
+<li>每个分片将自己的搜索结果（其实就是一些 doc id ）返回给协调节点，由协调节点进行数据的合并、排序、分页等操作，产出最终结果;</li>
+<li>接着由协调节点根据 doc id 去各个节点上拉取实际的 document 数据，最终返回给客户端;</li>
+</ol>
 <h3 id="更新流程">更新流程</h3>
 <ol>
 <li>客户端向某一节点发送更新请求;</li>
