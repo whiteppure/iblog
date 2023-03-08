@@ -1116,6 +1116,38 @@
             
             
             <li class="nav-item">
+                <a class="nav-link text-left" href="#redis%e9%9b%86%e7%be%a4%e6%95%b0%e6%8d%ae%e5%88%86%e7%89%87">
+                    Redis集群数据分片
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
                 <a class="nav-link text-left" href="#%e6%90%ad%e5%bb%baredis%e9%9b%86%e7%be%a4">
                     搭建Redis集群
                 </a>
@@ -1842,6 +1874,30 @@
             
         </ul>
         
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#redis%e5%a4%a7key%e9%97%ae%e9%a2%98">
+                    Redis大key问题
+                </a>
+            </li>
+            
+            
         </ul>
         
         </ul>
@@ -2616,6 +2672,15 @@ sentinel monitor mymaster 127.0.0.1 6379 1</li>
 <li>多键操作是不被支持、多键的Redis事务是不被支持、lua脚本不被支持；</li>
 <li>由于集群方案出现较晚，很多公司已经采用了其他的集群方案，而代理或者客户端分片的方案想要迁移至redis cluster，需要整体迁移而不是逐步过渡，复杂度较大；</li>
 </ul>
+<h4 id="redis集群数据分片">Redis集群数据分片</h4>
+<p>Redis 集群没有使用一致性hash, 而是引入了 哈希槽的概念. Redis cluster 有固定的 16384 个 hash slot，对每个 key 计算 CRC16 值，然后对 16384 取模，可以获取来决定放置哪个槽.</p>
+<p>集群的每个节点负责一部分hash槽,举个例子,比如当前集群有3个节点,那么:</p>
+<ul>
+<li>节点 A 包含 0 到 5500号哈希槽.</li>
+<li>节点 B 包含5501 到 11000 号哈希槽.</li>
+<li>节点 C 包含11001 到 16384号哈希槽.</li>
+</ul>
+<p>这种结构很容易添加或者删除节点. 比如如果我想新添加个节点D, 我需要从节点 A, B, C中得部分槽到D上. 如果我想移除节点A,需要将A中的槽移到B和C节点上,然后将没有任何槽的A节点从集群中移除即可. 由于从一个节点将哈希槽移动到另一个节点并不会停止服务,所以无论添加删除或者改变某个节点的哈希槽的数量都不会造成集群不可用的状态.</p>
 <h4 id="搭建redis集群">搭建Redis集群</h4>
 <ol>
 <li>修改<code>redis.conf</code>配置文件，修改前建议备份，修改之后启动redis服务；
@@ -3392,6 +3457,27 @@ redis-cli &ndash;cluster create &ndash;cluster-replicas 1 192.168.11.101:6379 19
 </tr>
 </tbody>
 </table>
+<h2 id="redis大key问题">Redis大key问题</h2>
+<p>所谓的大key问题是某个key的value比较大，所以本质上是大value问题.因为key往往是程序可以自行设置的，value往往不受程序控制，因此可能导致value很大。</p>
+<p>因为Redis是单线程的,单线程中请求任务的处理是串行的，前面完不成，后面处理不了，同时也导致分布式架构中内存数据和CPU的不平衡.所以大key问题最典型的就是阻塞线程，并发量下降，导致客户端超时，服务端业务成功率下降。</p>
+<p>大key问题一般是由于业务方案设计不合理,没有预见value的动态增长问题产生的.一直往value塞数据，没有删除机制，迟早要爆炸或数据没有合理做分片，将大key变成小key. 在线上一般通过集成<a href="https://www.redis.com.cn/clients.html">Redis可视化工具</a>,来发现和定位大key问题.</p>
+<p>解决大key问题,根据大key的实际用途可以分为两种情况：可删除和不可删除。如果发现某些大key并非热key就可以在DB中查询使用，则可以在Redis中删掉.</p>
+<ul>
+<li>
+<p>删除</p>
+<ol>
+<li>当Redis版本大于4.0时，可使用UNLINK命令安全地删除大Key，该命令能够以非阻塞的方式，逐步地清理传入的Key。</li>
+<li>当Redis版本小于4.0时，避免使用阻塞式命令KEYS，而是建议通过SCAN命令执行增量迭代扫描key，然后判断进行删除。</li>
+</ol>
+</li>
+<li>
+<p>不可删除</p>
+<ol>
+<li>当vaule是string时，比较难拆分，则使用序列化、压缩算法将key的大小控制在合理范围内，但是序列化和反序列化都会带来更多时间上的消耗。</li>
+<li>当value是string，压缩之后仍然是大key，则需要进行拆分，一个大key分为不同的部分，记录每个部分的key，使用multiget等操作实现事务读取。</li>
+</ol>
+</li>
+</ul>
 </div>
                     <div class="post_footer">
                         <div class="meta">
