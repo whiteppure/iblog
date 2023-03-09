@@ -12,7 +12,7 @@
 	
     
     
-    <meta name="description" content="MySql逻辑架构 主要分为：连接层，服务层，引擎层，存储层。 客户端执行一条select命令的流程如下： 连接层：最上层是一些客户端和连接服务，包含本地sock通信" />
+    <meta name="description" content="MySQL逻辑架构 主要分为：连接层，服务层，引擎层，存储层。 客户端执行一条select命令的流程如下： 连接层：最上层是一些客户端和连接服务，包含本地sock通信" />
     
 
     
@@ -65,7 +65,7 @@
             
             <li class="nav-item">
                 <a class="nav-link text-left" href="#mysql%e9%80%bb%e8%be%91%e6%9e%b6%e6%9e%84">
-                    MySql逻辑架构
+                    MySQL逻辑架构
                 </a>
             </li>
             
@@ -89,7 +89,7 @@
             
             <li class="nav-item">
                 <a class="nav-link text-left" href="#mysqlsql%e4%bc%98%e5%8c%96">
-                    MySqlSQL优化
+                    MySQLSQL优化
                 </a>
             </li>
             
@@ -945,7 +945,7 @@
             
             <li class="nav-item">
                 <a class="nav-link text-left" href="#mysql%e9%94%81%e6%9c%ba%e5%88%b6">
-                    MySql锁机制
+                    MySQL锁机制
                 </a>
             </li>
             
@@ -1154,7 +1154,7 @@
                         <h2><a href='/iblog/posts/essays/sql-select-fast/'>MySQLSQL优化及锁机制</a></h2>
                         <span class="date">2021.07.11</span>
                     </div>
-                    <div class="post_content markdown"><h2 id="mysql逻辑架构">MySql逻辑架构</h2>
+                    <div class="post_content markdown"><h2 id="mysql逻辑架构">MySQL逻辑架构</h2>
 <p>主要分为：连接层，服务层，引擎层，存储层。</p>
 <p>客户端执行一条select命令的流程如下：</p>
 <p><img src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-001.png" alt="MySqlSQL优化及锁机制-001"></p>
@@ -1172,7 +1172,7 @@
 <p>存储层：数据存储层，主要是将数据存储在运行于裸设备的文件系统之上，并完成与存储引擎的交互。</p>
 </li>
 </ul>
-<p>其中比较重要的就要说存储引擎了，MySql默认使用的存储引擎是InnoDB，可以使用相关命令来查看：</p>
+<p>其中比较重要的就要说存储引擎了，MySQL默认使用的存储引擎是InnoDB，可以使用相关命令来查看：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> show engines;
 </span></span></code></pre></div><p>如果查看当前使用的存储引擎可以使用命令：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> show variables like &#39;%storage_engine%&#39;;
@@ -1183,7 +1183,7 @@
 </span></span><span class="line"><span class="cl">	deptId INT(11) DEFAULT NULL,
 </span></span><span class="line"><span class="cl">	PRIMARY KEY (id)
 </span></span><span class="line"><span class="cl"> )ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-</span></span></code></pre></div><h2 id="mysqlsql优化">MySqlSQL优化</h2>
+</span></span></code></pre></div><h2 id="mysqlsql优化">MySQLSQL优化</h2>
 <p>参考文章：</p>
 <ul>
 <li><a href="https://www.hollischuang.com/archives/6330">https://www.hollischuang.com/archives/6330</a></li>
@@ -1208,7 +1208,7 @@
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> from .. on .. join ..  where .. group by .. having .. select distinct .. order by .. limit ..
 </span></span></code></pre></div><p>之所以SQL的编写过程会和执行过程有区别，是因为Mysql中有专门负责优化SELECT语句的优化器模块。</p>
 <blockquote>
-<p>MySQL Query Optimizer：MySql查询优化器，主要功能:通过计算分析系统中收集到的统计信息，为客户端请求的Query提供MySql认为最优的执行计划。</p>
+<p>MySQL Query Optimizer：MySQL查询优化器，主要功能:通过计算分析系统中收集到的统计信息，为客户端请求的Query提供MySQL认为最优的执行计划。</p>
 </blockquote>
 <p>当客户端向MySQL请求一条Query，命令解析器模块完成请求分类，区别出是SELECT并转发给MySQL Query Optimizer时，MySQL Query Optimizer首先会对整条Query进行优化，处理掉一些常量表达式的预算直接换算成常量值。
 并对Query中的查询条件进行简化和转换，如去掉一些无用或显而易见的条件、结构调整等。然后分析Query 中的 Hint信息(如果有），看显示Hint信息是否可以完全确定该Query的执行计划。如果没有Hint 或Hint信息还不足以完全确定执行计划，则会读取所涉及对象的统计信息，根据Query进行写相应的计算分析，然后再得出最后的执行计划。</p>
@@ -1354,7 +1354,7 @@
 <p>explain不止适用于select也适用于delete、insert、replace和update语句。</p>
 </blockquote>
 <p>当explain可解释语句一起使用时，MySQL会显示来自优化器的关于语句执行计划的信息。也就是说，MySQL解释了它将如何处理语句，包括有关表如何连接以及按顺序连接的信息。</p>
-<p>在MySql中执行任意一条SQL前加上explain关键字，即可看到：</p>
+<p>在MySQL中执行任意一条SQL前加上explain关键字，即可看到：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> +----+-------------+----------+------+---------------+------+---------+------+------+-------+
 </span></span><span class="line"><span class="cl"> | id | select_type | table    | type | possible_keys | key  | key_len | ref  | rows | Extra |
 </span></span><span class="line"><span class="cl"> +----+-------------+----------+------+---------------+------+---------+------+------+-------+
@@ -1444,7 +1444,7 @@
 </span></span><span class="line"><span class="cl"> +----+-------------+---------+-------+---------------+----------+---------+------+------+-------------+
 </span></span><span class="line"><span class="cl"> |  1 | SIMPLE      | tbl_001 | index | NULL          | idx_name | 63      | NULL |    4 | Using index |
 </span></span><span class="line"><span class="cl"> +----+-------------+---------+-------+---------------+----------+---------+------+------+-------------+
-</span></span></code></pre></div><p>其中，如果索引字段可以为null，MySql会用一个字节进行标识；varchar为可变长度，MySql用两个字节来标识。</p>
+</span></span></code></pre></div><p>其中，如果索引字段可以为null，MySQL会用一个字节进行标识；varchar为可变长度，MySQL用两个字节来标识。</p>
 <blockquote>
 <p>utf8：一个字符三个字节；
 gbk：一个字符两个字节；
@@ -1693,7 +1693,7 @@ latin：一个字符一个字节；</p>
 <li>复合索引不能使用不等于（!=、&lt;&gt;）或is null、is not null，否则自身及右侧索引全部失效；</li>
 </ul>
 <blockquote>
-<p>大部分情况下如果复合索引使用上面的运算符索引会失效，但是MySql在服务层存在SQL优化阶段，所以复合索引即使使用了不等于、is null、is not null等操作，还是可能会存在索引生效的情况。</p>
+<p>大部分情况下如果复合索引使用上面的运算符索引会失效，但是MySQL在服务层存在SQL优化阶段，所以复合索引即使使用了不等于、is null、is not null等操作，还是可能会存在索引生效的情况。</p>
 </blockquote>
 <ul>
 <li>尽量使用覆盖索引，使用覆盖索引会提高系统性能；
@@ -1711,7 +1711,7 @@ latin：一个字符一个字节；</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- authorid、typeid为复合索引，此处or的左右两边索引全部失效
 </span></span><span class="line"><span class="cl"> select * from book_2021 where authorid = 1 or typeid = 1;
 </span></span></code></pre></div></li>
-<li>避免使用*，因为使用<em>之后MySql还需要计算把</em>替换成对应的列；
+<li>避免使用*，因为使用<em>之后MySQL还需要计算把</em>替换成对应的列；
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-- 不要使用*，把*替换成具体需要的列
 </span></span><span class="line"><span class="cl"> select * from book_2021;
 </span></span></code></pre></div></li>
@@ -1733,16 +1733,16 @@ latin：一个字符一个字节；</p>
 <h4 id="order-by优化">order by优化</h4>
 <p>order by 是比较常用的一个关键字，基本上查询出来的数据都要进行排序，否则就太乱了。使用order by的时候常常伴随着Using filesort的发生，Using filesort在底层有两种算法，根据IO的次数分为：</p>
 <ul>
-<li>双路排序：MySql4.1之前默认使用双路排序；具体执行流程，双路排序需要扫描两次磁盘上的字段，首先扫描排序的字段对字段进行排序，然后扫描其他字段；</li>
-<li>单路排序：为了减少IO访问次数在MySql4.1之后默认使用单路排序；读取一次获取全部的字段，在buffer中进行排序。但是此种方法存在隐患不一定是只读一次数据，如果数据量过大buffer放不下则再需要读取文件，可以通过调节buffer来进行缓解；
+<li>双路排序：MySQL4.1之前默认使用双路排序；具体执行流程，双路排序需要扫描两次磁盘上的字段，首先扫描排序的字段对字段进行排序，然后扫描其他字段；</li>
+<li>单路排序：为了减少IO访问次数在MySQL4.1之后默认使用单路排序；读取一次获取全部的字段，在buffer中进行排序。但是此种方法存在隐患不一定是只读一次数据，如果数据量过大buffer放不下则再需要读取文件，可以通过调节buffer来进行缓解；
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 设置读取文件缓冲区（buffer）的大小,单位字节
 </span></span><span class="line"><span class="cl"> set max_length_for_sort_data = 1024;
 </span></span></code></pre></div></li>
 </ul>
-<p>如果需要排序的列的总大小超过了设置的<code>max_length_for_sort_data</code>那么MySql底层会自动从单路排序切换到双路排序。</p>
+<p>如果需要排序的列的总大小超过了设置的<code>max_length_for_sort_data</code>那么MySQL底层会自动从单路排序切换到双路排序。</p>
 <p>保证全部索引排序字段的一致性，都是升序或都是降序，不要部分升序部分降序。</p>
 <h3 id="排查sql">排查SQL</h3>
-<p>在MySql中可以通过抓去慢SQL日志来进行SQL排查，慢SQL日志超过响应时间的阈值默认10秒，便会记录该SQL;慢SQL日志默认是关闭的，建议在开发调优时打开，最终部署上线时关闭。</p>
+<p>在MySQL中可以通过抓去慢SQL日志来进行SQL排查，慢SQL日志超过响应时间的阈值默认10秒，便会记录该SQL;慢SQL日志默认是关闭的，建议在开发调优时打开，最终部署上线时关闭。</p>
 <h4 id="慢sql日志设置">慢SQL日志设置</h4>
 <p>通过SQL来查看记录慢SQL日志是否开启：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 查看变量 slow_query_log，记录慢查询日志默认关闭
@@ -1765,7 +1765,7 @@ latin：一个字符一个字节；</p>
 </span></span><span class="line"><span class="cl"> | slow_query_log      | ON                                           |
 </span></span><span class="line"><span class="cl"> | slow_query_log_file | /usr/local/mysql/data/MacBook-Pro-2-slow.log |
 </span></span><span class="line"><span class="cl"> +---------------------+----------------------------------------------+
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 在MySql my.cnf 配置文件中追加配置;重启MySql服务后也生效，即永久开启
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 在MySQL my.cnf 配置文件中追加配置;重启MySQL服务后也生效，即永久开启
 </span></span><span class="line"><span class="cl"> slow_query_log=1
 </span></span><span class="line"><span class="cl"> slow_query_log_file=/usr/local/mysql/data/MacBook-Pro-2-slow.log
 </span></span></code></pre></div><p>查看慢SQL记录日志阈值：</p>
@@ -1787,7 +1787,7 @@ latin：一个字符一个字节；</p>
 </span></span><span class="line"><span class="cl"> +-----------------+-----------+
 </span></span><span class="line"><span class="cl"> | long_query_time | 5.000000 |
 </span></span><span class="line"><span class="cl"> +-----------------+-----------+
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 在MySql配置文件my.cnf中修改慢查询SQL记录日志阈值,设置为3秒
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 在MySQL配置文件my.cnf中修改慢查询SQL记录日志阈值,设置为3秒
 </span></span><span class="line"><span class="cl"> long_query_time=3
 </span></span></code></pre></div><h4 id="查看慢sql日志">查看慢SQL日志</h4>
 <ul>
@@ -2009,7 +2009,7 @@ swaps：显示交换次数相关开销的信息;</p>
 </ul>
 <h4 id="全局查询日志">全局查询日志</h4>
 <p><strong>不要在生产环境开启这个功能。</strong></p>
-<p>在配置MySql文件<code>my.cnf</code>设置全局查询日志：</p>
+<p>在配置MySQL文件<code>my.cnf</code>设置全局查询日志：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-- 开启全局查询日志
 </span></span><span class="line"><span class="cl">general_log=1
 </span></span><span class="line"><span class="cl">
@@ -2033,10 +2033,10 @@ swaps：显示交换次数相关开销的信息;</p>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">-- 可在mysql库里的geneial_log表查看；如果为空则需要造数
 </span></span><span class="line"><span class="cl">select * from mysql.general_log;
-</span></span></code></pre></div><h2 id="mysql锁机制">MySql锁机制</h2>
+</span></span></code></pre></div><h2 id="mysql锁机制">MySQL锁机制</h2>
 <p>在数据库中，除传统的计算资源（如CPU、RAM、I/O等）的争用以外，数据也是一种供许多用户共享的资源。如何保证数据并发访问的一致性、有效性是所有数据库必须解决的一个问题，锁冲突也是影响数据库并发访问性能的一个重要因素。从这个角度来说，锁对数据库而言显得尤其重要，也更加复杂。
 简而言之，锁机制是解决因资源共享，而造成的并发问题。</p>
-<p>MySql中的锁按照对数据操作的类型分为：读锁即共享锁，写锁即互斥锁；按照操作粒度来分，分为表锁、行锁，页锁。</p>
+<p>MySQL中的锁按照对数据操作的类型分为：读锁即共享锁，写锁即互斥锁；按照操作粒度来分，分为表锁、行锁，页锁。</p>
 <ul>
 <li>读锁：对于同一个数据，多个读操作可以同时进行，互不干扰。</li>
 <li>写锁：如果当前写操作没有完毕，则无法进行其他的读操作、写操作。</li>
@@ -2118,13 +2118,13 @@ swaps：显示交换次数相关开销的信息;</p>
 </span></span><span class="line"><span class="cl"> -- Innodb_row_lock_time_max：从系统启动到现在等待最常的一次所花的时间；
 </span></span><span class="line"><span class="cl"> -- Innodb_row_lock_waits：系统启动后到现在总共等待的次数；
 </span></span><span class="line"><span class="cl"> -- show status like &#39;innodb_row_lock%&#39;;
-</span></span></code></pre></div><p>由于行锁与事务相关，所以在测试之前需要关闭MySql的自动提交：</p>
+</span></span></code></pre></div><p>由于行锁与事务相关，所以在测试之前需要关闭MySQL的自动提交：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 关闭自动提交；0关闭，1打开
 </span></span><span class="line"><span class="cl"> set autocommit = 0;
 </span></span></code></pre></div><p>测试行锁读写操作：</p>
 <p><img src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-010.png" alt="MySqlSQL优化及锁机制-010"></p>
 <p><img src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-011.png" alt="MySqlSQL优化及锁机制-011"></p>
-<p>当前会话当关闭MySql自动提交后，修改表中的某一行数据，未提交前其他会话是不可见该修改的数据的；如果当前会话和修改某一行数据其他会话也修改该行数据则其他会话会一直等待，直到持有锁的会话commit后才会执行。
+<p>当前会话当关闭MySQL自动提交后，修改表中的某一行数据，未提交前其他会话是不可见该修改的数据的；如果当前会话和修改某一行数据其他会话也修改该行数据则其他会话会一直等待，直到持有锁的会话commit后才会执行。
 如果当前会话和其他会话操作同一张表的不同行数据时，则相互不影响。</p>
 <p><strong>使用行锁时注意，无索引行或索引失效都会导致行锁变为表锁。</strong></p>
 <p><strong>间隙锁：</strong></p>
