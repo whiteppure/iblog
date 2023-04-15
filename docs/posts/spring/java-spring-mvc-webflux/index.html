@@ -12,7 +12,7 @@
 	
     
     
-    <meta name="description" content="概述 SpringMVC Spring Web MVC是建立在Servlet API上的原始Web框架，从一开始就包含在Spring框架中。正式名称 &amp;ldquo;Spring Web MVC &amp;ldquo;来自其源模块的名称（spring" />
+    <meta name="description" content="Spring MVC Spring Web MVC是建立在Servlet API上的原始Web框架，从一开始就包含在Spring框架中。正式名称 &amp;ldquo;Spring Web MVC &amp;ldquo;来自其源模块的名称（spring-" />
     
 
     
@@ -64,32 +64,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e6%a6%82%e8%bf%b0">
-                    概述
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#springmvc">
-                    SpringMVC
+                <a class="nav-link text-left" href="#spring-mvc">
+                    Spring MVC
                 </a>
             </li>
             
@@ -142,8 +118,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%8e%9f%e7%90%86%e6%b5%81%e7%a8%8b">
-                    原理流程
+                <a class="nav-link text-left" href="#%e6%89%a7%e8%a1%8c%e6%b5%81%e7%a8%8b">
+                    执行流程
                 </a>
             </li>
             
@@ -196,12 +172,68 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#springwebflux">
-                    SpringWebFlux
+                <a class="nav-link text-left" href="#spring-webflux">
+                    Spring WebFlux
                 </a>
             </li>
             
             
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%8e%9f%e7%90%86%e8%a7%a3%e6%9e%90">
+                    原理解析
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e8%af%ad%e6%b3%95%e4%bb%a3%e7%a0%81%e7%a4%ba%e4%be%8b-1">
+                    语法代码示例
+                </a>
+            </li>
+            
+            
+        </ul>
+        
         </ul>
         
         </ul>
@@ -304,10 +336,9 @@
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
                         <h2><a href='/iblog/posts/spring/java-spring-mvc-webflux/'>SpringMVC与SpringWebFlux</a></h2>
-                        <span class="date">2023.03.30</span>
+                        <span class="date">2023.04.14</span>
                     </div>
-                    <div class="post_content markdown"><h2 id="概述">概述</h2>
-<h2 id="springmvc">SpringMVC</h2>
+                    <div class="post_content markdown"><h2 id="spring-mvc">Spring MVC</h2>
 <p>Spring Web MVC是建立在Servlet API上的原始Web框架，从一开始就包含在Spring框架中。正式名称 &ldquo;Spring Web MVC &ldquo;来自其源模块的名称（spring-webmvc），但它更常被称为 &ldquo;Spring MVC&rdquo;。</p>
 <p>SpringMVC是基于Spring的，是Spring中的一个模块，专门用来做web开发使用的。</p>
 <ul>
@@ -322,7 +353,7 @@
 <p>MVC模式是一种将应用程序分为三个主要部分的架构模式，分别是模型（Model）、视图（View）和控制器（Controller）。模型负责处理数据，视图负责展示数据，控制器负责协调模型和视图之间的交互。</p>
 <p>在没有使用SpringMVC之前都是使用Servlet在做Web开发。但是使用Servlet开发在接收请求参数，数据共享，页面跳转等操作相对比较复杂。servlet是java进行web开发的标准，既然springMVC是对servlet的封装，那么很显然SpringMVC底层就是Servlet，SpringMVC就是对Servlet进行深层次的封装。</p>
 <p>SpringMVC 是一种基于 Spring 框架的 MVC 设计模型，它是 Spring 框架的一个子项目。SpringMVC 的核心思想是将 MVC 设计模式应用于 Spring 框架，实现了请求-响应模式，将业务逻辑、数据、显示分离，提高了部分代码的复用性，降低了各个模块间的耦合性。</p>
-<h3 id="原理流程">原理流程</h3>
+<h3 id="执行流程">执行流程</h3>
 <p><img src="/iblog/posts/annex/images/essays/SpringMVC%E4%B8%8ESpringWebFlux-01.jpg" alt="SpringMVC原理图"></p>
 <p>流程描述:</p>
 <ul>
@@ -350,9 +381,13 @@
 </span></span><span class="line"><span class="cl">   <span class="o">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h2 id="springwebflux">SpringWebFlux</h2>
-<p>官方资料: <a href="https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html">https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html</a></p>
-<p>与Spring Web MVC并行，Spring Framework 5.0引入了一个响应式Web框架，其名称为 &ldquo;Spring WebFlux&rdquo;，也是基于其源模块 spring-webflux。</p>
+</span></span></code></pre></div><h2 id="spring-webflux">Spring WebFlux</h2>
+<p>与Spring Web MVC并行，Spring Framework 5.0引入了一个响应式Web框架，其名称为 &ldquo;Spring WebFlux&rdquo;。与Spring MVC不同，它不需要Servlet API，完全异步和非阻塞，又被叫做响应式WebClient。</p>
+<p>其本身不会加快程序执行速度，但在高并发情况下借助异步IO能够以少量而稳定的线程处理更高的吞吐，规避文件IO/网络IO阻塞带来的线程堆积。</p>
+<p>更多信息请查看<a href="https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html">官方资料</a></p>
+<h3 id="原理解析">原理解析</h3>
+<p>Spring WebFlux 底层实现依赖 reactor 和 netty。Spring 做的就是通过抽象和封装，把 reactor 的能力通过你最熟悉不过的 Controller 来使用。</p>
+<h3 id="语法代码示例-1">语法代码示例</h3>
 <h2 id="两者比较">两者比较</h2>
 </div>
                     <div class="post_footer">
