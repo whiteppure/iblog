@@ -8,7 +8,7 @@
 	
 	
 	
-	<title>重构一个程序 ｜ 唯手熟尔</title>
+	<title>重构一个程序 ｜ 苦中作乐</title>
 	
     
     
@@ -50,8 +50,11 @@
 
 
 <div class="toc">
+
     <div class="page-header"><strong></strong></div>
+
     <div id="page-scrollspy" class="toc-nav">
+
         
         
         
@@ -261,7 +264,9 @@
         
         
         
+
     </div>
+
 </div>
 
 
@@ -290,13 +295,13 @@
         <div class="site_title">
             <h1>
                 <a href="https://whiteppure.github.io/iblog/">
-                    <span>唯手熟尔</span>
+                    <span>苦中作乐</span>
                 </a>
             </h1>
         </div>
         <div class="description">
             <p class="sub_title">
-                无他,唯手熟尔
+                知行合一
             </p>
             <div class="my_socials">
                 
@@ -367,6 +372,8 @@
 <p>在重构项目时，我们可以借鉴分治思想，将重构任务拆分成每周都能见到效果的小任务，形成正反馈，定期开会同步进度，不断加强团队的重构意识。</p>
 <p>具体代码重构&hellip;</p>
 <h3 id="过度设计">过度设计</h3>
+<p>在初学编程的时候,只管埋头写程序,浑浑噩噩的进行开发。然而很快便发现事先做好设计可以节省返工的成本。许多人把设计看作软件开发的关键环节，而把编程看成是机械式的劳动。他们认为设计就像画工程图纸而编码就像施工。</p>
+<p>有一种观点认为重构是可以取代预先设计的。</p>
 <h3 id="代码命名">代码命名</h3>
 <h3 id="代码结构">代码结构</h3>
 <h3 id="依赖传递">依赖传递</h3>
@@ -594,21 +601,20 @@
 
 
 <script>
-    function addDarkmodeWidget() {
-        new Darkmode({
-            right: '32px', 
-            bottom: 'unset', 
-            
-            time: '0.5s', 
-            mixColor: '#f7f7f7', 
-            backgroundColor: '#f7f7f7', 
-            buttonColorDark: '#212121', 
-            buttonColorLight: '#f7f7f7', 
-            saveInCookies: false, 
-            autoMatchOsTheme: true 
-        }).showWidget();
+    var options = {
+        right: '32px', 
+        bottom: 'unset', 
+        
+        time: '0.8s', 
+        mixColor: '#f7f7f7', 
+        backgroundColor: '#f7f7f7', 
+        buttonColorDark: '#212121', 
+        buttonColorLight: '#f7f7f7', 
+        saveInCookies: false, 
+        autoMatchOsTheme: true 
     }
-    window.addEventListener('load', addDarkmodeWidget);
+    const darkmode = new Darkmode(options);
+    darkmode.showWidget();
 </script>
 </body>
 
