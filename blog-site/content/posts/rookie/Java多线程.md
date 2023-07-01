@@ -4,7 +4,6 @@ date: 2021-05-05
 draft: false
 tags: ["Java", "Java基础"]
 slug: "rookie-multi-thread"
-weight: 90
 ---
 
 ## 相关概念

@@ -2,7 +2,7 @@
 title: "规范编写Java代码总结"
 date: 2021-11-25
 draft: false
-tags: ["Java","code"]
+tags: ["code"]
 slug: "java-code-rule"
 ---
 

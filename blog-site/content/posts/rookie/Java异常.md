@@ -4,7 +4,6 @@ date: 2021-01-13
 draft: false
 tags: ["Java", "Java基础"]
 slug: "rookie-exception"
-weight: 30
 ---
 
 ![Java异常分类](/iblog/posts/annex/images/essays/Java异常分类.png)

@@ -4,7 +4,6 @@ date: 2021-02-15
 draft: false
 tags: ["Java", "Java基础"]
 slug: "rookie-object-oriented"
-weight: 60
 ---
 
 

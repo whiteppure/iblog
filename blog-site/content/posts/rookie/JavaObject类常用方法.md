@@ -4,7 +4,6 @@ date: 2021-07-10
 draft: false
 tags: ["Java", "Java基础"]
 slug: "rookie-objectclass-methods"
-weight: 70
 ---
 
 ## 概览
@@ -22,17 +21,17 @@ class A {
 ```
 Java `Object`类是所有类的父类，也就是说 Java 的所有类都继承了`Object`，子类可以使用`Object`的所有方法。
 
-|方法名称 |方法作用
----|---
-[equals](#equals)|比较两个对象是否相同
-[hashCode](#hashCode)|获取对象的哈希值
-[toString](#toString)|返回对象的字符串表示形式
-[clone](#clone)|创建并返回一个对象的拷贝
-[finalize](#finalize)|当垃圾收集确定不再有对对象的引用时，由垃圾收集器在对象上调用
-[getClass](#getClass)|获取对象运行时的类
-[notify](#notify)|唤醒在该对象上等待的某个线程
-[notifyAll](#notifyAll)|唤醒在该对象上等待的所有线程
-[wait](#wait)|让当前线程进入等待(阻塞)状态。直到其他线程调用此对象的`notify()`方法或`notifyAll()`方法。
+| 方法名称                    | 方法作用                                                      |
+|-------------------------|-----------------------------------------------------------|
+| [equals](#equals)       | 比较两个对象是否相同                                                |
+| [hashCode](#hashCode)   | 获取对象的哈希值                                                  |
+| [toString](#toString)   | 返回对象的字符串表示形式                                              |
+| [clone](#clone)         | 创建并返回一个对象的拷贝                                              |
+| [finalize](#finalize)   | 当垃圾收集确定不再有对对象的引用时，由垃圾收集器在对象上调用                            |
+| [getClass](#getClass)   | 获取对象运行时的类                                                 |
+| [notify](#notify)       | 唤醒在该对象上等待的某个线程                                            |
+| [notifyAll](#notifyAll) | 唤醒在该对象上等待的所有线程                                            |
+| [wait](#wait)           | 让当前线程进入等待(阻塞)状态。直到其他线程调用此对象的`notify()`方法或`notifyAll()`方法。 |
 
 ## equals
 `Object`类中的`equals()`方法作用是比较两个对象，是判断两个对象引用指向的是同一个对象，即比较两个对象的内存地址是否相等。

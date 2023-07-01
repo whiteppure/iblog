@@ -4,7 +4,6 @@ date: 2021-04-09
 draft: false
 tags: ["Java", "Java基础"]
 slug: "rookie-io"
-weight: 50
 ---
 
 ## 概念

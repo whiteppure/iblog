@@ -4,7 +4,6 @@ date: 2021-01-20
 draft: false
 tags: ["Java", "Java基础"]
 slug: "rookie-datatype"
-weight: 10
 ---
 
 

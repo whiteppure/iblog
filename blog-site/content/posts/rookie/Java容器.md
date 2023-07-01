@@ -4,7 +4,6 @@ date: 2021-10-04
 draft: false
 tags: ["Java", "Java基础"]
 slug: "rookie-java-container"
-weight: 40
 ---
 
 ## 概述
