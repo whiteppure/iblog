@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>分布式微服务治理 ｜ 苦中作乐</title>
+	<title>微服务治理 ｜ 唯手熟尔</title>
 	
     
     
-    <meta name="description" content="什么是微服务架构 In short, the microservice architectural style is an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms, often an HTTP resource API. These services are built around business capabilities and independently deployable by fully automated deployment machinery. There is a bare minimum of centralized management of these services, which may be written in different programming languages and use" />
+    <meta name="description" content="什么是微服务架构 In short， the microservice architectural style is an approach to developing a single application as a suite of small services， each running in its own process and communicating with lightweight mechanisms， often an HTTP resource API。 These services are built around business capabilities and independently deployable" />
     
 
     
@@ -93,6 +93,54 @@
             <li class="nav-item">
                 <a class="nav-link text-left" href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e8%a6%81%e4%bd%bf%e7%94%a8%e5%be%ae%e6%9c%8d%e5%8a%a1">
                     为什么要使用微服务
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%bb%8e%e5%8d%95%e4%bd%93%e6%9e%b6%e6%9e%84%e8%bf%81%e7%a7%bb%e5%88%b0%e5%be%ae%e6%9c%8d%e5%8a%a1%e6%9e%b6%e6%9e%84">
+                    从单体架构迁移到微服务架构
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%9c%8d%e5%8a%a1%e6%b2%bb%e7%90%86%e6%b2%bb%e7%9a%84%e6%98%af%e4%bb%80%e4%b9%88">
+                    服务治理治的是什么
                 </a>
             </li>
             
@@ -579,13 +627,13 @@
         <div class="site_title">
             <h1>
                 <a href="https://whiteppure.github.io/iblog/">
-                    <span>苦中作乐</span>
+                    <span>唯手熟尔</span>
                 </a>
             </h1>
         </div>
         <div class="description">
             <p class="sub_title">
-                知行合一
+                无他,唯手熟尔
             </p>
             <div class="my_socials">
                 
@@ -620,35 +668,52 @@
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
-                        <h2><a href='/iblog/posts/essays/java-small-service/'>分布式微服务治理</a></h2>
+                        <h2><a href='/iblog/posts/essays/java-small-service/'>微服务治理</a></h2>
                         <span class="date">2021.06.21</span>
                     </div>
                     <div class="post_content markdown"><h2 id="什么是微服务架构">什么是微服务架构</h2>
 <blockquote>
-<p>In short, the microservice architectural style is an approach to developing a single application as a suite of small services,
-each running in its own process and communicating with lightweight mechanisms, often an HTTP resource API.
-These services are built around business capabilities and independently deployable by fully automated deployment machinery.
-There is a bare minimum of centralized management of these services, which may be written in different programming languages and use different data storage technologies. ——<a href="https://martinfowler.com/articles/microservices.html">James Lewis and Martin Fowler (2014)</a></p>
+<p>In short， the microservice architectural style is an approach to developing a single application as a suite of small services，
+each running in its own process and communicating with lightweight mechanisms， often an HTTP resource API。
+These services are built around business capabilities and independently deployable by fully automated deployment machinery。
+There is a bare minimum of centralized management of these services， which may be written in different programming languages and use different data storage technologies。 ——<a href="https://martinfowler.com/articles/microservices.html">James Lewis and Martin Fowler (2014)</a></p>
 </blockquote>
 <p>大意：简而言之，微服务体系结构风格是一种将单个应用程序开发为一套小型服务的方法，每个服务运行在自己的进程中，并与轻量级机制(通常是HTTP资源API)通信。
 这些服务是围绕业务功能构建的，可以通过全自动部署机制进行独立部署。对这些服务的集中管理是最低限度的，这些服务可能用不同的编程语言编写，并使用不同的数据存储技术。</p>
 <p>微服务是一种架构风格，将服务围绕业务功能拆分，一个应用拆分为一组小型服务，每个服务运行在自己的进程内，也就是可独立部署和升级，服务之间使用轻量级HTTP交互，可以由全自动部署机制独立部署，去中心化，服务自治。服务可以使用不同的语言、不同的存储技术。</p>
 <h2 id="为什么要使用微服务">为什么要使用微服务</h2>
-<p>说的微服务就不得不说微服务之前的单体应用，有对比才能看的出微服务对比之前的单体应用到底强在哪？为什么我们要抛弃单体应用？</p>
+<p>说起微服务就不得不说微服务之前的单体应用，有对比才能看的出微服务对比之前的单体应用到底强在哪？为什么我们要抛弃单体应用？</p>
 <ul>
 <li>单体应用往往所有的功能打包在一个包里，包含了 DO/DAO，Service，UI等所有逻辑，如果要修改一部分代码就需要全部重新部署，所以改动影响大，风险高。微服务模式弥补了这个缺陷，它将应用合理的拆分，实现敏捷开发和快速部署。</li>
 <li>单体应用只能通过在负载均衡器后面放置整个应用程序的多个实例来进行水平扩展，如果想要扩展特定的程序，显然是不行的，则需要使用到微服务模式实现。</li>
 <li>因为单体应用所有的功能全部都达到一个包里面，所以耦合性比较强，对于程序员来说代码维护会收到影响，出现了什么问题也不太方便进行排查。</li>
 <li>如果没有正确的设计，单体应用的一部分失败可能会级联并导致整个系统崩溃。而这种情况可以使用微服务的熔断、降级的思想来解决。</li>
 </ul>
-<p>微服务虽然好处多多，但是缺点就是服务众多，治理成本高，不利于维护系统，项目成本会升高，所以项目架构设计时应综合考量。
-建议设计的原则是业务驱动、设计保障、演进式迭代、保守治疗的方式。搞不清楚，有争议的地方先尽量不要拆，如果确实要拆，要经过业务分析后慎重设计，把真正相对独立的部分拆分出来，可以借鉴 <strong>DDD</strong> 的方式。拆了以后要观察微服务的接口是否稳定，针对业务需求的变更微服务的模块是否可以保持相对稳定，是否可以独立演进。</p>
+<p>微服务虽然好处多多，但是缺点就是服务众多，不好管理，这也就是为什么要治理微服务，治理成本高，不利于维护系统，项目成本会升高，所以项目架构设计时应综合考量。</p>
+<p>建议设计的原则是业务驱动、设计保障、演进式迭代、保守治疗的方式。搞不清楚，有争议的地方先尽量不要拆，如果确实要拆，要经过业务分析后慎重设计，把真正相对独立的部分拆分出来，可以借鉴 <strong>DDD</strong> 的方式。拆了以后要观察微服务的接口是否稳定，针对业务需求的变更微服务的模块是否可以保持相对稳定，是否可以独立演进。</p>
 <blockquote>
 <p>DDD: Domain-driven design的简称，译为领域驱动设计，是一种通过将实现连接到持续进化的模型来满足复杂需求的软件开发方法。
 <br>
 核心思想：DDD其实是面向对象方法论的一个升华。无外乎是通过划分领域（聚合根、实体、值对象）、领域行为封装到领域对象（充血模式）、内外交互封装到防腐层、职责封装到对应的模块和分层，从而实现了高内聚低耦合。
 链接：<a href="https://blog.csdn.net/qq_31960623/article/details/119840131">https://blog.csdn.net/qq_31960623/article/details/119840131</a></p>
 </blockquote>
+<h2 id="从单体架构迁移到微服务架构">从单体架构迁移到微服务架构</h2>
+<p>重写代码，但是不要大规模重写代码，重写代码听起来很好但风险较大，如果大规模重写代码可能会导致程序出现各种各样的bug;(当你承担重建一套全新基于微服务的应用程序不需要使用时候，可以采用重写这种方法)</p>
+<p>逐步迁移单体应用的功能，独立出来形成新的微服务，同时需要与旧的单体应用集成，这可以保证系统的正常运行，单体式应用在整个架构中比例逐渐下降直到消失或者成为微服务架构一部分;</p>
+<p>虽然在逐步的迁移功能，但是也会有源源不断的需求需要开发，此时该停止让单体式应用继续变大，也就是说当开发新功能时不应该为旧单体应用添加新代码，应该是将新功能开发成独立微服务;</p>
+<p>一个巨大的复杂单体应用由成十上百个模块构成，每个都是被抽取对象。决定第一个被抽取模块一般都是挑战，一般最好是从最容易抽取的模块开始，这会让开发者积累足够经验，这些经验可以为后续模块化工作带来巨大好处。</p>
+<p>转换模块成为微服务一般很耗费时间，一般可以根据获益程度来排序，一般从经常变化模块开始会获益最大。一旦转换一个模块为微服务，就可以将其开发部署成独立模块，从而加速开发进程。比如，抽取一些消耗内存资源较大的代码，将其弄成一个服务，然后可以将其部署在大内存主机上。同样的，将对计算资源很敏感的算法应用抽取出来也是非常有益的，这种服务可以被部署在有很多 CPU 的主机上。
+有三种策略可以考虑：将新功能以微服务方式实现；将表现层与业务数据访问层分离；将现存模块抽取变成微服务。</p>
+<p>首先要将抽离的相关功能,封装成相关几个方法,几个类,几个包中;定义好模块和单体应用之间的几个大概的接口,从程序内部开始调用; 一旦完成相关的接口,也就将此模块转换成独立微服务。为了实现，必须写代码使得单体应用和微服务之间通过使用进程间通信机制的API来交换信息;服务和单体应用整合的API代码就成为了容灾层;</p>
+<p>然后,将抽离的功能,转化为独立的服务进行部署,将其整合成一个微服务基础框架; 每抽取一个服务，就朝着微服务方向前进一步，随着时间推移，单体应用将会越来越简单，用户就可以增加更多独立的微服务。</p>
+<h2 id="服务治理治的是什么">服务治理治的是什么</h2>
+<p>摘自《微服务设计》:</p>
+<blockquote>
+<p>在进行城市交通规划之前首先要做的第一个事情是收集信息，要能够知道这个城市发生了什么，所以在各个路口需要安装采集探头，记录车来车往的信息。有了信息以后就需要对信息进行分析了，那么就需要可视化的图形界面，能够一眼就看出什么地方出了问题，通往哪个工厂的路坏了。发现了问题就要解决问题了，限制一下拥堵路段的流量，把去往一个公园的车辆导向到另外一个类似的公园。最后，如果把城市作为一个国家来考虑，那么每个进入这个城市的车辆都需要进行检查，看看有没有携带违禁品，最后给这些不熟悉道路的外地车规划路线。通过上面这个思考的过程，我们发现要对一个城市进行治理的时候，第一要采集信息，然后要能够对采集的信息进行监控和分析，最后根据分析的结果采取对应的治理策略。另外从整体安全的角度考虑还需要一个守门人</p>
+</blockquote>
+<p>我们也用同样的思路来思考服务治理，网关就是整个整体的守门人，日志采集，追踪工具，服务注册发现都是用来采集信息的，然后需要监控平台来展现这些采集的信息，并进行监控和分析。
+最后根据分析的结果采取治理策略，有的服务快撑不住了要限流，有的服务坏了要熔断，并且还能够及时的调整这些服务的配置。</p>
+<p><img src="/iblog/posts/annex/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84-011.png" alt="分布式架构-011"></p>
 <h2 id="springcloud">SpringCloud</h2>
 <p>随着微服务模式的使用，服务之间的调用带来的问题有很多，例如：数据一致性、网络波动、缓存、事务等问题，针对这一系列的问题就要有对应的框架来解决，目前主流一站式微服务解决方案有<code>Spring Cloud</code>、<code>Spring Cloud Alibaba</code>。</p>
 <p><code>Spring Cloud</code>它并不是一个框架，而是很多个框架。它是分布式微服务架构的一站式解决方案，是多种微服务架构落地技术的集合体，俗称微服务全家桶。</p>
@@ -662,10 +727,10 @@ There is a bare minimum of centralized management of these services, which may b
 <li><a href="https://www.jianshu.com/p/cb7fa0aa47a8">https://www.jianshu.com/p/cb7fa0aa47a8</a></li>
 </ul>
 <blockquote>
-<p>Eureka is a REST (Representational State Transfer) based service that is primarily used in the AWS cloud for locating services for the purpose of load balancing and failover of middle-tier servers. We call this service, the Eureka Server. Eureka also comes with a Java-based client component,the Eureka Client, which makes interactions with the service much easier. The client also has a built-in load balancer that does basic round-robin load balancing. &mdash;<a href="https://github.com/Netflix/eureka">https://github.com/Netflix/eureka</a></p>
+<p>Eureka is a REST (Representational State Transfer) based service that is primarily used in the AWS cloud for locating services for the purpose of load balancing and failover of middle-tier servers。 We call this service， the Eureka Server。 Eureka also comes with a Java-based client component，the Eureka Client， which makes interactions with the service much easier。 The client also has a built-in load balancer that does basic round-robin load balancing。 &mdash;<a href="https://github.com/Netflix/eureka">https://github.com/Netflix/eureka</a></p>
 </blockquote>
 <p>大意：Eureka是一个REST (Representational State Transfer)服务，它主要用于AWS云，用于定位服务，以实现中间层服务器的负载平衡和故障转移，我们称此服务为Eureka服务器。Eureka也有一个基于java的客户端组件，Eureka客户端，这使得与服务的交互更加容易，同时客户端也有一个内置的负载平衡器，它执行基本的循环负载均衡。</p>
-<p>Eureka采用了CS的设计架构，Eureka Sever作为服务注册功能的服务器，它是服务注册中心。而系统中的其他微服务，使用Eureka的客户端连接到 Eureka Server并维持心跳连接。这样系统的维护人员就可以通过Eureka Server来监控系统中各个微服务是否正常运行。</p>
+<p>Eureka采用了Client / Server 的设计架构，提供了完整的服务注册和服务发现，可以和 Spring Cloud 无缝集成。Eureka Sever作为服务注册功能的服务器，它是服务注册中心。而系统中的其他微服务，使用Eureka的客户端连接到 Eureka Server并维持心跳连接。这样系统的维护人员就可以通过Eureka Server来监控系统中各个微服务是否正常运行。</p>
 <p><img src="/iblog/posts/annex/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84-002.png" alt="分布式架构-002"></p>
 <ul>
 <li>Eureka Server 提供服务注册服务；各个微服务节点通过配置启动后，会在EurekaServer中进行注册，这样EurekaServer中的服务注册表中将会存储所有可用服务节点的信息，服务节点的信息可以在界面中直观看到。</li>
@@ -690,7 +755,7 @@ There is a bare minimum of centralized management of these services, which may b
 <p>简而言之，某时刻某一个微服务不可用了，Eureka不会立刻清理，依旧会对该微服务的信息进行保存。所以Eureka属于<a href="https://blog.csdn.net/white_pure/article/details/119806058">AP</a>。</p>
 <h3 id="服务熔断降级">服务熔断降级</h3>
 <p>由于分布式架构中应用程序依赖关系可能非常多，每个依赖关系在某些时候将不可避免地失败，针对服务调用失败，为了缩小调用失败的影响，引入了服务熔断降级的思想。</p>
-<p>多个微服务之间调用的时候，假设微服务A调用微服务B和微服务C，微服务B和微服务C又调用其它的微服务，这就是所谓的“扇出”。如果扇出的链路上某个微服务的调用响应时间过长或者不可用，对微服务A的调用就会占用越来越多的系统资源，进而引起系统崩溃，所谓的“雪崩效应”.</p>
+<p>多个微服务之间调用的时候，假设微服务A调用微服务B和微服务C，微服务B和微服务C又调用其它的微服务，这就是所谓的“扇出”。如果扇出的链路上某个微服务的调用响应时间过长或者不可用，对微服务A的调用就会占用越来越多的系统资源，进而引起系统崩溃，所谓的“雪崩效应”。</p>
 <ul>
 <li>服务熔断：熔断机制是应对雪崩效应的一种微服务链路保护机制，当链路的某个微服务不可用或者响应时间太长时，将快速的返回设置好的提示信息。</li>
 <li>服务降级：服务降级一般是指在服务器压力剧增的时候，根据实际业务使用情况以及流量，对一些服务和页面有策略的不处理或者用一种简单的方式进行处理，从而释放服务器资源的资源以保证核心业务的正常高效运行。</li>
@@ -722,8 +787,8 @@ There is a bare minimum of centralized management of these services, which may b
 </li>
 <li><code>HystrixObservableCommand</code>实现了后两种执行方式：
 <ul>
-<li><code>obseve()</code>：返回Observable对象，它代表了操作的多个结果，它是一个Hot Observable,不论“事件源”是否有“订阅者”，都会在创建后对事件进行发布，所以对于Hot Observable的每一个“订阅者”都有可能是从“事件源”的中途开始的，并可能只是看到了整个操作的局部过程。</li>
-<li><code>toObservable()</code>：同样会返回Observable对象，也代表了操作的多个结果，但它返回的是一个Cold Observable,没有“订间者”的时候并不会发布事件，而是进行等待，直到有“订阅者&quot;之后才发布事件，所以对于Cold Observable 的订阅者，它可以保证从一开始看到整个操作的全部过程。</li>
+<li><code>obseve()</code>：返回Observable对象，它代表了操作的多个结果，它是一个Hot Observable，不论“事件源”是否有“订阅者”，都会在创建后对事件进行发布，所以对于Hot Observable的每一个“订阅者”都有可能是从“事件源”的中途开始的，并可能只是看到了整个操作的局部过程。</li>
+<li><code>toObservable()</code>：同样会返回Observable对象，也代表了操作的多个结果，但它返回的是一个Cold Observable，没有“订间者”的时候并不会发布事件，而是进行等待，直到有“订阅者&quot;之后才发布事件，所以对于Cold Observable 的订阅者，它可以保证从一开始看到整个操作的全部过程。</li>
 </ul>
 </li>
 </ul>
@@ -766,9 +831,9 @@ There is a bare minimum of centralized management of these services, which may b
 <p>Spring Cloud Gateway是Spring官方基于Spring 5.0，Spring Boot 2.0和Project Reactor等技术开发的网关，Spring Cloud Gateway旨在为微服务架构提供一种简单而有效的统一的API路由管理方式。Spring Cloud Gateway作为Spring Cloud生态系中的网关，目标是替代ZUUL，其不仅提供统一的路由方式，并且基于Filter链的方式提供了网关基本的功能，例如：安全，监控/埋点，和限流等。</p>
 <p>核心组件：</p>
 <ul>
-<li>Route - 路由是构建网关的基本模块,它由ID,目标URI,一系列的断言和过滤器组成,如断言为true则匹配该路由；</li>
-<li>Predicate - 断言参考的是Java8的<code>java.util.function.Predicate</code>，开发人员可以匹配HTTP请求中的所有内容，例如请求头或请求参数,如果请求与断言相匹配则进行路由；</li>
-<li>Filter - 过滤指的是Spring框架中GatewayFilter的实例,使用过滤器,可以在请求被路由前或者之后对请求进行修改；</li>
+<li>Route - 路由是构建网关的基本模块，它由ID，目标URI，一系列的断言和过滤器组成，如断言为true则匹配该路由；</li>
+<li>Predicate - 断言参考的是Java8的<code>java.util.function。Predicate</code>，开发人员可以匹配HTTP请求中的所有内容，例如请求头或请求参数，如果请求与断言相匹配则进行路由；</li>
+<li>Filter - 过滤指的是Spring框架中GatewayFilter的实例，使用过滤器，可以在请求被路由前或者之后对请求进行修改；</li>
 </ul>
 <p>工作流程：
 <img src="/iblog/posts/annex/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84-006.png" alt="分布式架构-006"></p>
@@ -784,7 +849,7 @@ There is a bare minimum of centralized management of these services, which may b
 <li><a href="https://www.jianshu.com/p/a6ad30738140">https://www.jianshu.com/p/a6ad30738140</a></li>
 <li><a href="https://github.com/OpenFeign/feign">https://github.com/OpenFeign/feign</a></li>
 <li><a href="https://blog.csdn.net/qq_34978129/article/details/111183323">https://blog.csdn.net/qq_34978129/article/details/111183323</a></li>
-<li><a href="https://cloud.spring.io/spring-cloud-static/Hoxton.SR1/reference/htmlsingle/#spring-cloud-openfeign">https://cloud.spring.io/spring-cloud-static</a></li>
+<li><a href="https://cloud.spring.io/spring-cloud-static/Hoxton%E3%80%82SR1/reference/htmlsingle/#spring-cloud-openfeign">https://cloud.spring.io/spring-cloud-static</a></li>
 </ul>
 <p>服务调用可以说是微服务中最关键的，如果没有服务调用不会出现熔断降级、也不会出现服务负载、服务注册，分布式的服务治理可以说是围绕服务调用展开的。</p>
 <p>常见的服务之间的调用方式有两种：</p>
@@ -795,7 +860,7 @@ There is a bare minimum of centralized management of these services, which may b
 <p>现在热门的Rest风格，就可以通过HTTP协议来实现，如果公司全部采用Java技术栈，那么使用Dubbo作为微服务框架是一个不错的选择；如果公司的技术栈多样化，而且你更青睐Spring家族，那么SpringCloud搭建微服务是不二之选。</p>
 <h4 id="openfeign">OpenFeign</h4>
 <blockquote>
-<p>Feign is a declarative web service client. It makes writing web service clients easier. To use Feign create an interface and annotate it. It has pluggable annotation support including Feign annotations and JAX-RS annotations. Feign also supports pluggable encoders and decoders. Spring Cloud adds support for Spring MVC annotations and for using the same HttpMessageConverters used by default in Spring Web. Spring Cloud integrates Ribbon and Eureka, as well as Spring Cloud LoadBalancer to provide a load-balanced http client when using Feign.</p>
+<p>Feign is a declarative web service client。 It makes writing web service clients easier。 To use Feign create an interface and annotate it。 It has pluggable annotation support including Feign annotations and JAX-RS annotations。 Feign also supports pluggable encoders and decoders。 Spring Cloud adds support for Spring MVC annotations and for using the same HttpMessageConverters used by default in Spring Web。 Spring Cloud integrates Ribbon and Eureka， as well as Spring Cloud LoadBalancer to provide a load-balanced http client when using Feign。</p>
 </blockquote>
 <p>大意：Feign是一个声明式WebService客户端。使用Feign能让编写Web Service客户端更加简单。它的使用方法是定义一个服务接口然后在上面添加注解。Feign也支持可拔插式的编码器和解码器。Spring Cloud对Feign进行了封装，使其支持了Spring MVC标准注解和HttpMessageConverters。Feign可以与Eureka和Ribbon组合使用以支持负载均衡。</p>
 <p>Feign和OpenFeign:</p>
@@ -819,7 +884,7 @@ There is a bare minimum of centralized management of these services, which may b
 </span></span></code></pre></div><p>openFeign工作原理：</p>
 <p><img src="/iblog/posts/annex/images/essays/%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84-008.png" alt="分布式架构-008"></p>
 <ol>
-<li>使用注解<code>@FeignClient</code>注册<code>FactoryBean</code>到IOC容器, 最终产生了一个虚假的实现类代理;</li>
+<li>使用注解<code>@FeignClient</code>注册<code>FactoryBean</code>到IOC容器， 最终产生了一个虚假的实现类代理;</li>
 <li>使用Feign调用接口的地方，最终拿到的都是一个假的代理实现类；</li>
 <li>所有发生在代理实现类上的调用，都被转交给Feign框架，翻译成HTTP的形式发送出去，并得到返回结果，再翻译回接口定义的返回值形式；</li>
 </ol>
@@ -873,9 +938,9 @@ There is a bare minimum of centralized management of these services, which may b
 </span></span><span class="line"><span class="cl">        int next = 0;
 </span></span><span class="line"><span class="cl">        do {
 </span></span><span class="line"><span class="cl">            current = index.get();
-</span></span><span class="line"><span class="cl">            // 当最大数量超过 Integer.MAX_VALUE 归0
+</span></span><span class="line"><span class="cl">            // 当最大数量超过 Integer。MAX_VALUE 归0
 </span></span><span class="line"><span class="cl">            next = current &gt;= 2147483647 ? 0 : current + 1;
-</span></span><span class="line"><span class="cl">        }while (!index.compareAndSet(current,next));
+</span></span><span class="line"><span class="cl">        }while (!index.compareAndSet(current，next));
 </span></span><span class="line"><span class="cl">        return next;
 </span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">}
@@ -895,11 +960,11 @@ There is a bare minimum of centralized management of these services, which may b
 </span></span><span class="line"><span class="cl">     ServiceInstance instance = iLoadBalance.instance(instances);
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">     URI uri = instance.getUri();
-</span></span><span class="line"><span class="cl">     String finalUri = String.format(&#34;%s/%s&#34;, uri, PaymentConstant.PAYMENT_GETPORT_API);
+</span></span><span class="line"><span class="cl">     String finalUri = String.format(&#34;%s/%s&#34;， uri， PaymentConstant。PAYMENT_GETPORT_API);
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">     log.info(&#34;自定义负载均衡,请求地址：{}&#34;, finalUri);
+</span></span><span class="line"><span class="cl">     log.info(&#34;自定义负载均衡，请求地址：{}&#34;， finalUri);
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">     return restTemplate.getForObject(finalUri, String.class);
+</span></span><span class="line"><span class="cl">     return restTemplate.getForObject(finalUri， String.class);
 </span></span><span class="line"><span class="cl"> }
 </span></span></code></pre></div><h3 id="服务配置中心">服务配置中心</h3>
 <p>在分布式微服务意味着要将单体应用中的业务拆分成一个个子服务，每个服务的粒度相对较小，因此系统中会出现大量的服务。由于每个服务都需要必要的配置信息才能运行，所以一套集中式的、动态的配置管理设施是必不可少的。</p>
@@ -940,7 +1005,7 @@ There is a bare minimum of centralized management of these services, which may b
 <blockquote>
 <p>当配置客户端启动时，它绑定到配置服务器(通过spring.cloud.config.uri引导配置属性)，并使用远程属性源初始化Spring Environment。
 这种行为的最终结果是，所有想要使用Config Server的客户端应用程序都需要bootstrap.yml或一个环境变量</p>
-<p>applicaiton.yml是用户级的资源配置项,而bootstrap.yml是系统级的，优先级更加高，在加载配置时优先加载bootstrap.yml</p>
+<p>applicaiton.yml是用户级的资源配置项，而bootstrap.yml是系统级的，优先级更加高，在加载配置时优先加载bootstrap.yml</p>
 </blockquote>
 </li>
 </ol>

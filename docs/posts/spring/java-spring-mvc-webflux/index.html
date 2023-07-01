@@ -50,8 +50,11 @@
 
 
 <div class="toc">
+
     <div class="page-header"><strong></strong></div>
+
     <div id="page-scrollspy" class="toc-nav">
+
         
         
         
@@ -265,7 +268,9 @@
         
         
         
+
     </div>
+
 </div>
 
 
@@ -673,21 +678,20 @@
 
 
 <script>
-    function addDarkmodeWidget() {
-        new Darkmode({
-            right: '32px', 
-            bottom: 'unset', 
-            
-            time: '0.5s', 
-            mixColor: '#f7f7f7', 
-            backgroundColor: '#f7f7f7', 
-            buttonColorDark: '#212121', 
-            buttonColorLight: '#f7f7f7', 
-            saveInCookies: false, 
-            autoMatchOsTheme: true 
-        }).showWidget();
+    var options = {
+        right: '32px', 
+        bottom: 'unset', 
+        
+        time: '0.8s', 
+        mixColor: '#f7f7f7', 
+        backgroundColor: '#f7f7f7', 
+        buttonColorDark: '#212121', 
+        buttonColorLight: '#f7f7f7', 
+        saveInCookies: false, 
+        autoMatchOsTheme: true 
     }
-    window.addEventListener('load', addDarkmodeWidget);
+    const darkmode = new Darkmode(options);
+    darkmode.showWidget();
 </script>
 </body>
 

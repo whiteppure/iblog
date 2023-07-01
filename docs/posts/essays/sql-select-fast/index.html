@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>MySqlSQL优化及锁机制 ｜ 苦中作乐</title>
+	<title>MySQL详解 ｜ 唯手熟尔</title>
 	
     
     
-    <meta name="description" content="MySql逻辑架构 主要分为：连接层，服务层，引擎层，存储层。 客户端执行一条select命令的流程如下： 连接层：最上层是一些客户端和连接服务，包含本地sock通信" />
+    <meta name="description" content="逻辑架构 主要分为：连接层，服务层，引擎层，存储层。 客户端执行一条select命令的流程如下： 连接层：最上层是一些客户端和连接服务，包含本地sock通信和大多数基" />
     
 
     
@@ -67,8 +67,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#mysql%e9%80%bb%e8%be%91%e6%9e%b6%e6%9e%84">
-                    MySql逻辑架构
+                <a class="nav-link text-left" href="#%e9%80%bb%e8%be%91%e6%9e%b6%e6%9e%84">
+                    逻辑架构
                 </a>
             </li>
             
@@ -91,8 +91,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#mysqlsql%e4%bc%98%e5%8c%96">
-                    MySqlSQL优化
+                <a class="nav-link text-left" href="#sql%e4%bc%98%e5%8c%96">
+                    SQL优化
                 </a>
             </li>
             
@@ -948,7 +948,7 @@
             
             <li class="nav-item">
                 <a class="nav-link text-left" href="#mysql%e9%94%81%e6%9c%ba%e5%88%b6">
-                    MySql锁机制
+                    MySQL锁机制
                 </a>
             </li>
             
@@ -965,36 +965,6 @@
         
         
         
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8%e9%94%81">
-                    使用锁
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
         <ul class="nav">
             
         <ul class="nav">
@@ -1015,6 +985,196 @@
         
         </ul>
         
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e8%a1%8c%e9%94%81">
+                    行锁
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%80%bb%e7%bb%93">
+                    总结
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%88%86%e5%ba%93%e5%88%86%e8%a1%a8">
+                    分库分表
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%b8%b8%e8%a7%81%e5%88%86%e5%ba%93%e5%88%86%e8%a1%a8%e4%b8%ad%e9%97%b4%e4%bb%b6">
+                    常见分库分表中间件
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%8b%86%e5%88%86%e6%96%b9%e6%a1%88">
+                    拆分方案
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e8%bf%81%e7%a7%bb%e6%96%b9%e6%a1%88">
+                    迁移方案
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#id%e4%b8%bb%e9%94%ae%e9%97%ae%e9%a2%98">
+                    id主键问题
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
         </ul>
         
         
@@ -1035,8 +1195,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e8%a1%8c%e9%94%81">
-                    行锁
+                <a class="nav-link text-left" href="#%e5%88%a9%e7%94%a8%e6%95%b0%e6%8d%ae%e5%ba%93%e8%87%aa%e5%a2%9eid">
+                    利用数据库自增id
                 </a>
             </li>
             
@@ -1067,8 +1227,104 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e6%80%bb%e7%bb%93">
-                    总结
+                <a class="nav-link text-left" href="#%e5%88%a9%e7%94%a8redis%e8%87%aa%e5%a2%9e">
+                    利用Redis自增
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%88%a9%e7%94%a8uuid%e4%bd%9c%e4%b8%ba%e4%b8%bb%e9%94%ae">
+                    利用UUID作为主键
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%88%a9%e7%94%a8%e7%b3%bb%e7%bb%9f%e5%bd%93%e5%89%8d%e6%97%b6%e9%97%b4">
+                    利用系统当前时间
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e9%9b%aa%e8%8a%b1%e7%ae%97%e6%b3%95">
+                    雪花算法
                 </a>
             </li>
             
@@ -1115,13 +1371,13 @@
         <div class="site_title">
             <h1>
                 <a href="https://whiteppure.github.io/iblog/">
-                    <span>苦中作乐</span>
+                    <span>唯手熟尔</span>
                 </a>
             </h1>
         </div>
         <div class="description">
             <p class="sub_title">
-                知行合一
+                无他,唯手熟尔
             </p>
             <div class="my_socials">
                 
@@ -1156,10 +1412,10 @@
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
-                        <h2><a href='/iblog/posts/essays/sql-select-fast/'>MySqlSQL优化及锁机制</a></h2>
-                        <span class="date">2021.07.11</span>
+                        <h2><a href='/iblog/posts/essays/sql-select-fast/'>MySQL详解</a></h2>
+                        <span class="date">2023.03.13</span>
                     </div>
-                    <div class="post_content markdown"><h2 id="mysql逻辑架构">MySql逻辑架构</h2>
+                    <div class="post_content markdown"><h2 id="逻辑架构">逻辑架构</h2>
 <p>主要分为：连接层，服务层，引擎层，存储层。</p>
 <p>客户端执行一条select命令的流程如下：</p>
 <p><img src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-001.png" alt="MySqlSQL优化及锁机制-001"></p>
@@ -1177,7 +1433,7 @@
 <p>存储层：数据存储层，主要是将数据存储在运行于裸设备的文件系统之上，并完成与存储引擎的交互。</p>
 </li>
 </ul>
-<p>其中比较重要的就要说存储引擎了，MySql默认使用的存储引擎是InnoDB，可以使用相关命令来查看：</p>
+<p>其中比较重要的就要说存储引擎了，MySQL默认使用的存储引擎是InnoDB，可以使用相关命令来查看：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> show engines;
 </span></span></code></pre></div><p>如果查看当前使用的存储引擎可以使用命令：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> show variables like &#39;%storage_engine%&#39;;
@@ -1188,7 +1444,7 @@
 </span></span><span class="line"><span class="cl">	deptId INT(11) DEFAULT NULL,
 </span></span><span class="line"><span class="cl">	PRIMARY KEY (id)
 </span></span><span class="line"><span class="cl"> )ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-</span></span></code></pre></div><h2 id="mysqlsql优化">MySqlSQL优化</h2>
+</span></span></code></pre></div><h2 id="sql优化">SQL优化</h2>
 <p>参考文章：</p>
 <ul>
 <li><a href="https://www.hollischuang.com/archives/6330">https://www.hollischuang.com/archives/6330</a></li>
@@ -1213,7 +1469,7 @@
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> from .. on .. join ..  where .. group by .. having .. select distinct .. order by .. limit ..
 </span></span></code></pre></div><p>之所以SQL的编写过程会和执行过程有区别，是因为Mysql中有专门负责优化SELECT语句的优化器模块。</p>
 <blockquote>
-<p>MySQL Query Optimizer：MySql查询优化器，主要功能:通过计算分析系统中收集到的统计信息，为客户端请求的Query提供MySql认为最优的执行计划。</p>
+<p>MySQL Query Optimizer：MySQL查询优化器，主要功能:通过计算分析系统中收集到的统计信息，为客户端请求的Query提供MySQL认为最优的执行计划。</p>
 </blockquote>
 <p>当客户端向MySQL请求一条Query，命令解析器模块完成请求分类，区别出是SELECT并转发给MySQL Query Optimizer时，MySQL Query Optimizer首先会对整条Query进行优化，处理掉一些常量表达式的预算直接换算成常量值。
 并对Query中的查询条件进行简化和转换，如去掉一些无用或显而易见的条件、结构调整等。然后分析Query 中的 Hint信息(如果有），看显示Hint信息是否可以完全确定该Query的执行计划。如果没有Hint 或Hint信息还不足以完全确定执行计划，则会读取所涉及对象的统计信息，根据Query进行写相应的计算分析，然后再得出最后的执行计划。</p>
@@ -1359,7 +1615,7 @@
 <p>explain不止适用于select也适用于delete、insert、replace和update语句。</p>
 </blockquote>
 <p>当explain可解释语句一起使用时，MySQL会显示来自优化器的关于语句执行计划的信息。也就是说，MySQL解释了它将如何处理语句，包括有关表如何连接以及按顺序连接的信息。</p>
-<p>在MySql中执行任意一条SQL前加上explain关键字，即可看到：</p>
+<p>在MySQL中执行任意一条SQL前加上explain关键字，即可看到：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> +----+-------------+----------+------+---------------+------+---------+------+------+-------+
 </span></span><span class="line"><span class="cl"> | id | select_type | table    | type | possible_keys | key  | key_len | ref  | rows | Extra |
 </span></span><span class="line"><span class="cl"> +----+-------------+----------+------+---------------+------+---------+------+------+-------+
@@ -1449,7 +1705,7 @@
 </span></span><span class="line"><span class="cl"> +----+-------------+---------+-------+---------------+----------+---------+------+------+-------------+
 </span></span><span class="line"><span class="cl"> |  1 | SIMPLE      | tbl_001 | index | NULL          | idx_name | 63      | NULL |    4 | Using index |
 </span></span><span class="line"><span class="cl"> +----+-------------+---------+-------+---------------+----------+---------+------+------+-------------+
-</span></span></code></pre></div><p>其中，如果索引字段可以为null，MySql会用一个字节进行标识；varchar为可变长度，MySql用两个字节来标识。</p>
+</span></span></code></pre></div><p>其中，如果索引字段可以为null，MySQL会用一个字节进行标识；varchar为可变长度，MySQL用两个字节来标识。</p>
 <blockquote>
 <p>utf8：一个字符三个字节；
 gbk：一个字符两个字节；
@@ -1698,7 +1954,7 @@ latin：一个字符一个字节；</p>
 <li>复合索引不能使用不等于（!=、&lt;&gt;）或is null、is not null，否则自身及右侧索引全部失效；</li>
 </ul>
 <blockquote>
-<p>大部分情况下如果复合索引使用上面的运算符索引会失效，但是MySql在服务层存在SQL优化阶段，所以复合索引即使使用了不等于、is null、is not null等操作，还是可能会存在索引生效的情况。</p>
+<p>大部分情况下如果复合索引使用上面的运算符索引会失效，但是MySQL在服务层存在SQL优化阶段，所以复合索引即使使用了不等于、is null、is not null等操作，还是可能会存在索引生效的情况。</p>
 </blockquote>
 <ul>
 <li>尽量使用覆盖索引，使用覆盖索引会提高系统性能；
@@ -1716,7 +1972,7 @@ latin：一个字符一个字节；</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- authorid、typeid为复合索引，此处or的左右两边索引全部失效
 </span></span><span class="line"><span class="cl"> select * from book_2021 where authorid = 1 or typeid = 1;
 </span></span></code></pre></div></li>
-<li>避免使用*，因为使用<em>之后MySql还需要计算把</em>替换成对应的列；
+<li>避免使用*，因为使用<em>之后MySQL还需要计算把</em>替换成对应的列；
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-- 不要使用*，把*替换成具体需要的列
 </span></span><span class="line"><span class="cl"> select * from book_2021;
 </span></span></code></pre></div></li>
@@ -1738,16 +1994,16 @@ latin：一个字符一个字节；</p>
 <h4 id="order-by优化">order by优化</h4>
 <p>order by 是比较常用的一个关键字，基本上查询出来的数据都要进行排序，否则就太乱了。使用order by的时候常常伴随着Using filesort的发生，Using filesort在底层有两种算法，根据IO的次数分为：</p>
 <ul>
-<li>双路排序：MySql4.1之前默认使用双路排序；具体执行流程，双路排序需要扫描两次磁盘上的字段，首先扫描排序的字段对字段进行排序，然后扫描其他字段；</li>
-<li>单路排序：为了减少IO访问次数在MySql4.1之后默认使用单路排序；读取一次获取全部的字段，在buffer中进行排序。但是此种方法存在隐患不一定是只读一次数据，如果数据量过大buffer放不下则再需要读取文件，可以通过调节buffer来进行缓解；
+<li>双路排序：MySQL4.1之前默认使用双路排序；具体执行流程，双路排序需要扫描两次磁盘上的字段，首先扫描排序的字段对字段进行排序，然后扫描其他字段；</li>
+<li>单路排序：为了减少IO访问次数在MySQL4.1之后默认使用单路排序；读取一次获取全部的字段，在buffer中进行排序。但是此种方法存在隐患不一定是只读一次数据，如果数据量过大buffer放不下则再需要读取文件，可以通过调节buffer来进行缓解；
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 设置读取文件缓冲区（buffer）的大小,单位字节
 </span></span><span class="line"><span class="cl"> set max_length_for_sort_data = 1024;
 </span></span></code></pre></div></li>
 </ul>
-<p>如果需要排序的列的总大小超过了设置的<code>max_length_for_sort_data</code>那么MySql底层会自动从单路排序切换到双路排序。</p>
+<p>如果需要排序的列的总大小超过了设置的<code>max_length_for_sort_data</code>那么MySQL底层会自动从单路排序切换到双路排序。</p>
 <p>保证全部索引排序字段的一致性，都是升序或都是降序，不要部分升序部分降序。</p>
 <h3 id="排查sql">排查SQL</h3>
-<p>在MySql中可以通过抓去慢SQL日志来进行SQL排查，慢SQL日志超过响应时间的阈值默认10秒，便会记录该SQL;慢SQL日志默认是关闭的，建议在开发调优时打开，最终部署上线时关闭。</p>
+<p>在MySQL中可以通过抓去慢SQL日志来进行SQL排查，慢SQL日志超过响应时间的阈值默认10秒，便会记录该SQL;慢SQL日志默认是关闭的，建议在开发调优时打开，最终部署上线时关闭。</p>
 <h4 id="慢sql日志设置">慢SQL日志设置</h4>
 <p>通过SQL来查看记录慢SQL日志是否开启：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 查看变量 slow_query_log，记录慢查询日志默认关闭
@@ -1770,7 +2026,7 @@ latin：一个字符一个字节；</p>
 </span></span><span class="line"><span class="cl"> | slow_query_log      | ON                                           |
 </span></span><span class="line"><span class="cl"> | slow_query_log_file | /usr/local/mysql/data/MacBook-Pro-2-slow.log |
 </span></span><span class="line"><span class="cl"> +---------------------+----------------------------------------------+
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 在MySql my.cnf 配置文件中追加配置;重启MySql服务后也生效，即永久开启
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 在MySQL my.cnf 配置文件中追加配置;重启MySQL服务后也生效，即永久开启
 </span></span><span class="line"><span class="cl"> slow_query_log=1
 </span></span><span class="line"><span class="cl"> slow_query_log_file=/usr/local/mysql/data/MacBook-Pro-2-slow.log
 </span></span></code></pre></div><p>查看慢SQL记录日志阈值：</p>
@@ -1792,7 +2048,7 @@ latin：一个字符一个字节；</p>
 </span></span><span class="line"><span class="cl"> +-----------------+-----------+
 </span></span><span class="line"><span class="cl"> | long_query_time | 5.000000 |
 </span></span><span class="line"><span class="cl"> +-----------------+-----------+
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 在MySql配置文件my.cnf中修改慢查询SQL记录日志阈值,设置为3秒
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 在MySQL配置文件my.cnf中修改慢查询SQL记录日志阈值,设置为3秒
 </span></span><span class="line"><span class="cl"> long_query_time=3
 </span></span></code></pre></div><h4 id="查看慢sql日志">查看慢SQL日志</h4>
 <ul>
@@ -2014,7 +2270,7 @@ swaps：显示交换次数相关开销的信息;</p>
 </ul>
 <h4 id="全局查询日志">全局查询日志</h4>
 <p><strong>不要在生产环境开启这个功能。</strong></p>
-<p>在配置MySql文件<code>my.cnf</code>设置全局查询日志：</p>
+<p>在配置MySQL文件<code>my.cnf</code>设置全局查询日志：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-- 开启全局查询日志
 </span></span><span class="line"><span class="cl">general_log=1
 </span></span><span class="line"><span class="cl">
@@ -2038,18 +2294,17 @@ swaps：显示交换次数相关开销的信息;</p>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">-- 可在mysql库里的geneial_log表查看；如果为空则需要造数
 </span></span><span class="line"><span class="cl">select * from mysql.general_log;
-</span></span></code></pre></div><h2 id="mysql锁机制">MySql锁机制</h2>
+</span></span></code></pre></div><h2 id="mysql锁机制">MySQL锁机制</h2>
 <p>在数据库中，除传统的计算资源（如CPU、RAM、I/O等）的争用以外，数据也是一种供许多用户共享的资源。如何保证数据并发访问的一致性、有效性是所有数据库必须解决的一个问题，锁冲突也是影响数据库并发访问性能的一个重要因素。从这个角度来说，锁对数据库而言显得尤其重要，也更加复杂。
 简而言之，锁机制是解决因资源共享，而造成的并发问题。</p>
-<p>MySql中的锁按照对数据操作的类型分为：读锁即共享锁，写锁即互斥锁；按照操作粒度来分，分为表锁、行锁，页锁。</p>
+<p>MySQL中的锁按照对数据操作的类型分为：读锁即共享锁，写锁即互斥锁；按照操作粒度来分，分为表锁、行锁，页锁。</p>
 <ul>
 <li>读锁：对于同一个数据，多个读操作可以同时进行，互不干扰。</li>
 <li>写锁：如果当前写操作没有完毕，则无法进行其他的读操作、写操作。</li>
 <li>表锁：一次性对一张表整体加锁。MyISAM存储引擎偏向表锁，开销较小、加锁较快、无死锁、锁的范围较大，但是容易发生发生锁冲突，并发度低。</li>
 <li>行锁：一次性对一条数据加锁。InnoDB存储引擎偏向行锁，开销较大、加锁较慢、容易出现死锁、锁的范围较小，但是不易发生锁冲突，并发度高。</li>
 </ul>
-<h3 id="使用锁">使用锁</h3>
-<h4 id="表锁">表锁</h4>
+<h3 id="表锁">表锁</h3>
 <p>测试数据：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> create table mylock (
 </span></span><span class="line"><span class="cl">     id int not null primary key auto_increment,
@@ -2093,11 +2348,11 @@ swaps：显示交换次数相关开销的信息;</p>
 <p>给某个表添加写锁之后，当前会话可以对该表进行写操作、读操作，其他会话要想对该表进行读写操作需要等持有锁的会话释放锁，否则期间将会一直等待该锁释放；但是当前持有锁的会话是不能对其他表进行读写操作，其他会话能够对其他表进行读写操作。</p>
 <p>对于表锁MyISAM在执行查询语句前，会自动给涉及的所有表加读锁，在执行增删改操作前，会自动给涉及的表加写锁。</p>
 <ul>
-<li>对MyISAM表的读操作（加读锁），不会阻塞其他进程对同一表的读请求，但会阻塞对同一表的写请求。只有当读锁释放后，才会执行其它进程的写操作。</li>
-<li>对MyISAM表的写操作〈加写锁），会阻塞其他进程对同一表的读和写操作，只有当写锁释放后，才会执行其它进程的读写操作。</li>
+<li>对MyISAM表的读操作(加读锁)，不会阻塞其他进程对同一表的读请求，但会阻塞对同一表的写请求。只有当读锁释放后，才会执行其它进程的写操作。</li>
+<li>对MyISAM表的写操作(加写锁)，会阻塞其他进程对同一表的读和写操作，只有当写锁释放后，才会执行其它进程的读写操作。</li>
 </ul>
 <p>简而言之，就是读锁会阻塞写，但是不会堵塞读。而写锁则会把读和写都堵塞。</p>
-<h4 id="行锁">行锁</h4>
+<h3 id="行锁">行锁</h3>
 <p>测试数据：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> CREATE TABLE test_innodb_lock (a INT(11),b VARCHAR(16))ENGINE=INNODB;
 </span></span><span class="line"><span class="cl"> 
@@ -2123,13 +2378,13 @@ swaps：显示交换次数相关开销的信息;</p>
 </span></span><span class="line"><span class="cl"> -- Innodb_row_lock_time_max：从系统启动到现在等待最常的一次所花的时间；
 </span></span><span class="line"><span class="cl"> -- Innodb_row_lock_waits：系统启动后到现在总共等待的次数；
 </span></span><span class="line"><span class="cl"> -- show status like &#39;innodb_row_lock%&#39;;
-</span></span></code></pre></div><p>由于行锁与事务相关，所以在测试之前需要关闭MySql的自动提交：</p>
+</span></span></code></pre></div><p>由于行锁与事务相关，所以在测试之前需要关闭MySQL的自动提交：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 关闭自动提交；0关闭，1打开
 </span></span><span class="line"><span class="cl"> set autocommit = 0;
 </span></span></code></pre></div><p>测试行锁读写操作：</p>
 <p><img src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-010.png" alt="MySqlSQL优化及锁机制-010"></p>
 <p><img src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-011.png" alt="MySqlSQL优化及锁机制-011"></p>
-<p>当前会话当关闭MySql自动提交后，修改表中的某一行数据，未提交前其他会话是不可见该修改的数据的；如果当前会话和修改某一行数据其他会话也修改该行数据则其他会话会一直等待，直到持有锁的会话commit后才会执行。
+<p>当前会话当关闭MySQL自动提交后，修改表中的某一行数据，未提交前其他会话是不可见该修改的数据的；如果当前会话和修改某一行数据其他会话也修改该行数据则其他会话会一直等待，直到持有锁的会话commit后才会执行。
 如果当前会话和其他会话操作同一张表的不同行数据时，则相互不影响。</p>
 <p><strong>使用行锁时注意，无索引行或索引失效都会导致行锁变为表锁。</strong></p>
 <p><strong>间隙锁：</strong></p>
@@ -2143,7 +2398,7 @@ InnoDB也会对这个“间隙”加锁，这种锁机制就是所谓的间隙�
 </span></span></code></pre></div><p><img src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-012.png" alt="MySqlSQL优化及锁机制-012"></p>
 <p>Innodb存储引擎由于实现了行级锁定，虽然在锁定机制的实现方面所带来的性能损耗可能比表级锁定会要更高一些，但是在整体并发处理能力方面要远远优于MyISAM的表级锁定的。当系统并发量较高的时候，Innodb的整体性能和MylISAM相比就会有比较明显的优势了。
 但是，Innodb的行级锁定同样也有其脆弱的一面，当我们使用不当的时候，可能会让Innodb的整体性能表现不仅不能比MyISAM高，甚至可能会更差。</p>
-<h4 id="总结">总结</h4>
+<h3 id="总结">总结</h3>
 <ul>
 <li>MySQL锁分为全局锁、表级锁以及行级锁，不同的存储引擎支持锁的粒度有所不同，MyISAM 只支持到表级锁，InnoDB 则可以支持到行级锁，锁的粒度决定了业务的并发度，因此更推荐使用InnoDB</li>
 <li>InnoDB默认最小加锁粒度为行级锁，并且锁是加在索引上，如果SQL语句未命中索引，则走聚簇索引的全表扫描，表上每条记录都会上锁，导致并发能力下降，增大死锁的概率，因此需要为表合理的添加索引，线上查询尽量命中索引</li>
@@ -2154,6 +2409,73 @@ InnoDB也会对这个“间隙”加锁，这种锁机制就是所谓的间隙�
 <li>尽量控制事务大小，减少锁定资源量和时间长度</li>
 <li>尽可能低级别事务隔离</li>
 </ul>
+<h2 id="分库分表">分库分表</h2>
+<p>分库分表是两回事儿，可别搞混了，可能是光分库不分表，也可能是光分表不分库，都有可能。分库分表一定是为了支撑高并发、数据量大两个问题的。</p>
+<p>分库分表场景：
+假设你现在在一个小公司，注册用户就 20 万，每天活跃用户就 1 万，每天单表数据量就 1000，然后高峰期每秒钟并发请求最多就 10 个。随着公司业务发展，过了几年，注册用户数达到了 5000 万，每天活跃用户数 200 万，每天单表数据量 50 万条，数据库磁盘容量不断消耗掉，高峰期并发达到惊人的 5000~8000，这时候你会发现你得系统已经支撑不住了已经挂掉了。 其实在挂掉之前就应该考虑一个数据量得增长，考虑分库分表。</p>
+<p>一句话概括,随着业务的发展,数据库会遇到瓶颈,单表得数据量太大，会极大影响你的 sql 执行的性能，到了后面你的 sql 可能就跑的很慢了。所以为了维持功能的正常使用不得不分库分表。</p>
+<p>分表：
+分表就是把一个表的数据放到多个表中，然后查询的时候你就查一个表。比如按照用户 id 来分表，将一个用户的数据就放在一个表中。然后操作的时候你对一个用户就操作那个表就好了。这样可以控制每个表的数据量在可控的范围内，比如每个表就固定在 200 万以内。</p>
+<p>分库： 
+分库是啥意思？就是你一个库一般我们经验而言，最多支撑到并发 2000，一定要扩容了，而且一个健康的单库并发值你最好保持在每秒 1000 左右，不要太大。那么你可以将一个库的数据拆分到多个库中，访问的时候就访问一个库好了。</p>
+<h3 id="常见分库分表中间件">常见分库分表中间件</h3>
+<p><a href="https://github.com/alibaba/cobar/wiki">Cobar</a>：
+阿里 b2b 团队开发和开源的，属于 proxy 层方案，就是介于应用服务器和数据库服务器之间。应用程序通过 JDBC 驱动访问 Cobar 集群，Cobar 根据 SQL 和分库规则对 SQL 做分解，然后分发到 MySQL 集群不同的数据库实例上执行。早些年还可以用，但是最近几年都没更新了，基本没啥人用，差不多算是被抛弃的状态吧。而且不支持读写分离、存储过程、跨库 join 和分页等操作。</p>
+<p><a href="https://github.com/alibaba/tb_tddl">TDDL</a>：
+淘宝团队开发的，属于 client 层方案。支持基本的 crud 语法和读写分离，但不支持 join、多表查询等语法。目前使用的也不多，因为还依赖淘宝的 diamond 配置管理系统。</p>
+<p><a href="https://github.com/Qihoo360/Atlas">Atlas</a>：
+360 开源的，属于 proxy 层方案，以前是有一些公司在用的，但是确实有一个很大的问题就是社区最新的维护都在 5 年前了。所以，现在用的公司基本也很少了。</p>
+<p><a href="https://shardingsphere.apache.org/document/legacy/4.x/document/cn/overview">Sharding-jdbc</a>：
+当当开源的，属于 client 层方案，是 ShardingSphere 的 client 层方案， ShardingSphere 还提供 proxy 层的方案 Sharding-Proxy。确实之前用的还比较多一些，因为 SQL 语法支持也比较多，没有太多限制，而且截至 2019.4，已经推出到了 4.0.0-RC1 版本，支持分库分表、读写分离、分布式 id 生成、柔性事务（最大努力送达型事务、TCC 事务）。而且确实之前使用的公司会比较多一些（这个在官网有登记使用的公司，可以看到从 2017 年一直到现在，是有不少公司在用的），目前社区也还一直在开发和维护，还算是比较活跃，个人认为算是一个现在也可以选择的方案。</p>
+<p><a href="https://www.yuque.com/ccazhw/ml3nkf">Mycat</a>：
+基于 Cobar 改造的，属于 proxy 层方案，支持的功能非常完善，而且目前应该是非常火的而且不断流行的数据库中间件，社区很活跃，也有一些公司开始在用了。但是确实相比于 Sharding jdbc 来说，年轻一些，经历的锤炼少一些。</p>
+<p>综上，现在其实建议考量的，就是 Sharding-jdbc 和 Mycat，这两个都可以去考虑使用。无论分库还是分表，上面说的那些数据库中间件都是可以支持的。就是基本上那些中间件可以做到你分库分表之后，中间件可以根据你指定的某个字段值，比如说 userid，自动路由到对应的库上去，然后再自动路由到对应的表里去。</p>
+<p>Sharding-jdbc 这种 client 层方案的优点在于不用部署，运维成本低，不需要代理层的二次转发请求，性能很高，但是如果遇到升级啥的需要各个系统都重新升级版本再发布，各个系统都需要耦合 Sharding-jdbc 的依赖；</p>
+<p>Mycat 这种 proxy 层方案的缺点在于需要部署，自己运维一套中间件，运维成本高，但是好处在于对于各个项目是透明的，如果遇到升级之类的都是自己中间件那里搞就行了。</p>
+<p>通常来说，这两个方案其实都可以选用，但是建议中小型公司选用 Sharding-jdbc，client 层方案轻便，而且维护成本低，不需要额外增派人手，而且中小型公司系统复杂度会低一些，项目也没那么多；但是中大型公司最好还是选用 Mycat 这类 proxy 层方案，因为可能大公司系统和项目非常多，团队很大，人员充足，那么最好是专门弄个人来研究和维护 Mycat，然后大量项目直接透明使用即可。</p>
+<h3 id="拆分方案">拆分方案</h3>
+<p>拆分方案一般分为两种一种是水平拆分，一种是垂直拆分。</p>
+<p>水平拆分的意思，就是把一个表的数据给弄到多个库的多个表里去，但是每个库的表结构都一样，只不过每个库表放的数据是不同的，所有库表的数据加起来就是全部数据。水平拆分的意义，就是将数据均匀放更多的库里，然后用多个库来扛更高的并发，还有就是用多个库的存储容量来进行扩容。</p>
+<p>垂直拆分的意思，就是把一个有很多字段的表给拆分成多个表，或者是多个库上去。每个库表的结构都不一样，每个库表都包含部分字段。一般来说，会将较少的访问频率很高的字段放到一个表里去，然后将较多的访问频率很低的字段放到另外一个表里去。因为数据库是有缓存的，你访问频率高的行字段越少，就可以在缓存里缓存更多的行，性能就越好。这个一般在表层面做的较多一些。</p>
+<p>除了垂直和水平拆分外,还有比较流行的分库分表方式，一种是按照range（范围）来分，就是每个库一段连续的数据，这个一般是按比如时间范围来的，但是这种一般较少用，因为很容易产生热点问题，大量的流量都打在最新的数据上了；另一种是按照某个字段的hash值，一下均匀分散。</p>
+<p>range：好处在于扩容的时候很简单，因为你只要预备好，给每个月都准备一个库就可以了，到了一个新的月份的时候，自然而然，就会写新的库了；缺点，但是大部分的请求，都是访问最新的数据。实际生产用 range，要看场景。</p>
+<p>hash：好处在于可以平均分配每个库的数据量和请求压力；坏处在于说扩容起来比较麻烦，会有一个数据迁移的过程，之前的数据需要重新计算 hash 值重新分配到不同的库或表。</p>
+<h3 id="迁移方案">迁移方案</h3>
+<p>现在有一个未分库分表的系统，未来要分库分表，如何设计才可以让系统从未分库分表动态切换到分库分表上？</p>
+<p>方案一：停机迁移方案</p>
+<ol>
+<li>网站或者 app 发布公告，0 点到早上 6 点进行运维，无法访问；</li>
+<li>到时间将系统停掉，执行导数工具，将单库单表的数据读出来，写到分库分表里面去；</li>
+<li>导数完之后，需要改改配置，验证一下数据啥的；</li>
+</ol>
+<p>方案二：双写迁移方案</p>
+<ol>
+<li>在线上系统里面，之前所有写库的地方，增删改操作，除了对老库增删改，都加上对新库的增删改；</li>
+<li>重新部署系统，新数据库数据差太多，就写一个导数工具，跑起来读老库数据写新库，跑的时候要注意，老数据不要覆盖掉新数据；</li>
+<li>假设导完数据了，有可能数据还是存在不一致，那么就程序自动做一轮校验，比对新老库每个表的每条数据，就针对那些不一样的，从老库读数据再次写。反复循环，直到两个库每个表的数据都完全一致为止；</li>
+</ol>
+<h3 id="id主键问题">id主键问题</h3>
+<p>分库分表之后你必然要面对的一个问题，就是 id 咋生成？因为要是分成多个表之后，每个表都是从 1 开始累加，那肯定不对啊，需要一个全局唯一的 id 来支持。</p>
+<p>分库分表之后需要的id条件： 自增（最好），唯一</p>
+<h4 id="利用数据库自增id">利用数据库自增id</h4>
+<p>往一个库的一个表里插入一条没什么业务含义的数据，获取一个数据库自增的一个 id，拿到这个 id 之后再往对应的分库分表里去写入。缺点是高并发存在瓶颈；优点是简单方便；适用于并发不高，但是数据量太大导致的分库分表扩容，可能每秒最高并发最多就几百，那么就走单独的一个库和表生成自增主键即可。</p>
+<h4 id="利用redis自增">利用Redis自增</h4>
+<p>基于对数据库自增的改进，原理就是利用redis的incr命令实现ID的原子性自增。不依赖于数据库，灵活方便，且性能优于数据库，但是如果系统中没有Redis，还需要引入新的组件，会增加系统复杂度。</p>
+<h4 id="利用uuid作为主键">利用UUID作为主键</h4>
+<p>UUID一般不会作为主键使用，因为UUID 太长了、占用空间大，作为主键性能太差了，且UUID 不具有有序性，会导致 B+ 树索引在写的时候有过多的随机写操作，总之就是无序的性能开销大；适合于随机生成个什么文件名、编号之类的。</p>
+<h4 id="利用系统当前时间">利用系统当前时间</h4>
+<p>一般如果用这个方案，是将当前时间跟很多其他的业务字段拼接起来，作为一个 id，如果业务上你觉得可以接受，那么也是可以的。你可以将别的业务字段值跟当前时间拼接起来，组成一个全局唯一的编号。</p>
+<h4 id="雪花算法">雪花算法</h4>
+<p>算法思路是是把一个 64 位的 long 型的 id，1 个 bit 是不用的，用其中的 41 bits 作为毫秒数，用 10 bits 作为工作机器 id，12 bits 作为序列号。</p>
+<ul>
+<li>1 bit：不用，为啥呢？因为二进制里第一个 bit 为如果是 1，那么都是负数，但是我们生成的 id 都是正数，所以第一个 bit 统一都是 0；</li>
+<li>41 bits：表示的是时间戳，单位是毫秒。41 bits 可以表示的数字多达 2^41 - 1 ，也就是可以标识 2^41 - 1 个毫秒值，换算成年就是表示 69 年的时间；</li>
+<li>10 bits：记录工作机器 id，代表的是这个服务最多可以部署在 2^10 台机器上，也就是 1024 台机器。但是 10 bits 里 5 个 bits 代表机房 id，5 个 bits 代表机器 id。意思就是最多代表 2^5 个机房（32 个机房），每个机房里可以代表 2^5 个机器（32 台机器）；</li>
+<li>12 bits：这个是用来记录同一个毫秒内产生的不同 id，12 bits 可以代表的最大正整数是 2^12 - 1 = 4096 ，也就是说可以用这个 12 bits 代表的数字来区分同一个毫秒内的 4096 个不同的 id；</li>
+</ul>
+<p>雪花算法相对来说还是比较靠谱的，毫秒数在高位，自增序列在低位，整个ID都是趋势递增的。不依赖数据库等第三方系统，以服务的方式部署，稳定性更高，生成ID的性能也是非常高的，能达到百万计QPS。但是雪花算法强依赖时钟，如果机器上时钟回拨，会导致发号重复或者服务会处于不可用状态。</p>
+<p>为了规避雪花算法的缺点，一些国内的大厂做了改进，像美团的<a href="https://github.com/Meituan-Dianping/Leaf">Leaf</a>，百度的<a href="https://github.com/baidu/uid-generator">uid-generator</a>，都是基于雪花算法来实现的。</p>
+<p>所以你要真是搞分布式 id 生成，如果是高并发啥的，那么用这个应该性能比较好，一般每秒几万并发的场景，也足够用了。</p>
 </div>
                     <div class="post_footer">
                         <div class="meta">
@@ -2162,7 +2484,7 @@ InnoDB也会对这个“间隙”加锁，这种锁机制就是所谓的间隙�
                                     <i class="ri-stack-line"></i>
                                     
                                     
-                                    <a href="https://whiteppure.github.io/iblog/tags/sql/">SQL</a>
+                                    <a href="https://whiteppure.github.io/iblog/tags/mysql/">MySQL</a>
                                     
                                     
                                     
