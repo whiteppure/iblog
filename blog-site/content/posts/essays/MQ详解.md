@@ -3,7 +3,7 @@
 title: "MQ详解"
 date: 2021-10-19
 draft: false
-tags: ["Java", "MQ"]
+tags: ["MQ"]
 slug: "java-mq"
 ---
 

@@ -2,7 +2,7 @@
 title: "Redis详解"
 date: 2021-06-17
 draft: false
-tags: ["Java", "Redis"]
+tags: ["Redis"]
 slug: "java-redis"
 ---
 

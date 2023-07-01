@@ -2,7 +2,7 @@
 title: "如何减少及解决bug"
 date: 2023-03-10
 draft: false
-tags: ["code"]
+tags: ["技巧"]
 slug: "java-bugs"
 ---
 

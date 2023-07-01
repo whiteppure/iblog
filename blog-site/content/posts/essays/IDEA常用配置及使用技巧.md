@@ -2,7 +2,7 @@
 title: "IDEA常用配置及使用技巧"
 date: 2022-12-16
 draft: false
-tags: ["Java"]
+tags: ["技巧"]
 slug: "dev-idea"
 ---
 ## 下载
