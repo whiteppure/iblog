@@ -36,6 +36,7 @@ draft: false
 - 阿里技术团队: https://102.alibaba.com
 - 360技术团队: https://blogs.360.net
 
+
 ### 资源网站
 - Java工程师成神之路: https://hollischuang.github.io/toBeTopJavaer
 - CyC2018: http://www.cyc2018.xyz
@@ -47,14 +48,14 @@ draft: false
 - 常用Java类库大全: https://www.21doc.net/java/awesomejava
 - Java论坛: http://bbs.chinaunix.net/forum-26-1.html
 - 五分钟学算法: https://www.cxyxiaowu.com
-- 芋道源码: https://www.iocoder.cn
 - 并发编程网: http://ifeve.com
+- 资源文档鸠摩搜索: https://www.jiumodiary.com
 - iMySql老叶茶馆: https://imysql.com
-- 史上最全设计模式: https://blog.csdn.net/LoveLion/article/details/17517213
+- 对比学习其他语言: https://quickref.cn
+- Chrome插件安装包：https://crxdl.com
 - 图说设计模式: https://design-patterns.readthedocs.io/zh_CN/latest/index.html
 - ThreadLocal: http://www.threadlocal.cn
 - 深入分析synchronized: https://www.cnblogs.com/aspirant/p/11470858.html
-- 资源文档鸠摩搜索: https://www.jiumodiary.com
 - 阮一峰博客: http://www.ruanyifeng.com/blog
 - hollis博客: https://www.hollischuang.com
 - deepinmind的技术博客: http://it.deepinmind.com
@@ -62,7 +63,7 @@ draft: false
 - JVM8文档: https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html
 - JVM7文档: https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/java.html
 - OpenJDK相关链接: https://blog.csdn.net/qq_23091073/article/details/83178848
-- Chrome插件安装包：https://crxdl.com
+
 
 
 
