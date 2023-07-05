@@ -9,7 +9,7 @@ $(document).ready((function (_this) {
       $(window).scroll(function () {
         let st
         st = $(window).scrollTop()
-        if (st > 30) {
+        if (st > 260) {
           return bt.css('display', 'block')
         } else {
           return bt.css('display', 'none')

@@ -3,74 +3,135 @@
 <script src="{{ "js/fancybox.min.js" | absURL }}"></script>
 <script src="{{ "js/darkmode-js.js" | absURL }}"></script>
 <script src="{{ "js/zozo.js" | absURL }}"></script>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="{{ "js/busuanzi_2.3_busuanzi.pure.mini.js" | absURL }}"></script>
+<script src="{{ "js/html2canvas.js" | absURL }}"></script>
+<script src="{{ "js/jspdf.debug.js" | absURL }}"></script>
 
+
+
+<!-- 启用数学公式 -->
 {{ if .Site.Params.enableMathJax }}
 {{ partial "mathjax.html" . }}
 {{ end }}
 
 {{ template "_internal/google_analytics_async.html" . }}
 
-<script src="https://cdn.bootcdn.net/ajax/libs/jspdf/1.0.106/jspdf.debug.js"></script>
-<script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- 导出pdf -->
+<script type="text/javascript">
+    document.getElementById("export_pdf").onclick = () => {
+        removeNotContent()
+        window.print()
+    }
 
 
-<!-- 导出pdf按钮功能 -->
-<!--<script type="text/javascript">-->
+    /**
+     * html转pdf
+     * @deprecated 弃用
+     * @param pdfContent pdf内容
+     * @param pdfName 名字
+     * @code {
+     *          let pdfNameDoc = document.getElementById('post_page_title_detail')
+     *          let pdfName = isEmpty(pdfNameDoc) ? 'white‘pure_blog' : pdfNameDoc.innerHTML
+     *          const pdfContent = document.getElementById('pdf_content')
+     * }
+     */
+    function html2pdf(pdfContent,pdfName){
+        html2canvas(pdfContent, {
+            onrendered: function(canvas) {
 
-<!--    var downPdf = document.getElementById("export_pdf");-->
-<!--    var pdfContent = document.getElementById('pdf_content');-->
-<!--    downPdf.onclick = () => {-->
-<!--        html2canvas(pdfContent, {-->
-<!--            onrendered:function(canvas) {-->
+                var contentWidth = canvas.width;
+                var contentHeight = canvas.height;
 
-<!--                var contentWidth = canvas.width;-->
-<!--                var contentHeight = canvas.height;-->
+                //一页pdf显示html页面生成的canvas高度;
+                // var pageHeight = contentWidth / 592.28 * 841.89;
 
-<!--                //一页pdf显示html页面生成的canvas高度;-->
-<!--                // var pageHeight = contentWidth / 592.28 * 841.89;-->
+                var pageHeight = contentWidth / 592.28 * 841.89;
+                //未生成pdf的html页面高度
+                var leftHeight = contentHeight;
+                //页面偏移
+                var position = -2;
+                //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
+                // var imgWidth = 595.28;
+                // var imgHeight = 592.28/contentWidth * contentHeight;
 
-<!--                var pageHeight = contentWidth / 592.28 * 841.89;-->
-<!--                //未生成pdf的html页面高度-->
-<!--                var leftHeight = contentHeight;-->
-<!--                //页面偏移-->
-<!--                var position = 0;-->
-<!--                //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高-->
-<!--                // var imgWidth = 595.28;-->
-<!--                // var imgHeight = 592.28/contentWidth * contentHeight;-->
+                var imgWidth = 595.28;
+                var imgHeight = 585.28/contentWidth * contentHeight;
 
-<!--                var imgWidth = 595.28;-->
-<!--                var imgHeight = 585.28/contentWidth * contentHeight;-->
+                var pageData = canvas.toDataURL('image/jpeg', 1.0);
 
-<!--                var pageData = canvas.toDataURL('image/jpeg', 1.0);-->
+                var pdf = new jsPDF('', 'pt', 'a4');
 
-<!--                var pdf = new jsPDF('', 'pt', 'a4');-->
+                // pdf.addImage(pageData, 'JPEG', 20, 100, imgWidth, imgHeight );
+                // pdf.addImage(pageData, 'JPEG', 20, position, imgWidth, imgHeight);
 
-<!--                // pdf.addImage(pageData, 'JPEG', 20, 100, imgWidth, imgHeight );-->
-<!--                // pdf.addImage(pageData, 'JPEG', 20, position, imgWidth, imgHeight);-->
+                //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+                //当内容未超过pdf一页显示的范围，无需分页
+                if (leftHeight < pageHeight) {
+                    pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
+                } else {
+                    while(leftHeight > 0) {
+                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                        leftHeight -= pageHeight;
+                        position -= 841.89;
+                        //避免添加空白页
+                        if(leftHeight > 0) {
+                            pdf.addPage();
+                        }
+                    }
+                }
+                pdf.save(pdfName+'.pdf');
+            }
+        })
+    }
 
-<!--                //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)-->
-<!--                //当内容未超过pdf一页显示的范围，无需分页-->
-<!--                if (leftHeight < pageHeight) {-->
-<!--                    pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );-->
-<!--                } else {-->
-<!--                    while(leftHeight > 0) {-->
-<!--                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)-->
-<!--                        leftHeight -= pageHeight;-->
-<!--                        position -= 841.89;-->
-<!--                        //避免添加空白页-->
-<!--                        if(leftHeight > 0) {-->
-<!--                            pdf.addPage();-->
-<!--                        }-->
-<!--                    }-->
-<!--                }-->
 
-<!--                pdf.save('whitepure_blog.pdf');-->
-<!--            }-->
-<!--        })-->
-<!--    }-->
-<!--</script>-->
+    function removeNotContent(){
+        const notContentObjs = getNotContent();
+        for (let index = 0; index < notContentObjs.length; index++) {
+            if (!isEmpty(notContentObjs[index])) {
+                notContentObjs[index].remove()
+            }
+        }
+    }
 
+
+    function getNotContent(){
+        return [
+            // 评论展示内容
+            document.getElementById('doc_comments'),
+            // 顶部标签导航
+            document.getElementById('site_nav'),
+            // 顶部内容
+            document.getElementById('post_header'),
+            // 底部信息
+            document.getElementById('post_footer_info'),
+            document.getElementById('footer_powered_by'),
+            document.getElementById('footer_slogan'),
+            // 标题日期
+            document.getElementById('post_page_title_date'),
+            // 目录
+            document.getElementById('post_content_toc'),
+            // 数学公式
+            document.getElementById('MathJax_Message'),
+            // 夜间模式切换
+            document.getElementById('darkmode-background'),
+            document.getElementById('darkmode-layer'),
+            document.getElementById('darkmode-toggle'),
+            // 置顶
+            document.getElementById('back_to_top'),
+        ]
+    }
+
+    function isEmpty(obj){
+        return obj === undefined || obj === null
+    }
+
+</script>
+
+
+<!-- 夜间模式切换 -->
 <script>
     var options = {
         right: '32px', // default: '32px'

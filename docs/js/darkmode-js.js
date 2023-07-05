@@ -222,6 +222,8 @@
                             button.innerHTML = label;
                             layer.classList.add('darkmode-layer');
                             background.classList.add('darkmode-background');
+                            background.setAttribute('id','darkmode-background')
+
                             var darkmodeActivated = window.localStorage.getItem('darkmode') === 'true';
                             var preferedThemeOs = autoMatchOsTheme && window.matchMedia('(prefers-color-scheme: dark)').matches;
                             var darkmodeNeverActivatedByAction = window.localStorage.getItem('darkmode') === null;
@@ -262,6 +264,9 @@
                                 var time = parseFloat(this.time) * 1000;
                                 button.classList.add('darkmode-toggle');
                                 layer.classList.add('darkmode-layer--button');
+                                button.setAttribute('id','darkmode-toggle')
+                                layer.setAttribute('id','darkmode-layer')
+
                                 button.addEventListener('click', function () {
                                     var isDarkmode = _this.isActivated();
 

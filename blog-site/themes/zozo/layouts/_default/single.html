@@ -5,6 +5,8 @@
     {{ if .Site.Params.toc | default false }}
     {{ partial "toc" . }}
     {{ end }}
+
+    <!--    文章主题内容        -->
     <div class="main animate__animated animate__fadeInDown" id="pdf_content">
         {{ partial "nav.html" . }}
         {{ partial "header.html" . }}
@@ -12,13 +14,13 @@
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
-                        <h2><a href='{{ .RelPermalink }}'>{{ .Title }}</a></h2>
-                        <span class="date">{{ .Date.Format "2006.01.02" }}</span>
+                        <h2><a id="post_page_title_detail" href='{{ .RelPermalink }}'>{{ .Title }}</a></h2>
+                        <span id="post_page_title_date" class="date">{{ .Date.Format "2006.01.02" }}</span>
                     </div>
                     <div class="post_content markdown">{{ .Content }}</div>
-                    <div class="post_footer">
+                    <div id="post_footer" class="post_footer">
                         <div class="meta">
-                            <div class="info">
+                            <div id="post_footer_info" class="info">
                                 <span class="field tags">
                                     <i class="ri-stack-line"></i>
                                     {{ with .Params.tags }}
@@ -41,7 +43,7 @@
                 {{ if .Site.Params.valine.enable }}
                 {{ partial "comments.html" . }}
                 {{ else }}
-                <div class="doc_comments">{{ template "_internal/disqus.html" . }}</div>
+                <div id="doc_comments" class="doc_comments">{{ template "_internal/disqus.html" . }}</div>
                 {{ end }}
             </div>
         </div>
