@@ -605,7 +605,8 @@ table th, table td {
   border: 1px solid #dfe2e5;
 }
 
-a.back_to_top {
+
+a.back_to_top,a.content_hidden,a.content_display,a.top_to_back {
   text-decoration: none;
   position: fixed;
   bottom: 40px;
@@ -624,11 +625,27 @@ a.back_to_top {
   display: none;
 }
 
+.content_hidden{
+  bottom: 100px !important;
+  line-height: 44px !important;
+  font-size: 20px !important;
+}
+
+.content_display{
+  bottom: 100px !important;
+  line-height: 44px !important;
+}
+
+.top_to_back{
+  bottom: 160px !important;
+  line-height: 50px !important;
+}
+
 a.back_to_top span {
   color: #888888;
 }
 
-a.back_to_top:hover {
+a.back_to_top:hover,a.content_hidden:hover,a.content_display:hover,a.top_to_back:hover {
   cursor: pointer;
   background: #dfdfdf;
 }
@@ -738,3 +755,9 @@ a.back_to_top:hover span {
 }
 
 /*animation ends*/
+
+.display_none{
+  display: none !important;
+}
+
+

@@ -48,10 +48,9 @@ draft: false
 - 常用Java类库大全: https://www.21doc.net/java/awesomejava
 - Java论坛: http://bbs.chinaunix.net/forum-26-1.html
 - 五分钟学算法: https://www.cxyxiaowu.com
-- 并发编程网: http://ifeve.com
 - 资源文档鸠摩搜索: https://www.jiumodiary.com
 - iMySql老叶茶馆: https://imysql.com
-- 对比学习其他语言: https://quickref.cn
+- Quick Reference: https://quickref.cn
 - Chrome插件安装包：https://crxdl.com
 - 图说设计模式: https://design-patterns.readthedocs.io/zh_CN/latest/index.html
 - ThreadLocal: http://www.threadlocal.cn
@@ -60,9 +59,6 @@ draft: false
 - hollis博客: https://www.hollischuang.com
 - deepinmind的技术博客: http://it.deepinmind.com
 - JavaSE规范: https://docs.oracle.com/javase/specs
-- JVM8文档: https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html
-- JVM7文档: https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/java.html
-- OpenJDK相关链接: https://blog.csdn.net/qq_23091073/article/details/83178848
 
 
 
