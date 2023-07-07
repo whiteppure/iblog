@@ -122,6 +122,31 @@ $('[data-fancybox="gallery"]').fancybox({
 });
 
 
+// 点击更多图标
+$(document).ready((function (_this) {
+  return function () {
+    if ($(document).width() > 480) {
+      $('#icon_more').click(function () {
+        $(this).addClass('display_none')
+        $('#sys_function').removeClass('display_none')
+        $('#icon_less').removeClass('display_none')
+      })
+    }
+  }
+})(this))
+
+// 点击更少图标
+$(document).ready((function (_this) {
+  return function () {
+    $('#icon_less').click(function () {
+      $(this).addClass('display_none')
+      $('#sys_function').addClass('display_none')
+      $('#icon_more').removeClass('display_none')
+    })
+  }
+})(this))
+
+
 
 function hiddenNotContent(){
   const notContentObjs = getNotContent();

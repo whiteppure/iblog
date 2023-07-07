@@ -7,15 +7,14 @@
     {{ end }}
 
     <!--    文章主题内容        -->
-    <div class="main animate__animated animate__fadeInDown" id="pdf_content">
+    <div class="main animate__animated animate__fadeInDown" id="main_content">
         {{ partial "nav.html" . }}
         {{ partial "header.html" . }}
         <div class="content">
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
-<!--                        <a  href='{{ .RelPermalink }}'></a>-->
-                        <h2>{{ .Title }}</h2>
+                        <h2 id="post_single_title">{{ .Title }}</h2>
                         <span id="post_page_title_date" class="date">{{ .Date.Format "2006.01.02" }}</span>
                     </div>
                     <div class="post_content markdown">{{ .Content }}</div>
@@ -25,15 +24,14 @@
                                 <span class="field tags">
                                     <i class="ri-stack-line"></i>
                                     {{ with .Params.tags }}
-                                    {{ range . }}
-                                    <a href="{{ "tags" | absURL }}/{{ . | urlize }}/">{{ . }}</a>
+                                        {{ range . }}
+                                        <a href="{{ "tags" | absURL }}/{{ . | urlize }}/">{{ . }}</a>
+                                        {{ end }}
                                     {{ end }}
-                                    {{ end }}
-                                    {{ if .Site.Params.valine.enable }}
-                                    <span id="busuanzi_container_page_pv">
-                                      阅读量<span id="busuanzi_value_page_pv"></span>次
-                                    </span>
-                                    {{ else }}
+                                    {{ if .Site.Params.enableVisitor }}
+                                      <span id="busuanzi_container_page_pv">
+                                          阅读量<span id="busuanzi_value_page_pv"></span>次
+                                      </span>
                                     {{ end }}
                                 </span>
                             </div>

@@ -13,7 +13,7 @@
       <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
       
       <guid>https://whiteppure.github.io/iblog/posts/essays/thread-state-and-created/</guid>
-      <description>线程状态及转换 线程状态共包含6种，6中状态又可以互相的转换。 新建状态(New): 创建了线程后尚未启动； 可运行状态(Runnable): 可能正在运行，也可能正在等</description>
+      <description>线程状态及转换 线程状态共包含6种，6中状态又可以互相的转换。 新建状态(New): 创建了线程后尚未启动； 可运行状态(Runnable): 可能正在运行，也可能正在等待 CPU 时间片。包含了运行中(Running)和 就绪（Ready)状态； 就绪（Rea</description>
     </item>
     
     <item>
@@ -22,7 +22,7 @@
       <pubDate>Tue, 07 Apr 2020 00:00:00 +0000</pubDate>
       
       <guid>https://whiteppure.github.io/iblog/posts/essays/java-lock/</guid>
-      <description>公平锁 指多个线程按照申请锁的顺序来获取锁类似排队打饭 先来后到 优点: 所有的线程都能得到资源，不会饿死在队列中。 缺点: 吞吐量会下降很多，队列里面除了第一个线程，其他</description>
+      <description>公平锁 指多个线程按照申请锁的顺序来获取锁类似排队打饭 先来后到 优点: 所有的线程都能得到资源，不会饿死在队列中。 缺点: 吞吐量会下降很多，队列里面除了第一个线程，其他的线程都会阻塞，cpu唤醒阻塞线程的开销会很大。 非公平锁 指在多线程获取锁的顺序并</description>
     </item>
     
     <item>
@@ -31,7 +31,7 @@
       <pubDate>Sun, 05 Apr 2020 00:00:00 +0000</pubDate>
       
       <guid>https://whiteppure.github.io/iblog/posts/essays/java-thread-collection/</guid>
-      <description>ArrayList ArrayList线程不安全示例: public static void main(String[] args) { ArrayList&amp;lt;String&amp;gt; arrayList = new ArrayList&amp;lt;&amp;gt;(); for(int i=0; i&amp;lt; 3; i++) { new Thread(() -&amp;gt; { arrayList.add(UUID.randomUUID().toString()); System.out.println(arrayList); },String.valueOf(i)).start(); } } // ConcurrentModificationException 同步修改异常 Exception in thread &amp;#34;8&amp;#34; java.util.ConcurrentModificationException [null, 2041b613-8068-4ddd-9d01-305f5680d377] [null, 2041b613-8068-4ddd-9d01-305f5680d377, b3e0296d-e263-4632-a023-4267cdec5e25] [null, 2041b613-8068-4ddd-9d01-305f5680d377] 原因分析: 当某个线程正在执行 ad</description>
+      <description>ArrayList ArrayList线程不安全示例: public static void main(String[] args) { ArrayList&amp;lt;String&amp;gt; arrayList = new ArrayList&amp;lt;&amp;gt;(); for(int i=0; i&amp;lt; 3; i++) { new Thread(() -&amp;gt; { arrayList.add(UUID.randomUUID().toString()); System.out.println(arrayList); },String.valueOf(i)).start(); } } // ConcurrentModificationException 同步修改异常 Exception in thread &amp;#34;8&amp;#34; java.util.ConcurrentModificationException [null, 2041b613-8068-4ddd-9d01-305f5680d377] [null, 2041b613-8068-4ddd-9d01-305f5680d377, b3e0296d-e263-4632-a023-4267cdec5e25] [null, 2041b613-8068-4ddd-9d01-305f5680d377] 原因分析: 当某个线程正在执行 add()方法时,被某个线程打断,添加到一半被打断,没有被添加完 解决方案: 使用Vec</description>
     </item>
     
     <item>
@@ -40,7 +40,7 @@
       <pubDate>Sat, 04 Apr 2020 00:00:00 +0000</pubDate>
       
       <guid>https://whiteppure.github.io/iblog/posts/essays/cas-principle/</guid>
-      <description>CAS CAS全称为Compare and Swap被译为比较并交换。是一种无锁算法。在不使用锁（没有线程被阻塞）的情况下实现多线程之间的变量同步。 java.util.concurrent.atomic 并发包下的所有原子类都是</description>
+      <description>CAS CAS全称为Compare and Swap被译为比较并交换。是一种无锁算法。在不使用锁（没有线程被阻塞）的情况下实现多线程之间的变量同步。 java.util.concurrent.atomic 并发包下的所有原子类都是基于 CAS 来实现的。 以 AtomicInteger 原子整型类为例。 public class MainTest { public static void main(String[] args) { new AtomicInteger().compareAndSet(1,2); } } 以上面的代码为例</description>
     </item>
     
   </channel>

@@ -7,6 +7,7 @@
 <script src="{{ "js/busuanzi_2.3_busuanzi.pure.mini.js" | absURL }}"></script>
 <script src="{{ "js/html2canvas.js" | absURL }}"></script>
 <script src="{{ "js/utils.js" | absURL }}"></script>
+<script src="{{ "js/html2md_1.0.js" | absURL }}"></script>
 
 
 <!-- 启用数学公式 -->
@@ -17,26 +18,47 @@
 {{ template "_internal/google_analytics_async.html" . }}
 
 
-<!-- 导出pdf -->
+<!-- 导出功能 -->
 <script type="text/javascript">
     if (!isMobileReq()) {
-        document.getElementById("export_pdf").onclick = () => {
-            removeNotContent()
-            $('#content_hidden').css('display', 'none')
-            $('#content_display').css('display', 'none')
+        let titleObj = document.getElementById('post_single_title')
+        const title = isEmpty(titleObj) ? 'white‘blog' : titleObj.innerHTML
 
-            window.print()
-            window.location.reload();
+        // 导出pdf
+        document.getElementById('export_pdf').onclick = () => {
+            removeNotContent()
+            window.print();
+            window.location.reload()
         }
+
+        // 导出图片
+        document.getElementById('export_pic').onclick = () => {
+            hiddenNotContent()
+            const content = document.getElementById('main_content')
+            html2canvas(content).then(function (canvas) {
+                downloadBase64(title+'.png',canvas.toDataURL("image/png"))
+            });
+            displayNotContent()
+        }
+
+        // 导出markdown
+        document.getElementById('export_markdown').onclick = () => {
+            removeNotContent()
+            const content = document.getElementById('main_content')
+            const contentMd = html2md(content.innerHTML)
+            downloadFile(title+'.txt','text/markdown',contentMd)
+            window.location.reload()
+        }
+
     }
 </script>
 
 
 <!-- 夜间模式切换 -->
 <script>
-    // 晚上8点到早上6点 调用夜间模式
+    // 晚上7点到早上6点 调用夜间模式
     var hours = new Date().getHours();
-    if (hours >= 20 && hours <= 6 || hours === 20){
+    if (hours >= 19 && hours <= 6 || hours === 19){
         var options = {
             right: '32px', // default: '32px'
             bottom: 'unset', // default: '32px'

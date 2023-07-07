@@ -12,7 +12,7 @@
 	
     
     
-    <meta name="description" content="Java虚拟机定义了若干种程序运行期间会使用到的运行时数据区，其中有一些会随着虚拟机启动而创建，随着虚拟机退出而销毁。 另外一些则是与线程一一对应的，这些与线程对" />
+    <meta name="description" content="Java虚拟机定义了若干种程序运行期间会使用到的运行时数据区，其中有一些会随着虚拟机启动而创建，随着虚拟机退出而销毁。 另外一些则是与线程一一对应的，这些与线程对应的数据区域会随着线程开始和结束而创建和销毁。 运行时数据区域包括 程序计数寄存器 虚" />
     
 
     
@@ -665,7 +665,7 @@
     
 
     
-    <div class="main animate__animated animate__fadeInDown" id="pdf_content">
+    <div class="main animate__animated animate__fadeInDown" id="main_content">
         <div class="nav_container animated fadeInDown">
     <div class="site_nav" id="site_nav">
         <ul><li class="">
@@ -696,25 +696,42 @@
             <p class="sub_title">
                 无他,唯手熟尔
             </p>
+
+            
             <div class="my_socials">
                 
-                
-                <a href="https://github.com/whiteppure/" title="github" target="_blank">
-                    <i class="ri-github-fill"></i>
-                </a>
-                
+                    
+                    <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                        <i class="ri-github-fill"></i>
+                    </a>
+                    
                 
                 <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
                     <i class="ri-rss-fill"></i>
                 </a>
+                
+                
+                <span id="sys_function" class="sys_function display_none">
+                    <a id="export_pdf"  title="导出pdf" style="border: none; background-color: #ffffff; cursor: pointer; margin-left: 10px">
+                        <svg t="1688701481347" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3517" width="16" height="16"><path d="M425.610455 85.814544H149.05897A42.303635 42.303635 0 0 0 106.6274 128.075535V896.492068c0 23.326702 18.976933 42.26099 42.43157 42.26099h682.743143a42.559504 42.559504 0 0 0 42.431569-42.559504v-384.016365a42.644793 42.644793 0 0 1 85.289587 0v384.016365A127.849091 127.849091 0 0 1 831.802113 1024H149.05897A127.635867 127.635867 0 0 1 21.337813 896.449423V128.03289A127.593222 127.593222 0 0 1 149.101614 0.524957h276.466196a42.644793 42.644793 0 0 1 0 85.289587z m564.062683 158.08425l-170.579174 170.579173a42.644793 42.644793 0 1 1-60.299738-60.299738L856.578738 256.393718H618.364922a42.644793 42.644793 0 1 1 0-85.289587h238.213816l-97.784512-97.784511A42.644793 42.644793 0 1 1 819.093964 13.019882l170.579174 170.579174a42.644793 42.644793 0 0 1 0 60.299738zM149.272194 597.552066a42.644793 42.644793 0 0 1 42.644793-42.644794h51.514911c59.190973 0 107.891327 23.284057 107.976617 97.102195 0 71.003581-49.46796 102.347504-106.185536 102.347504h-31.343923v66.781747a32.282109 32.282109 0 0 1-64.606862 0V597.552066z m92.709781 100.215264c31.429213 0 46.568114-16.46089 46.568114-45.757863 0-30.064579-17.313786-40.512554-48.359196-40.512554h-26.311837v86.270417h28.145563z m232.414124-142.860058c81.878003 0 136.036891 43.710913 136.036891 147.67892S556.231457 853.420826 477.935617 853.420826h-38.16709a42.644793 42.644793 0 0 1-42.644794-42.644793v-213.223967a42.644793 42.644793 0 0 1 42.644794-42.644794h34.542282z m-4.008611 240.729859c43.32711 0 73.988717-22.047358 73.988717-93.050939 0-71.046226-30.704251-90.705476-73.988717-90.705476h-8.699538v183.79906h8.699538zM692.481573 853.420826a32.282109 32.282109 0 0 1-32.282109-32.282108V597.552066a42.644793 42.644793 0 0 1 42.644793-42.644794h99.063855a29.680776 29.680776 0 1 1 0 59.404197h-77.144431v65.374469h61.749661a29.894 29.894 0 1 1 0 59.788h-61.749661v81.66478a32.282109 32.282109 0 0 1-32.282108 32.282108z" fill="#5f5f5f" p-id="3518"></path></svg>
+                    </a>
+                    <a id="export_pic" title="导出图片" style="border: none; background-color: #ffffff; cursor: pointer; margin-left: 10px">
+                        <svg t="1688706653434" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5763" width="16" height="16"><path d="M610.683 256.076l86.225 86.225 162.374-162.317 83.822 83.822 0.115-250.375L691.299 12l81.759 81.759zM514.281 466.722c0-80.592-65.49-146.174-145.989-146.174s-145.99 65.582-145.99 146.174 65.49 146.174 145.989 146.174c80.469 0 145.99-65.583 145.99-146.174z m-61.638 0c0 46.629-37.846 84.536-84.352 84.536s-84.352-37.907-84.352-84.536 37.846-84.536 84.352-84.536c46.506-0.001 84.352 37.906 84.352 84.536z" p-id="5764" fill="#5f5f5f"></path><path d="M882.013 357.819v419.895c-33.716-30.727-76.092-69.805-98.189-91.903-23.731-23.73-47.338-28.661-62.932-27.891-29.802 0.709-50.451 19.046-56.307 24.902-8.845 7.859-79.451 70.853-115.879 107.312-4.839 4.869-14.886 14.886-26.967 3.421l-59.604-51.93c-1.325-1.572-20.063-19.755-49.033-20.156-13.437-0.709-35.565 4.13-56.985 25.549-28.785 28.785-142.692 148.208-184.174 191.756-24.932-15.656-25.087-48.293-25.087-48.293V130.899c0-56.553 40.897-56.553 56.553-56.553h389.999V12H195.767c-15.903 0-114.986 0-114.986 114.985v770.029s0.185 41.944 25.549 75.136c0.832 1.14 1.572 2.281 2.466 3.359a95.095 95.095 0 0 0 10.478 10.694c1.017 0.863 2.096 1.664 3.175 2.466 16.796 13.653 40.157 23.33 73.318 23.33h632.467s114.985 0 114.985-114.986V357.819h-61.206z m-60.436 588.906c-51.375 0-438.246 0.185-572.37 0.246 51.252-53.686 128.207-134.124 150.458-156.406 8.568-8.537 14.3-9.708 20.433-3.914l59.511 51.807c0.154 0.37 21.173 21.573 52.885 21.974 14.331-0.955 37.322-4.284 59.758-26.751 36.798-36.828 113.291-104.908 114.061-105.586l2.311-2.25c0.062 0 6.688-6.318 13.931-6.349 6.872-0.709 13.129 5.363 17.659 9.862 35.072 35.103 115.91 108.236 141.767 131.566v27.46c0.001 0.001 1.912 58.403-60.404 58.341z" p-id="5765" fill="#5f5f5f"></path></svg>
+                    </a>
+                    <a id="export_markdown" title="导出markdown" style="border: none; background-color: #ffffff; cursor: pointer; margin-left: 10px">
+<svg t="1688726126139" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15826" width="16" height="16"><path d="M547.015548 0c10.084887 0 19.965005 2.20127 28.974853 6.194271l2.815578 1.279808c1.484577 0.716692 2.86677 1.53577 4.300155 2.303654 5.272809 3.225116 10.187272 7.013348 14.692196 11.518273l277.769535 280.482727c13.361196 13.46358 20.374544 31.688047 20.374544 50.680398v599.410888c0 39.776434-31.227316 71.976404-71.00375 71.976404H202.030495c-39.776434 0-72.949058-32.19997-72.949057-71.976404V71.976404C129.081438 32.251162 162.254062 0 202.030495 0zM512 71.976404H201.057841v879.893615h622.908164V383.942409h-238.965755C545.172624 383.942409 512 351.742439 512 311.966005V71.976404zM407.106934 477.112433l110.575414 254.835375h1.842923l110.063491-254.835375h62.403439v324.917662h-53.240014v-223.915212h-1.842923l-95.576064 223.915212h-45.919512l-95.576064-223.915212h-1.842923v223.915212h-53.240014V477.112433h62.352247z m176.86947-366.741789v201.595361h200.776283l-200.776283-201.595361z" fill="#424242" p-id="15827"></path></svg>
+                    </a>
+                </span>
+                <a  id="icon_more" title="更多" >
+                    <svg t="1688715321313" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5356" width="16" height="16"><path d="M483.555556 199.111111m-85.333334 0a85.333333 85.333333 0 1 0 170.666667 0 85.333333 85.333333 0 1 0-170.666667 0Z" fill="#424242" p-id="5357"></path><path d="M483.555556 540.444444m-85.333334 0a85.333333 85.333333 0 1 0 170.666667 0 85.333333 85.333333 0 1 0-170.666667 0Z" fill="#424242" p-id="5358"></path><path d="M483.555556 881.777778m-85.333334 0a85.333333 85.333333 0 1 0 170.666667 0 85.333333 85.333333 0 1 0-170.666667 0Z" fill="#424242" p-id="5359"></path></svg>
+                </a>
+                <a  id="icon_less" class="display_none">
+                    <svg t="1688723160472" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15872" width="16" height="16"><path d="M300.105143 592.676571h423.789714a80.676571 80.676571 0 1 0 0-161.353142H300.105143a80.676571 80.676571 0 0 0 0 161.353142z" fill="#8a8a8a" p-id="15873"></path></svg>
+                </a>
 
                 
-                <button id="export_pdf" style="border: none; background-color: #ffffff; cursor: pointer; margin-left: 4px">
-                    <svg t="1614337230032" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="10" height="10"><path d="M825.202759 488.292634L584.527448 244.926676v484.916965c0 40.197297-32.584386 72.774621-72.781682 72.774621-40.190234 0-72.767559-32.577324-72.767559-72.774621V245.654069L197.999228 490.404193c-27.68331 28.29771-73.071228 28.784993-101.368938 1.094621a74.526014 74.526014 0 0 1-1.094621-105.168331L454.182841 22.076028a70.182841 70.182841 0 0 1 63.8976-19.067587 70.8608 70.8608 0 0 1 52.111007 21.179145l356.973462 360.977655c28.156469 28.608441 28.156469 74.518952 0 103.127393-27.662124 28.156469-72.915862 28.559007-101.065269 0.896883a53.699972 53.699972 0 0 1-0.896882-0.896883m123.211917 532.663614H75.083917c-40.190234 0-72.774621-32.584386-72.77462-72.781682v-145.556304c0-40.197297 32.59851-72.767559 72.788744-72.760496 40.183172 0.007062 72.753434 32.577324 72.767559 72.760496v72.774621h727.774455v-72.774621c0-40.197297 32.584386-72.774621 72.774621-72.774621 40.197297 0 72.774621 32.577324 72.774621 72.774621v145.556304c0 40.197297-32.577324 72.781683-72.774621 72.781682" fill="#707070" p-id="2941"></path></svg>
-                </button>
-                
-
             </div>
+
             
             <div class="post">
                 <div class="post_title post_detail_title">
@@ -732,8 +749,7 @@
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
-
-                        <h2>JVM-方法区</h2>
+                        <h2 id="post_single_title">JVM-方法区</h2>
                         <span id="post_page_title_date" class="date">2021.04.08</span>
                     </div>
                     <div class="post_content markdown"><p>Java虚拟机定义了若干种程序运行期间会使用到的运行时数据区，其中有一些会随着虚拟机启动而创建，随着虚拟机退出而销毁。
@@ -1115,16 +1131,16 @@ JDK 1.8后，元空间存放在直接内存中。</p>
                                 <span class="field tags">
                                     <i class="ri-stack-line"></i>
                                     
+                                        
+                                        <a href="https://whiteppure.github.io/iblog/tags/java/">Java</a>
+                                        
+                                        <a href="https://whiteppure.github.io/iblog/tags/jvm/">JVM</a>
+                                        
                                     
-                                    <a href="https://whiteppure.github.io/iblog/tags/java/">Java</a>
                                     
-                                    <a href="https://whiteppure.github.io/iblog/tags/jvm/">JVM</a>
-                                    
-                                    
-                                    
-                                    <span id="busuanzi_container_page_pv">
-                                      阅读量<span id="busuanzi_value_page_pv"></span>次
-                                    </span>
+                                      <span id="busuanzi_container_page_pv">
+                                          阅读量<span id="busuanzi_value_page_pv"></span>次
+                                      </span>
                                     
                                 </span>
                             </div>
@@ -1249,6 +1265,7 @@ JDK 1.8后，元空间存放在直接内存中。</p>
 <script src="https://whiteppure.github.io/iblog/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
 <script src="https://whiteppure.github.io/iblog/js/html2canvas.js"></script>
 <script src="https://whiteppure.github.io/iblog/js/utils.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/html2md_1.0.js"></script>
 
 
 
@@ -1260,14 +1277,35 @@ JDK 1.8后，元空间存放在直接内存中。</p>
 
 <script type="text/javascript">
     if (!isMobileReq()) {
-        document.getElementById("export_pdf").onclick = () => {
-            removeNotContent()
-            $('#content_hidden').css('display', 'none')
-            $('#content_display').css('display', 'none')
+        let titleObj = document.getElementById('post_single_title')
+        const title = isEmpty(titleObj) ? 'white‘blog' : titleObj.innerHTML
 
-            window.print()
-            window.location.reload();
+        
+        document.getElementById('export_pdf').onclick = () => {
+            removeNotContent()
+            window.print();
+            window.location.reload()
         }
+
+        
+        document.getElementById('export_pic').onclick = () => {
+            hiddenNotContent()
+            const content = document.getElementById('main_content')
+            html2canvas(content).then(function (canvas) {
+                downloadBase64(title+'.png',canvas.toDataURL("image/png"))
+            });
+            displayNotContent()
+        }
+
+        
+        document.getElementById('export_markdown').onclick = () => {
+            removeNotContent()
+            const content = document.getElementById('main_content')
+            const contentMd = html2md(content.innerHTML)
+            downloadFile(title+'.txt','text/markdown',contentMd)
+            window.location.reload()
+        }
+
     }
 </script>
 
@@ -1276,7 +1314,7 @@ JDK 1.8后，元空间存放在直接内存中。</p>
 <script>
     
     var hours = new Date().getHours();
-    if (hours >= 20 && hours <= 6 || hours === 20){
+    if (hours >= 19 && hours <= 6 || hours === 19){
         var options = {
             right: '32px', 
             bottom: 'unset', 
