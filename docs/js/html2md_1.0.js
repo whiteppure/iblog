@@ -1,8 +1,8 @@
 /**
  * 把 html 内容转化为 markdown 格式 V1.0
- * 
+ *
  * @author kohunglee
- * @param {string} htmlData 转换前的 html 
+ * @param {string} htmlData 转换前的 html
  * @return {string} 转化后的 markdown 源码
  */
 function html2md(htmlData){
@@ -14,16 +14,13 @@ function html2md(htmlData){
     aContent        = new Array  // a标签数据
     let pureHtml    = htmlData
 
-    // 源代码
-    console.log("转换前的源码：" + pureHtml)
-
     // 函数：删去html标签
-    function clearHtmlTag(sourceData = ''){  
+    function clearHtmlTag(sourceData = ''){
         return sourceData.replace(/\<[\s\S]*?\>/g,'')
     }
 
     // 复原ol标签
-    function olRecover(olData = ''){  
+    function olRecover(olData = ''){
         let result = olData
         let num = olData.match(/\<li\>/ig).length
         for(let i = 1; i <= num; i++){
@@ -36,7 +33,7 @@ function html2md(htmlData){
     }
 
     // 函数：复原img标签
-    function imgRecover(imgHtml = ''){  
+    function imgRecover(imgHtml = ''){
         let imgSrc,imgTit,imgAlt,result
         imgSrc     = imgHtml.match(/(?<=src=['"])[\s\S]*?(?=['"])/i)
         imgTit     = imgHtml.match(/(?<=title=['"])[\s\S]*?(?=['"])/i)
@@ -49,7 +46,7 @@ function html2md(htmlData){
     }
 
     // 函数：复原a标签
-    function aRecover(aData = ''){  
+    function aRecover(aData = ''){
         let aHref = '' + aData.match(/(?<=href=['"])[\s\S]*?(?=['"])/i)
         let aTit  = '' + aData.match(/(?<=title=['"])[\s\S]*?(?=['"])/i)
         let aText = '' + aData.match(/(?<=\<a\s*[^\>]*?\>)[\s\S]*?(?=<\/a>)/i)
@@ -60,7 +57,7 @@ function html2md(htmlData){
         aTit = (aTit != 'null') ? ` "${aTit}"` : ' '
         aText = clearHtmlTag(aText)
         let result = `[${aText}](${aHref}${aTit})`
-        
+
         if(aImg != null){  // 函数：如果发现图片,则更换为图片显示模式
             aImgSrc     = aImg[0].match(/(?<=src=['"])[\s\S]*?(?=['"])/i)
             aImgTit     = aImg[0].match(/(?<=title=['"])[\s\S]*?(?=['"])/i)
@@ -74,7 +71,7 @@ function html2md(htmlData){
     }
 
     // 函数：复原table标签
-    function tableRecover(tableData = null){  
+    function tableRecover(tableData = null){
         if(tableData[0] == null){  // 如果不存在 th 标签，则默认表格为一层
             let result = ''
             let colNum = tableData[1].length
@@ -128,7 +125,7 @@ function html2md(htmlData){
     pureHtml = pureHtml.replace(/<img\s*[^\>]*?\>[^]*?(<\/img>)?/ig,'`#imgContent#`')
 
     // 获取纯净（无属性）的 html
-    pureHtml = pureHtml.replace(/(?<=\<[a-zA-Z0-9]*)\s.*?(?=\>)/g,'')  
+    pureHtml = pureHtml.replace(/(?<=\<[a-zA-Z0-9]*)\s.*?(?=\>)/g,'')
 
     // 标题：标获取<h1><h2>...数据,并替换
     pureHtml = pureHtml.replace(/<h1>/ig,'[~wrap]# ').replace(/<\/h1>/ig,'[~wrap][~wrap]')
@@ -174,7 +171,7 @@ function html2md(htmlData){
             pureHtml = pureHtml.replace(/\`\#tableContent\#\`/i,tableText)
         }
     }
-    
+
     // 有序列表<ol>的<li>,储存ol的内容,并循环恢复ol中的内容
     olContent = pureHtml.match(/(?<=\<ol\s*[^\>]*?\>)[\s\S]*?(?=<\/ol>)/ig)
     pureHtml = pureHtml.replace(/(?<=\<ol\s*[^\>]*?\>)[\s\S]*?(?=<\/ol>)/ig,'`#olContent#`')
@@ -238,6 +235,12 @@ function html2md(htmlData){
 
     // 删去头部的空行
     pureHtml = pureHtml.replace(/^\n{1,}/i,'')
+
+    // 去除指定字符
+    pureHtml = pureHtml.replace('[](null )', '')
+
+    // 给图片默认加前缀
+    pureHtml = pureHtml.replaceAll('](/', ']('+window.location.protocol+window.location.host+'/')
 
     return pureHtml
 }

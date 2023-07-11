@@ -46,7 +46,7 @@
             removeNotContent()
             const content = document.getElementById('main_content')
             const contentMd = html2md(content.innerHTML)
-            downloadFile(title+'.txt','text/markdown',contentMd)
+            downloadFile(title+'.md','text/markdown',contentMd)
             window.location.reload()
         }
 
@@ -56,14 +56,12 @@
 
 <!-- 夜间模式切换 -->
 <script>
-    // 晚上7点到早上6点 调用夜间模式
-    var hours = new Date().getHours();
-    if (hours >= 19 && hours <= 6 || hours === 19){
-        var options = {
+    function darkModelOptions(){
+        return  {
             right: '32px', // default: '32px'
             bottom: 'unset', // default: '32px'
             // left: '32px', // default: 'unset'
-            time: '0.8s', // default: '0.3s'
+            time: '0.3s', // default: '0.3s'
             mixColor: '#f7f7f7', // default: '#fff'
             backgroundColor: '#f7f7f7', // default: '#fff'
             buttonColorDark: '#212121', // default: '#100f2c'
@@ -71,8 +69,14 @@
             saveInCookies: false, // default: true,
             autoMatchOsTheme: true // default: true
         }
-        const darkmode = new Darkmode(options);
-        darkmode.showWidget();
+    }
+
+    // window.addEventListener('load', new Darkmode(darkModelOptions()).showWidget());
+
+    // 晚上7点到早上6点 自动调用夜间模式
+    const hours = new Date().getHours();
+    if (hours >= 19 && hours <= 6 || hours === 19){
+        new Darkmode(darkModelOptions()).toggle();
     }
 
 </script>
