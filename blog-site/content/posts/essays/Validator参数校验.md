@@ -39,7 +39,7 @@ public class ValidatedCaseController1 {
 }
 ```
 
-## validator框架入门
+## Validator框架入门
 包括引入依赖,创建controller,创建校验实体,错误异常处理.
 
 ### pom依赖
@@ -169,7 +169,7 @@ public class ValidatedExceptionAdvice {
 }
 ```
 
-## validator框架进阶
+## Validator框架进阶
 包括自定义校验注解,validated分组校验,对象嵌套校验,表单格式校验.
 
 ### UserEntity2
