@@ -51,7 +51,7 @@ draft: false
 - 资源文档鸠摩搜索: https://www.jiumodiary.com
 - iMySql老叶茶馆: https://imysql.com
 - Quick Reference: https://quickref.cn
-- Chrome插件安装包：https://crxdl.com
+- Chrome插件安装包: https://crxdl.com
 - 图说设计模式: https://design-patterns.readthedocs.io/zh_CN/latest/index.html
 - ThreadLocal: http://www.threadlocal.cn
 - 深入分析synchronized: https://www.cnblogs.com/aspirant/p/11470858.html

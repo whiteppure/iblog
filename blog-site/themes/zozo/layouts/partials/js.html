@@ -1,14 +1,15 @@
 <script src="{{ "js/jquery-3.5.1.min.js" | absURL }}"></script>
 <link href="{{ "css/fancybox.min.css" | absURL }}" rel="stylesheet">
 <script src="{{ "js/fancybox.min.js" | absURL }}"></script>
-<script src="{{ "js/darkmode-js.js" | absURL }}"></script>
+<script src="{{ "js/darkmode.js" | absURL }}"></script>
 <script src="{{ "js/zozo.js" | absURL }}"></script>
 <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
 <script src="{{ "js/busuanzi_2.3_busuanzi.pure.mini.js" | absURL }}"></script>
 <script src="{{ "js/html2canvas.js" | absURL }}"></script>
 <script src="{{ "js/utils.js" | absURL }}"></script>
-<script src="{{ "js/html2md_1.0.js" | absURL }}"></script>
-
+<script src="{{ "js/html2md.js" | absURL }}"></script>
+<script src="{{ "js/htmlexport.js" | absURL }}"></script>
+<script src="{{ "js/autodarkmode.js" | absURL }}"></script>
 
 <!-- 启用数学公式 -->
 {{ if .Site.Params.enableMathJax }}
@@ -18,65 +19,4 @@
 {{ template "_internal/google_analytics_async.html" . }}
 
 
-<!-- 导出功能 -->
-<script type="text/javascript">
-    if (!isMobileReq()) {
-        let titleObj = document.getElementById('post_single_title')
-        const title = isEmpty(titleObj) ? 'white‘blog' : titleObj.innerHTML
 
-        // 导出pdf
-        document.getElementById('export_pdf').onclick = () => {
-            removeNotContent()
-            window.print();
-            window.location.reload()
-        }
-
-        // 导出图片
-        document.getElementById('export_pic').onclick = () => {
-            hiddenNotContent()
-            const content = document.getElementById('main_content')
-            html2canvas(content).then(function (canvas) {
-                downloadBase64(title+'.png',canvas.toDataURL("image/png"))
-            });
-            displayNotContent()
-        }
-
-        // 导出markdown
-        document.getElementById('export_markdown').onclick = () => {
-            removeNotContent()
-            const content = document.getElementById('main_content')
-            const contentMd = html2md(content.innerHTML)
-            downloadFile(title+'.md','text/markdown',contentMd)
-            window.location.reload()
-        }
-
-    }
-</script>
-
-
-<!-- 夜间模式切换 -->
-<script>
-    function darkModelOptions(){
-        return  {
-            right: '32px', // default: '32px'
-            bottom: 'unset', // default: '32px'
-            // left: '32px', // default: 'unset'
-            time: '0.3s', // default: '0.3s'
-            mixColor: '#f7f7f7', // default: '#fff'
-            backgroundColor: '#f7f7f7', // default: '#fff'
-            buttonColorDark: '#212121', // default: '#100f2c'
-            buttonColorLight: '#f7f7f7', // default: '#fff'
-            saveInCookies: false, // default: true,
-            autoMatchOsTheme: true // default: true
-        }
-    }
-
-    // window.addEventListener('load', new Darkmode(darkModelOptions()).showWidget());
-
-    // 晚上7点到早上6点 自动调用夜间模式
-    const hours = new Date().getHours();
-    if (hours >= 19 && hours <= 6 || hours === 19){
-        new Darkmode(darkModelOptions()).toggle();
-    }
-
-</script>

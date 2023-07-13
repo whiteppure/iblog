@@ -240,7 +240,7 @@ function html2md(htmlData){
     pureHtml = pureHtml.replace('[](null )', '')
 
     // 给图片默认加前缀
-    pureHtml = pureHtml.replaceAll('](/', ']('+window.location.protocol+window.location.host+'/')
+    pureHtml = pureHtml.replaceAll('](/', ']('+window.location.protocol+'//'+window.location.host+'/')
 
     return pureHtml
 }
