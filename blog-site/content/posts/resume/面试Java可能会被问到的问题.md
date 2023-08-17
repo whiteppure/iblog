@@ -34,7 +34,7 @@ slug: "interview-junior-javaer"
 ### [手写一个排序算法和查找算法](/iblog/posts/essays/data-structures-algorithms/#排序算法)
 
 
-## 分布式相关
+## 分布式
 ### [为什么要进行系统拆分](/iblog/posts/essays/java-small-service/#为什么要使用微服务)
 ### [SpringBoot与SSM对比优势](/iblog/posts/spring/java-spring/#springboot)
 ### [分布式注册中心、熔断降级、网关知道吗](/iblog/posts/essays/java-small-service/)
@@ -53,17 +53,23 @@ slug: "interview-junior-javaer"
 ### [手写一个负载均衡算法](/iblog/posts/essays/java-small-service/#服务负载)
 ### [Netty用过吗](/iblog/posts/rookie/rookie-io/#nettyhttpsdongzlgithubionetty-handbook)
 
-## 数据库相关
+## 数据库
 ### [MySQL如何优化索引](/iblog/posts/essays/sql-select-fast/#mysqlsql优化)
 ### [为什么分库分表](/iblog/posts/essays/sql-select-fast/#分库分表)
-### 如何实现MySQL的读写分离
+### [如何实现MySQL的读写分离(未完成)]()
 
 
-## 解决问题设计能力
+## 解决问题及设计能力
 ### [你平时是怎么进行故障排查的](/iblog/posts/essays/eye-beam/#常见故障排查)
-### 如何重构系统
-### 如何设计一个高可用的系统
-
+### [如何重构系统](/iblog/posts/essays/java-project-reconstitution/)
+### [如何设计一个高可用的系统(未完成)]()
+### [如何优化接口](/iblog/posts/essays/java-improve/)
+### 设计示例代码
+- [管道流设计模式结合业务](/iblog/posts/essays/pipeline-business/)
+- [整合支付功能](/iblog/posts/essays/pay-code/)
+- [整合文件上传功能](/iblog/posts/essays/uploadfile-code/)
+- [手搓二级缓存(未完成)]()
+- [手搓配置中心(未完成)]()
 
 ## 其他
 ### 说一个实际项目中遇到的问题及如何解决的
