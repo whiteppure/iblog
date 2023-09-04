@@ -16,9 +16,9 @@
         }
     }
 
-    // 晚上7点到早上6点 自动调用夜间模式
+    // 自动调用夜间模式
     const hours = new Date().getHours();
-    if (hours >= 19 && hours <= 6 || hours === 19){
+    if (hours >= 21 && hours <= 5){
         new Darkmode(darkModelOptions()).toggle();
     }
 })()
