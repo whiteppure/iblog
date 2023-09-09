@@ -12,7 +12,7 @@
 	
     
     
-    <meta name="description" content="nacos nacos下载 下载地址 一键傻瓜试安装即可 官网写的很清楚这里不在赘述 http://nacos.io/zh-cn/docs/v2/quickstart/quick-start.html nacos启动 将模式改为单机模式 启动成功 nacos相关配置 demo-dev.yaml server: port: 8001 config: info: &amp;#34;config info for dev from nacos config center&amp;#34; demo-test.yaml server: port: 3333 config: info: &amp;#34;config info for test from nacos config center&amp;#34; user.yaml user: name: zs1112222 age: 10 address: 测试地址 代码 整合nacos配置中心，注册中" />
+    <meta name="description" content="nacos nacos下载 下载地址 一键傻瓜试安装即可,官网写的很清楚这里不在赘述 http://nacos.io/zh-cn/docs/v2/quickstart/quick-start.html nacos启动 将模式改为单机模式 启动成功 nacos相关配置 demo-dev.yaml server: port: 8001 config: info: &amp;#34;config info for dev from nacos config center&amp;#34; demo-test.yaml server: port: 3333 config: info: &amp;#34;config info for test from nacos config center&amp;#34; user.yaml user: name: zs1112222 age: 10 address: 测试地址 代码 整合nacos配置中心,注册" />
     
 
     
@@ -492,8 +492,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%ae%8c%e6%95%b4%e9%a1%b9%e7%9b%ae">
-                    完整项目
+                <a class="nav-link text-left" href="#%e8%a1%a5%e5%85%85%e5%88%b7%e6%96%b0%e9%9d%99%e6%80%81%e9%85%8d%e7%bd%ae">
+                    补充.刷新静态配置
                 </a>
             </li>
             
@@ -609,13 +609,12 @@
                     <div class="post_content markdown"><h2 id="nacos">nacos</h2>
 <h3 id="nacos下载">nacos下载</h3>
 <p><a href="https://github.com/alibaba/nacos/releases">下载地址</a></p>
-<p>一键傻瓜试安装即可</p>
-<p>官网写的很清楚这里不在赘述 <a href="http://nacos.io/zh-cn/docs/v2/quickstart/quick-start.html">http://nacos.io/zh-cn/docs/v2/quickstart/quick-start.html</a></p>
+<p>一键傻瓜试安装即可,官网写的很清楚这里不在赘述 <a href="http://nacos.io/zh-cn/docs/v2/quickstart/quick-start.html">http://nacos.io/zh-cn/docs/v2/quickstart/quick-start.html</a></p>
 <h3 id="nacos启动">nacos启动</h3>
 <p>将模式改为单机模式
 <img src="/iblog/posts/annex/images/spring/SpringBoot%E6%95%B4%E5%90%88nacos-001.png" alt="SpringBoot整合nacos"></p>
-<p>启动成功</p>
-<p><img src="/iblog/posts/annex/images/spring/SpringBoot%E6%95%B4%E5%90%88nacos-002.png" alt="SpringBoot整合nacos"></p>
+<p>启动成功
+<img src="/iblog/posts/annex/images/spring/SpringBoot%E6%95%B4%E5%90%88nacos-002.png" alt="SpringBoot整合nacos"></p>
 <h3 id="nacos相关配置">nacos相关配置</h3>
 <p><img src="/iblog/posts/annex/images/spring/SpringBoot%E6%95%B4%E5%90%88nacos-004.png" alt="SpringBoot整合nacos"></p>
 <h4 id="demo-devyaml">demo-dev.yaml</h4>
@@ -637,7 +636,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l">测试地址</span><span class="w">
 </span></span></span></code></pre></div><p><img src="/iblog/posts/annex/images/spring/SpringBoot%E6%95%B4%E5%90%88nacos-003.png" alt="SpringBoot整合nacos"></p>
 <h2 id="代码">代码</h2>
-<p>整合nacos配置中心，注册中心</p>
+<p>整合nacos配置中心,注册中心,完整项目地址 <a href="https://gitee.com/gitee_pikaqiu/springboot-naocos-demo">gitee地址</a></p>
 <h3 id="pomxml">pom.xml</h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;parent&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
@@ -753,9 +752,108 @@
 </span></span></span></code></pre></div><h3 id="测试结果">测试结果</h3>
 <p><img src="/iblog/posts/annex/images/spring/SpringBoot%E6%95%B4%E5%90%88nacos-005.png" alt="SpringBoot整合nacos"></p>
 <p><img src="/iblog/posts/annex/images/spring/SpringBoot%E6%95%B4%E5%90%88nacos-006.png" alt="SpringBoot整合nacos"></p>
-<h3 id="完整项目">完整项目</h3>
-<p><a href="https://gitee.com/gitee_pikaqiu/springboot-naocos-demo">gitee地址</a></p>
-</div>
+<h3 id="补充刷新静态配置">补充.刷新静态配置</h3>
+<p>有时候一些老项目或者一些写法会遇到静态的配置,这时候可以利用Java的反射特性来刷新静态变量.</p>
+<p>大致原理为: 监听nacos配置改动,通过nacos改动确定改动的配置,进而缩小更新范围,通过反射更新变量.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="c">&lt;!-- https://mvnrepository.com/artifact/com.purgeteam/dynamic-config-spring-boot-starter --&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;groupId&gt;</span>com.purgeteam<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;artifactId&gt;</span>dynamic-config-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;version&gt;</span>0.1.1.RELEASE<span class="nt">&lt;/version&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/dependency&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><p>@NacosRefreshStaticField</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Target</span><span class="o">({</span><span class="n">ElementType</span><span class="o">.</span><span class="na">TYPE</span><span class="o">})</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@Documented</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">NacosRefreshStaticField</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">String</span> <span class="nf">configPrefix</span><span class="o">()</span> <span class="k">default</span> <span class="s">&#34;&#34;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>NacosListener</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Slf4j</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@Component</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@EnableDynamicConfigEvent</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NacosListener</span> <span class="kd">implements</span> <span class="n">ApplicationListener</span><span class="o">&lt;</span><span class="n">ActionConfigEvent</span><span class="o">&gt;</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@Autowired</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">ApplicationContext</span> <span class="n">applicationContext</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@SneakyThrows</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onApplicationEvent</span><span class="o">(</span><span class="n">ActionConfigEvent</span> <span class="n">environment</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">HashMap</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="n">environment</span><span class="o">.</span><span class="na">getPropertyMap</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="o">(</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">HashMap</span><span class="o">&gt;</span> <span class="n">entry</span> <span class="o">:</span> <span class="n">map</span><span class="o">.</span><span class="na">entrySet</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">String</span> <span class="n">key</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="na">getKey</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Map</span> <span class="n">changeMap</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="na">getValue</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">String</span> <span class="n">before</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">changeMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&#34;before&#34;</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">            <span class="n">String</span> <span class="n">after</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">changeMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&#34;after&#34;</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">            <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;配置[key:{}]被改变，改变前before：{}，改变后after：{}&#34;</span><span class="o">,</span><span class="n">key</span><span class="o">,</span><span class="n">before</span><span class="o">,</span><span class="n">after</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">String</span><span class="o">[]</span> <span class="n">configNameArr</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">&#34;\\.&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">String</span> <span class="n">configPrefix</span> <span class="o">=</span> <span class="n">configNameArr</span><span class="o">[</span><span class="n">0</span><span class="o">];</span>
+</span></span><span class="line"><span class="cl">            <span class="n">String</span> <span class="n">configRealVal</span> <span class="o">=</span> <span class="n">configNameArr</span><span class="o">[</span><span class="n">configNameArr</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="n">1</span><span class="o">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">AtomicReference</span><span class="o">&lt;</span><span class="n">Class</span><span class="o">&lt;?&gt;&gt;</span> <span class="n">curClazz</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AtomicReference</span><span class="o">&lt;&gt;();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">refreshStaticFieldBeanMap</span> <span class="o">=</span> <span class="n">applicationContext</span><span class="o">.</span><span class="na">getBeansWithAnnotation</span><span class="o">(</span><span class="n">NacosRefreshStaticField</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="o">(</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">mapEntry</span> <span class="o">:</span> <span class="n">refreshStaticFieldBeanMap</span><span class="o">.</span><span class="na">entrySet</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">String</span> <span class="n">beanName</span> <span class="o">=</span> <span class="n">mapEntry</span><span class="o">.</span><span class="na">getKey</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="o">(</span><span class="n">ObjectUtil</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">(</span><span class="n">beanName</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">continue</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="n">String</span> <span class="n">fullClassName</span> <span class="o">=</span> <span class="n">refreshStaticFieldBeanMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">beanName</span><span class="o">).</span><span class="na">toString</span><span class="o">().</span><span class="na">split</span><span class="o">(</span><span class="s">&#34;@&#34;</span><span class="o">)[</span><span class="n">0</span><span class="o">];</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">refreshStaticFieldClass</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">refreshStaticFieldClass</span> <span class="o">=</span> <span class="n">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">fullClassName</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">ClassNotFoundException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">throw</span> <span class="k">new</span> <span class="n">ClassNotFoundException</span><span class="o">(</span><span class="s">&#34;监听nacos刷新当前静态类属性,未找到当前类&#34;</span><span class="o">,</span><span class="n">e</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="n">NacosRefreshStaticField</span> <span class="n">refreshStaticConfig</span> <span class="o">=</span> <span class="n">refreshStaticFieldClass</span><span class="o">.</span><span class="na">getAnnotation</span><span class="o">(</span><span class="n">NacosRefreshStaticField</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="o">(</span><span class="n">Objects</span><span class="o">.</span><span class="na">nonNull</span><span class="o">(</span><span class="n">refreshStaticConfig</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">refreshStaticConfig</span><span class="o">.</span><span class="na">configPrefix</span><span class="o">().</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="n">configPrefix</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">curClazz</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">refreshStaticFieldClass</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">aClass</span> <span class="o">=</span> <span class="n">curClazz</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span><span class="n">Objects</span><span class="o">.</span><span class="na">isNull</span><span class="o">(</span><span class="n">aClass</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1">// 利用反射动态更新 静态变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">Field</span><span class="o">[]</span> <span class="n">declaredFields</span> <span class="o">=</span> <span class="n">aClass</span><span class="o">.</span><span class="na">getDeclaredFields</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="o">(</span><span class="n">Field</span> <span class="n">declaredField</span> <span class="o">:</span> <span class="n">declaredFields</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="o">(</span><span class="n">declaredField</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="n">configRealVal</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;刷新当前配置 更新当前类[{}] 静态属性 [{}]&#34;</span><span class="o">,</span><span class="n">aClass</span><span class="o">.</span><span class="na">getSimpleName</span><span class="o">(),</span><span class="n">declaredField</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">declaredField</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">declaredField</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span><span class="n">after</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>CommonWebConfig</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Data</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@Component</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@ConfigurationProperties</span><span class="o">(</span><span class="n">prefix</span> <span class="o">=</span> <span class="s">&#34;common&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@RefreshScope</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CommonWebConfig</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">apiUrl</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>使用</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Component</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@NacosRefreshStaticField</span><span class="o">(</span><span class="n">configPrefix</span><span class="o">=</span><span class="s">&#34;common&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExampleComponent</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="n">apiUrl</span> <span class="o">=</span> <span class="n">SpringUtil</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="n">CommonWebConfig</span><span class="o">.</span><span class="na">class</span><span class="o">).</span><span class="na">getApiUrl</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div></div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">
                             <div id="post_footer_info" class="info">
