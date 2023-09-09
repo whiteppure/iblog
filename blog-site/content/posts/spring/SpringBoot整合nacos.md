@@ -15,9 +15,11 @@ slug: "springboot-nacos"
 
 ### nacos启动
 将模式改为单机模式
+
 ![SpringBoot整合nacos](/iblog/posts/annex/images/spring/SpringBoot整合nacos-001.png)
 
 启动成功
+
 ![SpringBoot整合nacos](/iblog/posts/annex/images/spring/SpringBoot整合nacos-002.png)
 
 ### nacos相关配置
