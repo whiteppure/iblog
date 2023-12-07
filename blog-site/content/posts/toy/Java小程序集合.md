@@ -1,9 +1,9 @@
 ---
-title: "Java小程序"
+title: "Java小程序集合"
 date: 2022-04-09
 draft: false
-tags: ["Java", "小程序"]
-slug: "java-gadget"
+tags: ["Java", "玩具"]
+slug: "java-multi-gadget"
 ---
 
 ## 写在前面
@@ -11,14 +11,14 @@ slug: "java-gadget"
 
 使用`java -jar`命令启动
 
-![readme-009](/iblog/posts/annex/images/readme/readme-009.png)
+![Java玩具-009](/iblog/posts/annex/images/readme/Java玩具-009.png)
 
 某些程序功能并不是很完善，但是也可以凑合着用，写这些程序的主要目的是为了方便理解一些常用软件的实现逻辑。
 
 ## 强密码生成器
 生成6到20位的随机强密码，可指定密码长度、密码内容。[点击下载](/iblog/posts/annex/jar/auto-pwd.jar)
 
-![readme-001](/iblog/posts/annex/images/readme/readme-001.png)
+![Java玩具-001](/iblog/posts/annex/images/readme/Java玩具-001.png)
 ### 代码
 ```java
 /**
@@ -302,9 +302,9 @@ public class AutoPwdMainStarter {
 ## 截图工具
 截图小工具，支持复制到粘贴板、一次性截取多张图片。[点击下载](/iblog/posts/annex/jar/cut-screen.jar)
 
-![readme-002](/iblog/posts/annex/images/readme/readme-002.png)
+![Java玩具-002](/iblog/posts/annex/images/readme/Java玩具-002.png)
 
-![readme-003](/iblog/posts/annex/images/readme/readme-003.png)
+![Java玩具-003](/iblog/posts/annex/images/readme/Java玩具-003.png)
 ### 代码
 ```java
 /**
@@ -1052,7 +1052,7 @@ public class CutScreenMainStarter {
 ## 文字转二维码
 输入文字，生成二维码。[点击下载](/iblog/posts/annex/jar/qr-code.jar)
 
-![readme-004](/iblog/posts/annex/images/readme/readme-004.png)
+![Java玩具-004](/iblog/posts/annex/images/readme/Java玩具-004.png)
 ### 代码
 需要依赖第三方类库：[点击下载](/iblog/posts/annex/jar/lib/qrcode.jar)
 
@@ -1168,7 +1168,7 @@ public class QRCodeMainStarter {
 ## 英文翻译器
 将英文翻译为中文,仅支持单词、短语翻译，程序默认加载自带的英语字典，如果您想要修改字典可在源代码中进行配置或在程序运行时指定字典路径。[点击下载](/iblog/posts/annex/jar/english-translation.jar)
 
-![readme-005](/iblog/posts/annex/images/readme/readme-005.png)
+![Java玩具-005](/iblog/posts/annex/images/readme/Java玩具-005.png)
 ### 代码
 ```java
 /**
@@ -1359,7 +1359,7 @@ chinese=中国人
 ## 提色器
 按住alt（macOS用户按住option）鼠标滑动即可获取当前位置颜色。[点击下载](/iblog/posts/annex/jar/english-translation.jar)
 
-![readme-006](/iblog/posts/annex/images/readme/readme-006.png)
+![Java玩具-006](/iblog/posts/annex/images/readme/Java玩具-006.png)
 ### 代码
 ```java
 public class ExtracterFrame {
@@ -1477,7 +1477,7 @@ public class ExtractColorMainStarter {
 ## 图片水印生成器
 加载图片，输入水印内容，在加载图片的右下会生成红色水印。[点击下载](/iblog/posts/annex/jar/img-watermarking.jar)
 
-![readme-007](/iblog/posts/annex/images/readme/readme-007.png)
+![Java玩具-007](/iblog/posts/annex/images/readme/Java玩具-007.png)
 ### 代码
 ```java
 public class ImgWatermarking {
@@ -1707,7 +1707,7 @@ public class ImgWatermarkingMainStarter {
 ## huffman压缩
 采用huffman算法对文件进行无损压缩，目前仅支持压缩单个文件，压缩好的文件以`.huf`后缀结尾,会与被压缩文件放在相同目录下。[点击下载](/iblog/posts/annex/jar/huffman-zip.jar)
 
-![readme-008](/iblog/posts/annex/images/readme/readme-008.png)
+![Java玩具-008](/iblog/posts/annex/images/readme/Java玩具-008.png)
 ### 代码
 ```java
 public abstract class HuffmanCode {
