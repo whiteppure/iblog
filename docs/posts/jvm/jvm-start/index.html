@@ -38,6 +38,10 @@
 </head>
 
 <body>
+    <div class="post-password">
+        
+    </div>
+
     
     
     
@@ -718,7 +722,7 @@
 </ul>
 <h2 id="jvm整体结构">JVM整体结构</h2>
 <p>HotSpot VM是目前市面上高性能虚拟机的代表作之一。下图就是 HotSport 虚拟机结构图
-<img src="/iblog/posts/annex/images/essays/Jvm%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png" alt="Jvm内存模型"></p>
+<img alt="Jvm内存模型" src="/iblog/posts/annex/images/essays/Jvm%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png"></p>
 <ul>
 <li>类加载子系统：将字节码文件加载到内存当中生成一个class文件。具体分为三部分：装载，链接，初始化。</li>
 <li>运行时数据区：方法区、堆、Java栈（虚拟机栈）、本地方法栈、程序计数器。其中线程共享，堆和方法区；Java栈、本地方法栈和程序计数器为每个线程独有一份的。</li>
@@ -726,7 +730,7 @@
 </ul>
 <h2 id="java代码执行流程">Java代码执行流程</h2>
 <p>Java代码通过编译器生成字节码文件，字节码通过Java虚拟机跟操作系统交互。
-<img src="/iblog/posts/annex/images/essays/Java%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B.png" alt="Java代码执行流程"></p>
+<img alt="Java代码执行流程" src="/iblog/posts/annex/images/essays/Java%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B.png"></p>
 <h2 id="jvm架构模型">JVM架构模型</h2>
 <p>Java编译器输入的指令流基本上是一种 <strong>基于栈的指令集架构</strong> ，另外一种指令集架构则是 <strong>基于寄存器的指令集架构</strong> 。
 Hotsport 是基于栈的指令集架构。</p>
@@ -790,7 +794,7 @@ JDK1.4 的时候完全被淘汰。这款虚拟机只提供解释器。</p>
 它的编译执行系统已经具备现代高性能虚拟机雏形，如热点探测、两级即时编译器、编译器与解释器混合工作模式等。</p>
 <h3 id="hotspot-vm">Hotspot VM</h3>
 <p>Hotspot VM 是目前使用范围最广的Java虚拟机。Hotspot 并非由Sun公司开发，而是由一家名为“Longview Technologies”的小公司设计的；</p>
-<p>HotSpot VM既继承了Sun之前两款商用虚拟机的优点（如前面提到的准确式内存管理），也有许多自己新的技术优势， 
+<p>HotSpot VM既继承了Sun之前两款商用虚拟机的优点（如前面提到的准确式内存管理），也有许多自己新的技术优势，
 如它名称中的HotSpot指的就是它的热点代码探测技术,HotSpot VM的热点代码探测能力可以通过执行计数器找出最具有编译价值的代码，然后通知JIT编译器以方法为单位进行编译。
 如果一个方法被频繁调用，或方法中有效循环次数很多，将会分别触发标准编译和OSR（栈上替换）编译动作。
 通过编译器与解释器恰当地协同工作，可以在最优化的程序响应时间与最佳执行性能中取得平衡，而且无须等待本地代码输出才能执行程序， 即时编译的时间压力也相对减小，

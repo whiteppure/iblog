@@ -38,6 +38,10 @@
 </head>
 
 <body>
+    <div class="post-password">
+        
+    </div>
+
     
     
     
@@ -756,7 +760,7 @@
                     </div>
                     <div class="post_content markdown"><p>Java虚拟机定义了若干种程序运行期间会使用到的运行时数据区，其中有一些会随着虚拟机启动而创建，随着虚拟机退出而销毁。
 另外一些则是与线程一一对应的，这些与线程对应的数据区域会随着线程开始和结束而创建和销毁。</p>
-<p><img src="/iblog/posts/annex/images/essays/%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA.png" alt="运行时数据区"></p>
+<p><img alt="运行时数据区" src="/iblog/posts/annex/images/essays/%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA.png"></p>
 <p>运行时数据区域包括</p>
 <ul>
 <li>程序计数寄存器</li>
@@ -773,7 +777,7 @@
 ”但对于HotSpotJVM而言，方法区还有一个别名叫做Non-Heap（非堆），目的就是要和堆分开。</p>
 </blockquote>
 <p>方法区看作是一块独立于Java堆的内存空间。下图说明了栈、堆、方法区的交互关系
-<img src="/iblog/posts/annex/images/essays/%E6%96%B9%E6%B3%95%E5%8C%BA%E5%AE%9A%E4%BD%8D.png" alt="方法区定位"></p>
+<img alt="方法区定位" src="/iblog/posts/annex/images/essays/%E6%96%B9%E6%B3%95%E5%8C%BA%E5%AE%9A%E4%BD%8D.png"></p>
 <ul>
 <li>方法区主要存放的是 class，而堆中主要存放的是实例化的对象.</li>
 <li>方法区与Java堆一样，是各个线程共享的内存区域。</li>
@@ -817,25 +821,25 @@ JDK 1.8后，元空间存放在直接内存中。</p>
 <p>JDK8 方法区/元空间 OOM代码演示</p>
 <p>设置虚拟机参数</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-XX:MetaspaceSize=10m -XX:MaxMetaspaceSize=10m
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest  extends ClassLoader{
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        MainTest mainTest = new MainTest();
-</span></span><span class="line"><span class="cl">        int count = 0;
-</span></span><span class="line"><span class="cl">        try {
-</span></span><span class="line"><span class="cl">            for (int i = 0; i &lt; 1000; i++) {
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">MainTest</span>  <span class="k">extends</span> <span class="n">ClassLoader</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">MainTest</span> <span class="n">mainTest</span> <span class="o">=</span> <span class="n">new</span> <span class="n">MainTest</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="ne">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">                ClassWriter classWriter = new ClassWriter(0);
-</span></span><span class="line"><span class="cl">                classWriter.visit(Opcodes.V1_8,Opcodes.ACC_PUBLIC ,&#34;Class&#34; + i,null,&#34;java/lang/Object&#34;,null);
+</span></span><span class="line"><span class="cl">                <span class="n">ClassWriter</span> <span class="n">classWriter</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ClassWriter</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="n">classWriter</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">Opcodes</span><span class="o">.</span><span class="n">V1_8</span><span class="p">,</span><span class="n">Opcodes</span><span class="o">.</span><span class="n">ACC_PUBLIC</span> <span class="p">,</span><span class="s2">&#34;Class&#34;</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span><span class="n">null</span><span class="p">,</span><span class="s2">&#34;java/lang/Object&#34;</span><span class="p">,</span><span class="n">null</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">                byte[] bytes = classWriter.toByteArray();
-</span></span><span class="line"><span class="cl">                mainTest.defineClass(&#34;Class&#34; + i, bytes, 0, bytes.length);
-</span></span><span class="line"><span class="cl">                count ++;
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        }finally {
-</span></span><span class="line"><span class="cl">            System.out.println(count);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">                <span class="n">byte</span><span class="p">[]</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">classWriter</span><span class="o">.</span><span class="n">toByteArray</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="n">mainTest</span><span class="o">.</span><span class="n">defineClass</span><span class="p">(</span><span class="s2">&#34;Class&#34;</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="n">bytes</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bytes</span><span class="o">.</span><span class="n">length</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="n">count</span> <span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span><span class="n">finally</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="n">count</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p><strong>如何解决OOM？</strong></p>
 <ol>
 <li>
@@ -856,7 +860,7 @@ JDK 1.8后，元空间存放在直接内存中。</p>
 与机器物理内存对比看是否还可以调大，从代码上检查是否存在某些对象生命周期过长、持有状态时间过长的情况，尝试减少程序运行期的内存消耗。</li>
 </ol>
 <h3 id="方法区的内部结构">方法区的内部结构</h3>
-<p><img src="/iblog/posts/annex/images/essays/%E6%96%B9%E6%B3%95%E5%8C%BA%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84.png" alt="方法区内部结构"></p>
+<p><img alt="方法区内部结构" src="/iblog/posts/annex/images/essays/%E6%96%B9%E6%B3%95%E5%8C%BA%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84.png"></p>
 <blockquote>
 <p>方法区用于存储已被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等。</p>
 </blockquote>
@@ -921,43 +925,43 @@ JDK 1.8后，元空间存放在直接内存中。</p>
 <li>异常表（<code>abstract和native</code>方法除外）</li>
 </ul>
 <p>每个异常处理的开始位置、结束位置、代码处理在程序计数器中的偏移地址、被捕获的异常类的常量池索引</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> public static void context();
-</span></span><span class="line"><span class="cl">    descriptor: ()V
-</span></span><span class="line"><span class="cl">    flags: ACC_PUBLIC, ACC_STATIC
-</span></span><span class="line"><span class="cl">    Code:
-</span></span><span class="line"><span class="cl">      stack=2, locals=2, args_size=0
-</span></span><span class="line"><span class="cl">         0: iconst_0
-</span></span><span class="line"><span class="cl">         1: istore_0
-</span></span><span class="line"><span class="cl">         2: bipush        20
-</span></span><span class="line"><span class="cl">         4: iload_0
-</span></span><span class="line"><span class="cl">         5: idiv
-</span></span><span class="line"><span class="cl">         6: istore_1
-</span></span><span class="line"><span class="cl">         7: goto          15
-</span></span><span class="line"><span class="cl">        10: astore_0
-</span></span><span class="line"><span class="cl">        11: aload_0
-</span></span><span class="line"><span class="cl">        12: invokevirtual #5                  // Method java/lang/Exception.printStackTrace:()V
-</span></span><span class="line"><span class="cl">        15: return
-</span></span><span class="line"><span class="cl">       // 异常表
-</span></span><span class="line"><span class="cl">      Exception table:
-</span></span><span class="line"><span class="cl">         from    to  target type
-</span></span><span class="line"><span class="cl">             0     7    10   Class java/lang/Exception
-</span></span><span class="line"><span class="cl">       // 代码字节码指令行号对照表
-</span></span><span class="line"><span class="cl">      LineNumberTable:
-</span></span><span class="line"><span class="cl">        line 11: 0
-</span></span><span class="line"><span class="cl">        line 12: 2
-</span></span><span class="line"><span class="cl">        line 15: 7
-</span></span><span class="line"><span class="cl">        line 13: 10
-</span></span><span class="line"><span class="cl">        line 14: 11
-</span></span><span class="line"><span class="cl">        line 16: 15
-</span></span><span class="line"><span class="cl">        // 局部变量表
-</span></span><span class="line"><span class="cl">      LocalVariableTable:
-</span></span><span class="line"><span class="cl">        Start  Length  Slot  Name   Signature
-</span></span><span class="line"><span class="cl">            2       5     0     a   I
-</span></span><span class="line"><span class="cl">           11       4     0     e   Ljava/lang/Exception;
-</span></span><span class="line"><span class="cl">      StackMapTable: number_of_entries = 2
-</span></span><span class="line"><span class="cl">        frame_type = 74 /* same_locals_1_stack_item */
-</span></span><span class="line"><span class="cl">          stack = [ class java/lang/Exception ]
-</span></span><span class="line"><span class="cl">        frame_type = 4 /* same */
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">context</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">descriptor</span><span class="p">:</span> <span class="p">()</span><span class="n">V</span>
+</span></span><span class="line"><span class="cl">    <span class="n">flags</span><span class="p">:</span> <span class="n">ACC_PUBLIC</span><span class="p">,</span> <span class="n">ACC_STATIC</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Code</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">stack</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">locals</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">args_size</span><span class="o">=</span><span class="mi">0</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">0</span><span class="p">:</span> <span class="n">iconst_0</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">1</span><span class="p">:</span> <span class="n">istore_0</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">2</span><span class="p">:</span> <span class="n">bipush</span>        <span class="mi">20</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">4</span><span class="p">:</span> <span class="n">iload_0</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">5</span><span class="p">:</span> <span class="n">idiv</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">6</span><span class="p">:</span> <span class="n">istore_1</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">7</span><span class="p">:</span> <span class="n">goto</span>          <span class="mi">15</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">10</span><span class="p">:</span> <span class="n">astore_0</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">11</span><span class="p">:</span> <span class="n">aload_0</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">12</span><span class="p">:</span> <span class="n">invokevirtual</span> <span class="c1">#5                  // Method java/lang/Exception.printStackTrace:()V</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">15</span><span class="p">:</span> <span class="k">return</span>
+</span></span><span class="line"><span class="cl">       <span class="o">//</span> <span class="err">异常表</span>
+</span></span><span class="line"><span class="cl">      <span class="n">Exception</span> <span class="n">table</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">         <span class="n">from</span>    <span class="n">to</span>  <span class="n">target</span> <span class="n">type</span>
+</span></span><span class="line"><span class="cl">             <span class="mi">0</span>     <span class="mi">7</span>    <span class="mi">10</span>   <span class="n">Class</span> <span class="n">java</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Exception</span>
+</span></span><span class="line"><span class="cl">       <span class="o">//</span> <span class="err">代码字节码指令行号对照表</span>
+</span></span><span class="line"><span class="cl">      <span class="n">LineNumberTable</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">line</span> <span class="mi">11</span><span class="p">:</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="n">line</span> <span class="mi">12</span><span class="p">:</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">        <span class="n">line</span> <span class="mi">15</span><span class="p">:</span> <span class="mi">7</span>
+</span></span><span class="line"><span class="cl">        <span class="n">line</span> <span class="mi">13</span><span class="p">:</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">        <span class="n">line</span> <span class="mi">14</span><span class="p">:</span> <span class="mi">11</span>
+</span></span><span class="line"><span class="cl">        <span class="n">line</span> <span class="mi">16</span><span class="p">:</span> <span class="mi">15</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">局部变量表</span>
+</span></span><span class="line"><span class="cl">      <span class="n">LocalVariableTable</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Start</span>  <span class="n">Length</span>  <span class="n">Slot</span>  <span class="n">Name</span>   <span class="n">Signature</span>
+</span></span><span class="line"><span class="cl">            <span class="mi">2</span>       <span class="mi">5</span>     <span class="mi">0</span>     <span class="n">a</span>   <span class="n">I</span>
+</span></span><span class="line"><span class="cl">           <span class="mi">11</span>       <span class="mi">4</span>     <span class="mi">0</span>     <span class="n">e</span>   <span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Exception</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">StackMapTable</span><span class="p">:</span> <span class="n">number_of_entries</span> <span class="o">=</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">        <span class="n">frame_type</span> <span class="o">=</span> <span class="mi">74</span> <span class="o">/*</span> <span class="n">same_locals_1_stack_item</span> <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">          <span class="n">stack</span> <span class="o">=</span> <span class="p">[</span> <span class="k">class</span> <span class="n">java</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Exception</span> <span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">frame_type</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">/*</span> <span class="n">same</span> <span class="o">*/</span>
 </span></span></code></pre></div><h4 id="non-final的类变量">non-final的类变量</h4>
 <p>静态变量和类关联在一起，随着类的加载而加载，他们成为类数据在逻辑上的一部分。</p>
 <p>类变量被类的所有实例共享，即使没有类实例时，也可以访问它：</p>
@@ -995,43 +999,43 @@ JDK 1.8后，元空间存放在直接内存中。</p>
 </span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>反编译后该方法字节码指令</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// ....
-</span></span><span class="line"><span class="cl">     // 栈的最大深度为3 局部变量表长度为5 参数长度为1
-</span></span><span class="line"><span class="cl">      stack=3, locals=5, args_size=1
-</span></span><span class="line"><span class="cl">         // 将500压入操作数栈
-</span></span><span class="line"><span class="cl">         0: sipush        500
-</span></span><span class="line"><span class="cl">         // 在局部变量表里存放 500
-</span></span><span class="line"><span class="cl">         3: istore_1
-</span></span><span class="line"><span class="cl">         // 将100压入栈
-</span></span><span class="line"><span class="cl">         4: bipush        100
-</span></span><span class="line"><span class="cl">         // 在局部变量表里存放 100 
-</span></span><span class="line"><span class="cl">         6: istore_2
-</span></span><span class="line"><span class="cl">         // 将 500 从局部变量表里边取出，并压入操作数栈
-</span></span><span class="line"><span class="cl">         7: iload_1
-</span></span><span class="line"><span class="cl">         // 将 100 从局部变量表里边取出，并压入操作数栈
-</span></span><span class="line"><span class="cl">         8: iload_2
-</span></span><span class="line"><span class="cl">         // 调用 CPU 执行除法 500/100=5
-</span></span><span class="line"><span class="cl">         9: idiv
-</span></span><span class="line"><span class="cl">        // 存储在局部变量表里
-</span></span><span class="line"><span class="cl">        10: istore_3
-</span></span><span class="line"><span class="cl">        // 将50压入栈中
-</span></span><span class="line"><span class="cl">        11: bipush        50
-</span></span><span class="line"><span class="cl">        // 将 50 存储在局部变量表中
-</span></span><span class="line"><span class="cl">        13: istore        4
-</span></span><span class="line"><span class="cl">        // 获取 #2 地址上类或接口字段的值并将其推入操作数栈
-</span></span><span class="line"><span class="cl">        15: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
-</span></span><span class="line"><span class="cl">        // 将 5 从本地变量表取出放到栈中
-</span></span><span class="line"><span class="cl">        18: iload_3
-</span></span><span class="line"><span class="cl">        // 将50从本地变量表，压入栈
-</span></span><span class="line"><span class="cl">        19: iload         4
-</span></span><span class="line"><span class="cl">        // 调用cpu执行加法 5 + 50=55
-</span></span><span class="line"><span class="cl">        21: iadd
-</span></span><span class="line"><span class="cl">        // 虚方法调用 #3 中的方法 
-</span></span><span class="line"><span class="cl">        // JVM会根据这个方法的描述，创建新的栈桢，方法的参数从操作数栈中弹出来，压入虚拟机栈，然后虚拟机会开始执行虚拟机栈上最上面的栈桢
-</span></span><span class="line"><span class="cl">        22: invokevirtual #3                  // Method java/io/PrintStream.println:(I)V
-</span></span><span class="line"><span class="cl">        // void 类型返回 main方法执行结束
-</span></span><span class="line"><span class="cl">        25: return
-</span></span><span class="line"><span class="cl">// ...
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">//</span> <span class="o">....</span>
+</span></span><span class="line"><span class="cl">     <span class="o">//</span> <span class="err">栈的最大深度为</span><span class="mi">3</span> <span class="err">局部变量表长度为</span><span class="mi">5</span> <span class="err">参数长度为</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">      <span class="n">stack</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">locals</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">args_size</span><span class="o">=</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">         <span class="o">//</span> <span class="err">将</span><span class="mi">500</span><span class="err">压入操作数栈</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">0</span><span class="p">:</span> <span class="n">sipush</span>        <span class="mi">500</span>
+</span></span><span class="line"><span class="cl">         <span class="o">//</span> <span class="err">在局部变量表里存放</span> <span class="mi">500</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">3</span><span class="p">:</span> <span class="n">istore_1</span>
+</span></span><span class="line"><span class="cl">         <span class="o">//</span> <span class="err">将</span><span class="mi">100</span><span class="err">压入栈</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">4</span><span class="p">:</span> <span class="n">bipush</span>        <span class="mi">100</span>
+</span></span><span class="line"><span class="cl">         <span class="o">//</span> <span class="err">在局部变量表里存放</span> <span class="mi">100</span> 
+</span></span><span class="line"><span class="cl">         <span class="mi">6</span><span class="p">:</span> <span class="n">istore_2</span>
+</span></span><span class="line"><span class="cl">         <span class="o">//</span> <span class="err">将</span> <span class="mi">500</span> <span class="err">从局部变量表里边取出，并压入操作数栈</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">7</span><span class="p">:</span> <span class="n">iload_1</span>
+</span></span><span class="line"><span class="cl">         <span class="o">//</span> <span class="err">将</span> <span class="mi">100</span> <span class="err">从局部变量表里边取出，并压入操作数栈</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">8</span><span class="p">:</span> <span class="n">iload_2</span>
+</span></span><span class="line"><span class="cl">         <span class="o">//</span> <span class="err">调用</span> <span class="n">CPU</span> <span class="err">执行除法</span> <span class="mi">500</span><span class="o">/</span><span class="mi">100</span><span class="o">=</span><span class="mi">5</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">9</span><span class="p">:</span> <span class="n">idiv</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">存储在局部变量表里</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">10</span><span class="p">:</span> <span class="n">istore_3</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">将</span><span class="mi">50</span><span class="err">压入栈中</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">11</span><span class="p">:</span> <span class="n">bipush</span>        <span class="mi">50</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">将</span> <span class="mi">50</span> <span class="err">存储在局部变量表中</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">13</span><span class="p">:</span> <span class="n">istore</span>        <span class="mi">4</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">获取</span> <span class="c1">#2 地址上类或接口字段的值并将其推入操作数栈</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">15</span><span class="p">:</span> <span class="n">getstatic</span>     <span class="c1">#2                  // Field java/lang/System.out:Ljava/io/PrintStream;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">将</span> <span class="mi">5</span> <span class="err">从本地变量表取出放到栈中</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">18</span><span class="p">:</span> <span class="n">iload_3</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">将</span><span class="mi">50</span><span class="err">从本地变量表，压入栈</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">19</span><span class="p">:</span> <span class="n">iload</span>         <span class="mi">4</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">调用</span><span class="n">cpu执行加法</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">50</span><span class="o">=</span><span class="mi">55</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">21</span><span class="p">:</span> <span class="n">iadd</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">虚方法调用</span> <span class="c1">#3 中的方法 </span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="n">JVM会根据这个方法的描述</span><span class="err">，创建新的栈桢，方法的参数从操作数栈中弹出来，压入虚拟机栈，然后虚拟机会开始执行虚拟机栈上最上面的栈桢</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">22</span><span class="p">:</span> <span class="n">invokevirtual</span> <span class="c1">#3                  // Method java/io/PrintStream.println:(I)V</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="n">void</span> <span class="err">类型返回</span> <span class="n">main方法执行结束</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">25</span><span class="p">:</span> <span class="k">return</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="o">...</span>
 </span></span></code></pre></div><h3 id="方法区演进细节">方法区演进细节</h3>
 <p>只有<code>Hotspot</code>才有永久代（方法区具体实现）。<code>BEA JRockit、IBMJ9</code>等来说，是不存在永久代的概念的。</p>
 <p>Hotspot中方法区的变化</p>
@@ -1057,9 +1061,9 @@ JDK 1.8后，元空间存放在直接内存中。</p>
 </tr>
 </tbody>
 </table>
-<p><img src="/iblog/posts/annex/images/essays/Jdk1.6%E6%96%B9%E6%B3%95%E5%8C%BA%E5%8F%98%E5%8C%96.png" alt="Jdk1.6方法区变化"></p>
-<p><img src="/iblog/posts/annex/images/essays/Jdk1.7%E6%96%B9%E6%B3%95%E5%8C%BA%E5%8F%98%E5%8C%96.png" alt="Jdk1.7方法区变化"></p>
-<p><img src="/iblog/posts/annex/images/essays/Jdk1.8%E6%96%B9%E6%B3%95%E5%8C%BA%E5%8F%98%E5%8C%96.png" alt="Jdk1.8方法区变化"></p>
+<p><img alt="Jdk1.6方法区变化" src="/iblog/posts/annex/images/essays/Jdk1.6%E6%96%B9%E6%B3%95%E5%8C%BA%E5%8F%98%E5%8C%96.png"></p>
+<p><img alt="Jdk1.7方法区变化" src="/iblog/posts/annex/images/essays/Jdk1.7%E6%96%B9%E6%B3%95%E5%8C%BA%E5%8F%98%E5%8C%96.png"></p>
+<p><img alt="Jdk1.8方法区变化" src="/iblog/posts/annex/images/essays/Jdk1.8%E6%96%B9%E6%B3%95%E5%8C%BA%E5%8F%98%E5%8C%96.png"></p>
 <h4 id="为什么永久代要被元空间替代">为什么永久代要被元空间替代</h4>
 <p>根据官方的解释：替代是<code>JRockit</code>和<code>HotSpot</code>融合后的结果，因为<code>JRockit</code>没有永久代，所以<code>hotspot</code>用元空间替代了永久代。</p>
 <p>由于类的元数据分配在本地内存中，元空间的最大可分配空间就是系统可用内存空间，这项改动是很有必要的，原因有：</p>
@@ -1090,7 +1094,7 @@ JDK 1.8后，元空间存放在直接内存中。</p>
 <p>一般来说这个区域的回收效果比较难令人满意，尤其是类型的卸载，条件相当苛刻。但是这部分区域的回收有时又确实是必要的。
 以前sun公司的Bug列表中，曾出现过的若干个严重的Bug就是由于低版本的HotSpot虚拟机对此区域未完全回收而导致内存泄漏。</p>
 <p>方法区的垃圾收集主要回收两部分内容：常量池中废弃的常量和不再使用的类型。</p>
-<p>方法区内运行时常量池之中主要存放的两大类常量：<a href="#%E5%AD%97%E9%9D%A2%E9%87%8F">字面量</a>和<a href="#%E7%AC%A6%E5%8F%B7%E5%BC%95%E7%94%A8">符号引用</a>。</p>
+<p>方法区内运行时常量池之中主要存放的两大类常量：<a href="/iblog/posts/jvm/jvm-method-area/#字面量">字面量</a>和<a href="/iblog/posts/jvm/jvm-method-area/#符号引用">符号引用</a>。</p>
 <p>HotSpot虚拟机对常量池的回收策略是很明确的，只要常量池中的常量没有被任何地方引用，就可以被回收。</p>
 <p>判定一个常量是否“废弃”还是相对简单，而要判定一个类型是否属于“不再被使用的类”的条件就比较苛刻了。
 需要同时满足下面三个条件：</p>

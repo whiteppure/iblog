@@ -38,6 +38,10 @@
 </head>
 
 <body>
+    <div class="post-password">
+        
+    </div>
+
     
     
     
@@ -1280,7 +1284,7 @@
                     </div>
                     <div class="post_content markdown"><h2 id="概述">概述</h2>
 <p>Java中的集合主要包括 <code>Collection</code> 和 <code>Map</code> 两种，<code>Collection</code> 存储着对象的集合，而 <code>Map</code> 存储着键值对（两个对象）的映射表。</p>
-<p><img src="/iblog/posts/annex/images/essays/Java%E4%B8%AD%E7%9A%84%E9%9B%86%E5%90%88-01.jpg" alt="Java中的集合-01"></p>
+<p><img alt="Java中的集合-01" src="/iblog/posts/annex/images/essays/Java%E4%B8%AD%E7%9A%84%E9%9B%86%E5%90%88-01.jpg"></p>
 <p>如果你看过ArrayList类源码，就知道ArrayList底层是通过数组来存储元素的，所以如果严格来说，数组也算集合的一种。</p>
 <h2 id="数组">数组</h2>
 <p>Java中提供的数组是用来存储固定大小的同类型元素，所以Java数组就是同类数据元素的集合。</p>
@@ -1351,7 +1355,7 @@
 </span></span></code></pre></div><h2 id="arraylist">ArrayList</h2>
 <p>在List接口实现类中，最常用的就是ArrayList,ArrayList 类是一个可以动态修改的数组，与普通数组的区别就是它是没有固定大小的限制，可以添加或删除元素。</p>
 <p>ArrayList 继承了 AbstractList ，并实现了 List、RandomAccess, Cloneable 接口：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class ArrayList&lt;E&gt; extends AbstractList&lt;E&gt; implements List&lt;E&gt;, RandomAccess,Cloneable,Serializable
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="k">extends</span> <span class="n">AbstractList</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="n">implements</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">RandomAccess</span><span class="p">,</span><span class="n">Cloneable</span><span class="p">,</span><span class="n">Serializable</span>
 </span></span></code></pre></div><h3 id="randomaccess">RandomAccess</h3>
 <p>Random是随机的意思，Access是访问的意思，合起来就是随机访问的意思。</p>
 <p>RandomAccess接口是一个标记接口，用来标记实现的List集合具备快速随机访问的能力。所有的List实现都支持随机访问的，只是基于基本结构的不同，实现的速度不同罢了。</p>
@@ -1460,10 +1464,10 @@
 </span></span><span class="line"><span class="cl">System.out.println(e2.get(2)); // 2
 </span></span></code></pre></div><h4 id="arraylist中clone方法">ArrayList中clone方法</h4>
 <p>clone方法调用栈：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">clone 
-</span></span><span class="line"><span class="cl">    -&gt; Object.clone
-</span></span><span class="line"><span class="cl">    -&gt; Arrays.copyOf(T[] original, int newLength)
-</span></span><span class="line"><span class="cl">    -&gt; Arrays.copyOf(U[] original, int newLength, Class&lt;? extends T[]&gt; newType)
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">clone</span> 
+</span></span><span class="line"><span class="cl">    <span class="o">-&gt;</span> <span class="ne">Object</span><span class="o">.</span><span class="n">clone</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-&gt;</span> <span class="n">Arrays</span><span class="o">.</span><span class="n">copyOf</span><span class="p">(</span><span class="n">T</span><span class="p">[]</span> <span class="n">original</span><span class="p">,</span> <span class="ne">int</span> <span class="n">newLength</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-&gt;</span> <span class="n">Arrays</span><span class="o">.</span><span class="n">copyOf</span><span class="p">(</span><span class="n">U</span><span class="p">[]</span> <span class="n">original</span><span class="p">,</span> <span class="ne">int</span> <span class="n">newLength</span><span class="p">,</span> <span class="n">Class</span><span class="o">&lt;</span><span class="err">?</span> <span class="k">extends</span> <span class="n">T</span><span class="p">[]</span><span class="o">&gt;</span> <span class="n">newType</span><span class="p">)</span>
 </span></span></code></pre></div><p>文档注释大意：返回这个ArrayList实例的浅拷贝(元素本身不会被复制)。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class ArrayList implements Cloneable {
 </span></span><span class="line"><span class="cl">
@@ -1490,20 +1494,20 @@
 </span></span><span class="line"><span class="cl">        }
 </span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class Arrays{
-</span></span><span class="line"><span class="cl">   public static &lt;T&gt; T[] copyOf(T[] original, int newLength) {
-</span></span><span class="line"><span class="cl">        return (T[]) copyOf(original, newLength, original.getClass());
-</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">Arrays</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="n">public</span> <span class="k">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">T</span><span class="p">[]</span> <span class="n">copyOf</span><span class="p">(</span><span class="n">T</span><span class="p">[]</span> <span class="n">original</span><span class="p">,</span> <span class="ne">int</span> <span class="n">newLength</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">(</span><span class="n">T</span><span class="p">[])</span> <span class="n">copyOf</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="n">newLength</span><span class="p">,</span> <span class="n">original</span><span class="o">.</span><span class="n">getClass</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    public static &lt;T,U&gt; T[] copyOf(U[] original, int newLength, Class&lt;? extends T[]&gt; newType) {
-</span></span><span class="line"><span class="cl">        @SuppressWarnings(&#34;unchecked&#34;)
-</span></span><span class="line"><span class="cl">        T[] copy = ((Object)newType == (Object)Object[].class)
-</span></span><span class="line"><span class="cl">            ? (T[]) new Object[newLength]
-</span></span><span class="line"><span class="cl">            : (T[]) Array.newInstance(newType.getComponentType(), newLength);
-</span></span><span class="line"><span class="cl">        System.arraycopy(original, 0, copy, 0, Math.min(original.length, newLength));
-</span></span><span class="line"><span class="cl">        return copy;
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">U</span><span class="o">&gt;</span> <span class="n">T</span><span class="p">[]</span> <span class="n">copyOf</span><span class="p">(</span><span class="n">U</span><span class="p">[]</span> <span class="n">original</span><span class="p">,</span> <span class="ne">int</span> <span class="n">newLength</span><span class="p">,</span> <span class="n">Class</span><span class="o">&lt;</span><span class="err">?</span> <span class="k">extends</span> <span class="n">T</span><span class="p">[]</span><span class="o">&gt;</span> <span class="n">newType</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="err">@</span><span class="n">SuppressWarnings</span><span class="p">(</span><span class="s2">&#34;unchecked&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">T</span><span class="p">[]</span> <span class="n">copy</span> <span class="o">=</span> <span class="p">((</span><span class="ne">Object</span><span class="p">)</span><span class="n">newType</span> <span class="o">==</span> <span class="p">(</span><span class="ne">Object</span><span class="p">)</span><span class="ne">Object</span><span class="p">[]</span><span class="o">.</span><span class="k">class</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="err">?</span> <span class="p">(</span><span class="n">T</span><span class="p">[])</span> <span class="n">new</span> <span class="ne">Object</span><span class="p">[</span><span class="n">newLength</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="p">:</span> <span class="p">(</span><span class="n">T</span><span class="p">[])</span> <span class="ne">Array</span><span class="o">.</span><span class="n">newInstance</span><span class="p">(</span><span class="n">newType</span><span class="o">.</span><span class="n">getComponentType</span><span class="p">(),</span> <span class="n">newLength</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">arraycopy</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Math</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">original</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="n">newLength</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">copy</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>ArrayList中clone方法底层是调用父类的clone方法，父类没有重写clone方法所以调用的是Object类的clone方法。</p>
 <p>在ArrayList中核心方法最终调用<code>Arrays.copyOf</code>方法,不论怎样都会创建一个Object数组。</p>
 <blockquote>
@@ -1638,7 +1642,7 @@ peek(): 检索但不删除此队列的头部，如果此队列为空，则返回
 <li>hash碰撞：即hash冲突，两个不同的输入值，根据同一散列函数计算出的散列值相同的现象叫做碰撞。hash碰撞就是用同一hash散列函数计算出相同的散列值；当插入hashmap中元素的key出现重复时，这个时候就发生了hash碰撞；</li>
 </ul>
 <h3 id="结构">结构</h3>
-<p><img src="/iblog/posts/annex/images/essays/HashMap%E7%BB%93%E6%9E%84.png" alt="HashMap结构"></p>
+<p><img alt="HashMap结构" src="/iblog/posts/annex/images/essays/HashMap%E7%BB%93%E6%9E%84.png"></p>
 <ul>
 <li>JDK1.7：数组 + 单向链表；</li>
 <li>JDK1.8: 数组 + 单向链表/红黑树；</li>
@@ -1649,7 +1653,7 @@ peek(): 检索但不删除此队列的头部，如果此队列为空，则返回
 <h4 id="为什么不一开始就用红黑树代替链表结构">为什么不一开始就用红黑树代替链表结构</h4>
 <p>JDK文档注释：</p>
 <blockquote>
-<p>Because TreeNodes are about twice the size of regular nodes, we use them only when bins contain enough nodes to warrant use  (see TREEIFY_THRESHOLD). 
+<p>Because TreeNodes are about twice the size of regular nodes, we use them only when bins contain enough nodes to warrant use  (see TREEIFY_THRESHOLD).
 And when they become too small (due to removal or resizing) they are converted back to plain bins.</p>
 </blockquote>
 <p>单个 TreeNode 需要占用的空间大约是普通 Node 的两倍，所以只有当包含足够多的 Nodes 时才会转成 TreeNodes，而是否足够多就是由 TREEIFY_THRESHOLD 的值（默认值8）决定的。而当桶中节点数由于移除或者 resize 变少后，又会变回普通的链表的形式，以便节省空间，这个阈值是 UNTREEIFY_THRESHOLD（默认值6）。</p>
@@ -1693,15 +1697,15 @@ And when they become too small (due to removal or resizing) they are converted b
 </span></span></code></pre></div><h3 id="容量">容量</h3>
 <h4 id="为什么负载因子默认是075">为什么负载因子默认是0.75</h4>
 <p>HashMap中的负载因子这个值现在在JDK的源码中默认是0.75：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/**
-</span></span><span class="line"><span class="cl"> * The load factor used when none specified in constructor.
-</span></span><span class="line"><span class="cl"> */
-</span></span><span class="line"><span class="cl">static final float DEFAULT_LOAD_FACTOR = 0.75f;
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">/**</span>
+</span></span><span class="line"><span class="cl"> <span class="o">*</span> <span class="n">The</span> <span class="nb">load</span> <span class="n">factor</span> <span class="n">used</span> <span class="n">when</span> <span class="n">none</span> <span class="n">specified</span> <span class="ow">in</span> <span class="n">constructor</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl"> <span class="o">*/</span>
+</span></span><span class="line"><span class="cl"><span class="k">static</span> <span class="n">final</span> <span class="ne">float</span> <span class="n">DEFAULT_LOAD_FACTOR</span> <span class="o">=</span> <span class="mf">0.75</span><span class="n">f</span><span class="p">;</span>
 </span></span></code></pre></div><p>在<a href="https://docs.oracle.com/javase/6/docs/api/java/util/HashMap.html">JDK的官方文档</a>中解释如下：</p>
 <blockquote>
 <p>As a general rule, the default load factor (.75) offers a good tradeoff between time and space costs.
-Higher values decrease the space overhead but increase the lookup cost (reflected in most of the operations of the HashMap class, including get and put). 
-The expected number of entries in the map and its load factor should be taken into account when setting its initial capacity, so as to minimize the number of rehash operations. 
+Higher values decrease the space overhead but increase the lookup cost (reflected in most of the operations of the HashMap class, including get and put).
+The expected number of entries in the map and its load factor should be taken into account when setting its initial capacity, so as to minimize the number of rehash operations.
 If the initial capacity is greater than the maximum number of entries divided by the load factor, no rehash operations will ever occur.</p>
 </blockquote>
 <p>大意：一般来说，默认的负载因子(0.75)在时间和空间成本之间提供了很好的权衡。更高的值减少了空间开销，但增加了查找成本(反映在HashMap类的大多数操作中，包括get和put)。在设置映射的初始容量时，应该考虑映射中预期的条目数及其负载因子，以便最小化重哈希操作的数量。如果初始容量大于最大条目数除以负载因子，则不会发生重新散列操作。</p>
@@ -1848,31 +1852,31 @@ If the initial capacity is greater than the maximum number of entries divided by
 <li><code>新容量 = 旧容量 * 2</code></li>
 <li><code>新阈值 = 新容量 * 负载因子</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">void addEntry(int hash, K key, V value, int bucketIndex) {  
-</span></span><span class="line"><span class="cl">    //size：The number of key-value mappings contained in this map.  
-</span></span><span class="line"><span class="cl">    //threshold：The next size value at which to resize (capacity * load factor)  
-</span></span><span class="line"><span class="cl">    //数组扩容条件：1.已经存在的key-value mappings的个数大于等于阈值  
-</span></span><span class="line"><span class="cl">    //             2.底层数组的bucketIndex坐标处不等于null  
-</span></span><span class="line"><span class="cl">    if ((size &gt;= threshold) &amp;&amp; (null != table[bucketIndex])) {  
-</span></span><span class="line"><span class="cl">        resize(2 * table.length);//扩容之后，数组长度变了  
-</span></span><span class="line"><span class="cl">        hash = (null != key) ? hash(key) : 0;//为什么要再次计算一下hash值呢？  
-</span></span><span class="line"><span class="cl">        bucketIndex = indexFor(hash, table.length);//扩容之后，数组长度变了，在数组的下标跟数组长度有关，得重算。  
-</span></span><span class="line"><span class="cl">    }  
-</span></span><span class="line"><span class="cl">    createEntry(hash, key, value, bucketIndex);  
-</span></span><span class="line"><span class="cl">} 
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">void resize(int newCapacity) {   //传入新的容量
-</span></span><span class="line"><span class="cl">    Entry[] oldTable = table;    //引用扩容前的Entry数组
-</span></span><span class="line"><span class="cl">    int oldCapacity = oldTable.length;
-</span></span><span class="line"><span class="cl">    if (oldCapacity == MAXIMUM_CAPACITY) {  //扩容前的数组大小如果已经达到最大(2^30)了
-</span></span><span class="line"><span class="cl">        threshold = Integer.MAX_VALUE; //修改阈值为int的最大值(2^31-1)，这样以后就不会扩容了
-</span></span><span class="line"><span class="cl">        return;
-</span></span><span class="line"><span class="cl">    }
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">void</span> <span class="n">addEntry</span><span class="p">(</span><span class="ne">int</span> <span class="nb">hash</span><span class="p">,</span> <span class="n">K</span> <span class="n">key</span><span class="p">,</span> <span class="n">V</span> <span class="n">value</span><span class="p">,</span> <span class="ne">int</span> <span class="n">bucketIndex</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">    <span class="o">//</span><span class="n">size</span><span class="err">：</span><span class="n">The</span> <span class="n">number</span> <span class="n">of</span> <span class="n">key</span><span class="o">-</span><span class="n">value</span> <span class="n">mappings</span> <span class="n">contained</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">map</span><span class="o">.</span>  
+</span></span><span class="line"><span class="cl">    <span class="o">//</span><span class="n">threshold</span><span class="err">：</span><span class="n">The</span> <span class="n">next</span> <span class="n">size</span> <span class="n">value</span> <span class="n">at</span> <span class="n">which</span> <span class="n">to</span> <span class="n">resize</span> <span class="p">(</span><span class="n">capacity</span> <span class="o">*</span> <span class="nb">load</span> <span class="n">factor</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl">    <span class="o">//</span><span class="err">数组扩容条件：</span><span class="mf">1.</span><span class="err">已经存在的</span><span class="n">key</span><span class="o">-</span><span class="n">value</span> <span class="n">mappings的个数大于等于阈值</span>  
+</span></span><span class="line"><span class="cl">    <span class="o">//</span>             <span class="mf">2.</span><span class="err">底层数组的</span><span class="n">bucketIndex坐标处不等于null</span>  
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">((</span><span class="n">size</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">null</span> <span class="o">!=</span> <span class="n">table</span><span class="p">[</span><span class="n">bucketIndex</span><span class="p">]))</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">        <span class="n">resize</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">table</span><span class="o">.</span><span class="n">length</span><span class="p">);</span><span class="o">//</span><span class="err">扩容之后，数组长度变了</span>  
+</span></span><span class="line"><span class="cl">        <span class="nb">hash</span> <span class="o">=</span> <span class="p">(</span><span class="n">null</span> <span class="o">!=</span> <span class="n">key</span><span class="p">)</span> <span class="err">?</span> <span class="nb">hash</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="p">:</span> <span class="mi">0</span><span class="p">;</span><span class="o">//</span><span class="err">为什么要再次计算一下</span><span class="n">hash值呢</span><span class="err">？</span>  
+</span></span><span class="line"><span class="cl">        <span class="n">bucketIndex</span> <span class="o">=</span> <span class="n">indexFor</span><span class="p">(</span><span class="nb">hash</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">length</span><span class="p">);</span><span class="o">//</span><span class="err">扩容之后，数组长度变了，在数组的下标跟数组长度有关，得重算。</span>  
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>  
+</span></span><span class="line"><span class="cl">    <span class="n">createEntry</span><span class="p">(</span><span class="nb">hash</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">bucketIndex</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span> 
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">void</span> <span class="n">resize</span><span class="p">(</span><span class="ne">int</span> <span class="n">newCapacity</span><span class="p">)</span> <span class="p">{</span>   <span class="o">//</span><span class="err">传入新的容量</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Entry</span><span class="p">[]</span> <span class="n">oldTable</span> <span class="o">=</span> <span class="n">table</span><span class="p">;</span>    <span class="o">//</span><span class="err">引用扩容前的</span><span class="n">Entry数组</span>
+</span></span><span class="line"><span class="cl">    <span class="ne">int</span> <span class="n">oldCapacity</span> <span class="o">=</span> <span class="n">oldTable</span><span class="o">.</span><span class="n">length</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">oldCapacity</span> <span class="o">==</span> <span class="n">MAXIMUM_CAPACITY</span><span class="p">)</span> <span class="p">{</span>  <span class="o">//</span><span class="err">扩容前的数组大小如果已经达到最大</span><span class="p">(</span><span class="mi">2</span><span class="o">^</span><span class="mi">30</span><span class="p">)</span><span class="err">了</span>
+</span></span><span class="line"><span class="cl">        <span class="n">threshold</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="n">MAX_VALUE</span><span class="p">;</span> <span class="o">//</span><span class="err">修改阈值为</span><span class="n">int的最大值</span><span class="p">(</span><span class="mi">2</span><span class="o">^</span><span class="mi">31</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="err">，这样以后就不会扩容了</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    Entry[] newTable = new Entry[newCapacity];  //初始化一个新的Entry数组
-</span></span><span class="line"><span class="cl">    transfer(newTable);                         //！！将数据转移到新的Entry数组里
-</span></span><span class="line"><span class="cl">    table = newTable;                           //HashMap的table属性引用新的Entry数组
-</span></span><span class="line"><span class="cl">    threshold = (int) (newCapacity * loadFactor);//修改阈值
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">    <span class="n">Entry</span><span class="p">[]</span> <span class="n">newTable</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Entry</span><span class="p">[</span><span class="n">newCapacity</span><span class="p">];</span>  <span class="o">//</span><span class="err">初始化一个新的</span><span class="n">Entry数组</span>
+</span></span><span class="line"><span class="cl">    <span class="n">transfer</span><span class="p">(</span><span class="n">newTable</span><span class="p">);</span>                         <span class="o">//</span><span class="err">！！将数据转移到新的</span><span class="n">Entry数组里</span>
+</span></span><span class="line"><span class="cl">    <span class="n">table</span> <span class="o">=</span> <span class="n">newTable</span><span class="p">;</span>                           <span class="o">//</span><span class="n">HashMap的table属性引用新的Entry数组</span>
+</span></span><span class="line"><span class="cl">    <span class="n">threshold</span> <span class="o">=</span> <span class="p">(</span><span class="ne">int</span><span class="p">)</span> <span class="p">(</span><span class="n">newCapacity</span> <span class="o">*</span> <span class="n">loadFactor</span><span class="p">);</span><span class="o">//</span><span class="err">修改阈值</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>通过transfer方法将旧数组上的元素转移到扩容后的新数组上</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">void transfer(Entry[] newTable) {
 </span></span><span class="line"><span class="cl">    Entry[] src = table;                   //src引用了旧的Entry数组
@@ -1907,88 +1911,88 @@ If the initial capacity is greater than the maximum number of entries divided by
 </span></span><span class="line"><span class="cl">————————————
 </span></span><span class="line"><span class="cl">  0001 0101
 </span></span></code></pre></div><p>发现规律：扩容前的hash值和扩容后的hash值，如果元素A二进制形式第三位如果是0，扩容之后就还是原来的位置，如果是1扩容后就是原来的位置加16，而16就是扩容的大小。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> /**
-</span></span><span class="line"><span class="cl">     * Initializes or doubles table size.  If null, allocates in
-</span></span><span class="line"><span class="cl">     * accord with initial capacity target held in field threshold.
-</span></span><span class="line"><span class="cl">     * Otherwise, because we are using power-of-two expansion, the
-</span></span><span class="line"><span class="cl">     * elements from each bin must either stay at same index, or move
-</span></span><span class="line"><span class="cl">     * with a power of two offset in the new table.
-</span></span><span class="line"><span class="cl">     *
-</span></span><span class="line"><span class="cl">     * @return the table
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    final Node&lt;K,V&gt;[] resize() {
-</span></span><span class="line"><span class="cl">        Node&lt;K,V&gt;[] oldTab = table;
-</span></span><span class="line"><span class="cl">        int oldCap = (oldTab == null) ? 0 : oldTab.length;
-</span></span><span class="line"><span class="cl">        int oldThr = threshold;
-</span></span><span class="line"><span class="cl">        int newCap, newThr = 0;
-</span></span><span class="line"><span class="cl">        if (oldCap &gt; 0) {
-</span></span><span class="line"><span class="cl">            if (oldCap &gt;= MAXIMUM_CAPACITY) {
-</span></span><span class="line"><span class="cl">                threshold = Integer.MAX_VALUE;
-</span></span><span class="line"><span class="cl">                return oldTab;
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">            else if ((newCap = oldCap &lt;&lt; 1) &lt; MAXIMUM_CAPACITY &amp;&amp;
-</span></span><span class="line"><span class="cl">                     oldCap &gt;= DEFAULT_INITIAL_CAPACITY)
-</span></span><span class="line"><span class="cl">                newThr = oldThr &lt;&lt; 1; // double threshold
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        else if (oldThr &gt; 0) // initial capacity was placed in threshold
-</span></span><span class="line"><span class="cl">            newCap = oldThr;
-</span></span><span class="line"><span class="cl">        else {               // zero initial threshold signifies using defaults
-</span></span><span class="line"><span class="cl">            newCap = DEFAULT_INITIAL_CAPACITY;
-</span></span><span class="line"><span class="cl">            newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        if (newThr == 0) {
-</span></span><span class="line"><span class="cl">            float ft = (float)newCap * loadFactor;
-</span></span><span class="line"><span class="cl">            newThr = (newCap &lt; MAXIMUM_CAPACITY &amp;&amp; ft &lt; (float)MAXIMUM_CAPACITY ?
-</span></span><span class="line"><span class="cl">                      (int)ft : Integer.MAX_VALUE);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        threshold = newThr;
-</span></span><span class="line"><span class="cl">        @SuppressWarnings({&#34;rawtypes&#34;,&#34;unchecked&#34;})
-</span></span><span class="line"><span class="cl">        Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])new Node[newCap];
-</span></span><span class="line"><span class="cl">        table = newTab;
-</span></span><span class="line"><span class="cl">        if (oldTab != null) {
-</span></span><span class="line"><span class="cl">            for (int j = 0; j &lt; oldCap; ++j) {
-</span></span><span class="line"><span class="cl">                Node&lt;K,V&gt; e;
-</span></span><span class="line"><span class="cl">                if ((e = oldTab[j]) != null) {
-</span></span><span class="line"><span class="cl">                    oldTab[j] = null;
-</span></span><span class="line"><span class="cl">                    if (e.next == null)
-</span></span><span class="line"><span class="cl">                        newTab[e.hash &amp; (newCap - 1)] = e;
-</span></span><span class="line"><span class="cl">                    else if (e instanceof TreeNode)
-</span></span><span class="line"><span class="cl">                        ((TreeNode&lt;K,V&gt;)e).split(this, newTab, j, oldCap);
-</span></span><span class="line"><span class="cl">                    else { // preserve order
-</span></span><span class="line"><span class="cl">                        Node&lt;K,V&gt; loHead = null, loTail = null;
-</span></span><span class="line"><span class="cl">                        Node&lt;K,V&gt; hiHead = null, hiTail = null;
-</span></span><span class="line"><span class="cl">                        Node&lt;K,V&gt; next;
-</span></span><span class="line"><span class="cl">                        do {
-</span></span><span class="line"><span class="cl">                            next = e.next;
-</span></span><span class="line"><span class="cl">                            if ((e.hash &amp; oldCap) == 0) {
-</span></span><span class="line"><span class="cl">                                if (loTail == null)
-</span></span><span class="line"><span class="cl">                                    loHead = e;
-</span></span><span class="line"><span class="cl">                                else
-</span></span><span class="line"><span class="cl">                                    loTail.next = e;
-</span></span><span class="line"><span class="cl">                                loTail = e;
-</span></span><span class="line"><span class="cl">                            }
-</span></span><span class="line"><span class="cl">                            else {
-</span></span><span class="line"><span class="cl">                                if (hiTail == null)
-</span></span><span class="line"><span class="cl">                                    hiHead = e;
-</span></span><span class="line"><span class="cl">                                else
-</span></span><span class="line"><span class="cl">                                    hiTail.next = e;
-</span></span><span class="line"><span class="cl">                                hiTail = e;
-</span></span><span class="line"><span class="cl">                            }
-</span></span><span class="line"><span class="cl">                        } while ((e = next) != null);
-</span></span><span class="line"><span class="cl">                        if (loTail != null) {
-</span></span><span class="line"><span class="cl">                            loTail.next = null;
-</span></span><span class="line"><span class="cl">                            newTab[j] = loHead;
-</span></span><span class="line"><span class="cl">                        }
-</span></span><span class="line"><span class="cl">                        if (hiTail != null) {
-</span></span><span class="line"><span class="cl">                            hiTail.next = null;
-</span></span><span class="line"><span class="cl">                            newTab[j + oldCap] = hiHead;
-</span></span><span class="line"><span class="cl">                        }
-</span></span><span class="line"><span class="cl">                    }
-</span></span><span class="line"><span class="cl">                }
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        return newTab;
-</span></span><span class="line"><span class="cl">    }
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">Initializes</span> <span class="ow">or</span> <span class="n">doubles</span> <span class="n">table</span> <span class="n">size</span><span class="o">.</span>  <span class="n">If</span> <span class="n">null</span><span class="p">,</span> <span class="n">allocates</span> <span class="ow">in</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">accord</span> <span class="n">with</span> <span class="n">initial</span> <span class="n">capacity</span> <span class="n">target</span> <span class="n">held</span> <span class="ow">in</span> <span class="n">field</span> <span class="n">threshold</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">Otherwise</span><span class="p">,</span> <span class="n">because</span> <span class="n">we</span> <span class="n">are</span> <span class="n">using</span> <span class="n">power</span><span class="o">-</span><span class="n">of</span><span class="o">-</span><span class="n">two</span> <span class="n">expansion</span><span class="p">,</span> <span class="n">the</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">elements</span> <span class="n">from</span> <span class="n">each</span> <span class="n">bin</span> <span class="n">must</span> <span class="n">either</span> <span class="n">stay</span> <span class="n">at</span> <span class="n">same</span> <span class="n">index</span><span class="p">,</span> <span class="ow">or</span> <span class="n">move</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">with</span> <span class="n">a</span> <span class="n">power</span> <span class="n">of</span> <span class="n">two</span> <span class="n">offset</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">new</span> <span class="n">table</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span> <span class="n">the</span> <span class="n">table</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="n">final</span> <span class="ne">Node</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span><span class="p">[]</span> <span class="n">resize</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">Node</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span><span class="p">[]</span> <span class="n">oldTab</span> <span class="o">=</span> <span class="n">table</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">int</span> <span class="n">oldCap</span> <span class="o">=</span> <span class="p">(</span><span class="n">oldTab</span> <span class="o">==</span> <span class="n">null</span><span class="p">)</span> <span class="err">?</span> <span class="mi">0</span> <span class="p">:</span> <span class="n">oldTab</span><span class="o">.</span><span class="n">length</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">int</span> <span class="n">oldThr</span> <span class="o">=</span> <span class="n">threshold</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">int</span> <span class="n">newCap</span><span class="p">,</span> <span class="n">newThr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">oldCap</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">oldCap</span> <span class="o">&gt;=</span> <span class="n">MAXIMUM_CAPACITY</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">threshold</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="n">MAX_VALUE</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">oldTab</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span> <span class="k">if</span> <span class="p">((</span><span class="n">newCap</span> <span class="o">=</span> <span class="n">oldCap</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">MAXIMUM_CAPACITY</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">                     <span class="n">oldCap</span> <span class="o">&gt;=</span> <span class="n">DEFAULT_INITIAL_CAPACITY</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="n">newThr</span> <span class="o">=</span> <span class="n">oldThr</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">;</span> <span class="o">//</span> <span class="n">double</span> <span class="n">threshold</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">oldThr</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">//</span> <span class="n">initial</span> <span class="n">capacity</span> <span class="n">was</span> <span class="n">placed</span> <span class="ow">in</span> <span class="n">threshold</span>
+</span></span><span class="line"><span class="cl">            <span class="n">newCap</span> <span class="o">=</span> <span class="n">oldThr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="p">{</span>               <span class="o">//</span> <span class="n">zero</span> <span class="n">initial</span> <span class="n">threshold</span> <span class="n">signifies</span> <span class="n">using</span> <span class="n">defaults</span>
+</span></span><span class="line"><span class="cl">            <span class="n">newCap</span> <span class="o">=</span> <span class="n">DEFAULT_INITIAL_CAPACITY</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">newThr</span> <span class="o">=</span> <span class="p">(</span><span class="ne">int</span><span class="p">)(</span><span class="n">DEFAULT_LOAD_FACTOR</span> <span class="o">*</span> <span class="n">DEFAULT_INITIAL_CAPACITY</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">newThr</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="ne">float</span> <span class="n">ft</span> <span class="o">=</span> <span class="p">(</span><span class="ne">float</span><span class="p">)</span><span class="n">newCap</span> <span class="o">*</span> <span class="n">loadFactor</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">newThr</span> <span class="o">=</span> <span class="p">(</span><span class="n">newCap</span> <span class="o">&lt;</span> <span class="n">MAXIMUM_CAPACITY</span> <span class="o">&amp;&amp;</span> <span class="n">ft</span> <span class="o">&lt;</span> <span class="p">(</span><span class="ne">float</span><span class="p">)</span><span class="n">MAXIMUM_CAPACITY</span> <span class="err">?</span>
+</span></span><span class="line"><span class="cl">                      <span class="p">(</span><span class="ne">int</span><span class="p">)</span><span class="n">ft</span> <span class="p">:</span> <span class="n">Integer</span><span class="o">.</span><span class="n">MAX_VALUE</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">threshold</span> <span class="o">=</span> <span class="n">newThr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="err">@</span><span class="n">SuppressWarnings</span><span class="p">({</span><span class="s2">&#34;rawtypes&#34;</span><span class="p">,</span><span class="s2">&#34;unchecked&#34;</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">Node</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span><span class="p">[]</span> <span class="n">newTab</span> <span class="o">=</span> <span class="p">(</span><span class="ne">Node</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span><span class="p">[])</span><span class="n">new</span> <span class="ne">Node</span><span class="p">[</span><span class="n">newCap</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="n">table</span> <span class="o">=</span> <span class="n">newTab</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">oldTab</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="ne">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">oldCap</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="ne">Node</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">e</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">((</span><span class="n">e</span> <span class="o">=</span> <span class="n">oldTab</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">oldTab</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">next</span> <span class="o">==</span> <span class="n">null</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">newTab</span><span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">hash</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">newCap</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">e</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">e</span> <span class="n">instanceof</span> <span class="n">TreeNode</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">((</span><span class="n">TreeNode</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span><span class="p">)</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">newTab</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">oldCap</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">else</span> <span class="p">{</span> <span class="o">//</span> <span class="n">preserve</span> <span class="n">order</span>
+</span></span><span class="line"><span class="cl">                        <span class="ne">Node</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">loHead</span> <span class="o">=</span> <span class="n">null</span><span class="p">,</span> <span class="n">loTail</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="ne">Node</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">hiHead</span> <span class="o">=</span> <span class="n">null</span><span class="p">,</span> <span class="n">hiTail</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="ne">Node</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">do</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">next</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                            <span class="k">if</span> <span class="p">((</span><span class="n">e</span><span class="o">.</span><span class="n">hash</span> <span class="o">&amp;</span> <span class="n">oldCap</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                                <span class="k">if</span> <span class="p">(</span><span class="n">loTail</span> <span class="o">==</span> <span class="n">null</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                                    <span class="n">loHead</span> <span class="o">=</span> <span class="n">e</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                                <span class="k">else</span>
+</span></span><span class="line"><span class="cl">                                    <span class="n">loTail</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">e</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                                <span class="n">loTail</span> <span class="o">=</span> <span class="n">e</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                            <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                                <span class="k">if</span> <span class="p">(</span><span class="n">hiTail</span> <span class="o">==</span> <span class="n">null</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                                    <span class="n">hiHead</span> <span class="o">=</span> <span class="n">e</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                                <span class="k">else</span>
+</span></span><span class="line"><span class="cl">                                    <span class="n">hiTail</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">e</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                                <span class="n">hiTail</span> <span class="o">=</span> <span class="n">e</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">}</span> <span class="k">while</span> <span class="p">((</span><span class="n">e</span> <span class="o">=</span> <span class="n">next</span><span class="p">)</span> <span class="o">!=</span> <span class="n">null</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">if</span> <span class="p">(</span><span class="n">loTail</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">loTail</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">newTab</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">loHead</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">if</span> <span class="p">(</span><span class="n">hiTail</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">hiTail</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">newTab</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="n">oldCap</span><span class="p">]</span> <span class="o">=</span> <span class="n">hiHead</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">newTab</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span></code></pre></div></div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">

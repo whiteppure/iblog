@@ -38,6 +38,10 @@
 </head>
 
 <body>
+    <div class="post-password">
+        
+    </div>
+
     
     
     
@@ -1103,128 +1107,128 @@
 </span></span><span class="line"><span class="cl">        private String adress;
 </span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/**
-</span></span><span class="line"><span class="cl">* @author Axin
-</span></span><span class="line"><span class="cl">* @since 2020-09-10
-</span></span><span class="line"><span class="cl">* @summary 链式调用 bean 中 value 的方法
-</span></span><span class="line"><span class="cl">*/
-</span></span><span class="line"><span class="cl">public final class OptionalBean&lt;T&gt; {
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">/**</span>
+</span></span><span class="line"><span class="cl"><span class="o">*</span> <span class="err">@</span><span class="n">author</span> <span class="n">Axin</span>
+</span></span><span class="line"><span class="cl"><span class="o">*</span> <span class="err">@</span><span class="n">since</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">10</span>
+</span></span><span class="line"><span class="cl"><span class="o">*</span> <span class="err">@</span><span class="n">summary</span> <span class="err">链式调用</span> <span class="n">bean</span> <span class="err">中</span> <span class="n">value</span> <span class="err">的方法</span>
+</span></span><span class="line"><span class="cl"><span class="o">*/</span>
+</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="n">final</span> <span class="k">class</span> <span class="n">OptionalBean</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    private static final OptionalBean&lt;?&gt; EMPTY = new OptionalBean&lt;&gt;();
+</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="k">static</span> <span class="n">final</span> <span class="n">OptionalBean</span><span class="o">&lt;</span><span class="err">?</span><span class="o">&gt;</span> <span class="n">EMPTY</span> <span class="o">=</span> <span class="n">new</span> <span class="n">OptionalBean</span><span class="o">&lt;&gt;</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    private final T value;
+</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="n">final</span> <span class="n">T</span> <span class="n">value</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    private OptionalBean() {
-</span></span><span class="line"><span class="cl">        this.value = null;
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="n">OptionalBean</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">this</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 空值会抛出空指针
-</span></span><span class="line"><span class="cl">     * @param value
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    private OptionalBean(T value) {
-</span></span><span class="line"><span class="cl">        this.value = Objects.requireNonNull(value);
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">空值会抛出空指针</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">value</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="n">OptionalBean</span><span class="p">(</span><span class="n">T</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">this</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">Objects</span><span class="o">.</span><span class="n">requireNonNull</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 包装一个不能为空的 bean
-</span></span><span class="line"><span class="cl">     * @param value
-</span></span><span class="line"><span class="cl">     * @param &lt;T&gt;
-</span></span><span class="line"><span class="cl">     * @return
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    public static &lt;T&gt; OptionalBean&lt;T&gt; of(T value) {
-</span></span><span class="line"><span class="cl">        return new OptionalBean&lt;&gt;(value);
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">包装一个不能为空的</span> <span class="n">bean</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">value</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">OptionalBean</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">of</span><span class="p">(</span><span class="n">T</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">new</span> <span class="n">OptionalBean</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 包装一个可能为空的 bean
-</span></span><span class="line"><span class="cl">     * @param value
-</span></span><span class="line"><span class="cl">     * @param &lt;T&gt;
-</span></span><span class="line"><span class="cl">     * @return
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    public static &lt;T&gt; OptionalBean&lt;T&gt; ofNullable(T value) {
-</span></span><span class="line"><span class="cl">        return value == null ? empty() : of(value);
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">包装一个可能为空的</span> <span class="n">bean</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">value</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">OptionalBean</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">ofNullable</span><span class="p">(</span><span class="n">T</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">value</span> <span class="o">==</span> <span class="n">null</span> <span class="err">?</span> <span class="n">empty</span><span class="p">()</span> <span class="p">:</span> <span class="n">of</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 取出具体的值
-</span></span><span class="line"><span class="cl">     * @param fn
-</span></span><span class="line"><span class="cl">     * @param &lt;R&gt;
-</span></span><span class="line"><span class="cl">     * @return
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    public T get() {
-</span></span><span class="line"><span class="cl">        return Objects.isNull(value) ? null : value;
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">取出具体的值</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">fn</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="o">&lt;</span><span class="n">R</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">T</span> <span class="n">get</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">Objects</span><span class="o">.</span><span class="n">isNull</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="err">?</span> <span class="n">null</span> <span class="p">:</span> <span class="n">value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 取出一个可能为空的对象
-</span></span><span class="line"><span class="cl">     * @param fn
-</span></span><span class="line"><span class="cl">     * @param &lt;R&gt;
-</span></span><span class="line"><span class="cl">     * @return
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    public &lt;R&gt; OptionalBean&lt;R&gt; getBean(Function&lt;? super T, ? extends R&gt; fn) {
-</span></span><span class="line"><span class="cl">        return Objects.isNull(value) ? OptionalBean.empty() : OptionalBean.ofNullable(fn.apply(value));
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">取出一个可能为空的对象</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">fn</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="o">&lt;</span><span class="n">R</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="o">&lt;</span><span class="n">R</span><span class="o">&gt;</span> <span class="n">OptionalBean</span><span class="o">&lt;</span><span class="n">R</span><span class="o">&gt;</span> <span class="n">getBean</span><span class="p">(</span><span class="n">Function</span><span class="o">&lt;</span><span class="err">?</span> <span class="n">super</span> <span class="n">T</span><span class="p">,</span> <span class="err">?</span> <span class="k">extends</span> <span class="n">R</span><span class="o">&gt;</span> <span class="n">fn</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">Objects</span><span class="o">.</span><span class="n">isNull</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="err">?</span> <span class="n">OptionalBean</span><span class="o">.</span><span class="n">empty</span><span class="p">()</span> <span class="p">:</span> <span class="n">OptionalBean</span><span class="o">.</span><span class="n">ofNullable</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">value</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 如果目标值为空 获取一个默认值
-</span></span><span class="line"><span class="cl">     * @param other
-</span></span><span class="line"><span class="cl">     * @return
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    public T orElse(T other) {
-</span></span><span class="line"><span class="cl">        return value != null ? value : other;
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">如果目标值为空</span> <span class="err">获取一个默认值</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">other</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">T</span> <span class="n">orElse</span><span class="p">(</span><span class="n">T</span> <span class="n">other</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">value</span> <span class="o">!=</span> <span class="n">null</span> <span class="err">?</span> <span class="n">value</span> <span class="p">:</span> <span class="n">other</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 如果目标值为空 通过lambda表达式获取一个值
-</span></span><span class="line"><span class="cl">     * @param other
-</span></span><span class="line"><span class="cl">     * @return
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    public T orElseGet(Supplier&lt;? extends T&gt; other) {
-</span></span><span class="line"><span class="cl">        return value != null ? value : other.get();
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">如果目标值为空</span> <span class="err">通过</span><span class="n">lambda表达式获取一个值</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">other</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">T</span> <span class="n">orElseGet</span><span class="p">(</span><span class="n">Supplier</span><span class="o">&lt;</span><span class="err">?</span> <span class="k">extends</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">other</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">value</span> <span class="o">!=</span> <span class="n">null</span> <span class="err">?</span> <span class="n">value</span> <span class="p">:</span> <span class="n">other</span><span class="o">.</span><span class="n">get</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 如果目标值为空 抛出一个异常
-</span></span><span class="line"><span class="cl">     * @param exceptionSupplier
-</span></span><span class="line"><span class="cl">     * @param &lt;X&gt;
-</span></span><span class="line"><span class="cl">     * @return
-</span></span><span class="line"><span class="cl">     * @throws X
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    public &lt;X extends Throwable&gt; T orElseThrow(Supplier&lt;? extends X&gt; exceptionSupplier) throws X {
-</span></span><span class="line"><span class="cl">        if (value != null) {
-</span></span><span class="line"><span class="cl">            return value;
-</span></span><span class="line"><span class="cl">        } else {
-</span></span><span class="line"><span class="cl">            throw exceptionSupplier.get();
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">如果目标值为空</span> <span class="err">抛出一个异常</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">exceptionSupplier</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="o">&lt;</span><span class="n">X</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">throws</span> <span class="n">X</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="o">&lt;</span><span class="n">X</span> <span class="k">extends</span> <span class="n">Throwable</span><span class="o">&gt;</span> <span class="n">T</span> <span class="n">orElseThrow</span><span class="p">(</span><span class="n">Supplier</span><span class="o">&lt;</span><span class="err">?</span> <span class="k">extends</span> <span class="n">X</span><span class="o">&gt;</span> <span class="n">exceptionSupplier</span><span class="p">)</span> <span class="n">throws</span> <span class="n">X</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">throw</span> <span class="n">exceptionSupplier</span><span class="o">.</span><span class="n">get</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public boolean isPresent() {
-</span></span><span class="line"><span class="cl">        return value != null;
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">boolean</span> <span class="n">isPresent</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">value</span> <span class="o">!=</span> <span class="n">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public void ifPresent(Consumer&lt;? super T&gt; consumer) {
-</span></span><span class="line"><span class="cl">        if (value != null)
-</span></span><span class="line"><span class="cl">            consumer.accept(value);
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">ifPresent</span><span class="p">(</span><span class="n">Consumer</span><span class="o">&lt;</span><span class="err">?</span> <span class="n">super</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">consumer</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">consumer</span><span class="o">.</span><span class="n">accept</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    public int hashCode() {
-</span></span><span class="line"><span class="cl">        return Objects.hashCode(value);
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="ne">int</span> <span class="n">hashCode</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">Objects</span><span class="o">.</span><span class="n">hashCode</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 空值常量
-</span></span><span class="line"><span class="cl">     * @param &lt;T&gt;
-</span></span><span class="line"><span class="cl">     * @return
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    public static&lt;T&gt; OptionalBean&lt;T&gt; empty() {
-</span></span><span class="line"><span class="cl">        @SuppressWarnings(&#34;unchecked&#34;)
-</span></span><span class="line"><span class="cl">        OptionalBean&lt;T&gt; none = (OptionalBean&lt;T&gt;) EMPTY;
-</span></span><span class="line"><span class="cl">        return none;
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">空值常量</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">OptionalBean</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">empty</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="err">@</span><span class="n">SuppressWarnings</span><span class="p">(</span><span class="s2">&#34;unchecked&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">OptionalBean</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">none</span> <span class="o">=</span> <span class="p">(</span><span class="n">OptionalBean</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="n">EMPTY</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">none</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public static void main(String[] args) {
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    User axin = new User();
@@ -1339,228 +1343,228 @@
 </span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class BeanValidator {
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">BeanValidator</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    private static final Validator validator = Validation
-</span></span><span class="line"><span class="cl">            .byProvider(HibernateValidator.class)
-</span></span><span class="line"><span class="cl">            .configure().failFast(true)
-</span></span><span class="line"><span class="cl">            .buildValidatorFactory().getValidator();
+</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="k">static</span> <span class="n">final</span> <span class="n">Validator</span> <span class="n">validator</span> <span class="o">=</span> <span class="n">Validation</span>
+</span></span><span class="line"><span class="cl">            <span class="o">.</span><span class="n">byProvider</span><span class="p">(</span><span class="n">HibernateValidator</span><span class="o">.</span><span class="k">class</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="o">.</span><span class="n">configure</span><span class="p">()</span><span class="o">.</span><span class="n">failFast</span><span class="p">(</span><span class="bp">true</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="o">.</span><span class="n">buildValidatorFactory</span><span class="p">()</span><span class="o">.</span><span class="n">getValidator</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 校验对象
-</span></span><span class="line"><span class="cl">     *
-</span></span><span class="line"><span class="cl">     * @param object object
-</span></span><span class="line"><span class="cl">     * @param groups groups
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    public static void validateObject(Object object, Class&lt;?&gt;... groups) throws ValidationException {
-</span></span><span class="line"><span class="cl">        Set&lt;ConstraintViolation&lt;Object&gt;&gt; constraintViolations = validator.validate(object, groups);
-</span></span><span class="line"><span class="cl">        if (constraintViolations.stream().findFirst().isPresent()) {
-</span></span><span class="line"><span class="cl">            throw new ValidationException(constraintViolations.stream().findFirst().get().getMessage());
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">校验对象</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">object</span> <span class="n">object</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">groups</span> <span class="n">groups</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">validateObject</span><span class="p">(</span><span class="ne">Object</span> <span class="n">object</span><span class="p">,</span> <span class="n">Class</span><span class="o">&lt;</span><span class="err">?</span><span class="o">&gt;...</span> <span class="n">groups</span><span class="p">)</span> <span class="n">throws</span> <span class="n">ValidationException</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Set</span><span class="o">&lt;</span><span class="n">ConstraintViolation</span><span class="o">&lt;</span><span class="ne">Object</span><span class="o">&gt;&gt;</span> <span class="n">constraintViolations</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">object</span><span class="p">,</span> <span class="n">groups</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">constraintViolations</span><span class="o">.</span><span class="n">stream</span><span class="p">()</span><span class="o">.</span><span class="n">findFirst</span><span class="p">()</span><span class="o">.</span><span class="n">isPresent</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">throw</span> <span class="n">new</span> <span class="n">ValidationException</span><span class="p">(</span><span class="n">constraintViolations</span><span class="o">.</span><span class="n">stream</span><span class="p">()</span><span class="o">.</span><span class="n">findFirst</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">getMessage</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 校验对象bean
-</span></span><span class="line"><span class="cl">     *
-</span></span><span class="line"><span class="cl">     * @param t      bean
-</span></span><span class="line"><span class="cl">     * @param groups 校验组
-</span></span><span class="line"><span class="cl">     * @return ValidResult
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    public static &lt;T&gt; ValidResult validateBean(T t, Class&lt;?&gt;... groups) {
-</span></span><span class="line"><span class="cl">        ValidResult result = new ValidResult();
-</span></span><span class="line"><span class="cl">        Set&lt;ConstraintViolation&lt;T&gt;&gt; violationSet = validator.validate(t, groups);
-</span></span><span class="line"><span class="cl">        boolean hasError = violationSet != null &amp;&amp; violationSet.size() &gt; 0;
-</span></span><span class="line"><span class="cl">        result.setHasErrors(hasError);
-</span></span><span class="line"><span class="cl">        if (hasError) {
-</span></span><span class="line"><span class="cl">            for (ConstraintViolation&lt;T&gt; violation : violationSet) {
-</span></span><span class="line"><span class="cl">                result.addError(violation.getPropertyPath().toString(), violation.getMessage());
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        return result;
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">校验对象</span><span class="n">bean</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">t</span>      <span class="n">bean</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">groups</span> <span class="err">校验组</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span> <span class="n">ValidResult</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">ValidResult</span> <span class="n">validateBean</span><span class="p">(</span><span class="n">T</span> <span class="n">t</span><span class="p">,</span> <span class="n">Class</span><span class="o">&lt;</span><span class="err">?</span><span class="o">&gt;...</span> <span class="n">groups</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ValidResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ValidResult</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Set</span><span class="o">&lt;</span><span class="n">ConstraintViolation</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">violationSet</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">groups</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">boolean</span> <span class="n">hasError</span> <span class="o">=</span> <span class="n">violationSet</span> <span class="o">!=</span> <span class="n">null</span> <span class="o">&amp;&amp;</span> <span class="n">violationSet</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">result</span><span class="o">.</span><span class="n">setHasErrors</span><span class="p">(</span><span class="n">hasError</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">hasError</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="n">ConstraintViolation</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">violation</span> <span class="p">:</span> <span class="n">violationSet</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">result</span><span class="o">.</span><span class="n">addError</span><span class="p">(</span><span class="n">violation</span><span class="o">.</span><span class="n">getPropertyPath</span><span class="p">()</span><span class="o">.</span><span class="n">toString</span><span class="p">(),</span> <span class="n">violation</span><span class="o">.</span><span class="n">getMessage</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 校验bean的某一个属性
-</span></span><span class="line"><span class="cl">     *
-</span></span><span class="line"><span class="cl">     * @param obj          bean
-</span></span><span class="line"><span class="cl">     * @param propertyName 属性名称
-</span></span><span class="line"><span class="cl">     * @return ValidResult
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    public static &lt;T&gt; ValidResult validateProperty(T obj, String propertyName) {
-</span></span><span class="line"><span class="cl">        ValidResult result = new ValidResult();
-</span></span><span class="line"><span class="cl">        Set&lt;ConstraintViolation&lt;T&gt;&gt; violationSet = validator.validateProperty(obj, propertyName);
-</span></span><span class="line"><span class="cl">        boolean hasError = violationSet != null &amp;&amp; violationSet.size() &gt; 0;
-</span></span><span class="line"><span class="cl">        result.setHasErrors(hasError);
-</span></span><span class="line"><span class="cl">        if (hasError) {
-</span></span><span class="line"><span class="cl">            for (ConstraintViolation&lt;T&gt; violation : violationSet) {
-</span></span><span class="line"><span class="cl">                result.addError(propertyName, violation.getMessage());
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        return result;
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">校验</span><span class="n">bean的某一个属性</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">obj</span>          <span class="n">bean</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">propertyName</span> <span class="err">属性名称</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span> <span class="n">ValidResult</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">ValidResult</span> <span class="n">validateProperty</span><span class="p">(</span><span class="n">T</span> <span class="n">obj</span><span class="p">,</span> <span class="ne">String</span> <span class="n">propertyName</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ValidResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ValidResult</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Set</span><span class="o">&lt;</span><span class="n">ConstraintViolation</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">violationSet</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validateProperty</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">propertyName</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">boolean</span> <span class="n">hasError</span> <span class="o">=</span> <span class="n">violationSet</span> <span class="o">!=</span> <span class="n">null</span> <span class="o">&amp;&amp;</span> <span class="n">violationSet</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">result</span><span class="o">.</span><span class="n">setHasErrors</span><span class="p">(</span><span class="n">hasError</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">hasError</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="n">ConstraintViolation</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">violation</span> <span class="p">:</span> <span class="n">violationSet</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">result</span><span class="o">.</span><span class="n">addError</span><span class="p">(</span><span class="n">propertyName</span><span class="p">,</span> <span class="n">violation</span><span class="o">.</span><span class="n">getMessage</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 校验结果类
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    @Data
-</span></span><span class="line"><span class="cl">    public static class ValidResult {
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">校验结果类</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Data</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="k">class</span> <span class="n">ValidResult</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        /**
-</span></span><span class="line"><span class="cl">         * 是否有错误
-</span></span><span class="line"><span class="cl">         */
-</span></span><span class="line"><span class="cl">        private boolean hasErrors;
+</span></span><span class="line"><span class="cl">        <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">         <span class="o">*</span> <span class="err">是否有错误</span>
+</span></span><span class="line"><span class="cl">         <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">        <span class="n">private</span> <span class="n">boolean</span> <span class="n">hasErrors</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        /**
-</span></span><span class="line"><span class="cl">         * 错误信息
-</span></span><span class="line"><span class="cl">         */
-</span></span><span class="line"><span class="cl">        private List&lt;ErrorMessage&gt; errors;
+</span></span><span class="line"><span class="cl">        <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">         <span class="o">*</span> <span class="err">错误信息</span>
+</span></span><span class="line"><span class="cl">         <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">        <span class="n">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">ErrorMessage</span><span class="o">&gt;</span> <span class="n">errors</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        public ValidResult() {
-</span></span><span class="line"><span class="cl">            this.errors = new ArrayList&lt;&gt;();
-</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="n">ValidResult</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">this</span><span class="o">.</span><span class="n">errors</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        public boolean hasErrors() {
-</span></span><span class="line"><span class="cl">            return hasErrors;
-</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="n">boolean</span> <span class="n">hasErrors</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">hasErrors</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        public void setHasErrors(boolean hasErrors) {
-</span></span><span class="line"><span class="cl">            this.hasErrors = hasErrors;
-</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="n">void</span> <span class="n">setHasErrors</span><span class="p">(</span><span class="n">boolean</span> <span class="n">hasErrors</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">this</span><span class="o">.</span><span class="n">hasErrors</span> <span class="o">=</span> <span class="n">hasErrors</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        /**
-</span></span><span class="line"><span class="cl">         * 获取所有验证信息
-</span></span><span class="line"><span class="cl">         *
-</span></span><span class="line"><span class="cl">         * @return 集合形式
-</span></span><span class="line"><span class="cl">         */
-</span></span><span class="line"><span class="cl">        public List&lt;ErrorMessage&gt; getAllErrors() {
-</span></span><span class="line"><span class="cl">            return errors;
-</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">         <span class="o">*</span> <span class="err">获取所有验证信息</span>
+</span></span><span class="line"><span class="cl">         <span class="o">*</span>
+</span></span><span class="line"><span class="cl">         <span class="o">*</span> <span class="err">@</span><span class="k">return</span> <span class="err">集合形式</span>
+</span></span><span class="line"><span class="cl">         <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">ErrorMessage</span><span class="o">&gt;</span> <span class="n">getAllErrors</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">errors</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        /**
-</span></span><span class="line"><span class="cl">         * 获取所有验证信息
-</span></span><span class="line"><span class="cl">         *
-</span></span><span class="line"><span class="cl">         * @return 字符串形式
-</span></span><span class="line"><span class="cl">         */
-</span></span><span class="line"><span class="cl">        public String getErrors() {
-</span></span><span class="line"><span class="cl">            StringBuilder sb = new StringBuilder();
-</span></span><span class="line"><span class="cl">            for (ErrorMessage error : errors) {
-</span></span><span class="line"><span class="cl">                sb.append(error.getPropertyPath()).append(&#34;:&#34;).append(error.getMessage()).append(&#34; &#34;);
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">            return sb.toString();
-</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">         <span class="o">*</span> <span class="err">获取所有验证信息</span>
+</span></span><span class="line"><span class="cl">         <span class="o">*</span>
+</span></span><span class="line"><span class="cl">         <span class="o">*</span> <span class="err">@</span><span class="k">return</span> <span class="err">字符串形式</span>
+</span></span><span class="line"><span class="cl">         <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="ne">String</span> <span class="n">getErrors</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="n">new</span> <span class="n">StringBuilder</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="n">ErrorMessage</span> <span class="n">error</span> <span class="p">:</span> <span class="n">errors</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">getPropertyPath</span><span class="p">())</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&#34;:&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">getMessage</span><span class="p">())</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&#34; &#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">sb</span><span class="o">.</span><span class="n">toString</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        public void addError(String propertyName, String message) {
-</span></span><span class="line"><span class="cl">            this.errors.add(new ErrorMessage(propertyName, message));
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="n">void</span> <span class="n">addError</span><span class="p">(</span><span class="ne">String</span> <span class="n">propertyName</span><span class="p">,</span> <span class="ne">String</span> <span class="n">message</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">this</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new</span> <span class="n">ErrorMessage</span><span class="p">(</span><span class="n">propertyName</span><span class="p">,</span> <span class="n">message</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    @Data
-</span></span><span class="line"><span class="cl">    public static class ErrorMessage {
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Data</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="k">class</span> <span class="n">ErrorMessage</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        private String propertyPath;
+</span></span><span class="line"><span class="cl">        <span class="n">private</span> <span class="ne">String</span> <span class="n">propertyPath</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        private String message;
+</span></span><span class="line"><span class="cl">        <span class="n">private</span> <span class="ne">String</span> <span class="n">message</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        public ErrorMessage() {
-</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="n">ErrorMessage</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        public ErrorMessage(String propertyPath, String message) {
-</span></span><span class="line"><span class="cl">            this.propertyPath = propertyPath;
-</span></span><span class="line"><span class="cl">            this.message = message;
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="n">ErrorMessage</span><span class="p">(</span><span class="ne">String</span> <span class="n">propertyPath</span><span class="p">,</span> <span class="ne">String</span> <span class="n">message</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">this</span><span class="o">.</span><span class="n">propertyPath</span> <span class="o">=</span> <span class="n">propertyPath</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">this</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h3 id="过多ifelse">过多if..else</h3>
 <p>替换if..else并不会降低代码的复杂度，相反比较少见的写法可能会增加认知负荷，从而进一步增加了复杂度。之所以要替换过多的if..else是为了对代码进行解耦合，方便扩展代码，最终方便对代码的维护。</p>
 <p>以下有几种常见的方法来替换过多的if..else。</p>
 <h4 id="使用枚举代替ifelse">使用枚举代替if..else</h4>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MyTest {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        String val = &#34;FOUR&#34;;
-</span></span><span class="line"><span class="cl">        condition(val);
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;--------------&#34;);
-</span></span><span class="line"><span class="cl">        newCondition(val);
-</span></span><span class="line"><span class="cl">    }
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">MyTest</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">String</span> <span class="n">val</span> <span class="o">=</span> <span class="s2">&#34;FOUR&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">condition</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;--------------&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">newCondition</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public static void condition(String val) {
-</span></span><span class="line"><span class="cl">        if (&#34;ONE&#34;.equals(val)) {
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;val:&#34; + 1111111);
-</span></span><span class="line"><span class="cl">        } else if (&#34;TWO&#34;.equals(val)) {
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;val:&#34; + 2222222);
-</span></span><span class="line"><span class="cl">        } else if (&#34;THREE&#34;.equals(val)) {
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;val:&#34; + 3333333);
-</span></span><span class="line"><span class="cl">        } else {
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;val:&#34; + val);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">condition</span><span class="p">(</span><span class="ne">String</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="s2">&#34;ONE&#34;</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">val</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="mi">1111111</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="s2">&#34;TWO&#34;</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">val</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="mi">2222222</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="s2">&#34;THREE&#34;</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">val</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="mi">3333333</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public static void newCondition(String val) {
-</span></span><span class="line"><span class="cl">        ConditionEnum conditionEnum;
-</span></span><span class="line"><span class="cl">        try {
-</span></span><span class="line"><span class="cl">            conditionEnum = ConditionEnum.valueOf(val);
-</span></span><span class="line"><span class="cl">        } catch (IllegalArgumentException e) {
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;val:&#34; + val);
-</span></span><span class="line"><span class="cl">            return;
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        exec(conditionEnum);
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">newCondition</span><span class="p">(</span><span class="ne">String</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ConditionEnum</span> <span class="n">conditionEnum</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">conditionEnum</span> <span class="o">=</span> <span class="n">ConditionEnum</span><span class="o">.</span><span class="n">valueOf</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">IllegalArgumentException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">exec</span><span class="p">(</span><span class="n">conditionEnum</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public static void exec(ConditionEnum conditionEnum) {
-</span></span><span class="line"><span class="cl">        conditionEnum.context();
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">exec</span><span class="p">(</span><span class="n">ConditionEnum</span> <span class="n">conditionEnum</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">conditionEnum</span><span class="o">.</span><span class="n">context</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    enum ConditionEnum {
-</span></span><span class="line"><span class="cl">        ONE {
-</span></span><span class="line"><span class="cl">            @Override
-</span></span><span class="line"><span class="cl">            public void context() {
-</span></span><span class="line"><span class="cl">                System.out.println(&#34;val:&#34; + 1111111);
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        },
-</span></span><span class="line"><span class="cl">        TWO {
-</span></span><span class="line"><span class="cl">            @Override
-</span></span><span class="line"><span class="cl">            public void context() {
-</span></span><span class="line"><span class="cl">                System.out.println(&#34;val:&#34; + 2222222);
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        },
-</span></span><span class="line"><span class="cl">        THREE {
-</span></span><span class="line"><span class="cl">            @Override
-</span></span><span class="line"><span class="cl">            public void context() {
-</span></span><span class="line"><span class="cl">                System.out.println(&#34;val:&#34; + 3333333);
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        };
+</span></span><span class="line"><span class="cl">    <span class="k">enum</span> <span class="n">ConditionEnum</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ONE</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">            <span class="n">public</span> <span class="n">void</span> <span class="n">context</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="mi">1111111</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="n">TWO</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">            <span class="n">public</span> <span class="n">void</span> <span class="n">context</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="mi">2222222</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="n">THREE</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">            <span class="n">public</span> <span class="n">void</span> <span class="n">context</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="mi">3333333</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">};</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        public abstract void context();
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="n">abstract</span> <span class="n">void</span> <span class="n">context</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>也可用枚举替换成这样：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static void newCondition(String val) {
-</span></span><span class="line"><span class="cl">        ConditionEnum condition = ConditionEnum.getCondition(val);
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;val:&#34; + (condition == null ? val : condition.value));
-</span></span><span class="line"><span class="cl">    }
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">newCondition</span><span class="p">(</span><span class="ne">String</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ConditionEnum</span> <span class="n">condition</span> <span class="o">=</span> <span class="n">ConditionEnum</span><span class="o">.</span><span class="n">getCondition</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="p">(</span><span class="n">condition</span> <span class="o">==</span> <span class="n">null</span> <span class="err">?</span> <span class="n">val</span> <span class="p">:</span> <span class="n">condition</span><span class="o">.</span><span class="n">value</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    enum ConditionEnum {
-</span></span><span class="line"><span class="cl">        ONE(&#34;ONE&#34;,1111111),
-</span></span><span class="line"><span class="cl">        TWO(&#34;TWO&#34;,2222222),
-</span></span><span class="line"><span class="cl">        THREE(&#34;THREE&#34;,3333333)
+</span></span><span class="line"><span class="cl">    <span class="k">enum</span> <span class="n">ConditionEnum</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ONE</span><span class="p">(</span><span class="s2">&#34;ONE&#34;</span><span class="p">,</span><span class="mi">1111111</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">TWO</span><span class="p">(</span><span class="s2">&#34;TWO&#34;</span><span class="p">,</span><span class="mi">2222222</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">THREE</span><span class="p">(</span><span class="s2">&#34;THREE&#34;</span><span class="p">,</span><span class="mi">3333333</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        ;
+</span></span><span class="line"><span class="cl">        <span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        private String key;
-</span></span><span class="line"><span class="cl">        private Integer value;
+</span></span><span class="line"><span class="cl">        <span class="n">private</span> <span class="ne">String</span> <span class="n">key</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">private</span> <span class="n">Integer</span> <span class="n">value</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        ConditionEnum(String key,Integer value){
-</span></span><span class="line"><span class="cl">            this.key = key;
-</span></span><span class="line"><span class="cl">            this.value = value;
-</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        <span class="n">ConditionEnum</span><span class="p">(</span><span class="ne">String</span> <span class="n">key</span><span class="p">,</span><span class="n">Integer</span> <span class="n">value</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">this</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">this</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        public  static ConditionEnum getCondition(String key){
-</span></span><span class="line"><span class="cl">            return Arrays.stream(ConditionEnum.values()).filter(x -&gt; Objects.equals(x.key, key)).findFirst().orElse(null);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">        <span class="n">public</span>  <span class="k">static</span> <span class="n">ConditionEnum</span> <span class="n">getCondition</span><span class="p">(</span><span class="ne">String</span> <span class="n">key</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">Arrays</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="n">ConditionEnum</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">x</span> <span class="o">-&gt;</span> <span class="n">Objects</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span><span class="o">.</span><span class="n">findFirst</span><span class="p">()</span><span class="o">.</span><span class="n">orElse</span><span class="p">(</span><span class="n">null</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span></code></pre></div><h4 id="放入数据结构中进行判断从而减少ifelse">放入数据结构中进行判断从而减少if..else</h4>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MyTest {
 </span></span><span class="line"><span class="cl">    public static void main(String[] args) {
@@ -1664,163 +1668,163 @@
 </span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><h4 id="使用职责链模式代替ifelse">使用职责链模式代替if..else</h4>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MyTest {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        String val = &#34;1&#34;;
-</span></span><span class="line"><span class="cl">        condition(val);
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;--------------&#34;);
-</span></span><span class="line"><span class="cl">        newCondition(val);
-</span></span><span class="line"><span class="cl">    }
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">MyTest</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">String</span> <span class="n">val</span> <span class="o">=</span> <span class="s2">&#34;1&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">condition</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;--------------&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">newCondition</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public static void condition(String val) {
-</span></span><span class="line"><span class="cl">        if (&#34;ONE&#34;.equals(val)) {
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;val:&#34; + 1111111);
-</span></span><span class="line"><span class="cl">        } else if (&#34;TWO&#34;.equals(val)) {
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;val:&#34; + 2222222);
-</span></span><span class="line"><span class="cl">        } else if (&#34;THREE&#34;.equals(val)) {
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;val:&#34; + 3333333);
-</span></span><span class="line"><span class="cl">        } else {
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;val:&#34; + val);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">condition</span><span class="p">(</span><span class="ne">String</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="s2">&#34;ONE&#34;</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">val</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="mi">1111111</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="s2">&#34;TWO&#34;</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">val</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="mi">2222222</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="s2">&#34;THREE&#34;</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">val</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="mi">3333333</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public static void newCondition(String val) {
-</span></span><span class="line"><span class="cl">        One one = new One();
-</span></span><span class="line"><span class="cl">        Two two = new Two();
-</span></span><span class="line"><span class="cl">        Three three = new Three();
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">newCondition</span><span class="p">(</span><span class="ne">String</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">One</span> <span class="n">one</span> <span class="o">=</span> <span class="n">new</span> <span class="n">One</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Two</span> <span class="n">two</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Two</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Three</span> <span class="n">three</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Three</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        // 设置调用链,可设置成死循环
-</span></span><span class="line"><span class="cl">        one.setAbstractHandler(two);
-</span></span><span class="line"><span class="cl">        two.setAbstractHandler(three);
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">设置调用链</span><span class="p">,</span><span class="err">可设置成死循环</span>
+</span></span><span class="line"><span class="cl">        <span class="n">one</span><span class="o">.</span><span class="n">setAbstractHandler</span><span class="p">(</span><span class="n">two</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">two</span><span class="o">.</span><span class="n">setAbstractHandler</span><span class="p">(</span><span class="n">three</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        // 执行
-</span></span><span class="line"><span class="cl">        one.exec(val);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">执行</span>
+</span></span><span class="line"><span class="cl">        <span class="n">one</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">abstract class AbstractHandler {
+</span></span><span class="line"><span class="cl"><span class="n">abstract</span> <span class="k">class</span> <span class="n">AbstractHandler</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    protected AbstractHandler abstractHandler;
+</span></span><span class="line"><span class="cl">    <span class="n">protected</span> <span class="n">AbstractHandler</span> <span class="n">abstractHandler</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    protected void setAbstractHandler(AbstractHandler abstractHandler) {
-</span></span><span class="line"><span class="cl">        this.abstractHandler = abstractHandler;
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">protected</span> <span class="n">void</span> <span class="n">setAbstractHandler</span><span class="p">(</span><span class="n">AbstractHandler</span> <span class="n">abstractHandler</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">this</span><span class="o">.</span><span class="n">abstractHandler</span> <span class="o">=</span> <span class="n">abstractHandler</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    protected abstract void exec(String val);
+</span></span><span class="line"><span class="cl">    <span class="n">protected</span> <span class="n">abstract</span> <span class="n">void</span> <span class="n">exec</span><span class="p">(</span><span class="ne">String</span> <span class="n">val</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">class One extends AbstractHandler {
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="n">One</span> <span class="k">extends</span> <span class="n">AbstractHandler</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    protected void exec(String val) {
-</span></span><span class="line"><span class="cl">        if (!val.equals(&#34;ONE&#34;)){
-</span></span><span class="line"><span class="cl">            abstractHandler.exec(val);
-</span></span><span class="line"><span class="cl">            return;
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;val:&#34; + 1111111);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">protected</span> <span class="n">void</span> <span class="n">exec</span><span class="p">(</span><span class="ne">String</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">val</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="s2">&#34;ONE&#34;</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">abstractHandler</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="mi">1111111</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">class Two extends AbstractHandler {
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="n">Two</span> <span class="k">extends</span> <span class="n">AbstractHandler</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    protected void exec(String val) {
-</span></span><span class="line"><span class="cl">        if (!val.equals(&#34;TWO&#34;)){
-</span></span><span class="line"><span class="cl">            abstractHandler.exec(val);
-</span></span><span class="line"><span class="cl">            return;
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;val:&#34; + 2222222);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">protected</span> <span class="n">void</span> <span class="n">exec</span><span class="p">(</span><span class="ne">String</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">val</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="s2">&#34;TWO&#34;</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">abstractHandler</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="mi">2222222</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">class Three extends AbstractHandler {
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="n">Three</span> <span class="k">extends</span> <span class="n">AbstractHandler</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    protected void exec(String val) {
-</span></span><span class="line"><span class="cl">        System.out.println(val.equals(&#34;THREE&#34;) ? &#34;val:&#34; + 3333333 : &#34;val:&#34; + val);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">protected</span> <span class="n">void</span> <span class="n">exec</span><span class="p">(</span><span class="ne">String</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="s2">&#34;THREE&#34;</span><span class="p">)</span> <span class="err">?</span> <span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="mi">3333333</span> <span class="p">:</span> <span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h4 id="使用模板方法模式代替ifelse">使用模板方法模式代替if..else</h4>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MyTest {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        String val = &#34;ONE&#34;;
-</span></span><span class="line"><span class="cl">        condition(val);
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;--------------&#34;);
-</span></span><span class="line"><span class="cl">        newCondition(val);
-</span></span><span class="line"><span class="cl">    }
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">MyTest</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">String</span> <span class="n">val</span> <span class="o">=</span> <span class="s2">&#34;ONE&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">condition</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;--------------&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">newCondition</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public static void condition(String val) {
-</span></span><span class="line"><span class="cl">        if (&#34;ONE&#34;.equals(val)) {
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;val:&#34; + 1111111);
-</span></span><span class="line"><span class="cl">        } else if (&#34;TWO&#34;.equals(val)) {
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;val:&#34; + 2222222);
-</span></span><span class="line"><span class="cl">        } else if (&#34;THREE&#34;.equals(val)) {
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;val:&#34; + 3333333);
-</span></span><span class="line"><span class="cl">        } else {
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;val:&#34; + val);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">condition</span><span class="p">(</span><span class="ne">String</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="s2">&#34;ONE&#34;</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">val</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="mi">1111111</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="s2">&#34;TWO&#34;</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">val</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="mi">2222222</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="s2">&#34;THREE&#34;</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">val</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="mi">3333333</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public static void newCondition(String val) {
-</span></span><span class="line"><span class="cl">        if (!Objects.equals(val, &#34;ONE&#34;) &amp;&amp; !Objects.equals(val, &#34;TWO&#34;) &amp;&amp; !Objects.equals(val, &#34;THREE&#34;)) {
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;val:&#34; + val);
-</span></span><span class="line"><span class="cl">            return;
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        List&lt;ConditionTemplate&gt; list = new ArrayList&lt;&gt;(Arrays.asList(new One(), new Two(), new Three()));
-</span></span><span class="line"><span class="cl">        for (ConditionTemplate item : list) {
-</span></span><span class="line"><span class="cl">            item.template(val);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">newCondition</span><span class="p">(</span><span class="ne">String</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">Objects</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="s2">&#34;ONE&#34;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">Objects</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="s2">&#34;TWO&#34;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">Objects</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="s2">&#34;THREE&#34;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">List</span><span class="o">&lt;</span><span class="n">ConditionTemplate</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">Arrays</span><span class="o">.</span><span class="n">asList</span><span class="p">(</span><span class="n">new</span> <span class="n">One</span><span class="p">(),</span> <span class="n">new</span> <span class="n">Two</span><span class="p">(),</span> <span class="n">new</span> <span class="n">Three</span><span class="p">()));</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="n">ConditionTemplate</span> <span class="n">item</span> <span class="p">:</span> <span class="n">list</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">item</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">abstract class ConditionTemplate {
+</span></span><span class="line"><span class="cl"><span class="n">abstract</span> <span class="k">class</span> <span class="n">ConditionTemplate</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public void template(String val){
-</span></span><span class="line"><span class="cl">        if (supportIns(val)){
-</span></span><span class="line"><span class="cl">            support();
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">template</span><span class="p">(</span><span class="ne">String</span> <span class="n">val</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">supportIns</span><span class="p">(</span><span class="n">val</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">support</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public abstract void support();
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">abstract</span> <span class="n">void</span> <span class="n">support</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public abstract boolean supportIns(String val);
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">abstract</span> <span class="n">boolean</span> <span class="n">supportIns</span><span class="p">(</span><span class="ne">String</span> <span class="n">val</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">class One extends ConditionTemplate {
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    public void support() {
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;val:&#34; + 1111111);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    public boolean supportIns(String val) {
-</span></span><span class="line"><span class="cl">        return &#34;ONE&#34;.equals(val);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="n">One</span> <span class="k">extends</span> <span class="n">ConditionTemplate</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">support</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="mi">1111111</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">boolean</span> <span class="n">supportIns</span><span class="p">(</span><span class="ne">String</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;ONE&#34;</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">class Two extends ConditionTemplate {
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    public void support() {
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;val:&#34; + 2222222);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    public boolean supportIns(String val) {
-</span></span><span class="line"><span class="cl">        return &#34;TWO&#34;.equals(val);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="n">Two</span> <span class="k">extends</span> <span class="n">ConditionTemplate</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">support</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="mi">2222222</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">boolean</span> <span class="n">supportIns</span><span class="p">(</span><span class="ne">String</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;TWO&#34;</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">class Three extends ConditionTemplate {
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    public void support() {
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;val:&#34; + 3333333);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    public boolean supportIns(String val) {
-</span></span><span class="line"><span class="cl">        return &#34;THREE&#34;.equals(val);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="n">Three</span> <span class="k">extends</span> <span class="n">ConditionTemplate</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">support</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;val:&#34;</span> <span class="o">+</span> <span class="mi">3333333</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">boolean</span> <span class="n">supportIns</span><span class="p">(</span><span class="ne">String</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;THREE&#34;</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h4 id="使用工厂方法模式代替ifelse">使用工厂方法模式代替if..else</h4>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MyTest {
 </span></span><span class="line"><span class="cl">    public static void main(String[] args) {

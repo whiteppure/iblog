@@ -38,6 +38,10 @@
 </head>
 
 <body>
+    <div class="post-password">
+        
+    </div>
+
     
     
     
@@ -503,7 +507,7 @@
                         <span id="post_page_title_date" class="date">2021.04.12</span>
                     </div>
                     <div class="post_content markdown"><h2 id="对象实例化">对象实例化</h2>
-<p><img src="/iblog/posts/annex/images/essays/%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%E6%AD%A5%E9%AA%A4.png" alt="对象创建步骤"></p>
+<p><img alt="对象创建步骤" src="/iblog/posts/annex/images/essays/%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%E6%AD%A5%E9%AA%A4.png"></p>
 <h3 id="对象的创建方式">对象的创建方式</h3>
 <ul>
 <li>使用new关键字创建：最常见的方式、单例类中调用<code>getInstance</code>的静态类方法，<code>XXXFactory</code>的静态方法；</li>
@@ -524,7 +528,7 @@
 </span></span><span class="line"><span class="cl">        Object obj = new Object();
 </span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p><img src="/iblog/posts/annex/images/essays/%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4.png" alt="创建对象字节码指令"></p>
+</span></span></code></pre></div><p><img alt="创建对象字节码指令" src="/iblog/posts/annex/images/essays/%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4.png"></p>
 <p>创建对象步骤：</p>
 <ol>
 <li>加载类元信息</li>
@@ -573,7 +577,7 @@
 <p>初始化成员变量，执行实例化代码块，调用类的构造方法，并把堆内对象的首地址赋值给引用变量。
 因此一般来说（由字节码中跟随 <code>invokespecial</code> 指令所决定），new指令之后会接着执行方法，把对象按照程序员的意愿进行初始化，这样一个真正可用的对象才算完成创建出来。</p>
 <h2 id="对象组成">对象组成</h2>
-<p><img src="/iblog/posts/annex/images/essays/Java%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B8%83%E5%B1%80.png" alt="Java对象的布局"></p>
+<p><img alt="Java对象的布局" src="/iblog/posts/annex/images/essays/Java%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B8%83%E5%B1%80.png"></p>
 <h3 id="查看对象的组成">查看对象的组成</h3>
 <p><strong>引入依赖</strong></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;!-- 引入查看对象布局的依赖 --&gt;
@@ -609,10 +613,10 @@
 <h3 id="对象头">对象头</h3>
 <p><a href="http://openjdk.java.net/groups/hotspot/docs/HotSpotGlossary.html">官方文档</a>对于对象头的解释</p>
 <blockquote>
-<p>object header 
+<p>object header
 Common structure at the beginning of every GC-managed heap object.
 (Every oop points to an object header.) Includes fundamental information about the heap object&rsquo;s layout, type, GC state, synchronization state, and identity hash code.
-Consists of two words. In arrays it is immediately followed by a length field. 
+Consists of two words. In arrays it is immediately followed by a length field.
 Note that both Java objects and VM-internal objects have a common object header format.</p>
 </blockquote>
 <p>大意：每个GC管理堆对象开始处的公共结构。(每个oop都指向一个对象头。)包括关于堆对象布局、类型、GC状态、同步状态和标识散列代码的基本信息。
@@ -621,7 +625,7 @@ Note that both Java objects and VM-internal objects have a common object header 
 <blockquote>
 <p>mark word
 The first word of every object header. Usually a set of bitfields including synchronization state and identity hash code.
-May also be a pointer (with characteristic low bit encoding) to synchronization related information. 
+May also be a pointer (with characteristic low bit encoding) to synchronization related information.
 During GC, may contain GC state bits.</p>
 </blockquote>
 <p>大意：每个对象头文件的第一个字。通常是一组位域，包括同步状态和身份散列码。也可以是一个用于同步相关信息的指针(具有特征的低位编码)。在GC期间，可能包含GC状态位。</p>
@@ -753,15 +757,15 @@ For Java objects, the &ldquo;klass&rdquo; contains a C++ style &ldquo;vtable&rdq
 因为Jvm规定内存分配的字节必须是8的倍数,否则无法分配内存.如果对象头占得字节 + 实例变量占得字节刚好为8的倍数,对齐填充数据则不存在。</p>
 <h2 id="对象的访问定位">对象的访问定位</h2>
 <p>JVM是如何通过栈帧中的对象引用访问到其内部的对象实例呢？
-<img src="/iblog/posts/annex/images/essays/%E5%AF%B9%E8%B1%A1%E6%8C%87%E9%92%88%E8%AE%BF%E9%97%AE.png" alt="对象指针访问"></p>
+<img alt="对象指针访问" src="/iblog/posts/annex/images/essays/%E5%AF%B9%E8%B1%A1%E6%8C%87%E9%92%88%E8%AE%BF%E9%97%AE.png"></p>
 <p>hotspot使用的是直接访问。因为句柄访问开辟了句柄池，所以直接访问相较于句柄访问效率稍高一点。</p>
 <h3 id="句柄访问">句柄访问</h3>
 <p>句柄访问是在栈的局部变量表中，记录的对象的引用，然后在堆空间中开辟了一块空间，也就是句柄池。指向的是方法区中的对象类型数据。</p>
 <p>优点：<code>reference</code> 中存储稳定句柄地址，对象被移动（垃圾收集时移动对象很普遍）时只会改变句柄中实例数据指针即可，<code>reference</code> 本身不需要被修改</p>
-<p><img src="/iblog/posts/annex/images/essays/%E5%8F%A5%E6%9F%84%E8%AE%BF%E9%97%AE.png" alt="句柄访问"></p>
+<p><img alt="句柄访问" src="/iblog/posts/annex/images/essays/%E5%8F%A5%E6%9F%84%E8%AE%BF%E9%97%AE.png"></p>
 <h3 id="直接访问">直接访问</h3>
 <p>直接指针是局部变量表中的引用，直接指向堆中的实例，在对象实例中有类型指针，指向的是方法区中的对象类型数据。</p>
-<p><img src="/iblog/posts/annex/images/essays/%E7%9B%B4%E6%8E%A5%E8%AE%BF%E9%97%AE.png" alt="直接访问"></p>
+<p><img alt="直接访问" src="/iblog/posts/annex/images/essays/%E7%9B%B4%E6%8E%A5%E8%AE%BF%E9%97%AE.png"></p>
 <h2 id="对象的终止机制">对象的终止机制</h2>
 <p><code>finalize()</code>方法是Java提供的对象终止机制，允许开发人员提供对象被销毁之前的自定义处理逻辑。
 当垃圾回收器发现没有引用指向一个对象，即：垃圾回收此对象之前，总会先调用这个对象的<code>finalize()</code>方法。</p>
@@ -806,49 +810,49 @@ For Java objects, the &ldquo;klass&rdquo; contains a C++ style &ldquo;vtable&rdq
 </li>
 </ul>
 <p>代码演示对象能否被回收：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">MainTest</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public static MainTest var;
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">MainTest</span> <span class="k">var</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 此方法只能被调用一次
-</span></span><span class="line"><span class="cl">     * 可对该方法进行注释，来测试finalize方法是否能复活对象
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    protected void finalize() throws Throwable {
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;调用当前类重写的finalize()方法&#34;);
-</span></span><span class="line"><span class="cl">        // 复活对象 让当前带回收对象重新与引用链中的对象建立联系
-</span></span><span class="line"><span class="cl">        var = this;
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">此方法只能被调用一次</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">可对该方法进行注释，来测试</span><span class="n">finalize方法是否能复活对象</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">protected</span> <span class="n">void</span> <span class="n">finalize</span><span class="p">()</span> <span class="n">throws</span> <span class="n">Throwable</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;调用当前类重写的finalize()方法&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">复活对象</span> <span class="err">让当前带回收对象重新与引用链中的对象建立联系</span>
+</span></span><span class="line"><span class="cl">        <span class="k">var</span> <span class="o">=</span> <span class="n">this</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) throws InterruptedException {
-</span></span><span class="line"><span class="cl">        var = new MainTest();
-</span></span><span class="line"><span class="cl">        var = null;
-</span></span><span class="line"><span class="cl">        System.gc();
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;-----------------第一次gc操作------------&#34;);
-</span></span><span class="line"><span class="cl">        // 因为Finalizer线程的优先级比较低，暂停2秒，以等待它
-</span></span><span class="line"><span class="cl">        Thread.sleep(2000);
-</span></span><span class="line"><span class="cl">        if (var == null) {
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;对象已经死了&#34;);
-</span></span><span class="line"><span class="cl">            // 如果第一次对象就死亡了 就终止
-</span></span><span class="line"><span class="cl">            return;
-</span></span><span class="line"><span class="cl">        } else {
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;对象还活着&#34;);
-</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="n">throws</span> <span class="n">InterruptedException</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">var</span> <span class="o">=</span> <span class="n">new</span> <span class="n">MainTest</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">var</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">gc</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;-----------------第一次gc操作------------&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">因为</span><span class="n">Finalizer线程的优先级比较低</span><span class="err">，暂停</span><span class="mi">2</span><span class="err">秒，以等待它</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">Thread</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="k">var</span> <span class="o">==</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;对象已经死了&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">//</span> <span class="err">如果第一次对象就死亡了</span> <span class="err">就终止</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;对象还活着&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;-----------------第二次gc操作------------&#34;);
-</span></span><span class="line"><span class="cl">        var = null;
-</span></span><span class="line"><span class="cl">        System.gc();
-</span></span><span class="line"><span class="cl">        // 下面代码和上面代码是一样的，但是 对象却自救失败了
-</span></span><span class="line"><span class="cl">        Thread.sleep(2000);
-</span></span><span class="line"><span class="cl">        if (var == null) {
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;对象已经死了&#34;);
-</span></span><span class="line"><span class="cl">        } else {
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;对象还活着&#34;);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;-----------------第二次gc操作------------&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">var</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">gc</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">下面代码和上面代码是一样的，但是</span> <span class="err">对象却自救失败了</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">Thread</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="k">var</span> <span class="o">==</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;对象已经死了&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;对象还活着&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div></div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">

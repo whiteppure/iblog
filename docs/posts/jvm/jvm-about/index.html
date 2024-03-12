@@ -38,6 +38,10 @@
 </head>
 
 <body>
+    <div class="post-password">
+        
+    </div>
+
     
     
     
@@ -539,7 +543,7 @@
 但实际情况很多时候一些不太好的实践（或疏忽）会导致对象的生命周期变得很长甚至导致00M，也可以叫做宽泛意义上的“内存泄漏”。</p>
 <p>Java使用可达性分析算法来标记垃圾，最上面的数据不可达，就是需要被回收的。
 后期有一些对象不用了，按道理应该断开引用，但是存在一些链没有断开，从而导致没有办法被回收。从而造成内存泄漏。</p>
-<p><img src="/iblog/posts/annex/images/essays/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F.png" alt="内存泄漏"></p>
+<p><img alt="内存泄漏" src="/iblog/posts/annex/images/essays/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F.png"></p>
 <p><strong>内存泄漏与内存溢出的关系</strong></p>
 <p>尽管内存泄漏并不会立刻引起程序崩溃，但是一旦发生内存泄漏，程序中的可用内存就会被逐步蚕食，直至耗尽所有内存，最终出现<code>outOfMemory</code>异常，导致程序崩溃。</p>
 <h3 id="举例">举例</h3>
@@ -666,28 +670,28 @@
 </ul>
 <p>这4种引用强度依次逐渐减弱。除强引用外，其他3种引用均可以在<code>java.lang.ref</code>包中找到它们的身影。
 强引用为JVM内部实现。其他三类引用类型全部继承自<code>Reference</code>父类。</p>
-<p><img src="/iblog/posts/annex/images/essays/%E5%BC%BA%E8%BD%AF%E5%BC%B1%E8%99%9A.jpg" alt="强软弱虚"></p>
+<p><img alt="强软弱虚" src="/iblog/posts/annex/images/essays/%E5%BC%BA%E8%BD%AF%E5%BC%B1%E8%99%9A.jpg"></p>
 <p>上述引用垃圾回收的前提条件是：对象都是可触及的(可达性分析结果为可达)，如果对象不可触及就直接被垃圾回收器回收了。</p>
 <h3 id="强引用">强引用</h3>
 <p>在Java程序中，最常见的引用类型是强引用，普通系统99%以上都是强引用，也就是我们最常见的普通对象引用，也是默认的引用类型。
 当在Java语言中使用new操作符创建一个新的对象，并将其赋值给一个变量的时候，这个变量就成为指向该对象的一个强引用。</p>
 <p>强引用测试</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// 强引用测试
-</span></span><span class="line"><span class="cl">public class MainTest {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        StringBuffer var0 = new StringBuffer(&#34;hello world&#34;);
-</span></span><span class="line"><span class="cl">        StringBuffer var1 = var0;
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">//</span> <span class="err">强引用测试</span>
+</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">MainTest</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">StringBuffer</span> <span class="n">var0</span> <span class="o">=</span> <span class="n">new</span> <span class="n">StringBuffer</span><span class="p">(</span><span class="s2">&#34;hello world&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">StringBuffer</span> <span class="n">var1</span> <span class="o">=</span> <span class="n">var0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        var0 = null;
-</span></span><span class="line"><span class="cl">        System.gc();
-</span></span><span class="line"><span class="cl">        try {
-</span></span><span class="line"><span class="cl">            Thread.sleep(3000);
-</span></span><span class="line"><span class="cl">        } catch (InterruptedException e) {
-</span></span><span class="line"><span class="cl">            e.printStackTrace();
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        System.out.println(var1.toString());
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">        <span class="n">var0</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">gc</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="ne">Thread</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">e</span><span class="o">.</span><span class="n">printStackTrace</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="n">var1</span><span class="o">.</span><span class="n">toString</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>强引用所指向的对象在任何时候都不会被系统回收，虚拟机会抛出OOM异常，也不会回收强引用所指向对象;
 所以强引用是导致内存泄漏的主要原因。</p>
 <h3 id="软引用">软引用</h3>

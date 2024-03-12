@@ -1,6 +1,25 @@
 {{ partial "head.html" . }}
 
 <body>
+    <div class="post-password">
+        {{ if ( .Params.password | default "" ) }}
+        <script>
+            (function(){
+                if (prompt('请输入文章密码') !== {{ .Params.password }}){
+                    alert('密码错误！');
+                    if (history.length === 1) {
+                        window.opener = null;
+                        window.open('', '_self');
+                        window.close();
+                    } else {
+                        history.back();
+                    }
+                }
+            })();
+        </script>
+        {{ end }}
+    </div>
+
     <!--    文章目录        -->
     {{ if .Site.Params.toc | default false }}
     {{ partial "toc" . }}

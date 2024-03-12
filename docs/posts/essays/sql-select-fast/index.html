@@ -38,6 +38,10 @@
 </head>
 
 <body>
+    <div class="post-password">
+        
+    </div>
+
     
     
     
@@ -1441,7 +1445,7 @@
                     <div class="post_content markdown"><h2 id="逻辑架构">逻辑架构</h2>
 <p>主要分为：连接层，服务层，引擎层，存储层。</p>
 <p>客户端执行一条select命令的流程如下：</p>
-<p><img src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-001.png" alt="MySqlSQL优化及锁机制-001"></p>
+<p><img alt="MySqlSQL优化及锁机制-001" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-001.png"></p>
 <ul>
 <li>
 <p>连接层：最上层是一些客户端和连接服务，包含本地sock通信和大多数基于客户端/服务端工具实现的类似于tcplip的通信。主要完成一些类似于连接处理、授权认证、及相关的安全方案。在该层上引入了线程池的概念，为通过认证安全接入的客户端提供线程。同样在该层上可以实现基于SSL的安全链接。服务器也会为安全接入的每个客户端验证它所具有的操作权限。</p>
@@ -1459,7 +1463,7 @@
 <p>其中比较重要的就要说存储引擎了，MySQL默认使用的存储引擎是InnoDB，可以使用相关命令来查看：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> show engines;
 </span></span></code></pre></div><p>如果查看当前使用的存储引擎可以使用命令：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> show variables like &#39;%storage_engine%&#39;;
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="n">show</span> <span class="n">variables</span> <span class="n">like</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">torage_engine%&#39;</span><span class="p">;</span>
 </span></span></code></pre></div><p>在创建数据库的时候可以指定存储引擎：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> CREATE TABLE tbl_emp (
 </span></span><span class="line"><span class="cl">	id INT(11) NOT NULL AUTO_INCREMENT,
@@ -1551,11 +1555,11 @@
 </li>
 <li>
 <p>单库内拆：先分库，将不同数据库中的表拆分为了多个子表，多个子表存在于同一数据库中；
-<img src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-013.png" alt="MySqlSQL优化及锁机制-013"></p>
+<img alt="MySqlSQL优化及锁机制-013" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-013.png"></p>
 </li>
 <li>
 <p>多库拆分：
-<img src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-014.png" alt="MySqlSQL优化及锁机制-014"></p>
+<img alt="MySqlSQL优化及锁机制-014" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-014.png"></p>
 </li>
 </ul>
 <p>在一个数据库中将一张表拆分为几个子表在一定程度上可以解决单表查询性能的问题，但是也会遇到一个问题：单数据库存储瓶颈。所以在业界用的更多的还是将子表拆分到多个数据库中。</p>
@@ -1623,8 +1627,8 @@
 <li>频繁增删改的字段不要建立索引：如果某个字段频繁修改，那就意味着也需要修改索引，这必然影响MySQL的性能；</li>
 <li>为频繁查询的字段建立索引：建立索引要为经常作为查询条件的字段建立索引，这样能提高SQL的查询效率；与之相反的不要为很少使用的字段建立索引；</li>
 <li>避免为”大字段”建立索引：就是尽量使用字段长度小的字段作为索引；例如，要为<code>varchar(5)</code>和<code>varchar(200)</code>的字段建立索引，则优先考虑为<code>varchar(5)</code>的建立；如果非要为<code>varchar(200)</code>的字段建立索引那么可以这样：
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 为varchar(200)的字段建立索引，将其长度设置为 20  
-</span></span><span class="line"><span class="cl"> create index  tbl_001 on dual(address(20));
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="o">--</span> <span class="err">为</span><span class="n">varchar</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span><span class="err">的字段建立索引，将其长度设置为</span> <span class="mi">20</span>  
+</span></span><span class="line"><span class="cl"> <span class="n">create</span> <span class="n">index</span>  <span class="n">tbl_001</span> <span class="n">on</span> <span class="n">dual</span><span class="p">(</span><span class="n">address</span><span class="p">(</span><span class="mi">20</span><span class="p">));</span>
 </span></span></code></pre></div></li>
 <li>选择数据区分大的列建立索引：如果某个字段包含许多重复的数据则不适合建立索引。假设现在有一个”性别”字段，里面存放的数据的值要么是男，要么是女，这样的字段很不适合作为索引。因为如果值出现的几率几乎相等，那么无论搜索哪个值都可能得到一半的数据。在这些情况下，还不如不要索引，因为MySQL他还有一个查询优化器，查询优化器发现某个值出现在表的数据行中的百分比很高的时候，它一般会忽略索引，进行全表扫描。
 <blockquote>
@@ -1675,9 +1679,9 @@
 </ul>
 <h4 id="type">type</h4>
 <p>type是索引类型，是较为重要的一个指标，结果值从最好到最坏依次是：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> system &gt; const &gt; eq_ref &gt; ref &gt; fulltext &gt; ref_or_null &gt; index_merge &gt; unique_subquery &gt; index_subquery &gt; range &gt; index &gt;ALL
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="n">system</span> <span class="o">&gt;</span> <span class="k">const</span> <span class="o">&gt;</span> <span class="n">eq_ref</span> <span class="o">&gt;</span> <span class="n">ref</span> <span class="o">&gt;</span> <span class="n">fulltext</span> <span class="o">&gt;</span> <span class="n">ref_or_null</span> <span class="o">&gt;</span> <span class="n">index_merge</span> <span class="o">&gt;</span> <span class="n">unique_subquery</span> <span class="o">&gt;</span> <span class="n">index_subquery</span> <span class="o">&gt;</span> <span class="nb">range</span> <span class="o">&gt;</span> <span class="n">index</span> <span class="o">&gt;</span><span class="n">ALL</span>
 </span></span></code></pre></div><p>实际工作中可能用不到这么多，一般只要记住以下就行了：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> system &gt; const &gt; eq_ref &gt; ref &gt; range &gt; index &gt; ALL
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="n">system</span> <span class="o">&gt;</span> <span class="k">const</span> <span class="o">&gt;</span> <span class="n">eq_ref</span> <span class="o">&gt;</span> <span class="n">ref</span> <span class="o">&gt;</span> <span class="nb">range</span> <span class="o">&gt;</span> <span class="n">index</span> <span class="o">&gt;</span> <span class="n">ALL</span>
 </span></span></code></pre></div><p>其中system、const只是理想情况，实际能达到ref、range。</p>
 <p>常见索引类型：</p>
 <ul>
@@ -1721,13 +1725,13 @@
 </span></span><span class="line"><span class="cl"> +----+-------------+---------+-------+---------------+----------+---------+------+------+-------------+
 </span></span></code></pre></div><h4 id="key_len">key_len</h4>
 <p>key_len索引使用的长度，可通过索引列长度，例如：<code>name vachar(20)</code>，来判断复合索引到底有没有使用。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- name为索引列；可以为null；varchar类型；utf8字符集；
-</span></span><span class="line"><span class="cl"> explain select name from tbl_001 name = &#39;zs&#39;;
-</span></span><span class="line"><span class="cl"> +----+-------------+---------+-------+---------------+----------+---------+------+------+-------------+
-</span></span><span class="line"><span class="cl"> | id | select_type | table   | type  | possible_keys | key      | key_len | ref  | rows | Extra       |
-</span></span><span class="line"><span class="cl"> +----+-------------+---------+-------+---------------+----------+---------+------+------+-------------+
-</span></span><span class="line"><span class="cl"> |  1 | SIMPLE      | tbl_001 | index | NULL          | idx_name | 63      | NULL |    4 | Using index |
-</span></span><span class="line"><span class="cl"> +----+-------------+---------+-------+---------------+----------+---------+------+------+-------------+
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="o">--</span> <span class="n">name为索引列</span><span class="err">；可以为</span><span class="n">null</span><span class="err">；</span><span class="n">varchar类型</span><span class="err">；</span><span class="n">utf8字符集</span><span class="err">；</span>
+</span></span><span class="line"><span class="cl"> <span class="n">explain</span> <span class="n">select</span> <span class="n">name</span> <span class="n">from</span> <span class="n">tbl_001</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;zs&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+---------+-------+---------------+----------+---------+------+------+-------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">id</span> <span class="o">|</span> <span class="n">select_type</span> <span class="o">|</span> <span class="n">table</span>   <span class="o">|</span> <span class="n">type</span>  <span class="o">|</span> <span class="n">possible_keys</span> <span class="o">|</span> <span class="n">key</span>      <span class="o">|</span> <span class="n">key_len</span> <span class="o">|</span> <span class="n">ref</span>  <span class="o">|</span> <span class="n">rows</span> <span class="o">|</span> <span class="n">Extra</span>       <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+---------+-------+---------------+----------+---------+------+------+-------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">SIMPLE</span>      <span class="o">|</span> <span class="n">tbl_001</span> <span class="o">|</span> <span class="n">index</span> <span class="o">|</span> <span class="n">NULL</span>          <span class="o">|</span> <span class="n">idx_name</span> <span class="o">|</span> <span class="mi">63</span>      <span class="o">|</span> <span class="n">NULL</span> <span class="o">|</span>    <span class="mi">4</span> <span class="o">|</span> <span class="n">Using</span> <span class="n">index</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+---------+-------+---------------+----------+---------+------+------+-------------+</span>
 </span></span></code></pre></div><p>其中，如果索引字段可以为null，MySQL会用一个字节进行标识；varchar为可变长度，MySQL用两个字节来标识。</p>
 <blockquote>
 <p>utf8：一个字符三个字节；
@@ -1737,16 +1741,16 @@ latin：一个字符一个字节；</p>
 <p>举例，字段<code>name vachar(20)</code>，不能为null，utf8编码，执行执行计划name列使用到了索引那么key_len等于<code>20*3+1+2=63</code>。</p>
 <h4 id="ref">ref</h4>
 <p>ref指明当前表所引用的字段。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 其中b.d可以为常量，常量用 const 标识
-</span></span><span class="line"><span class="cl"> select ... where a.c = b.d;  
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- tid 为索引列
-</span></span><span class="line"><span class="cl"> explain select * from tbl_001 t1,tbl_002 t2 where t1.tid = t2.id and t1.name = &#39;zs&#39;;
-</span></span><span class="line"><span class="cl"> +----+-------------+-------+--------+------------------+----------+---------+-----------------+------+-------------+
-</span></span><span class="line"><span class="cl"> | id | select_type | table | type   | possible_keys    | key      | key_len | ref             | rows | Extra       |
-</span></span><span class="line"><span class="cl"> +----+-------------+-------+--------+------------------+----------+---------+-----------------+------+-------------+
-</span></span><span class="line"><span class="cl"> |  1 | SIMPLE      | t1    | ref    | idx_name,idx_tid | idx_name | 83      | const           |    1 | Using where |
-</span></span><span class="line"><span class="cl"> |  1 | SIMPLE      | t2    | eq_ref | PRIMARY          | PRIMARY  | 4       | sql_demo.t1.tid |    1 | NULL        |
-</span></span><span class="line"><span class="cl"> +----+-------------+-------+--------+------------------+----------+---------+-----------------+------+-------------+
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="o">--</span> <span class="err">其中</span><span class="n">b</span><span class="o">.</span><span class="n">d可以为常量</span><span class="err">，常量用</span> <span class="k">const</span> <span class="err">标识</span>
+</span></span><span class="line"><span class="cl"> <span class="n">select</span> <span class="o">...</span> <span class="n">where</span> <span class="n">a</span><span class="o">.</span><span class="n">c</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">d</span><span class="p">;</span>  
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="o">--</span> <span class="n">tid</span> <span class="err">为索引列</span>
+</span></span><span class="line"><span class="cl"> <span class="n">explain</span> <span class="n">select</span> <span class="o">*</span> <span class="n">from</span> <span class="n">tbl_001</span> <span class="n">t1</span><span class="p">,</span><span class="n">tbl_002</span> <span class="n">t2</span> <span class="n">where</span> <span class="n">t1</span><span class="o">.</span><span class="n">tid</span> <span class="o">=</span> <span class="n">t2</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="n">t1</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;zs&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+-------+--------+------------------+----------+---------+-----------------+------+-------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">id</span> <span class="o">|</span> <span class="n">select_type</span> <span class="o">|</span> <span class="n">table</span> <span class="o">|</span> <span class="n">type</span>   <span class="o">|</span> <span class="n">possible_keys</span>    <span class="o">|</span> <span class="n">key</span>      <span class="o">|</span> <span class="n">key_len</span> <span class="o">|</span> <span class="n">ref</span>             <span class="o">|</span> <span class="n">rows</span> <span class="o">|</span> <span class="n">Extra</span>       <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+-------+--------+------------------+----------+---------+-----------------+------+-------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">SIMPLE</span>      <span class="o">|</span> <span class="n">t1</span>    <span class="o">|</span> <span class="n">ref</span>    <span class="o">|</span> <span class="n">idx_name</span><span class="p">,</span><span class="n">idx_tid</span> <span class="o">|</span> <span class="n">idx_name</span> <span class="o">|</span> <span class="mi">83</span>      <span class="o">|</span> <span class="k">const</span>           <span class="o">|</span>    <span class="mi">1</span> <span class="o">|</span> <span class="n">Using</span> <span class="n">where</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">SIMPLE</span>      <span class="o">|</span> <span class="n">t2</span>    <span class="o">|</span> <span class="n">eq_ref</span> <span class="o">|</span> <span class="n">PRIMARY</span>          <span class="o">|</span> <span class="n">PRIMARY</span>  <span class="o">|</span> <span class="mi">4</span>       <span class="o">|</span> <span class="n">sql_demo</span><span class="o">.</span><span class="n">t1</span><span class="o">.</span><span class="n">tid</span> <span class="o">|</span>    <span class="mi">1</span> <span class="o">|</span> <span class="n">NULL</span>        <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+-------+--------+------------------+----------+---------+-----------------+------+-------------+</span>
 </span></span></code></pre></div><h4 id="rows">rows</h4>
 <p>rows表示查询行数，实际通过索引查询到的个数。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> mysql&gt; select * from tbl_001 t1,tbl_002 t2 where t1.tid = t2.id and t1.name = &#39;ls&#39;;
@@ -1769,47 +1773,47 @@ latin：一个字符一个字节；</p>
 <p>常见值：</p>
 <ul>
 <li>Using filesort：文件内排序；出现这个值代表额外的一次排序（查询），性能消耗比较大，需要进行SQL优化。常见order by语句中；
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- name 为单值索引
-</span></span><span class="line"><span class="cl"> explain select * from tbl_001 where name = &#39;zs&#39; order by tid;
-</span></span><span class="line"><span class="cl"> +----+-------------+---------+------+---------------+----------+---------+-------+------+----------------+
-</span></span><span class="line"><span class="cl"> | id | select_type | table   | type | possible_keys | key      | key_len | ref   | rows | Extra          |
-</span></span><span class="line"><span class="cl"> +----+-------------+---------+------+---------------+----------+---------+-------+------+----------------+
-</span></span><span class="line"><span class="cl"> |  1 | SIMPLE      | tbl_001 | ref  | idx_name      | idx_name | 83      | const |    1 | Using filesort |
-</span></span><span class="line"><span class="cl"> +----+-------------+---------+------+---------------+----------+---------+-------+------+----------------+
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="o">--</span> <span class="n">name</span> <span class="err">为单值索引</span>
+</span></span><span class="line"><span class="cl"> <span class="n">explain</span> <span class="n">select</span> <span class="o">*</span> <span class="n">from</span> <span class="n">tbl_001</span> <span class="n">where</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;zs&#39;</span> <span class="n">order</span> <span class="n">by</span> <span class="n">tid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+---------+------+---------------+----------+---------+-------+------+----------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">id</span> <span class="o">|</span> <span class="n">select_type</span> <span class="o">|</span> <span class="n">table</span>   <span class="o">|</span> <span class="n">type</span> <span class="o">|</span> <span class="n">possible_keys</span> <span class="o">|</span> <span class="n">key</span>      <span class="o">|</span> <span class="n">key_len</span> <span class="o">|</span> <span class="n">ref</span>   <span class="o">|</span> <span class="n">rows</span> <span class="o">|</span> <span class="n">Extra</span>          <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+---------+------+---------------+----------+---------+-------+------+----------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">SIMPLE</span>      <span class="o">|</span> <span class="n">tbl_001</span> <span class="o">|</span> <span class="n">ref</span>  <span class="o">|</span> <span class="n">idx_name</span>      <span class="o">|</span> <span class="n">idx_name</span> <span class="o">|</span> <span class="mi">83</span>      <span class="o">|</span> <span class="k">const</span> <span class="o">|</span>    <span class="mi">1</span> <span class="o">|</span> <span class="n">Using</span> <span class="n">filesort</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+---------+------+---------------+----------+---------+-------+------+----------------+</span>
 </span></span></code></pre></div>对于单值索引来说，如果排序和查找的是同一个字段，则不会出现 Using filesort 反之则出现;一般通过where哪些字段就 orderby 哪些字段来避免。
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- name，tid 为复合索引
-</span></span><span class="line"><span class="cl"> explain select * from tbl_001 where name = &#39;zs&#39; order by tid;
-</span></span><span class="line"><span class="cl"> +----+-------------+---------+------+---------------+-----------+---------+-------+------+-------------+
-</span></span><span class="line"><span class="cl"> | id | select_type | table   | type | possible_keys | key       | key_len | ref   | rows | Extra       |
-</span></span><span class="line"><span class="cl"> +----+-------------+---------+------+---------------+-----------+---------+-------+------+-------------+
-</span></span><span class="line"><span class="cl"> |  1 | SIMPLE      | tbl_001 | ref  | idx_trans     | idx_trans | 83      | const |    1 | Using index |
-</span></span><span class="line"><span class="cl"> +----+-------------+---------+------+---------------+-----------+---------+-------+------+-------------+
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="o">--</span> <span class="n">name</span><span class="err">，</span><span class="n">tid</span> <span class="err">为复合索引</span>
+</span></span><span class="line"><span class="cl"> <span class="n">explain</span> <span class="n">select</span> <span class="o">*</span> <span class="n">from</span> <span class="n">tbl_001</span> <span class="n">where</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;zs&#39;</span> <span class="n">order</span> <span class="n">by</span> <span class="n">tid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+---------+------+---------------+-----------+---------+-------+------+-------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">id</span> <span class="o">|</span> <span class="n">select_type</span> <span class="o">|</span> <span class="n">table</span>   <span class="o">|</span> <span class="n">type</span> <span class="o">|</span> <span class="n">possible_keys</span> <span class="o">|</span> <span class="n">key</span>       <span class="o">|</span> <span class="n">key_len</span> <span class="o">|</span> <span class="n">ref</span>   <span class="o">|</span> <span class="n">rows</span> <span class="o">|</span> <span class="n">Extra</span>       <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+---------+------+---------------+-----------+---------+-------+------+-------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">SIMPLE</span>      <span class="o">|</span> <span class="n">tbl_001</span> <span class="o">|</span> <span class="n">ref</span>  <span class="o">|</span> <span class="n">idx_trans</span>     <span class="o">|</span> <span class="n">idx_trans</span> <span class="o">|</span> <span class="mi">83</span>      <span class="o">|</span> <span class="k">const</span> <span class="o">|</span>    <span class="mi">1</span> <span class="o">|</span> <span class="n">Using</span> <span class="n">index</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+---------+------+---------------+-----------+---------+-------+------+-------------+</span>
 </span></span></code></pre></div>对于复合索引来说要按照建立复合索引的顺序来使用，不要跨列或者无序使用。
 <blockquote>
 <p>跨列使用指，where后边的字段和order by后边的字段拼接起来，看是否满足索引的顺序，如不满足则为跨列，会出现Using filsort。</p>
 </blockquote>
 </li>
 <li>Using temporary：使了用临时表保存中间结果，MysQL在对查询结果排序时使用临时表。性能消耗也是很大的，一般出现这个词需要进行SQL优化。常见于分组查询group by语句；
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- name、tid、cid 为复合索引
-</span></span><span class="line"><span class="cl"> explain select name from tbl_001 where name = &#39;zs&#39; group by cid;
-</span></span><span class="line"><span class="cl"> +----+-------------+---------+------+---------------+---------+---------+-------+------+------------------------------+
-</span></span><span class="line"><span class="cl"> | id | select_type | table   | type | possible_keys | key     | key_len | ref   | rows | Extra                        |
-</span></span><span class="line"><span class="cl"> +----+-------------+---------+------+---------------+---------+---------+-------+------+------------------------------+
-</span></span><span class="line"><span class="cl"> |  1 | SIMPLE      | tbl_001 | ref  | idx_ntc       | idx_ntc | 83      | const |    2 | Using index; Using temporary |
-</span></span><span class="line"><span class="cl"> +----+-------------+---------+------+---------------+---------+---------+-------+------+------------------------------+
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="o">--</span> <span class="n">name</span><span class="err">、</span><span class="n">tid</span><span class="err">、</span><span class="n">cid</span> <span class="err">为复合索引</span>
+</span></span><span class="line"><span class="cl"> <span class="n">explain</span> <span class="n">select</span> <span class="n">name</span> <span class="n">from</span> <span class="n">tbl_001</span> <span class="n">where</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;zs&#39;</span> <span class="n">group</span> <span class="n">by</span> <span class="n">cid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+---------+------+---------------+---------+---------+-------+------+------------------------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">id</span> <span class="o">|</span> <span class="n">select_type</span> <span class="o">|</span> <span class="n">table</span>   <span class="o">|</span> <span class="n">type</span> <span class="o">|</span> <span class="n">possible_keys</span> <span class="o">|</span> <span class="n">key</span>     <span class="o">|</span> <span class="n">key_len</span> <span class="o">|</span> <span class="n">ref</span>   <span class="o">|</span> <span class="n">rows</span> <span class="o">|</span> <span class="n">Extra</span>                        <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+---------+------+---------------+---------+---------+-------+------+------------------------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">SIMPLE</span>      <span class="o">|</span> <span class="n">tbl_001</span> <span class="o">|</span> <span class="n">ref</span>  <span class="o">|</span> <span class="n">idx_ntc</span>       <span class="o">|</span> <span class="n">idx_ntc</span> <span class="o">|</span> <span class="mi">83</span>      <span class="o">|</span> <span class="k">const</span> <span class="o">|</span>    <span class="mi">2</span> <span class="o">|</span> <span class="n">Using</span> <span class="n">index</span><span class="p">;</span> <span class="n">Using</span> <span class="n">temporary</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+---------+------+---------------+---------+---------+-------+------+------------------------------+</span>
 </span></span></code></pre></div>Using temporary出现的原因，已经有表了但是不使用，必须再来一张表。我们可以通过查询哪些列，就通过哪些列来分组来避免。</li>
 <li>Using index：出现这个值代表性能还是不错的；表示使用到了覆盖索引，不读取源文件，只从索引文件中获取数据，不需要回表查询。
 <blockquote>
 <p>覆盖索引（Covering Index）,一说为索引覆盖: 查询的数据列从索引文件中就能够取得，不必读取原数据行，MySQL可以利用索引返回select列表中的字段，而不必根据索引再次读取数据文件,换句话说查询到的列全部都在索引列中就是索引覆盖。
 如果要使用覆盖索引，一定要注意select列表中只取出需要的列，不可select*，因为如果将所有字段一起做索引会导致索引文件过大，查询性能下降。</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- name、tid、cid 为复合索引
-</span></span><span class="line"><span class="cl"> explain select name,tid,cid from tbl_001 where name = &#39;zs&#39;;
-</span></span><span class="line"><span class="cl"> +----+-------------+---------+------+---------------+---------+---------+-------+------+-------------+
-</span></span><span class="line"><span class="cl"> | id | select_type | table   | type | possible_keys | key     | key_len | ref   | rows | Extra       |
-</span></span><span class="line"><span class="cl"> +----+-------------+---------+------+---------------+---------+---------+-------+------+-------------+
-</span></span><span class="line"><span class="cl"> |  1 | SIMPLE      | tbl_001 | ref  | idx_ntc       | idx_ntc | 83      | const |    2 | Using index |
-</span></span><span class="line"><span class="cl"> +----+-------------+---------+------+---------------+---------+---------+-------+------+-------------+
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="o">--</span> <span class="n">name</span><span class="err">、</span><span class="n">tid</span><span class="err">、</span><span class="n">cid</span> <span class="err">为复合索引</span>
+</span></span><span class="line"><span class="cl"> <span class="n">explain</span> <span class="n">select</span> <span class="n">name</span><span class="p">,</span><span class="n">tid</span><span class="p">,</span><span class="n">cid</span> <span class="n">from</span> <span class="n">tbl_001</span> <span class="n">where</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;zs&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+---------+------+---------------+---------+---------+-------+------+-------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">id</span> <span class="o">|</span> <span class="n">select_type</span> <span class="o">|</span> <span class="n">table</span>   <span class="o">|</span> <span class="n">type</span> <span class="o">|</span> <span class="n">possible_keys</span> <span class="o">|</span> <span class="n">key</span>     <span class="o">|</span> <span class="n">key_len</span> <span class="o">|</span> <span class="n">ref</span>   <span class="o">|</span> <span class="n">rows</span> <span class="o">|</span> <span class="n">Extra</span>       <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+---------+------+---------------+---------+---------+-------+------+-------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">SIMPLE</span>      <span class="o">|</span> <span class="n">tbl_001</span> <span class="o">|</span> <span class="n">ref</span>  <span class="o">|</span> <span class="n">idx_ntc</span>       <span class="o">|</span> <span class="n">idx_ntc</span> <span class="o">|</span> <span class="mi">83</span>      <span class="o">|</span> <span class="k">const</span> <span class="o">|</span>    <span class="mi">2</span> <span class="o">|</span> <span class="n">Using</span> <span class="n">index</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+---------+------+---------------+---------+---------+-------+------+-------------+</span>
 </span></span></code></pre></div>如果用到了索引覆盖时，会对possible_key和key造成影响：
 <ul>
 <li>如果没有使用到where，则索引只出现在key中；</li>
@@ -1817,13 +1821,13 @@ latin：一个字符一个字节；</p>
 </ul>
 </li>
 <li>Using where：出现这个值代表需要回表查询；
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- name 为单值索引，此时索引中不包含其他字段，想要查询其他字段就必须回表查询
-</span></span><span class="line"><span class="cl"> explain select name,tid,cid from tbl_001 where name = &#39;zs&#39;;
-</span></span><span class="line"><span class="cl"> +----+-------------+---------+------+---------------+---------+---------+-------+------+-------------+
-</span></span><span class="line"><span class="cl"> | id | select_type | table   | type | possible_keys | key     | key_len | ref   | rows | Extra       |
-</span></span><span class="line"><span class="cl"> +----+-------------+---------+------+---------------+---------+---------+-------+------+-------------+
-</span></span><span class="line"><span class="cl"> |  1 | SIMPLE      | tbl_001 | ref  | idx_name      | idx_name | 83     | const |   2  | Using where |
-</span></span><span class="line"><span class="cl"> +----+-------------+---------+------+---------------+---------+---------+-------+------+-------------+
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="o">--</span> <span class="n">name</span> <span class="err">为单值索引，此时索引中不包含其他字段，想要查询其他字段就必须回表查询</span>
+</span></span><span class="line"><span class="cl"> <span class="n">explain</span> <span class="n">select</span> <span class="n">name</span><span class="p">,</span><span class="n">tid</span><span class="p">,</span><span class="n">cid</span> <span class="n">from</span> <span class="n">tbl_001</span> <span class="n">where</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;zs&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+---------+------+---------------+---------+---------+-------+------+-------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">id</span> <span class="o">|</span> <span class="n">select_type</span> <span class="o">|</span> <span class="n">table</span>   <span class="o">|</span> <span class="n">type</span> <span class="o">|</span> <span class="n">possible_keys</span> <span class="o">|</span> <span class="n">key</span>     <span class="o">|</span> <span class="n">key_len</span> <span class="o">|</span> <span class="n">ref</span>   <span class="o">|</span> <span class="n">rows</span> <span class="o">|</span> <span class="n">Extra</span>       <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+---------+------+---------------+---------+---------+-------+------+-------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">SIMPLE</span>      <span class="o">|</span> <span class="n">tbl_001</span> <span class="o">|</span> <span class="n">ref</span>  <span class="o">|</span> <span class="n">idx_name</span>      <span class="o">|</span> <span class="n">idx_name</span> <span class="o">|</span> <span class="mi">83</span>     <span class="o">|</span> <span class="k">const</span> <span class="o">|</span>   <span class="mi">2</span>  <span class="o">|</span> <span class="n">Using</span> <span class="n">where</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+---------+------+---------------+---------+---------+-------+------+-------------+</span>
 </span></span></code></pre></div></li>
 <li>Impossible WHERE：where语句永远为false，永远不成立；
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> explain select * from tbl_001 where name = &#39;zs&#39; and name = &#39;ls&#39;;
@@ -1836,19 +1840,19 @@ latin：一个字符一个字节；</p>
 </ul>
 <h3 id="sql优化案例">SQL优化案例</h3>
 <h4 id="单表优化">单表优化</h4>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 准备测试表、测试数据
-</span></span><span class="line"><span class="cl"> create table book_2021(
-</span></span><span class="line"><span class="cl">   bid int(4) primary key,
-</span></span><span class="line"><span class="cl">   name varchar(20) not null,
-</span></span><span class="line"><span class="cl">   authorid int(4) not null,
-</span></span><span class="line"><span class="cl">   publicid int(4) not null,
-</span></span><span class="line"><span class="cl">   typeid int(4) not null  
-</span></span><span class="line"><span class="cl"> );
-</span></span><span class="line"><span class="cl"> insert into book_2021 values(1,&#39;java&#39;,1,1,2);
-</span></span><span class="line"><span class="cl"> insert into book_2021 values(2,&#39;php&#39;,4,1,2);
-</span></span><span class="line"><span class="cl"> insert into book_2021 values(3,&#39;c&#39;,1,2,2);
-</span></span><span class="line"><span class="cl"> insert into book_2021 values(4,&#39;c#&#39;,3,1,2);
-</span></span><span class="line"><span class="cl"> insert into book_2021 values(5,&#39;c++&#39;,3,1,2);
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="o">--</span> <span class="err">准备测试表、测试数据</span>
+</span></span><span class="line"><span class="cl"> <span class="n">create</span> <span class="n">table</span> <span class="n">book_2021</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">   <span class="n">bid</span> <span class="ne">int</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="n">primary</span> <span class="n">key</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="n">name</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="ow">not</span> <span class="n">null</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="n">authorid</span> <span class="ne">int</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="ow">not</span> <span class="n">null</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="n">publicid</span> <span class="ne">int</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="ow">not</span> <span class="n">null</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="n">typeid</span> <span class="ne">int</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="ow">not</span> <span class="n">null</span>  
+</span></span><span class="line"><span class="cl"> <span class="p">);</span>
+</span></span><span class="line"><span class="cl"> <span class="n">insert</span> <span class="n">into</span> <span class="n">book_2021</span> <span class="n">values</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;java&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"> <span class="n">insert</span> <span class="n">into</span> <span class="n">book_2021</span> <span class="n">values</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;php&#39;</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"> <span class="n">insert</span> <span class="n">into</span> <span class="n">book_2021</span> <span class="n">values</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"> <span class="n">insert</span> <span class="n">into</span> <span class="n">book_2021</span> <span class="n">values</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="s1">&#39;c#&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"> <span class="n">insert</span> <span class="n">into</span> <span class="n">book_2021</span> <span class="n">values</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="s1">&#39;c++&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
 </span></span></code></pre></div><p>需要优化的SQL：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- SQL原型，优化该SQL 
 </span></span><span class="line"><span class="cl"> select bid from book_2021 where typeid in(2,3) and authorid=1 order by typeid desc;
@@ -1894,24 +1898,24 @@ latin：一个字符一个字节；</p>
 <li>将包含范围查询的条件放置到最后</li>
 </ul>
 <h4 id="两表优化">两表优化</h4>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 准备测试表、测试数据
-</span></span><span class="line"><span class="cl"> create table teacher2(
-</span></span><span class="line"><span class="cl">   tid int(4) primary key,
-</span></span><span class="line"><span class="cl">   cid int(4) not null  
-</span></span><span class="line"><span class="cl"> );
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="o">--</span> <span class="err">准备测试表、测试数据</span>
+</span></span><span class="line"><span class="cl"> <span class="n">create</span> <span class="n">table</span> <span class="n">teacher2</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">   <span class="n">tid</span> <span class="ne">int</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="n">primary</span> <span class="n">key</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="n">cid</span> <span class="ne">int</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="ow">not</span> <span class="n">null</span>  
+</span></span><span class="line"><span class="cl"> <span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"> insert into teacher2 values(1,2);
-</span></span><span class="line"><span class="cl"> insert into teacher2 values(2,1);
-</span></span><span class="line"><span class="cl"> insert into teacher2 values(3,3);
+</span></span><span class="line"><span class="cl"> <span class="n">insert</span> <span class="n">into</span> <span class="n">teacher2</span> <span class="n">values</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"> <span class="n">insert</span> <span class="n">into</span> <span class="n">teacher2</span> <span class="n">values</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"> <span class="n">insert</span> <span class="n">into</span> <span class="n">teacher2</span> <span class="n">values</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"> create table course2(
-</span></span><span class="line"><span class="cl">   cid int(4) not null,
-</span></span><span class="line"><span class="cl">   cname varchar(20)
-</span></span><span class="line"><span class="cl"> );
+</span></span><span class="line"><span class="cl"> <span class="n">create</span> <span class="n">table</span> <span class="n">course2</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">   <span class="n">cid</span> <span class="ne">int</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="ow">not</span> <span class="n">null</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="n">cname</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"> <span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"> insert into course2 values(1,&#39;java&#39;);
-</span></span><span class="line"><span class="cl"> insert into course2 values(2,&#39;phython&#39;);
-</span></span><span class="line"><span class="cl"> insert into course2 values(3,&#39;kotlin&#39;);
+</span></span><span class="line"><span class="cl"> <span class="n">insert</span> <span class="n">into</span> <span class="n">course2</span> <span class="n">values</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;java&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"> <span class="n">insert</span> <span class="n">into</span> <span class="n">course2</span> <span class="n">values</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;phython&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"> <span class="n">insert</span> <span class="n">into</span> <span class="n">course2</span> <span class="n">values</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;kotlin&#39;</span><span class="p">);</span>
 </span></span></code></pre></div><p>需要优化的SQL：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- SQL原型，优化该SQL 
 </span></span><span class="line"><span class="cl"> select * from teacher2 t left outer join course2 c on t.cid = c.cid where c.cname = &#39;java&#39;;
@@ -1944,14 +1948,14 @@ latin：一个字符一个字节；</p>
 </span></span><span class="line"><span class="cl"> alter table teacher2 add index idx_teacher2_cid(cid);
 </span></span><span class="line"><span class="cl"> alter table course2 add index idx_course2_cname(cname);
 </span></span></code></pre></div><p>最终优化后的SQL：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 添加索引后
-</span></span><span class="line"><span class="cl"> explain select * from teacher2 t left outer join course2 c on t.cid = c.cid where c.cname = &#39;java&#39;;
-</span></span><span class="line"><span class="cl"> +----+-------------+-------+------------+------+-------------------+-------------------+---------+----------------+------+----------+-------------+
-</span></span><span class="line"><span class="cl"> | id | select_type | table | partitions | type | possible_keys     | key               | key_len | ref            | rows | filtered | Extra       |
-</span></span><span class="line"><span class="cl"> +----+-------------+-------+------------+------+-------------------+-------------------+---------+----------------+------+----------+-------------+
-</span></span><span class="line"><span class="cl"> |  1 | SIMPLE      | c     | NULL       | ref  | idx_course2_cname | idx_course2_cname | 83      | const          |    1 |   100.00 | Using where |
-</span></span><span class="line"><span class="cl"> |  1 | SIMPLE      | t     | NULL       | ref  | idx_teacher2_cid  | idx_teacher2_cid  | 4       | sql_demo.c.cid |    1 |   100.00 | Using index |
-</span></span><span class="line"><span class="cl"> +----+-------------+-------+------------+------+-------------------+-------------------+---------+----------------+------+----------+-------------+
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="o">--</span> <span class="err">添加索引后</span>
+</span></span><span class="line"><span class="cl"> <span class="n">explain</span> <span class="n">select</span> <span class="o">*</span> <span class="n">from</span> <span class="n">teacher2</span> <span class="n">t</span> <span class="n">left</span> <span class="n">outer</span> <span class="n">join</span> <span class="n">course2</span> <span class="n">c</span> <span class="n">on</span> <span class="n">t</span><span class="o">.</span><span class="n">cid</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">cid</span> <span class="n">where</span> <span class="n">c</span><span class="o">.</span><span class="n">cname</span> <span class="o">=</span> <span class="s1">&#39;java&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+-------+------------+------+-------------------+-------------------+---------+----------------+------+----------+-------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">id</span> <span class="o">|</span> <span class="n">select_type</span> <span class="o">|</span> <span class="n">table</span> <span class="o">|</span> <span class="n">partitions</span> <span class="o">|</span> <span class="n">type</span> <span class="o">|</span> <span class="n">possible_keys</span>     <span class="o">|</span> <span class="n">key</span>               <span class="o">|</span> <span class="n">key_len</span> <span class="o">|</span> <span class="n">ref</span>            <span class="o">|</span> <span class="n">rows</span> <span class="o">|</span> <span class="n">filtered</span> <span class="o">|</span> <span class="n">Extra</span>       <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+-------+------------+------+-------------------+-------------------+---------+----------------+------+----------+-------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">SIMPLE</span>      <span class="o">|</span> <span class="n">c</span>     <span class="o">|</span> <span class="n">NULL</span>       <span class="o">|</span> <span class="n">ref</span>  <span class="o">|</span> <span class="n">idx_course2_cname</span> <span class="o">|</span> <span class="n">idx_course2_cname</span> <span class="o">|</span> <span class="mi">83</span>      <span class="o">|</span> <span class="k">const</span>          <span class="o">|</span>    <span class="mi">1</span> <span class="o">|</span>   <span class="mf">100.00</span> <span class="o">|</span> <span class="n">Using</span> <span class="n">where</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">SIMPLE</span>      <span class="o">|</span> <span class="n">t</span>     <span class="o">|</span> <span class="n">NULL</span>       <span class="o">|</span> <span class="n">ref</span>  <span class="o">|</span> <span class="n">idx_teacher2_cid</span>  <span class="o">|</span> <span class="n">idx_teacher2_cid</span>  <span class="o">|</span> <span class="mi">4</span>       <span class="o">|</span> <span class="n">sql_demo</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">cid</span> <span class="o">|</span>    <span class="mi">1</span> <span class="o">|</span>   <span class="mf">100.00</span> <span class="o">|</span> <span class="n">Using</span> <span class="n">index</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----+-------------+-------+------------+------+-------------------+-------------------+---------+----------------+------+----------+-------------+</span>
 </span></span></code></pre></div><p>多表优化总结：</p>
 <ul>
 <li>小表驱动大表；</li>
@@ -2029,64 +2033,64 @@ latin：一个字符一个字节；</p>
 <p>在MySQL中可以通过抓去慢SQL日志来进行SQL排查，慢SQL日志超过响应时间的阈值默认10秒，便会记录该SQL;慢SQL日志默认是关闭的，建议在开发调优时打开，最终部署上线时关闭。</p>
 <h4 id="慢sql日志设置">慢SQL日志设置</h4>
 <p>通过SQL来查看记录慢SQL日志是否开启：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 查看变量 slow_query_log，记录慢查询日志默认关闭
-</span></span><span class="line"><span class="cl"> show variables like &#39;%slow_query_log%&#39;;
-</span></span><span class="line"><span class="cl"> +---------------------+----------------------------------------------+
-</span></span><span class="line"><span class="cl"> | Variable_name       | Value                                        |
-</span></span><span class="line"><span class="cl"> +---------------------+----------------------------------------------+
-</span></span><span class="line"><span class="cl"> | slow_query_log      | OFF                                          |
-</span></span><span class="line"><span class="cl"> | slow_query_log_file | /usr/local/mysql/data/MacBook-Pro-2-slow.log |
-</span></span><span class="line"><span class="cl"> +---------------------+----------------------------------------------+
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="o">--</span> <span class="err">查看变量</span> <span class="n">slow_query_log</span><span class="err">，记录慢查询日志默认关闭</span>
+</span></span><span class="line"><span class="cl"> <span class="n">show</span> <span class="n">variables</span> <span class="n">like</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">low_query_log%&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+---------------------+----------------------------------------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">Variable_name</span>       <span class="o">|</span> <span class="n">Value</span>                                        <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+---------------------+----------------------------------------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">slow_query_log</span>      <span class="o">|</span> <span class="n">OFF</span>                                          <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">slow_query_log_file</span> <span class="o">|</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">MacBook</span><span class="o">-</span><span class="n">Pro</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">slow</span><span class="o">.</span><span class="n">log</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+---------------------+----------------------------------------------+</span>
 </span></span></code></pre></div><p>可以通过SQL来进行开启记录慢SQL日志：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 在内存中开启慢SQL记录日志； 此种方式在 mysql 服务重启后失效
-</span></span><span class="line"><span class="cl"> set global slow_query_log=1;
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="o">--</span> <span class="err">在内存中开启慢</span><span class="n">SQL记录日志</span><span class="err">；</span> <span class="err">此种方式在</span> <span class="n">mysql</span> <span class="err">服务重启后失效</span>
+</span></span><span class="line"><span class="cl"> <span class="n">set</span> <span class="n">global</span> <span class="n">slow_query_log</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl"> -- 查看是否开启慢SQL日志记录
-</span></span><span class="line"><span class="cl"> show variables like &#39;%slow_query_log%&#39;;
-</span></span><span class="line"><span class="cl"> +---------------------+----------------------------------------------+
-</span></span><span class="line"><span class="cl"> | Variable_name       | Value                                        |
-</span></span><span class="line"><span class="cl"> +---------------------+----------------------------------------------+
-</span></span><span class="line"><span class="cl"> | slow_query_log      | ON                                           |
-</span></span><span class="line"><span class="cl"> | slow_query_log_file | /usr/local/mysql/data/MacBook-Pro-2-slow.log |
-</span></span><span class="line"><span class="cl"> +---------------------+----------------------------------------------+
+</span></span><span class="line"><span class="cl"> <span class="o">--</span> <span class="err">查看是否开启慢</span><span class="n">SQL日志记录</span>
+</span></span><span class="line"><span class="cl"> <span class="n">show</span> <span class="n">variables</span> <span class="n">like</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">low_query_log%&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+---------------------+----------------------------------------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">Variable_name</span>       <span class="o">|</span> <span class="n">Value</span>                                        <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+---------------------+----------------------------------------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">slow_query_log</span>      <span class="o">|</span> <span class="n">ON</span>                                           <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">slow_query_log_file</span> <span class="o">|</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">MacBook</span><span class="o">-</span><span class="n">Pro</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">slow</span><span class="o">.</span><span class="n">log</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+---------------------+----------------------------------------------+</span>
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 在MySQL my.cnf 配置文件中追加配置;重启MySQL服务后也生效，即永久开启
 </span></span><span class="line"><span class="cl"> slow_query_log=1
 </span></span><span class="line"><span class="cl"> slow_query_log_file=/usr/local/mysql/data/MacBook-Pro-2-slow.log
 </span></span></code></pre></div><p>查看慢SQL记录日志阈值：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 查看慢SQL记录日志阈值，默认10秒
-</span></span><span class="line"><span class="cl"> show variables like &#39;%long_query_time%&#39;;
-</span></span><span class="line"><span class="cl"> +-----------------+-----------+
-</span></span><span class="line"><span class="cl"> | Variable_name   | Value     |
-</span></span><span class="line"><span class="cl"> +-----------------+-----------+
-</span></span><span class="line"><span class="cl"> | long_query_time | 10.000000 |
-</span></span><span class="line"><span class="cl"> +-----------------+-----------+
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="o">--</span> <span class="err">查看慢</span><span class="n">SQL记录日志阈值</span><span class="err">，默认</span><span class="mi">10</span><span class="err">秒</span>
+</span></span><span class="line"><span class="cl"> <span class="n">show</span> <span class="n">variables</span> <span class="n">like</span> <span class="s1">&#39;</span><span class="si">%lo</span><span class="s1">ng_query_time%&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+-----------------+-----------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">Variable_name</span>   <span class="o">|</span> <span class="n">Value</span>     <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+-----------------+-----------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">long_query_time</span> <span class="o">|</span> <span class="mf">10.000000</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+-----------------+-----------+</span>
 </span></span></code></pre></div><p>修改慢SQL记录日志阈值：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 在内存中修改设置慢查询SQL记录日志阈值为5秒；注意设置后不会立即生效，需要重新登陆mysql客户端才会生效
-</span></span><span class="line"><span class="cl"> set global long_query_time = 5;
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="o">--</span> <span class="err">在内存中修改设置慢查询</span><span class="n">SQL记录日志阈值为5秒</span><span class="err">；注意设置后不会立即生效，需要重新登陆</span><span class="n">mysql客户端才会生效</span>
+</span></span><span class="line"><span class="cl"> <span class="n">set</span> <span class="n">global</span> <span class="n">long_query_time</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"> -- 设置之后重新登陆mysql使用命令查看慢SQL查询日志阈值 
-</span></span><span class="line"><span class="cl"> show variables like &#39;%long_query_time%&#39;;
-</span></span><span class="line"><span class="cl"> +-----------------+-----------+
-</span></span><span class="line"><span class="cl"> | Variable_name   | Value     |
-</span></span><span class="line"><span class="cl"> +-----------------+-----------+
-</span></span><span class="line"><span class="cl"> | long_query_time | 5.000000 |
-</span></span><span class="line"><span class="cl"> +-----------------+-----------+
+</span></span><span class="line"><span class="cl"> <span class="o">--</span> <span class="err">设置之后重新登陆</span><span class="n">mysql使用命令查看慢SQL查询日志阈值</span> 
+</span></span><span class="line"><span class="cl"> <span class="n">show</span> <span class="n">variables</span> <span class="n">like</span> <span class="s1">&#39;</span><span class="si">%lo</span><span class="s1">ng_query_time%&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+-----------------+-----------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">Variable_name</span>   <span class="o">|</span> <span class="n">Value</span>     <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+-----------------+-----------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">long_query_time</span> <span class="o">|</span> <span class="mf">5.000000</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+-----------------+-----------+</span>
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 在MySQL配置文件my.cnf中修改慢查询SQL记录日志阈值,设置为3秒
 </span></span><span class="line"><span class="cl"> long_query_time=3
 </span></span></code></pre></div><h4 id="查看慢sql日志">查看慢SQL日志</h4>
 <ul>
 <li>直接查看慢SQL日志；
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  -- 模拟慢查询SQL 
-</span></span><span class="line"><span class="cl">  select sleep(5);
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">  <span class="o">--</span> <span class="err">模拟慢查询</span><span class="n">SQL</span> 
+</span></span><span class="line"><span class="cl">  <span class="n">select</span> <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  -- 查看是否开启慢SQL日志记录
-</span></span><span class="line"><span class="cl">  show variables like &#39;%slow_query_log%&#39;;
-</span></span><span class="line"><span class="cl">  +---------------------+----------------------------------------------+
-</span></span><span class="line"><span class="cl">  | Variable_name       | Value                                        |
-</span></span><span class="line"><span class="cl">  +---------------------+----------------------------------------------+
-</span></span><span class="line"><span class="cl">  | slow_query_log      | ON                                           |
-</span></span><span class="line"><span class="cl">  | slow_query_log_file | /usr/local/mysql/data/MacBook-Pro-2-slow.log |
-</span></span><span class="line"><span class="cl">  +---------------------+----------------------------------------------+
+</span></span><span class="line"><span class="cl">  <span class="o">--</span> <span class="err">查看是否开启慢</span><span class="n">SQL日志记录</span>
+</span></span><span class="line"><span class="cl">  <span class="n">show</span> <span class="n">variables</span> <span class="n">like</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">low_query_log%&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">+---------------------+----------------------------------------------+</span>
+</span></span><span class="line"><span class="cl">  <span class="o">|</span> <span class="n">Variable_name</span>       <span class="o">|</span> <span class="n">Value</span>                                        <span class="o">|</span>
+</span></span><span class="line"><span class="cl">  <span class="o">+---------------------+----------------------------------------------+</span>
+</span></span><span class="line"><span class="cl">  <span class="o">|</span> <span class="n">slow_query_log</span>      <span class="o">|</span> <span class="n">ON</span>                                           <span class="o">|</span>
+</span></span><span class="line"><span class="cl">  <span class="o">|</span> <span class="n">slow_query_log_file</span> <span class="o">|</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">MacBook</span><span class="o">-</span><span class="n">Pro</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">slow</span><span class="o">.</span><span class="n">log</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl">  <span class="o">+---------------------+----------------------------------------------+</span>
 </span></span></code></pre></div>查看慢SQL日志记录<code>cat /usr/local/mysql/data/MacBook-Pro-2-slow.log</code>执行命令：
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> MacBook-Pro-2:~ root# cat /usr/local/mysql/data/MacBook-Pro-2-slow.log
 </span></span><span class="line"><span class="cl"> /usr/local/mysql/bin/mysqld, Version: 8.0.22 (MySQL Community Server - GPL). started with:
@@ -2122,41 +2126,41 @@ latin：一个字符一个字节；</p>
 <ul>
 <li>
 <p>模拟数据；</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 创建表
-</span></span><span class="line"><span class="cl"> create database testdata;
-</span></span><span class="line"><span class="cl"> use testdata;
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="o">--</span> <span class="err">创建表</span>
+</span></span><span class="line"><span class="cl"> <span class="n">create</span> <span class="n">database</span> <span class="n">testdata</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="n">use</span> <span class="n">testdata</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"> create table dept 
-</span></span><span class="line"><span class="cl"> (
-</span></span><span class="line"><span class="cl"> dno int(5) primary key default 0,
-</span></span><span class="line"><span class="cl"> dname varchar(20) not null default &#39;&#39;,
-</span></span><span class="line"><span class="cl"> loc varchar(30) default &#39;&#39;
-</span></span><span class="line"><span class="cl"> ) engine=innodb default charset=utf8;
+</span></span><span class="line"><span class="cl"> <span class="n">create</span> <span class="n">table</span> <span class="n">dept</span> 
+</span></span><span class="line"><span class="cl"> <span class="p">(</span>
+</span></span><span class="line"><span class="cl"> <span class="n">dno</span> <span class="ne">int</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="n">primary</span> <span class="n">key</span> <span class="n">default</span> <span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"> <span class="n">dname</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="ow">not</span> <span class="n">null</span> <span class="n">default</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"> <span class="n">loc</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="n">default</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl"> <span class="p">)</span> <span class="n">engine</span><span class="o">=</span><span class="n">innodb</span> <span class="n">default</span> <span class="n">charset</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"> create table emp
-</span></span><span class="line"><span class="cl"> (
-</span></span><span class="line"><span class="cl"> eid int(5) primary key,
-</span></span><span class="line"><span class="cl"> ename varchar(20) not null default &#39;&#39;,
-</span></span><span class="line"><span class="cl"> job varchar(20) not null default &#39;&#39;,
-</span></span><span class="line"><span class="cl"> deptno int(5) not null default 0
-</span></span><span class="line"><span class="cl"> )engine=innodb default charset=utf8;
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 创建存储过程：获取随机字符串
-</span></span><span class="line"><span class="cl"> set global log_bin_trust_function_creators=1;
-</span></span><span class="line"><span class="cl"> use testdata;
-</span></span><span class="line"><span class="cl"> delimiter $
-</span></span><span class="line"><span class="cl"> create function randstring(n int) returns varchar(255)
-</span></span><span class="line"><span class="cl"> begin 
+</span></span><span class="line"><span class="cl"> <span class="n">create</span> <span class="n">table</span> <span class="n">emp</span>
+</span></span><span class="line"><span class="cl"> <span class="p">(</span>
+</span></span><span class="line"><span class="cl"> <span class="n">eid</span> <span class="ne">int</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="n">primary</span> <span class="n">key</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"> <span class="n">ename</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="ow">not</span> <span class="n">null</span> <span class="n">default</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"> <span class="n">job</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="ow">not</span> <span class="n">null</span> <span class="n">default</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"> <span class="n">deptno</span> <span class="ne">int</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="ow">not</span> <span class="n">null</span> <span class="n">default</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"> <span class="p">)</span><span class="n">engine</span><span class="o">=</span><span class="n">innodb</span> <span class="n">default</span> <span class="n">charset</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="o">--</span> <span class="err">创建存储过程：获取随机字符串</span>
+</span></span><span class="line"><span class="cl"> <span class="n">set</span> <span class="n">global</span> <span class="n">log_bin_trust_function_creators</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="n">use</span> <span class="n">testdata</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="n">delimiter</span> <span class="o">$</span>
+</span></span><span class="line"><span class="cl"> <span class="n">create</span> <span class="n">function</span> <span class="n">randstring</span><span class="p">(</span><span class="n">n</span> <span class="ne">int</span><span class="p">)</span> <span class="n">returns</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"> <span class="n">begin</span> 
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">     declare all_str varchar(100) default &#39;abcdefghijklmnopqrestuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;;
-</span></span><span class="line"><span class="cl">     declare return_str varchar(255) default &#39;&#39;;
-</span></span><span class="line"><span class="cl">     declare i int default 0;
-</span></span><span class="line"><span class="cl">     while i&lt;n
-</span></span><span class="line"><span class="cl">     do
-</span></span><span class="line"><span class="cl">         set return_str=concat(return_str, substring(all_str, FLOOR(1+rand()*52), 1));
-</span></span><span class="line"><span class="cl">         set i=i+1;
-</span></span><span class="line"><span class="cl">     end while;
-</span></span><span class="line"><span class="cl">     return return_str;
-</span></span><span class="line"><span class="cl"> end $
+</span></span><span class="line"><span class="cl">     <span class="n">declare</span> <span class="n">all_str</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="n">default</span> <span class="s1">&#39;abcdefghijklmnopqrestuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">     <span class="n">declare</span> <span class="n">return_str</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="n">default</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">     <span class="n">declare</span> <span class="n">i</span> <span class="ne">int</span> <span class="n">default</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">     <span class="k">while</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">n</span>
+</span></span><span class="line"><span class="cl">     <span class="k">do</span>
+</span></span><span class="line"><span class="cl">         <span class="n">set</span> <span class="n">return_str</span><span class="o">=</span><span class="n">concat</span><span class="p">(</span><span class="n">return_str</span><span class="p">,</span> <span class="n">substring</span><span class="p">(</span><span class="n">all_str</span><span class="p">,</span> <span class="n">FLOOR</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">rand</span><span class="p">()</span><span class="o">*</span><span class="mi">52</span><span class="p">),</span> <span class="mi">1</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">         <span class="n">set</span> <span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">     <span class="n">end</span> <span class="k">while</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">     <span class="k">return</span> <span class="n">return_str</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="n">end</span> <span class="o">$</span>
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 创建存储函数：插入随机整数
 </span></span><span class="line"><span class="cl"> use testdata;
 </span></span><span class="line"><span class="cl"> create function ran_num() returns int(5)
@@ -2206,16 +2210,16 @@ latin：一个字符一个字节；</p>
 </span></span></code></pre></div></li>
 <li>
 <p>使用<code>show profile</code>进行sql分析；</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 查看 profiling 是否开启，默认是关闭的
-</span></span><span class="line"><span class="cl"> show variables like &#39;profiling&#39;;
-</span></span><span class="line"><span class="cl"> +---------------+-------+
-</span></span><span class="line"><span class="cl"> | Variable_name | Value |
-</span></span><span class="line"><span class="cl"> +---------------+-------+
-</span></span><span class="line"><span class="cl"> | profiling     | OFF   |
-</span></span><span class="line"><span class="cl"> +---------------+-------+
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="o">--</span> <span class="err">查看</span> <span class="n">profiling</span> <span class="err">是否开启，默认是关闭的</span>
+</span></span><span class="line"><span class="cl"> <span class="n">show</span> <span class="n">variables</span> <span class="n">like</span> <span class="s1">&#39;profiling&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+---------------+-------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">Variable_name</span> <span class="o">|</span> <span class="n">Value</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+---------------+-------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">profiling</span>     <span class="o">|</span> <span class="n">OFF</span>   <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+---------------+-------+</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"> -- 如果没开启将其开启
-</span></span><span class="line"><span class="cl"> set profiling=on;
+</span></span><span class="line"><span class="cl"> <span class="o">--</span> <span class="err">如果没开启将其开启</span>
+</span></span><span class="line"><span class="cl"> <span class="n">set</span> <span class="n">profiling</span><span class="o">=</span><span class="n">on</span><span class="p">;</span>
 </span></span></code></pre></div></li>
 <li>
 <p>执行测试SQL，任意执行均可供之后SQL分析；</p>
@@ -2224,26 +2228,26 @@ latin：一个字符一个字节；</p>
 </span></span><span class="line"><span class="cl">select * from emp group by eid order by eid;
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">select * from emp group by eid limit 150000;
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-- 执行命令，查看结果
-</span></span><span class="line"><span class="cl"> show profiles;
-</span></span><span class="line"><span class="cl"> +----------+------------+--------------------------------------------------+
-</span></span><span class="line"><span class="cl"> | Query_ID | Duration   | Query                                            |
-</span></span><span class="line"><span class="cl"> +----------+------------+--------------------------------------------------+
-</span></span><span class="line"><span class="cl"> |        2 | 0.00300900 | show tables                                      |
-</span></span><span class="line"><span class="cl"> |        3 | 0.01485700 | desc emp                                         |
-</span></span><span class="line"><span class="cl"> |        4 | 0.00191200 | select * from emp group by eid%10 limit 150000   |
-</span></span><span class="line"><span class="cl"> |        5 | 0.25516300 | select * from emp                                |
-</span></span><span class="line"><span class="cl"> |        6 | 0.00026400 | select * from emp group by eid%10 limit 150000   |
-</span></span><span class="line"><span class="cl"> |        7 | 0.00019600 | select eid from emp group by eid%10 limit 150000 |
-</span></span><span class="line"><span class="cl"> |        8 | 0.03907500 | select eid from emp group by eid limit 150000    |
-</span></span><span class="line"><span class="cl"> |        9 | 0.06499100 | select * from emp group by eid limit 150000      |
-</span></span><span class="line"><span class="cl"> |       10 | 0.00031500 | select * from emp group by eid%20 order by 5     |
-</span></span><span class="line"><span class="cl"> |       11 | 0.00009100 | select * from emp group by eid%20 order by       |
-</span></span><span class="line"><span class="cl"> |       12 | 0.00012400 | select * from emp group by eid order by          |
-</span></span><span class="line"><span class="cl"> |       13 | 0.25195300 | select * from emp group by eid order by eid      |
-</span></span><span class="line"><span class="cl"> |       14 | 0.00196200 | show variables like &#39;profiling&#39;                  |
-</span></span><span class="line"><span class="cl"> |       15 | 0.26208900 | select * from emp group by eid order by eid      |
-</span></span><span class="line"><span class="cl"> +----------+------------+--------------------------------------------------+
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">--</span> <span class="err">执行命令，查看结果</span>
+</span></span><span class="line"><span class="cl"> <span class="n">show</span> <span class="n">profiles</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----------+------------+--------------------------------------------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">Query_ID</span> <span class="o">|</span> <span class="n">Duration</span>   <span class="o">|</span> <span class="n">Query</span>                                            <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----------+------------+--------------------------------------------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>        <span class="mi">2</span> <span class="o">|</span> <span class="mf">0.00300900</span> <span class="o">|</span> <span class="n">show</span> <span class="n">tables</span>                                      <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>        <span class="mi">3</span> <span class="o">|</span> <span class="mf">0.01485700</span> <span class="o">|</span> <span class="n">desc</span> <span class="n">emp</span>                                         <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>        <span class="mi">4</span> <span class="o">|</span> <span class="mf">0.00191200</span> <span class="o">|</span> <span class="n">select</span> <span class="o">*</span> <span class="n">from</span> <span class="n">emp</span> <span class="n">group</span> <span class="n">by</span> <span class="n">eid</span><span class="o">%</span><span class="mi">10</span> <span class="n">limit</span> <span class="mi">150000</span>   <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>        <span class="mi">5</span> <span class="o">|</span> <span class="mf">0.25516300</span> <span class="o">|</span> <span class="n">select</span> <span class="o">*</span> <span class="n">from</span> <span class="n">emp</span>                                <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>        <span class="mi">6</span> <span class="o">|</span> <span class="mf">0.00026400</span> <span class="o">|</span> <span class="n">select</span> <span class="o">*</span> <span class="n">from</span> <span class="n">emp</span> <span class="n">group</span> <span class="n">by</span> <span class="n">eid</span><span class="o">%</span><span class="mi">10</span> <span class="n">limit</span> <span class="mi">150000</span>   <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>        <span class="mi">7</span> <span class="o">|</span> <span class="mf">0.00019600</span> <span class="o">|</span> <span class="n">select</span> <span class="n">eid</span> <span class="n">from</span> <span class="n">emp</span> <span class="n">group</span> <span class="n">by</span> <span class="n">eid</span><span class="o">%</span><span class="mi">10</span> <span class="n">limit</span> <span class="mi">150000</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>        <span class="mi">8</span> <span class="o">|</span> <span class="mf">0.03907500</span> <span class="o">|</span> <span class="n">select</span> <span class="n">eid</span> <span class="n">from</span> <span class="n">emp</span> <span class="n">group</span> <span class="n">by</span> <span class="n">eid</span> <span class="n">limit</span> <span class="mi">150000</span>    <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>        <span class="mi">9</span> <span class="o">|</span> <span class="mf">0.06499100</span> <span class="o">|</span> <span class="n">select</span> <span class="o">*</span> <span class="n">from</span> <span class="n">emp</span> <span class="n">group</span> <span class="n">by</span> <span class="n">eid</span> <span class="n">limit</span> <span class="mi">150000</span>      <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>       <span class="mi">10</span> <span class="o">|</span> <span class="mf">0.00031500</span> <span class="o">|</span> <span class="n">select</span> <span class="o">*</span> <span class="n">from</span> <span class="n">emp</span> <span class="n">group</span> <span class="n">by</span> <span class="n">eid</span><span class="o">%</span><span class="mi">20</span> <span class="n">order</span> <span class="n">by</span> <span class="mi">5</span>     <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>       <span class="mi">11</span> <span class="o">|</span> <span class="mf">0.00009100</span> <span class="o">|</span> <span class="n">select</span> <span class="o">*</span> <span class="n">from</span> <span class="n">emp</span> <span class="n">group</span> <span class="n">by</span> <span class="n">eid</span><span class="o">%</span><span class="mi">20</span> <span class="n">order</span> <span class="n">by</span>       <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>       <span class="mi">12</span> <span class="o">|</span> <span class="mf">0.00012400</span> <span class="o">|</span> <span class="n">select</span> <span class="o">*</span> <span class="n">from</span> <span class="n">emp</span> <span class="n">group</span> <span class="n">by</span> <span class="n">eid</span> <span class="n">order</span> <span class="n">by</span>          <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>       <span class="mi">13</span> <span class="o">|</span> <span class="mf">0.25195300</span> <span class="o">|</span> <span class="n">select</span> <span class="o">*</span> <span class="n">from</span> <span class="n">emp</span> <span class="n">group</span> <span class="n">by</span> <span class="n">eid</span> <span class="n">order</span> <span class="n">by</span> <span class="n">eid</span>      <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>       <span class="mi">14</span> <span class="o">|</span> <span class="mf">0.00196200</span> <span class="o">|</span> <span class="n">show</span> <span class="n">variables</span> <span class="n">like</span> <span class="s1">&#39;profiling&#39;</span>                  <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>       <span class="mi">15</span> <span class="o">|</span> <span class="mf">0.26208900</span> <span class="o">|</span> <span class="n">select</span> <span class="o">*</span> <span class="n">from</span> <span class="n">emp</span> <span class="n">group</span> <span class="n">by</span> <span class="n">eid</span> <span class="n">order</span> <span class="n">by</span> <span class="n">eid</span>      <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+----------+------------+--------------------------------------------------+</span>
 </span></span></code></pre></div></li>
 <li>
 <p>使用命令<code>show profile cpu,block io for query 上一步前面执行 show profiles 的 Query_ID ;</code>诊断SQL；</p>
@@ -2294,29 +2298,29 @@ swaps：显示交换次数相关开销的信息;</p>
 <h4 id="全局查询日志">全局查询日志</h4>
 <p><strong>不要在生产环境开启这个功能。</strong></p>
 <p>在配置MySQL文件<code>my.cnf</code>设置全局查询日志：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-- 开启全局查询日志
-</span></span><span class="line"><span class="cl">general_log=1
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">--</span> <span class="err">开启全局查询日志</span>
+</span></span><span class="line"><span class="cl"><span class="n">general_log</span><span class="o">=</span><span class="mi">1</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">-- 记录日志文件的路径
-</span></span><span class="line"><span class="cl">general_log_file=/path/logfile
+</span></span><span class="line"><span class="cl"><span class="o">--</span> <span class="err">记录日志文件的路径</span>
+</span></span><span class="line"><span class="cl"><span class="n">general_log_file</span><span class="o">=/</span><span class="n">path</span><span class="o">/</span><span class="n">logfile</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">-- 设置输出格式为 FILE
-</span></span><span class="line"><span class="cl">log_output=FILE
+</span></span><span class="line"><span class="cl"><span class="o">--</span> <span class="err">设置输出格式为</span> <span class="n">FILE</span>
+</span></span><span class="line"><span class="cl"><span class="n">log_output</span><span class="o">=</span><span class="n">FILE</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">-- 通过cat命令直接查看；如果为空则需要造数
-</span></span><span class="line"><span class="cl">cat /var/lib/mysql/bigdata01.log;
+</span></span><span class="line"><span class="cl"><span class="o">--</span> <span class="err">通过</span><span class="n">cat命令直接查看</span><span class="err">；如果为空则需要造数</span>
+</span></span><span class="line"><span class="cl"><span class="n">cat</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">bigdata01</span><span class="o">.</span><span class="n">log</span><span class="p">;</span>
 </span></span></code></pre></div><p>在mysql客户端设置全局查询日志：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-- 查看是否开启全局查询日志
-</span></span><span class="line"><span class="cl">show variables like &#39;%general_log%&#39;;
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">--</span> <span class="err">查看是否开启全局查询日志</span>
+</span></span><span class="line"><span class="cl"><span class="n">show</span> <span class="n">variables</span> <span class="n">like</span> <span class="s1">&#39;</span><span class="si">%g</span><span class="s1">eneral_log%&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">-- 开启全局查询日志
-</span></span><span class="line"><span class="cl">set global general_log=1;
+</span></span><span class="line"><span class="cl"><span class="o">--</span> <span class="err">开启全局查询日志</span>
+</span></span><span class="line"><span class="cl"><span class="n">set</span> <span class="n">global</span> <span class="n">general_log</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">-- 设置输出格式为 TABLE
-</span></span><span class="line"><span class="cl">set global log_output=&#39;TABLE&#39;;
+</span></span><span class="line"><span class="cl"><span class="o">--</span> <span class="err">设置输出格式为</span> <span class="n">TABLE</span>
+</span></span><span class="line"><span class="cl"><span class="n">set</span> <span class="n">global</span> <span class="n">log_output</span><span class="o">=</span><span class="s1">&#39;TABLE&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">-- 可在mysql库里的geneial_log表查看；如果为空则需要造数
-</span></span><span class="line"><span class="cl">select * from mysql.general_log;
+</span></span><span class="line"><span class="cl"><span class="o">--</span> <span class="err">可在</span><span class="n">mysql库里的geneial_log表查看</span><span class="err">；如果为空则需要造数</span>
+</span></span><span class="line"><span class="cl"><span class="n">select</span> <span class="o">*</span> <span class="n">from</span> <span class="n">mysql</span><span class="o">.</span><span class="n">general_log</span><span class="p">;</span>
 </span></span></code></pre></div><h2 id="mysql锁机制">MySQL锁机制</h2>
 <p>在数据库中，除传统的计算资源（如CPU、RAM、I/O等）的争用以外，数据也是一种供许多用户共享的资源。如何保证数据并发访问的一致性、有效性是所有数据库必须解决的一个问题，锁冲突也是影响数据库并发访问性能的一个重要因素。从这个角度来说，锁对数据库而言显得尤其重要，也更加复杂。
 简而言之，锁机制是解决因资源共享，而造成的并发问题。</p>
@@ -2329,16 +2333,16 @@ swaps：显示交换次数相关开销的信息;</p>
 </ul>
 <h3 id="表锁">表锁</h3>
 <p>测试数据：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> create table mylock (
-</span></span><span class="line"><span class="cl">     id int not null primary key auto_increment,
-</span></span><span class="line"><span class="cl">     name varchar(20) default &#39;&#39;
-</span></span><span class="line"><span class="cl"> ) engine myisam;
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="n">create</span> <span class="n">table</span> <span class="n">mylock</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">     <span class="n">id</span> <span class="ne">int</span> <span class="ow">not</span> <span class="n">null</span> <span class="n">primary</span> <span class="n">key</span> <span class="n">auto_increment</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">     <span class="n">name</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="n">default</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl"> <span class="p">)</span> <span class="n">engine</span> <span class="n">myisam</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl"> insert into mylock(name) values(&#39;a&#39;);
-</span></span><span class="line"><span class="cl"> insert into mylock(name) values(&#39;b&#39;);
-</span></span><span class="line"><span class="cl"> insert into mylock(name) values(&#39;c&#39;);
-</span></span><span class="line"><span class="cl"> insert into mylock(name) values(&#39;d&#39;);
-</span></span><span class="line"><span class="cl"> insert into mylock(name) values(&#39;e&#39;);
+</span></span><span class="line"><span class="cl"> <span class="n">insert</span> <span class="n">into</span> <span class="n">mylock</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="n">values</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"> <span class="n">insert</span> <span class="n">into</span> <span class="n">mylock</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="n">values</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"> <span class="n">insert</span> <span class="n">into</span> <span class="n">mylock</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="n">values</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"> <span class="n">insert</span> <span class="n">into</span> <span class="n">mylock</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="n">values</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"> <span class="n">insert</span> <span class="n">into</span> <span class="n">mylock</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="n">values</span><span class="p">(</span><span class="s1">&#39;e&#39;</span><span class="p">);</span>
 </span></span></code></pre></div><p>常用命令：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 加锁
 </span></span><span class="line"><span class="cl"> lock table 表名1 read/write, 表名2 read/write, 其他;
@@ -2355,19 +2359,19 @@ swaps：显示交换次数相关开销的信息;</p>
 </span></span><span class="line"><span class="cl"> show status like &#39;table_locks%&#39;;
 </span></span></code></pre></div><hr>
 <p>给表添加<strong>读锁</strong>及测试读操作：</p>
-<p><img src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-002.png" alt="MySqlSQL优化及锁机制-002"></p>
-<p><img src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-004.png" alt="MySqlSQL优化及锁机制-004"></p>
+<p><img alt="MySqlSQL优化及锁机制-002" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-002.png"></p>
+<p><img alt="MySqlSQL优化及锁机制-004" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-004.png"></p>
 <p>给表添加<strong>读锁</strong>及测试写操作：</p>
-<p><img src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-003.png" alt="MySqlSQL优化及锁机制-003"></p>
-<p><img src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-005.png" alt="MySqlSQL优化及锁机制-005"></p>
+<p><img alt="MySqlSQL优化及锁机制-003" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-003.png"></p>
+<p><img alt="MySqlSQL优化及锁机制-005" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-005.png"></p>
 <p>给某个表添加读锁之后，所有会话都能对这个表进行读操作，但是当前会话不能对该表进行写操作，对其他表进行读、写操作；其他会话能需要等持有锁的会话释放该表的锁后，才能进行写操作，期间将会一直处于等待状态，可以对其他表进行读写操作。</p>
 <hr>
 <p>给表添加<strong>写锁</strong>及测试读操作：</p>
-<p><img src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-006.png" alt="MySqlSQL优化及锁机制-006"></p>
-<p><img src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-007.png" alt="MySqlSQL优化及锁机制-007"></p>
+<p><img alt="MySqlSQL优化及锁机制-006" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-006.png"></p>
+<p><img alt="MySqlSQL优化及锁机制-007" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-007.png"></p>
 <p>给表添加<strong>写锁</strong>及测试写操作：</p>
-<p><img src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-008.png" alt="MySqlSQL优化及锁机制-008"></p>
-<p><img src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-009.png" alt="MySqlSQL优化及锁机制-009"></p>
+<p><img alt="MySqlSQL优化及锁机制-008" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-008.png"></p>
+<p><img alt="MySqlSQL优化及锁机制-009" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-009.png"></p>
 <p>给某个表添加写锁之后，当前会话可以对该表进行写操作、读操作，其他会话要想对该表进行读写操作需要等持有锁的会话释放锁，否则期间将会一直等待该锁释放；但是当前持有锁的会话是不能对其他表进行读写操作，其他会话能够对其他表进行读写操作。</p>
 <p>对于表锁MyISAM在执行查询语句前，会自动给涉及的所有表加读锁，在执行增删改操作前，会自动给涉及的表加写锁。</p>
 <ul>
@@ -2405,8 +2409,8 @@ swaps：显示交换次数相关开销的信息;</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> -- 关闭自动提交；0关闭，1打开
 </span></span><span class="line"><span class="cl"> set autocommit = 0;
 </span></span></code></pre></div><p>测试行锁读写操作：</p>
-<p><img src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-010.png" alt="MySqlSQL优化及锁机制-010"></p>
-<p><img src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-011.png" alt="MySqlSQL优化及锁机制-011"></p>
+<p><img alt="MySqlSQL优化及锁机制-010" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-010.png"></p>
+<p><img alt="MySqlSQL优化及锁机制-011" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-011.png"></p>
 <p>当前会话当关闭MySQL自动提交后，修改表中的某一行数据，未提交前其他会话是不可见该修改的数据的；如果当前会话和修改某一行数据其他会话也修改该行数据则其他会话会一直等待，直到持有锁的会话commit后才会执行。
 如果当前会话和其他会话操作同一张表的不同行数据时，则相互不影响。</p>
 <p><strong>使用行锁时注意，无索引行或索引失效都会导致行锁变为表锁。</strong></p>
@@ -2418,7 +2422,7 @@ InnoDB也会对这个“间隙”加锁，这种锁机制就是所谓的间隙�
 <p><strong>如何锁定一行？</strong></p>
 <p>在查询语句使用<code>for update</code>关键字：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> select * from test_innodb_lock where a=8 for update;
-</span></span></code></pre></div><p><img src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-012.png" alt="MySqlSQL优化及锁机制-012"></p>
+</span></span></code></pre></div><p><img alt="MySqlSQL优化及锁机制-012" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-012.png"></p>
 <p>Innodb存储引擎由于实现了行级锁定，虽然在锁定机制的实现方面所带来的性能损耗可能比表级锁定会要更高一些，但是在整体并发处理能力方面要远远优于MyISAM的表级锁定的。当系统并发量较高的时候，Innodb的整体性能和MylISAM相比就会有比较明显的优势了。
 但是，Innodb的行级锁定同样也有其脆弱的一面，当我们使用不当的时候，可能会让Innodb的整体性能表现不仅不能比MyISAM高，甚至可能会更差。</p>
 <h3 id="总结">总结</h3>
@@ -2439,7 +2443,7 @@ InnoDB也会对这个“间隙”加锁，这种锁机制就是所谓的间隙�
 <p>一句话概括,随着业务的发展,数据库会遇到瓶颈,单表得数据量太大，会极大影响你的 sql 执行的性能，到了后面你的 sql 可能就跑的很慢了。所以为了维持功能的正常使用不得不分库分表。</p>
 <p>分表：
 分表就是把一个表的数据放到多个表中，然后查询的时候你就查一个表。比如按照用户 id 来分表，将一个用户的数据就放在一个表中。然后操作的时候你对一个用户就操作那个表就好了。这样可以控制每个表的数据量在可控的范围内，比如每个表就固定在 200 万以内。</p>
-<p>分库： 
+<p>分库：
 分库是啥意思？就是你一个库一般我们经验而言，最多支撑到并发 2000，一定要扩容了，而且一个健康的单库并发值你最好保持在每秒 1000 左右，不要太大。那么你可以将一个库的数据拆分到多个库中，访问的时候就访问一个库好了。</p>
 <h3 id="常见分库分表中间件">常见分库分表中间件</h3>
 <p><a href="https://github.com/alibaba/cobar/wiki">Cobar</a>：

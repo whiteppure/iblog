@@ -38,6 +38,10 @@
 </head>
 
 <body>
+    <div class="post-password">
+        
+    </div>
+
     
     
     
@@ -303,18 +307,18 @@
 <li><code>value</code> 是用 <code>volatile</code> 修饰的，保证了多线程之间看到的 <code>value</code> 值是同一份。</li>
 </ol>
 <p>继续向底层深入，就会看到<code>Unsafe</code>类中的一些方法，同时也是CAS的核心方法：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public final class Unsafe {
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="n">final</span> <span class="k">class</span> <span class="n">Unsafe</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // ...
+</span></span><span class="line"><span class="cl">    <span class="o">//</span> <span class="o">...</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public final native boolean compareAndSwapObject(Object var1, long var2, Object var4, Object var5);
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">final</span> <span class="n">native</span> <span class="n">boolean</span> <span class="n">compareAndSwapObject</span><span class="p">(</span><span class="ne">Object</span> <span class="n">var1</span><span class="p">,</span> <span class="n">long</span> <span class="n">var2</span><span class="p">,</span> <span class="ne">Object</span> <span class="n">var4</span><span class="p">,</span> <span class="ne">Object</span> <span class="n">var5</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public final native boolean compareAndSwapInt(Object var1, long var2, int var4, int var5);
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">final</span> <span class="n">native</span> <span class="n">boolean</span> <span class="n">compareAndSwapInt</span><span class="p">(</span><span class="ne">Object</span> <span class="n">var1</span><span class="p">,</span> <span class="n">long</span> <span class="n">var2</span><span class="p">,</span> <span class="ne">int</span> <span class="n">var4</span><span class="p">,</span> <span class="ne">int</span> <span class="n">var5</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public final native boolean compareAndSwapLong(Object var1, long var2, long var4, long var6);
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">final</span> <span class="n">native</span> <span class="n">boolean</span> <span class="n">compareAndSwapLong</span><span class="p">(</span><span class="ne">Object</span> <span class="n">var1</span><span class="p">,</span> <span class="n">long</span> <span class="n">var2</span><span class="p">,</span> <span class="n">long</span> <span class="n">var4</span><span class="p">,</span> <span class="n">long</span> <span class="n">var6</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    // ...
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">    <span class="o">//</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>上面的三个方法可以对应去查看 <code>openjdk</code> 的 <code>hotspot</code>源码：<code>src/share/vm/prims/unsafe.cpp</code></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#define FN_PTR(f) CAST_FROM_FN_PTR(void*, &amp;f)
 </span></span><span class="line"><span class="cl">
@@ -352,20 +356,20 @@
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>从上述源码可以看出CAS的原理就是调用了汇编指令 <code>cmpxchg</code> ,最终其实也就调用了CPU的某些指令。</p>
 <p>CAS作用也一目了然，在多线程环境中，就是比较当前线程工作内存中的值和主内存中的值，如果相同则执行规定操作，否则继续比较，直到主内存和工作内存中的值一直为止。例如代码：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public final int getAndAddInt(Object var1, long var2, int var4) {
-</span></span><span class="line"><span class="cl">        int var5;
-</span></span><span class="line"><span class="cl">        do {
-</span></span><span class="line"><span class="cl">            var5 = this.getIntVolatile(var1, var2);
-</span></span><span class="line"><span class="cl">        } while(!this.compareAndSwapInt(var1, var2, var5, var5 + var4));
-</span></span><span class="line"><span class="cl">        return var5;
-</span></span><span class="line"><span class="cl">}
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="n">final</span> <span class="ne">int</span> <span class="n">getAndAddInt</span><span class="p">(</span><span class="ne">Object</span> <span class="n">var1</span><span class="p">,</span> <span class="n">long</span> <span class="n">var2</span><span class="p">,</span> <span class="ne">int</span> <span class="n">var4</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">int</span> <span class="n">var5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">do</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">var5</span> <span class="o">=</span> <span class="n">this</span><span class="o">.</span><span class="n">getIntVolatile</span><span class="p">(</span><span class="n">var1</span><span class="p">,</span> <span class="n">var2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">this</span><span class="o">.</span><span class="n">compareAndSwapInt</span><span class="p">(</span><span class="n">var1</span><span class="p">,</span> <span class="n">var2</span><span class="p">,</span> <span class="n">var5</span><span class="p">,</span> <span class="n">var5</span> <span class="o">+</span> <span class="n">var4</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">var5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h3 id="如何保证数据一致性">如何保证数据一致性</h3>
 <p>从源码可以看出，是通过CPU指令进行调用,当CPU中某个处理器对缓存中的共享变量进行了操作，其他处理器会有个嗅探机制，将其他处理器的该共享变量的缓存失效，待其他线程读取时会重新从主内存中读取最新的数据，基于 <code>MESI</code> 缓存一致性协议来实现的。</p>
 <p>简述，就是通过CPU的缓存一致性协议来保证线程之间的数据一致性的。</p>
 <blockquote>
 <p>CPU 处理器速度远远大于在主内存中的，为了解决速度差异，在他们之间架设了多级缓存，如 L1、L2、L3 级别的缓存，这些缓存离CPU越近就越快，将频繁操作的数据缓存到这里，加快访问速度。</p>
 </blockquote>
-<p><img src="/iblog/posts/annex/images/essays/JMM.jpg" alt="JMM"></p>
+<p><img alt="JMM" src="/iblog/posts/annex/images/essays/JMM.jpg"></p>
 <h3 id="cas与unsafe关系">CAS与Unsafe关系</h3>
 <p>CAS的作用是比较并交换,就是先拿这个期望值,与主内存的值比较,判断主内存中该位置是否存在期望值,
 如果存在,则改为新的值,这个修改的过程是具有原子性的.
@@ -382,13 +386,13 @@ Unsafe类中的所有方法都是<strong>native</strong>修饰的，也就是说
 <ol>
 <li>
 <p>因为是采用自旋锁的方式来实现所以，自然有自旋锁的缺点，循环时间长开销大,例如：<code>getAndAddInt</code> 方法执行，有个<code>do while</code>循环，如果CAS失败，一直会进行尝试，如果CAS长时间不成功，可能会给CPU带来很大的开销。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public final int getAndAddInt(Object var1, long var2, int var4) {
-</span></span><span class="line"><span class="cl">        int var5;
-</span></span><span class="line"><span class="cl">        do {
-</span></span><span class="line"><span class="cl">            var5 = this.getIntVolatile(var1, var2);
-</span></span><span class="line"><span class="cl">        } while(!this.compareAndSwapInt(var1, var2, var5, var5 + var4));
-</span></span><span class="line"><span class="cl">        return var5;
-</span></span><span class="line"><span class="cl">}
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="n">final</span> <span class="ne">int</span> <span class="n">getAndAddInt</span><span class="p">(</span><span class="ne">Object</span> <span class="n">var1</span><span class="p">,</span> <span class="n">long</span> <span class="n">var2</span><span class="p">,</span> <span class="ne">int</span> <span class="n">var4</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">int</span> <span class="n">var5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">do</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">var5</span> <span class="o">=</span> <span class="n">this</span><span class="o">.</span><span class="n">getIntVolatile</span><span class="p">(</span><span class="n">var1</span><span class="p">,</span> <span class="n">var2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">this</span><span class="o">.</span><span class="n">compareAndSwapInt</span><span class="p">(</span><span class="n">var1</span><span class="p">,</span> <span class="n">var2</span><span class="p">,</span> <span class="n">var5</span><span class="p">,</span> <span class="n">var5</span> <span class="o">+</span> <span class="n">var4</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">var5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div></li>
 <li>
 <p>只能保证一个共享变量的原子操作，对多个共享变量操作时，循环CAS就无法保证操作的原子性，这个时候就可以用锁来保证原子性。</p>

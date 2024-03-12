@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>设计 on 唯手熟尔</title>
+    <link>http://localhost:1313/iblog/tags/%E8%AE%BE%E8%AE%A1/</link>
+    <description>Recent content in 设计 on 唯手熟尔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Sat, 09 Sep 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/iblog/tags/%E8%AE%BE%E8%AE%A1/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>定时任务可视化管理</title>
+      <link>http://localhost:1313/iblog/posts/essays/scheduled-job/</link>
+      <pubDate>Sat, 09 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/iblog/posts/essays/scheduled-job/</guid>
+      <description>代码实现 代码结构 pom &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-security&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-quartz&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.projectlombok&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;lombok&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;cn.hutool&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hutool-all&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; 库表结构 -- ---------------------------- -- 定时任务调度表 -- ---------------------------- drop table if exists sys_job; create table sys_job ( job_id bigint(20) not null auto_increment comment &amp;#39;任务ID&amp;#39;, job_name varchar(64) default &amp;#39;&amp;#39; comment &amp;#39;任务名称&amp;#39;, job_group varchar(64) default &amp;#39;DEFAULT&amp;#39; comment &amp;#39;任务组名&amp;#39;, invoke_target varchar(500) not null comment</description>
+    </item>
+    <item>
+      <title>整合文件上传功能</title>
+      <link>http://localhost:1313/iblog/posts/essays/uploadfile-code/</link>
+      <pubDate>Fri, 11 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/iblog/posts/essays/uploadfile-code/</guid>
+      <description>结构 pom.xml fastdfs-client-java-1.27.jar：点击下载 &amp;lt;dependencies&amp;gt; &amp;lt;!-- fastdfs --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.csource&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;fastdfs-client-java&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.27&amp;lt;/version&amp;gt; &amp;lt;systemPath&amp;gt;${project.basedir}/lib/fastdfs-client-java-1.27.jar&amp;lt;/systemPath&amp;gt; &amp;lt;scope&amp;gt;system&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;!--aliyun oss 依赖--&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;com.aliyun.oss&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;aliyun-sdk-oss&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-test&amp;lt;/artifactId&amp;gt; &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.projectlombok&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;lombok&amp;lt;/artifactId&amp;gt; &amp;lt;optional&amp;gt;true&amp;lt;/optional&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;cn.hutool&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hutool-all&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;5.8.11&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;commons-io&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;commons-io&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;2.11.0&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; application.yml server: port: 80 公共部分 FileManagement public interface FileManagement { /** * 设置下一个bean的对象 * * @param nextFileManagement 下一个</description>
+    </item>
+    <item>
+      <title>整合支付功能</title>
+      <link>http://localhost:1313/iblog/posts/essays/pay-code/</link>
+      <pubDate>Thu, 10 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/iblog/posts/essays/pay-code/</guid>
+      <description>结构 pom.xml &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-test&amp;lt;/artifactId&amp;gt; &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.projectlombok&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;lombok&amp;lt;/artifactId&amp;gt; &amp;lt;optional&amp;gt;true&amp;lt;/optional&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;cn.hutool&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hutool-all&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;5.8.11&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;com.alipay.sdk&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;alipay-sdk-java&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.9.9&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;com.github.binarywang&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;weixin-java-pay&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.5.0&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; application.yml server: port: 8080 pay: wechat: #微信公众号或者小程序等的appid appId: &amp;#34;&amp;#34; #微信支付商户号 mchId: &amp;#34;&amp;#34; #微信支付商户密钥 mchKey: &amp;#34;&amp;#34; #服务商模式下的子商户公众账号ID subAppId: #服务商模式下的子商户号 subMchId: # p12证书的位</description>
+    </item>
+    <item>
+      <title>管道流设计模式结合业务</title>
+      <link>http://localhost:1313/iblog/posts/essays/pipeline-business/</link>
+      <pubDate>Thu, 15 Jun 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/iblog/posts/essays/pipeline-business/</guid>
+      <description>流程图 代码实现 pom &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.plugin&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-plugin-core&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;${spring.plugin.core.version}&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-test&amp;lt;/artifactId&amp;gt; &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.projectlombok&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;lombok&amp;lt;/artifactId&amp;gt; &amp;lt;optional&amp;gt;true&amp;lt;/optional&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;cn.hutool&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hutool-all&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;${hutool.version}&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; context EventContext public interface EventContext { /** * 是否继续调用链 */ boolean continueChain(); /** * 获取当前过滤器选择器 */ FilterSelector getFilterSelector(); } BizType public interface BizType { /** * 获取业务类型码值 */ Integer getCode(); /** * 业务类型名称 * */ String getName(); } AbstractEventContext public abstract class AbstractEventContext implements EventContext{ private final BizType businessType; private final FilterSelector filterSelector; protected AbstractEventContext(BizType businessType, FilterSelector filterSelector) {</description>
+    </item>
+    <item>
+      <title>重构一个程序</title>
+      <link>http://localhost:1313/iblog/posts/essays/java-project-reconstitution/</link>
+      <pubDate>Thu, 20 Apr 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/iblog/posts/essays/java-project-reconstitution/</guid>
+      <description>什么是重构 摘自《重构：改善既有代码的设计》 重构(名词形式): 对软件内部结构的一种调整，目的是在不改变软件可观察行为的前提下，提高其可理解性，降低其修改成本。 重构(动词形式): 使用一些列重构手法，在不改变软件可观察行为的前提下，调整其结构。 重</description>
+    </item>
+    <item>
+      <title>接口优化</title>
+      <link>http://localhost:1313/iblog/posts/essays/java-improve/</link>
+      <pubDate>Tue, 20 Dec 2022 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/iblog/posts/essays/java-improve/</guid>
+      <description>接口优化 线上接口很慢,线上生产问题,我们绝对不能马虎放过抱着侥幸心理,必须要找到根本原因及时处理,防止下次留下更大的坑.大致思路要定位接口问题,然后具体问题具体分析,讨论不同解决方案. 定位问题 要快速定位接口哪一个环节比较慢,性能瓶颈在哪里,</description>
+    </item>
+    <item>
+      <title>整洁的代码</title>
+      <link>http://localhost:1313/iblog/posts/essays/clean-code/</link>
+      <pubDate>Thu, 01 Sep 2022 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/iblog/posts/essays/clean-code/</guid>
+      <description>为什么要写整洁的代码 为什么要写整洁的代码,回答这个问题之前,也许应该想想写糟糕的代码的原因 是想快点完成吗?还是要赶时间吗?有可能.或许你觉得自己要干好所需要的时间不够;假使花时间清理代码,老板就会大发雷霆.或许你只是不耐烦再搞这套程序,期望</description>
+    </item>
+    <item>
+      <title>如何做好程序设计功能</title>
+      <link>http://localhost:1313/iblog/posts/essays/java-design/</link>
+      <pubDate>Tue, 02 Aug 2022 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/iblog/posts/essays/java-design/</guid>
+      <description>产品需求澄清、PN排期及任务分解 开发设计评审 功能设计流程图 与外部系统交互、本系统模块之间流程，比较好用的画圈软件draw .io或在线的process on 数据库设计 从DDD角度界限上下文、ER图、评审表结构设计是否合理，表的关联关系是否合理、是</description>
+    </item>
+    <item>
+      <title>规范编写Java代码总结</title>
+      <link>http://localhost:1313/iblog/posts/essays/java-code-rule/</link>
+      <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/iblog/posts/essays/java-code-rule/</guid>
+      <description>编码规范 我们为什么要遵守规范来编码？ 是因为通常在编码过程中我们不只自己进行开发，通常需要一个团队来进行，开发好之后还需要维护，所以编码规范就显的尤为重要。 代码维护时间比较长，那么保证代码可读性就显得很重要。作为一个程序员，咱们得有点追求和信</description>
+    </item>
+  </channel>
+</rss>

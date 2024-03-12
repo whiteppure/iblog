@@ -38,6 +38,10 @@
 </head>
 
 <body>
+    <div class="post-password">
+        
+    </div>
+
     
     
     
@@ -1585,7 +1589,7 @@
 在一个数据传输通道中，如果既要写入数据，又要读取数据，则要分别提供两个流。</li>
 </ul>
 <h2 id="流的分类">流的分类</h2>
-<p><img src="/iblog/posts/annex/images/essays/JavaIO%E6%B5%81%E5%88%86%E7%B1%BB.png" alt="JavaIO流分类"></p>
+<p><img alt="JavaIO流分类" src="/iblog/posts/annex/images/essays/JavaIO%E6%B5%81%E5%88%86%E7%B1%BB.png"></p>
 <p>根据数据传输特性将流抽象为各种类，方便更直观的进行数据操作。</p>
 <p>主要的分类方式有以下3种：</p>
 <ul>
@@ -1681,7 +1685,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    }
 </span></span></code></pre></div><h3 id="操作字节流">操作字节流</h3>
-<p><img src="/iblog/posts/annex/images/essays/%E5%AD%97%E8%8A%82%E6%B5%81.png" alt="字节流"></p>
+<p><img alt="字节流" src="/iblog/posts/annex/images/essays/%E5%AD%97%E8%8A%82%E6%B5%81.png"></p>
 <p>操作byte类型数据，主要操作类是<code>OutputStream、InputStream</code>的子类；不用缓冲区，直接对文件本身操作。</p>
 <p>以下代码就是用<code>FileInputStream、FileOutputStream</code>操作字节流</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public static void main(String[] args) throws IOException {
@@ -1755,7 +1759,7 @@
 </span></span><span class="line"><span class="cl">        return sb.toString();
 </span></span><span class="line"><span class="cl">    }
 </span></span></code></pre></div><h3 id="操作字符流">操作字符流</h3>
-<p><img src="/iblog/posts/annex/images/essays/%E5%AD%97%E7%AC%A6%E6%B5%81.png" alt="字符流"></p>
+<p><img alt="字符流" src="/iblog/posts/annex/images/essays/%E5%AD%97%E7%AC%A6%E6%B5%81.png"></p>
 <p>操作字符类型数据，主要操作类是<code>Reader、Writer</code>的子类；使用缓冲区缓冲字符，不关闭流就不会输出任何内容。</p>
 <p>字符流适用于文本文件的读写，<code>OutputStreamWriter</code> 类其实也是借助 <code>FileOutputStream</code> 类实现的</p>
 <p>以下代码就是用<code>InputStreamReader、OutputStreamWriter</code>操作字节流.</p>
@@ -2028,7 +2032,7 @@
 </span></span></code></pre></div><h4 id="transient">transient</h4>
 <p>对于一个类中的某些字段如果不需要序列化，就需要加上<code>transient</code>关键字。</p>
 <blockquote>
-<p>被<code>transient</code>修饰的成员变量，在序列化的时候其值会被忽略，在被反序列化后， <code>transient</code> 变量的值被设为初始值， 
+<p>被<code>transient</code>修饰的成员变量，在序列化的时候其值会被忽略，在被反序列化后， <code>transient</code> 变量的值被设为初始值，
 如 int 型的是 0，对象型的是 null。</p>
 </blockquote>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">private transient String name;
@@ -2040,9 +2044,9 @@
 <p>以下内容来自<code>Serializable</code>接口注释</p>
 <blockquote>
 <p>If a serializable class does not explicitly declare a serialVersionUID,
-then the serialization runtime will calculate a default 
-serialVersionUID value for that class based on various aspects of the class, 
-as described in the Java(TM) Object Serialization Specification. 
+then the serialization runtime will calculate a default
+serialVersionUID value for that class based on various aspects of the class,
+as described in the Java(TM) Object Serialization Specification.
 However, it is strongly recommended that all serializable classes explicitly declare serialVersionUID values,
 since the default serialVersionUID computation is highly sensitive to class details that may vary depending on compiler implementations,
 and can thus result in unexpectedInvalidClassExceptions during deserialization.</p>
@@ -2120,45 +2124,45 @@ and can thus result in unexpectedInvalidClassExceptions during deserialization.<
 </span></span></code></pre></div><p>代码调用链：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ObjectInputStream.readObject -&gt; readObject0 -&gt; readOrdinaryObject -&gt; readClassDesc -&gt; readNonProxyDesc -&gt; ObjectStreamClass.initNonProxy
 </span></span></code></pre></div><p>在<code>initNonProxy</code>中 ，关键代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> void initNonProxy(ObjectStreamClass model,
-</span></span><span class="line"><span class="cl">                      Class&lt;?&gt; cl,
-</span></span><span class="line"><span class="cl">                      ClassNotFoundException resolveEx,
-</span></span><span class="line"><span class="cl">                      ObjectStreamClass superDesc)
-</span></span><span class="line"><span class="cl">        throws InvalidClassException
-</span></span><span class="line"><span class="cl">    {
-</span></span><span class="line"><span class="cl">        long suid = Long.valueOf(model.getSerialVersionUID());
-</span></span><span class="line"><span class="cl">        ObjectStreamClass osc = null;
-</span></span><span class="line"><span class="cl">        if (cl != null) {
-</span></span><span class="line"><span class="cl">            osc = lookup(cl, true);
-</span></span><span class="line"><span class="cl">            if (osc.isProxy) {
-</span></span><span class="line"><span class="cl">                throw new InvalidClassException(
-</span></span><span class="line"><span class="cl">                        &#34;cannot bind non-proxy descriptor to a proxy class&#34;);
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">            if (model.isEnum != osc.isEnum) {
-</span></span><span class="line"><span class="cl">                throw new InvalidClassException(model.isEnum ?
-</span></span><span class="line"><span class="cl">                        &#34;cannot bind enum descriptor to a non-enum class&#34; :
-</span></span><span class="line"><span class="cl">                        &#34;cannot bind non-enum descriptor to an enum class&#34;);
-</span></span><span class="line"><span class="cl">            }
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="n">void</span> <span class="n">initNonProxy</span><span class="p">(</span><span class="n">ObjectStreamClass</span> <span class="n">model</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                      <span class="n">Class</span><span class="o">&lt;</span><span class="err">?</span><span class="o">&gt;</span> <span class="n">cl</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                      <span class="n">ClassNotFoundException</span> <span class="n">resolveEx</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                      <span class="n">ObjectStreamClass</span> <span class="n">superDesc</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">throws</span> <span class="n">InvalidClassException</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">long</span> <span class="n">suid</span> <span class="o">=</span> <span class="n">Long</span><span class="o">.</span><span class="n">valueOf</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">getSerialVersionUID</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ObjectStreamClass</span> <span class="n">osc</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">cl</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">osc</span> <span class="o">=</span> <span class="n">lookup</span><span class="p">(</span><span class="n">cl</span><span class="p">,</span> <span class="bp">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">osc</span><span class="o">.</span><span class="n">isProxy</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">throw</span> <span class="n">new</span> <span class="n">InvalidClassException</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                        <span class="s2">&#34;cannot bind non-proxy descriptor to a proxy class&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">isEnum</span> <span class="o">!=</span> <span class="n">osc</span><span class="o">.</span><span class="n">isEnum</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">throw</span> <span class="n">new</span> <span class="n">InvalidClassException</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">isEnum</span> <span class="err">?</span>
+</span></span><span class="line"><span class="cl">                        <span class="s2">&#34;cannot bind enum descriptor to a non-enum class&#34;</span> <span class="p">:</span>
+</span></span><span class="line"><span class="cl">                        <span class="s2">&#34;cannot bind non-enum descriptor to an enum class&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">            // ========== 判断反序列化 serializableUID 是否一致 ========== start//
-</span></span><span class="line"><span class="cl">            if (model.serializable == osc.serializable &amp;&amp;
-</span></span><span class="line"><span class="cl">                    !cl.isArray() &amp;&amp;
-</span></span><span class="line"><span class="cl">                    suid != osc.getSerialVersionUID()) {
-</span></span><span class="line"><span class="cl">                throw new InvalidClassException(osc.name,
-</span></span><span class="line"><span class="cl">                        &#34;local class incompatible: &#34; +
-</span></span><span class="line"><span class="cl">                                &#34;stream classdesc serialVersionUID = &#34; + suid +
-</span></span><span class="line"><span class="cl">                                &#34;, local class serialVersionUID = &#34; +
-</span></span><span class="line"><span class="cl">                                osc.getSerialVersionUID());
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">            // ========== 判断反序列化 serializableUID 是否一致 ========== end//
+</span></span><span class="line"><span class="cl">            <span class="o">//</span> <span class="o">==========</span> <span class="err">判断反序列化</span> <span class="n">serializableUID</span> <span class="err">是否一致</span> <span class="o">==========</span> <span class="n">start</span><span class="o">//</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">serializable</span> <span class="o">==</span> <span class="n">osc</span><span class="o">.</span><span class="n">serializable</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">!</span><span class="n">cl</span><span class="o">.</span><span class="n">isArray</span><span class="p">()</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">suid</span> <span class="o">!=</span> <span class="n">osc</span><span class="o">.</span><span class="n">getSerialVersionUID</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">throw</span> <span class="n">new</span> <span class="n">InvalidClassException</span><span class="p">(</span><span class="n">osc</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="s2">&#34;local class incompatible: &#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">                                <span class="s2">&#34;stream classdesc serialVersionUID = &#34;</span> <span class="o">+</span> <span class="n">suid</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">                                <span class="s2">&#34;, local class serialVersionUID = &#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">                                <span class="n">osc</span><span class="o">.</span><span class="n">getSerialVersionUID</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">//</span> <span class="o">==========</span> <span class="err">判断反序列化</span> <span class="n">serializableUID</span> <span class="err">是否一致</span> <span class="o">==========</span> <span class="n">end</span><span class="o">//</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">            if (!classNamesEqual(model.name, osc.name)) {
-</span></span><span class="line"><span class="cl">                throw new InvalidClassException(osc.name,
-</span></span><span class="line"><span class="cl">                        &#34;local class name incompatible with stream class &#34; +
-</span></span><span class="line"><span class="cl">                                &#34;name \&#34;&#34; + model.name + &#34;\&#34;&#34;);
-</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">classNamesEqual</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">osc</span><span class="o">.</span><span class="n">name</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">throw</span> <span class="n">new</span> <span class="n">InvalidClassException</span><span class="p">(</span><span class="n">osc</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="s2">&#34;local class name incompatible with stream class &#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">                                <span class="s2">&#34;name </span><span class="se">\&#34;</span><span class="s2">&#34;</span> <span class="o">+</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&#34;</span><span class="se">\&#34;</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
 </span></span><span class="line"><span class="cl">            
-</span></span><span class="line"><span class="cl">            // ...
+</span></span><span class="line"><span class="cl">            <span class="o">//</span> <span class="o">...</span>
 </span></span><span class="line"><span class="cl">   
 </span></span></code></pre></div><p><code>getSerialVersionUID</code>方法：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public long getSerialVersionUID() {
@@ -2181,19 +2185,19 @@ and can thus result in unexpectedInvalidClassExceptions during deserialization.<
 <li>根据类名、接口名、成员方法及属性等来生成一个64位的哈希字段，比如： <code>private static final  long   serialVersionUID = xxxxL;</code></li>
 </ul>
 <p>第二种方式可通过编译器进行配置：
-<img src="/iblog/posts/annex/images/essays/idea%E6%A3%80%E6%9F%A5serialVersionUID.png" alt="idea检查serialVersionUID"></p>
-<p><img src="/iblog/posts/annex/images/essays/idea%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90serialVersionUID.png" alt="idea自动生成serialVersionUID"></p>
+<img alt="idea检查serialVersionUID" src="/iblog/posts/annex/images/essays/idea%E6%A3%80%E6%9F%A5serialVersionUID.png"></p>
+<p><img alt="idea自动生成serialVersionUID" src="/iblog/posts/annex/images/essays/idea%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90serialVersionUID.png"></p>
 <h3 id="序列化底层原理httphollischuanggiteeiotobetopjavaerbasicsjava-basicserialize-principleid序列化底层原理"><a href="http://hollischuang.gitee.io/tobetopjavaer/#/basics/java-basic/serialize-principle?id=%E5%BA%8F%E5%88%97%E5%8C%96%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86">序列化底层原理</a></h3>
 <h4 id="如何自定义的序列化和反序列化策略">如何自定义的序列化和反序列化策略?</h4>
 <p>通过在被序列化的类中增加 writeObject 和 readObject 方法来实现。</p>
 <p>在<code>java.util.ArrayList</code>中我们能找到答案：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class ArrayList&lt;E&gt; extends AbstractList&lt;E&gt;
-</span></span><span class="line"><span class="cl">        implements List&lt;E&gt;, RandomAccess, Cloneable, java.io.Serializable
-</span></span><span class="line"><span class="cl">{
-</span></span><span class="line"><span class="cl">    private static final long serialVersionUID = 8683452581122892189L;
-</span></span><span class="line"><span class="cl">    transient Object[] elementData; // non-private to simplify nested class access
-</span></span><span class="line"><span class="cl">    private int size;
-</span></span><span class="line"><span class="cl">}
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="k">extends</span> <span class="n">AbstractList</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">implements</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">RandomAccess</span><span class="p">,</span> <span class="n">Cloneable</span><span class="p">,</span> <span class="n">java</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">Serializable</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="k">static</span> <span class="n">final</span> <span class="n">long</span> <span class="n">serialVersionUID</span> <span class="o">=</span> <span class="mi">8683452581122892189</span><span class="n">L</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">transient</span> <span class="ne">Object</span><span class="p">[]</span> <span class="n">elementData</span><span class="p">;</span> <span class="o">//</span> <span class="n">non</span><span class="o">-</span><span class="n">private</span> <span class="n">to</span> <span class="n">simplify</span> <span class="n">nested</span> <span class="k">class</span> <span class="n">access</span>
+</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="ne">int</span> <span class="n">size</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>ArrayList实现了<code>java.io.Serializable</code>接口，那么我们就可以对它进行序列化及反序列化。
 因为<code>elementData</code>是 <code>transient</code> 的，所以这个成员变量不会被序列化而保留下来.</p>
 <p>ArrayList底层是通过数组实现的。
@@ -2380,47 +2384,47 @@ ArrayList把元素数组设置为transient。</p>
 <p>读取并返回&quot;ordinary&quot;(即，不是字符串，类，ObjectStreamClass，数组，或枚举常量)对象，如果对象的类是不可解析的，则为null(在这种情况下，ClassNotFoundException将与对象的句柄相关联)。
 设置passHandle为对象的赋值句柄。</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * Reads and returns &#34;ordinary&#34; (i.e., not a String, Class,
-</span></span><span class="line"><span class="cl">     * ObjectStreamClass, array, or enum constant) object, or null if object&#39;s
-</span></span><span class="line"><span class="cl">     * class is unresolvable (in which case a ClassNotFoundException will be
-</span></span><span class="line"><span class="cl">     * associated with object&#39;s handle).  Sets passHandle to object&#39;s assigned
-</span></span><span class="line"><span class="cl">     * handle.
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    private Object readOrdinaryObject(boolean unshared)
-</span></span><span class="line"><span class="cl">        throws IOException
-</span></span><span class="line"><span class="cl">    {
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">Reads</span> <span class="ow">and</span> <span class="n">returns</span> <span class="s2">&#34;ordinary&#34;</span> <span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="p">,</span> <span class="ow">not</span> <span class="n">a</span> <span class="ne">String</span><span class="p">,</span> <span class="n">Class</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">ObjectStreamClass</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="ow">or</span> <span class="k">enum</span> <span class="n">constant</span><span class="p">)</span> <span class="n">object</span><span class="p">,</span> <span class="ow">or</span> <span class="n">null</span> <span class="k">if</span> <span class="n">object</span><span class="s1">&#39;s</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="k">class</span> <span class="n">is</span> <span class="n">unresolvable</span> <span class="p">(</span><span class="ow">in</span> <span class="n">which</span> <span class="k">case</span> <span class="n">a</span> <span class="n">ClassNotFoundException</span> <span class="n">will</span> <span class="n">be</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">associated</span> <span class="n">with</span> <span class="n">object</span><span class="s1">&#39;s handle).  Sets passHandle to object&#39;</span><span class="n">s</span> <span class="n">assigned</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">handle</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="ne">Object</span> <span class="n">readOrdinaryObject</span><span class="p">(</span><span class="n">boolean</span> <span class="n">unshared</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">throws</span> <span class="n">IOException</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        // ...
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="o">...</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        Object obj;
-</span></span><span class="line"><span class="cl">        try {
-</span></span><span class="line"><span class="cl">            // `desc.isInstantiable()`: 如果一个 `serializable/externalizable` 的类可以在运行时被实例化，那么该方法就返回true
-</span></span><span class="line"><span class="cl">            // `desc.newInstance`：该方法通过反射的方式调用无参构造方法新建一个对象
-</span></span><span class="line"><span class="cl">            obj = desc.isInstantiable() ? desc.newInstance() : null;
-</span></span><span class="line"><span class="cl">        } catch (Exception ex) {
-</span></span><span class="line"><span class="cl">            throw (IOException) new InvalidClassException(
-</span></span><span class="line"><span class="cl">                desc.forClass().getName(),
-</span></span><span class="line"><span class="cl">                &#34;unable to create instance&#34;).initCause(ex);
-</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        <span class="ne">Object</span> <span class="n">obj</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="o">//</span> <span class="err">`</span><span class="n">desc</span><span class="o">.</span><span class="n">isInstantiable</span><span class="p">()</span><span class="err">`</span><span class="p">:</span> <span class="err">如果一个</span> <span class="err">`</span><span class="n">serializable</span><span class="o">/</span><span class="n">externalizable</span><span class="err">`</span> <span class="err">的类可以在运行时被实例化，那么该方法就返回</span><span class="bp">true</span>
+</span></span><span class="line"><span class="cl">            <span class="o">//</span> <span class="err">`</span><span class="n">desc</span><span class="o">.</span><span class="n">newInstance</span><span class="err">`：该方法通过反射的方式调用无参构造方法新建一个对象</span>
+</span></span><span class="line"><span class="cl">            <span class="n">obj</span> <span class="o">=</span> <span class="n">desc</span><span class="o">.</span><span class="n">isInstantiable</span><span class="p">()</span> <span class="err">?</span> <span class="n">desc</span><span class="o">.</span><span class="n">newInstance</span><span class="p">()</span> <span class="p">:</span> <span class="n">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">throw</span> <span class="p">(</span><span class="n">IOException</span><span class="p">)</span> <span class="n">new</span> <span class="n">InvalidClassException</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="n">desc</span><span class="o">.</span><span class="n">forClass</span><span class="p">()</span><span class="o">.</span><span class="n">getName</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;unable to create instance&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">initCause</span><span class="p">(</span><span class="n">ex</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        // ...
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="o">...</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        // hasReadResolveMethod:如果实现了serializable 或者 externalizable接口的类中包含readResolve则返回true
-</span></span><span class="line"><span class="cl">        if (obj != null &amp;&amp;
-</span></span><span class="line"><span class="cl">            handles.lookupException(passHandle) == null &amp;&amp;
-</span></span><span class="line"><span class="cl">            desc.hasReadResolveMethod())
-</span></span><span class="line"><span class="cl">        {
-</span></span><span class="line"><span class="cl">            // invokeReadResolve:通过反射的方式调用要被反序列化的类的readResolve方法。
-</span></span><span class="line"><span class="cl">            Object rep = desc.invokeReadResolve(obj);
-</span></span><span class="line"><span class="cl">            if (unshared &amp;&amp; rep.getClass().isArray()) {
-</span></span><span class="line"><span class="cl">                rep = cloneArray(rep);
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">            // ...
-</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="n">hasReadResolveMethod</span><span class="p">:</span><span class="err">如果实现了</span><span class="n">serializable</span> <span class="err">或者</span> <span class="n">externalizable接口的类中包含readResolve则返回true</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">obj</span> <span class="o">!=</span> <span class="n">null</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">handles</span><span class="o">.</span><span class="n">lookupException</span><span class="p">(</span><span class="n">passHandle</span><span class="p">)</span> <span class="o">==</span> <span class="n">null</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">desc</span><span class="o">.</span><span class="n">hasReadResolveMethod</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="o">//</span> <span class="n">invokeReadResolve</span><span class="p">:</span><span class="err">通过反射的方式调用要被反序列化的类的</span><span class="n">readResolve方法</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl">            <span class="ne">Object</span> <span class="n">rep</span> <span class="o">=</span> <span class="n">desc</span><span class="o">.</span><span class="n">invokeReadResolve</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">unshared</span> <span class="o">&amp;&amp;</span> <span class="n">rep</span><span class="o">.</span><span class="n">getClass</span><span class="p">()</span><span class="o">.</span><span class="n">isArray</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">rep</span> <span class="o">=</span> <span class="n">cloneArray</span><span class="p">(</span><span class="n">rep</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">//</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        return obj;
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">obj</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span></code></pre></div><h4 id="解决">解决</h4>
 <p>在 <code>Singleton</code> 中定义 <code>readResolve</code> 方法，并在该方法中指定要返回的对象的生成策略，就可以防止单例被破坏。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">class Singleton implements Serializable {
@@ -2471,9 +2475,9 @@ ArrayList把元素数组设置为transient。</p>
 <h3 id="io复用模型">IO复用模型</h3>
 <p>IO复用模型: 一个线程不断去轮询多个socket的状态，只有当socket真正有读写事件时，才真正调用实际的IO读写操作。
 在多路复用IO模型中，只需要使用一个线程就可以管理多个socket，系统不需要建立新的进程或者线程，也不必维护这些线程和进程，并且只有在真正有socket读写事件进行时，才会使用IO资源，所以它大大减少了资源占用。</p>
-<p><a href="#nio">Java NIO</a>实际上就是多路复用IO。
+<p><a href="/iblog/posts/java/rookie-io/#nio">Java NIO</a>实际上就是多路复用IO。
 通过<code>selector.select()</code>查询每个通道是否有到达事件，如果没有事件，则一直阻塞在那里，因此这种方式会导致用户线程的阻塞。所以，多路复用IO比较适合连接数比较多的情况。
-<img src="/iblog/posts/annex/images/essays/IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%A8%A1%E5%9E%8B.png" alt="IO多路复用模型"></p>
+<img alt="IO多路复用模型" src="/iblog/posts/annex/images/essays/IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%A8%A1%E5%9E%8B.png"></p>
 <p>特点：</p>
 <ul>
 <li>专一进程解决多个进程IO的阻塞问题，性能好;</li>
@@ -2539,8 +2543,8 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
 </tr>
 </tbody>
 </table>
-<p><img src="/iblog/posts/annex/images/essays/IO%E4%B8%8ENIO-1.png" alt="IO"></p>
-<p><img src="/iblog/posts/annex/images/essays/IO%E4%B8%8ENIO-2.png" alt="NIO"></p>
+<p><img alt="IO" src="/iblog/posts/annex/images/essays/IO%E4%B8%8ENIO-1.png"></p>
+<p><img alt="NIO" src="/iblog/posts/annex/images/essays/IO%E4%B8%8ENIO-2.png"></p>
 <h3 id="通道与缓冲区">通道与缓冲区</h3>
 <p>通道负责传输，缓冲区负责存储。</p>
 <p>若需要使用 NIO ，需要获取用于连接 IO 设备的通道以及用于容纳数据的缓冲区。然后操作缓冲区，对数据进行处理。</p>
@@ -2670,11 +2674,11 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">}</span><span class="w">
 </span></span></span></code></pre></div><h5 id="非直接缓冲区与直接缓冲区">非直接缓冲区与直接缓冲区</h5>
 <p>直接缓冲区：通过 <code>allocateDirect()</code> 方法分配直接缓冲区，将缓冲区建立在物理内存中。可以提高读写效率。</p>
-<p><img src="/iblog/posts/annex/images/essays/%E7%9B%B4%E6%8E%A5%E7%BC%93%E5%86%B2%E5%8C%BA.png" alt="直接缓冲区"></p>
+<p><img alt="直接缓冲区" src="/iblog/posts/annex/images/essays/%E7%9B%B4%E6%8E%A5%E7%BC%93%E5%86%B2%E5%8C%BA.png"></p>
 <p>非直接缓冲区：通过 <code>allocate()</code> 方法分配缓冲区，将缓冲区建立在JVM的内存中。</p>
 <p><code>allocate()</code>方法返回的缓冲区进行分配和取消分配所需成本通常高于非直接缓冲区 。
 直接缓冲区的内容可以驻留在常规的垃圾回收堆之外.</p>
-<p><img src="/iblog/posts/annex/images/essays/%E9%9D%9E%E7%9B%B4%E6%8E%A5%E7%BC%93%E5%86%B2%E5%8C%BA.png" alt="非直接缓冲区"></p>
+<p><img alt="非直接缓冲区" src="/iblog/posts/annex/images/essays/%E9%9D%9E%E7%9B%B4%E6%8E%A5%E7%BC%93%E5%86%B2%E5%8C%BA.png"></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
 </span></span><span class="line"><span class="cl">    public static void main(String[] args) {
 </span></span><span class="line"><span class="cl">        ByteBuffer allocate = ByteBuffer.allocate(1024);
@@ -3113,16 +3117,16 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
 </ul>
 <p>Netty 主要基于主从 Reactor 多线程模型做了一定的改进。</p>
 <h4 id="传统-io-模型">传统 IO 模型</h4>
-<p><img src="/iblog/posts/annex/images/essays/%E4%BC%A0%E7%BB%9FIO%E6%A8%A1%E5%9E%8B.png" alt="传统IO模型"></p>
+<p><img alt="传统IO模型" src="/iblog/posts/annex/images/essays/%E4%BC%A0%E7%BB%9FIO%E6%A8%A1%E5%9E%8B.png"></p>
 <p>采用阻塞 IO 模式获取输入的数据，每个连接都需要独立的线程完成数据的输入，业务处理，数据返回。
 当并发数很大，就会创建大量的线程，占用很大系统资源，连接创建后，如果当前线程暂时没有数据可读，该线程会阻塞在 read 操作，造成线程资源浪费。</p>
 <h4 id="reactor-模型">Reactor 模型</h4>
 <p>基于 I/O 复用模型，多个连接共用一个阻塞对象，应用程序只需要在一个阻塞对象等待，无需阻塞等待所有连接。 当某个连接有新的数据可以处理时，操作系统通知应用程序，线程从阻塞状态返回，开始进行业务处理。</p>
-<p><img src="/iblog/posts/annex/images/essays/Reactor%E6%A8%A1%E5%BC%8F.png" alt="Reactor模式"></p>
+<p><img alt="Reactor模式" src="/iblog/posts/annex/images/essays/Reactor%E6%A8%A1%E5%BC%8F.png"></p>
 <p>为了避免浪费可以创建一个线程池，当客户端发起请求时，通过<code>DispatcherHandler</code>进行分发请求处理到线程池，线程池中在使用具体的线程进行事件处理。 服务器端程序处理传入的多个请求,并将它们同步分派到相应的处理线程，因此 Reactor 模式也叫 Dispatcher 模式。</p>
 <p>Reactor 模式使用 IO 复用监听事件，收到事件后，分发给某个线程（进程），这点就是网络服务器高并发处理关键。</p>
 <h5 id="单-reactor-单线程">单 Reactor 单线程</h5>
-<p><img src="/iblog/posts/annex/images/essays/%E5%8D%95Reactor%E5%8D%95%E7%BA%BF%E7%A8%8B.png" alt="单Reactor单线程"></p>
+<p><img alt="单Reactor单线程" src="/iblog/posts/annex/images/essays/%E5%8D%95Reactor%E5%8D%95%E7%BA%BF%E7%A8%8B.png"></p>
 <p>步骤：</p>
 <ul>
 <li>Reactor 对象通过 Select 监控客户端请求事件，收到事件后通过 Dispatch 进行分发</li>
@@ -3144,7 +3148,7 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
 <li>客户端的数量有限，业务处理非常快速的情况</li>
 </ul>
 <h5 id="单-reactor-多线程">单 Reactor 多线程</h5>
-<p><img src="/iblog/posts/annex/images/essays/%E5%8D%95Reactor%E5%A4%9A%E7%BA%BF%E7%A8%8B.png" alt="单Reactor多线程"></p>
+<p><img alt="单Reactor多线程" src="/iblog/posts/annex/images/essays/%E5%8D%95Reactor%E5%A4%9A%E7%BA%BF%E7%A8%8B.png"></p>
 <p>步骤：</p>
 <ul>
 <li>Reactor 对象通过对 select 监听请求事件，收到请求事件后交给 dispath 进行转发</li>
@@ -3164,7 +3168,7 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
 <li>可以充分利用CPU资源</li>
 </ul>
 <h5 id="主从-reactor-多线程">主从 Reactor 多线程</h5>
-<p><img src="/iblog/posts/annex/images/essays/%E4%B8%BB%E4%BB%8EReactor%E7%BA%BF%E7%A8%8B.png" alt="主从Reactor线程"></p>
+<p><img alt="主从Reactor线程" src="/iblog/posts/annex/images/essays/%E4%B8%BB%E4%BB%8EReactor%E7%BA%BF%E7%A8%8B.png"></p>
 <p>Reactor 主线程可以对应多个 Reactor 子线程，即 MainRecator 可以关联多个 SubReactor，从而解决了Reactor 在单线程中运行，高并发场景下容易成为性能瓶颈。
 步骤：</p>
 <ul>
@@ -3187,8 +3191,8 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
 </ul>
 <p>这种模型在许多项目中广泛使用，包括 Nginx 主从 Reactor 多进程模型，Memcached 主从多线程，Netty 主从多线程模型的支持。</p>
 <h4 id="netty-模型">Netty 模型</h4>
-<p><img src="/iblog/posts/annex/images/essays/Netty%E6%A8%A1%E5%9E%8B.png" alt="Netty模型"></p>
-<p><img src="/iblog/posts/annex/images/essays/netty%E7%BB%93%E6%9E%84.png" alt="netty结构"></p>
+<p><img alt="Netty模型" src="/iblog/posts/annex/images/essays/Netty%E6%A8%A1%E5%9E%8B.png"></p>
+<p><img alt="netty结构" src="/iblog/posts/annex/images/essays/netty%E7%BB%93%E6%9E%84.png"></p>
 <ul>
 <li>Netty 抽象出两组线程池 <code>BossGroup</code> 专门负责接收客户端的连接，<code>WorkerGroup</code> 专门负责网络的读写；<code>BossGroup</code> 和 <code>WorkerGroup</code> 类型都是 <code>NioEventLoopGroup</code></li>
 <li><code>NioEventLoopGroup</code> 相当于一个事件循环组，这个组中含有多个事件循环，每一个事件循环是 <code>NioEventLoop</code>，每个 <code>NioEventLoop</code> 都有一个 <code>Selector</code>，用于监听绑定在其上的 <code>socket</code> 的网络通讯</li>
@@ -3575,310 +3579,310 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
 <p>对于粘包的情况，要对粘在一起的包进行拆包。对于拆包的情况，要对被拆开的包进行粘包，即将一个被拆开的完整应用包再组合成一个完整包。比较通用的做法就是每次发送一个应用数据包前在前面加上四个字节的包长度值，指明这个应用包的真实长度。</p>
 <p>使用netty解决拆包、粘包问题代码示例：</p>
 <p>客户端代码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@SpringBootApplication
-</span></span><span class="line"><span class="cl">public class NettyClientApplication {
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="err">@</span><span class="n">SpringBootApplication</span>
+</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">NettyClientApplication</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        SpringApplication.run(NettyClientApplication.class, args);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">SpringApplication</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">NettyClientApplication</span><span class="o">.</span><span class="k">class</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">@Slf4j
-</span></span><span class="line"><span class="cl">@Component
-</span></span><span class="line"><span class="cl">public class StartNetty implements CommandLineRunner {
+</span></span><span class="line"><span class="cl"><span class="err">@</span><span class="n">Slf4j</span>
+</span></span><span class="line"><span class="cl"><span class="err">@</span><span class="n">Component</span>
+</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">StartNetty</span> <span class="n">implements</span> <span class="n">CommandLineRunner</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    private final NettyClient nettyClient;
+</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="n">final</span> <span class="n">NettyClient</span> <span class="n">nettyClient</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public StartNetty(NettyClient nettyClient) {
-</span></span><span class="line"><span class="cl">        this.nettyClient = nettyClient;
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">StartNetty</span><span class="p">(</span><span class="n">NettyClient</span> <span class="n">nettyClient</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">this</span><span class="o">.</span><span class="n">nettyClient</span> <span class="o">=</span> <span class="n">nettyClient</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    public void run(String... args) throws Exception {
-</span></span><span class="line"><span class="cl">        log.info(&#34;启动netty客户端 ...&#34;);
-</span></span><span class="line"><span class="cl">        nettyClient.start();
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">run</span><span class="p">(</span><span class="ne">String</span><span class="o">...</span> <span class="n">args</span><span class="p">)</span> <span class="n">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;启动netty客户端 ...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">nettyClient</span><span class="o">.</span><span class="n">start</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">@Slf4j
-</span></span><span class="line"><span class="cl">@Component
-</span></span><span class="line"><span class="cl">public class NettyClient {
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * Netty客户端启动
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    public void start() {
-</span></span><span class="line"><span class="cl">        EventLoopGroup group = new NioEventLoopGroup();
-</span></span><span class="line"><span class="cl">        Bootstrap bootstrap = new Bootstrap()
-</span></span><span class="line"><span class="cl">                .group(group)
-</span></span><span class="line"><span class="cl">                //该参数的作用就是禁止使用Nagle算法，使用于小数据即时传输
-</span></span><span class="line"><span class="cl">                .option(ChannelOption.TCP_NODELAY, true)
-</span></span><span class="line"><span class="cl">                .channel(NioSocketChannel.class)
-</span></span><span class="line"><span class="cl">                .handler(new NettyClientInitializer());
-</span></span><span class="line"><span class="cl">        try {
-</span></span><span class="line"><span class="cl">            ChannelFuture future = bootstrap.connect(&#34;127.0.0.1&#34;, 9000).sync();
-</span></span><span class="line"><span class="cl">            log.info(&#34;客户端成功....&#34;);
-</span></span><span class="line"><span class="cl">            //发送消息
-</span></span><span class="line"><span class="cl">            future.channel().writeAndFlush(&#34;客户端请求数据&#34;);
-</span></span><span class="line"><span class="cl">            // 等待连接被关闭
-</span></span><span class="line"><span class="cl">            future.channel().closeFuture().sync();
-</span></span><span class="line"><span class="cl">        } catch (InterruptedException e) {
-</span></span><span class="line"><span class="cl">            e.printStackTrace();
-</span></span><span class="line"><span class="cl">        } finally {
-</span></span><span class="line"><span class="cl">            group.shutdownGracefully();
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">public class NettyClientInitializer extends ChannelInitializer&lt;SocketChannel&gt; {
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    protected void initChannel(SocketChannel socketChannel) throws Exception {
-</span></span><span class="line"><span class="cl">        socketChannel.pipeline().addLast(&#34;decoder&#34;, new MyMessageDecoder());
-</span></span><span class="line"><span class="cl">        socketChannel.pipeline().addLast(&#34;encoder&#34;, new MyMessageEncoder());
-</span></span><span class="line"><span class="cl">        socketChannel.pipeline().addLast(new NettyClientHandler());
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"><span class="err">@</span><span class="n">Slf4j</span>
+</span></span><span class="line"><span class="cl"><span class="err">@</span><span class="n">Component</span>
+</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">NettyClient</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">Netty客户端启动</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">start</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">EventLoopGroup</span> <span class="n">group</span> <span class="o">=</span> <span class="n">new</span> <span class="n">NioEventLoopGroup</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Bootstrap</span> <span class="n">bootstrap</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Bootstrap</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="o">//</span><span class="err">该参数的作用就是禁止使用</span><span class="n">Nagle算法</span><span class="err">，使用于小数据即时传输</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="n">ChannelOption</span><span class="o">.</span><span class="n">TCP_NODELAY</span><span class="p">,</span> <span class="bp">true</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="n">channel</span><span class="p">(</span><span class="n">NioSocketChannel</span><span class="o">.</span><span class="k">class</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="n">handler</span><span class="p">(</span><span class="n">new</span> <span class="n">NettyClientInitializer</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">        <span class="n">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ChannelFuture</span> <span class="n">future</span> <span class="o">=</span> <span class="n">bootstrap</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&#34;127.0.0.1&#34;</span><span class="p">,</span> <span class="mi">9000</span><span class="p">)</span><span class="o">.</span><span class="n">sync</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;客户端成功....&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">//</span><span class="err">发送消息</span>
+</span></span><span class="line"><span class="cl">            <span class="n">future</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span><span class="o">.</span><span class="n">writeAndFlush</span><span class="p">(</span><span class="s2">&#34;客户端请求数据&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">//</span> <span class="err">等待连接被关闭</span>
+</span></span><span class="line"><span class="cl">            <span class="n">future</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span><span class="o">.</span><span class="n">closeFuture</span><span class="p">()</span><span class="o">.</span><span class="n">sync</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">e</span><span class="o">.</span><span class="n">printStackTrace</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="n">finally</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">group</span><span class="o">.</span><span class="n">shutdownGracefully</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">@Slf4j
-</span></span><span class="line"><span class="cl">public class NettyClientHandler extends ChannelInboundHandlerAdapter {
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-</span></span><span class="line"><span class="cl">        log.info(&#34;客户端Active .....&#34;);
-</span></span><span class="line"><span class="cl">        // 模拟tcp粘包
-</span></span><span class="line"><span class="cl">        for (int i = 0; i &lt; 5; i++) {
-</span></span><span class="line"><span class="cl">            String mes = &#34;今天天气冷，吃火锅&#34;;
-</span></span><span class="line"><span class="cl">            byte[] content = mes.getBytes(Charset.forName(&#34;utf-8&#34;));
-</span></span><span class="line"><span class="cl">            int length = mes.getBytes(Charset.forName(&#34;utf-8&#34;)).length;
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">            //  解决tcp粘包问题
-</span></span><span class="line"><span class="cl">            MessageProtocol messageProtocol = new MessageProtocol();
-</span></span><span class="line"><span class="cl">            messageProtocol.setLen(length);
-</span></span><span class="line"><span class="cl">            messageProtocol.setContent(content);
-</span></span><span class="line"><span class="cl">            ctx.writeAndFlush(messageProtocol);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 收到服务端的消息
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-</span></span><span class="line"><span class="cl">        log.info(&#34;客户端收到消息: {}&#34;, msg.toString());
-</span></span><span class="line"><span class="cl">        MessageProtocol mp = (MessageProtocol)msg;
-</span></span><span class="line"><span class="cl">        int len = mp.getLen();
-</span></span><span class="line"><span class="cl">        byte[] content = mp.getContent();
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;客户端接收到消息如下&#34;);
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;长度=&#34; + len);
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;内容=&#34; + new String(content, StandardCharsets.UTF_8));
+</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">NettyClientInitializer</span> <span class="k">extends</span> <span class="n">ChannelInitializer</span><span class="o">&lt;</span><span class="n">SocketChannel</span><span class="o">&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">protected</span> <span class="n">void</span> <span class="n">initChannel</span><span class="p">(</span><span class="n">SocketChannel</span> <span class="n">socketChannel</span><span class="p">)</span> <span class="n">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">socketChannel</span><span class="o">.</span><span class="n">pipeline</span><span class="p">()</span><span class="o">.</span><span class="n">addLast</span><span class="p">(</span><span class="s2">&#34;decoder&#34;</span><span class="p">,</span> <span class="n">new</span> <span class="n">MyMessageDecoder</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">        <span class="n">socketChannel</span><span class="o">.</span><span class="n">pipeline</span><span class="p">()</span><span class="o">.</span><span class="n">addLast</span><span class="p">(</span><span class="s2">&#34;encoder&#34;</span><span class="p">,</span> <span class="n">new</span> <span class="n">MyMessageEncoder</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">        <span class="n">socketChannel</span><span class="o">.</span><span class="n">pipeline</span><span class="p">()</span><span class="o">.</span><span class="n">addLast</span><span class="p">(</span><span class="n">new</span> <span class="n">NettyClientHandler</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl"><span class="err">@</span><span class="n">Slf4j</span>
+</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">NettyClientHandler</span> <span class="k">extends</span> <span class="n">ChannelInboundHandlerAdapter</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">channelActive</span><span class="p">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="p">)</span> <span class="n">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;客户端Active .....&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">模拟</span><span class="n">tcp粘包</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="ne">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="ne">String</span> <span class="n">mes</span> <span class="o">=</span> <span class="s2">&#34;今天天气冷，吃火锅&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">byte</span><span class="p">[]</span> <span class="n">content</span> <span class="o">=</span> <span class="n">mes</span><span class="o">.</span><span class="n">getBytes</span><span class="p">(</span><span class="n">Charset</span><span class="o">.</span><span class="n">forName</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">            <span class="ne">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">mes</span><span class="o">.</span><span class="n">getBytes</span><span class="p">(</span><span class="n">Charset</span><span class="o">.</span><span class="n">forName</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span><span class="o">.</span><span class="n">length</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 客户端异常时触发
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-</span></span><span class="line"><span class="cl">        cause.printStackTrace();
-</span></span><span class="line"><span class="cl">        ctx.close();
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">            <span class="o">//</span>  <span class="err">解决</span><span class="n">tcp粘包问题</span>
+</span></span><span class="line"><span class="cl">            <span class="n">MessageProtocol</span> <span class="n">messageProtocol</span> <span class="o">=</span> <span class="n">new</span> <span class="n">MessageProtocol</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">messageProtocol</span><span class="o">.</span><span class="n">setLen</span><span class="p">(</span><span class="n">length</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">messageProtocol</span><span class="o">.</span><span class="n">setContent</span><span class="p">(</span><span class="n">content</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ctx</span><span class="o">.</span><span class="n">writeAndFlush</span><span class="p">(</span><span class="n">messageProtocol</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">收到服务端的消息</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">channelRead</span><span class="p">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="p">,</span> <span class="ne">Object</span> <span class="n">msg</span><span class="p">)</span> <span class="n">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;客户端收到消息: {}&#34;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">toString</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">        <span class="n">MessageProtocol</span> <span class="n">mp</span> <span class="o">=</span> <span class="p">(</span><span class="n">MessageProtocol</span><span class="p">)</span><span class="n">msg</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">getLen</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">byte</span><span class="p">[]</span> <span class="n">content</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">getContent</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;客户端接收到消息如下&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;长度=&#34;</span> <span class="o">+</span> <span class="n">len</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;内容=&#34;</span> <span class="o">+</span> <span class="n">new</span> <span class="ne">String</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">StandardCharsets</span><span class="o">.</span><span class="n">UTF_8</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">客户端异常时触发</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">exceptionCaught</span><span class="p">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">Throwable</span> <span class="n">cause</span><span class="p">)</span> <span class="n">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cause</span><span class="o">.</span><span class="n">printStackTrace</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ctx</span><span class="o">.</span><span class="n">close</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>服务端代码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@SpringBootApplication
-</span></span><span class="line"><span class="cl">public class NettyServerApplication {
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="err">@</span><span class="n">SpringBootApplication</span>
+</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">NettyServerApplication</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        SpringApplication.run(NettyServerApplication.class, args);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">SpringApplication</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">NettyServerApplication</span><span class="o">.</span><span class="k">class</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">@Slf4j
-</span></span><span class="line"><span class="cl">@Component
-</span></span><span class="line"><span class="cl">public class StartNetty implements CommandLineRunner {
+</span></span><span class="line"><span class="cl"><span class="err">@</span><span class="n">Slf4j</span>
+</span></span><span class="line"><span class="cl"><span class="err">@</span><span class="n">Component</span>
+</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">StartNetty</span> <span class="n">implements</span> <span class="n">CommandLineRunner</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    private final NettyServer nettyServer;
+</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="n">final</span> <span class="n">NettyServer</span> <span class="n">nettyServer</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public StartNetty(NettyServer nettyServer) {
-</span></span><span class="line"><span class="cl">        this.nettyServer = nettyServer;
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">StartNetty</span><span class="p">(</span><span class="n">NettyServer</span> <span class="n">nettyServer</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">this</span><span class="o">.</span><span class="n">nettyServer</span> <span class="o">=</span> <span class="n">nettyServer</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 启动netty 让netty随着项目一起启动
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    public void run(String... args) throws Exception {
-</span></span><span class="line"><span class="cl">        log.info(&#34;netty 服务端启动 ...&#34;);
-</span></span><span class="line"><span class="cl">        nettyServer.start(new InetSocketAddress(&#34;127.0.0.1&#34;, 9000));
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">启动</span><span class="n">netty</span> <span class="err">让</span><span class="n">netty随着项目一起启动</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">run</span><span class="p">(</span><span class="ne">String</span><span class="o">...</span> <span class="n">args</span><span class="p">)</span> <span class="n">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;netty 服务端启动 ...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">nettyServer</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">new</span> <span class="n">InetSocketAddress</span><span class="p">(</span><span class="s2">&#34;127.0.0.1&#34;</span><span class="p">,</span> <span class="mi">9000</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">@Slf4j
-</span></span><span class="line"><span class="cl">@Component
-</span></span><span class="line"><span class="cl">public class NettyServer  {
+</span></span><span class="line"><span class="cl"><span class="err">@</span><span class="n">Slf4j</span>
+</span></span><span class="line"><span class="cl"><span class="err">@</span><span class="n">Component</span>
+</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">NettyServer</span>  <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * Netty服务启动
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    public void start(InetSocketAddress socketAddress) {
-</span></span><span class="line"><span class="cl">        //new 一个主线程组
-</span></span><span class="line"><span class="cl">        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
-</span></span><span class="line"><span class="cl">        //new 一个工作线程组
-</span></span><span class="line"><span class="cl">        EventLoopGroup workGroup = new NioEventLoopGroup(200);
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">Netty服务启动</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">start</span><span class="p">(</span><span class="n">InetSocketAddress</span> <span class="n">socketAddress</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span><span class="n">new</span> <span class="err">一个主线程组</span>
+</span></span><span class="line"><span class="cl">        <span class="n">EventLoopGroup</span> <span class="n">bossGroup</span> <span class="o">=</span> <span class="n">new</span> <span class="n">NioEventLoopGroup</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span><span class="n">new</span> <span class="err">一个工作线程组</span>
+</span></span><span class="line"><span class="cl">        <span class="n">EventLoopGroup</span> <span class="n">workGroup</span> <span class="o">=</span> <span class="n">new</span> <span class="n">NioEventLoopGroup</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        ServerBootstrap bootstrap = new ServerBootstrap()
-</span></span><span class="line"><span class="cl">                .group(bossGroup, workGroup)
-</span></span><span class="line"><span class="cl">                .channel(NioServerSocketChannel.class)
-</span></span><span class="line"><span class="cl">                .childHandler(new ServerChannelInitializer())
-</span></span><span class="line"><span class="cl">                .localAddress(socketAddress)
-</span></span><span class="line"><span class="cl">                //设置队列大小
-</span></span><span class="line"><span class="cl">                .option(ChannelOption.SO_BACKLOG, 1024)
-</span></span><span class="line"><span class="cl">                // 两小时内没有数据的通信时,TCP会自动发送一个活动探测数据报文
-</span></span><span class="line"><span class="cl">                .childOption(ChannelOption.SO_KEEPALIVE, true);
-</span></span><span class="line"><span class="cl">        //绑定端口,开始接收进来的连接
-</span></span><span class="line"><span class="cl">        try {
-</span></span><span class="line"><span class="cl">            // 绑定端口 生成一个ChannelFuture 对象 启动服务器
-</span></span><span class="line"><span class="cl">            ChannelFuture future = bootstrap.bind(socketAddress).sync();
-</span></span><span class="line"><span class="cl">            log.info(&#34;服务器启动开始监听端口: {}&#34;, socketAddress.getPort());
-</span></span><span class="line"><span class="cl">            // 对关闭通道进行监听
-</span></span><span class="line"><span class="cl">            future.channel().closeFuture().sync();
-</span></span><span class="line"><span class="cl">        } catch (InterruptedException e) {
-</span></span><span class="line"><span class="cl">            e.printStackTrace();
-</span></span><span class="line"><span class="cl">        } finally {
-</span></span><span class="line"><span class="cl">            //关闭主线程组
-</span></span><span class="line"><span class="cl">            bossGroup.shutdownGracefully();
-</span></span><span class="line"><span class="cl">            //关闭工作线程组
-</span></span><span class="line"><span class="cl">            workGroup.shutdownGracefully();
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">        <span class="n">ServerBootstrap</span> <span class="n">bootstrap</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ServerBootstrap</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">bossGroup</span><span class="p">,</span> <span class="n">workGroup</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="n">channel</span><span class="p">(</span><span class="n">NioServerSocketChannel</span><span class="o">.</span><span class="k">class</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="n">childHandler</span><span class="p">(</span><span class="n">new</span> <span class="n">ServerChannelInitializer</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="n">localAddress</span><span class="p">(</span><span class="n">socketAddress</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="o">//</span><span class="err">设置队列大小</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="n">ChannelOption</span><span class="o">.</span><span class="n">SO_BACKLOG</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="o">//</span> <span class="err">两小时内没有数据的通信时</span><span class="p">,</span><span class="n">TCP会自动发送一个活动探测数据报文</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="n">childOption</span><span class="p">(</span><span class="n">ChannelOption</span><span class="o">.</span><span class="n">SO_KEEPALIVE</span><span class="p">,</span> <span class="bp">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span><span class="err">绑定端口</span><span class="p">,</span><span class="err">开始接收进来的连接</span>
+</span></span><span class="line"><span class="cl">        <span class="n">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="o">//</span> <span class="err">绑定端口</span> <span class="err">生成一个</span><span class="n">ChannelFuture</span> <span class="err">对象</span> <span class="err">启动服务器</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ChannelFuture</span> <span class="n">future</span> <span class="o">=</span> <span class="n">bootstrap</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">socketAddress</span><span class="p">)</span><span class="o">.</span><span class="n">sync</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;服务器启动开始监听端口: {}&#34;</span><span class="p">,</span> <span class="n">socketAddress</span><span class="o">.</span><span class="n">getPort</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">            <span class="o">//</span> <span class="err">对关闭通道进行监听</span>
+</span></span><span class="line"><span class="cl">            <span class="n">future</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span><span class="o">.</span><span class="n">closeFuture</span><span class="p">()</span><span class="o">.</span><span class="n">sync</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">e</span><span class="o">.</span><span class="n">printStackTrace</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="n">finally</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="o">//</span><span class="err">关闭主线程组</span>
+</span></span><span class="line"><span class="cl">            <span class="n">bossGroup</span><span class="o">.</span><span class="n">shutdownGracefully</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="o">//</span><span class="err">关闭工作线程组</span>
+</span></span><span class="line"><span class="cl">            <span class="n">workGroup</span><span class="o">.</span><span class="n">shutdownGracefully</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">public class ServerChannelInitializer extends ChannelInitializer&lt;SocketChannel&gt; {
+</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">ServerChannelInitializer</span> <span class="k">extends</span> <span class="n">ChannelInitializer</span><span class="o">&lt;</span><span class="n">SocketChannel</span><span class="o">&gt;</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    protected void initChannel(SocketChannel socketChannel) throws Exception {
-</span></span><span class="line"><span class="cl">        socketChannel.pipeline().addLast(&#34;decoder&#34;, new MyMessageDecoder());
-</span></span><span class="line"><span class="cl">        socketChannel.pipeline().addLast(&#34;encoder&#34;, new MyMessageEncoder());
-</span></span><span class="line"><span class="cl">        socketChannel.pipeline().addLast(new NettyServerHandler());
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">protected</span> <span class="n">void</span> <span class="n">initChannel</span><span class="p">(</span><span class="n">SocketChannel</span> <span class="n">socketChannel</span><span class="p">)</span> <span class="n">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">socketChannel</span><span class="o">.</span><span class="n">pipeline</span><span class="p">()</span><span class="o">.</span><span class="n">addLast</span><span class="p">(</span><span class="s2">&#34;decoder&#34;</span><span class="p">,</span> <span class="n">new</span> <span class="n">MyMessageDecoder</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">        <span class="n">socketChannel</span><span class="o">.</span><span class="n">pipeline</span><span class="p">()</span><span class="o">.</span><span class="n">addLast</span><span class="p">(</span><span class="s2">&#34;encoder&#34;</span><span class="p">,</span> <span class="n">new</span> <span class="n">MyMessageEncoder</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">        <span class="n">socketChannel</span><span class="o">.</span><span class="n">pipeline</span><span class="p">()</span><span class="o">.</span><span class="n">addLast</span><span class="p">(</span><span class="n">new</span> <span class="n">NettyServerHandler</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">@Slf4j
-</span></span><span class="line"><span class="cl">public class NettyServerHandler extends ChannelInboundHandlerAdapter {
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 客户端连接会触发
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-</span></span><span class="line"><span class="cl">        log.info(&#34;服务端 Active......&#34;);
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl"><span class="err">@</span><span class="n">Slf4j</span>
+</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">NettyServerHandler</span> <span class="k">extends</span> <span class="n">ChannelInboundHandlerAdapter</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">客户端连接会触发</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">channelActive</span><span class="p">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="p">)</span> <span class="n">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;服务端 Active......&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 客户端发消息会触发
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-</span></span><span class="line"><span class="cl">        log.info(&#34;服务器收到消息: {}&#34;, msg.toString());
-</span></span><span class="line"><span class="cl">        MessageProtocol mp = (MessageProtocol)msg;
-</span></span><span class="line"><span class="cl">        int len = mp.getLen();
-</span></span><span class="line"><span class="cl">        byte[] content = mp.getContent();
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">客户端发消息会触发</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">channelRead</span><span class="p">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="p">,</span> <span class="ne">Object</span> <span class="n">msg</span><span class="p">)</span> <span class="n">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;服务器收到消息: {}&#34;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">toString</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">        <span class="n">MessageProtocol</span> <span class="n">mp</span> <span class="o">=</span> <span class="p">(</span><span class="n">MessageProtocol</span><span class="p">)</span><span class="n">msg</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">getLen</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">byte</span><span class="p">[]</span> <span class="n">content</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">getContent</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        System.out.println();
-</span></span><span class="line"><span class="cl">        System.out.println();
-</span></span><span class="line"><span class="cl">        System.out.println();
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;服务器接收到信息如下&#34;);
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;长度=&#34; + len);
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;内容=&#34; + new String(content, Charset.forName(&#34;utf-8&#34;)));
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;服务器接收到信息如下&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;长度=&#34;</span> <span class="o">+</span> <span class="n">len</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;内容=&#34;</span> <span class="o">+</span> <span class="n">new</span> <span class="ne">String</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">Charset</span><span class="o">.</span><span class="n">forName</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">)));</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        //回复消息
-</span></span><span class="line"><span class="cl">        String responseContent = UUID.randomUUID().toString();
-</span></span><span class="line"><span class="cl">        int responseLen = responseContent.getBytes(&#34;utf-8&#34;).length;
-</span></span><span class="line"><span class="cl">        byte[] responseContent2 = responseContent.getBytes(&#34;utf-8&#34;);
-</span></span><span class="line"><span class="cl">        //构建一个协议包
-</span></span><span class="line"><span class="cl">        MessageProtocol messageProtocol = new MessageProtocol();
-</span></span><span class="line"><span class="cl">        messageProtocol.setLen(responseLen);
-</span></span><span class="line"><span class="cl">        messageProtocol.setContent(responseContent2);
+</span></span><span class="line"><span class="cl">        <span class="o">//</span><span class="err">回复消息</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">String</span> <span class="n">responseContent</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="n">randomUUID</span><span class="p">()</span><span class="o">.</span><span class="n">toString</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">int</span> <span class="n">responseLen</span> <span class="o">=</span> <span class="n">responseContent</span><span class="o">.</span><span class="n">getBytes</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">length</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">byte</span><span class="p">[]</span> <span class="n">responseContent2</span> <span class="o">=</span> <span class="n">responseContent</span><span class="o">.</span><span class="n">getBytes</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span><span class="err">构建一个协议包</span>
+</span></span><span class="line"><span class="cl">        <span class="n">MessageProtocol</span> <span class="n">messageProtocol</span> <span class="o">=</span> <span class="n">new</span> <span class="n">MessageProtocol</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">messageProtocol</span><span class="o">.</span><span class="n">setLen</span><span class="p">(</span><span class="n">responseLen</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">messageProtocol</span><span class="o">.</span><span class="n">setContent</span><span class="p">(</span><span class="n">responseContent2</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        ctx.writeAndFlush(messageProtocol);
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">        <span class="n">ctx</span><span class="o">.</span><span class="n">writeAndFlush</span><span class="p">(</span><span class="n">messageProtocol</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 给客户端发送消息
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-</span></span><span class="line"><span class="cl">        ctx.writeAndFlush(&#34;hello client&#34;);
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">给客户端发送消息</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">channelReadComplete</span><span class="p">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="p">)</span> <span class="n">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ctx</span><span class="o">.</span><span class="n">writeAndFlush</span><span class="p">(</span><span class="s2">&#34;hello client&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 发生异常触发
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-</span></span><span class="line"><span class="cl">        cause.printStackTrace();
-</span></span><span class="line"><span class="cl">        ctx.close();
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">发生异常触发</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">exceptionCaught</span><span class="p">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">Throwable</span> <span class="n">cause</span><span class="p">)</span> <span class="n">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cause</span><span class="o">.</span><span class="n">printStackTrace</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ctx</span><span class="o">.</span><span class="n">close</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>公共代码部分</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MessageProtocol {
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">MessageProtocol</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    private int len;
+</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="ne">int</span> <span class="n">len</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    private byte[] content;
+</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="n">byte</span><span class="p">[]</span> <span class="n">content</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public int getLen() {
-</span></span><span class="line"><span class="cl">        return len;
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="ne">int</span> <span class="n">getLen</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">len</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public void setLen(int len) {
-</span></span><span class="line"><span class="cl">        this.len = len;
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">setLen</span><span class="p">(</span><span class="ne">int</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">this</span><span class="o">.</span><span class="n">len</span> <span class="o">=</span> <span class="n">len</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public byte[] getContent() {
-</span></span><span class="line"><span class="cl">        return content;
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">byte</span><span class="p">[]</span> <span class="n">getContent</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">content</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public void setContent(byte[] content) {
-</span></span><span class="line"><span class="cl">        this.content = content;
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">setContent</span><span class="p">(</span><span class="n">byte</span><span class="p">[]</span> <span class="n">content</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">this</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">content</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    public String toString() {
-</span></span><span class="line"><span class="cl">        return &#34;MessageProtocol{&#34; +
-</span></span><span class="line"><span class="cl">                &#34;len=&#34; + len +
-</span></span><span class="line"><span class="cl">                &#34;, content=&#34; + new String(content) +
-</span></span><span class="line"><span class="cl">                &#39;}&#39;;
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="ne">String</span> <span class="n">toString</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;MessageProtocol{&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;len=&#34;</span> <span class="o">+</span> <span class="n">len</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;, content=&#34;</span> <span class="o">+</span> <span class="n">new</span> <span class="ne">String</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;}&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">public class MyMessageDecoder extends ReplayingDecoder&lt;Void&gt; {
+</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">MyMessageDecoder</span> <span class="k">extends</span> <span class="n">ReplayingDecoder</span><span class="o">&lt;</span><span class="n">Void</span><span class="o">&gt;</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List&lt;Object&gt; out) throws Exception {
-</span></span><span class="line"><span class="cl">        //需要将得到二进制字节码-&gt; MessageProtocol 数据包(对象)
-</span></span><span class="line"><span class="cl">        int length = in.readInt();
-</span></span><span class="line"><span class="cl">        byte[] content = new byte[length];
-</span></span><span class="line"><span class="cl">        in.readBytes(content);
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">protected</span> <span class="n">void</span> <span class="n">decode</span><span class="p">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">ByteBuf</span> <span class="ow">in</span><span class="p">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="ne">Object</span><span class="o">&gt;</span> <span class="n">out</span><span class="p">)</span> <span class="n">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span><span class="err">需要将得到二进制字节码</span><span class="o">-&gt;</span> <span class="n">MessageProtocol</span> <span class="err">数据包</span><span class="p">(</span><span class="err">对象</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">int</span> <span class="n">length</span> <span class="o">=</span> <span class="ow">in</span><span class="o">.</span><span class="n">readInt</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">byte</span><span class="p">[]</span> <span class="n">content</span> <span class="o">=</span> <span class="n">new</span> <span class="n">byte</span><span class="p">[</span><span class="n">length</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="ow">in</span><span class="o">.</span><span class="n">readBytes</span><span class="p">(</span><span class="n">content</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        //封装成 MessageProtocol 对象，放入 out， 传递下一个handler业务处理
-</span></span><span class="line"><span class="cl">        MessageProtocol messageProtocol = new MessageProtocol();
-</span></span><span class="line"><span class="cl">        messageProtocol.setLen(length);
-</span></span><span class="line"><span class="cl">        messageProtocol.setContent(content);
-</span></span><span class="line"><span class="cl">        out.add(messageProtocol);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">        <span class="o">//</span><span class="err">封装成</span> <span class="n">MessageProtocol</span> <span class="err">对象，放入</span> <span class="n">out</span><span class="err">，</span> <span class="err">传递下一个</span><span class="n">handler业务处理</span>
+</span></span><span class="line"><span class="cl">        <span class="n">MessageProtocol</span> <span class="n">messageProtocol</span> <span class="o">=</span> <span class="n">new</span> <span class="n">MessageProtocol</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">messageProtocol</span><span class="o">.</span><span class="n">setLen</span><span class="p">(</span><span class="n">length</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">messageProtocol</span><span class="o">.</span><span class="n">setContent</span><span class="p">(</span><span class="n">content</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">messageProtocol</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">public class MyMessageEncoder extends MessageToByteEncoder&lt;MessageProtocol&gt; {
+</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">MyMessageEncoder</span> <span class="k">extends</span> <span class="n">MessageToByteEncoder</span><span class="o">&lt;</span><span class="n">MessageProtocol</span><span class="o">&gt;</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    protected void encode(ChannelHandlerContext ctx, MessageProtocol msg, ByteBuf out) throws Exception {
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;MyMessageEncoder encode 方法被调用&#34;);
-</span></span><span class="line"><span class="cl">        out.writeInt(msg.getLen());
-</span></span><span class="line"><span class="cl">        out.writeBytes(msg.getContent());
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">protected</span> <span class="n">void</span> <span class="n">encode</span><span class="p">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">MessageProtocol</span> <span class="n">msg</span><span class="p">,</span> <span class="n">ByteBuf</span> <span class="n">out</span><span class="p">)</span> <span class="n">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;MyMessageEncoder encode 方法被调用&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span><span class="o">.</span><span class="n">writeInt</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">getLen</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span><span class="o">.</span><span class="n">writeBytes</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">getContent</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div></div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">

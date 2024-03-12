@@ -38,6 +38,10 @@
 </head>
 
 <body>
+    <div class="post-password">
+        
+    </div>
+
     
     
     
@@ -1726,27 +1730,27 @@ JDK1.7之前方法区位于永久代.由于一些原因在JDK1.8时彻底祛除�
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Exception in thread &#34;main&#34; java.lang.OutOfMemoryError: Java heap space
 </span></span></code></pre></div><h5 id="intern方法">intern方法</h5>
 <p>intern是一个native方法，调用的是底层C的方法</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * Returns a canonical representation for the string object.
-</span></span><span class="line"><span class="cl">     * &lt;p&gt;
-</span></span><span class="line"><span class="cl">     * A pool of strings, initially empty, is maintained privately by the
-</span></span><span class="line"><span class="cl">     * class {@code String}.
-</span></span><span class="line"><span class="cl">     * &lt;p&gt;
-</span></span><span class="line"><span class="cl">     * When the intern method is invoked, if the pool already contains a
-</span></span><span class="line"><span class="cl">     * string equal to this {@code String} object as determined by
-</span></span><span class="line"><span class="cl">     * the {@link #equals(Object)} method, then the string from the pool is
-</span></span><span class="line"><span class="cl">     * returned. Otherwise, this {@code String} object is added to the
-</span></span><span class="line"><span class="cl">     * pool and a reference to this {@code String} object is returned.
-</span></span><span class="line"><span class="cl">     * &lt;p&gt;
-</span></span><span class="line"><span class="cl">     * It follows that for any two strings {@code s} and {@code t},
-</span></span><span class="line"><span class="cl">     * {@code s.intern() == t.intern()} is {@code true}
-</span></span><span class="line"><span class="cl">     * if and only if {@code s.equals(t)} is {@code true}.
-</span></span><span class="line"><span class="cl">     * &lt;p&gt;
-</span></span><span class="line"><span class="cl">     * All literal strings and string-valued constant expressions are
-</span></span><span class="line"><span class="cl">     * interned. String literals are defined in section 3.10.5 of the
-</span></span><span class="line"><span class="cl">     * &lt;cite&gt;The Java&amp;trade; Language Specification&lt;/cite&gt;.
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    public native String intern();
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">    <span class="o">/**</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">Returns</span> <span class="n">a</span> <span class="n">canonical</span> <span class="n">representation</span> <span class="k">for</span> <span class="n">the</span> <span class="n">string</span> <span class="n">object</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">A</span> <span class="n">pool</span> <span class="n">of</span> <span class="n">strings</span><span class="p">,</span> <span class="n">initially</span> <span class="n">empty</span><span class="p">,</span> <span class="n">is</span> <span class="n">maintained</span> <span class="n">privately</span> <span class="n">by</span> <span class="n">the</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="k">class</span> <span class="p">{</span><span class="err">@</span><span class="n">code</span> <span class="ne">String</span><span class="p">}</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">When</span> <span class="n">the</span> <span class="n">intern</span> <span class="n">method</span> <span class="n">is</span> <span class="n">invoked</span><span class="p">,</span> <span class="k">if</span> <span class="n">the</span> <span class="n">pool</span> <span class="n">already</span> <span class="n">contains</span> <span class="n">a</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">string</span> <span class="n">equal</span> <span class="n">to</span> <span class="n">this</span> <span class="p">{</span><span class="err">@</span><span class="n">code</span> <span class="ne">String</span><span class="p">}</span> <span class="n">object</span> <span class="n">as</span> <span class="n">determined</span> <span class="n">by</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">the</span> <span class="p">{</span><span class="err">@</span><span class="n">link</span> <span class="c1">#equals(Object)} method, then the string from the pool is</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">returned</span><span class="o">.</span> <span class="n">Otherwise</span><span class="p">,</span> <span class="n">this</span> <span class="p">{</span><span class="err">@</span><span class="n">code</span> <span class="ne">String</span><span class="p">}</span> <span class="n">object</span> <span class="n">is</span> <span class="n">added</span> <span class="n">to</span> <span class="n">the</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">pool</span> <span class="ow">and</span> <span class="n">a</span> <span class="n">reference</span> <span class="n">to</span> <span class="n">this</span> <span class="p">{</span><span class="err">@</span><span class="n">code</span> <span class="ne">String</span><span class="p">}</span> <span class="n">object</span> <span class="n">is</span> <span class="n">returned</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">It</span> <span class="n">follows</span> <span class="n">that</span> <span class="k">for</span> <span class="n">any</span> <span class="n">two</span> <span class="n">strings</span> <span class="p">{</span><span class="err">@</span><span class="n">code</span> <span class="n">s</span><span class="p">}</span> <span class="ow">and</span> <span class="p">{</span><span class="err">@</span><span class="n">code</span> <span class="n">t</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="p">{</span><span class="err">@</span><span class="n">code</span> <span class="n">s</span><span class="o">.</span><span class="n">intern</span><span class="p">()</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">intern</span><span class="p">()}</span> <span class="n">is</span> <span class="p">{</span><span class="err">@</span><span class="n">code</span> <span class="bp">true</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="k">if</span> <span class="ow">and</span> <span class="n">only</span> <span class="k">if</span> <span class="p">{</span><span class="err">@</span><span class="n">code</span> <span class="n">s</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">t</span><span class="p">)}</span> <span class="n">is</span> <span class="p">{</span><span class="err">@</span><span class="n">code</span> <span class="bp">true</span><span class="p">}</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">All</span> <span class="n">literal</span> <span class="n">strings</span> <span class="ow">and</span> <span class="n">string</span><span class="o">-</span><span class="n">valued</span> <span class="n">constant</span> <span class="n">expressions</span> <span class="n">are</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">interned</span><span class="o">.</span> <span class="ne">String</span> <span class="n">literals</span> <span class="n">are</span> <span class="n">defined</span> <span class="ow">in</span> <span class="n">section</span> <span class="mf">3.10</span><span class="o">.</span><span class="mi">5</span> <span class="n">of</span> <span class="n">the</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="o">&lt;</span><span class="n">cite</span><span class="o">&gt;</span><span class="n">The</span> <span class="n">Java</span><span class="o">&amp;</span><span class="n">trade</span><span class="p">;</span> <span class="n">Language</span> <span class="n">Specification</span><span class="o">&lt;/</span><span class="n">cite</span><span class="o">&gt;.</span>
+</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">native</span> <span class="ne">String</span> <span class="n">intern</span><span class="p">();</span>
 </span></span></code></pre></div><p><code>intern</code>方法文档注释大意是：字符串池最初是空的，由String类私有地维护。在调用intern方法时，如果池中已经包含了由equals(object)方法确定的与该字符串对象相等的字符串，则返回池中的字符串。
 否则，该字符串对象将被添加到池中，并返回对该字符串对象的引用。</p>
 <p><strong>当一个字符串调用 <code>intern()</code> 方法时，如果 String Pool 中已经存在一个字符串和该字符串值相等（使用 <code>equals()</code>方法进行确定），那么就会返回 String Pool 中字符串的引用；否则，就会在 String Pool 中添加一个新的字符串，并返回这个新字符串的引用.</strong></p>
@@ -1787,9 +1791,9 @@ JDK1.7之前方法区位于永久代.由于一些原因在JDK1.8时彻底祛除�
 </span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>不使用<code>intern</code>方法
-<img src="/iblog/posts/annex/images/essays/%E4%B8%8D%E7%94%A8intern%E6%96%B9%E6%B3%95%E6%B5%8B%E8%AF%95.png" alt="不用intern方法测试"></p>
+<img alt="不用intern方法测试" src="/iblog/posts/annex/images/essays/%E4%B8%8D%E7%94%A8intern%E6%96%B9%E6%B3%95%E6%B5%8B%E8%AF%95.png"></p>
 <p>使用<code>intern</code>方法后
-<img src="/iblog/posts/annex/images/essays/%E4%BD%BF%E7%94%A8intern%E6%96%B9%E6%B3%95%E6%B5%8B%E8%AF%95.png" alt="使用intern方法测试"></p>
+<img alt="使用intern方法测试" src="/iblog/posts/annex/images/essays/%E4%BD%BF%E7%94%A8intern%E6%96%B9%E6%B3%95%E6%B5%8B%E8%AF%95.png"></p>
 <h5 id="经典案例">经典案例</h5>
 <p><strong>String常量池常考的一个问题就是<code>new String(&quot;abc&quot;)</code>会创建几个对象?</strong></p>
 <p>答案: 两个字符串对象(前提是 String常量池中还没有 &ldquo;abc&rdquo; 字符串对象).</p>
@@ -1802,18 +1806,18 @@ JDK1.7之前方法区位于永久代.由于一些原因在JDK1.8时彻底祛除�
 <p>初始化新创建的String对象，使其表示与实参相同的字符序列;换句话说，新创建的字符串是实参字符串的副本。
 除非需要显式复制形参的值，否则没有必要使用这个构造函数，因为字符串是不可变的。</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/**
-</span></span><span class="line"><span class="cl"> * Initializes a newly created {@code String} object so that it represents
-</span></span><span class="line"><span class="cl"> * the same sequence of characters as the argument; in other words, the
-</span></span><span class="line"><span class="cl"> * newly created string is a copy of the argument string. Unless an
-</span></span><span class="line"><span class="cl"> * explicit copy of {@code original} is needed, use of this constructor is
-</span></span><span class="line"><span class="cl"> * unnecessary since Strings are immutable.
-</span></span><span class="line"><span class="cl"> *
-</span></span><span class="line"><span class="cl"> */
-</span></span><span class="line"><span class="cl">public String(String original) {
-</span></span><span class="line"><span class="cl">    this.value = original.value;
-</span></span><span class="line"><span class="cl">    this.hash = original.hash;
-</span></span><span class="line"><span class="cl">}
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">/**</span>
+</span></span><span class="line"><span class="cl"> <span class="o">*</span> <span class="n">Initializes</span> <span class="n">a</span> <span class="n">newly</span> <span class="n">created</span> <span class="p">{</span><span class="err">@</span><span class="n">code</span> <span class="ne">String</span><span class="p">}</span> <span class="n">object</span> <span class="n">so</span> <span class="n">that</span> <span class="n">it</span> <span class="n">represents</span>
+</span></span><span class="line"><span class="cl"> <span class="o">*</span> <span class="n">the</span> <span class="n">same</span> <span class="n">sequence</span> <span class="n">of</span> <span class="n">characters</span> <span class="n">as</span> <span class="n">the</span> <span class="n">argument</span><span class="p">;</span> <span class="ow">in</span> <span class="n">other</span> <span class="n">words</span><span class="p">,</span> <span class="n">the</span>
+</span></span><span class="line"><span class="cl"> <span class="o">*</span> <span class="n">newly</span> <span class="n">created</span> <span class="n">string</span> <span class="n">is</span> <span class="n">a</span> <span class="n">copy</span> <span class="n">of</span> <span class="n">the</span> <span class="n">argument</span> <span class="n">string</span><span class="o">.</span> <span class="n">Unless</span> <span class="n">an</span>
+</span></span><span class="line"><span class="cl"> <span class="o">*</span> <span class="n">explicit</span> <span class="n">copy</span> <span class="n">of</span> <span class="p">{</span><span class="err">@</span><span class="n">code</span> <span class="n">original</span><span class="p">}</span> <span class="n">is</span> <span class="n">needed</span><span class="p">,</span> <span class="n">use</span> <span class="n">of</span> <span class="n">this</span> <span class="n">constructor</span> <span class="n">is</span>
+</span></span><span class="line"><span class="cl"> <span class="o">*</span> <span class="n">unnecessary</span> <span class="n">since</span> <span class="n">Strings</span> <span class="n">are</span> <span class="n">immutable</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl"> <span class="o">*</span>
+</span></span><span class="line"><span class="cl"> <span class="o">*/</span>
+</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="ne">String</span><span class="p">(</span><span class="ne">String</span> <span class="n">original</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">this</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">original</span><span class="o">.</span><span class="n">value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">this</span><span class="o">.</span><span class="n">hash</span> <span class="o">=</span> <span class="n">original</span><span class="o">.</span><span class="n">hash</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>字节码分析：</p>
 <p>创建一个测试类，其 main 方法中使用这种方式来创建字符串对象。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
@@ -1879,13 +1883,13 @@ JDK1.7之前方法区位于永久代.由于一些原因在JDK1.8时彻底祛除�
 <li>如果串池中有，则并不会放入。返回已有的串池中的对象的地址</li>
 <li>如果没有，会把此<strong>对象复制一份，放入串池</strong>，并返回串池中的对象地址</li>
 </ul>
-<p><img src="/iblog/posts/annex/images/essays/JDK6%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F%E6%B1%A0%E6%A1%88%E4%BE%8B%E8%A7%A3%E6%9E%90.png" alt="JDK6字符串常量池案例解析"></p>
+<p><img alt="JDK6字符串常量池案例解析" src="/iblog/posts/annex/images/essays/JDK6%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F%E6%B1%A0%E6%A1%88%E4%BE%8B%E8%A7%A3%E6%9E%90.png"></p>
 <p>JDK1.7起，将这个字符串对象尝试放入串池。</p>
 <ul>
 <li>如果串池中有，则并不会放入。返回已有的串池中的对象的地址</li>
 <li>如果没有，则会把<strong>对象的引用地址复制一份，放入串池</strong>，并返回串池中的引用地址</li>
 </ul>
-<p><img src="/iblog/posts/annex/images/essays/JDK78%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F%E6%B1%A0%E6%A1%88%E4%BE%8B%E8%A7%A3%E6%9E%90.png" alt="JDK78字符串常量池案例解析"></p>
+<p><img alt="JDK78字符串常量池案例解析" src="/iblog/posts/annex/images/essays/JDK78%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F%E6%B1%A0%E6%A1%88%E4%BE%8B%E8%A7%A3%E6%9E%90.png"></p>
 <h5 id="注意">注意</h5>
 <p>字符串常量池是不会存储相同内容的字符串的。</p>
 <p>字符串常量池其实是一个固定大小的<code>Hashtable</code>;
@@ -1944,13 +1948,13 @@ JDK1.7之前方法区位于永久代.由于一些原因在JDK1.8时彻底祛除�
 </span></span></code></pre></div><p><a href="http://openjdk.java.net/jeps/254">那么为什么要改变内存存储结构呢？</a>
 官方的解释：</p>
 <blockquote>
-<p>The current implementation of the String class stores characters in a char array, using two bytes (sixteen bits) for each character. 
+<p>The current implementation of the String class stores characters in a char array, using two bytes (sixteen bits) for each character.
 Data gathered from many different applications indicates that strings are a major component of heap usage and,
 moreover, that most String objects contain only Latin-1 characters. Such characters require only one byte of storage,
 hence half of the space in the internal char arrays of such String objects is going unused.</p>
 <p>We propose to change the internal representation of the String class from a UTF-16 char array to a byte array plus an encoding-flag field.
-The new String class will store characters encoded either as ISO-8859-1/Latin-1 (one byte per character), 
-or as UTF-16 (two bytes per character), based upon the contents of the string. 
+The new String class will store characters encoded either as ISO-8859-1/Latin-1 (one byte per character),
+or as UTF-16 (two bytes per character), based upon the contents of the string.
 The encoding flag will indicate which encoding is used.</p>
 </blockquote>
 <p>大意：String类的当前实现将字符存储在char数组中，每个字符使用两个字节(16位)。
@@ -2078,30 +2082,30 @@ String不可变性天生具备线程安全,可以在多个线程中安全地使�
 </span></span><span class="line"><span class="cl">        System.out.println(str3);
 </span></span><span class="line"><span class="cl">    }
 </span></span></code></pre></div><p>打开文件所在位置,用<code>javap -verbose</code>命令进行反编译.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// ...
-</span></span><span class="line"><span class="cl">  public static void main(java.lang.String[]);
-</span></span><span class="line"><span class="cl">    descriptor: ([Ljava/lang/String;)V
-</span></span><span class="line"><span class="cl">    flags: ACC_PUBLIC, ACC_STATIC
-</span></span><span class="line"><span class="cl">    Code:
-</span></span><span class="line"><span class="cl">      stack=2, locals=4, args_size=1
-</span></span><span class="line"><span class="cl">         0: ldc           #2                  // String 123
-</span></span><span class="line"><span class="cl">         2: astore_1
-</span></span><span class="line"><span class="cl">         3: ldc           #3                  // String 456
-</span></span><span class="line"><span class="cl">         5: astore_2
-</span></span><span class="line"><span class="cl">         6: new           #4                  // class java/lang/StringBuilder
-</span></span><span class="line"><span class="cl">         9: dup
-</span></span><span class="line"><span class="cl">        10: invokespecial #5                  // Method java/lang/StringBuilder.&#34;&lt;init&gt;&#34;:()V
-</span></span><span class="line"><span class="cl">        13: aload_1
-</span></span><span class="line"><span class="cl">        14: invokevirtual #6                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
-</span></span><span class="line"><span class="cl">        17: aload_2
-</span></span><span class="line"><span class="cl">        18: invokevirtual #6                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
-</span></span><span class="line"><span class="cl">        21: invokevirtual #7                  // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
-</span></span><span class="line"><span class="cl">        24: astore_3
-</span></span><span class="line"><span class="cl">        25: getstatic     #8                  // Field java/lang/System.out:Ljava/io/PrintStream;
-</span></span><span class="line"><span class="cl">        28: aload_3
-</span></span><span class="line"><span class="cl">        29: invokevirtual #9                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
-</span></span><span class="line"><span class="cl">        32: return
-</span></span><span class="line"><span class="cl">      // ...
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">//</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">  <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="n">java</span><span class="o">.</span><span class="n">lang</span><span class="o">.</span><span class="n">String</span><span class="p">[]);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">descriptor</span><span class="p">:</span> <span class="p">([</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="ne">String</span><span class="p">;)</span><span class="n">V</span>
+</span></span><span class="line"><span class="cl">    <span class="n">flags</span><span class="p">:</span> <span class="n">ACC_PUBLIC</span><span class="p">,</span> <span class="n">ACC_STATIC</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Code</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">stack</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">locals</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">args_size</span><span class="o">=</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">0</span><span class="p">:</span> <span class="n">ldc</span>           <span class="c1">#2                  // String 123</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">2</span><span class="p">:</span> <span class="n">astore_1</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">3</span><span class="p">:</span> <span class="n">ldc</span>           <span class="c1">#3                  // String 456</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">5</span><span class="p">:</span> <span class="n">astore_2</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">6</span><span class="p">:</span> <span class="n">new</span>           <span class="c1">#4                  // class java/lang/StringBuilder</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">9</span><span class="p">:</span> <span class="n">dup</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">10</span><span class="p">:</span> <span class="n">invokespecial</span> <span class="c1">#5                  // Method java/lang/StringBuilder.&#34;&lt;init&gt;&#34;:()V</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">13</span><span class="p">:</span> <span class="n">aload_1</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">14</span><span class="p">:</span> <span class="n">invokevirtual</span> <span class="c1">#6                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">17</span><span class="p">:</span> <span class="n">aload_2</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">18</span><span class="p">:</span> <span class="n">invokevirtual</span> <span class="c1">#6                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">21</span><span class="p">:</span> <span class="n">invokevirtual</span> <span class="c1">#7                  // Method java/lang/StringBuilder.toString:()Ljava/lang/String;</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">24</span><span class="p">:</span> <span class="n">astore_3</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">25</span><span class="p">:</span> <span class="n">getstatic</span>     <span class="c1">#8                  // Field java/lang/System.out:Ljava/io/PrintStream;</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">28</span><span class="p">:</span> <span class="n">aload_3</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">29</span><span class="p">:</span> <span class="n">invokevirtual</span> <span class="c1">#9                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">32</span><span class="p">:</span> <span class="k">return</span>
+</span></span><span class="line"><span class="cl">      <span class="o">//</span> <span class="o">...</span>
 </span></span></code></pre></div><p>可以看到<strong>在字符串拼接过程中,是将String转成了<code>StringBuilder</code>后，使用其<code>append</code>方法进行拼接字符串处理的.最后在去调用<code>StringBuilder</code>的<code>toString</code>方法进行返回</strong></p>
 <blockquote>
 <p>在JDK5之后，使用的是StringBuilder，在JDK5之前使用的是StringBuffer</p>
@@ -2474,12 +2478,12 @@ String不可变性天生具备线程安全,可以在多个线程中安全地使�
 </span></span><span class="line"><span class="cl">    }
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">java: 常量字符串过长
 </span></span></code></pre></div><p>在<code>Gen</code>类中相关报错信息源码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">private void checkStringConstant(DiagnosticPosition var1, Object var2) {
-</span></span><span class="line"><span class="cl">    if (this.nerrs == 0 &amp;&amp; var2 != null &amp;&amp; var2 instanceof String &amp;&amp; ((String)var2).length() &gt;= 65535) {
-</span></span><span class="line"><span class="cl">        this.log.error(var1, &#34;limit.string&#34;, new Object[0]);
-</span></span><span class="line"><span class="cl">        ++this.nerrs;
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">private</span> <span class="n">void</span> <span class="n">checkStringConstant</span><span class="p">(</span><span class="n">DiagnosticPosition</span> <span class="n">var1</span><span class="p">,</span> <span class="ne">Object</span> <span class="n">var2</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">this</span><span class="o">.</span><span class="n">nerrs</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">var2</span> <span class="o">!=</span> <span class="n">null</span> <span class="o">&amp;&amp;</span> <span class="n">var2</span> <span class="n">instanceof</span> <span class="ne">String</span> <span class="o">&amp;&amp;</span> <span class="p">((</span><span class="ne">String</span><span class="p">)</span><span class="n">var2</span><span class="p">)</span><span class="o">.</span><span class="n">length</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mi">65535</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">this</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">var1</span><span class="p">,</span> <span class="s2">&#34;limit.string&#34;</span><span class="p">,</span> <span class="n">new</span> <span class="ne">Object</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">++</span><span class="n">this</span><span class="o">.</span><span class="n">nerrs</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>可以看到源码中如果<code>String</code>长度大于等于65535会导致编译失败</p>
 <p>在编译期的时候,字面量要进字符串常量池.所以要遵守<a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.4.3">《Java®虚拟机规范》(Java8)中对String常量池的描述.</a></p>
 <p><code>CONSTANT_String_info</code> 用于表示 <code>java.lang.String</code> 类型的常量对象结构体</p>

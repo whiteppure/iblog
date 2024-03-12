@@ -38,6 +38,10 @@
 </head>
 
 <body>
+    <div class="post-password">
+        
+    </div>
+
     
     
     
@@ -236,7 +240,7 @@
                     </div>
                     <div class="post_content markdown"><p>Java虚拟机定义了若干种程序运行期间会使用到的运行时数据区，其中有一些会随着虚拟机启动而创建，随着虚拟机退出而销毁。
 另外一些则是与线程一一对应的，这些与线程对应的数据区域会随着线程开始和结束而创建和销毁。</p>
-<p><img src="/iblog/posts/annex/images/essays/%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA.png" alt="运行时数据区"></p>
+<p><img alt="运行时数据区" src="/iblog/posts/annex/images/essays/%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA.png"></p>
 <p>运行时数据区域包括</p>
 <ul>
 <li>程序计数寄存器</li>
@@ -279,32 +283,32 @@ JVM中的PC寄存器是对物理PC寄存器的一种抽象模拟。</p>
 </span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>通过<code>javap -verbose MainTest.class</code>命令反编译<code>.class</code>文件，得到如下</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// ...
-</span></span><span class="line"><span class="cl"> public static void main(java.lang.String[]);
-</span></span><span class="line"><span class="cl">    descriptor: ([Ljava/lang/String;)V
-</span></span><span class="line"><span class="cl">    flags: ACC_PUBLIC, ACC_STATIC
-</span></span><span class="line"><span class="cl">    Code:
-</span></span><span class="line"><span class="cl">      stack=2, locals=5, args_size=1
-</span></span><span class="line"><span class="cl">         0: bipush        10
-</span></span><span class="line"><span class="cl">         2: istore_1
-</span></span><span class="line"><span class="cl">         3: bipush        20
-</span></span><span class="line"><span class="cl">         5: istore_2
-</span></span><span class="line"><span class="cl">         6: iload_1
-</span></span><span class="line"><span class="cl">         7: iload_2
-</span></span><span class="line"><span class="cl">         8: iadd
-</span></span><span class="line"><span class="cl">         9: istore_3
-</span></span><span class="line"><span class="cl">        10: ldc           #2                  // String abc
-</span></span><span class="line"><span class="cl">        12: astore        4
-</span></span><span class="line"><span class="cl">        14: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;
-</span></span><span class="line"><span class="cl">        17: aload         4
-</span></span><span class="line"><span class="cl">        19: invokevirtual #4                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
-</span></span><span class="line"><span class="cl">        22: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;
-</span></span><span class="line"><span class="cl">        25: iload_3
-</span></span><span class="line"><span class="cl">        26: invokevirtual #5                  // Method java/io/PrintStream.println:(I)V
-</span></span><span class="line"><span class="cl">        29: return
-</span></span><span class="line"><span class="cl">// ...
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">//</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"> <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="n">java</span><span class="o">.</span><span class="n">lang</span><span class="o">.</span><span class="n">String</span><span class="p">[]);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">descriptor</span><span class="p">:</span> <span class="p">([</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="ne">String</span><span class="p">;)</span><span class="n">V</span>
+</span></span><span class="line"><span class="cl">    <span class="n">flags</span><span class="p">:</span> <span class="n">ACC_PUBLIC</span><span class="p">,</span> <span class="n">ACC_STATIC</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Code</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">stack</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">locals</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">args_size</span><span class="o">=</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">0</span><span class="p">:</span> <span class="n">bipush</span>        <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">2</span><span class="p">:</span> <span class="n">istore_1</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">3</span><span class="p">:</span> <span class="n">bipush</span>        <span class="mi">20</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">5</span><span class="p">:</span> <span class="n">istore_2</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">6</span><span class="p">:</span> <span class="n">iload_1</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">7</span><span class="p">:</span> <span class="n">iload_2</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">8</span><span class="p">:</span> <span class="n">iadd</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">9</span><span class="p">:</span> <span class="n">istore_3</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">10</span><span class="p">:</span> <span class="n">ldc</span>           <span class="c1">#2                  // String abc</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">12</span><span class="p">:</span> <span class="n">astore</span>        <span class="mi">4</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">14</span><span class="p">:</span> <span class="n">getstatic</span>     <span class="c1">#3                  // Field java/lang/System.out:Ljava/io/PrintStream;</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">17</span><span class="p">:</span> <span class="n">aload</span>         <span class="mi">4</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">19</span><span class="p">:</span> <span class="n">invokevirtual</span> <span class="c1">#4                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">22</span><span class="p">:</span> <span class="n">getstatic</span>     <span class="c1">#3                  // Field java/lang/System.out:Ljava/io/PrintStream;</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">25</span><span class="p">:</span> <span class="n">iload_3</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">26</span><span class="p">:</span> <span class="n">invokevirtual</span> <span class="c1">#5                  // Method java/io/PrintStream.println:(I)V</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">29</span><span class="p">:</span> <span class="k">return</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="o">...</span>
 </span></span></code></pre></div><p>通过PC寄存器，我们就可以知道当前程序执行到哪一步了。
-<img src="/iblog/posts/annex/images/essays/PC%E5%AF%84%E5%AD%98%E5%99%A8%E4%BF%9D%E5%AD%98%E6%8C%87%E4%BB%A4%E7%A4%BA%E6%84%8F.png" alt="PC寄存器保存指令示意"></p>
+<img alt="PC寄存器保存指令示意" src="/iblog/posts/annex/images/essays/PC%E5%AF%84%E5%AD%98%E5%99%A8%E4%BF%9D%E5%AD%98%E6%8C%87%E4%BB%A4%E7%A4%BA%E6%84%8F.png"></p>
 <h3 id="常见问题">常见问题</h3>
 <p><em><strong>使用PC寄存器存储字节码指令地址有什么用呢？</strong></em></p>
 <p>因为CPU需要不停的切换各个线程，这时候切换回来以后，就得知道接着从哪开始继续执行。

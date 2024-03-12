@@ -38,6 +38,10 @@
 </head>
 
 <body>
+    <div class="post-password">
+        
+    </div>
+
     
     
     
@@ -832,16 +836,16 @@
 </span></span><span class="line"><span class="cl">map.put(&#34;wechat&#34;, &#34;Java&#34;);  
 </span></span><span class="line"><span class="cl">map.put(&#34;blog&#34;, &#34;https://www.jianshu.com/u/94111742c97c&#34;);  
 </span></span></code></pre></div><p>以下代码：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public static &lt;A extends Comparable&lt;A&gt;&gt; A max(Collection&lt;A&gt; xs) {
-</span></span><span class="line"><span class="cl">    Iterator&lt;A&gt; xi = xs.iterator();
-</span></span><span class="line"><span class="cl">    A w = xi.next();
-</span></span><span class="line"><span class="cl">    while (xi.hasNext()) {
-</span></span><span class="line"><span class="cl">        A x = xi.next();
-</span></span><span class="line"><span class="cl">        if (w.compareTo(x) &lt; 0)
-</span></span><span class="line"><span class="cl">            w = x;
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">    return w;
-</span></span><span class="line"><span class="cl">}
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">static</span> <span class="o">&lt;</span><span class="n">A</span> <span class="k">extends</span> <span class="n">Comparable</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;&gt;</span> <span class="n">A</span> <span class="nb">max</span><span class="p">(</span><span class="n">Collection</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span> <span class="n">xs</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span> <span class="n">xi</span> <span class="o">=</span> <span class="n">xs</span><span class="o">.</span><span class="n">iterator</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">A</span> <span class="n">w</span> <span class="o">=</span> <span class="n">xi</span><span class="o">.</span><span class="n">next</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="p">(</span><span class="n">xi</span><span class="o">.</span><span class="n">hasNext</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">A</span> <span class="n">x</span> <span class="o">=</span> <span class="n">xi</span><span class="o">.</span><span class="n">next</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">compareTo</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">w</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">w</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>类型擦除后会变成：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> public static Comparable max(Collection xs){
 </span></span><span class="line"><span class="cl">    Iterator xi = xs.iterator();
@@ -922,42 +926,42 @@
 <p>要想看源码，首先得有一个类吧，那么枚举类型到底是什么类呢？是enum吗？</p>
 <p>答案很明显不是，enum就和class一样，只是一个关键字，他并不是一个类。</p>
 <p>那么枚举是由什么类维护的呢，我们简单的写一个枚举：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public enum t {
-</span></span><span class="line"><span class="cl">    SPRING,SUMMER;
-</span></span><span class="line"><span class="cl">}
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">enum</span> <span class="n">t</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">SPRING</span><span class="p">,</span><span class="n">SUMMER</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>然后我们使用反编译，看看这段代码到底是怎么实现的，反编译后代码内容如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public final class T extends Enum
-</span></span><span class="line"><span class="cl">{
-</span></span><span class="line"><span class="cl">    private T(String s, int i)
-</span></span><span class="line"><span class="cl">    {
-</span></span><span class="line"><span class="cl">        super(s, i);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">    public static T[] values()
-</span></span><span class="line"><span class="cl">    {
-</span></span><span class="line"><span class="cl">        T at[];
-</span></span><span class="line"><span class="cl">        int i;
-</span></span><span class="line"><span class="cl">        T at1[];
-</span></span><span class="line"><span class="cl">        System.arraycopy(at = ENUM$VALUES, 0, at1 = new T[i = at.length], 0, i);
-</span></span><span class="line"><span class="cl">        return at1;
-</span></span><span class="line"><span class="cl">    }
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="n">final</span> <span class="k">class</span> <span class="n">T</span> <span class="k">extends</span> <span class="n">Enum</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="n">T</span><span class="p">(</span><span class="ne">String</span> <span class="n">s</span><span class="p">,</span> <span class="ne">int</span> <span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">super</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">T</span><span class="p">[]</span> <span class="n">values</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">T</span> <span class="n">at</span><span class="p">[];</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">int</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">T</span> <span class="n">at1</span><span class="p">[];</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">arraycopy</span><span class="p">(</span><span class="n">at</span> <span class="o">=</span> <span class="n">ENUM</span><span class="o">$</span><span class="n">VALUES</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">at1</span> <span class="o">=</span> <span class="n">new</span> <span class="n">T</span><span class="p">[</span><span class="n">i</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">length</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">at1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public static T valueOf(String s)
-</span></span><span class="line"><span class="cl">    {
-</span></span><span class="line"><span class="cl">        return (T)Enum.valueOf(demo/T, s);
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">T</span> <span class="n">valueOf</span><span class="p">(</span><span class="ne">String</span> <span class="n">s</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="n">Enum</span><span class="o">.</span><span class="n">valueOf</span><span class="p">(</span><span class="n">demo</span><span class="o">/</span><span class="n">T</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public static final T SPRING;
-</span></span><span class="line"><span class="cl">    public static final T SUMMER;
-</span></span><span class="line"><span class="cl">    private static final T ENUM$VALUES[];
-</span></span><span class="line"><span class="cl">    static
-</span></span><span class="line"><span class="cl">    {
-</span></span><span class="line"><span class="cl">        SPRING = new T(&#34;SPRING&#34;, 0);
-</span></span><span class="line"><span class="cl">        SUMMER = new T(&#34;SUMMER&#34;, 1);
-</span></span><span class="line"><span class="cl">        ENUM$VALUES = (new T[] {
-</span></span><span class="line"><span class="cl">            SPRING, SUMMER
-</span></span><span class="line"><span class="cl">        });
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">final</span> <span class="n">T</span> <span class="n">SPRING</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">final</span> <span class="n">T</span> <span class="n">SUMMER</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="k">static</span> <span class="n">final</span> <span class="n">T</span> <span class="n">ENUM</span><span class="o">$</span><span class="n">VALUES</span><span class="p">[];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">static</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">SPRING</span> <span class="o">=</span> <span class="n">new</span> <span class="n">T</span><span class="p">(</span><span class="s2">&#34;SPRING&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">SUMMER</span> <span class="o">=</span> <span class="n">new</span> <span class="n">T</span><span class="p">(</span><span class="s2">&#34;SUMMER&#34;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ENUM</span><span class="o">$</span><span class="n">VALUES</span> <span class="o">=</span> <span class="p">(</span><span class="n">new</span> <span class="n">T</span><span class="p">[]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">SPRING</span><span class="p">,</span> <span class="n">SUMMER</span>
+</span></span><span class="line"><span class="cl">        <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>通过反编译后代码我们可以看到，<code>public final class T extends Enum</code>，说明，
 该类是继承了Enum类的，同时final关键字告诉我们，这个类也是不能被继承的。</p>
 <p>当我们使用enmu来定义一个枚举类型的时候，编译器会自动帮我们创建一个final类型的类继承Enum类，所以枚举类型不能被继承。</p>
@@ -1266,14 +1270,14 @@ Java在执行的时候默认是不启动断言检查的（这个时候，所有�
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>为啥说他并不是内部类的语法糖呢，前面讲内部类我们说过，内部类在编译之后会有两个class文件，但是，包含lambda表达式的类编译后只有一个文件。</p>
 <p>反编译后代码如下:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public static /* varargs */ void main(String ... args) {
-</span></span><span class="line"><span class="cl">    ImmutableList strList = ImmutableList.of((Object)&#34;Java&#34;, (Object)&#34;\u516c\u4f17\u53f7\uff1aJava&#34;, (Object)&#34;\u535a\u5ba2\uff1awww.jianshu.com/u/94111742c97c&#34;);
-</span></span><span class="line"><span class="cl">    strList.forEach((Consumer&lt;String&gt;)LambdaMetafactory.metafactory(null, null, null, (Ljava/lang/Object;)V, lambda$main$0(java.lang.String ), (Ljava/lang/String;)V)());
-</span></span><span class="line"><span class="cl">}
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">static</span> <span class="o">/*</span> <span class="n">varargs</span> <span class="o">*/</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span> <span class="o">...</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ImmutableList</span> <span class="n">strList</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.</span><span class="n">of</span><span class="p">((</span><span class="ne">Object</span><span class="p">)</span><span class="s2">&#34;Java&#34;</span><span class="p">,</span> <span class="p">(</span><span class="ne">Object</span><span class="p">)</span><span class="s2">&#34;</span><span class="se">\u516c\u4f17\u53f7\uff1a</span><span class="s2">Java&#34;</span><span class="p">,</span> <span class="p">(</span><span class="ne">Object</span><span class="p">)</span><span class="s2">&#34;</span><span class="se">\u535a\u5ba2\uff1a</span><span class="s2">www.jianshu.com/u/94111742c97c&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">strList</span><span class="o">.</span><span class="n">forEach</span><span class="p">((</span><span class="n">Consumer</span><span class="o">&lt;</span><span class="ne">String</span><span class="o">&gt;</span><span class="p">)</span><span class="n">LambdaMetafactory</span><span class="o">.</span><span class="n">metafactory</span><span class="p">(</span><span class="n">null</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span> <span class="p">(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="ne">Object</span><span class="p">;)</span><span class="n">V</span><span class="p">,</span> <span class="n">lambda</span><span class="o">$</span><span class="n">main</span><span class="o">$</span><span class="mi">0</span><span class="p">(</span><span class="n">java</span><span class="o">.</span><span class="n">lang</span><span class="o">.</span><span class="n">String</span> <span class="p">),</span> <span class="p">(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="ne">String</span><span class="p">;)</span><span class="n">V</span><span class="p">)());</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">private static /* synthetic */ void lambda$main$0(String s) {
-</span></span><span class="line"><span class="cl">    System.out.println(s);
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"><span class="n">private</span> <span class="k">static</span> <span class="o">/*</span> <span class="n">synthetic</span> <span class="o">*/</span> <span class="n">void</span> <span class="n">lambda</span><span class="o">$</span><span class="n">main</span><span class="o">$</span><span class="mi">0</span><span class="p">(</span><span class="ne">String</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>可以看到，在forEach方法中，其实是调用了<code>java.lang.invoke.LambdaMetafactory#metafactory</code>方法，
 该方法的第四个参数implMethod指定了方法实现。可以看到这里其实是调用了一个lambda0方法进行了输出。</p>
 <p>再来看一个稍微复杂一点的，先对List进行过滤，然后再输出：</p>
@@ -1285,19 +1289,19 @@ Java在执行的时候默认是不启动断言检查的（这个时候，所有�
 </span></span><span class="line"><span class="cl">    HollisList.forEach( s -&gt; { System.out.println(s); } );
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>反编译后代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public static /* varargs */ void main(String ... args) {
-</span></span><span class="line"><span class="cl">    ImmutableList strList = ImmutableList.of((Object)&#34;Java&#34;, (Object)&#34;\u516c\u4f17\u53f7\uff1aJava&#34;, (Object)&#34;\u535a\u5ba2\uff1awww.jianshu.com/u/94111742c97c&#34;);
-</span></span><span class="line"><span class="cl">    List&lt;Object&gt; HollisList = strList.stream().filter((Predicate&lt;String&gt;)LambdaMetafactory.metafactory(null, null, null, (Ljava/lang/Object;)Z, lambda$main$0(java.lang.String ), (Ljava/lang/String;)Z)()).collect(Collectors.toList());
-</span></span><span class="line"><span class="cl">    HollisList.forEach((Consumer&lt;Object&gt;)LambdaMetafactory.metafactory(null, null, null, (Ljava/lang/Object;)V, lambda$main$1(java.lang.Object ), (Ljava/lang/Object;)V)());
-</span></span><span class="line"><span class="cl">}
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">static</span> <span class="o">/*</span> <span class="n">varargs</span> <span class="o">*/</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span> <span class="o">...</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ImmutableList</span> <span class="n">strList</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.</span><span class="n">of</span><span class="p">((</span><span class="ne">Object</span><span class="p">)</span><span class="s2">&#34;Java&#34;</span><span class="p">,</span> <span class="p">(</span><span class="ne">Object</span><span class="p">)</span><span class="s2">&#34;</span><span class="se">\u516c\u4f17\u53f7\uff1a</span><span class="s2">Java&#34;</span><span class="p">,</span> <span class="p">(</span><span class="ne">Object</span><span class="p">)</span><span class="s2">&#34;</span><span class="se">\u535a\u5ba2\uff1a</span><span class="s2">www.jianshu.com/u/94111742c97c&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">List</span><span class="o">&lt;</span><span class="ne">Object</span><span class="o">&gt;</span> <span class="n">HollisList</span> <span class="o">=</span> <span class="n">strList</span><span class="o">.</span><span class="n">stream</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">((</span><span class="n">Predicate</span><span class="o">&lt;</span><span class="ne">String</span><span class="o">&gt;</span><span class="p">)</span><span class="n">LambdaMetafactory</span><span class="o">.</span><span class="n">metafactory</span><span class="p">(</span><span class="n">null</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span> <span class="p">(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="ne">Object</span><span class="p">;)</span><span class="n">Z</span><span class="p">,</span> <span class="n">lambda</span><span class="o">$</span><span class="n">main</span><span class="o">$</span><span class="mi">0</span><span class="p">(</span><span class="n">java</span><span class="o">.</span><span class="n">lang</span><span class="o">.</span><span class="n">String</span> <span class="p">),</span> <span class="p">(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="ne">String</span><span class="p">;)</span><span class="n">Z</span><span class="p">)())</span><span class="o">.</span><span class="n">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="o">.</span><span class="n">toList</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="n">HollisList</span><span class="o">.</span><span class="n">forEach</span><span class="p">((</span><span class="n">Consumer</span><span class="o">&lt;</span><span class="ne">Object</span><span class="o">&gt;</span><span class="p">)</span><span class="n">LambdaMetafactory</span><span class="o">.</span><span class="n">metafactory</span><span class="p">(</span><span class="n">null</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span> <span class="p">(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="ne">Object</span><span class="p">;)</span><span class="n">V</span><span class="p">,</span> <span class="n">lambda</span><span class="o">$</span><span class="n">main</span><span class="o">$</span><span class="mi">1</span><span class="p">(</span><span class="n">java</span><span class="o">.</span><span class="n">lang</span><span class="o">.</span><span class="n">Object</span> <span class="p">),</span> <span class="p">(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="ne">Object</span><span class="p">;)</span><span class="n">V</span><span class="p">)());</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">private static /* synthetic */ void lambda$main$1(Object s) {
-</span></span><span class="line"><span class="cl">    System.out.println(s);
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"><span class="n">private</span> <span class="k">static</span> <span class="o">/*</span> <span class="n">synthetic</span> <span class="o">*/</span> <span class="n">void</span> <span class="n">lambda</span><span class="o">$</span><span class="n">main</span><span class="o">$</span><span class="mi">1</span><span class="p">(</span><span class="ne">Object</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">private static /* synthetic */ boolean lambda$main$0(String string) {
-</span></span><span class="line"><span class="cl">    return string.contains(&#34;Hollis&#34;);
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"><span class="n">private</span> <span class="k">static</span> <span class="o">/*</span> <span class="n">synthetic</span> <span class="o">*/</span> <span class="n">boolean</span> <span class="n">lambda</span><span class="o">$</span><span class="n">main</span><span class="o">$</span><span class="mi">0</span><span class="p">(</span><span class="ne">String</span> <span class="n">string</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&#34;Hollis&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>两个lambda表达式分别调用了lambda1和lambda0两个方法。</p>
 <p>所以，lambda表达式的实现其实是依赖了一些底层的api，在编译阶段，编译器会把lambda表达式进行解糖，转换成调用内部api的方式。</p>
 <h3 id="可能遇到的坑">可能遇到的坑</h3>
@@ -1317,19 +1321,19 @@ Java在执行的时候默认是不启动断言检查的（这个时候，所有�
 <h4 id="泛型当泛型遇到catch">泛型——当泛型遇到catch</h4>
 <p>泛型的类型参数不能用在Java异常处理的catch语句中。因为异常处理是由JVM在运行时刻来进行的。由于类型信息被擦除，JVM是无法区分两个异常类型MyException<String>和MyException<Integer>的</p>
 <p>泛型——当泛型内包含静态变量</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class StaticTest{
-</span></span><span class="line"><span class="cl">    public static void main(String[] args){
-</span></span><span class="line"><span class="cl">        GT&lt;Integer&gt; gti = new GT&lt;Integer&gt;();
-</span></span><span class="line"><span class="cl">        gti.var=1;
-</span></span><span class="line"><span class="cl">        GT&lt;String&gt; gts = new GT&lt;String&gt;();
-</span></span><span class="line"><span class="cl">        gts.var=2;
-</span></span><span class="line"><span class="cl">        System.out.println(gti.var);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span><span class="line"><span class="cl">class GT&lt;T&gt;{
-</span></span><span class="line"><span class="cl">    public static int var=0;
-</span></span><span class="line"><span class="cl">    public void nothing(T x){}
-</span></span><span class="line"><span class="cl">}
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">StaticTest</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">GT</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">gti</span> <span class="o">=</span> <span class="n">new</span> <span class="n">GT</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">gti</span><span class="o">.</span><span class="k">var</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">GT</span><span class="o">&lt;</span><span class="ne">String</span><span class="o">&gt;</span> <span class="n">gts</span> <span class="o">=</span> <span class="n">new</span> <span class="n">GT</span><span class="o">&lt;</span><span class="ne">String</span><span class="o">&gt;</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">gts</span><span class="o">.</span><span class="k">var</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="n">gti</span><span class="o">.</span><span class="k">var</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="n">GT</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="ne">int</span> <span class="k">var</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">nothing</span><span class="p">(</span><span class="n">T</span> <span class="n">x</span><span class="p">){}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>以上代码输出结果为：2！由于经过类型擦除，所有的泛型类实例都关联到同一份字节码上，泛型类的所有静态变量是共享的。</p>
 <h4 id="自动装箱与拆箱对象相等比较">自动装箱与拆箱——对象相等比较</h4>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public static void main(String[] args) {
@@ -1353,7 +1357,7 @@ Java在执行的时候默认是不启动断言检查的（这个时候，所有�
 </span></span><span class="line"><span class="cl">        students.remove(stu);    
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>会抛出<code>ConcurrentModificationException</code>异常。</p>
-<p>Iterator是工作在一个独立的线程中，并且拥有一个 mutex 锁。 
+<p>Iterator是工作在一个独立的线程中，并且拥有一个 mutex 锁。
 Iterator被创建之后会建立一个指向原来对象的单链索引表，当原来的对象数量发生变化时，这个索引表的内容不会同步改变，所以当索引指针往后移动的时候就找不到要迭代的对象，
 所以按照 <code>fail-fast</code> 原则 Iterator 会马上抛出<code>java.util.ConcurrentModificationException</code>异常。</p>
 <p>所以 Iterator 在工作的时候是不允许被迭代的对象被改变的。但你可以使用 Iterator 本身的方法remove()来删除对象，<code>Iterator.remove()</code> 方法会在删除当前迭代对象的同时维护索引的一致性。</p>

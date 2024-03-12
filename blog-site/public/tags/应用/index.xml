@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>应用 on 唯手熟尔</title>
+    <link>http://localhost:1313/iblog/tags/%E5%BA%94%E7%94%A8/</link>
+    <description>Recent content in 应用 on 唯手熟尔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Sat, 09 Sep 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/iblog/tags/%E5%BA%94%E7%94%A8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>定时任务可视化管理</title>
+      <link>http://localhost:1313/iblog/posts/essays/scheduled-job/</link>
+      <pubDate>Sat, 09 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/iblog/posts/essays/scheduled-job/</guid>
+      <description>代码实现 代码结构 pom &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-security&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-quartz&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.projectlombok&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;lombok&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;cn.hutool&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hutool-all&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; 库表结构 -- ---------------------------- -- 定时任务调度表 -- ---------------------------- drop table if exists sys_job; create table sys_job ( job_id bigint(20) not null auto_increment comment &amp;#39;任务ID&amp;#39;, job_name varchar(64) default &amp;#39;&amp;#39; comment &amp;#39;任务名称&amp;#39;, job_group varchar(64) default &amp;#39;DEFAULT&amp;#39; comment &amp;#39;任务组名&amp;#39;, invoke_target varchar(500) not null comment</description>
+    </item>
+    <item>
+      <title>整合文件上传功能</title>
+      <link>http://localhost:1313/iblog/posts/essays/uploadfile-code/</link>
+      <pubDate>Fri, 11 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/iblog/posts/essays/uploadfile-code/</guid>
+      <description>结构 pom.xml fastdfs-client-java-1.27.jar：点击下载 &amp;lt;dependencies&amp;gt; &amp;lt;!-- fastdfs --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.csource&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;fastdfs-client-java&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.27&amp;lt;/version&amp;gt; &amp;lt;systemPath&amp;gt;${project.basedir}/lib/fastdfs-client-java-1.27.jar&amp;lt;/systemPath&amp;gt; &amp;lt;scope&amp;gt;system&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;!--aliyun oss 依赖--&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;com.aliyun.oss&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;aliyun-sdk-oss&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-test&amp;lt;/artifactId&amp;gt; &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.projectlombok&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;lombok&amp;lt;/artifactId&amp;gt; &amp;lt;optional&amp;gt;true&amp;lt;/optional&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;cn.hutool&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hutool-all&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;5.8.11&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;commons-io&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;commons-io&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;2.11.0&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; application.yml server: port: 80 公共部分 FileManagement public interface FileManagement { /** * 设置下一个bean的对象 * * @param nextFileManagement 下一个</description>
+    </item>
+    <item>
+      <title>整合支付功能</title>
+      <link>http://localhost:1313/iblog/posts/essays/pay-code/</link>
+      <pubDate>Thu, 10 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/iblog/posts/essays/pay-code/</guid>
+      <description>结构 pom.xml &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-test&amp;lt;/artifactId&amp;gt; &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.projectlombok&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;lombok&amp;lt;/artifactId&amp;gt; &amp;lt;optional&amp;gt;true&amp;lt;/optional&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;cn.hutool&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hutool-all&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;5.8.11&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;com.alipay.sdk&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;alipay-sdk-java&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.9.9&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;com.github.binarywang&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;weixin-java-pay&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.5.0&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; application.yml server: port: 8080 pay: wechat: #微信公众号或者小程序等的appid appId: &amp;#34;&amp;#34; #微信支付商户号 mchId: &amp;#34;&amp;#34; #微信支付商户密钥 mchKey: &amp;#34;&amp;#34; #服务商模式下的子商户公众账号ID subAppId: #服务商模式下的子商户号 subMchId: # p12证书的位</description>
+    </item>
+    <item>
+      <title>Validator参数校验</title>
+      <link>http://localhost:1313/iblog/posts/essays/springboot-validator/</link>
+      <pubDate>Sat, 01 Jul 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/iblog/posts/essays/springboot-validator/</guid>
+      <description>常见参数校验 在日常的接口开发中,为了防止非法参数对业务造成影响,经常需要对接口的参数做校验,最简单就是用if条件语句来判断,但是随着参数越来越多,业务越来越复杂,判断参数代码语句显得尤为冗长. 或者有些程序会将if封装起来,例如spring中</description>
+    </item>
+    <item>
+      <title>管道流设计模式结合业务</title>
+      <link>http://localhost:1313/iblog/posts/essays/pipeline-business/</link>
+      <pubDate>Thu, 15 Jun 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/iblog/posts/essays/pipeline-business/</guid>
+      <description>流程图 代码实现 pom &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.plugin&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-plugin-core&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;${spring.plugin.core.version}&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-test&amp;lt;/artifactId&amp;gt; &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.projectlombok&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;lombok&amp;lt;/artifactId&amp;gt; &amp;lt;optional&amp;gt;true&amp;lt;/optional&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;cn.hutool&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hutool-all&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;${hutool.version}&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; context EventContext public interface EventContext { /** * 是否继续调用链 */ boolean continueChain(); /** * 获取当前过滤器选择器 */ FilterSelector getFilterSelector(); } BizType public interface BizType { /** * 获取业务类型码值 */ Integer getCode(); /** * 业务类型名称 * */ String getName(); } AbstractEventContext public abstract class AbstractEventContext implements EventContext{ private final BizType businessType; private final FilterSelector filterSelector; protected AbstractEventContext(BizType businessType, FilterSelector filterSelector) {</description>
+    </item>
+  </channel>
+</rss>

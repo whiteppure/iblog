@@ -38,6 +38,10 @@
 </head>
 
 <body>
+    <div class="post-password">
+        
+    </div>
+
     
     
     
@@ -1091,7 +1095,7 @@
 </span></span><span class="line"><span class="cl">        System.out.println(i&gt;&gt;&gt;j);//0
 </span></span><span class="line"><span class="cl">    }
 </span></span></code></pre></div><p>解析:</p>
-<p>以下示例用十进制的1和2进行运算.1用二进制表示为<code>0000 0001</code>,2用二进制表示为<code>0000 0010</code><a href="https://www.google.com/search?sxsrf=ALeKk0010piT4DlhyvDp3DJUzmKw1n2QLA%3A1612180398529&amp;ei=rusXYLncH9X_wAP5n5GwDQ&amp;q=10%E8%BF%9B%E5%88%B62%E8%BF%9B%E5%88%B6%E4%BA%92%E7%9B%B8%E8%BD%AC%E6%8D%A2&amp;oq=10%E8%BF%9B%E5%88%B62%E8%BF%9B%E5%88%B6%E4%BA%92%E7%9B%B8%E8%BD%AC%E6%8D%A2&amp;gs_lcp=CgZwc3ktYWIQA1CuT1iuT2CEVmgBcAB4AIABvQGIAb0BkgEDMC4xmAEAoAECoAEBqgEHZ3dzLXdpesABAQ&amp;sclient=psy-ab&amp;ved=0ahUKEwi5697_z8juAhXVP3AKHflPBNYQ4dUDCA0&amp;uact=5">10进制2进制互相转换</a>怎么转就不讲了.不懂的小伙伴可自行查看链接.</p>
+<p>以下示例用十进制的1和2进行运算.1用二进制表示为<code>0000 0001</code>,2用二进制表示为<code>0000 0010</code><a href="https://www.google.com/search?sxsrf=ALeKk0010piT4DlhyvDp3DJUzmKw1n2QLA%3A1612180398529&ei=rusXYLncH9X_wAP5n5GwDQ&q=10%E8%BF%9B%E5%88%B62%E8%BF%9B%E5%88%B6%E4%BA%92%E7%9B%B8%E8%BD%AC%E6%8D%A2&oq=10%E8%BF%9B%E5%88%B62%E8%BF%9B%E5%88%B6%E4%BA%92%E7%9B%B8%E8%BD%AC%E6%8D%A2&gs_lcp=CgZwc3ktYWIQA1CuT1iuT2CEVmgBcAB4AIABvQGIAb0BkgEDMC4xmAEAoAECoAEBqgEHZ3dzLXdpesABAQ&sclient=psy-ab&ved=0ahUKEwi5697_z8juAhXVP3AKHflPBNYQ4dUDCA0&uact=5">10进制2进制互相转换</a>怎么转就不讲了.不懂的小伙伴可自行查看链接.</p>
 <p>&amp;:如果相对应位都是1,则结果为1,否则为0</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">0000 0001
 </span></span><span class="line"><span class="cl">0000 0010
@@ -1144,113 +1148,113 @@
 <p>该运算符有3个操作数,其功能是对表达式条件进行判断,根据判断结果是<code>true</code>或者<code>false</code>两种情况赋予赋予不同的返回值.
 该运算符的主要是决定哪个值应该赋值给变量.</p>
 <p>在某些情况下,可以发现三目运算符和<code>if...else</code>作用是相同的.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        int var1 = 1;
-</span></span><span class="line"><span class="cl">        int var2 = 0;
-</span></span><span class="line"><span class="cl">        var1 = var2 &gt; 1 ?  1: 2;
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">int</span> <span class="n">var1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">int</span> <span class="n">var2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">var1</span> <span class="o">=</span> <span class="n">var2</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="err">?</span>  <span class="mi">1</span><span class="p">:</span> <span class="mi">2</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        
-</span></span><span class="line"><span class="cl">        // 等价于if...else以下代码
-</span></span><span class="line"><span class="cl">        if (var2 &gt; 1) {
-</span></span><span class="line"><span class="cl">            var1 = 1;
-</span></span><span class="line"><span class="cl">        }else {
-</span></span><span class="line"><span class="cl">            var1 = 2;
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">等价于</span><span class="k">if</span><span class="o">...</span><span class="n">else以下代码</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">var2</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">var1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">var1</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span></code></pre></div><p>三目运算符的原理到底是什么,与<code>if...else</code>到底哪有啥不同?要探究这个原因,需要看JVM是对三目运算符怎么处理的.</p>
 <p>用<code>javap -verbose</code>命令,分别把<code>if...else</code>和三目运算符相关代码进行反编译</p>
 <p>三目运算符</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        int var1 = 1;
-</span></span><span class="line"><span class="cl">        int var2 = 0;
-</span></span><span class="line"><span class="cl">        // 如果var2大于1 则var1等于1 否则等于2
-</span></span><span class="line"><span class="cl">        var1 = var2 &gt; 1 ?  1: 2;
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  // ...
-</span></span><span class="line"><span class="cl">{
-</span></span><span class="line"><span class="cl"> // ...
-</span></span><span class="line"><span class="cl">  public static void main(java.lang.String[]);
-</span></span><span class="line"><span class="cl">    descriptor: ([Ljava/lang/String;)V
-</span></span><span class="line"><span class="cl">    flags: ACC_PUBLIC, ACC_STATIC
-</span></span><span class="line"><span class="cl">    Code:
-</span></span><span class="line"><span class="cl">      stack=2, locals=3, args_size=1
-</span></span><span class="line"><span class="cl">         0: iconst_1 // 向栈里添加int类型 1
-</span></span><span class="line"><span class="cl">         1: istore_1 // 将int 1 存储到局部变量
-</span></span><span class="line"><span class="cl">         2: iconst_0 // 向栈里添加int类型 0
-</span></span><span class="line"><span class="cl">         3: istore_2 // 将int 2 存储到局部变量
-</span></span><span class="line"><span class="cl">         4: iload_2  // 从局部变量加载int 2
-</span></span><span class="line"><span class="cl">         5: iconst_1
-</span></span><span class="line"><span class="cl">         6: if_icmple     13  // 将1,3步骤栈中的变量弹出 进行比较
-</span></span><span class="line"><span class="cl">         9: iconst_1 // 比较成功 存储该值到栈中
-</span></span><span class="line"><span class="cl">        10: goto          14 // 改变地址
-</span></span><span class="line"><span class="cl">        13: iconst_2
-</span></span><span class="line"><span class="cl">        14: istore_1
-</span></span><span class="line"><span class="cl">        15: return
-</span></span><span class="line"><span class="cl">      LineNumberTable:
-</span></span><span class="line"><span class="cl">        line 6: 0
-</span></span><span class="line"><span class="cl">        line 7: 2
-</span></span><span class="line"><span class="cl">        line 8: 4
-</span></span><span class="line"><span class="cl">        line 9: 15
-</span></span><span class="line"><span class="cl">      LocalVariableTable:
-</span></span><span class="line"><span class="cl">        Start  Length  Slot  Name   Signature
-</span></span><span class="line"><span class="cl">            0      16     0  args   [Ljava/lang/String;
-</span></span><span class="line"><span class="cl">            2      14     1  var1   I
-</span></span><span class="line"><span class="cl">            4      12     2  var2   I
-</span></span><span class="line"><span class="cl">      StackMapTable: number_of_entries = 2
-</span></span><span class="line"><span class="cl">        frame_type = 253 /* append */
-</span></span><span class="line"><span class="cl">          offset_delta = 13
-</span></span><span class="line"><span class="cl">          locals = [ int, int ]
-</span></span><span class="line"><span class="cl">        frame_type = 64 /* same_locals_1_stack_item */
-</span></span><span class="line"><span class="cl">          stack = [ int ]
-</span></span><span class="line"><span class="cl">}
-</span></span><span class="line"><span class="cl">// ...
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">int</span> <span class="n">var1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">int</span> <span class="n">var2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">如果</span><span class="n">var2大于1</span> <span class="err">则</span><span class="n">var1等于1</span> <span class="err">否则等于</span><span class="mi">2</span>
+</span></span><span class="line"><span class="cl">        <span class="n">var1</span> <span class="o">=</span> <span class="n">var2</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="err">?</span>  <span class="mi">1</span><span class="p">:</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">  <span class="o">//</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"> <span class="o">//</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">  <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="n">java</span><span class="o">.</span><span class="n">lang</span><span class="o">.</span><span class="n">String</span><span class="p">[]);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">descriptor</span><span class="p">:</span> <span class="p">([</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="ne">String</span><span class="p">;)</span><span class="n">V</span>
+</span></span><span class="line"><span class="cl">    <span class="n">flags</span><span class="p">:</span> <span class="n">ACC_PUBLIC</span><span class="p">,</span> <span class="n">ACC_STATIC</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Code</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">stack</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">locals</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">args_size</span><span class="o">=</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">0</span><span class="p">:</span> <span class="n">iconst_1</span> <span class="o">//</span> <span class="err">向栈里添加</span><span class="n">int类型</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">1</span><span class="p">:</span> <span class="n">istore_1</span> <span class="o">//</span> <span class="err">将</span><span class="ne">int</span> <span class="mi">1</span> <span class="err">存储到局部变量</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">2</span><span class="p">:</span> <span class="n">iconst_0</span> <span class="o">//</span> <span class="err">向栈里添加</span><span class="n">int类型</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">3</span><span class="p">:</span> <span class="n">istore_2</span> <span class="o">//</span> <span class="err">将</span><span class="ne">int</span> <span class="mi">2</span> <span class="err">存储到局部变量</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">4</span><span class="p">:</span> <span class="n">iload_2</span>  <span class="o">//</span> <span class="err">从局部变量加载</span><span class="ne">int</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">5</span><span class="p">:</span> <span class="n">iconst_1</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">6</span><span class="p">:</span> <span class="n">if_icmple</span>     <span class="mi">13</span>  <span class="o">//</span> <span class="err">将</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="err">步骤栈中的变量弹出</span> <span class="err">进行比较</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">9</span><span class="p">:</span> <span class="n">iconst_1</span> <span class="o">//</span> <span class="err">比较成功</span> <span class="err">存储该值到栈中</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">10</span><span class="p">:</span> <span class="n">goto</span>          <span class="mi">14</span> <span class="o">//</span> <span class="err">改变地址</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">13</span><span class="p">:</span> <span class="n">iconst_2</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">14</span><span class="p">:</span> <span class="n">istore_1</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">15</span><span class="p">:</span> <span class="k">return</span>
+</span></span><span class="line"><span class="cl">      <span class="n">LineNumberTable</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">line</span> <span class="mi">6</span><span class="p">:</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="n">line</span> <span class="mi">7</span><span class="p">:</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">        <span class="n">line</span> <span class="mi">8</span><span class="p">:</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl">        <span class="n">line</span> <span class="mi">9</span><span class="p">:</span> <span class="mi">15</span>
+</span></span><span class="line"><span class="cl">      <span class="n">LocalVariableTable</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Start</span>  <span class="n">Length</span>  <span class="n">Slot</span>  <span class="n">Name</span>   <span class="n">Signature</span>
+</span></span><span class="line"><span class="cl">            <span class="mi">0</span>      <span class="mi">16</span>     <span class="mi">0</span>  <span class="n">args</span>   <span class="p">[</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="ne">String</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="mi">2</span>      <span class="mi">14</span>     <span class="mi">1</span>  <span class="n">var1</span>   <span class="n">I</span>
+</span></span><span class="line"><span class="cl">            <span class="mi">4</span>      <span class="mi">12</span>     <span class="mi">2</span>  <span class="n">var2</span>   <span class="n">I</span>
+</span></span><span class="line"><span class="cl">      <span class="n">StackMapTable</span><span class="p">:</span> <span class="n">number_of_entries</span> <span class="o">=</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">        <span class="n">frame_type</span> <span class="o">=</span> <span class="mi">253</span> <span class="o">/*</span> <span class="n">append</span> <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">          <span class="n">offset_delta</span> <span class="o">=</span> <span class="mi">13</span>
+</span></span><span class="line"><span class="cl">          <span class="n">locals</span> <span class="o">=</span> <span class="p">[</span> <span class="ne">int</span><span class="p">,</span> <span class="ne">int</span> <span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">frame_type</span> <span class="o">=</span> <span class="mi">64</span> <span class="o">/*</span> <span class="n">same_locals_1_stack_item</span> <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">          <span class="n">stack</span> <span class="o">=</span> <span class="p">[</span> <span class="ne">int</span> <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="o">...</span>
 </span></span></code></pre></div><p><code>if...else</code></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        int var1 = 1;
-</span></span><span class="line"><span class="cl">        int var2 = 0;
-</span></span><span class="line"><span class="cl">        if (var2 &gt; 1){
-</span></span><span class="line"><span class="cl">            var1 = 1;
-</span></span><span class="line"><span class="cl">        } else {
-</span></span><span class="line"><span class="cl">            var1 = 2;
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  // ...
-</span></span><span class="line"><span class="cl">  public static void main(java.lang.String[]);
-</span></span><span class="line"><span class="cl">    descriptor: ([Ljava/lang/String;)V
-</span></span><span class="line"><span class="cl">    flags: ACC_PUBLIC, ACC_STATIC
-</span></span><span class="line"><span class="cl">    Code:
-</span></span><span class="line"><span class="cl">      stack=2, locals=3, args_size=1
-</span></span><span class="line"><span class="cl">         0: iconst_1
-</span></span><span class="line"><span class="cl">         1: istore_1
-</span></span><span class="line"><span class="cl">         2: iconst_0
-</span></span><span class="line"><span class="cl">         3: istore_2
-</span></span><span class="line"><span class="cl">         4: iload_2
-</span></span><span class="line"><span class="cl">         5: iconst_1
-</span></span><span class="line"><span class="cl">         6: if_icmple     14
-</span></span><span class="line"><span class="cl">         9: iconst_1
-</span></span><span class="line"><span class="cl">        10: istore_1
-</span></span><span class="line"><span class="cl">        11: goto          16
-</span></span><span class="line"><span class="cl">        14: iconst_2
-</span></span><span class="line"><span class="cl">        15: istore_1
-</span></span><span class="line"><span class="cl">        16: return
-</span></span><span class="line"><span class="cl">      LineNumberTable:
-</span></span><span class="line"><span class="cl">        line 6: 0
-</span></span><span class="line"><span class="cl">        line 7: 2
-</span></span><span class="line"><span class="cl">        line 8: 4
-</span></span><span class="line"><span class="cl">        line 9: 9
-</span></span><span class="line"><span class="cl">        line 11: 14
-</span></span><span class="line"><span class="cl">        line 13: 16
-</span></span><span class="line"><span class="cl">      LocalVariableTable:
-</span></span><span class="line"><span class="cl">        Start  Length  Slot  Name   Signature
-</span></span><span class="line"><span class="cl">            0      17     0  args   [Ljava/lang/String;
-</span></span><span class="line"><span class="cl">            2      15     1  var1   I
-</span></span><span class="line"><span class="cl">            4      13     2  var2   I
-</span></span><span class="line"><span class="cl">      StackMapTable: number_of_entries = 2
-</span></span><span class="line"><span class="cl">        frame_type = 253 /* append */
-</span></span><span class="line"><span class="cl">          offset_delta = 14
-</span></span><span class="line"><span class="cl">          locals = [ int, int ]
-</span></span><span class="line"><span class="cl">        frame_type = 1 /* same */
-</span></span><span class="line"><span class="cl">}
-</span></span><span class="line"><span class="cl">// ...
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">int</span> <span class="n">var1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">int</span> <span class="n">var2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">var2</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">var1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">var1</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">  <span class="o">//</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">  <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="n">java</span><span class="o">.</span><span class="n">lang</span><span class="o">.</span><span class="n">String</span><span class="p">[]);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">descriptor</span><span class="p">:</span> <span class="p">([</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="ne">String</span><span class="p">;)</span><span class="n">V</span>
+</span></span><span class="line"><span class="cl">    <span class="n">flags</span><span class="p">:</span> <span class="n">ACC_PUBLIC</span><span class="p">,</span> <span class="n">ACC_STATIC</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Code</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">stack</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">locals</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">args_size</span><span class="o">=</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">0</span><span class="p">:</span> <span class="n">iconst_1</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">1</span><span class="p">:</span> <span class="n">istore_1</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">2</span><span class="p">:</span> <span class="n">iconst_0</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">3</span><span class="p">:</span> <span class="n">istore_2</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">4</span><span class="p">:</span> <span class="n">iload_2</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">5</span><span class="p">:</span> <span class="n">iconst_1</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">6</span><span class="p">:</span> <span class="n">if_icmple</span>     <span class="mi">14</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">9</span><span class="p">:</span> <span class="n">iconst_1</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">10</span><span class="p">:</span> <span class="n">istore_1</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">11</span><span class="p">:</span> <span class="n">goto</span>          <span class="mi">16</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">14</span><span class="p">:</span> <span class="n">iconst_2</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">15</span><span class="p">:</span> <span class="n">istore_1</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">16</span><span class="p">:</span> <span class="k">return</span>
+</span></span><span class="line"><span class="cl">      <span class="n">LineNumberTable</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">line</span> <span class="mi">6</span><span class="p">:</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="n">line</span> <span class="mi">7</span><span class="p">:</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">        <span class="n">line</span> <span class="mi">8</span><span class="p">:</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl">        <span class="n">line</span> <span class="mi">9</span><span class="p">:</span> <span class="mi">9</span>
+</span></span><span class="line"><span class="cl">        <span class="n">line</span> <span class="mi">11</span><span class="p">:</span> <span class="mi">14</span>
+</span></span><span class="line"><span class="cl">        <span class="n">line</span> <span class="mi">13</span><span class="p">:</span> <span class="mi">16</span>
+</span></span><span class="line"><span class="cl">      <span class="n">LocalVariableTable</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Start</span>  <span class="n">Length</span>  <span class="n">Slot</span>  <span class="n">Name</span>   <span class="n">Signature</span>
+</span></span><span class="line"><span class="cl">            <span class="mi">0</span>      <span class="mi">17</span>     <span class="mi">0</span>  <span class="n">args</span>   <span class="p">[</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="ne">String</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="mi">2</span>      <span class="mi">15</span>     <span class="mi">1</span>  <span class="n">var1</span>   <span class="n">I</span>
+</span></span><span class="line"><span class="cl">            <span class="mi">4</span>      <span class="mi">13</span>     <span class="mi">2</span>  <span class="n">var2</span>   <span class="n">I</span>
+</span></span><span class="line"><span class="cl">      <span class="n">StackMapTable</span><span class="p">:</span> <span class="n">number_of_entries</span> <span class="o">=</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">        <span class="n">frame_type</span> <span class="o">=</span> <span class="mi">253</span> <span class="o">/*</span> <span class="n">append</span> <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">          <span class="n">offset_delta</span> <span class="o">=</span> <span class="mi">14</span>
+</span></span><span class="line"><span class="cl">          <span class="n">locals</span> <span class="o">=</span> <span class="p">[</span> <span class="ne">int</span><span class="p">,</span> <span class="ne">int</span> <span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">frame_type</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/*</span> <span class="n">same</span> <span class="o">*/</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="o">...</span>
 </span></span></code></pre></div><p>通过查阅<a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html">《Java虚拟机指令集》</a>,可以看到JVM对上边的代码进行了什么处理.</p>
 <p><strong>通过比较两次反编译后的代码可以得出一个结论:三目运算符,省去了一步赋值操作</strong> 所以实际开发中三目运算符的运算效率略高于<code>if..else</code>.
 但是对于实际开发来说三目运算符的可读性相对不如<code>if...else</code>代码，所以在常见的编码中，三目运算符更倾向于简单的<code>if...else</code>语句的替代.</p>
@@ -1487,37 +1491,37 @@
 <h2 id="控制流语句">控制流语句</h2>
 <h3 id="if-else语句">if-else语句</h3>
 <p><code>if</code>语句是最基本的控制语句,它只有在<code>If(exception)</code>为<code>true</code>的时候才会执行特定的代码.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        boolean var1 = true;
-</span></span><span class="line"><span class="cl">        if (var1){
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;hello world ...&#34;);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">boolean</span> <span class="n">var1</span> <span class="o">=</span> <span class="bp">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">var1</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;hello world ...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span></code></pre></div><p><code>if</code>语句后面可以跟<code>else</code>语句.当<code>If(exception)</code>为<code>false</code>时,<code>else</code>语句体将被执行.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        boolean var1 = false;
-</span></span><span class="line"><span class="cl">        if (var1){
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;if ...&#34;);
-</span></span><span class="line"><span class="cl">        }else{
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;else ...&#34;);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">boolean</span> <span class="n">var1</span> <span class="o">=</span> <span class="bp">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">var1</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;if ...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;else ...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span></code></pre></div><p><code>if</code>语句后面可以跟 <code>else if…else</code> 语句</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class HelloWorld {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        String var = &#34;123&#34;;
-</span></span><span class="line"><span class="cl">        if (&#34;123&#34;.equals(var)){
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;123 ...&#34;);
-</span></span><span class="line"><span class="cl">        }else if(&#34;234&#34;.equals(var)){
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;234 ...&#34;);
-</span></span><span class="line"><span class="cl">        }else if (&#34;345&#34;.equals(var)){
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;345 ...&#34;);
-</span></span><span class="line"><span class="cl">        }else{
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;...&#34;);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">HelloWorld</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">String</span> <span class="k">var</span> <span class="o">=</span> <span class="s2">&#34;123&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="s2">&#34;123&#34;</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="k">var</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;123 ...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="s2">&#34;234&#34;</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="k">var</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;234 ...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span><span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="s2">&#34;345&#34;</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="k">var</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;345 ...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h3 id="switch语句">switch语句</h3>
 <p><code>switch</code>语句是在项目开发中是比较常用的.可以和<code>if...else</code>起到相同的作用,但是用<code>switch</code>代码可读性更高.</p>
 <p><code>switch case</code>语句判断一个变量与一系列值中某个值是否相等,每个值称为一个分支.</p>
@@ -2001,13 +2005,13 @@ Reference data type parameters, such as objects, are also passed into methods by
 </ul>
 <h6 id="valueof">valueOf</h6>
 <p><code>valueOf(double val)</code>底层也是调用<code>String</code>构造</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static BigDecimal valueOf(double val) {
-</span></span><span class="line"><span class="cl">        // Reminder: a zero double returns &#39;0.0&#39;, so we cannot fastpath
-</span></span><span class="line"><span class="cl">        // to use the constant ZERO.  This might be important enough to
-</span></span><span class="line"><span class="cl">        // justify a factory approach, a cache, or a few private
-</span></span><span class="line"><span class="cl">        // constants, later.
-</span></span><span class="line"><span class="cl">        return new BigDecimal(Double.toString(val));
-</span></span><span class="line"><span class="cl">    }
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">BigDecimal</span> <span class="n">valueOf</span><span class="p">(</span><span class="n">double</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="n">Reminder</span><span class="p">:</span> <span class="n">a</span> <span class="n">zero</span> <span class="n">double</span> <span class="n">returns</span> <span class="s1">&#39;0.0&#39;</span><span class="p">,</span> <span class="n">so</span> <span class="n">we</span> <span class="n">cannot</span> <span class="n">fastpath</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="n">to</span> <span class="n">use</span> <span class="n">the</span> <span class="n">constant</span> <span class="n">ZERO</span><span class="o">.</span>  <span class="n">This</span> <span class="n">might</span> <span class="n">be</span> <span class="n">important</span> <span class="n">enough</span> <span class="n">to</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="n">justify</span> <span class="n">a</span> <span class="n">factory</span> <span class="n">approach</span><span class="p">,</span> <span class="n">a</span> <span class="n">cache</span><span class="p">,</span> <span class="ow">or</span> <span class="n">a</span> <span class="n">few</span> <span class="n">private</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="n">constants</span><span class="p">,</span> <span class="n">later</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">new</span> <span class="n">BigDecimal</span><span class="p">(</span><span class="n">Double</span><span class="o">.</span><span class="n">toString</span><span class="p">(</span><span class="n">val</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span></code></pre></div><p><code>valueOf(long val)</code></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static BigDecimal valueOf(long val) {
 </span></span><span class="line"><span class="cl">        // 判断在不在 缓存常用的小BigDecimal值中

@@ -38,6 +38,10 @@
 </head>
 
 <body>
+    <div class="post-password">
+        
+    </div>
+
     
     
     
@@ -2399,7 +2403,7 @@
 一个进程至少有一个线程，一个进程可以运行多个线程，多个线程可共享数据。</p>
 <p>Java 程序是多线程程序，每启动一个Java程序至少我们知道的都会包含一个主线程和一个垃圾回收线程。
 而且启动的时候，每条线程可以并行执行不同的任务。</p>
-<p><img src="/iblog/posts/annex/images/essays/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%85%B3%E7%B3%BB.jpg" alt="线程与进程的关系"></p>
+<p><img alt="线程与进程的关系" src="/iblog/posts/annex/images/essays/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%85%B3%E7%B3%BB.jpg"></p>
 <h3 id="并行并发串行">并行、并发、串行</h3>
 <ul>
 <li>并行：前提是在多核CPU或多个CPU条件下，多个线程同时被多个CPU执行，同时执行的线程并不会抢占CPU资源。</li>
@@ -2431,7 +2435,7 @@
 <p>对于单CPU的计算机来说，同一时间是只能干一件事儿的，如果是单线程就是串行；如果是多个线程就是并发。
 而对于多CPU的计算机说，同一时间能干多个事，如果多个CPU同时执行多个线程就是并行；如果一个CPU同时执行多个线程就是并行。</p>
 <p>并行与并发区别图解
-<img src="/iblog/posts/annex/images/essays/%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%B9%B6%E5%8F%91%E5%8C%BA%E5%88%AB.png" alt="并行与并发区别"></p>
+<img alt="并行与并发区别" src="/iblog/posts/annex/images/essays/%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%B9%B6%E5%8F%91%E5%8C%BA%E5%88%AB.png"></p>
 <p>并发是两个队列交替使用一台咖啡机，并行是两个队列同时使用两台咖啡机；
 如果串行，一个队列使用一台咖啡机，那么哪怕前面那个人便秘了去厕所呆半天，后面的人也只能死等着他回来才能去接咖啡，这效率无疑是最低的。</p>
 <h3 id="同步与异步">同步与异步</h3>
@@ -2497,7 +2501,7 @@
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><h2 id="线程的状态">线程的状态</h2>
 <p>线程状态共包含6种，6中状态又可以互相的转换。
-<img src="/iblog/posts/annex/images/essays/%E7%BA%BF%E7%A8%8B%E8%BD%AC%E6%8D%A2%E5%9B%BE.jpg" alt="线程状态转换"></p>
+<img alt="线程状态转换" src="/iblog/posts/annex/images/essays/%E7%BA%BF%E7%A8%8B%E8%BD%AC%E6%8D%A2%E5%9B%BE.jpg"></p>
 <ul>
 <li>新建状态(New): 创建了线程后尚未启动；</li>
 <li>可运行状态(Runnable): 可能正在运行，也可能正在等待 CPU 时间片。包含了运行中(Running)和 就绪（Ready)状态；
@@ -2538,18 +2542,18 @@
 <p>在Java中，创建一个线程，有且仅有一种方式: 创建一个<code>Thread</code>类实例，并调用它的<code>start</code>方法。</p>
 <h3 id="thread类">Thread类</h3>
 <p>通过继承<code>Thread</code>类，重写<code>run()</code>方法来创建线程。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        ThreadDemo thread1 = new ThreadDemo();
-</span></span><span class="line"><span class="cl">        thread1.start();
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span><span class="line"><span class="cl">class ThreadDemo extends Thread {
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    public void run() {
-</span></span><span class="line"><span class="cl">        System.out.printf(&#34;通过继承Thread类的方式创建线程,线程 %s 启动&#34;,Thread.currentThread().getName());
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">MainTest</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ThreadDemo</span> <span class="n">thread1</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ThreadDemo</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">thread1</span><span class="o">.</span><span class="n">start</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="n">ThreadDemo</span> <span class="k">extends</span> <span class="ne">Thread</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">run</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">printf</span><span class="p">(</span><span class="s2">&#34;通过继承Thread类的方式创建线程,线程 </span><span class="si">%s</span><span class="s2"> 启动&#34;</span><span class="p">,</span><span class="ne">Thread</span><span class="o">.</span><span class="n">currentThread</span><span class="p">()</span><span class="o">.</span><span class="n">getName</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h3 id="runnable接口">Runnable接口</h3>
 <p>实现 <code>Runnale</code> 接口，将它作为 <code>target</code> 参数传递给 <code>Thread</code> 类构造函数的方式创建线程。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
@@ -2684,7 +2688,7 @@
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><h4 id="阻塞队列">阻塞队列</h4>
 <p>阻塞队列，顾名思义，首先它是一个队列：</p>
-<p><img src="/iblog/posts/annex/images/essays/%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97%E7%BB%93%E6%9E%84.jpeg" alt="阻塞队列"></p>
+<p><img alt="阻塞队列" src="/iblog/posts/annex/images/essays/%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97%E7%BB%93%E6%9E%84.jpeg"></p>
 <p>一个阻塞队列在数据结构中所起的作用：</p>
 <ul>
 <li>当阻塞队列是空时，从队列中获取元素的操作将会被阻塞。</li>
@@ -2809,7 +2813,7 @@
 <li><code>unit</code>：多余的空闲线程的存活时间的单位</li>
 </ul>
 <h4 id="线程池工作原理">线程池工作原理</h4>
-<p><img src="/iblog/posts/annex/images/essays/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86.png" alt="线程池工作原理"></p>
+<p><img alt="线程池工作原理" src="/iblog/posts/annex/images/essays/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86.png"></p>
 <p>在创建了线程池后，等待提交过来的任务请求;
 当调用<code>execute</code>方法添加一个请求任务时，线程池会做如下判断：</p>
 <ol>
@@ -2832,7 +2836,7 @@
 <p><strong>在实际开发中用哪个线程池？</strong></p>
 <p>上面的三种一个都不用，我们生产上只能使用自定义的。</p>
 <p><strong><code>Executors</code> 中JDK已经给你提供了，为什么不用?</strong></p>
-<p>以下内容摘自<a href="https://developer.aliyun.com/topic/download?spm=a2c6h.15028928.J_5293118740.2&amp;id=805">《阿里巴巴开发手册》</a></p>
+<p>以下内容摘自<a href="https://developer.aliyun.com/topic/download?spm=a2c6h.15028928.J_5293118740.2&id=805">《阿里巴巴开发手册》</a></p>
 <blockquote>
 <p>【强制】线程资源必须通过线程池提供，不允许在应用中自行显式创建线程。
 说明：线程池的好处是减少在创建和销毁线程上所消耗的时间以及系统资源的开销，解决资源不足的问题。 如果不使用线程池，有可能造成系统创建大量同类线程而导致消耗完内存或者“过度切换”的问题。
@@ -3043,14 +3047,14 @@ CPU密集型任务配置尽可能少的线程数量：<code>参考公式：（CP
 由于悲观锁在修改数据前先加锁的特性，能保证写操作时数据正确，所以悲观锁更适合写多读少的场景。</p>
 <p>乐观锁则与悲观锁相反，每一次修改数据时，都认为没有其他线程来跟它一起修改，所以在修改数据之前不会去添加锁，如果这个数据没有被更新，当前线程将自己修改的数据成功写入。如果数据已经被其他线程更新，则根据不同的实现方式执行不同的操作。
 由于乐观锁是一种无锁操作，所以在使用乐观锁的场景中读的性能会大幅度提升，适合读多写少。</p>
-<p><img src="/iblog/posts/annex/images/essays/%E6%82%B2%E8%A7%82%E9%94%81%E4%B8%8E%E4%B9%90%E8%A7%82%E9%94%81.png" alt="悲观锁与乐观锁"></p>
+<p><img alt="悲观锁与乐观锁" src="/iblog/posts/annex/images/essays/%E6%82%B2%E8%A7%82%E9%94%81%E4%B8%8E%E4%B9%90%E8%A7%82%E9%94%81.png"></p>
 <p>在Java中悲观锁的实现有：<code>synchronized</code>、<code>Lock</code>实现类，乐观锁的实现有<code>CAS</code>。</p>
 <h3 id="自旋锁适应性自旋锁">自旋锁、适应性自旋锁</h3>
-<p><img src="/iblog/posts/annex/images/essays/%E8%87%AA%E6%97%8B%E9%94%81%E4%B8%8E%E9%9D%9E%E8%87%AA%E6%97%8B%E9%94%81.png" alt="自旋锁与非自旋锁"></p>
+<p><img alt="自旋锁与非自旋锁" src="/iblog/posts/annex/images/essays/%E8%87%AA%E6%97%8B%E9%94%81%E4%B8%8E%E9%9D%9E%E8%87%AA%E6%97%8B%E9%94%81.png"></p>
 <h4 id="自旋锁">自旋锁</h4>
 <p>当一个线程尝试获取某个锁时，如果该锁已被其他线程占用，就一直循环检测锁是否被释放，而不是进入线程挂起或睡眠状态，直到获取到某个锁。</p>
 <p>自旋锁本身是有缺点的，它不能代替阻塞。如果锁被占用的时间很长，那么自旋的线程只会白白浪费处理器资源，带来性能上的浪费。</p>
-<p>自旋锁的实现原理是<a href="#CAS">CAS</a>,例如<code>AtomicInteger</code>中<code>getAndUpdate()</code>方法</p>
+<p>自旋锁的实现原理是<a href="/iblog/posts/java/rookie-multi-thread/#CAS">CAS</a>,例如<code>AtomicInteger</code>中<code>getAndUpdate()</code>方法</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public final int getAndUpdate(IntUnaryOperator updateFunction) {
 </span></span><span class="line"><span class="cl">        int prev, next;
 </span></span><span class="line"><span class="cl">        do {
@@ -3184,12 +3188,12 @@ CAS操作来加锁和解锁，而只需简单的测试一下对象头的 <code>M
 <p>资源有序分配法: 线程 A 和 线程 B 获取资源的顺序要一样，当线程 A 先尝试获取资源 A，然后尝试获取资源 B 的时候，线程 B 同样也是先尝试获取资源 A，然后尝试获取资源 B。也就是说，线程 A 和 线程 B 总是以相同的顺序申请自己想要的资源。</p>
 </blockquote>
 <p>也可以通过银行家算法来动态避免死锁问题。
-<img src="/iblog/posts/annex/images/essays/%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95.png" alt="银行家算法"></p>
+<img alt="银行家算法" src="/iblog/posts/annex/images/essays/%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95.png"></p>
 <blockquote>
 <p>银行家算法：一个避免死锁（Deadlock）的著名算法，是由艾兹格·迪杰斯特拉在1965年为T.H.E系统设计的一种避免死锁产生的算法。它以银行借贷系统的分配策略为基础，判断并保证系统的安全运行。
 <br>
 在银行中，客户申请贷款的数量是有限的，每个客户在第一次申请贷款时要声明完成该项目所需的最大资金量，在满足所有贷款要求时，客户应及时归还。银行家在客户申请的贷款数量不超过自己拥有的最大值时，都应尽量满足客户的需要。通过判断借贷是否安全，然后决定借不借。
-<br> 
+<br>
 举例,现有公司B、公司A、公司T，想要从银行分别贷款70亿、40亿、50亿，假设银行只有100亿供放贷，如果借不到企业最大需求的钱，钱将不会归还，怎么才能合理的放贷？</p>
 <table>
 <thead>
@@ -3265,7 +3269,7 @@ CAS操作来加锁和解锁，而只需简单的测试一下对象头的 <code>M
 <p>Java内存模型，即JMM（Java Memory Model）本身是一种抽象的概念,并不真实存在,它描述的是一组规则或规范通过规范定制了程序中各个变量(包括实例字段,静态字段和构成数组对象的元素)的访问方式。
 屏蔽了各种硬件和操作系统的访问差异的，保证了Java程序在各种平台下对内存的访问都能保证效果一致的机制及规范。</p>
 <p>JMM就作用于工作内存和主存之间数据同步过程。他规定了如何做数据同步以及什么时候做数据同步。</p>
-<p><img src="/iblog/posts/annex/images/essays/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.jpg" alt="Java内存模型"></p>
+<p><img alt="Java内存模型" src="/iblog/posts/annex/images/essays/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.jpg"></p>
 <p><strong>那么在Java中是如何保证原子性、可见性及有序性的呢？</strong></p>
 <ul>
 <li>
@@ -3333,14 +3337,14 @@ CAS操作来加锁和解锁，而只需简单的测试一下对象头的 <code>M
 <p><code>volatile</code>只提供了保证访问该变量时，每次都是从内存中读取最新值，并不会使用寄存器缓存该值——每次都会从内存中读取。
 而对该变量的修改，<code>volatile</code> 并不提供原子性(线程不安全)的保证;由于及时更新，很可能导致另一线程访问最新变量值，无法跳出循环的情况,多线程下计数器必须使用锁保护.</p>
 </blockquote>
-<p>将<a href="#%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B">上面的代码</a>用<code>javap -v SingletonDemo.class &gt;test.txt</code>命令执行，将反编译后的字节码指令写入到test文件中,可以看到<code>ACC_VOLATILE</code></p>
+<p>将<a href="/iblog/posts/java/rookie-multi-thread/#使用案例">上面的代码</a>用<code>javap -v SingletonDemo.class &gt;test.txt</code>命令执行，将反编译后的字节码指令写入到test文件中,可以看到<code>ACC_VOLATILE</code></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  public static volatile content.posts.rookie.SingletonDemo singleton;
 </span></span><span class="line"><span class="cl">    descriptor: Lcontent/posts/rookie/SingletonDemo;
 </span></span><span class="line"><span class="cl">    flags: ACC_PUBLIC, ACC_STATIC, ACC_VOLATILE
 </span></span></code></pre></div><p><code>volatile</code> 在字节码层面，就是使用访问标志：<code>ACC_VOLATILE</code> 来表示，供后续操作此变量时判断访问标志是否为 <code>ACC_VOLATILE</code>，来决定是否遵循 <code>volatile</code> 的语义处理。</p>
 <p>可以从<code>openjdk8</code>中找到对应的源码文件</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">路径：openjdk8/hotspot/src/share/vm/interpreter/bytecodeInterpreter.cpp
-</span></span></code></pre></div><p><img src="/iblog/posts/annex/images/essays/volitile%E5%AD%97%E8%8A%82%E7%A0%81.png" alt="volitile字节码"></p>
+</span></span></code></pre></div><p><img alt="volitile字节码" src="/iblog/posts/annex/images/essays/volitile%E5%AD%97%E8%8A%82%E7%A0%81.png"></p>
 <p>重点是<code>cache-&gt;is_volatile()</code>方法，调用栈</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">bytecodeInterpreter.cpp&gt;is_volatile() 
 </span></span><span class="line"><span class="cl">==&gt; accessFlags.hpp&gt;is_volatile 
@@ -3361,16 +3365,16 @@ CAS操作来加锁和解锁，而只需简单的测试一下对象头的 <code>M
 <li>使用 <code>volatile</code> 变量时，避免激进的优化; 系统总是重新从内存读取数据，即使它前面的指令刚从内存中读取被缓存，防止出现未知更改和主内存中不一致。</li>
 </ul>
 <p>其在64位系统的实现<code>orderAccess_linux_x86.inline.hpp.OrderAccess::release_store</code></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">inline void OrderAccess::fence() {
-</span></span><span class="line"><span class="cl">  if (os::is_MP()) {
-</span></span><span class="line"><span class="cl">    // always use locked addl since mfence is sometimes expensive
-</span></span><span class="line"><span class="cl">#ifdef AMD64
-</span></span><span class="line"><span class="cl">    __asm__ volatile (&#34;lock; addl $0,0(%%rsp)&#34; : : : &#34;cc&#34;, &#34;memory&#34;);
-</span></span><span class="line"><span class="cl">#else
-</span></span><span class="line"><span class="cl">    __asm__ volatile (&#34;lock; addl $0,0(%%esp)&#34; : : : &#34;cc&#34;, &#34;memory&#34;);
-</span></span><span class="line"><span class="cl">#endif
-</span></span><span class="line"><span class="cl">  }
-</span></span><span class="line"><span class="cl">}
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kr">inline</span> <span class="kt">void</span> <span class="n">OrderAccess</span><span class="o">::</span><span class="nf">fence</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">os</span><span class="o">::</span><span class="nf">is_MP</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// always use locked addl since mfence is sometimes expensive
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#ifdef AMD64
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>    <span class="n">__asm__</span> <span class="k">volatile</span> <span class="p">(</span><span class="s">&#34;lock; addl $0,0(%%rsp)&#34;</span> <span class="o">:</span> <span class="o">:</span> <span class="o">:</span> <span class="s">&#34;cc&#34;</span><span class="p">,</span> <span class="s">&#34;memory&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#else
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>    <span class="n">__asm__</span> <span class="k">volatile</span> <span class="p">(</span><span class="s">&#34;lock; addl $0,0(%%esp)&#34;</span> <span class="o">:</span> <span class="o">:</span> <span class="o">:</span> <span class="s">&#34;cc&#34;</span><span class="p">,</span> <span class="s">&#34;memory&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>代码<code>lock; addl $0,0(%%rsp)</code>就是lock前缀；</p>
 <blockquote>
 <p>lock前缀，会保证某个处理器对共享内存的独占使用。
@@ -3383,7 +3387,7 @@ CAS操作来加锁和解锁，而只需简单的测试一下对象头的 <code>M
 <p>缓存一致性协议: 每个处理器通过嗅探在总线上传播的数据来检查自己缓存的值是不是过期了，当处理器发现自己缓存行对应的内存地址被修改，就会将当前处理器的缓存行设置成无效状态，当处理器要对这个数据进行修改操作的时候，会强制重新从系统内存里把数据读到处理器缓存里。</p>
 </blockquote>
 <p>为了提高CPU处理器的执行速度，在处理器和内存之间增加了多级缓存来提升。但是由于引入了多级缓存，就存在缓存数据不一致问题。</p>
-<p><img src="/iblog/posts/annex/images/essays/CPU%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98.jpg" alt="CPU多级缓存"></p>
+<p><img alt="CPU多级缓存" src="/iblog/posts/annex/images/essays/CPU%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98.jpg"></p>
 <p>所以，如果一个变量被 <code>volatile</code> 所修饰的话，在每次数据变化之后，其值都会被强制刷入主存。而其他处理器的缓存由于遵守了缓存一致性协议，也会把这个变量的值从主存加载到自己的缓存中。这就保证了一个 <code>volatile</code> 在并发编程中，其值在多个缓存中是可见的。</p>
 <h4 id="volatile与可见性">volatile与可见性</h4>
 <p>各个线程对主内存中共享变量的操作，都是各个线程各自拷贝到自己的工作内存操作后再写回主内存中的。
@@ -3463,7 +3467,7 @@ CAS操作来加锁和解锁，而只需简单的测试一下对象头的 <code>M
 即某个线程修改了数据,准备回主内存,此时CPU切换到另一个线程修改了数据,并且写回到了主内存,此时其他的线程不知道主内存的数据已经被更改,还会执行将之前从主内存复制的数据修改后的,写到主内存,这就导致了数据被覆盖,丢失。</p>
 <p><strong>解决</strong></p>
 <p>如果要解决原子性的问题,在Java中只能控制线程，在修改的时候不能被中断，即加锁。
-上面的例子可以使用<a href="#CAS">CAS</a>的实现<code>AtomicInteger</code>来解决。</p>
+上面的例子可以使用<a href="/iblog/posts/java/rookie-multi-thread/#CAS">CAS</a>的实现<code>AtomicInteger</code>来解决。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    public static void main(String[] args) {
@@ -3507,24 +3511,24 @@ CAS操作来加锁和解锁，而只需简单的测试一下对象头的 <code>M
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>对于<code>AtomicInteger.incrementAndGet</code>方法来说，原理就是<code>volatile</code> + <code>do...while()</code> + <code>CAS</code>;</p>
 <p><code>AtomicInteger.incrementAndGet</code>源码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public final int incrementAndGet() {
-</span></span><span class="line"><span class="cl">    return unsafe.getAndAddInt(this, valueOffset, 1) + 1;
-</span></span><span class="line"><span class="cl">}
-</span></span><span class="line"><span class="cl">//=========================
-</span></span><span class="line"><span class="cl">public final int getAndAddInt(Object var1, long var2, int var4) {
-</span></span><span class="line"><span class="cl">    int var5;
-</span></span><span class="line"><span class="cl">    do {
-</span></span><span class="line"><span class="cl">        var5 = this.getIntVolatile(var1, var2);
-</span></span><span class="line"><span class="cl">    } while(!this.compareAndSwapInt(var1, var2, var5, var5 + var4));
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="n">final</span> <span class="ne">int</span> <span class="n">incrementAndGet</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">unsafe</span><span class="o">.</span><span class="n">getAndAddInt</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">valueOffset</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">//=========================</span>
+</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="n">final</span> <span class="ne">int</span> <span class="n">getAndAddInt</span><span class="p">(</span><span class="ne">Object</span> <span class="n">var1</span><span class="p">,</span> <span class="n">long</span> <span class="n">var2</span><span class="p">,</span> <span class="ne">int</span> <span class="n">var4</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="ne">int</span> <span class="n">var5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">do</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">var5</span> <span class="o">=</span> <span class="n">this</span><span class="o">.</span><span class="n">getIntVolatile</span><span class="p">(</span><span class="n">var1</span><span class="p">,</span> <span class="n">var2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">this</span><span class="o">.</span><span class="n">compareAndSwapInt</span><span class="p">(</span><span class="n">var1</span><span class="p">,</span> <span class="n">var2</span><span class="p">,</span> <span class="n">var5</span><span class="p">,</span> <span class="n">var5</span> <span class="o">+</span> <span class="n">var4</span><span class="p">));</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    return var5;
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">var5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>用<code>volatile</code>修饰该变量，保证该变量被某个线程修改时，保证其他线程中的这个变量的可见性；
 在多线程环境下，CPU轮流切换线程执行，有可能某个线程修改了数据,准备回主内存,此时CPU切换到另一个线程修改了数据,并且写回到了主内存，此时就导致数据的不准确；
 <code>do...while()</code> + <code>CAS</code>的作用就是，当某个线程工作内存中的值与主内存中的值，如果不相同就会一直<code>while</code>循环下去,之所以用<code>do..while</code>是考虑到做自增操作。</p>
 <h4 id="volatile与有序性">volatile与有序性</h4>
 <p>有序性，指的就是代码按照顺序执行，这个就是对比指令重排来说的；计算机在执行程序时,为了提高性能,编译器和处理器常常会做指令重排。</p>
-<p>在上面的<a href="#%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B">使用案例</a>中的代码，DCL就是一个使用禁止指令重排的案例。</p>
+<p>在上面的<a href="/iblog/posts/java/rookie-multi-thread/#使用案例">使用案例</a>中的代码，DCL就是一个使用禁止指令重排的案例。</p>
 <p><strong><code>volatile</code> 禁止指令重排原因</strong></p>
 <p>由于编译器和处理器都能执行指令重排的优化,如果在指令键加入一条内存屏障(<code>Memory barrier</code>),就会告诉编译器和CPU不管什么指令都不能和这条加入<code>Memory barrier</code>指令键重新排序,也就是说<strong>通过内存屏障禁止在内存屏障前后的指令重新排序优化</strong>。
 内存屏障的另一个作用就是强制刷出各种CPU缓存数据,因此任何CPU上的线程都能读取到这些数据的最新值，即可见性。</p>
@@ -3570,18 +3574,18 @@ CAS操作来加锁和解锁，而只需简单的测试一下对象头的 <code>M
 <li><code>value</code> 是用 <code>volatile</code> 修饰的，保证了多线程之间看到的 <code>value</code> 值是同一份。</li>
 </ol>
 <p>继续向底层深入，就会看到<code>Unsafe</code>类中的一些方法，同时也是CAS的核心方法：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public final class Unsafe {
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="n">final</span> <span class="k">class</span> <span class="n">Unsafe</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // ...
+</span></span><span class="line"><span class="cl">    <span class="o">//</span> <span class="o">...</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public final native boolean compareAndSwapObject(Object var1, long var2, Object var4, Object var5);
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">final</span> <span class="n">native</span> <span class="n">boolean</span> <span class="n">compareAndSwapObject</span><span class="p">(</span><span class="ne">Object</span> <span class="n">var1</span><span class="p">,</span> <span class="n">long</span> <span class="n">var2</span><span class="p">,</span> <span class="ne">Object</span> <span class="n">var4</span><span class="p">,</span> <span class="ne">Object</span> <span class="n">var5</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public final native boolean compareAndSwapInt(Object var1, long var2, int var4, int var5);
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">final</span> <span class="n">native</span> <span class="n">boolean</span> <span class="n">compareAndSwapInt</span><span class="p">(</span><span class="ne">Object</span> <span class="n">var1</span><span class="p">,</span> <span class="n">long</span> <span class="n">var2</span><span class="p">,</span> <span class="ne">int</span> <span class="n">var4</span><span class="p">,</span> <span class="ne">int</span> <span class="n">var5</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public final native boolean compareAndSwapLong(Object var1, long var2, long var4, long var6);
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">final</span> <span class="n">native</span> <span class="n">boolean</span> <span class="n">compareAndSwapLong</span><span class="p">(</span><span class="ne">Object</span> <span class="n">var1</span><span class="p">,</span> <span class="n">long</span> <span class="n">var2</span><span class="p">,</span> <span class="n">long</span> <span class="n">var4</span><span class="p">,</span> <span class="n">long</span> <span class="n">var6</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    // ...
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">    <span class="o">//</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>上面的三个方法的原理，可以对应去查看 <code>openjdk</code> 的 <code>hotspot</code>源码：<code>src/share/vm/prims/unsafe.cpp</code></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#define FN_PTR(f) CAST_FROM_FN_PTR(void*, &amp;f)
 </span></span><span class="line"><span class="cl">
@@ -3620,20 +3624,20 @@ CAS操作来加锁和解锁，而只需简单的测试一下对象头的 <code>M
 </span></span></code></pre></div><p>从上述源码可以看出CAS的原理就是调用了汇编指令 <code>cmpxchg</code> ,最终其实也就调用了CPU的某些指令。</p>
 <p>CAS作用也一目了然，在多线程环境中，就是比较当前线程工作内存中的值和主内存中的值，如果相同则执行规定操作，否则继续比较，直到主内存和当前线程工作内存中的值一致为止。</p>
 <p>例如代码：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public final int getAndAddInt(Object var1, long var2, int var4) {
-</span></span><span class="line"><span class="cl">        int var5;
-</span></span><span class="line"><span class="cl">        do {
-</span></span><span class="line"><span class="cl">            var5 = this.getIntVolatile(var1, var2);
-</span></span><span class="line"><span class="cl">        } while(!this.compareAndSwapInt(var1, var2, var5, var5 + var4));
-</span></span><span class="line"><span class="cl">        return var5;
-</span></span><span class="line"><span class="cl">}
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="n">final</span> <span class="ne">int</span> <span class="n">getAndAddInt</span><span class="p">(</span><span class="ne">Object</span> <span class="n">var1</span><span class="p">,</span> <span class="n">long</span> <span class="n">var2</span><span class="p">,</span> <span class="ne">int</span> <span class="n">var4</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">int</span> <span class="n">var5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">do</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">var5</span> <span class="o">=</span> <span class="n">this</span><span class="o">.</span><span class="n">getIntVolatile</span><span class="p">(</span><span class="n">var1</span><span class="p">,</span> <span class="n">var2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">this</span><span class="o">.</span><span class="n">compareAndSwapInt</span><span class="p">(</span><span class="n">var1</span><span class="p">,</span> <span class="n">var2</span><span class="p">,</span> <span class="n">var5</span><span class="p">,</span> <span class="n">var5</span> <span class="o">+</span> <span class="n">var4</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">var5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h4 id="如何保证数据一致性">如何保证数据一致性</h4>
 <p>从源码可以看出，CAS是通过<code>Unsafe</code>调用CPU指令,当CPU中某个处理器对缓存中的共享变量进行了操作，其他处理器会有个嗅探机制，将其他处理器的该共享变量的缓存失效，待其他线程读取时会重新从主内存中读取最新的数据，基于 <code>MESI</code> 缓存一致性协议来实现的。</p>
 <p>简述，就是通过CPU的缓存一致性协议来保证线程之间的数据一致性的。</p>
 <blockquote>
 <p>CPU 处理器速度远远大于在主内存中的，为了解决速度差异，在他们之间架设了多级缓存，如 L1、L2、L3 级别的缓存，这些缓存离CPU越近就越快，将频繁操作的数据缓存到这里，加快访问速度。</p>
 </blockquote>
-<p><img src="/iblog/posts/annex/images/essays/CPU%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98.jpg" alt="CPU多级缓存"></p>
+<p><img alt="CPU多级缓存" src="/iblog/posts/annex/images/essays/CPU%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98.jpg"></p>
 <h4 id="cas与unsafe关系">CAS与Unsafe关系</h4>
 <p>CAS的作用是比较并交换,就是先拿这个期望值,与主内存的值比较,判断主内存中该位置是否存在期望值,
 如果存在,则改为新的值,这个修改的过程是具有原子性的.
@@ -3649,13 +3653,13 @@ Unsafe类中的所有方法都是<strong>native</strong>修饰的，也就是说
 <h4 id="缺点">缺点</h4>
 <h5 id="循环时间长开销">循环时间长开销</h5>
 <p>因为是采用自旋锁的方式来实现所以，自然有自旋锁的缺点，循环时间长开销大,例如：<code>getAndAddInt</code> 方法执行，有个<code>do while</code>循环，如果CAS失败，一直会进行尝试，如果CAS长时间不成功，可能会给CPU带来很大的开销。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public final int getAndAddInt(Object var1, long var2, int var4) {
-</span></span><span class="line"><span class="cl">        int var5;
-</span></span><span class="line"><span class="cl">        do {
-</span></span><span class="line"><span class="cl">            var5 = this.getIntVolatile(var1, var2);
-</span></span><span class="line"><span class="cl">        } while(!this.compareAndSwapInt(var1, var2, var5, var5 + var4));
-</span></span><span class="line"><span class="cl">        return var5;
-</span></span><span class="line"><span class="cl">}
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="n">final</span> <span class="ne">int</span> <span class="n">getAndAddInt</span><span class="p">(</span><span class="ne">Object</span> <span class="n">var1</span><span class="p">,</span> <span class="n">long</span> <span class="n">var2</span><span class="p">,</span> <span class="ne">int</span> <span class="n">var4</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">int</span> <span class="n">var5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">do</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">var5</span> <span class="o">=</span> <span class="n">this</span><span class="o">.</span><span class="n">getIntVolatile</span><span class="p">(</span><span class="n">var1</span><span class="p">,</span> <span class="n">var2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">this</span><span class="o">.</span><span class="n">compareAndSwapInt</span><span class="p">(</span><span class="n">var1</span><span class="p">,</span> <span class="n">var2</span><span class="p">,</span> <span class="n">var5</span><span class="p">,</span> <span class="n">var5</span> <span class="o">+</span> <span class="n">var4</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">var5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h5 id="多个变量原子性">多个变量原子性</h5>
 <p>只能保证一个共享变量的原子操作，对多个共享变量操作时，循环CAS就无法保证操作的原子性，这个时候就可以用锁来保证原子性。
 但是Java从1.5开始JDK提供了<code>AtomicReference</code>类来保证引用对象之间的原子性，可以把多个变量放在一个对象里来进行CAS操作。</p>
@@ -3765,7 +3769,7 @@ Unsafe类中的所有方法都是<strong>native</strong>修饰的，也就是说
 <h4 id="使用">使用</h4>
 <p>在实际使用过程中，<code>lock</code>也是比较简单的。
 <code>Lock</code>和<code>ReadWriteLock</code>是两大锁的根接口，<code>Lock</code>代表实现类是<code>ReentrantLock</code>（可重入锁），<code>ReadWriteLock</code>（读写锁）的代表实现类是<code>ReentrantReadWriteLock</code>。</p>
-<p><img src="/iblog/posts/annex/images/essays/juc.locks.png" alt="juc.locks"></p>
+<p><img alt="juc.locks" src="/iblog/posts/annex/images/essays/juc.locks.png"></p>
 <h5 id="lock">Lock</h5>
 <p><strong>lock()</strong></p>
 <p><code>lock()</code>方法是平常使用得最多的一个方法，就是用来获取锁。如果锁已被其他线程获取，则进行等待。
@@ -3819,7 +3823,7 @@ Unsafe类中的所有方法都是<strong>native</strong>修饰的，也就是说
 </span></span><span class="line"><span class="cl">Lock readLock()   
 </span></span><span class="line"><span class="cl">//返回用于写入操作的锁  
 </span></span><span class="line"><span class="cl">Lock writeLock() 
-</span></span></code></pre></div><p><code>ReadWriteLock</code>管理一组锁，一个是只读的锁，一个是写锁。<a href="#%E5%85%B1%E4%BA%AB%E9%94%81%E4%B8%8E%E7%8B%AC%E5%8D%A0%E9%94%81">共享锁与独占锁</a>的实现是读写锁。
+</span></span></code></pre></div><p><code>ReadWriteLock</code>管理一组锁，一个是只读的锁，一个是写锁。<a href="/iblog/posts/java/rookie-multi-thread/#共享锁与独占锁">共享锁与独占锁</a>的实现是读写锁。
 Java并发库中<code>ReetrantReadWriteLock</code>实现了<code>ReadWriteLock</code>接口并添加了可重入的特性。</p>
 <p>对于<code>ReetrantReadWriteLock</code>其读锁是共享锁而写锁是独占锁，读锁的共享可保证并发读是非常高效的；
 需要注意的是，<strong>读写、写读和写写的过程是互斥的，只有读读不是互斥的</strong>。</p>
@@ -3952,7 +3956,7 @@ Java并发库中<code>ReetrantReadWriteLock</code>实现了<code>ReadWriteLock</
 <p>AQS是指<code>java.util.concurrent.locks</code>包下的一个抽象类<code>AbstractQueuedSynchronizer</code>译为：抽象的队列同步器。</p>
 <p>在JUC包下，能够看到有许多类都继承了AQS，例如，<code>ReentrantLock 、CountDownLatch 、 ReentrantReadWriteLock 、 Semaphore </code>；
 所以AQS是JUC内容中重要的基础。</p>
-<p><img src="/iblog/posts/annex/images/essays/JUC.locks%E5%8C%85UML.png" alt="JUC.locks包UML"></p>
+<p><img alt="JUC.locks包UML" src="/iblog/posts/annex/images/essays/JUC.locks%E5%8C%85UML.png"></p>
 <blockquote>
 <p>同步、同步器？
 同步，面向锁的使用者，定义了程序员和锁交互的使用层API；
@@ -3960,7 +3964,7 @@ Java并发库中<code>ReetrantReadWriteLock</code>实现了<code>ReadWriteLock</
 </blockquote>
 <p>AQS是用来构建锁或者其它同步器组件的重量级基础框架及整个JUC体系的基石，通过内置的<code>CLH(FIFO)</code>队列的变种来完成资源获取线程的排队工作；
 将每条将要去抢占资源的线程封装成一个<code>Node</code>节点来实现锁的分配，有一个<code>int</code>类变量表示持有锁的状态,通过CAS完成对<code>status</code>值的修改。</p>
-<p><img src="/iblog/posts/annex/images/essays/AQS.png" alt="AQS"></p>
+<p><img alt="AQS" src="/iblog/posts/annex/images/essays/AQS.png"></p>
 <p>在多线程并发环境下，使用lock加锁，当处在加锁与解锁之间的代码，只能有一个线程来执行；这时候其他线程不能够获取锁，如果不处理线程就会造成了堵塞；
 在AQS框架中，会将暂时获取不到锁的线程加入到队列里，这个队列就是AQS的抽象表现。它会将这些线程封装成队列的结点，通过CAS、自旋以及<code>LockSuport.park()</code>的方式，维护<code>state</code>变量的状态，使并发达到同步的效果。</p>
 <p>AQS中的队列，是指CLH队列（Craig, Landin, and Hagerste[三个人名组成]）锁队列的变体，是一个双向队列。
@@ -3971,7 +3975,7 @@ Java并发库中<code>ReetrantReadWriteLock</code>实现了<code>ReadWriteLock</
 <p>AQS可以理解为一个框架，因为它定义了一些JUC包下常用&quot;锁&quot;的标准。
 AQS简单来说，包含一个<code>status</code>和一个队列；<code>status</code>保存线程持有锁的状态，用于判断该线程获没获取到锁，没获取到锁就去队列中排队。
 队列是由<code>Node</code>结点构成，每个<code>Node</code>结点里面主要包含一个<code>waitStatus</code>和保存的线程。</p>
-<p><img src="/iblog/posts/annex/images/essays/AQS%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3.png" alt="AQS简单理解"></p>
+<p><img alt="AQS简单理解" src="/iblog/posts/annex/images/essays/AQS%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3.png"></p>
 <h4 id="reentrantlock原理">ReentrantLock原理</h4>
 <p><code>ReentrantLock</code>译为，可重入锁，它的原理用到了AQS。</p>
 <blockquote>
@@ -4019,8 +4023,8 @@ AQS简单来说，包含一个<code>status</code>和一个队列；<code>status<
 <p><code>ReentrantLock</code>原理用到了AQS，而AQS包括一个线程队列和一个state变量；所以<code>ReentrantLock</code>加锁过程，可以简单理解为<code>state</code>变量的变化。
 如果在多线程并发的环境下，还要有其他线程被保存到AQS的队列中。
 加锁过程，如图所示：
-<img src="/iblog/posts/annex/images/essays/reentrantLock%E5%8A%A0%E9%94%81.png" alt="reentrantLock加锁"></p>
-<p><code>ReentrantLock</code>加锁，有两种形式，默认是<a href="#%E5%85%AC%E5%B9%B3%E9%94%81%E4%B8%8E%E9%9D%9E%E5%85%AC%E5%B9%B3%E9%94%81">非公平锁</a>，但可以通过构造方法来指定为<a href="#%E5%85%AC%E5%B9%B3%E9%94%81%E4%B8%8E%E9%9D%9E%E5%85%AC%E5%B9%B3%E9%94%81">公平锁</a>。</p>
+<img alt="reentrantLock加锁" src="/iblog/posts/annex/images/essays/reentrantLock%E5%8A%A0%E9%94%81.png"></p>
+<p><code>ReentrantLock</code>加锁，有两种形式，默认是<a href="/iblog/posts/java/rookie-multi-thread/#公平锁与非公平锁">非公平锁</a>，但可以通过构造方法来指定为<a href="/iblog/posts/java/rookie-multi-thread/#公平锁与非公平锁">公平锁</a>。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static void main(String[] args) {
 </span></span><span class="line"><span class="cl">        ReentrantLock reentrantLock = new ReentrantLock(true);
 </span></span><span class="line"><span class="cl">    }
@@ -4192,7 +4196,7 @@ AQS简单来说，包含一个<code>status</code>和一个队列；<code>status<
 </span></span><span class="line"><span class="cl">    }
 </span></span></code></pre></div><p>调用<code>LockSupport.park()</code>方法让线程挂起，直到持有锁的线程将它们唤醒。</p>
 <p><strong>ReentrantLock解锁</strong>
-<img src="/iblog/posts/annex/images/essays/reentrantLock%E8%A7%A3%E9%94%81.png" alt="reentrantLock解锁"></p>
+<img alt="reentrantLock解锁" src="/iblog/posts/annex/images/essays/reentrantLock%E8%A7%A3%E9%94%81.png"></p>
 <p><code>ReentrantLock</code>释放锁调用栈：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">unlock() --&gt; release() --&gt; tryRelease() --&gt; unparkSuccessor()
 </span></span></code></pre></div><p><code>release</code>方法,如果<code>tryRelease</code>方法返回true，则判队列中的头结点中的<code>waitStatus</code>，如果不等于0则，执行<code>unparkSuccessor</code>方法，按唤醒队列中等待的线程。</p>
@@ -4297,7 +4301,7 @@ AQS简单来说，包含一个<code>status</code>和一个队列；<code>status<
 </span></span><span class="line"><span class="cl">        if (count &lt; 0) throw new IllegalArgumentException(&#34;count &lt; 0&#34;);
 </span></span><span class="line"><span class="cl">        this.sync = new Sync(count);
 </span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>每次调用<code>countDown()</code>方法可以让计数器减1，底层是<a href="#AQS">AQS</a>框架，这里就不写了。
+</span></span></code></pre></div><p>每次调用<code>countDown()</code>方法可以让计数器减1，底层是<a href="/iblog/posts/java/rookie-multi-thread/#AQS">AQS</a>框架，这里就不写了。
 调用了<code>await()</code>进行阻塞等待的线程，当计数器减到0后，再执行<code>await()</code>之后的代码。</p>
 <h4 id="cyclicbarrier">CyclicBarrier</h4>
 <p>参考文章：</p>
@@ -4319,7 +4323,7 @@ AQS简单来说，包含一个<code>status</code>和一个队列；<code>status<
 这个屏障被称为<code>cyclic·</code>，因为它可以在等待的线程被释放后被重用。</p>
 <p>它要做的事情是，让一组线程达到一个屏障（同步点）时被阻塞，直到最后一个线程达到屏障时，所有被屏障拦截的线程才会继续干活线程进入屏障通过<code>CyclicBarrier.await()</code>方法。</p>
 <p>简单说就是让一组线程相互等待，当达到一个共同点时，所有之前等待的线程再继续执行，且 <code>CyclicBarrier</code> 功能可重复使用。</p>
-<p><img src="/iblog/posts/annex/images/essays/CyclicBarrier.gif" alt="CyclicBarrier"></p>
+<p><img alt="CyclicBarrier" src="/iblog/posts/annex/images/essays/CyclicBarrier.gif"></p>
 <p>例如，凑齐七颗龙珠召唤神龙：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
 </span></span><span class="line"><span class="cl">    public static void main(String[] args) {
@@ -4339,7 +4343,7 @@ AQS简单来说，包含一个<code>status</code>和一个队列；<code>status<
 </span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p><code>CyclicBarrier</code>原理简单说明：</p>
-<p><code>CyclicBarrier</code> 是基于 <a href="#ReentrantLock%E5%8E%9F%E7%90%86">ReentrantLock</a> 实现的，其底层也是基于 <a href="#AQS">AQS</a> 的。</p>
+<p><code>CyclicBarrier</code> 是基于 <a href="/iblog/posts/java/rookie-multi-thread/#ReentrantLock原理">ReentrantLock</a> 实现的，其底层也是基于 <a href="/iblog/posts/java/rookie-multi-thread/#AQS">AQS</a> 的。</p>
 <p>在 <code>CyclicBarrier</code> 类的内部有一个计数器 <code>count</code>，当 <code>count</code> 不为 0 时，每个线程在到达屏障点会先调用 <code>await</code> 方法将自己阻塞，此时计数器会减 1，直到计数器减为 0 的时候，所有因调用 <code>await</code> 方法而被阻塞的线程就会被唤醒继续执行。
 当 <code>count</code> 计数器变成 0 之后，就会进入下一轮阻塞，此时 <code>parties</code>(<code>parties</code> 是在 <code>new CyclicBarrier(parties)</code> 时设置的值)会将它的值赋值给 <code>count</code> 从而实现复用。</p>
 <p><code>CyclicBarrier</code>内部使用了<code>ReentrantLock</code>和<code>Condition</code>两个类。它有两个构造函数：</p>
@@ -4518,7 +4522,7 @@ AQS简单来说，包含一个<code>status</code>和一个队列；<code>status<
 </span></span><span class="line"><span class="cl">    public Semaphore(int permits, boolean fair) {
 </span></span><span class="line"><span class="cl">        sync = fair ? new FairSync(permits) : new NonfairSync(permits);
 </span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p><code>Semaphore</code>的底层也用到了<a href="#AQS">AQS</a>。</p>
+</span></span></code></pre></div><p><code>Semaphore</code>的底层也用到了<a href="/iblog/posts/java/rookie-multi-thread/#AQS">AQS</a>。</p>
 <p><code>Semaphore</code> 是用来保护一个或者多个共享资源的访问，<code>Semaphore</code> 内部维护了一个计数器，其值为可以访问的共享资源的个数。
 一个线程要访问共享资源，先获得信号量，如果信号量的计数器值大于1，意味着有共享资源可以访问，则使其计数器值减去1，再访问共享资源。</p>
 <p>如果计数器值为0,线程进入休眠。当某个线程使用完共享资源后，释放信号量，并将信号量内部的计数器加1，之前进入休眠的线程将被唤醒并再次试图获得信号量。</p>
@@ -4793,38 +4797,38 @@ AQS简单来说，包含一个<code>status</code>和一个队列；<code>status<
 </span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  synchronized void demo01();
-</span></span><span class="line"><span class="cl">    descriptor: ()V
-</span></span><span class="line"><span class="cl">    flags: ACC_SYNCHRONIZED
-</span></span><span class="line"><span class="cl">    Code:
-</span></span><span class="line"><span class="cl">      stack=2, locals=1, args_size=1
-</span></span><span class="line"><span class="cl">         0: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
-</span></span><span class="line"><span class="cl">         3: ldc           #3                  // String demo 01
-</span></span><span class="line"><span class="cl">         5: invokevirtual #4                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
-</span></span><span class="line"><span class="cl">         8: return
-</span></span><span class="line"><span class="cl">// ...
-</span></span><span class="line"><span class="cl">void demo02();
-</span></span><span class="line"><span class="cl">    descriptor: ()V
-</span></span><span class="line"><span class="cl">    flags:
-</span></span><span class="line"><span class="cl">    Code:
-</span></span><span class="line"><span class="cl">      stack=2, locals=3, args_size=1
-</span></span><span class="line"><span class="cl">         0: ldc           #5                  // class content/posts/rookie/MainTest
-</span></span><span class="line"><span class="cl">         2: dup
-</span></span><span class="line"><span class="cl">         3: astore_1
-</span></span><span class="line"><span class="cl">         4: monitorenter
-</span></span><span class="line"><span class="cl">         5: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
-</span></span><span class="line"><span class="cl">         8: ldc           #6                  // String demo 02
-</span></span><span class="line"><span class="cl">        10: invokevirtual #4                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
-</span></span><span class="line"><span class="cl">        13: aload_1
-</span></span><span class="line"><span class="cl">        14: monitorexit
-</span></span><span class="line"><span class="cl">        15: goto          23
-</span></span><span class="line"><span class="cl">        18: astore_2
-</span></span><span class="line"><span class="cl">        19: aload_1
-</span></span><span class="line"><span class="cl">        20: monitorexit
-</span></span><span class="line"><span class="cl">        21: aload_2
-</span></span><span class="line"><span class="cl">        22: athrow
-</span></span><span class="line"><span class="cl">        23: return
-</span></span><span class="line"><span class="cl">// ...
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">  <span class="n">synchronized</span> <span class="n">void</span> <span class="n">demo01</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">descriptor</span><span class="p">:</span> <span class="p">()</span><span class="n">V</span>
+</span></span><span class="line"><span class="cl">    <span class="n">flags</span><span class="p">:</span> <span class="n">ACC_SYNCHRONIZED</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Code</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">stack</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">locals</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">args_size</span><span class="o">=</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">0</span><span class="p">:</span> <span class="n">getstatic</span>     <span class="c1">#2                  // Field java/lang/System.out:Ljava/io/PrintStream;</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">3</span><span class="p">:</span> <span class="n">ldc</span>           <span class="c1">#3                  // String demo 01</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">5</span><span class="p">:</span> <span class="n">invokevirtual</span> <span class="c1">#4                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">8</span><span class="p">:</span> <span class="k">return</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="n">void</span> <span class="n">demo02</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">descriptor</span><span class="p">:</span> <span class="p">()</span><span class="n">V</span>
+</span></span><span class="line"><span class="cl">    <span class="n">flags</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Code</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">stack</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">locals</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">args_size</span><span class="o">=</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">0</span><span class="p">:</span> <span class="n">ldc</span>           <span class="c1">#5                  // class content/posts/rookie/MainTest</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">2</span><span class="p">:</span> <span class="n">dup</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">3</span><span class="p">:</span> <span class="n">astore_1</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">4</span><span class="p">:</span> <span class="n">monitorenter</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">5</span><span class="p">:</span> <span class="n">getstatic</span>     <span class="c1">#2                  // Field java/lang/System.out:Ljava/io/PrintStream;</span>
+</span></span><span class="line"><span class="cl">         <span class="mi">8</span><span class="p">:</span> <span class="n">ldc</span>           <span class="c1">#6                  // String demo 02</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">10</span><span class="p">:</span> <span class="n">invokevirtual</span> <span class="c1">#4                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">13</span><span class="p">:</span> <span class="n">aload_1</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">14</span><span class="p">:</span> <span class="n">monitorexit</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">15</span><span class="p">:</span> <span class="n">goto</span>          <span class="mi">23</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">18</span><span class="p">:</span> <span class="n">astore_2</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">19</span><span class="p">:</span> <span class="n">aload_1</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">20</span><span class="p">:</span> <span class="n">monitorexit</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">21</span><span class="p">:</span> <span class="n">aload_2</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">22</span><span class="p">:</span> <span class="n">athrow</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">23</span><span class="p">:</span> <span class="k">return</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="o">...</span>
 </span></span></code></pre></div><p>通过反编译后代码可以看出：</p>
 <ul>
 <li>对于同步方法，JVM采用<code>ACC_SYNCHRONIZED</code>标记符来实现同步；</li>
@@ -4869,7 +4873,7 @@ AQS简单来说，包含一个<code>status</code>和一个队列；<code>status<
 <li><code>_count</code>：用来记录该线程获取锁的次数</li>
 </ul>
 <p>当多个线程同时访问一段同步代码时，首先会进入<code>_EntryList</code>队列中，当某个线程获取到对象的<code>monitor</code>后进入<code>_Owner</code>区域并把<code>monitor</code>中的<code>_owner</code>变量设置为当前线程，同时<code>monitor</code>中的计数器<code>_count</code>加1。即获得对象锁。</p>
-<p><img src="/iblog/posts/annex/images/essays/synchronized%E5%8E%9F%E7%90%86.gif" alt="synchronized原理"></p>
+<p><img alt="synchronized原理" src="/iblog/posts/annex/images/essays/synchronized%E5%8E%9F%E7%90%86.gif"></p>
 <p>若此时持有<code>monitor</code>的线程调用<code>wait()</code>方法，将释放当前对象持有的<code>monitor</code>，<code>_owner</code>变量恢复为<code>null</code>，<code>_count</code>自减1，同时该线程进入<code>_WaitSet</code>集合中等待被唤醒。若当前线程执行完毕也将释放<code>monitor</code>并复位变量的值，以便其他线程进入获取<code>monitor</code>。</p>
 <p>由此看来，<code>monitor</code>对象存在于每个Java对象的对象头中(存储的是指针)，<code>synchronized</code>锁便是通过这种方式获取锁的，也是为什么Java中任意对象可以作为锁的原因。</p>
 <p><code>ObjectMonitor</code>中其他方法：</p>
@@ -4905,7 +4909,7 @@ Java的线程是映射到操作系统原生线程之上的，如果要阻塞或�
 <li><code>lock</code>： 11： 表示被垃圾回收器标记的状态</li>
 </ul>
 </blockquote>
-<p>对象的锁状态，可以分为4种，级别从低到高依次是：无锁状态、<a href="#%E5%81%8F%E5%90%91%E9%94%81">偏向锁状态</a>、<a href="#%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%E4%B8%8E%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81">轻量级锁状态</a>和<a href="#%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%E4%B8%8E%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81">重量级锁状态</a>。
+<p>对象的锁状态，可以分为4种，级别从低到高依次是：无锁状态、<a href="/iblog/posts/java/rookie-multi-thread/#偏向锁">偏向锁状态</a>、<a href="/iblog/posts/java/rookie-multi-thread/#轻量级锁与重量级锁">轻量级锁状态</a>和<a href="/iblog/posts/java/rookie-multi-thread/#轻量级锁与重量级锁">重量级锁状态</a>。
 其中这几个锁只有重量级锁是需要使用操作系统底层<code>mutex</code>互斥原语来实现，其他的锁都是使用对象头来实现的。
 随着锁的竞争，锁可以从偏向锁升级到轻量级锁，再升级的重量级锁。</p>
 <p>锁升级过程：</p>
@@ -5213,15 +5217,15 @@ copy of the variable.</p>
 </span></span></code></pre></div><p>首先，在每个线程 <code>Thread</code> 内部有一个 <code>ThreadLocal</code>.<code>ThreadLocalMap</code> 类型的成员变量 <code>threadLocals</code>，这个 <code>threadLocals</code> 就是用来存储实际的变量副本的，键值为当前 <code>ThreadLocal</code> 变量，value为变量副本,即T类型的变量。</p>
 <p>初始时，在Thread里面，<code>threadLocals</code>为空，当通过<code>ThreadLocal</code>变量调用<code>get()</code>方法或者<code>set()</code>方法，就会对<code>Thread</code>类中的<code>threadLocals</code>进行初始化，并且以当前<code>ThreadLoca</code>变量为键值，以<code>ThreadLocal</code>要保存的副本变量为<code>value</code>，存到<code>threadLocals</code>。</p>
 <p><code>ThreadLocal.ThreadLocalMap</code>是一个比较特殊的Map，它的每个<code>Entry的key</code>都是一个弱引用：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">static class Entry extends WeakReference&lt;ThreadLocal&lt;?&gt;&gt; {
-</span></span><span class="line"><span class="cl">    /** The value associated with this ThreadLocal. */
-</span></span><span class="line"><span class="cl">    Object value;
-</span></span><span class="line"><span class="cl">    //key就是一个弱引用
-</span></span><span class="line"><span class="cl">    Entry(ThreadLocal&lt;?&gt; k, Object v) {
-</span></span><span class="line"><span class="cl">        super(k);
-</span></span><span class="line"><span class="cl">        value = v;
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="k">static</span> <span class="k">class</span> <span class="n">Entry</span> <span class="k">extends</span> <span class="n">WeakReference</span><span class="o">&lt;</span><span class="n">ThreadLocal</span><span class="o">&lt;</span><span class="err">?</span><span class="o">&gt;&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="o">/**</span> <span class="n">The</span> <span class="n">value</span> <span class="n">associated</span> <span class="n">with</span> <span class="n">this</span> <span class="n">ThreadLocal</span><span class="o">.</span> <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">    <span class="ne">Object</span> <span class="n">value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">//</span><span class="n">key就是一个弱引用</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Entry</span><span class="p">(</span><span class="n">ThreadLocal</span><span class="o">&lt;</span><span class="err">?</span><span class="o">&gt;</span> <span class="n">k</span><span class="p">,</span> <span class="ne">Object</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">super</span><span class="p">(</span><span class="n">k</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">value</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>这样设计的好处是，如果这个变量不再被其他对象使用时，可以自动回收这个<code>ThreadLoca</code>l对象，避免可能的<a href="https://whiteppure.github.io/iblog/posts/jvm/jvm-about/#%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F">内存泄露</a>。</p>
 <h4 id="内存泄漏问题">内存泄漏问题</h4>
 <p>虽然<code>ThreadLocalMap</code>中的key是弱引用，当不存在外部强引用的时候，就会自动被回收，但是<code>Entry</code>中的<code>value</code>依然是强引用。这个<code>value</code>的引用链条如下：</p>
@@ -5427,7 +5431,7 @@ copy of the variable.</p>
 </span></span><span class="line"><span class="cl">public CopyOnWriteArraySet() {
 </span></span><span class="line"><span class="cl">    al = new CopyOnWriteArrayList&lt;E&gt;();
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>参照<a href="#CopyWriteArrayList%E5%8E%9F%E7%90%86">CopyWriteArrayList原理</a></p>
+</span></span></code></pre></div><p>参照<a href="/iblog/posts/java/rookie-multi-thread/#CopyWriteArrayList原理">CopyWriteArrayList原理</a></p>
 <h3 id="hashmap">HashMap</h3>
 <p><code>HashMap</code> 也是线程不安全的集合类;
 在多线程环境下使用同样会出现<code>java.util.ConcurrentModificationException</code>。</p>
@@ -5484,7 +5488,7 @@ copy of the variable.</p>
 <p>在阅读之前建议掌握<code>HashMap</code>基本原理、CAS、<code>synchronized</code>、lock以及对多线程并发有一定了解。</p>
 <h5 id="jdk17concurrenthashmap">jdk1.7ConcurrentHashMap</h5>
 <p>JDK1.7采用<code>segment</code>的分段锁机制实现线程安全，其中<code>segment</code>类继承自<code>ReentrantLock</code>。用<code>ReentrantLock</code>、CAS来保证线程安全。</p>
-<p><img src="/iblog/posts/annex/images/essays/jdk1.7ConcurrentHashMap.png" alt="jdk1.7ConcurrentHashMap"></p>
+<p><img alt="jdk1.7ConcurrentHashMap" src="/iblog/posts/annex/images/essays/jdk1.7ConcurrentHashMap.png"></p>
 <p>jdk1.7的<code>ConcurrentHashMap</code>结构：</p>
 <ul>
 <li><code>segment</code>: 每一个<code>segment</code>数组就相当于一个<code>HashMap</code>；</li>
@@ -5507,35 +5511,35 @@ copy of the variable.</p>
 </span></span></code></pre></div><p>首先判空，计算hash值，计算put进来的元素分配到哪个<code>segment</code>数组上，判断当前<code>segments</code>数组上的元素是否为空，如果为空就会使用<code>ensureSegment</code>方法创建<code>segment</code>对象；
 最后调用<code>Segment.put</code>方法，存放到对应的节点中。</p>
 <p><code>Segment.ensureSegment</code>方法源码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/**
-</span></span><span class="line"><span class="cl"> * Returns the segment for the given index, creating it and
-</span></span><span class="line"><span class="cl"> * recording in segment table (via CAS) if not already present.
-</span></span><span class="line"><span class="cl"> *
-</span></span><span class="line"><span class="cl"> * @param k the index
-</span></span><span class="line"><span class="cl"> * @return the segment
-</span></span><span class="line"><span class="cl"> */
-</span></span><span class="line"><span class="cl">private Segment&lt;K,V&gt; ensureSegment(int k) {
-</span></span><span class="line"><span class="cl">        final Segment&lt;K,V&gt;[] ss = this.segments;
-</span></span><span class="line"><span class="cl">        long u = (k &lt;&lt; SSHIFT) + SBASE; // raw offset
-</span></span><span class="line"><span class="cl">        Segment&lt;K,V&gt; seg;
-</span></span><span class="line"><span class="cl">        if ((seg = (Segment&lt;K,V&gt;)UNSAFE.getObjectVolatile(ss, u)) == null) {
-</span></span><span class="line"><span class="cl">            Segment&lt;K,V&gt; proto = ss[0]; // use segment 0 as prototype
-</span></span><span class="line"><span class="cl">            int cap = proto.table.length;
-</span></span><span class="line"><span class="cl">            float lf = proto.loadFactor;
-</span></span><span class="line"><span class="cl">            int threshold = (int)(cap * lf);
-</span></span><span class="line"><span class="cl">            HashEntry&lt;K,V&gt;[] tab = (HashEntry&lt;K,V&gt;[])new HashEntry[cap];
-</span></span><span class="line"><span class="cl">            if ((seg = (Segment&lt;K,V&gt;)UNSAFE.getObjectVolatile(ss, u))
-</span></span><span class="line"><span class="cl">                == null) { // recheck
-</span></span><span class="line"><span class="cl">                Segment&lt;K,V&gt; s = new Segment&lt;K,V&gt;(lf, threshold, tab);
-</span></span><span class="line"><span class="cl">                while ((seg = (Segment&lt;K,V&gt;)UNSAFE.getObjectVolatile(ss, u))
-</span></span><span class="line"><span class="cl">                       == null) {
-</span></span><span class="line"><span class="cl">                    if (UNSAFE.compareAndSwapObject(ss, u, null, seg = s))
-</span></span><span class="line"><span class="cl">                        break;
-</span></span><span class="line"><span class="cl">                }
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        return seg;
-</span></span><span class="line"><span class="cl">    }
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">/**</span>
+</span></span><span class="line"><span class="cl"> <span class="o">*</span> <span class="n">Returns</span> <span class="n">the</span> <span class="n">segment</span> <span class="k">for</span> <span class="n">the</span> <span class="n">given</span> <span class="n">index</span><span class="p">,</span> <span class="n">creating</span> <span class="n">it</span> <span class="ow">and</span>
+</span></span><span class="line"><span class="cl"> <span class="o">*</span> <span class="n">recording</span> <span class="ow">in</span> <span class="n">segment</span> <span class="n">table</span> <span class="p">(</span><span class="n">via</span> <span class="n">CAS</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">already</span> <span class="n">present</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl"> <span class="o">*</span>
+</span></span><span class="line"><span class="cl"> <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">k</span> <span class="n">the</span> <span class="n">index</span>
+</span></span><span class="line"><span class="cl"> <span class="o">*</span> <span class="err">@</span><span class="k">return</span> <span class="n">the</span> <span class="n">segment</span>
+</span></span><span class="line"><span class="cl"> <span class="o">*/</span>
+</span></span><span class="line"><span class="cl"><span class="n">private</span> <span class="n">Segment</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">ensureSegment</span><span class="p">(</span><span class="ne">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">final</span> <span class="n">Segment</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span><span class="p">[]</span> <span class="n">ss</span> <span class="o">=</span> <span class="n">this</span><span class="o">.</span><span class="n">segments</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">long</span> <span class="n">u</span> <span class="o">=</span> <span class="p">(</span><span class="n">k</span> <span class="o">&lt;&lt;</span> <span class="n">SSHIFT</span><span class="p">)</span> <span class="o">+</span> <span class="n">SBASE</span><span class="p">;</span> <span class="o">//</span> <span class="n">raw</span> <span class="n">offset</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Segment</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">seg</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">((</span><span class="n">seg</span> <span class="o">=</span> <span class="p">(</span><span class="n">Segment</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span><span class="p">)</span><span class="n">UNSAFE</span><span class="o">.</span><span class="n">getObjectVolatile</span><span class="p">(</span><span class="n">ss</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span> <span class="o">==</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Segment</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">proto</span> <span class="o">=</span> <span class="n">ss</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="o">//</span> <span class="n">use</span> <span class="n">segment</span> <span class="mi">0</span> <span class="n">as</span> <span class="n">prototype</span>
+</span></span><span class="line"><span class="cl">            <span class="ne">int</span> <span class="n">cap</span> <span class="o">=</span> <span class="n">proto</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">length</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="ne">float</span> <span class="n">lf</span> <span class="o">=</span> <span class="n">proto</span><span class="o">.</span><span class="n">loadFactor</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="ne">int</span> <span class="n">threshold</span> <span class="o">=</span> <span class="p">(</span><span class="ne">int</span><span class="p">)(</span><span class="n">cap</span> <span class="o">*</span> <span class="n">lf</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">HashEntry</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span><span class="p">[]</span> <span class="n">tab</span> <span class="o">=</span> <span class="p">(</span><span class="n">HashEntry</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span><span class="p">[])</span><span class="n">new</span> <span class="n">HashEntry</span><span class="p">[</span><span class="n">cap</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">((</span><span class="n">seg</span> <span class="o">=</span> <span class="p">(</span><span class="n">Segment</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span><span class="p">)</span><span class="n">UNSAFE</span><span class="o">.</span><span class="n">getObjectVolatile</span><span class="p">(</span><span class="n">ss</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">                <span class="o">==</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span> <span class="o">//</span> <span class="n">recheck</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Segment</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Segment</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span><span class="p">(</span><span class="n">lf</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">tab</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="k">while</span> <span class="p">((</span><span class="n">seg</span> <span class="o">=</span> <span class="p">(</span><span class="n">Segment</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span><span class="p">)</span><span class="n">UNSAFE</span><span class="o">.</span><span class="n">getObjectVolatile</span><span class="p">(</span><span class="n">ss</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">                       <span class="o">==</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="p">(</span><span class="n">UNSAFE</span><span class="o">.</span><span class="n">compareAndSwapObject</span><span class="p">(</span><span class="n">ss</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span> <span class="n">seg</span> <span class="o">=</span> <span class="n">s</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">seg</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span></code></pre></div><p>通过文档注释可以看到<code>ensureSegment</code>方法作用</p>
 <blockquote>
 <p>返回指定索引的segment对象，通过CAS判断，如果还没有则创建它并记录在segment表中。</p>
@@ -5597,7 +5601,7 @@ copy of the variable.</p>
 虽然在JDK1.8中还能看到 <code>Segment</code> 的数据结构，但是已经简化了属性，只是为了兼容旧版本。</p>
 <p>JDK1.8中彻底放弃了<code>Segment</code>转而采用的是<code>Node</code>,其设计思想也不再是JDK1.7中的分段锁思想；
 JDK1.8版本的<code>ConcurrentHashMap</code>的数据结构已经接近<code>HashMap</code>，相对而言，<code>ConcurrentHashMap</code> 只是增加了同步操作来控制并发。</p>
-<p><img src="/iblog/posts/annex/images/essays/jdk1.8ConcurrentHashMap.png" alt="jdk1.8ConcurrentHashMap"></p>
+<p><img alt="jdk1.8ConcurrentHashMap" src="/iblog/posts/annex/images/essays/jdk1.8ConcurrentHashMap.png"></p>
 <p>相关概念：</p>
 <ul>
 <li><code>sizeCtl</code> ：默认为0，用来控制<code>table</code>的初始化和扩容操作;用<code>volatile</code>修饰，保证了其可见性；</li>

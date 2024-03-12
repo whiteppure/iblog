@@ -38,6 +38,10 @@
 </head>
 
 <body>
+    <div class="post-password">
+        
+    </div>
+
     
     
     
@@ -667,80 +671,80 @@
 </span></span><span class="line"><span class="cl">invoke test ...param: hello ...
 </span></span></code></pre></div><h3 id="反射与枚举">反射与枚举</h3>
 <p>经典案例: 用枚举实现单例设计模式,防止反射破坏单例</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public enum EnumSingleton {
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">enum</span> <span class="n">EnumSingleton</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    INSTANCE;
+</span></span><span class="line"><span class="cl">    <span class="n">INSTANCE</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public EnumSingleton getInstance(){
-</span></span><span class="line"><span class="cl">        return INSTANCE;
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">EnumSingleton</span> <span class="n">getInstance</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">INSTANCE</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) throws IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchMethodException {
-</span></span><span class="line"><span class="cl">        EnumSingleton singleton1=EnumSingleton.INSTANCE;
-</span></span><span class="line"><span class="cl">        EnumSingleton singleton2=EnumSingleton.INSTANCE;
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;正常情况下，实例化两个实例是否相同：&#34;+(singleton1==singleton2));
-</span></span><span class="line"><span class="cl">        Constructor&lt;EnumSingleton&gt; constructor= null;
-</span></span><span class="line"><span class="cl">        constructor = EnumSingleton.class.getDeclaredConstructor();
-</span></span><span class="line"><span class="cl">        constructor.setAccessible(true);
-</span></span><span class="line"><span class="cl">        EnumSingleton singleton3= null;
-</span></span><span class="line"><span class="cl">        singleton3 = constructor.newInstance();
-</span></span><span class="line"><span class="cl">        System.out.println(singleton1+&#34;\n&#34;+singleton2+&#34;\n&#34;+singleton3);
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;通过反射攻击单例模式情况下，实例化两个实例是否相同：&#34;+(singleton1==singleton3));
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="n">throws</span> <span class="n">IllegalAccessException</span><span class="p">,</span> <span class="n">InvocationTargetException</span><span class="p">,</span> <span class="n">InstantiationException</span><span class="p">,</span> <span class="n">NoSuchMethodException</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">EnumSingleton</span> <span class="n">singleton1</span><span class="o">=</span><span class="n">EnumSingleton</span><span class="o">.</span><span class="n">INSTANCE</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">EnumSingleton</span> <span class="n">singleton2</span><span class="o">=</span><span class="n">EnumSingleton</span><span class="o">.</span><span class="n">INSTANCE</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;正常情况下，实例化两个实例是否相同：&#34;</span><span class="o">+</span><span class="p">(</span><span class="n">singleton1</span><span class="o">==</span><span class="n">singleton2</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Constructor</span><span class="o">&lt;</span><span class="n">EnumSingleton</span><span class="o">&gt;</span> <span class="n">constructor</span><span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">constructor</span> <span class="o">=</span> <span class="n">EnumSingleton</span><span class="o">.</span><span class="k">class</span><span class="o">.</span><span class="n">getDeclaredConstructor</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">constructor</span><span class="o">.</span><span class="n">setAccessible</span><span class="p">(</span><span class="bp">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">EnumSingleton</span> <span class="n">singleton3</span><span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">singleton3</span> <span class="o">=</span> <span class="n">constructor</span><span class="o">.</span><span class="n">newInstance</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="n">singleton1</span><span class="o">+</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="o">+</span><span class="n">singleton2</span><span class="o">+</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="o">+</span><span class="n">singleton3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;通过反射攻击单例模式情况下，实例化两个实例是否相同：&#34;</span><span class="o">+</span><span class="p">(</span><span class="n">singleton1</span><span class="o">==</span><span class="n">singleton3</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>结果</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">正常情况下，实例化两个实例是否相同：true
 </span></span><span class="line"><span class="cl">Exception in thread &#34;main&#34; java.lang.NoSuchMethodException
 </span></span></code></pre></div><p>原因
 <code>Constructor</code>类中 <code>newInstance</code>方法 不能通过反射来创建对象</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    @CallerSensitive
-</span></span><span class="line"><span class="cl">    public T newInstance(Object ... initargs)
-</span></span><span class="line"><span class="cl">        throws InstantiationException, IllegalAccessException,
-</span></span><span class="line"><span class="cl">               IllegalArgumentException, InvocationTargetException
-</span></span><span class="line"><span class="cl">    {
-</span></span><span class="line"><span class="cl">        if (!override) {
-</span></span><span class="line"><span class="cl">            if (!Reflection.quickCheckMemberAccess(clazz, modifiers)) {
-</span></span><span class="line"><span class="cl">                Class&lt;?&gt; caller = Reflection.getCallerClass();
-</span></span><span class="line"><span class="cl">                checkAccess(caller, clazz, null, modifiers);
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        if ((clazz.getModifiers() &amp; Modifier.ENUM) != 0)
-</span></span><span class="line"><span class="cl">            throw new IllegalArgumentException(&#34;Cannot reflectively create enum objects&#34;);
-</span></span><span class="line"><span class="cl">        ConstructorAccessor ca = constructorAccessor;   // read volatile
-</span></span><span class="line"><span class="cl">        if (ca == null) {
-</span></span><span class="line"><span class="cl">            ca = acquireConstructorAccessor();
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        @SuppressWarnings(&#34;unchecked&#34;)
-</span></span><span class="line"><span class="cl">        T inst = (T) ca.newInstance(initargs);
-</span></span><span class="line"><span class="cl">        return inst;
-</span></span><span class="line"><span class="cl">    }
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">    <span class="err">@</span><span class="n">CallerSensitive</span>
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">T</span> <span class="n">newInstance</span><span class="p">(</span><span class="ne">Object</span> <span class="o">...</span> <span class="n">initargs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">throws</span> <span class="n">InstantiationException</span><span class="p">,</span> <span class="n">IllegalAccessException</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="n">IllegalArgumentException</span><span class="p">,</span> <span class="n">InvocationTargetException</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">override</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">Reflection</span><span class="o">.</span><span class="n">quickCheckMemberAccess</span><span class="p">(</span><span class="n">clazz</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Class</span><span class="o">&lt;</span><span class="err">?</span><span class="o">&gt;</span> <span class="n">caller</span> <span class="o">=</span> <span class="n">Reflection</span><span class="o">.</span><span class="n">getCallerClass</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="n">checkAccess</span><span class="p">(</span><span class="n">caller</span><span class="p">,</span> <span class="n">clazz</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">((</span><span class="n">clazz</span><span class="o">.</span><span class="n">getModifiers</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">Modifier</span><span class="o">.</span><span class="n">ENUM</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">throw</span> <span class="n">new</span> <span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s2">&#34;Cannot reflectively create enum objects&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ConstructorAccessor</span> <span class="n">ca</span> <span class="o">=</span> <span class="n">constructorAccessor</span><span class="p">;</span>   <span class="o">//</span> <span class="n">read</span> <span class="n">volatile</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">ca</span> <span class="o">==</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ca</span> <span class="o">=</span> <span class="n">acquireConstructorAccessor</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="err">@</span><span class="n">SuppressWarnings</span><span class="p">(</span><span class="s2">&#34;unchecked&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">T</span> <span class="n">inst</span> <span class="o">=</span> <span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="n">ca</span><span class="o">.</span><span class="n">newInstance</span><span class="p">(</span><span class="n">initargs</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">inst</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span></code></pre></div><p>枚举类无法通过反射来创建对象,原因是<code>newInstance</code>方法加了判断如果是枚举类就抛出异常<code>throw new IllegalArgumentException(&quot;Cannot reflectively create enum objects&quot;);</code></p>
 <p>除了不能创建枚举类的对象外,反射还是能够调用枚举类的方法的</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public enum EnumSingleton {
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">enum</span> <span class="n">EnumSingleton</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public EnumSingleton getInstance(){
-</span></span><span class="line"><span class="cl">        return INSTANCE;
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">EnumSingleton</span> <span class="n">getInstance</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">INSTANCE</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public void getTst(){
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;enum method ...&#34;);
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">getTst</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;enum method ...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) throws IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchMethodException, ClassNotFoundException {
-</span></span><span class="line"><span class="cl">        Class&lt;?&gt; aClass = Class.forName(&#34;com.test.EnumSingleton&#34;);
-</span></span><span class="line"><span class="cl">        Method getInstance = aClass.getMethod(&#34;getTst&#34;);
-</span></span><span class="line"><span class="cl">        // 枚举对应的class没有newInstance方法，会报NoSuchMethodException，应该使用getEnumConstants方法
-</span></span><span class="line"><span class="cl">        Object[] oo = aClass.getEnumConstants();
-</span></span><span class="line"><span class="cl">        getInstance.invoke(oo[0]);
-</span></span><span class="line"><span class="cl">        Method getTst = aClass.getMethod(&#34;getTst&#34;);
-</span></span><span class="line"><span class="cl">        getTst.invoke(oo[0]);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="n">throws</span> <span class="n">IllegalAccessException</span><span class="p">,</span> <span class="n">InvocationTargetException</span><span class="p">,</span> <span class="n">InstantiationException</span><span class="p">,</span> <span class="n">NoSuchMethodException</span><span class="p">,</span> <span class="n">ClassNotFoundException</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Class</span><span class="o">&lt;</span><span class="err">?</span><span class="o">&gt;</span> <span class="n">aClass</span> <span class="o">=</span> <span class="n">Class</span><span class="o">.</span><span class="n">forName</span><span class="p">(</span><span class="s2">&#34;com.test.EnumSingleton&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Method</span> <span class="n">getInstance</span> <span class="o">=</span> <span class="n">aClass</span><span class="o">.</span><span class="n">getMethod</span><span class="p">(</span><span class="s2">&#34;getTst&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">枚举对应的</span><span class="n">class没有newInstance方法</span><span class="err">，会报</span><span class="n">NoSuchMethodException</span><span class="err">，应该使用</span><span class="n">getEnumConstants方法</span>
+</span></span><span class="line"><span class="cl">        <span class="ne">Object</span><span class="p">[]</span> <span class="n">oo</span> <span class="o">=</span> <span class="n">aClass</span><span class="o">.</span><span class="n">getEnumConstants</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">getInstance</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">oo</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Method</span> <span class="n">getTst</span> <span class="o">=</span> <span class="n">aClass</span><span class="o">.</span><span class="n">getMethod</span><span class="p">(</span><span class="s2">&#34;getTst&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">getTst</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">oo</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>结果</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">enum getInstance ... 
-</span></span><span class="line"><span class="cl">enum method ...
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="k">enum</span> <span class="n">getInstance</span> <span class="o">...</span> 
+</span></span><span class="line"><span class="cl"><span class="k">enum</span> <span class="n">method</span> <span class="o">...</span>
 </span></span></code></pre></div><h3 id="反射与泛型">反射与泛型</h3>
 <p>反射会擦除泛型,因为泛型只在编译期间生效.而反射是在Java程序运行期间生效。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public static void main(String[] args) throws Exception {
@@ -778,9 +782,9 @@
 <p>Java的Class类是java反射机制的基础,通过Class类我们可以获得关于一个类的相关信息.<br>
 虚拟机为每种类型管理一个独一无二的Class对象。也就是说，每个类（型）都有一个Class对象。运行程序时，Java虚拟机(JVM)首先检查是否所要加载的类对应的Class对象是否已经加载。如果没有加载，JVM就会根据类名查找.class文件，并将其Class对象载入</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">private  Class(ClassLoader loader) { 
-</span></span><span class="line"><span class="cl">    classLoader = loader; 
-</span></span><span class="line"><span class="cl">}
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">private</span>  <span class="n">Class</span><span class="p">(</span><span class="n">ClassLoader</span> <span class="n">loader</span><span class="p">)</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">classLoader</span> <span class="o">=</span> <span class="n">loader</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>class类的构造器时私有的,只有JVM可以创建Class的对象，因此不可以像普通类一样new一个Class对象, 但是却可以通过已有的类得到一个Class对象，共有三种方式</p>
 <p>在运行时获取 class 的对象.</p>
 <ol>
@@ -803,48 +807,48 @@
 </span></span></code></pre></div><p>反射可以提供运行时的类信息，并且这个类可以在运行时才加载进来，甚至在编译时期该类的 .class 不存在也可以加载进来。</p>
 <h4 id="获取方法">获取方法</h4>
 <p>创建<code>MainTest</code>类,A类,创建一个B类和C接口.让A类去继承B类.A类实现C接口,<code>MainTest</code>为主类,A类,B类为内部类</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">MainTest</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   class B{
-</span></span><span class="line"><span class="cl">        private void privateMethodB(){
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;private method B ...&#34;);
-</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">   <span class="k">class</span> <span class="n">B</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">private</span> <span class="n">void</span> <span class="n">privateMethodB</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;private method B ...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        void defaultMethodB(){
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;default method B... &#34;);
-</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        <span class="n">void</span> <span class="n">defaultMethodB</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;default method B... &#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        protected void protectedMethodB(){
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;protected method B...&#34;);
-</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        <span class="n">protected</span> <span class="n">void</span> <span class="n">protectedMethodB</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;protected method B...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        public void publicMethodB(){
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;public method B...&#34;);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="n">void</span> <span class="n">publicMethodB</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;public method B...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    interface C{}
+</span></span><span class="line"><span class="cl">    <span class="n">interface</span> <span class="n">C</span><span class="p">{}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    class A extends B implements C{
+</span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="n">A</span> <span class="k">extends</span> <span class="n">B</span> <span class="n">implements</span> <span class="n">C</span><span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        private void privateMethod(){
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;private method ...&#34;);
-</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        <span class="n">private</span> <span class="n">void</span> <span class="n">privateMethod</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;private method ...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        void defaultMethod(){
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;default method ... &#34;);
-</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        <span class="n">void</span> <span class="n">defaultMethod</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;default method ... &#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        protected void protectedMethod(){
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;protected method ...&#34;);
-</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        <span class="n">protected</span> <span class="n">void</span> <span class="n">protectedMethod</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;protected method ...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        public void publicMethod(){
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;public method ...&#34;);
-</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="n">void</span> <span class="n">publicMethod</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;public method ...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><ul>
 <li><code>getDeclaredMethods</code> 方法返回类或接口声明的所有方法，包括公共、保护、默认（包）访问和私有方法，但不包括继承的方法。
 执行下边代码</li>

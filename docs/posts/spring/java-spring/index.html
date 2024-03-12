@@ -38,6 +38,10 @@
 </head>
 
 <body>
+    <div class="post-password">
+        
+    </div>
+
     
     
     
@@ -1146,18 +1150,18 @@
 <li>业务层：spring</li>
 <li>持久层：jdbctemplate、spring data</li>
 </ul>
-<p><img src="/iblog/posts/annex/images/spring/Spring%E8%AF%A6%E8%A7%A3-001.png" alt="Spring详解-001"></p>
+<p><img alt="Spring详解-001" src="/iblog/posts/annex/images/spring/Spring%E8%AF%A6%E8%A7%A3-001.png"></p>
 <h2 id="对spring的理解">对Spring的理解</h2>
 <p>Spring是一个轻量级的框架，简化我们的开发，里面重点包含两个模块分别是IOC和AOP。</p>
 <ul>
 <li>IOC叫控制反转，在没用IOC之前都要手动new创建对象，使用IOC之后由容器进行对象的创建，并且由容器来管理对象，减去了开发上的成本，提高了工作效率。</li>
 <li>AOP叫面向切面编程，在实际项目开发中需要嵌入一些与业务不想关的代码的时候就可以使用AOP。比如，权限日志的增加。</li>
 </ul>
-<p>Spring虽然把它当成框架来使用，但其本质是一个容器，即IOC容器，里面最核心是如何<a href="#Bean%E7%9A%84%E5%88%9B%E5%BB%BA%E6%B5%81%E7%A8%8B">创建对象和管理对象</a>,里面包含了Bean的生命周期和Spring的一些扩展点，包含对AOP的应用。
+<p>Spring虽然把它当成框架来使用，但其本质是一个容器，即IOC容器，里面最核心是如何<a href="/iblog/posts/spring/java-spring/#Bean的创建流程">创建对象和管理对象</a>,里面包含了Bean的生命周期和Spring的一些扩展点，包含对AOP的应用。
 除此之外，Spring真正的强大之处在于其生态，它包含了Spring Framework、Spring Boot、Spring Cloud等一些列框架，极大提高了开发效率。</p>
 <h2 id="spring-启动流程">Spring 启动流程</h2>
 <p>参考：<a href="https://blog.csdn.net/scjava/article/details/109587619">https://blog.csdn.net/scjava/article/details/109587619</a></p>
-<p><img src="/iblog/posts/annex/images/spring/Spring%E8%AF%A6%E8%A7%A3-004.png" alt="Spring详解-004"></p>
+<p><img alt="Spring详解-004" src="/iblog/posts/annex/images/spring/Spring%E8%AF%A6%E8%A7%A3-004.png"></p>
 <p>核心方法<code>AbstractApplicationContext#refresh()</code></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public void refresh() throws BeansException, IllegalStateException {
 </span></span><span class="line"><span class="cl">  synchronized (this.startupShutdownMonitor) {
@@ -1245,7 +1249,7 @@
 <li>finishRefresh 容器启动过后，发布事件</li>
 </ol>
 <h2 id="spring循环依赖与三级缓存">Spring循环依赖与三级缓存</h2>
-<p><img src="/iblog/posts/annex/images/spring/Spring%E8%AF%A6%E8%A7%A3-003.png" alt="Spring详解-003"></p>
+<p><img alt="Spring详解-003" src="/iblog/posts/annex/images/spring/Spring%E8%AF%A6%E8%A7%A3-003.png"></p>
 <p>Spring循环依赖调用流程：</p>
 <p>在BeanA中注入BeanB，BeanB中注入BeanA，在BeanA创建的过程中，会先判断容器中A是否存在，如果不存在会先初始化BeanA，然后给BeanA赋值，此时会给BeanA里的BeanB属性赋值，在赋值之前会将创建BeanA的流程放到三级缓存中（三级缓存为Map结构，key为String，value为函数式接口）； 由于BeanA里面包含BeanB,所以接下来给BeanB执行创建流程，判断容器中是否存在BeanB，给属性B赋值,此时会给BeanB里的BeanA属性赋值。</p>
 <p>在判断容器中是否存在该Bean时，查找顺序为：一级缓存-&gt;二级缓存-&gt;三级缓存，经历过上面的步骤后，此时三级缓存中A和B都有值（为BeanA、B的创建流程），不需要再进行初始化操作，然后将会执行BeanA的创建流程并将其放入二级缓存中并删除三级缓存中的值，但是此时BeanA中的BeanB还未赋值进行完全的初始化，
@@ -1359,39 +1363,39 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 </blockquote>
 <p><code>@AutoConfigurationPackage</code> 这个注解本身的含义就是将主配置类（<code>@SpringBootApplication</code>标注的类）所在的包下面所有的组件都扫描到 <code>spring</code> 容器中。</p>
 <p><code>AutoConfigurationImportSelector</code>核心代码如下</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">	/**
-</span></span><span class="line"><span class="cl">	 * Return the auto-configuration class names that should be considered. By default
-</span></span><span class="line"><span class="cl">	 * this method will load candidates using {@link SpringFactoriesLoader} with
-</span></span><span class="line"><span class="cl">	 * {@link #getSpringFactoriesLoaderFactoryClass()}.
-</span></span><span class="line"><span class="cl">	 * @param metadata the source metadata
-</span></span><span class="line"><span class="cl">	 * @param attributes the {@link #getAttributes(AnnotationMetadata) annotation
-</span></span><span class="line"><span class="cl">	 * attributes}
-</span></span><span class="line"><span class="cl">	 * @return a list of candidate configurations
-</span></span><span class="line"><span class="cl">	 */
-</span></span><span class="line"><span class="cl">	protected List&lt;String&gt; getCandidateConfigurations(AnnotationMetadata metadata, AnnotationAttributes attributes) {
-</span></span><span class="line"><span class="cl">		List&lt;String&gt; configurations = SpringFactoriesLoader.loadFactoryNames(getSpringFactoriesLoaderFactoryClass(),
-</span></span><span class="line"><span class="cl">				getBeanClassLoader());
-</span></span><span class="line"><span class="cl">		Assert.notEmpty(configurations, &#34;No auto configuration classes found in META-INF/spring.factories. If you &#34;
-</span></span><span class="line"><span class="cl">				+ &#34;are using a custom packaging, make sure that file is correct.&#34;);
-</span></span><span class="line"><span class="cl">		return configurations;
-</span></span><span class="line"><span class="cl">	}
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">	<span class="o">/**</span>
+</span></span><span class="line"><span class="cl">	 <span class="o">*</span> <span class="n">Return</span> <span class="n">the</span> <span class="n">auto</span><span class="o">-</span><span class="n">configuration</span> <span class="k">class</span> <span class="n">names</span> <span class="n">that</span> <span class="n">should</span> <span class="n">be</span> <span class="n">considered</span><span class="o">.</span> <span class="n">By</span> <span class="n">default</span>
+</span></span><span class="line"><span class="cl">	 <span class="o">*</span> <span class="n">this</span> <span class="n">method</span> <span class="n">will</span> <span class="nb">load</span> <span class="n">candidates</span> <span class="n">using</span> <span class="p">{</span><span class="err">@</span><span class="n">link</span> <span class="n">SpringFactoriesLoader</span><span class="p">}</span> <span class="n">with</span>
+</span></span><span class="line"><span class="cl">	 <span class="o">*</span> <span class="p">{</span><span class="err">@</span><span class="n">link</span> <span class="c1">#getSpringFactoriesLoaderFactoryClass()}.</span>
+</span></span><span class="line"><span class="cl">	 <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">metadata</span> <span class="n">the</span> <span class="n">source</span> <span class="n">metadata</span>
+</span></span><span class="line"><span class="cl">	 <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">attributes</span> <span class="n">the</span> <span class="p">{</span><span class="err">@</span><span class="n">link</span> <span class="c1">#getAttributes(AnnotationMetadata) annotation</span>
+</span></span><span class="line"><span class="cl">	 <span class="o">*</span> <span class="n">attributes</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	 <span class="o">*</span> <span class="err">@</span><span class="k">return</span> <span class="n">a</span> <span class="n">list</span> <span class="n">of</span> <span class="n">candidate</span> <span class="n">configurations</span>
+</span></span><span class="line"><span class="cl">	 <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">	<span class="n">protected</span> <span class="n">List</span><span class="o">&lt;</span><span class="ne">String</span><span class="o">&gt;</span> <span class="n">getCandidateConfigurations</span><span class="p">(</span><span class="n">AnnotationMetadata</span> <span class="n">metadata</span><span class="p">,</span> <span class="n">AnnotationAttributes</span> <span class="n">attributes</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">List</span><span class="o">&lt;</span><span class="ne">String</span><span class="o">&gt;</span> <span class="n">configurations</span> <span class="o">=</span> <span class="n">SpringFactoriesLoader</span><span class="o">.</span><span class="n">loadFactoryNames</span><span class="p">(</span><span class="n">getSpringFactoriesLoaderFactoryClass</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">				<span class="n">getBeanClassLoader</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Assert</span><span class="o">.</span><span class="n">notEmpty</span><span class="p">(</span><span class="n">configurations</span><span class="p">,</span> <span class="s2">&#34;No auto configuration classes found in META-INF/spring.factories. If you &#34;</span>
+</span></span><span class="line"><span class="cl">				<span class="o">+</span> <span class="s2">&#34;are using a custom packaging, make sure that file is correct.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">configurations</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	/**
-</span></span><span class="line"><span class="cl">	 * Return the class used by {@link SpringFactoriesLoader} to load configuration
-</span></span><span class="line"><span class="cl">	 * candidates.
-</span></span><span class="line"><span class="cl">	 * @return the factory class
-</span></span><span class="line"><span class="cl">	 */
-</span></span><span class="line"><span class="cl">	protected Class&lt;?&gt; getSpringFactoriesLoaderFactoryClass() {
-</span></span><span class="line"><span class="cl">		return EnableAutoConfiguration.class;
-</span></span><span class="line"><span class="cl">	}
-</span></span><span class="line"><span class="cl">	protected ClassLoader getBeanClassLoader() {
-</span></span><span class="line"><span class="cl">		return this.beanClassLoader;
-</span></span><span class="line"><span class="cl">	}
+</span></span><span class="line"><span class="cl">	<span class="o">/**</span>
+</span></span><span class="line"><span class="cl">	 <span class="o">*</span> <span class="n">Return</span> <span class="n">the</span> <span class="k">class</span> <span class="n">used</span> <span class="n">by</span> <span class="p">{</span><span class="err">@</span><span class="n">link</span> <span class="n">SpringFactoriesLoader</span><span class="p">}</span> <span class="n">to</span> <span class="nb">load</span> <span class="n">configuration</span>
+</span></span><span class="line"><span class="cl">	 <span class="o">*</span> <span class="n">candidates</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">	 <span class="o">*</span> <span class="err">@</span><span class="k">return</span> <span class="n">the</span> <span class="n">factory</span> <span class="k">class</span>
+</span></span><span class="line"><span class="cl">	 <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">	<span class="n">protected</span> <span class="n">Class</span><span class="o">&lt;</span><span class="err">?</span><span class="o">&gt;</span> <span class="n">getSpringFactoriesLoaderFactoryClass</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">EnableAutoConfiguration</span><span class="o">.</span><span class="k">class</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="n">protected</span> <span class="n">ClassLoader</span> <span class="n">getBeanClassLoader</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">this</span><span class="o">.</span><span class="n">beanClassLoader</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span></code></pre></div><p><code>getSpringFactoriesLoaderFactoryClass</code>方法返回<code>EnableAutoConfiguration.class</code>目的就是为了将启动类所需的所有资源导入。</p>
 <p>在<code>getCandidateConfigurations</code>中有如下代码</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Assert.notEmpty(configurations, &#34;No auto configuration classes found in META-INF/spring.factories. If you are using a custom packaging, make sure that file is correct.&#34;);
 </span></span></code></pre></div><p>大意：在<code>META-INF/spring.factories</code>中没有发现自动配置类。如果您使用的是自定义打包，请确保该文件是正确的。
-<img src="/iblog/posts/annex/images/essays/%E6%89%BE%E5%88%B0spring.factories.png" alt="找到spring.factories"></p>
+<img alt="找到spring.factories" src="/iblog/posts/annex/images/essays/%E6%89%BE%E5%88%B0spring.factories.png"></p>
 <p><code>spring.factories</code>包含了很多类，但不是全部都加载的，在某些类里面，是有一个条件<code>@ConditionalOnXXX</code>注解，只有当这个注解上的条件满足才会加载。</p>
 <p>例如：<code>SpringApplicationAdminJmxAutoConfiguration</code></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Configuration(proxyBeanMethods = false)
@@ -1400,7 +1404,7 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 </span></span><span class="line"><span class="cl">		matchIfMissing = false)
 </span></span><span class="line"><span class="cl">public class SpringApplicationAdminJmxAutoConfiguration 
 </span></span></code></pre></div><h4 id="总结">总结</h4>
-<p><img src="/iblog/posts/annex/images/essays/@SpringbootApplication%E5%8E%9F%E7%90%86.png" alt="@SpringbootApplication原理"></p>
+<p><img alt="@SpringbootApplication原理" src="/iblog/posts/annex/images/essays/@SpringbootApplication%E5%8E%9F%E7%90%86.png"></p>
 <p>当 <code>Springboot</code> 启动的时候，会执行<code>AutoConfigurationImportSelector</code>这个类中的<code>getCandidateConfigurations</code>方法，这个方法会帮我们加载<code>META-INF/spring.factories</code>文件里面的当<code>@ConditionXXX</code>注解条件满足的类。</p>
 <h2 id="bean的自动装配">Bean的自动装配</h2>
 <p>提到Bean的自动装配就不得不说一下Spring的核心IOC，IOC全称为Inversion of Control，中文译为控制反转，是面向对象编程中的一种设计原则，可以用来减低计算机代码之间的耦合度。</p>
@@ -1939,7 +1943,7 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 </span></span><span class="line"><span class="cl">public interface Aware {
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p><img src="/iblog/posts/annex/images/essays/Aware%E5%AD%90%E6%8E%A5%E5%8F%A3.png" alt="Aware子接口"></p>
+</span></span></code></pre></div><p><img alt="Aware子接口" src="/iblog/posts/annex/images/essays/Aware%E5%AD%90%E6%8E%A5%E5%8F%A3.png"></p>
 <p>使用测试</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Component
 </span></span><span class="line"><span class="cl">class TestService implements ApplicationContextAware, EmbeddedValueResolverAware, BeanFactoryAware {
@@ -1968,7 +1972,7 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>关于这些<code>Aware</code>都是使用<code>AwareProcessor</code>进行处理的,比如:<code>ApplicationContextAwareProcessor</code>就是处理<code>ApplicationContextAware</code>接口的。</p>
 <h2 id="bean的创建流程">Bean的创建流程</h2>
-<p><img src="/iblog/posts/annex/images/spring/Spring%E8%AF%A6%E8%A7%A3-002.png" alt="Spring详解-002"></p>
+<p><img alt="Spring详解-002" src="/iblog/posts/annex/images/spring/Spring%E8%AF%A6%E8%A7%A3-002.png"></p>
 <ol>
 <li>在xml或注解上标注定义Bean；</li>
 <li>使用IO流读取文件并使用dom4j或其他技术来解析xml，将其转换为document对象，并设置到BeanDefinition对象（注解则需要读取哪些类标注了该注解最终转换为BeanDefinition对象）；</li>
@@ -2361,16 +2365,16 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 <p>通过对下面代码打断点</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">AopConfigUtils.registerAspectJAnnotationAutoProxyCreatorIfNecessary(registry);
 </span></span></code></pre></div><p>可以看到该方法是给容器中注册了一个<code>AnnotationAwareAspectJAutoProxyCreator</code>组件，实际上是注册<code>AnnotationAwareAspectJAutoProxyCreator</code>组件。</p>
-<p><img src="/iblog/posts/annex/images/essays/AOP%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6.png" alt="AOP核心组件1"></p>
+<p><img alt="AOP核心组件1" src="/iblog/posts/annex/images/essays/AOP%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6.png"></p>
 <p>可以看出<code>@EnableAspectJAutoProxy</code>注解最主要的作用实际上就是通过<code>@Import</code>注解把<code>AnnotationAwareAspectJAutoProxyCreator</code>这个对象注入到<code>spring</code>容器中。</p>
 <p>现在只要把<code>AnnotationAwareAspectJAutoProxyCreator</code>组件何时注册搞懂，<code>AspectJAutoProxyRegistrar</code>组件何时注册也就明白了。</p>
 <p><code>AnnotationAwareAspectJAutoProxyCreator</code>继承关系：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">AnnotationAwareAspectJAutoProxyCreator
-</span></span><span class="line"><span class="cl">    extends AspectJAwareAdvisorAutoProxyCreator
-</span></span><span class="line"><span class="cl">        extends AbstractAdvisorAutoProxyCreator
-</span></span><span class="line"><span class="cl">            extends AbstractAutoProxyCreator
-</span></span><span class="line"><span class="cl">                extends ProxyProcessorSupport implements SmartInstantiationAwareBeanPostProcessor,BeanFactoryAware
-</span></span><span class="line"><span class="cl">                    extends ProxyConfig implements Ordered, BeanClassLoaderAware, AopInfrastructureBean 
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">AnnotationAwareAspectJAutoProxyCreator</span>
+</span></span><span class="line"><span class="cl">    <span class="k">extends</span> <span class="n">AspectJAwareAdvisorAutoProxyCreator</span>
+</span></span><span class="line"><span class="cl">        <span class="k">extends</span> <span class="n">AbstractAdvisorAutoProxyCreator</span>
+</span></span><span class="line"><span class="cl">            <span class="k">extends</span> <span class="n">AbstractAutoProxyCreator</span>
+</span></span><span class="line"><span class="cl">                <span class="k">extends</span> <span class="n">ProxyProcessorSupport</span> <span class="n">implements</span> <span class="n">SmartInstantiationAwareBeanPostProcessor</span><span class="p">,</span><span class="n">BeanFactoryAware</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">extends</span> <span class="n">ProxyConfig</span> <span class="n">implements</span> <span class="n">Ordered</span><span class="p">,</span> <span class="n">BeanClassLoaderAware</span><span class="p">,</span> <span class="n">AopInfrastructureBean</span> 
 </span></span></code></pre></div><p>可以看到其中的一个父类<code>AbstractAutoProxyCreator</code>这个父类实现了<code>SmartInstantiationAwareBeanPostProcessor</code>接口，该接口是一个后置处理器接口；同样实现了<code>BeanFactoryAware</code>接口，这意味着，该类可以通过接口中的方法进行自动装配<code>BeanFactory</code>。</p>
 <p>这两个接口的在AOP体系中具体的实现方法：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1.AbstractAutoProxyCreator
@@ -2596,12 +2600,12 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 </span></span><span class="line"><span class="cl">    return null;
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>到了这里在回过头来看一下<code>AnnotationAwareAspectJAutoProxyCreator</code>组件实现的<code>SmartInstantiationAwareBeanPostProcessor</code>接口，继承关系：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">SmartInstantiationAwareBeanPostProcessor 
-</span></span><span class="line"><span class="cl">    -&gt;extends InstantiationAwareBeanPostProcessor
-</span></span><span class="line"><span class="cl">        -&gt;extends BeanPostProcessor
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">SmartInstantiationAwareBeanPostProcessor</span> 
+</span></span><span class="line"><span class="cl">    <span class="o">-&gt;</span><span class="k">extends</span> <span class="n">InstantiationAwareBeanPostProcessor</span>
+</span></span><span class="line"><span class="cl">        <span class="o">-&gt;</span><span class="k">extends</span> <span class="n">BeanPostProcessor</span>
 </span></span></code></pre></div><p>到这就跟前边对上了，AOP相关的后置处理器也就是在这被调用的。</p>
 <p>回头在看上面的<code>createBean()</code>方法，刚才看到的是<code>resolveBeforeInstantiation()</code>方法的调用栈，所以从层次结构上看<code>AnnotationAwareAspectJAutoProxyCreator</code>组件的调用是在创建 <code>Bean</code>实例之前先尝试用后置处理器返回对象的。</p>
-<p><img src="/iblog/posts/annex/images/essays/AOP@EnableAspectJAutoProxy%E5%8E%9F%E7%90%86.png" alt="AOP@EnableAspectJAutoProxy原理"></p>
+<p><img alt="AOP@EnableAspectJAutoProxy原理" src="/iblog/posts/annex/images/essays/AOP@EnableAspectJAutoProxy%E5%8E%9F%E7%90%86.png"></p>
 <h2 id="spring事务">Spring事务</h2>
 <p>Spring 为事务管理提供了丰富的功能支持。Spring 事务管理分为编码式和声明式的两种方式。编程式事务指的是通过编码方式实现事务；声明式事务基于 AOP,将具体业务逻辑与事务处理解耦。声明式事务管理使业务代码逻辑不受污染, 因此在实际使用中声明式事务用的比较多。</p>
 <h3 id="spring事务的隔离级别">Spring事务的隔离级别</h3>
@@ -2673,47 +2677,47 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 <li>@Transactional(propagation=Propagation.SUPPORTS)：如果其他bean调用这个方法,在其他bean中声明事务,那就用事务.如果其他bean没有声明事务,那就不用事务.</li>
 </ul>
 <h3 id="transactional注解">@Transactional注解</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Target</span><span class="o">({</span><span class="n">ElementType</span><span class="o">.</span><span class="na">TYPE</span><span class="o">,</span> <span class="n">ElementType</span><span class="o">.</span><span class="na">METHOD</span><span class="o">})</span>
-</span></span><span class="line"><span class="cl"><span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
-</span></span><span class="line"><span class="cl"><span class="nd">@Inherited</span>
-</span></span><span class="line"><span class="cl"><span class="nd">@Documented</span>
-</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">Transactional</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nd">@AliasFor</span><span class="o">(</span><span class="s">&#34;transactionManager&#34;</span><span class="o">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">String</span> <span class="nf">value</span><span class="o">()</span> <span class="k">default</span> <span class="s">&#34;&#34;</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="nd">@AliasFor</span><span class="o">(</span><span class="s">&#34;value&#34;</span><span class="o">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">String</span> <span class="nf">transactionManager</span><span class="o">()</span> <span class="k">default</span> <span class="s">&#34;&#34;</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// 事务的传播行为
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Propagation</span> <span class="nf">propagation</span><span class="o">()</span> <span class="k">default</span> <span class="n">Propagation</span><span class="o">.</span><span class="na">REQUIRED</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// 事务的隔离级别
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Isolation</span> <span class="nf">isolation</span><span class="o">()</span> <span class="k">default</span> <span class="n">Isolation</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// 超时时间
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 事务需要在一定时间内提交，如不提交则进行回滚
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 默认-1，设置时间以秒单位进行计算 
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="nf">timeout</span><span class="o">()</span> <span class="k">default</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// 是否只读
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 读：查询操作；写：添加、修改、删除操作
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 默认值false，表示可以进行读、写操作
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 设置true后 只能查询
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">boolean</span> <span class="nf">readOnly</span><span class="o">()</span> <span class="k">default</span> <span class="kc">false</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// 回滚
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 设置出现哪些异常进行回滚 
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Throwable</span><span class="o">&gt;[]</span> <span class="nf">rollbackFor</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">String</span><span class="o">[]</span> <span class="nf">rollbackForClassName</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// 不回滚
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 设置出现哪些异常不进行回滚 
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Throwable</span><span class="o">&gt;[]</span> <span class="nf">noRollbackFor</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">String</span><span class="o">[]</span> <span class="nf">noRollbackForClassName</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h4 id="失效情况">失效情况</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">TYPE</span><span class="p">,</span><span class="w"> </span><span class="n">ElementType</span><span class="p">.</span><span class="na">METHOD</span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Inherited</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Documented</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="nd">@interface</span><span class="w"> </span><span class="n">Transactional</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@AliasFor</span><span class="p">(</span><span class="s">&#34;transactionManager&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="nf">value</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="s">&#34;&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@AliasFor</span><span class="p">(</span><span class="s">&#34;value&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="nf">transactionManager</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="s">&#34;&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 事务的传播行为</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Propagation</span><span class="w"> </span><span class="nf">propagation</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="n">Propagation</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 事务的隔离级别</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Isolation</span><span class="w"> </span><span class="nf">isolation</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="n">Isolation</span><span class="p">.</span><span class="na">DEFAULT</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 超时时间</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 事务需要在一定时间内提交，如不提交则进行回滚</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 默认-1，设置时间以秒单位进行计算 </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="nf">timeout</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="o">-</span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 是否只读</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 读：查询操作；写：添加、修改、删除操作</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 默认值false，表示可以进行读、写操作</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 设置true后 只能查询</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">readOnly</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 回滚</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 设置出现哪些异常进行回滚 </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Class</span><span class="o">&lt;?</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Throwable</span><span class="o">&gt;[]</span><span class="w"> </span><span class="nf">rollbackFor</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="nf">rollbackForClassName</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 不回滚</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 设置出现哪些异常不进行回滚 </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Class</span><span class="o">&lt;?</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Throwable</span><span class="o">&gt;[]</span><span class="w"> </span><span class="nf">noRollbackFor</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="nf">noRollbackForClassName</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h4 id="失效情况">失效情况</h4>
 <ol>
 <li>如果某个方法是非public的，那么@Transactional就会失效，因为底层cglib是基于父子类来实现的，子类是不能重载父类的private方法，所以无法很好利用代理，这种情况下会导致@Transactional失效</li>
 <li>使用的数据库引擎不支持事务，例如在使用mysql的时候使用MyISAM引擎不支持事务，InnoDB支持，并且从mysql5.5之后开始默认的存储引擎就为InnoDB 。</li>

@@ -2,7 +2,7 @@
 title: "面试Java可能会被问到的问题"
 date: 2021-05-11
 draft: false
-tags: ["Java", "求职"]
+tags: ["求职"]
 slug: "interview-junior-javaer"
 ---
 

@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="zh" >
+<head><script src="/iblog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=iblog/livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="whitepure" />
+	
+	
+	
+	<title>JVM-堆 ｜ 唯手熟尔</title>
+	
+    
+    
+    <meta name="description" content="Java虚拟机定义了若干种程序运行期间会使用到的运行时数据区，其中有一些会随着虚拟机启动而创建，随着虚拟机退出而销毁。 另外一些则是与线程一一对应的，这些与线程对应的数据区域会随着线程开始和结束而创建和销毁。 运行时数据区域包括 程序计数寄存器 虚" />
+    
+
+    
+    
+    <meta name="keywords" content="whitepure博客, whiteppure, whitepure" />
+    
+
+	
+
+    <link rel="shortcut icon" href="http://localhost:1313/iblog/images/favicon.ico" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/normalize.css" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/zozo.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/highlight.css" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/toc.css" />
+
+    
+    
+</head>
+
+<body>
+    <div class="post-password">
+        
+    </div>
+
+    
+    
+    
+
+
+
+
+
+
+
+
+
+<div id="post_content_toc" class="toc">
+    <div class="page-header"><strong></strong></div>
+    <div id="page-scrollspy" class="toc-nav">
+
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%a0%86">
+                    堆
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%a0%86%e7%9a%84%e6%a0%b8%e5%bf%83%e6%a6%82%e5%bf%b5">
+                    堆的核心概念
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%a0%86%e5%86%85%e5%ad%98%e7%bb%86%e5%88%86">
+                    堆内存细分
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e8%ae%be%e7%bd%ae%e5%a0%86%e5%86%85%e5%ad%98%e5%a4%a7%e5%b0%8f">
+                    设置堆内存大小
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%9f%a5%e7%9c%8b%e5%a0%86%e5%86%85%e5%ad%98%e5%a4%a7%e5%b0%8f">
+                    查看堆内存大小
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#-xxprintgcdetails">
+                    -XX:&#43;PrintGCDetails
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#jstat--gc">
+                    jstat -gc
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#oom">
+                    OOM
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%b9%b4%e8%bd%bb%e4%bb%a3%e4%b8%8e%e8%80%81%e5%b9%b4%e4%bb%a3">
+                    年轻代与老年代
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#-xxnewratio">
+                    -XX:NewRatio
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#-xxsurvivorratio">
+                    -XX:SurvivorRatio
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%b8%ba%e5%af%b9%e8%b1%a1%e5%88%86%e9%85%8d%e5%86%85%e5%ad%98">
+                    为对象分配内存
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#gc%e7%ae%80%e5%8d%95%e4%bb%8b%e7%bb%8d">
+                    GC简单介绍
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#minor-gc">
+                    Minor GC
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#major-gc">
+                    Major GC
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#full-gc">
+                    Full GC
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#gc%e4%b8%be%e4%be%8b">
+                    GC举例
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%a0%86%e7%a9%ba%e9%97%b4%e5%88%86%e4%bb%a3%e6%80%9d%e6%83%b3">
+                    堆空间分代思想
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%86%85%e5%ad%98%e5%88%86%e9%85%8d%e7%ad%96%e7%95%a5">
+                    内存分配策略
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#tlab">
+                    TLAB
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#jvm%e5%a0%86%e7%a9%ba%e9%97%b4%e7%9a%84%e5%8f%82%e6%95%b0%e8%ae%be%e7%bd%aehttpsdocsoraclecomjavase8docstechnotestoolsunixjavahtml">
+                    JVM堆空间的参数设置
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e9%80%83%e9%80%b8%e5%88%86%e6%9e%90">
+                    逃逸分析
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e9%80%83%e9%80%b8%e5%88%86%e6%9e%90%e4%b8%be%e4%be%8b">
+                    逃逸分析举例
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%8f%82%e6%95%b0%e8%ae%be%e7%bd%ae">
+                    参数设置
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%a0%88%e4%b8%8a%e5%88%86%e9%85%8d">
+                    栈上分配
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%90%8c%e6%ad%a5%e7%9c%81%e7%95%a5">
+                    同步省略
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%88%86%e7%a6%bb%e5%af%b9%e8%b1%a1%e6%88%96%e6%a0%87%e9%87%8f%e6%9b%bf%e6%8d%a2">
+                    分离对象或标量替换
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e9%80%83%e9%80%b8%e5%88%86%e6%9e%90%e7%9a%84%e4%b8%8d%e8%b6%b3">
+                    逃逸分析的不足
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%80%bb%e7%bb%93">
+                    总结
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+
+    </div>
+
+</div>
+
+
+
+    
+
+    
+    <div class="main animate__animated animate__fadeInDown" id="main_content">
+        <div class="nav_container animated fadeInDown">
+    <div class="site_nav" id="site_nav">
+        <ul><li class="">
+                <a href="http://localhost:1313/iblog/">首页</a>
+            </li><li class="">
+                <a href="http://localhost:1313/iblog/posts/">归档</a>
+            </li><li class="">
+                <a href="http://localhost:1313/iblog/tags/">标签</a>
+            </li><li class="">
+                <a href="http://localhost:1313/iblog/about/">关于</a>
+            </li>
+        </ul>
+    </div>
+    <div class="menu_icon">
+        <a id="menu_icon"><i class="ri-menu-line"></i></a>
+    </div>
+</div>
+        <div id="post_header" class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="http://localhost:1313/iblog/">
+                    <span>唯手熟尔</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">
+                
+            </p>
+
+            
+            <div class="my_socials">
+                
+                    
+                    <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                        <i class="ri-github-fill"></i>
+                    </a>
+                    
+                
+                <a href="http://localhost:1313/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
+                
+                <span id="sys_function" class="sys_function display_none">
+                    <a id="export_pdf"  title="导出pdf" style="border: none; background-color: #ffffff; cursor: pointer; margin-left: 10px">
+                        <svg t="1688701481347" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3517" width="16" height="16"><path d="M425.610455 85.814544H149.05897A42.303635 42.303635 0 0 0 106.6274 128.075535V896.492068c0 23.326702 18.976933 42.26099 42.43157 42.26099h682.743143a42.559504 42.559504 0 0 0 42.431569-42.559504v-384.016365a42.644793 42.644793 0 0 1 85.289587 0v384.016365A127.849091 127.849091 0 0 1 831.802113 1024H149.05897A127.635867 127.635867 0 0 1 21.337813 896.449423V128.03289A127.593222 127.593222 0 0 1 149.101614 0.524957h276.466196a42.644793 42.644793 0 0 1 0 85.289587z m564.062683 158.08425l-170.579174 170.579173a42.644793 42.644793 0 1 1-60.299738-60.299738L856.578738 256.393718H618.364922a42.644793 42.644793 0 1 1 0-85.289587h238.213816l-97.784512-97.784511A42.644793 42.644793 0 1 1 819.093964 13.019882l170.579174 170.579174a42.644793 42.644793 0 0 1 0 60.299738zM149.272194 597.552066a42.644793 42.644793 0 0 1 42.644793-42.644794h51.514911c59.190973 0 107.891327 23.284057 107.976617 97.102195 0 71.003581-49.46796 102.347504-106.185536 102.347504h-31.343923v66.781747a32.282109 32.282109 0 0 1-64.606862 0V597.552066z m92.709781 100.215264c31.429213 0 46.568114-16.46089 46.568114-45.757863 0-30.064579-17.313786-40.512554-48.359196-40.512554h-26.311837v86.270417h28.145563z m232.414124-142.860058c81.878003 0 136.036891 43.710913 136.036891 147.67892S556.231457 853.420826 477.935617 853.420826h-38.16709a42.644793 42.644793 0 0 1-42.644794-42.644793v-213.223967a42.644793 42.644793 0 0 1 42.644794-42.644794h34.542282z m-4.008611 240.729859c43.32711 0 73.988717-22.047358 73.988717-93.050939 0-71.046226-30.704251-90.705476-73.988717-90.705476h-8.699538v183.79906h8.699538zM692.481573 853.420826a32.282109 32.282109 0 0 1-32.282109-32.282108V597.552066a42.644793 42.644793 0 0 1 42.644793-42.644794h99.063855a29.680776 29.680776 0 1 1 0 59.404197h-77.144431v65.374469h61.749661a29.894 29.894 0 1 1 0 59.788h-61.749661v81.66478a32.282109 32.282109 0 0 1-32.282108 32.282108z" fill="#5f5f5f" p-id="3518"></path></svg>
+                    </a>
+                    <a id="export_pic" title="导出图片" style="border: none; background-color: #ffffff; cursor: pointer; margin-left: 10px">
+                        <svg t="1689071509720" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4564" width="16" height="16"><path d="M909.132886 0.037506h-184.960611a33.909445 33.909445 0 0 0-32.368107 33.909445 33.909445 33.909445 0 0 0 33.909445 33.395666h158.244078l-200.373995 199.346437a33.395666 33.395666 0 0 0 0 47.781491 31.854327 31.854327 0 0 0 23.633856 9.76181 33.909445 33.909445 0 0 0 24.147635-9.76181l198.832657-199.346437V272.340628a33.909445 33.909445 0 0 0 69.874009 0V88.921355A88.37007 88.37007 0 0 0 909.132886 0.037506zM216.558153 347.866211a107.37991 107.37991 0 1 0 107.37991-107.379911 107.89369 107.89369 0 0 0-107.37991 107.379911z m154.133843 0a51.377948 51.377948 0 0 1-97.618101 0 51.377948 51.377948 0 1 1 97.618101 0z" p-id="4565" fill="#424242"></path><path d="M963.079731 437.777619a34.423225 34.423225 0 0 0-33.909446 33.909445v265.110209a1811.07265 1811.07265 0 0 0-137.692899-193.181082 106.352351 106.352351 0 0 0-78.60826-36.478343 123.820854 123.820854 0 0 0-82.204716 35.964563l-3.596456 3.082677-188.557068 176.74014c-11.816928-13.358266-47.781491-51.377948-82.204716-87.856291a83.232275 83.232275 0 0 0-85.801172-21.578738 105.324792 105.324792 0 0 0-38.019681 19.52362l-141.289356 121.765736V89.948914a22.092517 22.092517 0 0 1 22.606297-22.606297h417.702713a33.395666 33.395666 0 0 0 33.395666-33.909445 33.395666 33.395666 0 0 0-33.395666-33.395666H113.802258A89.911408 89.911408 0 0 0 23.89085 89.948914v844.139678a89.911408 89.911408 0 0 0 89.911408 89.911408h793.27551a89.911408 89.911408 0 0 0 89.397629-89.911408v-462.401528a33.909445 33.909445 0 0 0-33.395666-33.909445z m-33.909446 496.310973a22.606297 22.606297 0 0 1-22.092517 22.606297H113.802258a22.606297 22.606297 0 0 1-22.606297-22.606297v-88.37007l183.933052-160.812976a43.157476 43.157476 0 0 1 15.413385-7.192912 15.927164 15.927164 0 0 1 17.982281 5.137794c37.505902 36.478343 78.60826 83.232275 82.718496 87.856291a61.653537 61.653537 0 0 0 42.643696 22.092517 62.681096 62.681096 0 0 0 51.377948-20.037399c8.220472-8.220472 134.610223-125.875971 194.208641-181.877935a57.029522 57.029522 0 0 1 34.423225-16.440943 45.212594 45.212594 0 0 1 29.79921 15.927164 2954.231982 2954.231982 0 0 1 186.501949 256.889738z" p-id="4566" fill="#424242"></path></svg>
+                    </a>
+                    <a id="export_markdown" title="导出markdown" style="border: none; background-color: #ffffff; cursor: pointer; margin-left: 10px">
+                        <svg t="1689071035200" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="13570" width="16" height="16"><path d="M178.073367 843.957262V461.158929h107.121045l107.121045 140.734874 107.125433-140.734874h107.116657v382.798333h-107.116657v-219.54307l-107.125433 140.730486-107.116657-140.730486v219.54307zM737.783131 892.148786l-131.221196-209.156132h87.479334V461.158929h87.479335v221.833725h87.483722z" p-id="13571" fill="#424242"></path><path d="M911.9958 217.142709c10.672172 10.663395 19.812851 25.144549 27.430816 43.430297 7.617965 18.285748 11.431335 35.044392 11.431336 50.28471V969.140255c0 15.235929-5.336086 28.18998-15.999481 38.853375-10.667783 10.667783-23.621834 16.003869-38.857763 16.003869H127.994904c-15.240317 0-28.18998-5.336086-38.857763-16.003869-10.663395-10.663395-15.999481-23.617446-15.999481-38.853375V54.852856c0-15.240317 5.331698-28.18998 15.999481-38.857763C99.804925 5.336086 112.758975 0 127.999292 0h512.000944c15.235929 0 31.998962 3.808982 50.28471 11.426947 18.285748 7.622353 32.762514 16.763033 43.430297 27.426428zM658.290372 77.715526v214.856442h214.856442c-3.808982-11.049559-7.99974-18.856218-12.572275-23.43314l-178.855415-178.851027c-4.572534-4.572534-12.383581-8.763292-23.43314-12.572275z m219.428976 873.143369V365.71496h-237.714724c-15.240317 0-28.18998-5.336086-38.857763-15.999481-10.663395-10.667783-15.999481-23.621834-15.999481-38.857763V73.142992H146.28504v877.715903z" p-id="13572" fill="#424242"></path></svg>
+                    </a>
+                    <a id="export_doc" title="导出文档" style="border: none; background-color: #ffffff; cursor: pointer; margin-left: 10px">
+                        <svg t="1689246982401" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6825" width="16" height="16"><path d="M270.76864 608.32h180.8a31.68 31.68 0 0 0 0-62.976H270.76864a31.68 31.68 0 0 0 0 62.976zM271.34464 458.56h457.92a33.472 33.472 0 0 0 31.552-34.752 33.28 33.28 0 0 0-31.552-34.624H271.34464a34.816 34.816 0 0 0 0 69.376zM271.34464 293.504h457.92a33.344 33.344 0 0 0 31.552-34.688 33.216 33.216 0 0 0-31.552-34.624H271.34464a33.28 33.28 0 0 0-31.616 34.624 33.28 33.28 0 0 0 31.616 34.688z" p-id="6826" fill="#424242"></path><path d="M869.87264 0H153.77664A70.4 70.4 0 0 0 84.65664 70.912V953.6A69.952 69.952 0 0 0 153.77664 1024h370.048a32 32 0 0 0 0-63.68H147.12064V64h729.6v468.672a31.296 31.296 0 1 0 62.528 0V70.912A70.4 70.4 0 0 0 869.87264 0z" p-id="6827" fill="#424242"></path><path d="M482.16064 730.624h337.664L715.82464 625.216a28.864 28.864 0 0 1-7.936-28.736 29.184 29.184 0 0 1 20.608-21.184 29.632 29.632 0 0 1 29.12 8.128l174.784 177.216-174.784 176.96a29.184 29.184 0 0 1-49.728-13.312 29.248 29.248 0 0 1 8-28.8l103.936-105.344H482.16064a29.696 29.696 0 0 1-29.504-29.76 29.632 29.632 0 0 1 29.504-29.76z" p-id="6828" fill="#424242"></path></svg>
+                    </a>
+                </span>
+                <a  id="icon_more" title="更多" >
+                    <svg t="1688715321313" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5356" width="16" height="16"><path d="M483.555556 199.111111m-85.333334 0a85.333333 85.333333 0 1 0 170.666667 0 85.333333 85.333333 0 1 0-170.666667 0Z" fill="#424242" p-id="5357"></path><path d="M483.555556 540.444444m-85.333334 0a85.333333 85.333333 0 1 0 170.666667 0 85.333333 85.333333 0 1 0-170.666667 0Z" fill="#424242" p-id="5358"></path><path d="M483.555556 881.777778m-85.333334 0a85.333333 85.333333 0 1 0 170.666667 0 85.333333 85.333333 0 1 0-170.666667 0Z" fill="#424242" p-id="5359"></path></svg>
+                </a>
+                <a  id="icon_less" class="display_none">
+                    <svg t="1688723160472" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15872" width="16" height="16"><path d="M300.105143 592.676571h423.789714a80.676571 80.676571 0 1 0 0-161.353142H300.105143a80.676571 80.676571 0 0 0 0 161.353142z" fill="#8a8a8a" p-id="15873"></path></svg>
+                </a>
+                
+            </div>
+
+            
+            <div class="post">
+                <div class="post_title post_detail_title">
+                    <span class="date" id="busuanzi_container_site_pv">访问量 <span id="busuanzi_value_site_pv"></span>次</span>
+                </div>
+                <div class="post_title post_detail_title">
+                    <span class="date" id="busuanzi_container_site_uv">访客数 <span id="busuanzi_value_site_uv"></span>人</span>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+        <div class="content">
+            <div class="post_page">
+                <div class="post animate__animated animate__fadeInDown">
+                    <div class="post_title post_detail_title">
+                        <h2 id="post_single_title">JVM-堆</h2>
+                        <span id="post_page_title_date" class="date">2021.04.03</span>
+                    </div>
+                    <div class="post_content markdown"><p>Java虚拟机定义了若干种程序运行期间会使用到的运行时数据区，其中有一些会随着虚拟机启动而创建，随着虚拟机退出而销毁。
+另外一些则是与线程一一对应的，这些与线程对应的数据区域会随着线程开始和结束而创建和销毁。</p>
+<p><img alt="运行时数据区" src="/iblog/posts/annex/images/essays/%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA.png"></p>
+<p>运行时数据区域包括</p>
+<ul>
+<li>程序计数寄存器</li>
+<li>虚拟机栈</li>
+<li>本地方法栈</li>
+<li>堆</li>
+<li>方法区</li>
+</ul>
+<p>其中：方法区、堆为线程共享；程序计数寄存器、虚拟机栈、本地方法栈 为线程私有。</p>
+<h2 id="堆">堆</h2>
+<h3 id="堆的核心概念">堆的核心概念</h3>
+<p>堆针对一个JVM进程来说是唯一的，也就是一个进程只有一个JVM，但是进程包含多个线程，他们是共享同一堆空间的。
+一个JVM实例只存在一个堆内存，堆也是Java内存管理的核心区域。</p>
+<p>Java堆区在JVM启动的时候即被创建，其空间大小也就确定了。是JVM管理的最大一块内存空间。堆内存的大小是可以调节的。</p>
+<blockquote>
+<p>-Xms10m：最小堆内存</p>
+<p>-Xmx10m：最大堆内存</p>
+</blockquote>
+<p>《Java虚拟机规范》规定，堆可以处于物理上不连续的内存空间中，但在逻辑上它应该被视为连续的。
+所有的线程共享Java堆，在这里还可以划分线程私有的缓冲区（Thread Local Allocation Buffer，TLAB）。</p>
+<p>《Java虚拟机规范》中对Java堆的描述是：所有的对象实例以及数组都应当在运行时分配在堆上。</p>
+<blockquote>
+<p>The heap is the run-time data area from which memory for all class instances and arrays is allocated</p>
+</blockquote>
+<p>“几乎”所有的对象实例都在这里分配内存。—从实际使用角度看的。因为还有一些对象是在栈上分配的。</p>
+<p>数组和对象可能永远不会存储在栈上，因为栈帧中保存引用，这个引用指向对象或者数组在堆中的位置。</p>
+<p>在方法结束后，堆中的对象不会马上被移除，仅仅在垃圾收集的时候才会被移除。</p>
+<ul>
+<li>也就是触发了GC的时候，才会进行回收</li>
+<li>如果堆中对象马上被回收，那么用户线程就会收到影响，一个方法频繁的调用频繁的回收程序性能会收到影响</li>
+</ul>
+<p>堆，是GC（Garbage Collection，垃圾收集器）执行垃圾回收的重点区域。
+<img alt="堆内存分配" src="/iblog/posts/annex/images/essays/%E5%A0%86%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D.png"></p>
+<h3 id="堆内存细分">堆内存细分</h3>
+<p><img alt="堆内存划分" src="/iblog/posts/annex/images/essays/%E5%A0%86%E5%86%85%E5%AD%98%E5%88%92%E5%88%86.png"></p>
+<p>Java 7及之前<strong>堆内存逻辑</strong>上分为三部分：新生区+养老区+永久区</p>
+<ul>
+<li>Young Generation Space 新生区 Young/New 又被划分为Eden区和Survivor区</li>
+<li>Tenure generation space 养老区</li>
+<li>Permanent Space永久区</li>
+</ul>
+<p>Java 8及之后<strong>堆内存逻辑</strong>上分为三部分：新生区+养老区+元空间</p>
+<ul>
+<li>Young Generation Space新生区 Young/New 又被划分为Eden区和Survivor区</li>
+<li>Tenure generation space 养老区</li>
+<li>Meta Space 元空间</li>
+</ul>
+<p>堆空间内部结构，JDK1.8之前从 永久代 替换成 元空间。</p>
+<div style="width: 45%;display: inline-block">
+    <img src="/iblog/posts/annex/images/essays/jvm1.8之前.png" alt="jvm1.8之前">
+</div>
+<div style="width: 45%;display: inline-block">
+    <img src="/iblog/posts/annex/images/essays/jvm1.8.png" alt="jvm1.8">
+</div>
+<h3 id="设置堆内存大小">设置堆内存大小</h3>
+<p>Java堆区用于存储Java对象实例，那么堆的大小在JVM启动时就已经设定好了，可以通过选项&quot;-Xmx&quot;和&quot;-Xms&quot;来进行设置。</p>
+<blockquote>
+<p>“-Xms&quot;用于表示堆区的起始内存，等价于 -XX:InitialHeapSize
+“-Xmx&quot;则用于表示堆区的最大内存，等价于 -XX:MaxHeapSize</p>
+</blockquote>
+<p><img alt="设置堆大小" src="/iblog/posts/annex/images/essays/%E8%AE%BE%E7%BD%AE%E5%A0%86%E5%A4%A7%E5%B0%8F.png"></p>
+<p><em>默认情况下,初始堆内存大小：物理电脑内存大小/64;最大堆内存大小：物理电脑内存大小/4</em>。</p>
+<blockquote>
+<p>在生产环境和开发环境，通常会将-Xms和-Xmx两个参数配置相同的值，
+其目的是为了能够在 Java 垃圾回收机制清理完堆区后不需要重新分隔计算堆区的大小，从而提高性能。</p>
+</blockquote>
+<p>使用代码查看</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        // 返回Java虚拟机中的堆内存总量
+</span></span><span class="line"><span class="cl">        long initialMemory = Runtime.getRuntime().totalMemory() / 1024 / 1024;
+</span></span><span class="line"><span class="cl">        // 返回Java虚拟机试图使用的最大堆内存
+</span></span><span class="line"><span class="cl">        long maxMemory = Runtime.getRuntime().maxMemory() / 1024 / 1024;
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;-Xms:&#34; + initialMemory + &#34;M&#34;);
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;-Xmx:&#34; + maxMemory + &#34;M&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h3 id="查看堆内存大小">查看堆内存大小</h3>
+<h4 id="-xxprintgcdetails">-XX:+PrintGCDetails</h4>
+<p>程序启动加入<code>-XX:+PrintGCDetails</code>参数</p>
+<p><img alt="-XXPrintGCDetails" src="/iblog/posts/annex/images/essays/-XXPrintGCDetails.png"></p>
+<p><img alt="PrintGCDetails查看堆内存" src="/iblog/posts/annex/images/essays/PrintGCDetails%E6%9F%A5%E7%9C%8B%E5%A0%86%E5%86%85%E5%AD%98.png"></p>
+<h4 id="jstat--gc">jstat -gc</h4>
+<blockquote>
+<p>jps  -&gt;  jstat -gc 进程ID</p>
+</blockquote>
+<p><img alt="jstat" src="/iblog/posts/annex/images/essays/jstat.png"></p>
+<h3 id="oom">OOM</h3>
+<p>一旦堆区中的内存大小超过“-Xmx&quot;所指定的最大内存时，将会抛出<code>outOfMemoryError</code>异常。</p>
+<p>代码实现</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        ArrayList&lt;Object&gt; list = new ArrayList&lt;&gt;();
+</span></span><span class="line"><span class="cl">        while (true){
+</span></span><span class="line"><span class="cl">//            try {
+</span></span><span class="line"><span class="cl">//                Thread.sleep(1000000);
+</span></span><span class="line"><span class="cl">//            } catch (InterruptedException e) {
+</span></span><span class="line"><span class="cl">//                e.printStackTrace();
+</span></span><span class="line"><span class="cl">//            }
+</span></span><span class="line"><span class="cl">            list.add(new Picture(new Random().nextInt(1024 * 1024)));
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">class Picture {
+</span></span><span class="line"><span class="cl">    private int data;
+</span></span><span class="line"><span class="cl">    public Picture(int data) {
+</span></span><span class="line"><span class="cl">        this.data = data;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p><img alt="OOM" src="/iblog/posts/annex/images/essays/OOM.png"></p>
+<blockquote>
+<p><code>jvisual</code> 工具在 jdk /bin/jvisualvm.exe
+亦可在编译器 <a href="https://blog.csdn.net/qq_37960603/article/details/85224547">下载jvisual插件</a></p>
+</blockquote>
+<p>出现OOM错误后，可以通过 VisualVM 这个工具查看具体是什么参数造成的
+<img alt="jvisual-OOM" src="/iblog/posts/annex/images/essays/jvisual-OOM.png"></p>
+<h3 id="年轻代与老年代">年轻代与老年代</h3>
+<p>存储在JVM中的Java对象，按照生命周期可以被划分为两类：</p>
+<p>一类是生命周期较短的瞬时对象，这类对象的创建和消亡都非常迅速，生命周期短的，及时回收；
+另外一类对象的生命周期却非常长，在某些极端的情况下还能够与JVM的生命周期保持一致。</p>
+<p>Java堆区进一步细分的话，可以划分为年轻代和老年代。
+其中年轻代又可以划分为Eden区、Survivor0区和 Survivor1 区（有时也叫做from区、to区）。
+<img alt="年轻代与老年代" src="/iblog/posts/annex/images/essays/%E5%B9%B4%E8%BD%BB%E4%BB%A3%E4%B8%8E%E8%80%81%E5%B9%B4%E4%BB%A3.png"></p>
+<blockquote>
+<p>没有明确规定，to 区是 Survivor1；这两个区域是不断进行交换的；是从一个区到另外一个区</p>
+</blockquote>
+<p>测试用的代码,用于测试以下JVM参数</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;start ...&#34;);
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            Thread.sleep(1000000);
+</span></span><span class="line"><span class="cl">        } catch (InterruptedException e) {
+</span></span><span class="line"><span class="cl">            e.printStackTrace();
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h4 id="-xxnewratio">-XX:NewRatio</h4>
+<p>该参数是配置新生代与老年代在堆结构的占比。</p>
+<p>默认情况下，新生代：老年代 - &gt; 1 : 2</p>
+<ul>
+<li>默认-XX:NewRatio=2；表示新生代占1，老年代占2，新生代占整个堆的1/3</li>
+<li>可以修改-XX:NewRatio=4； 表示新生代占1，老年代占4，新生代占整个堆的1/5
+<img alt="NewRatio" src="/iblog/posts/annex/images/essays/NewRatio.png"></li>
+</ul>
+<p>当发现在整个项目中，生命周期长的对象偏多，那么就可以通过调整年轻代与老年代的比例，来进行调优。</p>
+<h4 id="-xxsurvivorratio">-XX:SurvivorRatio</h4>
+<p>该命令是调整eden区与survivor区比例。这个参数一般使用默认值就可以了。</p>
+<p>在HotSpot中，Eden空间和另外两个survivor空间缺省所占的比例是8：1：1，
+当然开发人员可以通过选项“-XX:SurvivorRatio”调整这个空间比例。比如：-XX:SurvivorRatio=8。</p>
+<blockquote>
+<p>PS 在实际开发中使用hotspot虚拟机，默认情况下不是8：1：1；
+是因为虚拟机有一个自适应内存分配策略，可以通过<code>-XX:-UseAdaptiveSizePolicy</code>关闭再来进行查看.
+<img alt="SurvivorRatio" src="/iblog/posts/annex/images/essays/SurvivorRatio.png"></p>
+</blockquote>
+<p>几乎所有的Java对象都是在Eden区被new出来的。绝大部分的Java对象的销毁都在新生代进行了。（有些大的对象在Eden区无法存储时候，将直接进入老年代）</p>
+<p>IBM公司的专门研究表明，新生代中80%的对象都是“朝生夕死”的。</p>
+<p>可以使用选项&quot;-Xmn&quot;设置新生代最大内存大小。</p>
+<blockquote>
+<p>PS 当 -Xmn 参数与 -XX:NewRatio 设置的值发生冲突时，会以 -Xmn 设置的具体值为准。</p>
+</blockquote>
+<p><img alt="eden与survivor与tenured" src="/iblog/posts/annex/images/essays/eden%E4%B8%8Esurvivor%E4%B8%8Etenured.png"></p>
+<h3 id="为对象分配内存">为对象分配内存</h3>
+<p>为新对象分配内存是一件非常严谨和复杂的任务，JM的设计者们不仅需要考虑内存如何分配、在哪里分配等问题，
+并且由于内存分配算法与内存回收算法密切相关，所以还需要考虑GC执行完内存回收后是否会在内存空间中产生内存碎片。</p>
+<p>对象分配内存步骤：
+<img alt="对象内存分配策略" src="/iblog/posts/annex/images/essays/%E5%AF%B9%E8%B1%A1%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5.png"></p>
+<ol>
+<li>新的对象先放伊甸园区。此区有大小限制。(如果对象过大可能直接分配在老年代)</li>
+<li>当伊甸园的空间填满时，程序又需要创建对象，JVM的垃圾回收器将对伊甸园区进行MinorGC，将伊甸园区中的不再被其他对象所引用的对象进行销毁。
+再将新的对象放到伊甸园区。</li>
+<li>然后将伊甸园中的剩余对象移动到幸存者0区。</li>
+<li>如果再次触发MinorGC，会首先将没有被回收的对象放到幸存者1区，然后判断幸存者0区中的对象是否能被回收，如果没有回收，就会放到幸存者1区。</li>
+<li>重复步骤3、4，默认情况下如果一个对象被扫描了15次（阈值），都不能被回收，则将该对象晋升到老年代。</li>
+<li>当老年代内存不足时，再次触发GC：Major GC，进行老年代的内存清理。</li>
+<li>若老年代执行了Major GC之后，发现依然无法进行对象的保存，就会产生OOM错误。</li>
+</ol>
+<p><em>可以用 -XX:MaxTenuringThreshold=N  进行设置幸存者区到老年代的GC扫描次数，默认15次。</em></p>
+<blockquote>
+<p>PS 如果幸存者区满了？
+如果Survivor区满了后，将会触发一些特殊的规则，也就是可能直接晋升老年代。
+<strong>需要特别注意，在Eden区满了的时候，才会触发MinorGC，而幸存者区满了后，不会触发MinorGC操作</strong></p>
+</blockquote>
+<p>代码演示对象分配过程</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// -Xms600m -Xmx600m
+</span></span><span class="line"><span class="cl">public class HeapInstanceTest {
+</span></span><span class="line"><span class="cl">    byte [] buffer = new byte[new Random().nextInt(1024 * 200)];
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) throws InterruptedException {
+</span></span><span class="line"><span class="cl">        ArrayList&lt;HeapInstanceTest&gt; list = new ArrayList&lt;&gt;();
+</span></span><span class="line"><span class="cl">        while (true) {
+</span></span><span class="line"><span class="cl">            list.add(new HeapInstanceTest());
+</span></span><span class="line"><span class="cl">            Thread.sleep(10);
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>打开<code>VisualVM</code>图形化界面,通过<code>VisualGC</code>进行动态化查看
+<img alt="代码演示对象分配过程" src="/iblog/posts/annex/images/essays/%E4%BB%A3%E7%A0%81%E6%BC%94%E7%A4%BA%E5%AF%B9%E8%B1%A1%E5%88%86%E9%85%8D%E8%BF%87%E7%A8%8B.gif"></p>
+<blockquote>
+<p>总结：</p>
+<ul>
+<li>针对幸存者s0，s1区的总结：复制之后有交换，谁空谁是to区</li>
+<li>关于垃圾回收：频繁在新生区收集，很少在老年代收集，几乎不再永久代和元空间进行收集</li>
+<li>新生代采用复制算法的目的：是为了减少内碎片</li>
+</ul>
+</blockquote>
+<h3 id="gc简单介绍">GC简单介绍</h3>
+<ul>
+<li>Minor GC：新生代的GC</li>
+<li>Major GC：老年代的GC</li>
+<li>Full GC：整堆收集，收集整个Java堆和方法区的垃圾</li>
+</ul>
+<p>JVM的调优的一个环节，也就是垃圾收集，我们需要尽量的避免垃圾回收，因为在垃圾回收的过程中，容易出现 STW 的问题；
+而 Major GC 和 Full GC出现 STW 的时间，是Minor GC的10倍以上。</p>
+<blockquote>
+<p>STW: Java中 Stop-The-World 机制简称 STW ，是在执行垃圾收集算法时，Java 应用程序的其他所有线程都被挂起（除了垃圾收集帮助器之外）。
+Java中一种全局暂停现象，全局停顿，所有 Java 代码停止，native 代码可以执行，但不能与 JVM 交互；这些现象多半是由于 GC 引起。</p>
+</blockquote>
+<p>JVM在进行GC时，并非每次都对上面三个内存区域一起回收的，大部分时候回收的都是指新生代。</p>
+<p>针对Hotspot VM的实现，它里面的GC按照回收区域又分为两大种类型：一种是部分收集（Partial GC），一种是整堆收集（FullGC）。</p>
+<ul>
+<li>部分收集：不是完整收集整个Java堆的垃圾收集。其中又分为：
+<ul>
+<li>新生代收集（MinorGC/YoungGC）：只是新生代的垃圾收集</li>
+<li>老年代收集（MajorGC/OldGC）：只是老年代的圾收集。目前，只有CMSGC会有单独收集老年代的行为。注意，很多时候Major GC会和FullGC混淆使用，需要具体分辨是老年代回收还是整堆回收。</li>
+<li>混合收集（MixedGC）：收集整个新生代以及部分老年代的垃圾收集。目前，只有G1 GC会有这种行为</li>
+</ul>
+</li>
+<li>整堆收集（FullGC）：收集整个Java堆和方法区的垃圾收集。</li>
+</ul>
+<h4 id="minor-gc">Minor GC</h4>
+<p>当年轻代空间不足时，就会触发MinorGC，这里的年轻代满指的是Eden代满，Survivor满了不会引发Minor GC。每次Minor GC会清理年轻代的垃圾。
+因为Java对象大多都具备朝生夕灭的特性，所以Minor GC非常频繁，一般回收速度也比较快。</p>
+<p>Minor GC会引发STW，暂停其它用户的线程，等垃圾回收结束，用户线程才恢复运行。</p>
+<h4 id="major-gc">Major GC</h4>
+<p>发生在老年代的GC，对象从老年代消失时，我们说 “Major GC” 或 “Full GC” 发生了。</p>
+<p>出现了MajorGc，经常会伴随至少一次的Minor GC，但非绝对的，在Parallel Scavenge收集器的收集策略里就有直接进行MajorGC的策略选择过程。</p>
+<p>也就是在老年代空间不足时，会先尝试触发MinorGc。
+如果之后空间还不足，则触发Major GC，Major GC的速度一般会比MinorGc慢10倍以上，STW的时间更长，如果Major GC后，内存还不足，就报OOM了。</p>
+<h4 id="full-gc">Full GC</h4>
+<p>触发Full GC执行的情况有如下五种：</p>
+<ol>
+<li>调用<code>System.gc（）</code>时，系统建议执行Full GC，但是不必然执行.</li>
+<li>老年代空间不足.
+<ul>
+<li>通过Minor GC后进入老年代的平均大小，大于老年代的可用内存.也就是老年代空间不足。</li>
+<li>由Eden区、survivor space（From Space）区向survivor space（To Space）区复制时，对象大小大于To Space可用内存，
+则把该对象转存到老年代，且老年代的可用内存小于该对象大小. 也就是老年代空间不足。</li>
+</ul>
+</li>
+<li>方法区空间不足.</li>
+</ol>
+<h4 id="gc举例">GC举例</h4>
+<p>测试GC代码</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        int i = 0;
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            List&lt;String&gt; list = new ArrayList&lt;&gt;();
+</span></span><span class="line"><span class="cl">            String a = &#34;awsl&#34;;
+</span></span><span class="line"><span class="cl">            while(true) {
+</span></span><span class="line"><span class="cl">                list.add(a);
+</span></span><span class="line"><span class="cl">                a = a + a;
+</span></span><span class="line"><span class="cl">                i++;
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        }catch (Exception e) {
+</span></span><span class="line"><span class="cl">            e.getStackTrace();
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>加入如下虚拟机参数</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-Xms10m -Xmx10m -XX:+PrintGCDetails
+</span></span></code></pre></div><p>GC 日志</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[GC (Allocation Failure) [PSYoungGen: 1933K-&gt;496K(2560K)] 1933K-&gt;736K(9728K), 0.0009799 secs] [Times: user=0.01 sys=0.00, real=0.00 secs] 
+</span></span><span class="line"><span class="cl">[GC (Allocation Failure) [PSYoungGen: 2476K-&gt;480K(2560K)] 2716K-&gt;1464K(9728K), 0.0014628 secs] [Times: user=0.00 sys=0.00, real=0.01 secs] 
+</span></span><span class="line"><span class="cl">[Full GC (Ergonomics) [PSYoungGen: 2156K-&gt;0K(2560K)] [ParOldGen: 7128K-&gt;4559K(7168K)] 9284K-&gt;4559K(9728K), [Metaspace: 3029K-&gt;3029K(1056768K)], 0.0033635 secs] [Times: user=0.01 sys=0.00, real=0.00 secs] 
+</span></span><span class="line"><span class="cl">[GC (Allocation Failure) [PSYoungGen: 56K-&gt;128K(2560K)] 6663K-&gt;6735K(9728K), 0.0009897 secs] [Times: user=0.01 sys=0.00, real=0.01 secs] 
+</span></span><span class="line"><span class="cl">[Full GC (Ergonomics) [PSYoungGen: 128K-&gt;0K(2560K)] [ParOldGen: 6607K-&gt;6509K(7168K)] 6735K-&gt;6509K(9728K), [Metaspace: 3047K-&gt;3047K(1056768K)], 0.0040646 secs] [Times: user=0.01 sys=0.00, real=0.00 secs] 
+</span></span><span class="line"><span class="cl">[GC (Allocation Failure) [PSYoungGen: 0K-&gt;0K(2560K)] 6509K-&gt;6509K(9728K), 0.0006842 secs] [Times: user=0.01 sys=0.00, real=0.00 secs] 
+</span></span><span class="line"><span class="cl">[Full GC (Allocation Failure) [PSYoungGen: 0K-&gt;0K(2560K)] [ParOldGen: 6509K-&gt;6491K(7168K)] 6509K-&gt;6491K(9728K), [Metaspace: 3047K-&gt;3047K(1056768K)], 0.0039890 secs] [Times: user=0.01 sys=0.00, real=0.00 secs] 
+</span></span><span class="line"><span class="cl">Heap
+</span></span><span class="line"><span class="cl"> PSYoungGen      total 2560K, used 111K [0x00000007bfd00000, 0x00000007c0000000, 0x00000007c0000000)
+</span></span><span class="line"><span class="cl">  eden space 2048K, 5% used [0x00000007bfd00000,0x00000007bfd1bf38,0x00000007bff00000)
+</span></span><span class="line"><span class="cl">  from space 512K, 0% used [0x00000007bff80000,0x00000007bff80000,0x00000007c0000000)
+</span></span><span class="line"><span class="cl">  to   space 512K, 0% used [0x00000007bff00000,0x00000007bff00000,0x00000007bff80000)
+</span></span><span class="line"><span class="cl"> ParOldGen       total 7168K, used 6491K [0x00000007bf600000, 0x00000007bfd00000, 0x00000007bfd00000)
+</span></span><span class="line"><span class="cl">  object space 7168K, 90% used [0x00000007bf600000,0x00000007bfc56f18,0x00000007bfd00000)
+</span></span><span class="line"><span class="cl"> Metaspace       used 3093K, capacity 4496K, committed 4864K, reserved 1056768K
+</span></span><span class="line"><span class="cl">  class space    used 338K, capacity 388K, committed 512K, reserved 1048576K
+</span></span><span class="line"><span class="cl">Exception in thread &#34;main&#34; java.lang.OutOfMemoryError: Java heap space
+</span></span></code></pre></div><h3 id="堆空间分代思想">堆空间分代思想</h3>
+<p>为什么要把Java堆分代？不分代就不能正常工作了吗？经研究，不同对象的生命周期不同。70%-99% 的对象是临时对象。</p>
+<p>不分代完全可以，分代的唯一理由就是优化GC性能。
+如果没有分代，那所有的对象都在一块，GC的时候要找到哪些对象没用，这样就会对堆的所有区域进行扫描。比较耗费性能。
+而很多对象都是朝生夕死的，如果分代的话，把新创建的对象放到某一地方，当GC的时候先把这块存储“朝生夕死”对象的区域进行回收，这样就会腾出很大的空间出来。</p>
+<h3 id="内存分配策略">内存分配策略</h3>
+<p>如果对象在Eden出生并经过第一次Minor GC后仍然存活，并且能被Survivor容纳的话，将被移动到survivor空间中，并将对象年龄设为1。
+对象在survivor区中每熬过一次MinorGC，年龄就增加1岁，当它的年龄增加到一定程度（默认为15岁，其实每个JVM、每个GC都有所不同）时，就会被晋升到老年代。</p>
+<blockquote>
+<p>PS： 对象晋升老年代的年龄阀值，可以通过选项 <code>-XX:MaxTenuringThreshold</code> 来设置</p>
+</blockquote>
+<p>针对不同年龄段的对象分配原则:</p>
+<ul>
+<li>
+<p>优先分配到Eden。
+但是开发中比较长的字符串或者数组，会直接存在老年代。因为新创建的对象都是朝生夕死的，所以这个大对象可能也很快被回收，由于老年代触发Major GC的次数比 Minor GC要更少，因此可能回收起来就会比较慢</p>
+</li>
+<li>
+<p>大对象直接分配到老年代。
+尽量避免程序中出现过多的大对象</p>
+</li>
+<li>
+<p>长期存活的对象分配到老年代。</p>
+</li>
+<li>
+<p>动态对象年龄判断。
+如果Survivor区中相同年龄的所有对象大小的总和大于Survivor空间的一半，年龄大于或等于该年龄的对象可以直接进入老年代，无须等到 <code>MaxTenuringThreshold</code> 中要求的年龄。</p>
+</li>
+<li>
+<p>空间分配担保。
+就是经过Minor GC后，所有的对象都存活，因为Survivor比较小，所以就需要将Survivor无法容纳的对象，存放到老年代中。通过<code>-XX:HandlePromotionFailure</code>参数来调节。</p>
+</li>
+</ul>
+<h3 id="tlab">TLAB</h3>
+<blockquote>
+<p>堆空间都是共享的么？
+不是，因为还有 TLAB 这个概念，在堆中划分出一块区域，为每个线程所独占，以此来保证线程安全。</p>
+</blockquote>
+<p>TLAB全称：<code>Thread Local Allocation Buffer</code> 译为：线程本地分配缓冲区。</p>
+<p>因为堆区是线程共享区域，任何线程都可以访问到堆区中的共享数据，
+由于对象实例的创建在JVM中非常频繁，因此在并发环境下从堆区中划分内存空间是线程不安全的。
+为避免多个线程操作同一地址，需要使用加锁等机制，进而影响分配速度。
+使用锁又会影响性能，TLAB应运而生。
+多线程同时分配内存时，使用TLAB可以避免一系列的非线程安全问题，同时还能够提升内存分配的吞吐量，因此我们可以将这种内存分配方式称之为快速分配策略。</p>
+<p><img alt="TLAB" src="/iblog/posts/annex/images/essays/TLAB.png"></p>
+<p>从内存模型而不是垃圾收集的角度，对Eden区域继续进行划分，JVM为每个线程分配了一个私有缓存区域，它包含在Eden空间内。
+默认情况下，TLAB空间的内存非常小，仅占有整个Eden空间的1%，当然我们可以通过选项<code>-XX:TLABWasteTargetPercent</code>设置TLAB空间所占用Eden空间的百分比大小。</p>
+<p>对象首先是通过TLAB开辟空间，如果不能放入，那么需要通过Eden来进行分配。
+尽管不是所有的对象实例都能够在TLAB中成功分配内存，但JVM确实是将TLAB作为内存分配的首选。
+可以通过选项<code>-XX:UseTLAB</code>设置是否开启TLAB空间,默认是开启的。
+一旦对象在TLAB空间分配内存失败时，JVM就会尝试着通过使用加锁机制确保数据操作的原子性，从而直接在Eden空间中分配内存。</p>
+<p><img alt="TLAB分配过程.png" src="/iblog/posts/annex/images/essays/TLAB%E5%88%86%E9%85%8D%E8%BF%87%E7%A8%8B.png"></p>
+<h3 id="jvm堆空间的参数设置httpsdocsoraclecomjavase8docstechnotestoolsunixjavahtml"><a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html">JVM堆空间的参数设置</a></h3>
+<ul>
+<li>
+<p>-XX：+PrintFlagsInitial：查看所有的参数的默认初始值</p>
+</li>
+<li>
+<p>-XX：+PrintFlagsFinal：查看所有的参数的最终值（可能会存在修改，不再是初始值）</p>
+</li>
+<li>
+<p>-Xms：初始堆空间内存（默认为物理内存的1/64）</p>
+</li>
+<li>
+<p>-Xmx：最大堆空间内存（默认为物理内存的1/4）</p>
+</li>
+<li>
+<p>-Xmn：设置新生代的大小。（初始值及最大值）</p>
+</li>
+<li>
+<p>-XX:NewRatio：配置新生代与老年代在堆结构的占比(默认是2)</p>
+</li>
+<li>
+<p>-XX:SurvivorRatio：设置新生代中Eden和S0/S1空间的比例(默认是8)</p>
+</li>
+<li>
+<p>-XX:MaxTenuringThreshold：设置新生代垃圾的最大年龄（(默认是15）</p>
+</li>
+<li>
+<p>-XX:+PrintGCDetails：输出详细的GC处理日志</p>
+</li>
+<li>
+<p>-XX:+PrintGC - verbose:gc 打印gc简要信息</p>
+</li>
+<li>
+<p>-XX:HandlePromotionFailure：是否设置空间分配担保（默认true）</p>
+</li>
+</ul>
+<blockquote>
+<p>在发生Minor GC之前，虚拟机会检查老年代最大可用的连续空间是否大于新生代所有对象的总空间。
+如果大于，则此次Minor GC是安全的。
+如果小于，则虚拟机会查看-xx:HandlePromotionFailure设置值是否允担保失败。
+如果HandlePromotionFailure=true，那么会继续检查老年代最大可用连续空间是否大于历次晋升到老年代的对象的平均大小。
+如果大于，则尝试进行一次Minor GC，但这次Minor GC依然是有风险的；
+如果小于，则改为进行一次FullGC。
+如果HandlePromotionFailure=false，则改为进行一次Full Gc。
+在JDK7之后，HandlePromotionFailure参数不会再影响到虚拟机的空间分配担保策略，观察openJDK中的源码变化，虽然源码中还定义了HandlePromotionFailure参数，但是在代码中已经不会再使用它。
+JDK7之后的规则变为只要老年代的连续空间大于新生代对象总大小或者历次晋升的平均大小就会进行Minor GC，否则将进行FullGC。</p>
+<p>简而言之，在JDK7之后 -XX:HandlePromotionFailure=true 默认为true，且不会受到分配担保策略。</p>
+</blockquote>
+<h3 id="逃逸分析">逃逸分析</h3>
+<blockquote>
+<p>随着JIT编译期的发展与逃逸分析技术逐渐成熟，栈上分配、标量替换优化技术将会导致一些微妙的变化，所有的对象都分配到堆上也渐渐变得不那么“绝对”了。</p>
+</blockquote>
+<p>在Java虚拟机中，对象是在Java堆中分配内存的，这是一个普遍的常识。
+但是，有一种特殊情况，那就是如果经过逃逸分析后发现，一个对象并没有逃逸出方法的话，那么就可能被优化成栈上分配。
+这样就无需在堆上分配内存，也无须进行垃圾回收了。这也是最常见的堆外存储技术。</p>
+<p>还有基于openJDK深度定制的TaoBaoVM，其中创新的GCIH（GC invisible heap）技术实现off-heap:
+将生命周期较长的Java对象从heap中移至heap外，并且GC不能管理GCIH内部的Java对象，以此达到降低GC的回收频率和提升GC的回收效率的目的。</p>
+<p>逃逸分析是一种可以有效减少Java程序中同步负载和内存堆分配压力的跨函数全局数据流分析算法。
+通过逃逸分析，Java Hotspot编译器能够分析出一个新的对象的引用的使用范围从而决定是否要将这个对象分配到堆上。
+逃逸分析的基本行为就是分析对象动态作用域：</p>
+<ul>
+<li>当一个对象在方法中被定义后，对象只在方法内部使用，则认为没有发生逃逸。</li>
+<li>当一个对象在方法中被定义后，它被外部方法所引用，则认为发生逃逸。例如作为调用参数传递到其他地方中。</li>
+</ul>
+<h4 id="逃逸分析举例">逃逸分析举例</h4>
+<p>没有发生逃逸出方法的对象，则可以分配到栈上，随着方法执行的结束，栈空间就被移除，每个栈里面包含了很多栈帧，也就是发生逃逸分析</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public static StringBuffer createStringBuffer(String s1, String s2) {
+</span></span><span class="line"><span class="cl">    StringBuffer sb = new StringBuffer();
+</span></span><span class="line"><span class="cl">    sb.append(s1);
+</span></span><span class="line"><span class="cl">    sb.append(s2);
+</span></span><span class="line"><span class="cl">    return sb;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>如果想要StringBuffer sb对象不发生逃逸方法，则发生逃逸分析，可以这样写</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public static String createStringBuffer(String s1, String s2) {
+</span></span><span class="line"><span class="cl">    StringBuffer sb = new StringBuffer();
+</span></span><span class="line"><span class="cl">    sb.append(s1);
+</span></span><span class="line"><span class="cl">    sb.append(s2);
+</span></span><span class="line"><span class="cl">    return sb.toString();
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><blockquote>
+<p>如何快速的判断是否发生了逃逸分析，看new的对象实体是否在方法外被调用。</p>
+</blockquote>
+<h4 id="参数设置">参数设置</h4>
+<p>在JDK 1.7 版本之后，HotSpot中默认就已经开启了逃逸分析</p>
+<p>如果使用的是较早的版本，则可以通过：</p>
+<ul>
+<li>选项“-XX：+DoEscapeAnalysis&quot;显式开启逃逸分析</li>
+<li>通过选项“-XX：+PrintEscapeAnalysis&quot;查看逃逸分析的筛选结果</li>
+</ul>
+<p>在开发中能使用局部变量的，就不要使用在方法外定义。</p>
+<h4 id="栈上分配">栈上分配</h4>
+<p>将堆分配转化为栈分配。如果一个对象在子程序中被分配，要使指向该对象的指针永远不会发生逃逸，对象可能是栈上分配的候选，而不是堆上分配。</p>
+<p>JIT即时编译器在编译期间根据逃逸分析的结果，发现如果一个对象并没有逃逸出方法的话，就可能被优化成栈上分配。
+分配完成后，继续在调用栈内执行，最后线程结束，栈空间被回收，局部变量对象也被回收。这样就无须进行垃圾回收了。</p>
+<p>代码演示</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * 通过代码来演示，逃逸分析前，逃逸分析后的变化情况
+</span></span><span class="line"><span class="cl"> * 逃逸分析前虚拟机参数： -Xmx1G -Xms1G -XX:-DoEscapeAnalysis -XX:+PrintGCDetails
+</span></span><span class="line"><span class="cl"> * 逃逸分析后虚拟机参数： -Xmx1G -Xms1G -XX:+DoEscapeAnalysis -XX:+PrintGCDetails
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) throws InterruptedException {
+</span></span><span class="line"><span class="cl">        long start = System.currentTimeMillis();
+</span></span><span class="line"><span class="cl">        for (int i = 0; i &lt; 100000000; i++) {
+</span></span><span class="line"><span class="cl">            alloc();
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        long end = System.currentTimeMillis();
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;花费的时间为：&#34; + (end - start) + &#34; ms&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // 为了方便查看堆内存中对象个数，线程sleep
+</span></span><span class="line"><span class="cl">        Thread.sleep(10000000);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private static void alloc() {
+</span></span><span class="line"><span class="cl">        // 未发生逃逸
+</span></span><span class="line"><span class="cl">        User user = new User();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">class User {
+</span></span><span class="line"><span class="cl">    private String name;
+</span></span><span class="line"><span class="cl">    private String age;
+</span></span><span class="line"><span class="cl">    private String gender;
+</span></span><span class="line"><span class="cl">    private String phone;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>逃逸分析之前</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">花费的时间为：881 ms
+</span></span></code></pre></div><p><img alt="栈上分配逃逸分析前" src="/iblog/posts/annex/images/essays/%E6%A0%88%E4%B8%8A%E5%88%86%E9%85%8D%E9%80%83%E9%80%B8%E5%88%86%E6%9E%90%E5%89%8D.png"></p>
+<p>逃逸分析之后</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">花费的时间为：5 ms
+</span></span></code></pre></div><p><img alt="栈上分配逃逸分析后" src="/iblog/posts/annex/images/essays/%E6%A0%88%E4%B8%8A%E5%88%86%E9%85%8D%E9%80%83%E9%80%B8%E5%88%86%E6%9E%90%E5%90%8E.png"></p>
+<h4 id="同步省略">同步省略</h4>
+<p>如果一个对象被发现只有一个线程被访问到，那么对于这个对象的操作可以不考虑同步。</p>
+<p>线程同步的代价是相当高的，同步的后果是降低并发性和性能。</p>
+<p>在动态编译同步块的时候，JIT编译器可以借助逃逸分析来判断同步块所使用的锁对象是否只能够被一个线程访问而没有被发布到其他线程。
+如果没有，那么JIT编译器在编译这个同步块的时候就会取消对这部分代码的同步。这样就能大大提高并发性和性能。这个取消同步的过程就叫同步省略，也叫锁消除。</p>
+<p>代码演示</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public void func() {
+</span></span><span class="line"><span class="cl">    Object obj = new Object();
+</span></span><span class="line"><span class="cl">    synchronized(obj) {
+</span></span><span class="line"><span class="cl">        System.out.println(obj);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>当多个线程同时进来，每个线程都会重新<code>new Object()</code> 不会发生线程安全问题；还有obj对象的生命周期只在func()方法中，并不会被其他线程所访问到.
+所以在JIT编译阶段就会被优化掉，提高效率。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public void func() {
+</span></span><span class="line"><span class="cl">    Object obj = new Object();
+</span></span><span class="line"><span class="cl">	System.out.println(obj);
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h4 id="分离对象或标量替换">分离对象或标量替换</h4>
+<p>标量是指一个无法再分解成更小的数据的数据。Java中的原始数据类型就是标量。
+相对的，那些还可以分解的数据叫做聚合量（Aggregate），Java中的对象就是聚合量，因为他可以分解成其他聚合量和标量。</p>
+<p>在JIT阶段，如果经过逃逸分析，发现一个对象不会被外界访问的话，那么经过JIT优化，
+就会把这个对象拆解成若干个其中包含的若干个成员变量来代替。这个过程就是标量替换。</p>
+<p>有的对象可能不需要作为一个连续的内存结构存在也可以被访问到，那么对象的部分（或全部）可以不存储在内存，而是存储在CPU寄存器中。</p>
+<p>代码演示</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public static void main(String args[]) {
+</span></span><span class="line"><span class="cl">    alloc();
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">class Point {
+</span></span><span class="line"><span class="cl">    private int x;
+</span></span><span class="line"><span class="cl">    private int y;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">private static void alloc() {
+</span></span><span class="line"><span class="cl">    Point point = new Point(1,2);
+</span></span><span class="line"><span class="cl">    System.out.println(&#34;point.x&#34; + point.x + &#34;;point.y&#34; + point.y);
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>经过标量替换后</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">private static void alloc() {
+</span></span><span class="line"><span class="cl">    int x = 1;
+</span></span><span class="line"><span class="cl">    int y = 2;
+</span></span><span class="line"><span class="cl">    System.out.println(&#34;point.x = &#34; + x + &#34;; point.y=&#34; + y);
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>这样做的好处是可以大大减少堆内存的占用。因为一旦不需要创建对象了，那么就不再需要分配堆内存了。 标量替换为栈上分配提供了很好的基础。</p>
+<h4 id="逃逸分析的不足">逃逸分析的不足</h4>
+<p>关于逃逸分析的论文在1999年就已经发表了，但直到JDK1.6才有实现，而且这项技术到如今也并不是十分成熟。</p>
+<p>其根本原因就是无法保证逃逸分析的性能消耗一定能高于他的消耗。
+虽然经过逃逸分析可以做标量替换、栈上分配、和锁消除。但是逃逸分析自身也是需要进行一系列复杂的分析的，这其实也是一个相对耗时的过程。
+一个极端的例子，就是经过逃逸分析之后，发现没有一个对象是不逃逸的。那这个逃逸分析的过程就白白浪费掉了。</p>
+<p>虽然这项技术并不十分成熟，但是它也是即时编译器优化技术中一个十分重要的手段。
+注意到有一些观点，认为通过逃逸分析，JVM会在栈上分配那些不会逃逸的对象，这在理论上是可行的，但是取决于JvM设计者的选择。
+oracle Hotspot JVM中并未这么做，这一点在逃逸分析相关的文档里已经说明，<strong>所以可以明确所有的对象实例都是创建在堆上。</strong></p>
+<p>目前很多书籍还是基于JDK7以前的版本，JDK已经发生了很大变化，intern字符串的缓存和静态变量曾经都被分配在永久代上，而永久代已经被元数据区取代。
+但是，intern字符串缓存和静态变量并不是被转移到元数据区，而是直接在堆上分配，所以这一点同样符合前面一点的结论：<strong>对象实例都是分配在堆上</strong>。</p>
+<h3 id="总结">总结</h3>
+<p>年轻代是对象的诞生、成长、消亡的区域，一个对象在这里产生、应用，最后被垃圾回收器收集、结束生命。</p>
+<p>老年代放置长生命周期的对象，通常都是从survivor区域筛选拷贝过来的Java对象。
+当然，也有特殊情况，我们知道普通的对象会被分配在TLAB上；如果对象较大，JVM会试图直接分配在Eden其他位置上；
+如果对象太大，完全无法在新生代找到足够长的连续空闲空间，JVM就会直接分配到老年代。当GC只发生在年轻代中，回收年轻代对象的行为被称为MinorGC。</p>
+<p>当GC发生在老年代时则被称为MajorGc或者FullGC。一般的，MinorGc的发生频率要比MajorGC高很多，即老年代中垃圾回收发生的频率将大大低于年轻代。</p>
+</div>
+                    <div id="post_footer" class="post_footer">
+                        <div class="meta">
+                            <div id="post_footer_info" class="info">
+                                <span class="field tags">
+                                    <i class="ri-stack-line"></i>
+                                    
+                                        
+                                        <a href="http://localhost:1313/iblog/tags/java/">Java</a>
+                                        
+                                        <a href="http://localhost:1313/iblog/tags/jvm/">JVM</a>
+                                        
+                                    
+                                    
+                                      <span id="busuanzi_container_page_pv">
+                                          阅读量<span id="busuanzi_value_page_pv"></span>次
+                                      </span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+<div id="doc_comments" class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="http://localhost:1313/iblog/css/comments.css" />
+
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+        
+        emojiCDN: '//i0.hdslb.com/bfs/emote/',
+        
+        emojiMaps: {
+            "tv_doge": "6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png",
+            "tv_亲亲": "a8111ad55953ef5e3be3327ef94eb4a39d535d06.png",
+            "tv_偷笑": "bb690d4107620f1c15cff29509db529a73aee261.png",
+            "tv_再见": "180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png",
+            "tv_冷漠": "b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png",
+            "tv_发怒": "34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png",
+            "tv_发财": "34db290afd2963723c6eb3c4560667db7253a21a.png",
+            "tv_可爱": "9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png",
+            "tv_吐血": "09dd16a7aa59b77baa1155d47484409624470c77.png",
+            "tv_呆": "fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png",
+            "tv_呕吐": "9f996894a39e282ccf5e66856af49483f81870f3.png",
+            "tv_困": "241ee304e44c0af029adceb294399391e4737ef2.png",
+            "tv_坏笑": "1f0b87f731a671079842116e0991c91c2c88645a.png",
+            "tv_大佬": "093c1e2c490161aca397afc45573c877cdead616.png",
+            "tv_大哭": "23269aeb35f99daee28dda129676f6e9ea87934f.png",
+            "tv_委屈": "d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png",
+            "tv_害羞": "a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png",
+            "tv_尴尬": "7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png",
+            "tv_微笑": "70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png",
+            "tv_思考": "90cf159733e558137ed20aa04d09964436f618a1.png",
+            "tv_惊吓": "0d15c7e2ee58e935adc6a7193ee042388adc22af.png",
+            "tv_打脸": "56ab10b624063e966bfcb76ea5dc4794d87dfd47.png",
+            "tv_抓狂": "fe31c08edad661d63762b04e17b8d5ae3c71a757.png",
+            "tv_抠鼻": "c666f55e88d471e51bbd9fab9bb308110824a6eb.png",
+            "tv_斜眼笑": "911f987aa8bc1bee12d52aafe62bc41ef4474e6c.png",
+            "tv_无奈": "ea8ed89ee9878f2fece2dda0ea8a5dbfe21b5751.png",
+            "tv_晕": "5443c22b4d07fb1907ccc610c8e6db254f2461b7.png",
+            "tv_流汗": "cead1c351ab8d79e9f369605beb90148db0fbed3.png",
+            "tv_流泪": "7e71cde7858f0cd50d74b0264aa26db612a8a167.png",
+            "tv_流鼻血": "c32d39db2737f89b904ca32700d140a9241b0767.png",
+            "tv_点赞": "f85c354995bd99e28fc76c869bfe42ba6438eff4.png",
+            "tv_生气": "26702dcafdab5e8225b43ffd23c94ac1ff932654.png",
+            "tv_生病": "8b0ec90e6b86771092a498c54f09fc94621c1900.png",
+            "tv_疑问": "0793d949b18d7be716078349c202c15ff166f314.png",
+            "tv_白眼": "c1d59f439e379ee50eef488bcb5e5378e5044ea4.png",
+            "tv_皱眉": "72ccad6679fea0d14cce648b4d818e09b8ffea2d.png",
+            "tv_目瞪口呆": "0b8cb81a68de5d5365212c99375e7ace3e7891b7.png",
+            "tv_睡着": "8b196675b53af58264f383c50ad0945048290b33.png",
+            "tv_笑哭": "1abc628f6d4f4caf9d0e7800878f4697abbc8273.png",
+            "tv_腼腆": "89712c0d4af73e67f89e35cbc518420380a7f6f4.png",
+            "tv_色": "61822c7e9aae5da76475e7892534545336b23a6f.png",
+            "tv_调侃": "4bc022533ef31544ca0d72c12c808cf4a1cce3e3.png",
+            "tv_调皮": "b9c41de8e82dd7a8515ae5e3cb63e898bf245186.png",
+            "tv_鄙视": "6e72339f346a692a495b123174b49e4e8e781303.png",
+            "tv_闭嘴": "c9e990da7f6e93975e25fd8b70e2e290aa4086ef.png",
+            "tv_难过": "87f46748d3f142ebc6586ff58860d0e2fc8263ba.png",
+            "tv_馋": "fc7e829b845c43c623c8b490ee3602b7f0e76a31.png",
+            "tv_鬼脸": "0ffbbddf8a94d124ca2f54b360bbc04feb6bbfea.png",
+            "tv_黑人问号": "45821a01f51bc867da9edbaa2e070410819a95b2.png",
+            "tv_鼓掌": "1d21793f96ef4e6f48b23e53e3b9e42da833a0f6.png"
+        }
+    })
+</script>
+
+                
+            </div>
+        </div>
+    </div>
+    <div class="side_nav">
+    
+    <a id="top_to_back" href="#" class="top_to_back">
+        <svg t="1688614744062" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2152" width="16" height="16"><path d="M966.4 323.2c-9.6-9.6-25.6-9.6-35.2 0l-416 416-425.6-416c-9.6-9.6-25.6-9.6-35.2 0-9.6 9.6-9.6 25.6 0 35.2l441.6 432c9.6 9.6 25.6 9.6 35.2 0l435.2-432C976 345.6 976 332.8 966.4 323.2z" p-id="2153" fill="#424242"></path></svg>    </a>
+    
+    <div>
+        <a id="content_display" class="content_display">
+            <svg t="1688606941910" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="57753" width="18" height="18"><path d="M192 448c10.9 0 21.8-4.2 30.2-12.5L497 160.8c5.4-5.4 11.8-6.2 15.1-6.2 3.3 0 9.6 0.8 15.1 6.2l274.7 274.7c16.7 16.7 43.7 16.7 60.3 0 16.7-16.7 16.7-43.7 0-60.3L587.4 100.4c-41.6-41.6-109.3-41.6-150.9 0L161.8 375.2c-16.7 16.7-16.7 43.7 0 60.3 8.4 8.3 19.3 12.5 30.2 12.5zM801.8 588.5L527.1 863.2c-5.4 5.4-11.8 6.2-15.1 6.2-3.3 0-9.7-0.8-15.1-6.2L222.2 588.5c-16.7-16.7-43.7-16.7-60.3 0-16.7 16.7-16.7 43.7 0 60.3l274.8 274.8c20.8 20.8 48.1 31.2 75.4 31.2 27.3 0 54.6-10.4 75.4-31.2l274.7-274.8c16.7-16.7 16.7-43.7 0-60.3-16.7-16.7-43.7-16.7-60.4 0z" fill="#424242" p-id="57754"></path></svg>
+        </a>
+        <a id="content_hidden" class="content_hidden">
+            <svg t="1688603143752" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15592" width="18" height="18"><path d="M479.004101 645.938677L165.25229 958.480465a37.510709 37.510709 0 0 0 0 54.059551 36.47863 36.47863 0 0 0 53.063061 0l293.679668-292.576411 293.715256 292.576411a36.443042 36.443042 0 0 0 53.063061 0 37.510709 37.510709 0 0 0 0-54.059551l-313.751811-312.541788c-21.210989-22.349834-36.514219-24.698702-66.017424 0z m66.053013-267.877709l312.577377-312.541789a37.510709 37.510709 0 0 0 0-54.059551 36.443042 36.443042 0 0 0-53.063061 0l-292.505234 292.576411L219.560963 11.459628a36.47863 36.47863 0 0 0-53.063061 0 37.510709 37.510709 0 0 0 0 54.059551l312.577377 312.541789a46.58588 46.58588 0 0 0 65.981835-0.035589z" p-id="15593" fill="#424242"></path></svg>
+        </a>
+    </div>
+    
+    <a id="back_to_top" href="#" class="back_to_top">
+        <svg t="1688628374733" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3166" width="16" height="16"><path d="M966.4 668.8l-435.2-432c-9.6-9.6-25.6-9.6-35.2 0l-441.6 432c-9.6 9.6-9.6 25.6 0 35.2 9.6 9.6 25.6 9.6 35.2 0l425.6-416 416 416c9.6 9.6 25.6 9.6 35.2 0S976 678.4 966.4 668.8z" p-id="3167" fill="#424242"></path></svg>
+    </a>
+</div>
+    <footer class="footer">
+    <div id="footer_powered_by" class="powered_by">
+        <a href="https://varkai.com">Designed by VarKai,</a>
+        <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+    </div>
+
+    <div id="footer_slogan" class="footer_slogan">
+        <span>from 2020</span>
+    </div>
+</footer>
+    <script src="http://localhost:1313/iblog/js/jquery-3.5.1.min.js"></script>
+<link href="http://localhost:1313/iblog/css/fancybox.min.css" rel="stylesheet">
+<script src="http://localhost:1313/iblog/js/fancybox.min.js"></script>
+<script src="http://localhost:1313/iblog/js/darkmode.js"></script>
+<script src="http://localhost:1313/iblog/js/zozo.js"></script>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="http://localhost:1313/iblog/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
+<script src="http://localhost:1313/iblog/js/html2canvas.js"></script>
+<script src="http://localhost:1313/iblog/js/utils.js"></script>
+<script src="http://localhost:1313/iblog/js/html2md.js"></script>
+<script src="http://localhost:1313/iblog/js/htmlexport.js"></script>
+<script src="http://localhost:1313/iblog/js/autodarkmode.js"></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
