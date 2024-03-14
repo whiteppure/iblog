@@ -1,5 +1,5 @@
 ---
-title: "Vue2.0学习笔记"
+title: "Vue2.0基础"
 date: 2019-05-23
 draft: false
 tags: ["Vue"]
