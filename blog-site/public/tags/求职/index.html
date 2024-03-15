@@ -125,30 +125,6 @@
         <div class="content">
             <div class="list_with_title">
                 
-                <div class="listing_title">2023</div>
-                <div class="listing">
-                    
-                    <div class="listing_item">
-                        <div class="listing_post">
-                            <a href="/iblog/posts/resume/interview-resume-20230915/">20230915简历</a>
-                            <div class="post_time"><span class="date">09-15</span></div>
-                        </div>
-                    </div>
-                    
-                </div>
-                
-                <div class="listing_title">2022</div>
-                <div class="listing">
-                    
-                    <div class="listing_item">
-                        <div class="listing_post">
-                            <a href="/iblog/posts/resume/interview-resume-20220422/">20220422简历</a>
-                            <div class="post_time"><span class="date">04-22</span></div>
-                        </div>
-                    </div>
-                    
-                </div>
-                
                 <div class="listing_title">2021</div>
                 <div class="listing">
                     
@@ -163,18 +139,6 @@
                         <div class="listing_post">
                             <a href="/iblog/posts/resume/interview-questions-and-answers/">面试中常见的问题</a>
                             <div class="post_time"><span class="date">04-23</span></div>
-                        </div>
-                    </div>
-                    
-                </div>
-                
-                <div class="listing_title">2020</div>
-                <div class="listing">
-                    
-                    <div class="listing_item">
-                        <div class="listing_post">
-                            <a href="/iblog/posts/resume/interview-resume-20201124/">20201124简历</a>
-                            <div class="post_time"><span class="date">11-24</span></div>
                         </div>
                     </div>
                     
@@ -223,7 +187,30 @@
 <script src="http://localhost:1313/iblog/js/utils.js"></script>
 <script src="http://localhost:1313/iblog/js/html2md.js"></script>
 <script src="http://localhost:1313/iblog/js/htmlexport.js"></script>
-<script src="http://localhost:1313/iblog/js/autodarkmode.js"></script>
+
+
+
+<script>
+    function addDarkmodeWidget(){
+        
+        const hours = new Date().getHours();
+        if (hours >= 19 || hours <= 5){
+        new Darkmode({
+            right: '32px', 
+            bottom: 'unset', 
+            
+            time: '0.3s', 
+            mixColor: '#f7f7f7', 
+            backgroundColor: '#f7f7f7', 
+            buttonColorDark: '#212121', 
+            buttonColorLight: '#f7f7f7', 
+            saveInCookies: false, 
+            autoMatchOsTheme: true 
+        }).toggle();
+        }
+    }
+    window.addEventListener('load', addDarkmodeWidget);
+</script>
 
 
 

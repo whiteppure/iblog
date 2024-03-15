@@ -8,7 +8,7 @@
 	
 	
 	
-	<title>20220422简历 ｜ 唯手熟尔</title>
+	<title>Java20220422简历 ｜ 唯手熟尔</title>
 	
     
     
@@ -474,7 +474,7 @@
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
-                        <h2 id="post_single_title">20220422简历</h2>
+                        <h2 id="post_single_title">Java20220422简历</h2>
                         <span id="post_page_title_date" class="date">2022.04.22</span>
                     </div>
                     <div class="post_content markdown"><h2 id="自我介绍">自我介绍</h2>
@@ -647,8 +647,6 @@
                                         
                                         <a href="http://localhost:1313/iblog/tags/%E7%AE%80%E5%8E%86/">简历</a>
                                         
-                                        <a href="http://localhost:1313/iblog/tags/%E6%B1%82%E8%81%8C/">求职</a>
-                                        
                                     
                                     
                                       <span id="busuanzi_container_page_pv">
@@ -780,7 +778,30 @@
 <script src="http://localhost:1313/iblog/js/utils.js"></script>
 <script src="http://localhost:1313/iblog/js/html2md.js"></script>
 <script src="http://localhost:1313/iblog/js/htmlexport.js"></script>
-<script src="http://localhost:1313/iblog/js/autodarkmode.js"></script>
+
+
+
+<script>
+    function addDarkmodeWidget(){
+        
+        const hours = new Date().getHours();
+        if (hours >= 19 || hours <= 5){
+        new Darkmode({
+            right: '32px', 
+            bottom: 'unset', 
+            
+            time: '0.3s', 
+            mixColor: '#f7f7f7', 
+            backgroundColor: '#f7f7f7', 
+            buttonColorDark: '#212121', 
+            buttonColorLight: '#f7f7f7', 
+            saveInCookies: false, 
+            autoMatchOsTheme: true 
+        }).toggle();
+        }
+    }
+    window.addEventListener('load', addDarkmodeWidget);
+</script>
 
 
 

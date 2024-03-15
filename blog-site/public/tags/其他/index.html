@@ -130,6 +130,13 @@
                     
                     <div class="listing_item">
                         <div class="listing_post">
+                            <a href="/iblog/posts/essays/quick-write-resume/">如何快速写一份简历</a>
+                            <div class="post_time"><span class="date">03-15</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="listing_item">
+                        <div class="listing_post">
                             <a href="/iblog/posts/essays/force-copy-website-text/">如何强制复制网站文字</a>
                             <div class="post_time"><span class="date">03-14</span></div>
                         </div>
@@ -180,7 +187,30 @@
 <script src="http://localhost:1313/iblog/js/utils.js"></script>
 <script src="http://localhost:1313/iblog/js/html2md.js"></script>
 <script src="http://localhost:1313/iblog/js/htmlexport.js"></script>
-<script src="http://localhost:1313/iblog/js/autodarkmode.js"></script>
+
+
+
+<script>
+    function addDarkmodeWidget(){
+        
+        const hours = new Date().getHours();
+        if (hours >= 19 || hours <= 5){
+        new Darkmode({
+            right: '32px', 
+            bottom: 'unset', 
+            
+            time: '0.3s', 
+            mixColor: '#f7f7f7', 
+            backgroundColor: '#f7f7f7', 
+            buttonColorDark: '#212121', 
+            buttonColorLight: '#f7f7f7', 
+            saveInCookies: false, 
+            autoMatchOsTheme: true 
+        }).toggle();
+        }
+    }
+    window.addEventListener('load', addDarkmodeWidget);
+</script>
 
 
 
