@@ -8,8 +8,8 @@ slug: "dev-idea"
 ## 下载
 工欲善其事必先利其器,一个好的开发工具,能极大提高开发效率.
 
-- 新UI很漂亮。IDEA 2022.2.3 官方下载地址: https://www.jetbrains.com/zh-cn/idea/download/other.html
-- 激活工具 百度云下载. 链接：https://pan.baidu.com/s/19sCUTCBXvwXgEQc8vX-SYQ?pwd=gwup 提取码：gwup
+- 新UI很漂亮。IDEA 官方下载地址: https://www.jetbrains.com/zh-cn/idea/download/other.html
+- 激活工具 百度云下载. 链接：https://pan.baidu.com/s/1bmktlKMWC6nIqgJNSUYx_A?pwd=8888
 
 ![idea常用配置](/iblog/posts/annex/images/essays/idea常用配置-01.jpg)
 
