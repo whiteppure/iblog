@@ -5,10 +5,11 @@ hidden: true
 draft: false
 ---
 
-## 搭建博客
-本博客使用 [hugo](https://gohugo.io) + GitHubPage 进行搭建，使用的主题为 [zozo](https://github.com/varkai/hugo-theme-zozo) Designed by [VarKai](https://www.varkai.com)。
+最开始搭建博客时，希望能将自己学习的知识记录下来，发布过一些其他博客网站，但是都用着不太舒服，最后选择了自己搭建，开始是自己买服务器，用[halo](https://gitee.com/halo-dev/halo)搭建，随着时间的推移，当时囊中羞涩，没有再续费，最后摸索出来使用[GitHub Page](https://docs.github.com/zh/pages/getting-started-with-github-pages)搭建。
 
-如果你想要使用 hugo 搭建博客，可以参考以下相关资料：
+本博客于2021年2月20日正式发布，使用 [hugo](https://gohugo.io) + [GitHub Page](https://docs.github.com/zh/pages/getting-started-with-github-pages) 进行搭建，使用的主题为 [zozo](https://github.com/varkai/hugo-theme-zozo) Designed by [VarKai](https://www.varkai.com)。
+
+如果你想要跟我一样使用 [hugo](https://gohugo.io) 搭建博客，可以参考以下相关资料：
 - hugo中文帮助文档: https://hugo.aiaide.com
 - hugo中文文档: https://www.gohugo.org
 - hugo给文章添加目录: https://www.ariesme.com/posts/2019/add_toc_for_hugo
@@ -16,49 +17,9 @@ draft: false
 - 不蒜子计数统计: https://busuanzi.ibruce.info
 - 暗黑主题: https://darkmodejs.learn.uno
 
-## 面试资料
-目前只有面试Java开发的相关资料，包括从网上收集和自己整理的一些，希望可以帮助到一些人吧。
-
-- [面试资料A](/iblog/posts/resume/interview-junior-javaer/)
-- ...
-
-[//]: # (- [面试资料B]&#40;https://www.cnblogs.com/crazymakercircle/&#41;)
+关于博客文章的内容，在2024年之前主要是一些Java后端技术类的文章，当然最近的一些文章不光是关于技术，会更加贴近生活，会写一些对生活上的思考和读一些书籍的感想，除此之外也会分享一些网上冲浪的经验。一方面是梳理自己的思想，另一方面也希望能帮助大家伙。
 
 
-## 学习参考资料
-因为本人目前主要是做Java开发相关的工作，所以这里的博客文章、参考资料大部分都和Java相关，如果您不想看到Java可以直接关闭本页面。
-
-### 大厂技术博客
-- Oracle博客: https://blogs.oracle.com/poonam
-- 美团技术团队: https://tech.meituan.com
-- 淘宝前端团队: https://fed.taobao.org/blogs
-- 有道技术博客: http://techblog.youdao.com
-- 阿里技术团队: https://102.alibaba.com
-- 360技术团队: https://blogs.360.net
-
-
-### 资源网站
-- Java工程师成神之路: https://hollischuang.github.io/toBeTopJavaer
-- CyC2018: http://www.cyc2018.xyz
-- Netty学习手册: https://dongzl.github.io/netty-handbook
-- 互联网进阶知识扫盲: https://doocs.github.io/advanced-java
-- SpringBoot 学习/面试指南: https://snailclimb.gitee.io/springboot-guide
-- Java-Spring学习指南: https://www.baeldung.com/
-- JavaFamily: https://github.com/AobingJava/JavaFamily
-- 常用Java类库大全: https://www.21doc.net/java/awesomejava
-- Java论坛: http://bbs.chinaunix.net/forum-26-1.html
-- 五分钟学算法: https://www.cxyxiaowu.com
-- 资源文档鸠摩搜索: https://www.jiumodiary.com
-- iMySql老叶茶馆: https://imysql.com
-- Quick Reference: https://quickref.cn
-- Chrome插件安装包: https://crxdl.com
-- 图说设计模式: https://design-patterns.readthedocs.io/zh_CN/latest/index.html
-- ThreadLocal: http://www.threadlocal.cn
-- 深入分析synchronized: https://www.cnblogs.com/aspirant/p/11470858.html
-- 阮一峰博客: http://www.ruanyifeng.com/blog
-- hollis博客: https://www.hollischuang.com
-- deepinmind的技术博客: http://it.deepinmind.com
-- JavaSE规范: https://docs.oracle.com/javase/specs
 
 
 
