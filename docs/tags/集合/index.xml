@@ -13,14 +13,14 @@
       <link>https://whiteppure.github.io/iblog/posts/essays/java-hashmap/</link>
       <pubDate>Mon, 03 May 2021 00:00:00 +0000</pubDate>
       <guid>https://whiteppure.github.io/iblog/posts/essays/java-hashmap/</guid>
-      <description>相关概念 capacity： 容量，默认16； loadFactor： 负载因子，表示HashMap满的程度，默认值为0.75f，也就是说默认情况下，当HashMap中元素个数达到了容量的3/4的时候就会进行自动扩容； threshold： 阈值；阈值</description>
+      <description>相关概念 capacity： 容量，默认16； loadFactor： 负载因子，表示HashMap满的程度，默认值为0.75f，也就是说默认情况下，当HashMap中</description>
     </item>
     <item>
       <title>Java中集合的线程不安全问题</title>
       <link>https://whiteppure.github.io/iblog/posts/essays/java-thread-collection/</link>
       <pubDate>Sun, 05 Apr 2020 00:00:00 +0000</pubDate>
       <guid>https://whiteppure.github.io/iblog/posts/essays/java-thread-collection/</guid>
-      <description>ArrayList ArrayList线程不安全示例: public static void main(String[] args) { ArrayList&amp;lt;String&amp;gt; arrayList = new ArrayList&amp;lt;&amp;gt;(); for(int i=0; i&amp;lt; 3; i++) { new Thread(() -&amp;gt; { arrayList.add(UUID.randomUUID().toString()); System.out.println(arrayList); },String.valueOf(i)).start(); } } // ConcurrentModificationException 同步修改异常 Exception in thread &amp;#34;8&amp;#34; java.util.ConcurrentModificationException [null, 2041b613-8068-4ddd-9d01-305f5680d377] [null, 2041b613-8068-4ddd-9d01-305f5680d377, b3e0296d-e263-4632-a023-4267cdec5e25] [null, 2041b613-8068-4ddd-9d01-305f5680d377] 原因分析: 当某个线程正在执行 add()方法时,被某个线程打断,添加到一半被打断,没有被添加完 解决方案: 使用Vec</description>
+      <description>ArrayList ArrayList线程不安全示例: public static void main(String[] args) { ArrayList&amp;lt;String&amp;gt; arrayList = new ArrayList&amp;lt;&amp;gt;(); for(int i=0; i&amp;lt; 3; i++) { new Thread(() -&amp;gt; { arrayList.add(UUID.randomUUID().toString()); System.out.println(arrayList); },String.valueOf(i)).start(); } } // ConcurrentModificationException 同步修改异常 Exception in thread &amp;#34;8&amp;#34; java.util.ConcurrentModificationException [null, 2041b613-8068-4ddd-9d01-305f5680d377] [null, 2041b613-8068-4ddd-9d01-305f5680d377, b3e0296d-e263-4632-a023-4267cdec5e25] [null, 2041b613-8068-4ddd-9d01-305f5680d377] 原因分析: 当某个线程正在执行 ad</description>
     </item>
   </channel>
 </rss>
