@@ -34,6 +34,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/highlight.css" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/toc.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/search.css" />
 
     
     
@@ -181,7 +182,16 @@
             <div class="pagination"></div>
         </div>
     </div>
-    <div class="side_nav">
+    
+<a id="search-btn" style="display: inline-block;" href="javascript:void(0);">
+    <span class="ri-search-line"></span>
+</a>
+<div id="fastSearch">
+    <input id="searchInput" tabindex="0" autocomplete="off">
+    <ul id="searchResults">
+    </ul>
+</div>
+<div class="side_nav">
     
     <a id="top_to_back" href="#" class="top_to_back">
         <svg t="1688614744062" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2152" width="16" height="16"><path d="M966.4 323.2c-9.6-9.6-25.6-9.6-35.2 0l-416 416-425.6-416c-9.6-9.6-25.6-9.6-35.2 0-9.6 9.6-9.6 25.6 0 35.2l441.6 432c9.6 9.6 25.6 9.6 35.2 0l435.2-432C976 345.6 976 332.8 966.4 323.2z" p-id="2153" fill="#424242"></path></svg>    </a>
@@ -221,29 +231,31 @@
 <script src="https://whiteppure.github.io/iblog/js/html2md.js"></script>
 <script src="https://whiteppure.github.io/iblog/js/htmlexport.js"></script>
 
+<script src="https://whiteppure.github.io/iblog/js/fastsearch.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/fuse.js"></script>
 
 
-<script>
-    function addDarkmodeWidget(){
-        
-        const hours = new Date().getHours();
-        if (hours >= 19 || hours <= 5){
-        new Darkmode({
-            right: '32px', 
-            bottom: 'unset', 
-            
-            time: '0.3s', 
-            mixColor: '#f7f7f7', 
-            backgroundColor: '#f7f7f7', 
-            buttonColorDark: '#212121', 
-            buttonColorLight: '#f7f7f7', 
-            saveInCookies: false, 
-            autoMatchOsTheme: true 
-        }).toggle();
-        }
-    }
-    window.addEventListener('load', addDarkmodeWidget);
-</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
