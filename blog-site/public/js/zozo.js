@@ -171,6 +171,8 @@ function displayNotContent(){
   for (const element of notContentObjs) {
     if (!isEmpty(element)) {
       element.classList.remove('display_none')
+      // 隐藏搜索内容
+      $('#fastSearch').hidden
     }
   }
 }
@@ -201,6 +203,9 @@ function getNotContent(){
     // 侧边栏
     document.getElementById('back_to_top'),
     document.getElementById('top_to_back'),
+    // 搜索框
+    document.getElementById('search-btn'),
+    document.getElementById('fastSearch')
   ]
 }
 

@@ -3859,8 +3859,8 @@ NIO支持面向缓冲区的、基于通道的IO操作。NIO将以更加高效的
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">MyMessageDecoder</span> <span class="k">extends</span> <span class="n">ReplayingDecoder</span><span class="o">&lt;</span><span class="n">Void</span><span class="o">&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
+</span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    <span class="err">@</span><span class="n">Override</span>
 </span></span><span class="line"><span class="cl">    <span class="n">protected</span> <span class="n">void</span> <span class="n">decode</span><span class="p">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">ByteBuf</span> <span class="ow">in</span><span class="p">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="ne">Object</span><span class="o">&gt;</span> <span class="n">out</span><span class="p">)</span> <span class="n">throws</span> <span class="n">Exception</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="o">//</span><span class="err">需要将得到二进制字节码</span><span class="o">-&gt;</span> <span class="n">MessageProtocol</span> <span class="err">数据包</span><span class="p">(</span><span class="err">对象</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="ne">int</span> <span class="n">length</span> <span class="o">=</span> <span class="ow">in</span><span class="o">.</span><span class="n">readInt</span><span class="p">();</span>
