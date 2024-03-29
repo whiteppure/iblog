@@ -65,7 +65,7 @@ Github520，截至这篇文章发布之前，host文件内容：
 - https://gitclone.com/
 - https://help.kkgithub.com/
 
-上述方法如果仍然无法解决问题，我们可以尝试使用VPN，下面是一些推荐的网站，嘘！这些都是不能播的：
+上述方法如果仍然无法解决问题，我们可以尝试使用VPN，下面是一些推荐的网站：
 - https://sdkdns.github.io/
 - https://www.naiun.top/#/login
 
