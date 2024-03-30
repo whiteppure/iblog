@@ -6,6 +6,7 @@ tags: ["书籍"]
 slug: "java-books"
 ---
 
+- [深入理解计算机系统](https://pan.baidu.com/s/1hrra2uo)
 - [HeadFirst设计模式](https://pan.baidu.com/s/1mXGLnTJqGtGeGlrePzx3fA?pwd=8888)
 - [Java数据结构和算法](https://pan.baidu.com/s/1mXGLnTJqGtGeGlrePzx3fA?pwd=8888)
 - [Java核心技术卷I基础知识](https://pan.baidu.com/s/1mXGLnTJqGtGeGlrePzx3fA?pwd=8888)
