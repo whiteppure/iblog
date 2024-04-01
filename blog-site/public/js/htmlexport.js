@@ -8,6 +8,9 @@
         // html导出pdf
         document.getElementById('export_pdf').onclick = () => {
             removeNotContent()
+            document.getElementById('content_display').remove()
+            document.getElementById('content_hidden').remove()
+
             window.print();
             window.location.reload()
         }
@@ -35,6 +38,9 @@
         // html导出docx
         document.getElementById('export_doc').onclick = () => {
             removeNotContent()
+            document.getElementById('content_display').remove()
+            document.getElementById('content_hidden').remove()
+
             const content = document.getElementById('main_content')
             const contentMd = wordExport(content)
             downloadFile(title+'.doc','application/msword',contentMd)
