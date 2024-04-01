@@ -1,8 +1,8 @@
 ---
-title: "Vue2.0基础"
+title: "Vue2.0基础入门笔记"
 date: 2019-05-23
 draft: false
-tags: ["Vue"]
+tags: ["Vue","笔记"]
 slug: "vue2-note"
 ---
 
