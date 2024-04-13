@@ -25,7 +25,7 @@ Spring是一个轻量级的框架，简化我们的开发，里面重点包含�
 Spring虽然把它当成框架来使用，但其本质是一个容器，即IOC容器，里面最核心是如何[创建对象和管理对象](#Bean的创建流程),里面包含了Bean的生命周期和Spring的一些扩展点，包含对AOP的应用。
 除此之外，Spring真正的强大之处在于其生态，它包含了Spring Framework、Spring Boot、Spring Cloud等一些列框架，极大提高了开发效率。
 
-## Spring 启动流程
+## Spring启动流程
 参考：[https://blog.csdn.net/scjava/article/details/109587619](https://blog.csdn.net/scjava/article/details/109587619)
 
 ![Spring详解-004](/iblog/posts/annex/images/spring/Spring详解-004.png)
