@@ -7,7 +7,7 @@ tags: ["MQ"]
 slug: "java-mq"
 ---
 
-## 概念
+## 概览
 MQ 即 messagequeue 消息队列，是分布式系统的重要组件，主要解决异步消息，应用解耦，消峰等问题。从而实现高可用，高性能，可伸缩和最终一致性的架构。使用较多的MQ有：activeMQ，rabbitMQ，kafka，metaMQ。
 
 ## MQ优点
