@@ -1,5 +1,5 @@
 ---
-title: "学习Java参考资料"
+title: "学习Java参考资料（持续更新中...）"
 date: 2024-03-22
 draft: false
 tags: ["Java"]
@@ -41,6 +41,6 @@ slug: "java-resource"
 - deepinmind的技术博客: http://it.deepinmind.com
 - JavaSE规范: https://docs.oracle.com/javase/specs
 - Web前端导航: https://www.alloyteam.com/nav
-
+- 计算机考研论坛：http://www.cskaoyan.com/forum.php
 
 
