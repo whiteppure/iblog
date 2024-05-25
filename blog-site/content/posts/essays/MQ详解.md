@@ -1,9 +1,8 @@
-
 ---
 title: "MQ详解"
 date: 2021-10-19
 draft: false
-tags: ["MQ"]
+tags: ["MQ","详解"]
 slug: "java-mq"
 ---
 

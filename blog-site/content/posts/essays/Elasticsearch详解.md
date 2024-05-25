@@ -2,7 +2,7 @@
 title: "Elasticsearch详解"
 date: 2023-02-14
 draft: false
-tags: ["Elasticsearch"]
+tags: ["Elasticsearch","详解"]
 slug: "elasticsearch"
 ---
 

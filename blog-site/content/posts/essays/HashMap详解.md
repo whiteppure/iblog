@@ -2,7 +2,7 @@
 title: "HashMap详解"
 date: 2021-05-03
 draft: false
-tags: ["Java", "集合"]
+tags: ["Java", "集合","详解"]
 slug: "java-hashmap"
 ---
 
