@@ -2,7 +2,7 @@
 title: "SpringMVC与SpringWebFlux"
 date: 2023-04-14
 draft: false
-tags: ["Java","Spring"]
+tags: ["Java","spring"]
 slug: "java-spring-mvc-webflux"
 ---
 

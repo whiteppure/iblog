@@ -2,7 +2,7 @@
 title: "SpringBoot整合redis"
 date: 2020-03-01
 draft: false
-tags: ["springboot", "redis"]
+tags: ["springboot", "redis","spring"]
 slug: "springboot-redis"
 ---
 

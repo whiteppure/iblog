@@ -62,14 +62,9 @@ Java 8及之后**堆内存逻辑**上分为三部分：新生区+养老区+元�
 - Tenure generation space 养老区
 - Meta Space 元空间
 
-堆空间内部结构，JDK1.8之前从 永久代 替换成 元空间。
-<div style="width: 45%;display: inline-block">
-    <img src="/iblog/posts/annex/images/essays/jvm1.8之前.png" alt="jvm1.8之前">
-</div>
-<div style="width: 45%;display: inline-block">
-    <img src="/iblog/posts/annex/images/essays/jvm1.8.png" alt="jvm1.8">
-</div>
+堆空间内部结构，JDK1.8之后永久代替换成了元空间。
 
+![堆内存结构](/iblog/posts/annex/images/essays/堆内存结构.png)
 
 ### 设置堆内存大小
 

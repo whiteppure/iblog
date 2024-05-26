@@ -2,7 +2,7 @@
 title: "SpringBoot整合elasticsearch"
 date: 2020-02-09
 draft: false
-tags: ["springboot", "elasticsearch"]
+tags: ["springboot", "elasticsearch","spring"]
 slug: "springboot-elasticsearch"
 ---
 ## 安装elasticsearch
