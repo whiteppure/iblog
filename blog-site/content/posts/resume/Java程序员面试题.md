@@ -115,13 +115,12 @@ slug: "interview-junior-javaer"
 - [从单体架构迁移到微服务架构](/iblog/posts/essays/java-small-service/#从单体架构迁移到微服务架构)
 - [服务治理治的是什么](/iblog/posts/essays/java-small-service/#服务治理治的是什么)
 - [分布式断路思想与Hystrix](/iblog/posts/essays/java-small-service/#服务熔断降级)
-- 服务注册与Nacos
-- 微服务网关
+- [微服务网关Spring Cloud Gateway](/iblog/posts/essays/java-small-service/#spring-cloud-gateway)
 
 #### 7.分布式架构基础
 - [Base、CAP分布式事务](/iblog/posts/essays/java-transaction/#分布式事务基础理论)
-- [分布式锁]()
-- [分布式id](distributed-id)
+- [分布式锁](/iblog/posts/essays/distributed-lock/)
+- [分布式id](/iblog/posts/essays/distributed-id/)
 
 
 
