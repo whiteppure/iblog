@@ -1,5 +1,5 @@
 ---
-title: "JVM-本地方法接口"
+title: "JVM中的本地方法接口"
 date: 2021-04-02
 draft: false
 tags: ["Java", "JVM"]

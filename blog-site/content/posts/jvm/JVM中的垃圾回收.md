@@ -1,5 +1,5 @@
 ---
-title: "JVM-垃圾回收"
+title: "JVM中的垃圾回收"
 date: 2021-04-21
 draft: false
 tags: ["Java", "JVM"]

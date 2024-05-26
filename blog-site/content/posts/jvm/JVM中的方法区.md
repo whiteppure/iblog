@@ -1,5 +1,5 @@
 ---
-title: "JVM-方法区"
+title: "JVM中的方法区"
 date: 2021-04-08
 draft: false
 tags: ["Java", "JVM"]

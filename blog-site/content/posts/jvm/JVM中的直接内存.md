@@ -1,5 +1,5 @@
 ---
-title: "JVM-直接内存"
+title: "JVM中的直接内存"
 date: 2021-04-14
 draft: false
 tags: ["Java", "JVM"]

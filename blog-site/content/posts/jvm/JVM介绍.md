@@ -1,5 +1,5 @@
 ---
-title: "JVM-JVM介绍"
+title: "JVM介绍"
 date: 2021-03-05
 draft: false
 tags: ["Java","JVM", "使用介绍"]
