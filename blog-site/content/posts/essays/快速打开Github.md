@@ -1,6 +1,6 @@
 ---
 title: "快速打开Github"
-date: 2024-03-22
+date: 2024-03-21
 draft: false
 tags: ["其他"]
 slug: "accelerate-access-github"
@@ -11,8 +11,8 @@ slug: "accelerate-access-github"
 我们在浏览器输入 GitHub 的网址时，会向 DNS 服务器发送一个请求，获取到 GitHub 网站所在的服务器 IP 地址，从而进行访问。如果 DNS 告诉了你错误的地址、或者请求被拦截、再或者 DNS 挂了，都会导致你无法访问网站。
 
 可以通过修改 hosts 文件，解决： GitHub 访问速度慢的问题，推荐[GitHub520](https://github.com/521xueweihan/GitHub520)。
-Windows 系统中的文件路径：`C:\WINDOWS\system32\drivers\etc`
-Linux 系统中的文件路径：`/etc/hosts`
+- Windows 系统中的文件路径：`C:\WINDOWS\system32\drivers\etc`
+- Linux 系统中的文件路径：`/etc/hosts`
 
 Github520，截至这篇文章发布之前，host文件内容：
 ```text

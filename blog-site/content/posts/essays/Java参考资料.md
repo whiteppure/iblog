@@ -1,6 +1,6 @@
 ---
 title: "Java参考资料（持续更新）"
-date: 2024-03-22
+date: 2024-03-20
 draft: false
 tags: ["Java"]
 slug: "java-resource"
