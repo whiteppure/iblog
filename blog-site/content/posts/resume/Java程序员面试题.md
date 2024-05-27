@@ -37,10 +37,8 @@ slug: "interview-junior-javaer"
 #### 3.JVM
 - [JVM内存区域划分及功能](/iblog/posts/jvm/java-memory-divide/#java内存区域划分)
 - [Java类加载机制](/iblog/posts/jvm/java-memory-divide/#java类加载机制)
-- JVM中对象生命周期
-- [JVM垃圾回收机制]()
-- 常用JVM启动参数
-- STW及JVM参数调优
+- [JVM垃圾回收机制](/iblog/posts/jvm/java-memory-divide/#jvm垃圾回收机制iblogpostsjvmjava-garbage-collection)
+- JVM参数调优
 - JVM问题排查思路
 
 #### 4.IO与序列化
