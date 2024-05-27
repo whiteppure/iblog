@@ -343,8 +343,7 @@ Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
 - 空间分配担保。就是经过Minor GC后，所有的对象都存活，因为Survivor比较小，所以就需要将Survivor无法容纳的对象，存放到老年代中。通过`-XX:HandlePromotionFailure`参数来调节。
 
 ### TLAB
-
-> 堆空间都是共享的么？
+>堆空间都是共享的么？
 不是，因为还有 TLAB 这个概念，在堆中划分出一块区域，为每个线程所独占，以此来保证线程安全。
 
 TLAB全称：`Thread Local Allocation Buffer` 译为：线程本地分配缓冲区。
@@ -361,7 +360,7 @@ TLAB全称：`Thread Local Allocation Buffer` 译为：线程本地分配缓冲�
 默认情况下，TLAB空间的内存非常小，仅占有整个Eden空间的1%，当然我们可以通过选项`-XX:TLABWasteTargetPercent`设置TLAB空间所占用Eden空间的百分比大小。
 
 对象首先是通过TLAB开辟空间，如果不能放入，那么需要通过Eden来进行分配。尽管不是所有的对象实例都能够在TLAB中成功分配内存，但JVM确实是将TLAB作为内存分配的首选。
-可以通过选项`-XX:UseTLAB`设置是否开启TLAB空间,默认是开启的。一旦对象在TLAB空间分配内存失败时，JVM就会尝试着通过使用加锁机制确保数据操作的原子性，从而直接在Eden空间中分配内存。
+可以通过选项`-XX:UseTLAB`设置是否开启TLAB空间，默认是开启的。一旦对象在TLAB空间分配内存失败时，JVM就会尝试着通过使用加锁机制确保数据操作的原子性，从而直接在Eden空间中分配内存。
 
 ![TLAB分配过程.png](/iblog/posts/annex/images/essays/TLAB分配过程.png)
 

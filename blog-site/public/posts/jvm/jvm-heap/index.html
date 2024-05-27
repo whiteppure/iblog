@@ -1338,7 +1338,7 @@ Java中一种全局暂停现象，全局停顿，所有 Java 代码停止，nati
 <p>从内存模型而不是垃圾收集的角度，对Eden区域继续进行划分，JVM为每个线程分配了一个私有缓存区域，它包含在Eden空间内。
 默认情况下，TLAB空间的内存非常小，仅占有整个Eden空间的1%，当然我们可以通过选项<code>-XX:TLABWasteTargetPercent</code>设置TLAB空间所占用Eden空间的百分比大小。</p>
 <p>对象首先是通过TLAB开辟空间，如果不能放入，那么需要通过Eden来进行分配。尽管不是所有的对象实例都能够在TLAB中成功分配内存，但JVM确实是将TLAB作为内存分配的首选。
-可以通过选项<code>-XX:UseTLAB</code>设置是否开启TLAB空间,默认是开启的。一旦对象在TLAB空间分配内存失败时，JVM就会尝试着通过使用加锁机制确保数据操作的原子性，从而直接在Eden空间中分配内存。</p>
+可以通过选项<code>-XX:UseTLAB</code>设置是否开启TLAB空间，默认是开启的。一旦对象在TLAB空间分配内存失败时，JVM就会尝试着通过使用加锁机制确保数据操作的原子性，从而直接在Eden空间中分配内存。</p>
 <p><img alt="TLAB分配过程.png" src="/iblog/posts/annex/images/essays/TLAB%E5%88%86%E9%85%8D%E8%BF%87%E7%A8%8B.png"></p>
 <h3 id="jvm堆空间的参数设置httpsdocsoraclecomjavase8docstechnotestoolsunixjavahtml"><a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html">JVM堆空间的参数设置</a></h3>
 <ul>
