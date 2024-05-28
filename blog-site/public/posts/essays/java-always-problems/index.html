@@ -93,14 +93,46 @@
             
         <ul class="nav">
             
+        <ul class="nav">
+            
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%86%85%e5%ad%98%e4%bd%bf%e7%94%a8%e8%bf%87%e9%ab%98">
-                    内存使用过高
+                <a class="nav-link text-left" href="#%e6%8e%92%e6%9f%a5%e8%bf%87%e7%a8%8b">
+                    排查过程
                 </a>
             </li>
             
             
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e8%a7%a3%e5%86%b3%e6%96%b9%e6%a1%88">
+                    解决方案
+                </a>
+            </li>
+            
+            
+        </ul>
+        
         </ul>
         
         </ul>
@@ -149,6 +181,62 @@
             </li>
             
             
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%8e%92%e6%9f%a5%e8%bf%87%e7%a8%8b-1">
+                    排查过程
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e8%a7%a3%e5%86%b3%e6%96%b9%e6%a1%88-1">
+                    解决方案
+                </a>
+            </li>
+            
+            
+        </ul>
+        
         </ul>
         
         </ul>
@@ -280,30 +368,30 @@
                         <span id="post_page_title_date" class="date">2024.05.28</span>
                     </div>
                     <div class="post_content markdown"><h2 id="cpu使用过高">CPU使用过高</h2>
-<p>一般在生产环境排查程序故障，都会查看日志什么的，但是有些故障日志是看不出来的，就比如：CPU使用过高。</p>
-<p>那应该怎么办呢？我们需要结合linux命令和JDK相关命令来排查程序故障。</p>
-<p>步骤：</p>
-<ul>
-<li>首先使用top命令，找出CPU占比最高的Java进程；然后进一步定位后台程序，如果发现使用过高的进程ID,记录下来方便排查；</li>
-<li>定位到具体的线程；使用<code>ps -mp 进程ID -o THREAD,tid,time</code>命令可以找到有问题的线程ID；
+<p>一般在生产环境排查程序故障，都会查看日志什么的，但是有些故障日志是看不出来的，就比如：CPU使用过高。
+那应该怎么办呢？我们需要结合linux命令和JDK相关命令来排查程序故障。</p>
+<h3 id="排查过程">排查过程</h3>
+<ol>
+<li>首先使用top命令，找出CPU占比最高的Java进程，然后进一步定位后台程序，如果发现使用过高的进程ID，记录下来方便排查。</li>
+<li>定位到具体的线程，使用<code>ps -mp 进程ID -o THREAD,tid,time</code>命令可以找到有问题的线程ID。
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ps -mp 进程ID -o THREAD,tid,time 说明：
 </span></span><span class="line"><span class="cl">-m：显示所有线程；
 </span></span><span class="line"><span class="cl">-p：pid进程使用CPU的时间；
 </span></span><span class="line"><span class="cl">-o：该参数后是用户自定义参数
 </span></span></code></pre></div></li>
-<li>获取到线程ID后，将线程ID转化为16进制格式，如果有英文要小写格式；可以用命令<code>printf &quot;%x\n&quot; 线程ID</code>,当然也可以使用工具从10进制转16进制。
+<li>获取到线程ID后，需要将线程ID转化为16进制格式，如果有英文要小写格式；可以用命令<code>printf &quot;%x\n&quot; 线程ID</code>，当然也可以使用工具从10进制转16进制。
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">printf &#34;%x\n&#34; 16
 </span></span></code></pre></div></li>
-<li>线程ID转成16进制后，执行最后一个命令：<code>jstack 进程ID | grep 16进制线程ID -A50</code>,就能看到有问题的代码。</li>
-</ul>
-<h2 id="内存使用过高">内存使用过高</h2>
-<p>与CPU使用过高同样的，内存如果占用过大，查看程序日志也看不出来。</p>
-<p>步骤：</p>
-<ul>
-<li>使用top命令查看应用程序内存占用情况，查看内存使用情况,如果发现使用过高的进程ID,记录下来；</li>
-<li>根据进程ID查询具体线程ID: <code>ps p进程ID -L -o pcpu,pmem,pid,tid,time,tname,cmd</code>,记下使用内存异常的记下线程ID；</li>
-<li>将内存使用较高的线程的堆栈信息写入文件：<code>jstack -l 进程ID &gt; 文件名</code>,写入文件后将文件中的线程ID转换为16进制,在文件中搜索16进制线程ID即可；</li>
-</ul>
+<li>线程ID转成16进制后，执行最后一个命令：<code>jstack 进程ID | grep 16进制线程ID -A50</code>或者dump下来，<code>jstack pid &gt; pid.log</code>，就能看到有问题的代码。</li>
+</ol>
+<h3 id="解决方案">解决方案</h3>
+<ol>
+<li>将dump文件下载下来，上传到第三方网站，如：https://fastthread.io/ 进行分析，然后找到解决方案；</li>
+<li>确定是否新部署或有新变更： 首先需要确认是否在最近进行了新的部署或有其他相关的变更，例如代码更新、配置修改等。这些变更可能导致应用出现性能问题，特别是在高负载情况下；</li>
+<li>确定是否可重现问题：尝试重现CPU飙高的问题，可以通过模拟实际场景、使用压力测试工具或者观察日志等方式来尽量还原问题。如果能够确定问题的可重现性，将有助于后续的排查和分析；</li>
+<li>确定是否为GC造成：Java应用中频繁进行垃圾回收可能会导致CPU飙高。可以通过查看GC日志、分析堆内存使用情况以及GC时间等指标来确认是否为GC引起了性能问题；</li>
+<li>确定是否线程阻塞：线程阻塞也是常见的导致CPU飙高的原因之一。可以通过线程监控工具，如JMC、VisualVM，来检查是否存在长时间阻塞的线程，并分析造成线程阻塞的原因；</li>
+</ol>
 <h2 id="死锁">死锁</h2>
 <p>死锁经常表现为程序的停顿，或者不再响应用户的请求。从操作系统上观察，对应进程的CPU占用率为零，很快会从top或prstat的输出中消失。</p>
 <p>死锁示例代码：</p>
@@ -402,35 +490,32 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>根据运维之前收集到的内存数据、GC 日志尝试判断哪里出现了问题。
+</span></span></span></code></pre></div><h3 id="排查过程-1">排查过程</h3>
+<p>根据运维之前收集到的内存数据、GC 日志尝试判断哪里出现了问题。
 结果发现老年代的内存使用就算是发生 GC 也一直居高不下，而且随着时间推移也越来越高。</p>
 <p><img alt="内存泄漏问题-01" src="/iblog/posts/annex/images/essays/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98-01.png"></p>
-<p>内存泄漏排查：</p>
+<p>使用<code>jstat -gc &lt;vmid&gt;</code> 查看GC垃圾回收统计信息，看Full GC后堆空间使用内存还持续增长，且有增长到Xmx设定值的趋势，基本可以肯定存在内存泄露。
+如果当前完全垃圾回收后内存增长到一个值之后，又能回落，总体上处于一个动态平衡，那么内存泄漏基本可以排除；也可以隔断时间抽取老年代占用内存情况，如果老年代占用情况持续上升也很有可能存在内存泄露的情况。</p>
+<h3 id="解决方案-1">解决方案</h3>
 <ol>
 <li>内存泄漏的主要表象就是内存不足，所以首先要看一下JVM启动参数中内存空间分配是否过小，如果是这种问题调整该参数即可；</li>
-<li>从代码层面找问题，如果之前从未出现过此类问题，新增接口或者引入新第三包的时候后出现该问题，则可能是新增的部分代码存在问题；</li>
-<li>使用jdk相关命令进行排查分析：
-<ul>
-<li>使用jstat -gc <vmid> 查看GC垃圾回收统计信息，看Full GC后堆空间使用内存还持续增长，且有增长到Xmx设定值的趋势基本可以肯定存在内存泄露，如果当前完全垃圾回收后内存增长到一个值之后，又能回落，总体上处于一个动态平衡，那么内存泄漏基本可以排除；也可以隔断时间抽取老年代占用内存情况，如果老年代占用情况持续上升也很有可能存在内存泄露的情况；</li>
-<li>把堆dump下来再用工具进行分析，但dump堆要花较长的时间，并且文件巨大，不建议这样；可以使用jmap -histo:live <pid>在线进行分析,查看输出的对象数量如果过大就需要额外注意；</li>
-</ul>
-</li>
+<li>确定是否新部署或有新变更，首先需要确认是否在最近进行了新的部署或有其他相关的变更，例如代码更新、配置修改等。这些变更可能导致应用出现性能问题，特别是在高负载情况下；</li>
+<li>内存泄漏解决方案，最经典的就是用MAT工具分析dump文件，但如果dump文件巨大就不建议这样，可以使用其他方案，例如：重启、本地复现、<code>jmap -histo:live &lt;pid&gt;</code>在线进行分析等其他方案解决。</li>
 </ol>
-<p>使用MAT找到内存泄漏的代码思路：</p>
-<ul>
-<li><a href="https://blog.csdn.net/lnkToKing/article/details/103533995">https://blog.csdn.net/lnkToKing/article/details/103533995</a></li>
-</ul>
+<p>使用MAT定位内存泄漏思路：</p>
 <ol>
-<li>打开MAT中histogram，找到堆内存中占用最大的对象（内存泄漏很有可能就是由大对象导致的）；</li>
-<li>由大对象找被哪些线程引用，查看内存占用最大的线程；</li>
-<li>从线程中的堆栈信息找到项目中自定义的包和对象，从而可定位到具体的代码；</li>
+<li>打开MAT中histogram，找到堆内存中占用最大的对象，内存泄漏很有可能就是由大对象导致的；
+<img alt="MAT-01" src="/iblog/posts/annex/images/essays/MAT-01.png"></li>
+<li>由大对象找被哪些线程引用，查看内存占用最大的线程；
+<img alt="MAT-02" src="/iblog/posts/annex/images/essays/MAT-02.png">
+<img alt="MAT-03" src="/iblog/posts/annex/images/essays/MAT-03.png"></li>
+<li>从线程中的堆栈信息找到项目中自定义的包和对象，从而可定位到具体的代码；
+<img alt="MAT-04" src="/iblog/posts/annex/images/essays/MAT-04.png">
+<img alt="MAT-05" src="/iblog/posts/annex/images/essays/MAT-05.png"></li>
 </ol>
 <h2 id="jvm参数调优">JVM参数调优</h2>
-<p>JVM优化是到最后不得已才采用的手段，对JVM内存的系统级的调优主要的目的是减少GC的频率和Full GC的次数。</p>
-<p>OracleJVM参数官网说明：</p>
-<ul>
-<li><a href="https://www.oracle.com/java/technologies/javase/vmoptions-jsp.html">https://www.oracle.com/java/technologies/javase/vmoptions-jsp.html</a></li>
-</ul>
+<p>JVM优化是到最后不得已才采用的手段，对JVM内存的系统级的调优主要的目的是减少GC的频率和Full GC的次数。
+JVM参数说明：https://www.oracle.com/java/technologies/javase/vmoptions-jsp.html</p>
 <p>理想的情况下，一个Java程序使用JVM的默认设置也可以运行得很好，所以一般来说，没有必要设置任何JVM参数。然而，由于一些性能问题，我们需要设置合理的JVM参数。</p>
 <p>可以通过<code>java -XX:+PrintFlagsInitial</code> 命令查看JVM所有参数。</p>
 <p>常用参数：</p>

@@ -38,8 +38,7 @@ slug: "interview-junior-javaer"
 - [JVM内存区域划分及功能](/iblog/posts/jvm/java-memory-divide/#java内存区域划分)
 - [Java类加载机制](/iblog/posts/jvm/java-memory-divide/#java类加载机制)
 - [JVM垃圾回收机制](/iblog/posts/jvm/java-memory-divide/#jvm垃圾回收机制iblogpostsjvmjava-garbage-collection)
-- JVM参数调优
-- JVM问题排查思路
+- [JVM参数调优](/iblog/posts/essays/java-always-problems/#jvm参数调优)
 
 #### 4.IO与序列化
 - [AIO、BIO、NIO等，IO模型](/iblog/posts/java/rookie-io/#io模型httphollischuanggiteeiotobetopjavaerbasicsjava-basiclinux-ioidlinux-5种io模型)
@@ -143,9 +142,9 @@ slug: "interview-junior-javaer"
 
 ### 场景问题
 - [线上遇到接口很慢处理思路](/iblog/posts/essays/java-improve/#线上遇到接口很慢处理思路)
-- [线上CPU飚高处理思路]()
-- [数据量较大如何处理]()
-
+- [线上CPU飚高处理思路](/iblog/posts/essays/java-always-problems/#cpu使用过高)
+- [内存泄漏排查思路](/iblog/posts/essays/java-always-problems)
+- 数据量较大如何处理
 
 
 ### 设计示例代码
