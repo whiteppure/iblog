@@ -141,7 +141,7 @@ slug: "interview-junior-javaer"
 
 
 ### 场景问题
-- [线上遇到接口很慢处理思路](/iblog/posts/essays/java-improve/#线上遇到接口很慢处理思路)
+- [线上遇到接口很慢处理思路](/iblog/posts/essays/java-always-problems/#接口慢)
 - [线上CPU飚高处理思路](/iblog/posts/essays/java-always-problems/#cpu使用过高)
 - [内存泄漏排查思路](/iblog/posts/essays/java-always-problems)
 - 数据量较大如何处理
