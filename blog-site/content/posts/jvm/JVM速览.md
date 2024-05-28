@@ -630,18 +630,62 @@ M.L.Minsky在该论文中描述的算法被人们称为复制算法，它将可�
 分代的思想被现有的虚拟机广泛使用，几乎所有的垃圾回收器都区分新生代和老年代。
 在HotSpot中，基于分代的概念，GC所使用的内存回收算法必须结合年轻代和老年代各自的特点。
 
-- 年轻代：区域相对老年代较小，对象生命周期短、存活率低，回收频繁。适合复制算法；复制算法内存利用率不高的问题，通过Hotspot中的两个幸存者区的设计得到缓解。
+- 年轻代：区域相对老年代较小，对象生命周期短、存活率低，回收频繁。适合复制算法，复制算法内存利用率不高的问题，通过Hotspot中的两个幸存者区的设计得到缓解。
 - 老年代：区域较大，对象生命周期长、存活率高，回收不及年轻代频繁。不适合复制算法，一般是由标记清除或者是标记清除与标记整理的混合实现。
 
 ### 垃圾收集器
+如果说收集算法是内存回收的方法论，那么垃圾收集器就是内存回收的具体实现。
 
-#### Serial收集器
+虽然我们对各个收集器进行比较，但并非要挑选出一个最好的收集器。
+因为直到现在为止还没有最好的垃圾收集器出现，更加没有万能的垃圾收集器，我们能做的就是根据具体应用场景选择适合自己的垃圾收集器。
 
-#### ParNew收集器
+JDK 默认垃圾收集器（使用 java -XX:+PrintCommandLineFlags -version 命令查看）：
+- JDK 8：Parallel Scavenge（新生代）+ Parallel Old（老年代）
+- JDK 9 ~ JDK20: G1
+
+#### Serial GC
+`Serial GC`由于弊端较大，只有放在单核CPU上才能充分发挥其作用，由于现在都是多核CPU已经不用串行收集器了，所以以下内容了解即可。
+对于交互较强的应用而言，这种垃圾收集器是不能接受的。一般在Java web应用程序中是不会采用串行垃圾收集器的。
+
+`Serial GC`(串行垃圾回收回器)是最基本、历史最悠久的垃圾收集器了。JDK1.3之前回收新生代唯一的选择。
+
+`Serial GC`作为[HotSpot中client模式](https://whiteppure.github.io/iblog/posts/jvm/jvm-execute-engine/#即使编译器分类)下的默认新生代垃圾收集器；
+`Serial GC`年轻代采用标记-复制算法，老年代采用标记-整理算法、串行回收和"stop-the-world"机制的方式执行内存回收。
+
+`Serial GC`是一个单线程的收集器，但它的“单线程”的意义并不仅仅说明它只会使用一个CPU或一条收集线程去完成垃圾收集工作，更重要的是在它进行垃圾收集时，必须暂停其他所有的工作线程，直到它收集结束
+
+`Serial GC`的优点, 简单而高效（与其他收集器的单线程比），对于限定单个CPU的环境来说，`Serial GC`由于没有线程交互的开销，专心做垃圾收集自然可以获得最高的单线程收集效率。
+是运行在client模式下的虚拟机是个不错的选择。
+
+使用`Serial GC`，运行任意程序，设置虚拟机参数如下;当设置使用`Serial GC`时，新生代和老年代都会使用串行收集器。
+```
+-XX:+PrintCommandLineFlags -XX:+UseSerialGC
+```
+
+输出
+```
+-XX:InitialHeapSize=268435456 -XX:MaxHeapSize=4294967296 -XX:+PrintCommandLineFlags -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseSerialGC 
+```
+
+#### ParNew GC
+
+
+
+### Parallel Scavenge GC
+
+
+#### Serial Old GC
+
+
+
+#### Parallel Old GC
+
+
 
 #### CMS
 
 #### G1
 
 #### ZGC
+
 
