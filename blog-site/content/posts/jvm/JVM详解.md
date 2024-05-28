@@ -1,5 +1,5 @@
 ---
-title: "JVM速览"
+title: "JVM详解"
 date: 2024-05-26
 draft: false
 tags: ["Java", "JVM","详解"]
@@ -21,12 +21,12 @@ JVM 大致可以划分为三个区域，分别是类加载子系统（Class Load
 - 执行引擎：将字节码指令解释/编译为对应平台上的本地机器指令才可以，简单来说，JVM 中的执行引擎充当了将高级语言翻译为机器语言的译者。包括：解释器、JIT及时编译器、GC垃圾回收器。
 
 ## [Java类加载机制](/iblog/posts/jvm/jvm-classloader/)
-在Java中，类加载器把一个class装入JVM中，要经过以下步骤： 加载、验证、准备、解析和初始化。其中验证，准备，解析统称为连接。
-这5个阶段一般是顺序发生的，但在动态绑定的情况下，解析阶段发生在初始化阶段之后。
+一个类从被加载到虚拟机内存中开始，到卸载出内存为止，它的整个生命周期将会经历加载、验证、准备、卸载、解析、初始化、使用、卸载七个阶段，其中验证、准备、解析三个部分统称为连接。
+这几个阶段一般是顺序发生的，但在动态绑定的情况下，解析阶段发生在初始化阶段之后。
+
+![类加载过程-全](/iblog/posts/annex/images/essays/类加载过程-全.png)
 
 ![类加载过程](/iblog/posts/annex/images/essays/类加载过程.png)
-
-![类加载过程详细](/iblog/posts/annex/images/essays/类加载过程详细.png)
 
 类加载器只负责class文件的加载，至于它是否可以运行，则由执行引擎(Execution Engine)决定。
 被加载的类信息存放于一块称为方法区的内存空间。除了类的信息外，方法区中还会存放运行时常量池信息，可能还包括字符串字面量和数字常量。
@@ -176,7 +176,7 @@ JVM 启动的时候，并不会一次性加载所有的类，而是根据需要�
 >
 >在Java中，任意一个类都需要由加载它的类加载器和这个类本身一同确定其在java虚拟机中的唯一性，即比较两个类是否相等，只有在这两个类是由同一个类加载器加载的前提之下才有意义，否则，即使这两个类来源于同一个Class类文件，只要加载它的类加载器不相同，那么这两个类必定不相等(这里的相等包括代表类的Class对象的`equals()`方法、`isAssignableFrom()`方法、`isInstance()`方法和`instanceof`关键字的结果)。
 
-### 双亲委派模型
+#### 双亲委派模型
 ![双亲委派模型](/iblog/posts/annex/images/essays/双亲委派模型.png)
 
 ClassLoader 类使用委托模型来搜索类和资源。每个 ClassLoader 实例都有一个相关的父类加载器。需要查找类或资源时，ClassLoader 实例会在试图亲自查找类或资源之前，将搜索类或资源的任务委托给其父类加载器。
@@ -204,6 +204,18 @@ ClassLoader 类使用委托模型来搜索类和资源。每个 ClassLoader 实�
 类加载器在进行类加载的时候，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成，调用父加载器 loadClass()方法来加载类。
 重写 loadClass()方法之后，我们就可以改变传统双亲委派模型的执行流程。
 例如，子类加载器可以在委派给父类加载器之前，先自己尝试加载这个类，或者在父类加载器返回之后，再尝试从其他地方加载这个类。具体的规则由我们自己实现，根据项目需求定制化。
+
+### 类卸载
+卸载类即该类的 Class 对象被 GC。
+
+卸载类需要满足 3 个要求：
+1. 该类的所有的实例对象都已被 GC，也就是说堆不存在该类的实例对象；
+2. 该类没有在其他任何地方被引用；
+3. 该类的类加载器的实例已被 GC；
+
+所以，在 JVM 生命周期内，由 JVM 自带的类加载器加载的类是不会被卸载的。但是由我们自定义的类加载器加载的类是可能被卸载的。
+
+JDK 自带的 BootstrapClassLoader, ExtClassLoader, AppClassLoader 负责加载 JDK 提供的类，所以它们(类加载器的实例)肯定不会被回收。而我们自定义的类加载器的实例是可以被回收的，所以使用我们自定义加载器加载的类是可以被卸载掉的。
 
 ## Java内存区域划分
 Java 虚拟机在执行 Java 程序的过程中会把它管理的内存划分成若干个不同的数据区域。
@@ -518,13 +530,6 @@ public class StackReference {
 - 在 greet 方法执行期间，localVar 引用的对象是活跃的，因为它是从 GC Roots 可达的。
 - 当 greet 方法执行完毕后，localVar 的作用域结束，localVar 引用的 Object 对象不再由任何 GC Roots 引用（假设没有其他引用指向这个对象），因此它将有资格作为垃圾被回收掉
 
-对象可以被回收，就代表一定会被回收吗？
-
-即使在可达性分析法中不可达的对象，也并非是“非死不可”的，这时候它们暂时处于“缓刑阶段”，要真正宣告一个对象死亡，至少要经历两次标记过程；
-可达性分析法中不可达的对象被第一次标记并且进行一次筛选，筛选的条件是此对象是否有必要执行 finalize 方法。
-当对象没有覆盖 finalize 方法，或 finalize 方法已经被虚拟机调用过时，虚拟机将这两种情况视为没有必要执行。
-被判定为需要执行的对象将会被放在一个队列中进行第二次标记，除非这个对象与引用链上的任何一个对象建立关联，否则就会被真的回收。
-
 如果要使用可达性分析算法来判断内存是否可回收，那么分析工作必须在一个能保障一致性的快照中进行，如果这点不满足，分析结果的准确性就无法保证。
 简单来说就是执行这个算法的时候，要停止程序标记对象，不能一边改变对象的引用一边判定对象是不是垃圾。
 
@@ -542,6 +547,236 @@ STW是JVM在后台自动发起和自动完成的，在用户不可见的情况�
 
 STW事件和采用哪款GC无关，因为所有的GC都有这个事件。任何垃圾回收器都不能完全避免`Stop-The-World`情况发生，只能说垃圾回收器越来越优秀，回收效率越来越高，尽可能地缩短了暂停时间。
 因此，在选择和调优垃圾收集器时，需要考虑其停顿时间。Java 中的一些垃圾收集器，如 G1 和 ZGC，都会尽可能地减少了STW的时间，通过并发的垃圾收集，提高应用的响应性能。
+
+### 对象引用
+可达性分析是基于引用链进行判断的，在JDK1.2版之后，Java对引用的概念进行了扩充，将引用分为：
+- 强引用（StrongReference）：最传统的“引用”的定义；无论任何情况下，只要强引用关系还存在，垃圾收集器就永远不会回收掉被引用的对象。
+- 软引用（SoftReference）：在系统将要发生内存溢出之前，将会把这些对象列入回收范围之中进行第二次回收。如果这次回收后还没有足够的内存，才会抛出内存溢出异常。
+- 弱引用（WeakReference）：被弱引用关联的对象只能生存到下一次垃圾收集之前。当垃圾收集器工作时，无论内存空间是否足够，都会回收掉被弱引用关联的对象。
+- 虚引用（PhantomReference）：一个对象是否有虚引用的存在，完全不会对其生存时间构成影响，也无法通过虚引用来获得一个对象的实例。为一个对象设置虚引用关联的唯一目的就是能在这个对象被收集器回收时收到一个系统通知。
+
+这4种引用强度依次逐渐减弱。除强引用外，其他3种引用均可以在`java.lang.ref`包中找到它们的身影。
+强引用为JVM内部实现，其他三类引用类型全部继承自`Reference`父类。
+
+![强软弱虚](/iblog/posts/annex/images/essays/强软弱虚.jpg)
+
+上述引用垃圾回收的前提条件是：对象都是可触及的(可达性分析结果为可达)，如果对象不可触及就直接被垃圾回收器回收了。
+
+#### 强引用
+在Java程序中，最常见的引用类型是强引用，普通系统99%以上都是强引用，也就是我们最常见的普通对象引用，也是默认的引用类型。
+当在Java语言中使用new操作符创建一个新的对象，并将其赋值给一个变量的时候，这个变量就成为指向该对象的一个强引用。
+
+强引用测试
+```
+// 强引用测试
+public class MainTest {
+    public static void main(String[] args) {
+        StringBuffer var0 = new StringBuffer("hello world");
+        StringBuffer var1 = var0;
+
+        var0 = null;
+        System.gc();
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(var1.toString());
+    }
+}
+```
+强引用所指向的对象在任何时候都不会被系统回收，虚拟机会抛出OOM异常，也不会回收强引用所指向对象，所以强引用是导致内存泄漏的主要原因。
+
+#### 软引用
+软引用是一种比强引用生命周期稍弱的一种引用类型。在JVM内存充足的情况下，软引用并不会被垃圾回收器回收，只有在JVM内存不足的情况下，才会被垃圾回收器回收。
+
+软引用是用来描述一些还有用，但非必需的对象。
+只被软引用关联着的对象，在系统将要发生内存溢出异常前，会把这些对象列进回收范围之中进行**第二次回收**，如果这次回收还没有足够的内存，才会抛出内存溢出异常。
+> 这里的第一次回收是指不可达的对象
+
+所以软引用一般用来实现一些内存敏感的缓存，只要内存空间足够，对象就会保持不被回收掉。
+比如：高速缓存就有用到软引用。如果还有空闲内存，就可以暂时保留缓存，当内存不足时清理掉，这样就保证了使用缓存的同时，不会耗尽内存。
+
+软引用测试
+```
+/**
+ * 软引用测试
+ * 
+ * 虚拟机参数：
+ * -Xms10m
+ * -Xmx10m
+ * -XX:+PrintGCDetails
+ */
+public class MainTest {
+    public static void main(String[] args) {
+        //SoftReference<User> softReference = new SoftReference<>(new User("hello"));
+        // 上面的一行代码等价于下面的三行代码
+        User user = new User("hello");
+        SoftReference<User> softReference = new SoftReference<User>(user);
+        // 一定要销毁强引用对象 否则创建软引用对象将毫无意义
+        user = null;
+        System.out.println("创建大对象之前：" + softReference.get());
+        try{
+            // 模拟堆内存资源紧张 看软引用对象是否会被回收
+            byte[] bytes = new byte[1024 * 1024 *7];
+        }catch (Throwable e) {
+            e.printStackTrace();
+        }finally {
+            System.out.println("创建大对象之后：" + softReference.get());
+        }
+    }
+}
+
+class User {
+    private String name;
+
+    public User(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+}
+
+```
+
+#### 弱引用
+弱引用也是用来描述那些非必需对象，被弱引用关联的对象只能生存到下一次垃圾收集发生为止。
+
+在系统GC时，只要发现弱引用，不管系统堆空间使用是否充足，都会回收掉只被弱引用关联的对象。
+由于垃圾回收器的线程通常优先级很低，因此，并不一定能很快地发现持有弱引用的对象。在这种情况下，弱引用对象可以存在较长的时间。
+
+弱引用和软引用一样，在构造弱引用时，也可以指定一个引用队列，当弱引用对象被回收时，就会加入指定的引用队列，通过这个队列可以跟踪对象的回收情况。
+
+软引用、弱引用都非常适合来保存那些可有可无的缓存数据。如果这么做，当系统内存不足时，这些缓存数据会被回收，不会导致内存溢出。
+而当内存资源充足时，这些缓存数据又可以存在相当长的时间，从而起到加速系统的作用。
+
+弱引用测试
+```
+/**
+ * 弱引用测试
+ */
+public class MainTest {
+    public static void main(String[] args) {
+        WeakReference<User> weakReference = new WeakReference<>(new User("hello"));
+        System.out.println("建议GC之前：" + weakReference.get());
+        System.gc();
+        System.out.println("建议GC之后：" + weakReference.get());
+    }
+}
+
+class User {
+    private String name;
+
+    public User(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+}
+```
+
+#### 虚引用
+虚引用也称为“幽灵引用”或者“幻影引用”，是所有引用类型中最弱的一个。
+
+一个对象是否有虚引用的存在，完全不会决定对象的生命周期。如果一个对象仅持有虚引用，那么它和没有引用几乎是一样的，随时都可能被垃圾回收器回收。
+它不能单独使用，也无法通过虚引用来获取被引用的对象，当试图通过虚引用的`get()`方法取得对象时，总是`null`。
+
+为一个对象设置虚引用关联的唯一目的在于跟踪垃圾回收过程。比如：能在这个对象被收集器回收时收到一个系统通知。
+**虚引用必须和引用队列一起使用。** 虚引用在创建时必须提供一个引用队列作为参数。当垃圾回收器准备回收一个对象时，如果发现它还有虚引用，就会在回收对象后，将这个虚引用加入引用队列，以通知应用程序对象的回收情况。
+由于虚引用可以跟踪对象的回收时间，因此，也可以将一些资源释放操作放置在虚引用中执行和记录。
+
+虚引用测试
+```
+/**
+ * 虚引用测试
+ */
+public class MainTest {
+    // 当前类对象的声明
+    public static MainTest obj;
+    // 引用队列
+    static ReferenceQueue<MainTest> phantomQueue = null;
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+        System.out.println("调用当前类的finalize方法");
+        obj = this;
+    }
+
+    public static void main(String[] args) {
+        Thread thread = new Thread(() -> {
+            while(true) {
+                if (phantomQueue != null) {
+                    PhantomReference<MainTest> objt = null;
+                    try {
+                        objt = (PhantomReference<MainTest>) phantomQueue.remove();
+                    } catch (Exception e) {
+                        e.getStackTrace();
+                    }
+                    if (objt != null) {
+                        System.out.println("追踪垃圾回收过程：PhantomReferenceTest实例被GC了");
+                    }
+                }
+            }
+        }, "t1");
+        thread.setDaemon(true);
+        thread.start();
+
+        phantomQueue = new ReferenceQueue<>();
+        obj = new MainTest();
+        // 构造了PhantomReferenceTest对象的虚引用，并指定了引用队列
+        PhantomReference<MainTest> phantomReference = new PhantomReference<>(obj, phantomQueue);
+        try {
+            System.out.println(phantomReference.get());
+            // 去除强引用
+            obj = null;
+            // 第一次进行GC，由于对象可复活，GC无法回收该对象
+            System.out.println("第一次GC操作");
+            System.gc();
+            Thread.sleep(1000);
+            if (obj == null) {
+                System.out.println("obj 是 null");
+            } else {
+                System.out.println("obj 不是 null");
+            }
+            System.out.println("第二次GC操作");
+            obj = null;
+            System.gc();
+            Thread.sleep(1000);
+            if (obj == null) {
+                System.out.println("obj 是 null");
+            } else {
+                System.out.println("obj 不是 null");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+
+        }
+    }
+}
+```
+### 对象真正死亡
+对象可以被回收，就代表一定会被回收吗？
+
+即使在可达性分析法中不可达的对象，也并非是“非死不可”的，这时候它们暂时处于“缓刑阶段”，要真正宣告一个对象死亡，至少要经历两次标记过程。
+- 如果对象在进行可达性分析后发现 GC Roots 不可达，将会进行第一次标记；
+- 随后进行一次筛选，筛选的条件是此对象是否有必要执行 finalized() 方法；
+
+当对象没有覆盖 finalize 方法，或 finalize 方法已经被虚拟机调用过时，虚拟机将这两种情况视为没有必要执行finalize方法。
+如果判定结果是有必要执行，此时对象会被放入名为 F-Queue 的队列，等待 Finalizer 线程执行其 finalized() 方法。
+
+如果对象在 finalized() 方法中重新将自己与引用链上的任何一个对象进行了关联，如果将自己赋值给某个类变量或者对象的成员变量，此时它就实现了自我拯救，则第二次标记会将其移除 “即将回收” 的集合，否则该对象就将被真正回收，走向死亡。
 
 ### 垃圾收集算法
 当成功区分出内存中存活对象和死亡对象后，GC接下来的任务就是执行垃圾回收，释放掉无用对象所占用的内存空间，以便有足够的可用内存空间为新对象分配内存。
@@ -643,49 +878,129 @@ JDK 默认垃圾收集器（使用 java -XX:+PrintCommandLineFlags -version 命�
 - JDK 8：Parallel Scavenge（新生代）+ Parallel Old（老年代）
 - JDK 9 ~ JDK20: G1
 
-#### Serial GC
+### Serial GC
 `Serial GC`由于弊端较大，只有放在单核CPU上才能充分发挥其作用，由于现在都是多核CPU已经不用串行收集器了，所以以下内容了解即可。
 对于交互较强的应用而言，这种垃圾收集器是不能接受的。一般在Java web应用程序中是不会采用串行垃圾收集器的。
 
 `Serial GC`(串行垃圾回收回器)是最基本、历史最悠久的垃圾收集器了。JDK1.3之前回收新生代唯一的选择。
 
 `Serial GC`作为[HotSpot中client模式](https://whiteppure.github.io/iblog/posts/jvm/jvm-execute-engine/#即使编译器分类)下的默认新生代垃圾收集器；
-`Serial GC`年轻代采用标记-复制算法，老年代采用标记-整理算法、串行回收和"stop-the-world"机制的方式执行内存回收。
+`Serial GC`年轻代采用标记-复制算法，老年代采用标记-整理算法、串行回收和STW机制的方式执行内存回收。
+
+![serial-GC](/iblog/posts/annex/images/essays/serial-GC.png)
 
 `Serial GC`是一个单线程的收集器，但它的“单线程”的意义并不仅仅说明它只会使用一个CPU或一条收集线程去完成垃圾收集工作，更重要的是在它进行垃圾收集时，必须暂停其他所有的工作线程，直到它收集结束
 
 `Serial GC`的优点, 简单而高效（与其他收集器的单线程比），对于限定单个CPU的环境来说，`Serial GC`由于没有线程交互的开销，专心做垃圾收集自然可以获得最高的单线程收集效率。
 是运行在client模式下的虚拟机是个不错的选择。
 
-使用`Serial GC`，运行任意程序，设置虚拟机参数如下;当设置使用`Serial GC`时，新生代和老年代都会使用串行收集器。
+运行任意程序，设置虚拟机参数如下，当设置使用`Serial GC`时，新生代和老年代都会使用串行收集器。
 ```
 -XX:+PrintCommandLineFlags -XX:+UseSerialGC
 ```
-
 输出
 ```
 -XX:InitialHeapSize=268435456 -XX:MaxHeapSize=4294967296 -XX:+PrintCommandLineFlags -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseSerialGC 
 ```
 
-#### ParNew GC
+### ParNew GC
+ParNew 收集器其实就是 Serial 收集器的多线程版本，除了使用多线程进行垃圾收集外，其余行为：控制参数、收集算法、回收策略等等和 Serial 收集器完全一样。
 
+![parnew-GC](/iblog/posts/annex/images/essays/parnew-GC.png)
 
+它是许多运行在 Server 模式下的虚拟机的首要选择，除了 Serial 收集器外，只有它能与 CMS 收集器配合工作。
 
 ### Parallel Scavenge GC
+Parallel Scavenge 收集器也是使用标记-复制算法的多线程收集器，它看上去几乎和 ParNew 都一样。
 
+![parallel-scavenge-GC](/iblog/posts/annex/images/essays/parallel-scavenge-GC.png)
 
-#### Serial Old GC
+Parallel Scavenge 收集器关注点是吞吐量（高效率的利用 CPU）。CMS 等垃圾收集器的关注点更多的是用户线程的停顿时间（提高用户体验）。
 
+### Serial Old GC
+Serial 收集器的老年代版本，它同样是一个单线程收集器。它主要有两大用途：
+- 在 JDK1.5 以及以前的版本中与 Parallel Scavenge 收集器搭配使用；
+- 作为 CMS 收集器的后备方案；
 
+![serial-GC](/iblog/posts/annex/images/essays/serial-GC.png)
 
-#### Parallel Old GC
+### Parallel Old GC
+Parallel Scavenge 收集器的老年代版本。使用多线程和“标记-整理”算法。
+在注重吞吐量以及 CPU 资源的场合，都可以优先考虑 Parallel Scavenge 收集器和 Parallel Old 收集器。
 
+![parallel-scavenge-GC](/iblog/posts/annex/images/essays/parallel-scavenge-GC.png)
 
+### CMS
+CMS全称：Concurrent Mark Sweep，是一种以获取最短回收停顿时间为目标的收集器。它非常符合在注重用户体验的应用上使用。
+CMS收集器是 HotSpot 虚拟机第一款真正意义上的并发收集器，它第一次实现了让垃圾收集线程与用户线程（基本上）同时工作。
 
-#### CMS
+从名字中的Mark Sweep这两个词可以看出，CMS 收集器是一种 “标记-清除”算法实现的，以获取最短回收停顿时间为目标，采用“标记-清除”算法，分 4 大步进行垃圾收集，其中初始标记和重新标记会 STW，JDK 1.5 时引入，JDK9 被标记弃用，JDK14 被移除。
 
-#### G1
+![cms-GC](/iblog/posts/annex/images/essays/cms-GC.png)
 
-#### ZGC
+- 初始标记，指的是寻找所有被 GCRoots 引用的对象，该阶段需要「Stop the World」。这个步骤仅仅只是标记一下 GC Roots 能直接关联到的对象，并不需要做整个引用的扫描，因此速度很快。
+- 并发标记，指的是对「初始标记阶段」标记的对象进行整个引用链的扫描，该阶段不需要「Stop the World」。 对整个引用链做扫描需要花费非常多的时间，因此需要通过垃圾回收线程与用户线程并发执行，降低垃圾回收的时间，所以叫做并发标记。
+  这也是 CMS 能极大降低 GC 停顿时间的核心原因，但这也带来了一些问题，即：并发标记的时候，引用可能发生变化，因此可能发生漏标（本应该回收的垃圾没有被回收）和多标（本不应该回收的垃圾被回收）了。
+- 重新标记，指的是对「并发标记」阶段出现的问题进行校正，该阶段需要「Stop the World」。正如并发标记阶段说到的，由于垃圾回收算法和用户线程并发执行，虽然能降低响应时间，但是会发生漏标和多标的问题。所以对于 CMS 来说，它需要在这个阶段做一些校验，解决并发标记阶段发生的问题。
+- 并发清除，指的是将标记为垃圾的对象进行清除，该阶段不需要「Stop the World」。 在这个阶段，垃圾回收线程与用户线程可以并发执行，因此并不影响用户的响应时间。
 
+CMS 的优点是：并发收集、低停顿，但缺点也很明显：
+- 对 CPU 资源非常敏感，因此在 CPU 资源紧张的情况下，CMS 的性能会大打折扣。
+  默认情况下，CMS 启用的垃圾回收线程数是（CPU数量 + 3)/4，当 CPU 数量很大时，启用的垃圾回收线程数占比就越小。但如果 CPU 数量很小，例如只有 2 个 CPU，垃圾回收线程占用就达到了 50%，这极大地降低系统的吞吐量，无法接受。
+- CMS 采用的是「标记-清除」算法，会产生大量的内存碎片，导致空间不连续，当出现大对象无法找到连续的内存空间时，就会触发一次 Full GC，这会导致系统的停顿时间变长。
+- CMS 无法处理浮动垃圾，当 CMS 在进行垃圾回收的时候，应用程序还在不断地产生垃圾，这些垃圾会在 CMS 垃圾回收结束之后产生，这些垃圾就是浮动垃圾，CMS 无法处理这些浮动垃圾，只能在下一次 GC 时清理掉。
+
+### G1
+G1 (Garbage-First) 是一款面向服务器的垃圾收集器，主要针对配备多颗处理器及大容量内存的机器. 以极高概率满足 GC 停顿时间要求的同时,还具备高吞吐量性能特征。
+在 JDK 1.7 时引入，在 JDK 9 时取代 CMS 成为了默认的垃圾收集器。G1 有五个属性：分代、增量、并行、标记整理、可预测的停顿。
+
+1. 分代：
+   将堆内存分为多个大小相等的区域（Region），每个区域都可以是 Eden 区、Survivor 区或者 Old 区。
+   ![g1分区](/iblog/posts/annex/images/essays/g1分区.png)<br/>
+   可以通过 -XX:G1HeapRegionSize=n 来设置 Region 的大小，可以设定为 1M、2M、4M、8M、16M、32M（不能超过）。<br/>
+   G1 有专门分配大对象的 Region 叫 Humongous 区，而不是让大对象直接进入老年代的 Region 中。
+   在 G1 中，大对象的判定规则就是一个大对象超过了一个 Region 大小的 50%，比如每个 Region 是 2M，只要一个对象超过了 1M，就会被放入 Humongous 中，而且一个大对象如果太大，可能会横跨多个 Region 来存放。
+   G1 会根据各个区域的垃圾回收情况来决定下一次垃圾回收的区域，这样就避免了对整个堆内存进行垃圾回收，从而降低了垃圾回收的时间。
+2. 增量：G1 可以以增量方式执行垃圾回收，这意味着它不需要一次性回收整个堆空间，而是可以逐步、增量地清理。有助于控制停顿时间，尤其是在处理大型堆时。
+3. 并行：G1 垃圾回收器可以并行回收垃圾，这意味着它可以利用多个 CPU 来加速垃圾回收的速度，这一特性在年轻代的垃圾回收（Minor GC）中比较明显，因为年轻代的回收通常涉及较多的对象和较高的回收速率。
+4. 标记整理：在进行老年代的垃圾回收时，G1 使用标记-整理算法。这个过程分为两个阶段：标记存活的对象和整理（压缩）堆空间。通过整理，G1 能够避免内存碎片化，提高内存利用率。
+5. 可预测的停顿：G1 也是基于「标记-清除」算法，因此在进行垃圾回收的时候，仍然需要「Stop the World」。不过，G1 在停顿时间上添加了预测机制，用户可以指定期望停顿时间。
+
+G1 中存在三种 GC 模式，分别是 Young GC、Mixed GC 和 Full GC。
+![g1垃圾收集过程](/iblog/posts/annex/images/essays/g1垃圾收集过程.png)
+
+当 Eden 区的内存空间无法支持新对象的内存分配时，G1 会触发 Young GC。
+
+当需要分配对象到 Humongous 区域或者堆内存的空间占比超过 -XX:G1HeapWastePercent 设置的 InitiatingHeapOccupancyPercent 值时，G1 会触发一次 concurrent marking，它的作用就是计算老年代中有多少空间需要被回收，当发现垃圾的占比达到 -XX:G1HeapWastePercent 中所设置的 G1HeapWastePercent 比例时，在下次 Young GC 后会触发一次 Mixed GC。
+Mixed GC 是指回收年轻代的 Region 以及一部分老年代中的 Region。Mixed GC 和 Young GC 一样，采用的也是复制算法。
+
+在 Mixed GC 过程中，如果发现老年代空间还是不足，此时如果 G1HeapWastePercent 设定过低，可能引发 Full GC。-XX:G1HeapWastePercent 默认是 5，意味着只有 5% 的堆是“浪费”的。如果浪费的堆的百分比大于 G1HeapWastePercent，则运行 Full GC。
+
+在以 Region 为最小管理单元以及所采用的 GC 模式的基础上，G1 建立了停顿预测模型，即 Pause Prediction Model 。这也是 G1 非常被人所称道的特性。
+可以借助 -XX:MaxGCPauseMillis 来设置期望的停顿时间（默认 200ms），G1 会根据这个值来计算出一个合理的 Young GC 的回收时间，然后根据这个时间来制定 Young GC 的回收计划。
+
+G1收集垃圾的过程：
+![g1-GC](/iblog/posts/annex/images/essays/g1-GC.png)
+1. 初始标记 (Inital Marking) ：标记 GC Roots 能直接关联到的对象，并且修改 TAMS（Top at Mark Start）指针的值，让下一阶段用户线程并发运行时，能够正确的在 Reigin 中分配新对象。
+G1 为每一个 Reigin 都设计了两个名为 TAMS 的指针，新分配的对象必须位于这两个指针位置以上，位于这两个指针位置以上的对象默认被隐式标记为存活的，不会纳入回收范围；
+2. 并发标记 (Concurrent Marking) ：从 GC Roots 能直接关联到的对象开始遍历整个对象图。遍历完成后，还需要处理 SATB 记录中变动的对象。
+SATB（snapshot-at-the-beginning，开始阶段快照）能够有效的解决并发标记阶段因为用户线程运行而导致的对象变动，其效率比 CMS 重新标记阶段所使用的增量更新算法效率更高；
+3. 最终标记 (Final Marking) ：对用户线程做一个短暂的暂停，用于处理并发阶段结束后仍遗留下来的少量的 STAB 记录。虽然并发标记阶段会处理 SATB 记录，但由于处理时用户线程依然是运行中的，因此依然会有少量的变动，所以需要最终标记来处理；
+4. 筛选回收 (Live Data Counting and Evacuation) ：负责更新 Regin 统计数据，按照各个 Regin 的回收价值和成本进行排序，在根据用户期望的停顿时间进行来指定回收计划，可以选择任意多个 Regin 构成回收集。
+
+然后将回收集中 Regin 的存活对象复制到空的 Regin 中，再清理掉整个旧的 Regin 。此时因为涉及到存活对象的移动，所以需要暂停用户线程，并由多个收集线程并行执行。
+
+### ZGC
+ZGC（The Z Garbage Collector）是 JDK11 推出的一款低延迟垃圾收集器，适用于大内存低延迟服务的内存管理和回收，SPEC jbb 2015 基准测试，在 128G 的大堆下，最大停顿时间为 1.68 ms，停顿时间远胜于 G1 和 CMS。
+
+ZGC 在 Java11 中引入，处于试验阶段。经过多个版本的迭代，不断的完善和修复问题，ZGC 在 Java15 已经可以正式使用了。
+不过，默认的垃圾回收器依然是 G1。你可以通过`java -XX:+UseZGC className`启用 ZGC。
+
+与 G1 和 CMS 类似，ZGC 也采用了复制算法，只不过做了重大优化，ZGC 在标记、转移和重定位阶段几乎都是并发的，这是 ZGC 实现停顿时间小于 10ms 的关键所在。
+
+关键技术在于：
+- 指针染色（Colored Pointer）：一种用于标记对象状态的技术。
+- 读屏障（Load Barrier）：一种在程序运行时插入到对象访问操作中的特殊检查，用于确保对象访问的正确性。
+
+这两种技术可以让所有线程在并发的条件下，就指针的状态达成一致。因此，ZGC 可以并发的复制对象，这大大的降低了 GC 的停顿时间。
 
