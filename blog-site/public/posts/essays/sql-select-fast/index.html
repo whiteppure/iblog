@@ -195,10 +195,138 @@
             
         <ul class="nav">
             
+        <ul class="nav">
+            
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e6%93%8d%e4%bd%9c%e4%ba%8b%e7%89%a9">
-                    操作事物
+                <a class="nav-link text-left" href="#atomicity%e5%8e%9f%e5%ad%90%e6%80%a7">
+                    Atomicity原子性
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#consistency%e4%b8%80%e8%87%b4%e6%80%a7">
+                    Consistency一致性
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#isolation%e9%9a%94%e7%a6%bb%e6%80%a7">
+                    Isolation隔离性
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#durability%e6%8c%81%e4%b9%85%e6%80%a7">
+                    Durability持久性
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#mysql%e4%b8%ad%e7%9a%84%e6%97%a5%e5%bf%97">
+                    MySQL中的日志
                 </a>
             </li>
             
@@ -225,8 +353,36 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e9%9a%94%e7%a6%bb%e7%ba%a7%e5%88%ab">
-                    隔离级别
+                <a class="nav-link text-left" href="#mvcc%e5%b9%b6%e5%8f%91%e6%8e%a7%e5%88%b6%e6%9c%ba%e5%88%b6">
+                    MVCC并发控制机制
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%93%8d%e4%bd%9c%e4%ba%8b%e7%89%a9">
+                    操作事物
                 </a>
             </li>
             
@@ -1585,7 +1741,7 @@
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
                         <h2 id="post_single_title">MySQL详解</h2>
-                        <span id="post_page_title_date" class="date">2023.03.13</span>
+                        <span id="post_page_title_date" class="date">2024.05.30</span>
                     </div>
                     <div class="post_content markdown"><h2 id="mysql介绍">MySQL介绍</h2>
 <p>MySQL 是一种关系型数据库，主要用于持久化存储我们系统中的一些数据。</p>
@@ -1610,6 +1766,7 @@
 <li>引擎层：存储引擎层，存储引擎真正的负责了MySQL中数据的存储和提取，服务器通过API与存储引擎进行通信。不同的存储引擎具有的功能不同这样我们可以根据自己的实际需要进行选取，后面介绍MyISAM和InnoDB。</li>
 <li>存储层：数据存储层，主要是将数据存储在运行于裸设备的文件系统之上，并完成与存储引擎的交互。</li>
 </ul>
+<p>详细一点：</p>
 <p><img alt="MySQL基础架构" src="/iblog/posts/annex/images/essays/MySQL%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84.png"></p>
 <ul>
 <li>连接器： 登录 MySQL 的时候需要身份权限认证。</li>
@@ -1621,17 +1778,185 @@
 </ul>
 <h2 id="mysql存储引擎">MySQL存储引擎</h2>
 <p>MySQL 核心在于存储引擎，MySQL 5.5.5 之前，MyISAM 是 MySQL 的默认存储引擎。5.5.5 版本之后，InnoDB 是 MySQL 的默认存储引擎。
-可以使用<code>show engines;</code>来查看，所有的存储引擎中只有 InnoDB 是事务性存储引擎，也就是说只有 InnoDB 支持事务。</p>
+可以使用<code>show engines;</code>来查看。</p>
 <p><img alt="MySQL存储引擎" src="/iblog/posts/annex/images/essays/MySQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.png"></p>
 <h2 id="mysql事务">MySQL事务</h2>
 <p>什么是事务？举个例子：你去超市买东西，&ldquo;一手交钱，一手交货&quot;就是一个事务的例子。
 交钱和交货必须同时成功，事务才算成功，其中有一个环节失败，事务将会撤销所有已成功的活动。</p>
 <p>所以事务可以看作是一次重大的活动，它由不同的小活动组成，这些活动要么全部成功，要么全部失败。</p>
+<p>所有的存储引擎中只有 <code>InnoDB</code>、<code>NDB</code> 是事务性存储引擎，也就是说只有 <code>InnoDB</code>、<code>NDB</code> 支持事务。</p>
 <h3 id="事物的实现">事物的实现</h3>
-<p>事务是通过事务日志来实现的，事务日志包括：redo log和undo log。</p>
+<p>只要对数据库稍有了解的人都知道事务具有 ACID 四个基本属性，而我们不知道的可能就是数据库是如何实现这四个属性的。
+简单来说，事务是通过事务日志来实现的，事务日志包括：redo log和undo log，下面详细介绍。</p>
+<h4 id="atomicity原子性">Atomicity原子性</h4>
+<p>要么全部都执行，要都不执行，不可能出现部分成功部分失败的情况，这是对原子性最简单的描述。</p>
+<p>事务其实和一个操作没有什么太大的区别，它是一系列的数据库操作（可以理解为 SQL）的集合，如果事务不具备原子性，那么就没办法保证同一个事务中的所有操作都被执行或者未被执行了，整个数据库系统就既不可用也不可信。</p>
+<p>想要保证事务的原子性，就需要在异常发生时，对已经执行的操作进行回滚，而在 MySQL 中，恢复机制是通过回滚日志（undo log）实现的。
+为了能够在发生错误时撤销之前的全部操作，需要将之前的操作都记录下来的，所以所有事务进行的修改都会先记录到这个回滚日志中，然后再对数据库中的对应行进行操作。</p>
+<p>回滚日志中保存的是逻辑日志，当回滚日志被使用时，它只会按照日志逻辑地将数据库中的修改撤销，相当于每一条 INSERT 都对应了一条 DELETE，每一条 UPDATE 也都对应一条相反的 UPDATE 语句。</p>
+<h4 id="consistency一致性">Consistency一致性</h4>
+<p>数据库对于 ACID 中的一致性的定义是这样的：如果一个事务原子地在一个一致地数据库中独立运行，那么在它执行之后，数据库的状态一定是一致的。</p>
+<p>对于这个概念，它的第一层意思就是对于数据完整性的约束，包括主键约束、引用约束以及一些约束检查等等，在事务的执行的前后以及过程中，不会违背对数据完整性的约束，所有对数据库写入的操作都应该是合法的，并不能产生不合法的数据状态。
+第二层意思其实是指逻辑上的对于开发者的要求，我们要在代码中写出正确的事务逻辑，比如银行转账，事务中的逻辑不可能只扣钱或者只加钱，这是应用层面上对于数据库一致性的要求。</p>
+<p>数据库 ACID 中的一致性，对事务的要求不止包含对数据完整性以及合法性的检查，还包含应用层面逻辑的正确。</p>
+<h4 id="isolation隔离性">Isolation隔离性</h4>
+<p>当事务都只是串行执行的时候是不会发生问题的，然而在实际工作中，并行执行的事务才是常态，并行执行下，可能出现非常复杂的问题：</p>
+<p>当 Transaction1 在执行的过程中对 <code>id = 1</code> 的用户进行了读写，但是没有将修改的内容进行提交或者回滚，在这时 Transaction2 对同样的数据进行了读操作并提交了事务；也就是说 Transaction2 是依赖于 Transaction1 的，当 Transaction1 由于一些错误需要回滚时，因为要保证事务的原子性，需要对 Transaction2 进行回滚，但是由于我们已经提交了 Transaction2，所以我们已经没有办法进行回滚操作。
+这种现象称为不可恢复安排，这种情况是我们难以接受的，如果相关的事物都回滚，这会造成性能上的巨大损失。</p>
+<p>其实这里可以使用互斥锁来解决这个问题，比如在MySQL中，想要对读取的数据进行更新时需要使用<code>SELECT ... FOR UPDATE</code>尝试获取对应行的互斥锁，保证不同事务可以正常运行。</p>
+<p>当多个事务同时并发执行时，事务的隔离性可能就会被违反，虽然单个事务的执行可能没有任何错误，但是从总体来看就会造成数据库的一致性出现问题，而串行虽然能够允许开发者忽略并行造成的影响，能够很好地维护数据库的一致性，但是却会影响事务执行的性能。
+所以为数据库提供什么样的隔离性，也就决定了数据库的性能以及可以达到什么样的一致性。</p>
+<p>在SQL标准中定义了四种数据库的事务的隔离级别：</p>
+<ul>
+<li>RAED UNCOMMITED：使用查询语句不会加锁，可能会读到未提交的行（Dirty Read）；</li>
+<li>READ COMMITED：只对记录加记录锁，而不会在记录之间加间隙锁，所以允许新的记录插入到被锁定记录的附近，所以再多次使用查询语句时，可能得到不同的结果（Non-Repeatable Read）；</li>
+<li>REPEATABLE READ：多次读取同一范围的数据会返回第一次查询的快照，不会返回不同的数据行，但是可能发生幻读（Phantom Read）；</li>
+<li>SERIALIZABLE：InnoDB 隐式地将全部的查询语句加上共享锁，解决了幻读的问题。最高的隔离级别，完全服从 ACID 的隔离级别，所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰；</li>
+</ul>
+<p>从 <code>RAED UNCOMMITED</code> 到 <code>SERIALIZABLE</code>，随着事务隔离级别变得越来越严格，每个事务的隔离级别其实都比上一级多解决了一个问题，但是数据库对于并发执行事务的性能也逐渐下降。</p>
+<table>
+<thead>
+<tr>
+<th>隔离级别</th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>READ-UNCOMMITTED</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>READ-COMMITTED</td>
+<td>×</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>REPEATABLE-READ</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr>
+<td>SERIALIZABLE</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+</tbody>
+</table>
+<p>数据库对于隔离级别的实现，就是使用并发控制机制对在同一时间执行的事务进行控制，限制不同的事务对于同一资源的访问和更新。</p>
+<p>锁是一种最为常见的并发控制机制，在一个事务中，并不会将整个数据库都加锁，而是只会锁住那些需要访问的数据，MySQL 和常见数据库中的锁都分为两种：读锁（共享锁）、写锁（互斥锁）。
+读锁保证了读操作可以并发执行，相互不会影响，而写锁保证了在更新数据库数据时，不会有其他的事务访问或者更改同一条记录造成不可预知的问题。</p>
+<p>除了锁，另一种实现事务隔离性的方式就是通过时间戳，但实际上就是一种乐观锁思想，PostgreSQL就是使用这种方式实现事务的数据库。
+乐观锁在读取数据时不进行加锁操作，它“乐观”地认为在此期间数据不会被其他事务修改。
+为了确保数据的一致性，在数据更新时验证数据的版本或者时间戳等标志信息，以此来判断数据是否被其他事务修改过。如果数据确实被修改过，则乐观锁的更新操作会失败，此时可以根据应用需求选择回滚事务。</p>
+<p>再有就是多版本快照隔离思想。通过维护多个版本的数据，数据库可以允许事务在数据被其他事务更新时，对旧版本的数据进行读取，很多数据库都对这一机制进行了实现，也就是 MVCC。
+MySQL 和 PostgreSQL 都对这一机制进行自己的实现。</p>
+<h4 id="durability持久性">Durability持久性</h4>
+<p>数据被写入到数据库中，那么数据一定是存储在磁盘上。事务的持久性就体现在，一旦事务被提交，那么数据一定会被写入到数据库中并持久存储起来。</p>
+<p>当事务已经被提交之后，就无法再次回滚了，唯一能够撤回已经提交的事务的方式就是创建一个相反的事务对原操作进行撤销，这也是事务持久性的体现之一。</p>
+<p>与原子性一样，事务的持久性也是通过日志来实现的，MySQL使用重做日志（redo log）实现事务的持久性。
+重做日志由两部分组成，一是内存中的重做日志缓冲区，因为它保存在内存中，所以它是易失的，另一个就是在磁盘上的重做日志文件，它是持久的。</p>
+<p>当我们在一个事务中尝试对数据进行修改时，首先会先将数据从磁盘读入内存，并更新内存中缓存的数据，然后生成一条重做日志并写入重做日志缓存。
+当事务真正提交时，MySQL会将重做日志缓存中的内容，刷新到重做日志文件，即将内存中的数据更新到磁盘上。</p>
+<p>在 InnoDB 中，重做日志都是以512字节的块的形式进行存储的，因为块的大小与磁盘扇区大小相同，所以重做日志的写入可以保证原子性，不会由于机器断电导致重做日志仅写入一半并留下脏数据。</p>
+<h3 id="mysql中的日志">MySQL中的日志</h3>
+<p>MySQL 日志 主要包括错误日志、查询日志、慢查询日志、事务日志、二进制日志几大类。
+其中，比较重要的还要属二进制日志 <code>binlog（归档日志）</code>和<code>redo log（重做|事物日志）</code>和 <code>undo log（回滚日志）</code>。</p>
+<p>简单来说，MySQL InnoDB 引擎使用 <code>redo log(重做日志)</code> 保证事务的持久性，使用 <code>undo log(回滚日志)</code> 来保证事务的原子性。
+MySQL的数据备份、主备、主主、主从都离不开 <code>binlog</code>，需要依靠 <code>binlog</code> 来同步数据，保证数据一致性。</p>
+<h3 id="mvcc并发控制机制">MVCC并发控制机制</h3>
+<p>MVCC 是一种并发控制机制，解决多个并发事务同时读写数据库产生的一些问题，用于保持数据的一致性和隔离性。</p>
+<p>它是通过在每个数据行上维护多个版本的数据来实现的。当一个事务要对数据库中的数据进行修改时，MVCC 会为该事务创建一个数据快照，而不是直接修改实际的数据行。
+读操作使用旧版本数据的快照，写操作创建新版本，并确保原版本仍可用。这样，不同的事务可以在一定程度上并发执行，而不会相互干扰。</p>
+<p>当一个事务执行读操作时，它会使用快照读取。因为是快照读取，因此其他并发事务对数据行的修改不会影响当前事务的读取操作。
+事务会查找符合条件的数据快照，并选择符合其事务开始时间的数据版本进行读取，读的是旧快照。
+如果某个数据快照有多个版本，事务会选择不晚于其开始时间的最新版本，确保事务只读取在它开始之前已经存在的数据。</p>
+<p>当一个事务执行写操作时，它会先生成一个新的数据版本快照。原始版本的数据仍然存在，供其他事务使用快照读取，这保证了其他事务不受当前事务的写操作影响。
+新版本的数据会带有当前事务的版本号，以便其他事务能够正确读取相应版本的数据。然后将修改后的数据写入新版本。</p>
+<p>当一个事务提交时，它所做的修改将成为数据库的最新版本，并且对其他事务可见。
+当一个事务回滚时，它所做的修改将被撤销，对其他事务不可见。</p>
+<p>为了防止数据库中的版本无限增长，MVCC会定期进行版本的回收。回收机制会删除已经不再需要的旧版本数据，从而释放空间。</p>
+<p>InnoDB对MVCC的实现主要是依赖于：隐藏字段、<code>Read View</code>、<code>undo log</code>。</p>
+<p>InnoDB 存储引擎为每行数据添加了三个隐藏字段:</p>
+<ul>
+<li><code>DB_TRX_ID（6字节）</code>：表示最后一次插入或更新该行的事务 id。此外，delete 操作在内部被视为更新，只不过会在记录头 Record header 中的 deleted_flag 字段将其标记为已删除；</li>
+<li><code>DB_ROLL_PTR（7字节）</code> 回滚指针，指向该行的 undo log 。如果该行未被更新，则为空；</li>
+<li><code>DB_ROW_ID（6字节）</code>：如果没有设置主键且该表没有唯一非空索引时，InnoDB 会使用该 id 来生成聚簇索引；</li>
+</ul>
+<p><code>Read View</code>主要是用来做可见性判断，里面保存了 “当前对本事务不可见的其他活跃事务”。</p>
+<p><code>undo log</code>作用是，当读取记录时，若该记录被其他事务占用或当前版本对该事务不可见，则可以通过 <code>undo log</code> 读取之前的版本数据，以此实现<strong>非锁定读</strong>。</p>
+<p>非锁定读是什么？</p>
+<p>在 InnoDB 存储引擎中，多版本控制就是对非锁定读的实现。
+如果读取的行正在执行 DELETE 或 UPDATE 操作，这时读取操作不会去等待行上锁的释放。相反地，InnoDB 存储引擎会去读取行的一个快照数据，对于这种读取历史数据的方式，我们叫它快照读，就是对非锁定读的实现。</p>
+<p>具体一点，在 <code>Repeatable Read</code> 和 <code>Read Committed</code> 两个隔离级别下，如果是执行普通的 select 语句，不包括 <code>select ... lock in share mode</code> ,<code>select ... for update</code>则会使用一致性非锁定读。</p>
 <h3 id="操作事物">操作事物</h3>
-<h3 id="隔离级别">隔离级别</h3>
-<h2 id="mysql索引">MySQL索引</h2>
+<p>所有的存储引擎中只有 <code>InnoDB</code>、<code>NDB</code> 是事务性存储引擎，也就是说只有 <code>InnoDB</code>、<code>NDB</code> 支持事务。
+不支持的存储引擎，比如在MyISAM上操作事务，事务不会生效，SQL语句直接自动执行提交，所以回滚对于不支持事务的存储引擎是无效的。</p>
+<p>启动事务的方式：</p>
+<ul>
+<li><code>begin</code>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">mysql&gt; begin;
+</span></span><span class="line"><span class="cl">Query OK, 0 rows affected (0.00 sec)
+</span></span><span class="line"><span class="cl">mysql&gt; 事务操作SQL......
+</span></span></code></pre></div></li>
+<li><code>start transaction [修饰符]</code>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">修饰符：
+</span></span><span class="line"><span class="cl">1. read only //只读
+</span></span><span class="line"><span class="cl">2. read write //读写 默认
+</span></span><span class="line"><span class="cl">3. WITH CONSISTENT SNAPSHOT //一致性读
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-- 例如
+</span></span><span class="line"><span class="cl">mysql&gt; start transaction read only;
+</span></span><span class="line"><span class="cl">Query OK, 0 rows affected (0.00 sec)
+</span></span><span class="line"><span class="cl">mysql&gt; 事务操作SQL......
+</span></span></code></pre></div></li>
+</ul>
+<p>提交事物完整示例：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">mysql&gt; begin;
+</span></span><span class="line"><span class="cl">Query OK, 0 rows affected (0.01 sec)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mysql&gt; update account set balance=balance-20 where id = 1;
+</span></span><span class="line"><span class="cl">Query OK, 1 row affected (0.00 sec)
+</span></span><span class="line"><span class="cl">Rows matched: 1  Changed: 1  Warnings: 0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mysql&gt; update account set balance=balance+20 where id = 2;
+</span></span><span class="line"><span class="cl">Query OK, 1 row affected (0.00 sec)
+</span></span><span class="line"><span class="cl">Rows matched: 1  Changed: 1  Warnings: 0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mysql&gt; commit;
+</span></span><span class="line"><span class="cl">Query OK, 0 rows affected (0.01 sec)
+</span></span></code></pre></div><p>回滚事物完整示例：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">mysql&gt; begin;
+</span></span><span class="line"><span class="cl">Query OK, 0 rows affected (0.00 sec)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mysql&gt; update account set balance=balance-25 where id = 1;
+</span></span><span class="line"><span class="cl">Query OK, 1 row affected (0.00 sec)
+</span></span><span class="line"><span class="cl">Rows matched: 1  Changed: 1  Warnings: 0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mysql&gt; update account set balance=balance+25 where id = 2;
+</span></span><span class="line"><span class="cl">Query OK, 1 row affected (0.00 sec)
+</span></span><span class="line"><span class="cl">Rows matched: 1  Changed: 1  Warnings: 0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mysql&gt; rollback;
+</span></span><span class="line"><span class="cl">Query OK, 0 rows affected (0.00 sec)
+</span></span></code></pre></div><p>默认是事务自动提交的，每执行一条SQL就自动提交。
+此时需要操作事务，则需要显式开启（begin or start transaction）和提交（commit）或回滚（rollback）。
+如设置成OFF，则需要执行提交（commit）或回滚（rollback）操作时才会真正执行事务。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">--查看事务开启情况：
+</span></span><span class="line"><span class="cl">mysql&gt; SHOW VARIABLES LIKE &#39;autocommit&#39;;
+</span></span><span class="line"><span class="cl">+---------------+-------+
+</span></span><span class="line"><span class="cl">| Variable_name | Value |
+</span></span><span class="line"><span class="cl">+---------------+-------+
+</span></span><span class="line"><span class="cl">| autocommit | ON |
+</span></span><span class="line"><span class="cl">+---------------+-------+
+</span></span></code></pre></div><h2 id="mysql索引">MySQL索引</h2>
 <p>MySQL官方对索引的定义为：索引（Index）是帮助MySQL高效获取数据的数据结构。
 可以得到索引的本质：索引是数据结构。</p>
 <p>索引相当于一本书的目录或者字典。
@@ -2717,6 +3042,8 @@ InnoDB也会对这个“间隙”加锁，这种锁机制就是所谓的间隙�
 <li><a href="https://blog.codinglabs.org/articles/theory-of-mysql-index.html">https://blog.codinglabs.org/articles/theory-of-mysql-index.html</a></li>
 <li><a href="https://javaguide.cn/database/mysql/mysql-index.html">https://javaguide.cn/database/mysql/mysql-index.html</a></li>
 <li><a href="https://mp.weixin.qq.com/s/8qemhRg5MgXs1So5YCv0fQ">https://mp.weixin.qq.com/s/8qemhRg5MgXs1So5YCv0fQ</a></li>
+<li><a href="https://javaguide.cn/database/mysql/innodb-implementation-of-mvcc.html">https://javaguide.cn/database/mysql/innodb-implementation-of-mvcc.html</a></li>
+<li><a href="https://javabetter.cn/mysql/shiwu-shixian.html">https://javabetter.cn/mysql/shiwu-shixian.html</a></li>
 </ul>
 </div>
                     <div id="post_footer" class="post_footer">
