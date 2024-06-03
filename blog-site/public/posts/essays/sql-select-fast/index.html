@@ -1777,9 +1777,68 @@
 <li>插件式存储引擎：主要负责数据的存储和读取，采用的是插件式架构，支持 InnoDB、MyISAM、Memory 等多种存储引擎。</li>
 </ul>
 <h2 id="mysql存储引擎">MySQL存储引擎</h2>
-<p>MySQL 核心在于存储引擎，MySQL 5.5.5 之前，MyISAM 是 MySQL 的默认存储引擎。5.5.5 版本之后，InnoDB 是 MySQL 的默认存储引擎。
-可以使用<code>show engines;</code>来查看。</p>
+<p>MySQL 核心在于存储引擎，MySQL 5.5.5 之前，MyISAM 是 MySQL 的默认存储引擎。5.5.5 版本之后，InnoDB 是 MySQL 的默认存储引擎。</p>
+<p>可以使用<code>show engines;</code>来查看。</p>
 <p><img alt="MySQL存储引擎" src="/iblog/posts/annex/images/essays/MySQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.png"></p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>InnoDB</th>
+<th>MyISAM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>事务支持</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>锁类型</td>
+<td>行级锁</td>
+<td>表级锁</td>
+</tr>
+<tr>
+<td>外键支持</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>崩溃恢复</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>数据存储</td>
+<td>表和索引存储在表空间中</td>
+<td>数据和索引存储在不同文件中</td>
+</tr>
+<tr>
+<td>全文索引</td>
+<td>MySQL 5.6及以上版本支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>高并发和事务性要求高的应用</td>
+<td>读操作多、写操作少的应用</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>写性能较好，读性能较好</td>
+<td>读性能高，写性能相对较差</td>
+</tr>
+<tr>
+<td>数据完整性</td>
+<td>高</td>
+<td>低</td>
+</tr>
+</tbody>
+</table>
+<p>选择 InnoDB 还是 MyISAM 取决于具体的应用需求。InnoDB 适合需要高并发、高数据完整性和事务支持的应用，而 MyISAM 适合读操作多、数据一致性要求不高的应用。</p>
+<p>尽管 MyISAM 在特定场景下仍然有其应用价值，但随着 MySQL 版本的更新和 InnoDB 性能的不断提升，大多数新应用和系统都选择了 InnoDB 作为主要存储引擎。
+遗留系统可能继续使用 MyISAM，但在新开发中，使用 InnoDB 已成为主流和最佳实践。</p>
 <h2 id="mysql事务">MySQL事务</h2>
 <p>什么是事务？举个例子：你去超市买东西，&ldquo;一手交钱，一手交货&quot;就是一个事务的例子。
 交钱和交货必须同时成功，事务才算成功，其中有一个环节失败，事务将会撤销所有已成功的活动。</p>
