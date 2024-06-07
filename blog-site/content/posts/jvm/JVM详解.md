@@ -878,7 +878,7 @@ JDK 默认垃圾收集器（使用 java -XX:+PrintCommandLineFlags -version 命�
 - JDK 8：Parallel Scavenge（新生代）+ Parallel Old（老年代）
 - JDK 9 ~ JDK20: G1
 
-### Serial GC
+#### Serial GC
 `Serial GC`由于弊端较大，只有放在单核CPU上才能充分发挥其作用，由于现在都是多核CPU已经不用串行收集器了，所以以下内容了解即可。
 对于交互较强的应用而言，这种垃圾收集器是不能接受的。一般在Java web应用程序中是不会采用串行垃圾收集器的。
 
@@ -903,34 +903,34 @@ JDK 默认垃圾收集器（使用 java -XX:+PrintCommandLineFlags -version 命�
 -XX:InitialHeapSize=268435456 -XX:MaxHeapSize=4294967296 -XX:+PrintCommandLineFlags -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseSerialGC 
 ```
 
-### ParNew GC
+#### ParNew GC
 ParNew 收集器其实就是 Serial 收集器的多线程版本，除了使用多线程进行垃圾收集外，其余行为：控制参数、收集算法、回收策略等等和 Serial 收集器完全一样。
 
 ![parnew-GC](/iblog/posts/annex/images/essays/parnew-GC.png)
 
 它是许多运行在 Server 模式下的虚拟机的首要选择，除了 Serial 收集器外，只有它能与 CMS 收集器配合工作。
 
-### Parallel Scavenge GC
+#### Parallel Scavenge GC
 Parallel Scavenge 收集器也是使用标记-复制算法的多线程收集器，它看上去几乎和 ParNew 都一样。
 
 ![parallel-scavenge-GC](/iblog/posts/annex/images/essays/parallel-scavenge-GC.png)
 
 Parallel Scavenge 收集器关注点是吞吐量（高效率的利用 CPU）。CMS 等垃圾收集器的关注点更多的是用户线程的停顿时间（提高用户体验）。
 
-### Serial Old GC
+#### Serial Old GC
 Serial 收集器的老年代版本，它同样是一个单线程收集器。它主要有两大用途：
 - 在 JDK1.5 以及以前的版本中与 Parallel Scavenge 收集器搭配使用；
 - 作为 CMS 收集器的后备方案；
 
 ![serial-GC](/iblog/posts/annex/images/essays/serial-GC.png)
 
-### Parallel Old GC
+#### Parallel Old GC
 Parallel Scavenge 收集器的老年代版本。使用多线程和“标记-整理”算法。
 在注重吞吐量以及 CPU 资源的场合，都可以优先考虑 Parallel Scavenge 收集器和 Parallel Old 收集器。
 
 ![parallel-scavenge-GC](/iblog/posts/annex/images/essays/parallel-scavenge-GC.png)
 
-### CMS
+#### CMS
 CMS全称：Concurrent Mark Sweep，是一种以获取最短回收停顿时间为目标的收集器。它非常符合在注重用户体验的应用上使用。
 CMS收集器是 HotSpot 虚拟机第一款真正意义上的并发收集器，它第一次实现了让垃圾收集线程与用户线程（基本上）同时工作。
 
@@ -950,7 +950,7 @@ CMS 的优点是：并发收集、低停顿，但缺点也很明显：
 - CMS 采用的是「标记-清除」算法，会产生大量的内存碎片，导致空间不连续，当出现大对象无法找到连续的内存空间时，就会触发一次 Full GC，这会导致系统的停顿时间变长。
 - CMS 无法处理浮动垃圾，当 CMS 在进行垃圾回收的时候，应用程序还在不断地产生垃圾，这些垃圾会在 CMS 垃圾回收结束之后产生，这些垃圾就是浮动垃圾，CMS 无法处理这些浮动垃圾，只能在下一次 GC 时清理掉。
 
-### G1
+#### G1
 G1 (Garbage-First) 是一款面向服务器的垃圾收集器，主要针对配备多颗处理器及大容量内存的机器. 以极高概率满足 GC 停顿时间要求的同时,还具备高吞吐量性能特征。
 在 JDK 1.7 时引入，在 JDK 9 时取代 CMS 成为了默认的垃圾收集器。G1 有五个属性：分代、增量、并行、标记整理、可预测的停顿。
 
@@ -990,7 +990,7 @@ SATB（snapshot-at-the-beginning，开始阶段快照）能够有效的解决并
 
 然后将回收集中 Regin 的存活对象复制到空的 Regin 中，再清理掉整个旧的 Regin 。此时因为涉及到存活对象的移动，所以需要暂停用户线程，并由多个收集线程并行执行。
 
-### ZGC
+#### ZGC
 ZGC（The Z Garbage Collector）是 JDK11 推出的一款低延迟垃圾收集器，适用于大内存低延迟服务的内存管理和回收，SPEC jbb 2015 基准测试，在 128G 的大堆下，最大停顿时间为 1.68 ms，停顿时间远胜于 G1 和 CMS。
 
 ZGC 在 Java11 中引入，处于试验阶段。经过多个版本的迭代，不断的完善和修复问题，ZGC 在 Java15 已经可以正式使用了。
