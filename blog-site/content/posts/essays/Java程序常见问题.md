@@ -34,9 +34,15 @@ slug: "java-always-problems"
 
 
 ## 死锁
-死锁经常表现为程序的停顿，或者不再响应用户的请求。从操作系统上观察，对应进程的CPU占用率为零，很快会从top或prstat的输出中消失。
+死锁通常被定义为：如果一个进程集合中的每个进程都在等待只能由此集合中的其他进程才能引发的事件，而无限期陷入僵持的局面称为死锁。
 
-死锁示例代码：
+举个例子，当线程A持有锁a并尝试获取锁b，线程B持有锁b并尝试获取锁a时，就会出现死锁。
+简单来说，死锁问题的产生是由两个或者以上线程并行执行的时候，争夺资源而互相等待造成的。
+
+### 排查过程
+死锁经常表现为程序的停顿，或者不再响应用户的请求。从操作系统上观察，对应进程的CPU占用率为零，很快会从top的输出中消失。
+
+这里模拟死锁代码：
 ```
 public class MainTest {
 
@@ -77,35 +83,320 @@ class ThreadHolderLock implements Runnable{
 }
 ```
 
-步骤：
-- 使用`jps -l`命令找到程序进程；
-- 使用`jstack pid`命令打印堆栈信息；
+1. 使用`jps -l`命令找到程序进程；
+2. 使用`jstack pid`命令打印堆栈信息；
+   ```
+   Found one Java-level deadlock:
+   =============================
+   "线程BBB":
+     waiting to lock monitor 0x00007feb0d80b018 (object 0x000000076af2d588, a java.lang.String),
+     which is held by "线程AAA"
+   "线程AAA":
+     waiting to lock monitor 0x00007feb0d80d8a8 (object 0x000000076af2d5c0, a java.lang.String),
+     which is held by "线程BBB"
+   
+   Java stack information for the threads listed above:
+   ===================================================
+   "线程BBB":
+       at com.github.springcloud.service.ThreadHolderLock.run(MainTest.java:35)
+       - waiting to lock <0x000000076af2d588> (a java.lang.String)
+       - locked <0x000000076af2d5c0> (a java.lang.String)
+       at java.lang.Thread.run(Thread.java:748)
+   "线程AAA":
+       at com.github.springcloud.service.ThreadHolderLock.run(MainTest.java:35)
+       - waiting to lock <0x000000076af2d5c0> (a java.lang.String)
+       - locked <0x000000076af2d588> (a java.lang.String)
+       at java.lang.Thread.run(Thread.java:748)
+   
+   Found 1 deadlock.
+   ```
 
-上面死锁示例代码使用`jstack pid`后的一些信息：
+### 解决方案
+#### 使用资源有序分配法避免死锁
+想要如何避免死锁，就要弄清楚死锁出现的原因，造成死锁必须达成的4个条件：
+- 互斥条件：一个资源每次只能被一个线程使用。例如，如果线程 A 已经持有的资源，不能再同时被线程 B 持有，如果线程 B 请求获取线程 A 已经占用的资源，那线程 B 只能等待，直到线程 A 释放了资源。
+- 请求与保持条件：一个线程因请求资源而阻塞时，对已获得的资源保持不放。例如，当线程 A 已经持有了资源 1，又想申请资源 2，而资源 2 已经被线程 C 持有了，所以线程 A 就会处于等待状态，但是线程 A 在等待资源 2 的同时并不会释放自己已经持有的资源 1。
+- 不剥夺条件：线程已获得的资源，在未使用完之前，不能强行剥夺。例如，当线程A已经持有了资源 ，在自己使用完之前不能被其他线程获取，线程 B 如果也想使用此资源，则只能在线程 A 使用完并释放后才能获取。
+- 循环等待条件：若干线程之间形成一种头尾相接的循环等待资源关系。比如，线程 A 已经持有资源 2，而想请求资源 1， 线程 B 已经获取了资源 1，而想请求资源 2，这就形成资源请求等待的环。
+
+避免死锁的产生就只需要破环其中一个条件就可以，最常见的并且可行的就是使用资源有序分配法，来破循环等待条件。
+
+资源有序分配法: 线程 A 和 线程 B 获取资源的顺序要一样，当线程 A 先尝试获取资源 A，然后尝试获取资源 B 的时候，线程 B 同样也是先尝试获取资源 A，然后尝试获取资源 B。也就是说，线程 A 和 线程 B 总是以相同的顺序申请自己想要的资源。
+
+给资源分配一个全局的唯一编号，进程必须按资源编号的顺序请求资源。这种方法可以避免循环等待，从而防止死锁。
+```java
+class Resource {
+    private final int id;
+
+    public Resource(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+}
+
+class Process extends Thread {
+    private final int id;
+    private final Resource[] resources;
+
+    public Process(int id, Resource[] resources) {
+        this.id = id;
+        this.resources = resources;
+    }
+
+    @Override
+    public void run() {
+        try {
+            acquireResources();
+            // 模拟处理
+            Thread.sleep((int) (Math.random() * 1000));
+            releaseResources();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void acquireResources() throws InterruptedException {
+        for (Resource resource : resources) {
+            synchronized (resource) {
+                System.out.println("Process " + id + " acquired Resource " + resource.getId());
+            }
+        }
+    }
+
+    private void releaseResources() {
+        for (Resource resource : resources) {
+            synchronized (resource) {
+                System.out.println("Process " + id + " released Resource " + resource.getId());
+            }
+        }
+    }
+}
+
+public class ResourceOrderingExample {
+    public static void main(String[] args) {
+        Resource resource1 = new Resource(1);
+        Resource resource2 = new Resource(2);
+        Resource resource3 = new Resource(3);
+
+        Process process1 = new Process(1, new Resource[]{resource1, resource2});
+        Process process2 = new Process(2, new Resource[]{resource2, resource3});
+        Process process3 = new Process(3, new Resource[]{resource3, resource1});
+
+        process1.start();
+        process2.start();
+        process3.start();
+    }
+}
 ```
-Found one Java-level deadlock:
-=============================
-"线程BBB":
-  waiting to lock monitor 0x00007feb0d80b018 (object 0x000000076af2d588, a java.lang.String),
-  which is held by "线程AAA"
-"线程AAA":
-  waiting to lock monitor 0x00007feb0d80d8a8 (object 0x000000076af2d5c0, a java.lang.String),
-  which is held by "线程BBB"
 
-Java stack information for the threads listed above:
-===================================================
-"线程BBB":
-	at com.github.springcloud.service.ThreadHolderLock.run(MainTest.java:35)
-	- waiting to lock <0x000000076af2d588> (a java.lang.String)
-	- locked <0x000000076af2d5c0> (a java.lang.String)
-	at java.lang.Thread.run(Thread.java:748)
-"线程AAA":
-	at com.github.springcloud.service.ThreadHolderLock.run(MainTest.java:35)
-	- waiting to lock <0x000000076af2d5c0> (a java.lang.String)
-	- locked <0x000000076af2d588> (a java.lang.String)
-	at java.lang.Thread.run(Thread.java:748)
+#### 使用银行家算法避免死锁
+![银行家算法](/iblog/posts/annex/images/essays/银行家算法.png)
 
-Found 1 deadlock.
+银行家算法：一个避免死锁（Deadlock）的著名算法，是由艾兹格·迪杰斯特拉在1965年为T.H.E系统设计的一种避免死锁产生的算法。它以银行借贷系统的分配策略为基础，判断并保证系统的安全运行。
+
+在银行中，客户申请贷款的数量是有限的，每个客户在第一次申请贷款时要声明完成该项目所需的最大资金量，在满足所有贷款要求时，客户应及时归还。银行家在客户申请的贷款数量不超过自己拥有的最大值时，都应尽量满足客户的需要。通过判断借贷是否安全，然后决定借不借。
+
+举例，现有公司B、公司A、公司T，想要从银行分别贷款70亿、40亿、50亿，假设银行只有100亿供放贷，如果借不到企业最大需求的钱，钱将不会归还，怎么才能合理的放贷？
+| 公司 | 最大需求 | 已借走 | 最多还借 |
+| ---- | -------- | ------ | -------- |
+| B    | 70       | 20     | 50       |
+| A    | 40       | 10     | 30       |
+| T    | 50       | 30     | 20       |
+
+此时公司B、A、T已经从银行借走60亿，银行还剩40亿。此时银行可放贷金额组合：
+- 借给公司B10亿、公司A10亿、公司T20亿，等待公司T还钱再将10亿借给公司A，等待公司A还钱，再将钱借给公司B；
+- 借给公司T20亿，等公司T还钱再将钱借给公司A，等待公司A还钱再将钱借给公司B；
+- 借给公司A10亿，等待公司A还钱再将钱借给公司T，公司T还钱再将钱借给公司B；
+
+```java
+class Banker {
+    private int[] available;  // 系统可用资源
+    private int[][] maximum;  // 每个进程的最大资源需求
+    private int[][] allocation; // 每个进程当前已分配的资源
+    private int[][] need;      // 每个进程剩余的资源需求
+
+    public Banker(int[] available, int[][] maximum) {
+        this.available = available;
+        this.maximum = maximum;
+        int numProcesses = maximum.length;
+        int numResources = available.length;
+        allocation = new int[numProcesses][numResources];
+        need = new int[numProcesses][numResources];
+        for (int i = 0; i < numProcesses; i++) {
+            for (int j = 0; j < numResources; j++) {
+                need[i][j] = maximum[i][j]; // 初始时，Need等于Maximum
+            }
+        }
+    }
+
+    // 请求资源的方法
+    public synchronized boolean requestResources(int processId, int[] request) {
+        if (!isRequestValid(processId, request)) {
+            return false; // 请求不合法，拒绝请求
+        }
+
+        // 试探性分配
+        for (int i = 0; i < available.length; i++) {
+            available[i] -= request[i];
+            allocation[processId][i] += request[i];
+            need[processId][i] -= request[i];
+        }
+
+        // 安全性检查
+        boolean safe = isSafeState();
+
+        if (!safe) {
+            // 如果不安全，恢复试探性分配前的状态
+            for (int i = 0; i < available.length; i++) {
+                available[i] += request[i];
+                allocation[processId][i] -= request[i];
+                need[processId][i] += request[i];
+            }
+        }
+
+        return safe;
+    }
+
+    private boolean isRequestValid(int processId, int[] request) {
+        for (int i = 0; i < request.length; i++) {
+            if (request[i] > need[processId][i] || request[i] > available[i]) {
+                return false; // 请求超出需求或可用资源
+            }
+        }
+        return true;
+    }
+
+    private boolean isSafeState() {
+        int[] work = available.clone();
+        boolean[] finish = new boolean[allocation.length];
+
+        while (true) {
+            boolean found = false;
+            for (int i = 0; i < allocation.length; i++) {
+                if (!finish[i]) {
+                    boolean canProceed = true;
+                    for (int j = 0; j < work.length; j++) {
+                        if (need[i][j] > work[j]) {
+                            canProceed = false;
+                            break;
+                        }
+                    }
+                    if (canProceed) {
+                        for (int j = 0; j < work.length; j++) {
+                            work[j] += allocation[i][j];
+                        }
+                        finish[i] = true;
+                        found = true;
+                    }
+                }
+            }
+            if (!found) {
+                break;
+            }
+        }
+
+        for (boolean f : finish) {
+            if (!f) {
+                return false; // 存在未完成的进程，系统不安全
+            }
+        }
+        return true; // 所有进程都完成，系统安全
+    }
+}
+```
+调用示例
+```java
+public class BankerExample {
+    public static void main(String[] args) {
+        int[] available = {3, 3, 2};
+        int[][] maximum = {
+            {7, 5, 3},
+            {3, 2, 2},
+            {9, 0, 2},
+            {2, 2, 2},
+            {4, 3, 3}
+        };
+
+        Banker banker = new Banker(available, maximum);
+
+        int[] request1 = {1, 0, 2};
+        boolean granted1 = banker.requestResources(1, request1);
+        System.out.println("Request 1 granted: " + granted1);
+
+        int[] request2 = {3, 3, 0};
+        boolean granted2 = banker.requestResources(4, request2);
+        System.out.println("Request 2 granted: " + granted2);
+
+        int[] request3 = {2, 0, 0};
+        boolean granted3 = banker.requestResources(0, request3);
+        System.out.println("Request 3 granted: " + granted3);
+    }
+}
+```
+
+#### 使用 tryLock 进行超时锁定
+使用 `java.util.concurrent.locks.ReentrantLock` 的 `tryLock`方法可以尝试获取锁，并设置超时时间，避免长时间等待造成的死锁。
+
+```java
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.TimeUnit;
+
+class Process extends Thread {
+    private final int id;
+    private final Lock lock1;
+    private final Lock lock2;
+
+    public Process(int id, Lock lock1, Lock lock2) {
+        this.id = id;
+        this.lock1 = lock1;
+        this.lock2 = lock2;
+    }
+
+    @Override
+    public void run() {
+        try {
+            while (true) {
+                if (lock1.tryLock(50, TimeUnit.MILLISECONDS)) {
+                    try {
+                        if (lock2.tryLock(50, TimeUnit.MILLISECONDS)) {
+                            try {
+                                System.out.println("Process " + id + " acquired both locks");
+                                // 模拟处理
+                                Thread.sleep((int) (Math.random() * 1000));
+                                return;
+                            } finally {
+                                lock2.unlock();
+                            }
+                        }
+                    } finally {
+                        lock1.unlock();
+                    }
+                }
+                // 等待一段时间再重试
+                Thread.sleep((int) (Math.random() * 50));
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+public class TryLockExample {
+    public static void main(String[] args) {
+        Lock lock1 = new ReentrantLock();
+        Lock lock2 = new ReentrantLock();
+
+        Process process1 = new Process(1, lock1, lock2);
+        Process process2 = new Process(2, lock2, lock1);
+
+        process1.start();
+        process2.start();
+    }
+}
 ```
 
 ## 内存泄露
@@ -141,7 +432,6 @@ public class MemoryLeak {
 ```
 
 ### 排查过程
-
 根据运维之前收集到的内存数据、GC 日志尝试判断哪里出现了问题。
 结果发现老年代的内存使用就算是发生 GC 也一直居高不下，而且随着时间推移也越来越高。
 
@@ -190,7 +480,7 @@ JVM参数说明：https://www.oracle.com/java/technologies/javase/vmoptions-jsp.
 | -XX:MetaspaceSize               | 初始化的元空间大小                        | 如果元空间大小达到了这个值，就会触发Full GC为了避免频繁的Full GC，建议将- XX：MetaspaceSize设置较大值。如果释放了空间之后，元空间还是不足，那么就会自动增加MetaspaceSize的大小 |
 | -XX:MaxMetaspaceSize            | 元空间最大值                              | 默认情况下，元空间最大的大小是系统内存的大小，元空间一直扩大，虚拟机可能会消耗完所有的可用系统内存。 |
 
-完整示例参数：
+示例参数：
 ```
 # 必备
 -XX:+PrintGCDetails 
@@ -221,14 +511,14 @@ JVM参数说明：https://www.oracle.com/java/technologies/javase/vmoptions-jsp.
 4. 堆内存持续上涨达到设置的最大内存值；
 
 调优原则：
-1. 多数导致GC问题的Java应用，都不是因为我们参数设置错误，而是代码问题
-2. 在实际使用中，分析GC情况优化代码比优化JVM参数更好
-3. 减少创建对象的数量、减少使用全局变量和大对象
+1. 多数导致GC问题的Java应用，都不是因为我们参数设置错误，而是代码问题；
+2. 在实际使用中，分析GC情况优化代码比优化JVM参数更好；
+3. 减少创建对象的数量、减少使用全局变量和大对象；
 
 调优思路：
-1. 分析GC日志及dump文件，判断是否需要优化，确定瓶颈问题点。如果各项参数设置合理，系统没有超时日志出现，GC频率不高，GC耗时不高，那么没有必要进行GC优化，如果GC时间超过1-3秒，或者频繁GC，则必须优化。
-2. 确定JVM调优目标。如果内存分配过大或过小，或者采用的GC收集器比较慢，则应该优先调整这些参数，并且先找1台或几台机器进行测试，然后比较优化过的机器和没有优化的机器的性能对比，并有针对性的做出最后选择。
-3. 不断的分析和调整，直到找到合适的JVM参数配置。
+1. 分析GC日志及dump文件，判断是否需要优化，确定瓶颈问题点。如果各项参数设置合理，系统没有超时日志出现，GC频率不高，GC耗时不高，那么没有必要进行GC优化，如果GC时间超过1-3秒，或者频繁GC，则必须优化；
+2. 确定JVM调优目标。如果内存分配过大或过小，或者采用的GC收集器比较慢，则应该优先调整这些参数，并且先找1台或几台机器进行测试，然后比较优化过的机器和没有优化的机器的性能对比，并有针对性的做出最后选择；
+3. 不断的分析和调整，直到找到合适的JVM参数配置；
 
 ## 线上接口慢
 
@@ -280,5 +570,6 @@ JVM参数说明：https://www.oracle.com/java/technologies/javase/vmoptions-jsp.
 - 接口需要加动态配置开关；能够快速切断流量或降级某些非核心服务调用；
 - 设计程序自愈能力；比如如果数据有问题，用配置好的程序逻辑自动去修复；
 
-## @Transactional常见问题
+## @Transactional不生效
+
 

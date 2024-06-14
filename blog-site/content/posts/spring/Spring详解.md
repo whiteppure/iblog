@@ -177,7 +177,7 @@ public class SpringBootExampleApplication {
 public @interface SpringBootApplication{
 }
 ```
-#### @SpringBootConfiguration
+### @SpringBootConfiguration
 `@SpringBootConfiguration`核心注解是`@Configuration`代表自己是一个`Spring`的配置类
 ```
 @Target({ElementType.TYPE})
@@ -204,7 +204,7 @@ public @interface SpringBootConfiguration {
 public @interface Component 
 ```
 
-#### @EnableAutoConfiguration
+### @EnableAutoConfiguration
 核心注解是`@AutoConfigurationPackage`和`@Import({AutoConfigurationImportSelector.class})`
 ```
 @Target({ElementType.TYPE})
@@ -234,7 +234,8 @@ public @interface EnableAutoConfiguration {
 
 	}
 ```
->这里可以打断点自己看一下
+
+这里可以打断点自己看一下
 
 `@AutoConfigurationPackage` 这个注解本身的含义就是将主配置类（`@SpringBootApplication`标注的类）所在的包下面所有的组件都扫描到 `spring` 容器中。
 
@@ -290,7 +291,7 @@ Assert.notEmpty(configurations, "No auto configuration classes found in META-INF
 public class SpringApplicationAdminJmxAutoConfiguration 
 ```
 
-#### 总结
+### 总结
 ![@SpringbootApplication原理](/iblog/posts/annex/images/essays/@SpringbootApplication原理.png)
 
 当 `Springboot` 启动的时候，会执行`AutoConfigurationImportSelector`这个类中的`getCandidateConfigurations`方法，这个方法会帮我们加载`META-INF/spring.factories`文件里面的当`@ConditionXXX`注解条件满足的类。
@@ -1688,7 +1689,7 @@ public @interface Transactional {
 ```
 #### 失效情况
 1. 如果某个方法是非public的，那么@Transactional就会失效，因为底层cglib是基于父子类来实现的，子类是不能重载父类的private方法，所以无法很好利用代理，这种情况下会导致@Transactional失效
-2. 使用的数据库引擎不支持事务，例如在使用mysql的时候使用MyISAM引擎不支持事务，InnoDB支持，并且从mysql5.5之后开始默认的存储引擎就为InnoDB 。
+2. 使用的数据库引擎不支持事务，例如在使用mysql的时候使用MyISAM引擎不支持事务，InnoDB支持，并且从mysql5.5之后开始默认的存储引擎就为InnoDB。
 3. 调用的问题，因为Spring事务是基于代理来实现的，所以某个加了@Transactional的方法只有是被代理对象调用时，那么这个注解才会生效，所以当被代理对象来调用这个方法那么事务就不会生效，简单的可以理解为添加了@Transactional注解的方法不能在同一个类中调用，否则会使事务失效。
 4. @Transactional 注解属性 propagation 设置错误，若是错误的配置以下三种 propagation ，事务将不会发生回滚：
    - TransactionDefinition.PROPAGATION_SUPPORTS：如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。
@@ -1699,6 +1700,7 @@ public @interface Transactional {
 
 
 #### 原理
-利用Spring Aop实现的。 当一个方法使用了@Transactional注解，在运行时，JVM为该Bean创建一个代理对象，并且在调用该方法的时候进行使用TransactionInterceptor拦截，在方法执行之前会开启一个事务，然后执行方法的逻辑。 方法执行成功，则提交事务。如果执行方法中出现异常，则回滚事务。
+利用Spring Aop实现的。 当一个方法使用了@Transactional注解，在运行时，JVM为该Bean创建一个代理对象，并且在调用该方法的时候进行使用TransactionInterceptor拦截，在方法执行之前会开启一个事务，然后执行方法的逻辑。
+方法执行成功，则提交事务。如果执行方法中出现异常，则回滚事务。
 
 

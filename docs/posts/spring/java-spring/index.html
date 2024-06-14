@@ -219,8 +219,6 @@
             
         <ul class="nav">
             
-        <ul class="nav">
-            
             
             <li class="nav-item">
                 <a class="nav-link text-left" href="#springbootconfiguration">
@@ -235,7 +233,6 @@
         
         </ul>
         
-        </ul>
         
         
         
@@ -244,9 +241,6 @@
         
         
         
-        
-        <ul class="nav">
-            
         <ul class="nav">
             
         <ul class="nav">
@@ -267,7 +261,6 @@
         
         </ul>
         
-        </ul>
         
         
         
@@ -276,9 +269,6 @@
         
         
         
-        
-        <ul class="nav">
-            
         <ul class="nav">
             
         <ul class="nav">
@@ -293,8 +283,6 @@
             </li>
             
             
-        </ul>
-        
         </ul>
         
         </ul>
@@ -1309,7 +1297,7 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 </span></span><span class="line"><span class="cl">)
 </span></span><span class="line"><span class="cl">public @interface SpringBootApplication{
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><h4 id="springbootconfiguration">@SpringBootConfiguration</h4>
+</span></span></code></pre></div><h3 id="springbootconfiguration">@SpringBootConfiguration</h3>
 <p><code>@SpringBootConfiguration</code>核心注解是<code>@Configuration</code>代表自己是一个<code>Spring</code>的配置类</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Target({ElementType.TYPE})
 </span></span><span class="line"><span class="cl">@Retention(RetentionPolicy.RUNTIME)
@@ -1333,7 +1321,7 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 </span></span><span class="line"><span class="cl">@Documented
 </span></span><span class="line"><span class="cl">@Indexed
 </span></span><span class="line"><span class="cl">public @interface Component 
-</span></span></code></pre></div><h4 id="enableautoconfiguration">@EnableAutoConfiguration</h4>
+</span></span></code></pre></div><h3 id="enableautoconfiguration">@EnableAutoConfiguration</h3>
 <p>核心注解是<code>@AutoConfigurationPackage</code>和<code>@Import({AutoConfigurationImportSelector.class})</code></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Target({ElementType.TYPE})
 </span></span><span class="line"><span class="cl">@Retention(RetentionPolicy.RUNTIME)
@@ -1359,9 +1347,7 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 </span></span><span class="line"><span class="cl">		<span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span></code></pre></div><blockquote>
-<p>这里可以打断点自己看一下</p>
-</blockquote>
+</span></span></code></pre></div><p>这里可以打断点自己看一下</p>
 <p><code>@AutoConfigurationPackage</code> 这个注解本身的含义就是将主配置类（<code>@SpringBootApplication</code>标注的类）所在的包下面所有的组件都扫描到 <code>spring</code> 容器中。</p>
 <p><code>AutoConfigurationImportSelector</code>核心代码如下</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">	<span class="o">/**</span>
@@ -1404,7 +1390,7 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 </span></span><span class="line"><span class="cl">@ConditionalOnProperty(prefix = &#34;spring.application.admin&#34;, value = &#34;enabled&#34;, havingValue = &#34;true&#34;,
 </span></span><span class="line"><span class="cl">		matchIfMissing = false)
 </span></span><span class="line"><span class="cl">public class SpringApplicationAdminJmxAutoConfiguration 
-</span></span></code></pre></div><h4 id="总结">总结</h4>
+</span></span></code></pre></div><h3 id="总结">总结</h3>
 <p><img alt="@SpringbootApplication原理" src="/iblog/posts/annex/images/essays/@SpringbootApplication%E5%8E%9F%E7%90%86.png"></p>
 <p>当 <code>Springboot</code> 启动的时候，会执行<code>AutoConfigurationImportSelector</code>这个类中的<code>getCandidateConfigurations</code>方法，这个方法会帮我们加载<code>META-INF/spring.factories</code>文件里面的当<code>@ConditionXXX</code>注解条件满足的类。</p>
 <h2 id="bean的自动装配">Bean的自动装配</h2>
@@ -2721,7 +2707,7 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 </span></span></span></code></pre></div><h4 id="失效情况">失效情况</h4>
 <ol>
 <li>如果某个方法是非public的，那么@Transactional就会失效，因为底层cglib是基于父子类来实现的，子类是不能重载父类的private方法，所以无法很好利用代理，这种情况下会导致@Transactional失效</li>
-<li>使用的数据库引擎不支持事务，例如在使用mysql的时候使用MyISAM引擎不支持事务，InnoDB支持，并且从mysql5.5之后开始默认的存储引擎就为InnoDB 。</li>
+<li>使用的数据库引擎不支持事务，例如在使用mysql的时候使用MyISAM引擎不支持事务，InnoDB支持，并且从mysql5.5之后开始默认的存储引擎就为InnoDB。</li>
 <li>调用的问题，因为Spring事务是基于代理来实现的，所以某个加了@Transactional的方法只有是被代理对象调用时，那么这个注解才会生效，所以当被代理对象来调用这个方法那么事务就不会生效，简单的可以理解为添加了@Transactional注解的方法不能在同一个类中调用，否则会使事务失效。</li>
 <li>@Transactional 注解属性 propagation 设置错误，若是错误的配置以下三种 propagation ，事务将不会发生回滚：
 <ul>
@@ -2734,7 +2720,8 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 <li>异常被 catch 了 导致@Transactional失效：当事务方法中抛出一个异常后，应该是需要表示当前事务需要 rollback ，如果在事务方法中手动捕获了该异常，那么事务方法则会任务当前事务应该正常 commit，此时就会出现事务方法中明明有报错信息表示当前事务需要 rollback 但是事务方法任务是正常，出现了前后不一致，也是因为这样就会抛出 UnexpectedRollbackException异常。</li>
 </ol>
 <h4 id="原理-2">原理</h4>
-<p>利用Spring Aop实现的。 当一个方法使用了@Transactional注解，在运行时，JVM为该Bean创建一个代理对象，并且在调用该方法的时候进行使用TransactionInterceptor拦截，在方法执行之前会开启一个事务，然后执行方法的逻辑。 方法执行成功，则提交事务。如果执行方法中出现异常，则回滚事务。</p>
+<p>利用Spring Aop实现的。 当一个方法使用了@Transactional注解，在运行时，JVM为该Bean创建一个代理对象，并且在调用该方法的时候进行使用TransactionInterceptor拦截，在方法执行之前会开启一个事务，然后执行方法的逻辑。
+方法执行成功，则提交事务。如果执行方法中出现异常，则回滚事务。</p>
 </div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">
