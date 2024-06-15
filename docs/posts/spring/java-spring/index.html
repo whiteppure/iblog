@@ -665,38 +665,6 @@
             
         <ul class="nav">
             
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%8e%9f%e7%90%86-1">
-                    原理
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
             
             <li class="nav-item">
                 <a class="nav-link text-left" href="#aop">
@@ -925,8 +893,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#spring%e4%ba%8b%e5%8a%a1%e7%9a%84%e4%bc%a0%e6%92%ad">
-                    Spring事务的传播
+                <a class="nav-link text-left" href="#spring%e4%ba%8b%e5%8a%a1%e7%9a%84%e4%bc%a0%e6%92%ad%e5%8f%8a%e5%9c%ba%e6%99%af">
+                    Spring事务的传播及场景
                 </a>
             </li>
             
@@ -953,8 +921,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#transactional%e6%b3%a8%e8%a7%a3">
-                    @Transactional注解
+                <a class="nav-link text-left" href="#spring%e4%ba%8b%e5%8a%a1%e7%9a%84%e5%8e%9f%e7%90%86">
+                    Spring事务的原理
                 </a>
             </li>
             
@@ -973,58 +941,18 @@
         
         
         
-        <ul class="nav">
-            
-        <ul class="nav">
-            
         <ul class="nav">
             
         <ul class="nav">
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%a4%b1%e6%95%88%e6%83%85%e5%86%b5">
-                    失效情况
+                <a class="nav-link text-left" href="#%e5%8f%82%e8%80%83%e6%96%87%e7%ab%a0">
+                    参考文章
                 </a>
             </li>
             
             
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%8e%9f%e7%90%86-2">
-                    原理
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
         </ul>
         
         </ul>
@@ -1149,7 +1077,6 @@
 <p>Spring虽然把它当成框架来使用，但其本质是一个容器，即IOC容器，里面最核心是如何<a href="/iblog/posts/spring/java-spring/#Bean的创建流程">创建对象和管理对象</a>,里面包含了Bean的生命周期和Spring的一些扩展点，包含对AOP的应用。
 除此之外，Spring真正的强大之处在于其生态，它包含了Spring Framework、Spring Boot、Spring Cloud等一些列框架，极大提高了开发效率。</p>
 <h2 id="spring启动流程">Spring启动流程</h2>
-<p>参考：<a href="https://blog.csdn.net/scjava/article/details/109587619">https://blog.csdn.net/scjava/article/details/109587619</a></p>
 <p><img alt="Spring详解-004" src="/iblog/posts/annex/images/spring/Spring%E8%AF%A6%E8%A7%A3-004.png"></p>
 <p>核心方法<code>AbstractApplicationContext#refresh()</code></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public void refresh() throws BeansException, IllegalStateException {
@@ -1250,7 +1177,6 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 <li>第三次：A的三级缓存中有值，不需要进行初始化操作，执行创建A的流程,将其放入二级缓存，返回值给到创建B，此时B已经创建完全，将其加入一级缓存，然后将该返回值给到A，将A加入一级缓存，至此循环依赖问题解决。</li>
 </ul>
 <h2 id="springboot">SpringBoot</h2>
-<p>官网地址：<a href="https://spring.io/projects/spring-boot">https://spring.io/projects/spring-boot</a></p>
 <blockquote>
 <p><code>SpringBoot</code>是由<code>Pivotal</code>团队提供的全新框架，其设计目的是用来简化新<code>Spring</code>应用的初始搭建以及开发过程。
 该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。<code>SpringBoot</code> 提供了一种新的编程范式，可以更加快速便捷地开发 <code>Spring</code> 项目，在开发过程当中可以专注于应用程序本身的功能开发，而无需在 <code>Spring</code> 配置上花太大的工夫。</p>
@@ -1981,7 +1907,7 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 <p><code>Bean</code>的生命周期，即<code>Bean</code>的 <code>实例化-&gt;初始化-&gt;使用-&gt;销毁</code> 的过程。</p>
 <h3 id="注入bean">注入Bean</h3>
 <p>我们可以使用 xml 配置的方式来指定，<code>bean</code> 在初始化、销毁的时候调用对应的方法：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;bean id=&#34;getDemoEntity&#34; class=&#34;com.my.demo&#34; init-method=&#34;init&#34; destroy-method=&#34;destroy&#34; /&gt;
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;getDemoEntity&#34;</span> <span class="na">class=</span><span class="s">&#34;com.my.demo&#34;</span> <span class="na">init-method=</span><span class="s">&#34;init&#34;</span> <span class="na">destroy-method=</span><span class="s">&#34;destroy&#34;</span> <span class="nt">/&gt;</span>
 </span></span></code></pre></div><p>也可以使用注解的方式，来调用bean在初始化、销毁的时候调用对应的方法：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
 </span></span><span class="line"><span class="cl">    public static void main(String[] args) {
@@ -2015,8 +1941,7 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 </span></span><span class="line"><span class="cl">        System.out.println(&#34;调用了销毁方法...&#34;);
 </span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>需要注意的是，上面演示的是单实例 <code>bean</code>，如果是多实例 <code>bean</code>，初始化和销毁会不一样。</p>
-<p>单实例 <code>bean</code>：</p>
+</span></span></code></pre></div><p>单实例 <code>bean</code>：</p>
 <ul>
 <li>在容器启动的时候创建对象；</li>
 <li>在容器关闭的时候销毁；</li>
@@ -2029,7 +1954,7 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 <p>多实例注解代码：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Scope(&#34;prototype&#34;)
 </span></span><span class="line"><span class="cl">@Bean(initMethod=&#34;init&#34;,destroyMethod=&#34;destroy&#34;)
-</span></span><span class="line"><span class="cl">public Test test（）{}
+</span></span><span class="line"><span class="cl">public Test test(){}
 </span></span></code></pre></div><h3 id="initializingbeandisposablebean">InitializingBean、DisposableBean</h3>
 <p>通过让<code>Bean</code>实现 <code>InitializingBean</code>(定义初始化逻辑)和实现<code>DisposableBean</code>(销毁逻辑)实现初始化<code>bean</code>和销毁<code>bean</code>:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
@@ -2063,7 +1988,7 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 <p>Java提供了对应的注解，也可以调用<code>Bean</code>的初始化方法和销毁方法：</p>
 <ul>
 <li><code>@PostConstruct</code> 标注该注解的方法，在<code>bean</code>创建完成并且属性赋值完成 来执行初始化方法;</li>
-<li><code>@PreDestroy</code>， 在容器销毁<code>bean</code>之前通知我们进行<code>bean</code>的清理工作;</li>
+<li><code>@PreDestroy</code> 在容器销毁<code>bean</code>之前通知我们进行<code>bean</code>的清理工作;</li>
 </ul>
 <p>这两个注解不是<code>spring</code>的注解是<code>JSR250</code>JDK带的注解。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
@@ -2096,9 +2021,12 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 </span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><h3 id="beanpostprocessor">BeanPostProcessor</h3>
-<p>除了上面的几种方法，也可以使用<code>BeanPostProcessor</code>,<code>Bean</code>的后置处理器，在初始化前后进行处理工作。</p>
-<p><code>postProcessBeforeInitialization</code>：会在初始化完成之前调用
-<code>postProcessAfterInitialization</code>：会在初始化完成之后调用</p>
+<p>除了上面的几种方法，也可以使用<code>BeanPostProcessor</code>，<code>Bean</code>的后置处理器，在初始化前后进行处理工作。</p>
+<ul>
+<li><code>postProcessBeforeInitialization</code>：会在初始化完成之前调用</li>
+<li><code>postProcessAfterInitialization</code>：会在初始化完成之后调用</li>
+</ul>
+<p>调用顺序： 创建对象 &ndash;&gt; postProcessBeforeInitialization &ndash;&gt; 初始化 &ndash;&gt; postProcessAfterInitialization &ndash;&gt; 销毁</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
 </span></span><span class="line"><span class="cl">    public static void main(String[] args) {
 </span></span><span class="line"><span class="cl">        // 获取Spring IOC容器
@@ -2145,12 +2073,7 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 </span></span><span class="line"><span class="cl">        System.out.println(&#34;调用了初始化方法...&#34;);
 </span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>调用顺序：</p>
-<blockquote>
-<p>创建对象 &ndash;&gt; postProcessBeforeInitialization &ndash;&gt; 初始化 &ndash;&gt; postProcessAfterInitialization &ndash;&gt; 销毁</p>
-</blockquote>
-<h4 id="原理-1">原理</h4>
-<p>通过打断点，可以看到，在创建<code>bean</code>的时候会，会调用<code>AbstractAutowireCapableBeanFactory</code>类的<code>doCreateBean</code>方法，这也是创建<code>bean</code>的核心方法。</p>
+</span></span></code></pre></div><p>通过打断点可以看到，在创建<code>bean</code>的时候会调用<code>AbstractAutowireCapableBeanFactory</code>类的<code>doCreateBean</code>方法，这也是创建<code>bean</code>的核心方法。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    try {
 </span></span><span class="line"><span class="cl">        populateBean(beanName, mbd, instanceWrapper);
 </span></span><span class="line"><span class="cl">        exposedObject = initializeBean(beanName, exposedObject, mbd);
@@ -2192,8 +2115,8 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 </span></span><span class="line"><span class="cl">		}
 </span></span><span class="line"><span class="cl">		return result;
 </span></span><span class="line"><span class="cl">	}
-</span></span></code></pre></div><p>该方法作用，遍历容器中所有的<code>BeanPostProcessor</code>挨个执行<code>postProcessBeforeInitialization</code>方法，一旦返回<code>null</code>，将不会执行后面<code>bean</code>的<code>postProcessBeforeInitialization</code>方法。</p>
-<p>之后在调用<code>invokeInitMethods</code>方法，进行<code>bean</code>的初始化，最后在执行<code>applyBeanPostProcessorsAfterInitialization</code>方法，执行一些初始化之后的工作。</p>
+</span></span></code></pre></div><p>该方法作用，遍历容器中所有的<code>BeanPostProcessor</code>挨个执行<code>postProcessBeforeInitialization</code>方法，一旦返回<code>null</code>，将不会执行后面<code>bean</code>的<code>postProcessBeforeInitialization</code>方法。
+之后在调用<code>invokeInitMethods</code>方法，进行<code>bean</code>的初始化，最后在执行<code>applyBeanPostProcessorsAfterInitialization</code>方法，执行一些初始化之后的工作。</p>
 <h2 id="aop">AOP</h2>
 <p>AOP全称：<code>Aspect-Oriented Programming</code>，译为面向切面编程 。AOP可以说是对OOP的补充和完善。在程序原有的纵向执行流程中,针对某一个或某些方法添加通知(方法),形成横切面的过程就叫做面向切面编程。</p>
 <p>实现AOP的技术，主要分为两大类： 一是采用动态代理技术，利用截取消息的方式，对该消息进行装饰，以取代原有对象行为的执行；二是采用静态织入的方式，引入特定的语法创建“切面”，从而使得编译器可以在编译期间织入有关“切面”的代码，属于静态代理。</p>
@@ -2594,9 +2517,10 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 <p>回头在看上面的<code>createBean()</code>方法，刚才看到的是<code>resolveBeforeInstantiation()</code>方法的调用栈，所以从层次结构上看<code>AnnotationAwareAspectJAutoProxyCreator</code>组件的调用是在创建 <code>Bean</code>实例之前先尝试用后置处理器返回对象的。</p>
 <p><img alt="AOP@EnableAspectJAutoProxy原理" src="/iblog/posts/annex/images/essays/AOP@EnableAspectJAutoProxy%E5%8E%9F%E7%90%86.png"></p>
 <h2 id="spring事务">Spring事务</h2>
-<p>Spring 为事务管理提供了丰富的功能支持。Spring 事务管理分为编码式和声明式的两种方式。编程式事务指的是通过编码方式实现事务；声明式事务基于 AOP,将具体业务逻辑与事务处理解耦。声明式事务管理使业务代码逻辑不受污染, 因此在实际使用中声明式事务用的比较多。</p>
+<p>Spring 为事务管理提供了丰富的功能支持，Spring 事务管理分为编码式和声明式的两种方式。
+编程式事务指的是通过编码方式实现事务；声明式事务基于 AOP，即使用<code>@Transactional</code>注解，将具体业务逻辑与事务处理解耦。声明式事务管理使业务代码逻辑不受污染, 因此在实际使用中声明式事务用的比较多。</p>
 <h3 id="spring事务的隔离级别">Spring事务的隔离级别</h3>
-<p>事务隔离级别指的是一个事务对数据的修改与另一个并行的事务的隔离程度，当多个事务同时访问相同数据时，如果没有采取必要的隔离机制，就可能发生以下问题：</p>
+<p>事务隔离级别，即数据库中事务隔离级别，指的是一个事务对数据的修改与另一个并行的事务的隔离程度，当多个事务同时访问相同数据时，如果没有采取必要的隔离机制，就可能发生以下问题：</p>
 <table>
 <thead>
 <tr>
@@ -2619,7 +2543,8 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 </tr>
 </tbody>
 </table>
-<p>Spring支持的隔离级别：</p>
+<br>
+Spring支持的隔离级别：
 <table>
 <thead>
 <tr>
@@ -2650,78 +2575,101 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 </tr>
 </tbody>
 </table>
-<p>不是事务隔离级别设置得越高越好，事务隔离级别设置得越高，意味着势必要花手段去加锁用以保证事务的正确性，那么效率就要降低，因此实际开发中往往要在效率和并发正确性之间做一个取舍，一般情况下会设置为READ_COMMITED，此时避免了脏读，并发性也还不错，之后再通过一些别的手段去解决不可重复读和幻读的问题就好了。</p>
-<p>Spring建议的是使用DEFAULT，即数据库本身的隔离级别，配置好数据库本身的隔离级别，无论在哪个框架中读写数据都不用操心了。</p>
-<h3 id="spring事务的传播">Spring事务的传播</h3>
-<p>事务传播行为指当一个事务方法被另一个事务方法调用时，这个事务方法应该如何进行。</p>
+<br>
+不是事务隔离级别设置得越高越好，事务隔离级别设置得越高，意味着势必要花手段去加锁用以保证事务的正确性，那么效率就要降低，因此实际开发中往往要在效率和并发正确性之间做一个取舍，一般情况下会设置为READ_COMMITED，此时避免了脏读，并发性也还不错，之后再通过一些别的手段去解决不可重复读和幻读的问题就好了。
+<p>Spring中通过<code>@Transactional(isolation = Isolation.REPEATABLE_READ)</code>可以指定事务的隔离级别。
+Spring建议的是使用<code>DEFAULT</code>，即数据库本身的隔离级别，配置好数据库本身的隔离级别，无论在哪个框架中读写数据都不用操心了。</p>
+<h3 id="spring事务的传播及场景">Spring事务的传播及场景</h3>
+<p>事务传播行为指，当一个事务方法被另一个事务方法调用时，这个事务方法应该如何进行，是应该加入现有事务，还是应该启动一个新事务。</p>
 <p>Spring定义了七种传播行为：</p>
 <ul>
-<li>@Transactional(propagation=Propagation.REQUIRED)：如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)</li>
-<li>@Transactional(propagation=Propagation.NOT_SUPPORTED)：容器不为这个方法开启事务</li>
-<li>@Transactional(propagation=Propagation.REQUIRES_NEW)：不管是否存在事务,都创建一个新的事务,原来的挂起,新的执行完毕,继续执行老的事务</li>
-<li>@Transactional(propagation=Propagation.MANDATORY)：必须在一个已有的事务中执行,否则抛出异常</li>
-<li>@Transactional(propagation=Propagation.NEVER)：必须在一个没有的事务中执行,否则抛出异常(与Propagation.MANDATORY相反)</li>
-<li>@Transactional(propagation=Propagation.SUPPORTS)：如果其他bean调用这个方法,在其他bean中声明事务,那就用事务.如果其他bean没有声明事务,那就不用事务.</li>
-</ul>
-<h3 id="transactional注解">@Transactional注解</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">TYPE</span><span class="p">,</span><span class="w"> </span><span class="n">ElementType</span><span class="p">.</span><span class="na">METHOD</span><span class="p">})</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Inherited</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Documented</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="nd">@interface</span><span class="w"> </span><span class="n">Transactional</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@AliasFor</span><span class="p">(</span><span class="s">&#34;transactionManager&#34;</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="nf">value</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="s">&#34;&#34;</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@AliasFor</span><span class="p">(</span><span class="s">&#34;value&#34;</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="nf">transactionManager</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="s">&#34;&#34;</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 事务的传播行为</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Propagation</span><span class="w"> </span><span class="nf">propagation</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="n">Propagation</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 事务的隔离级别</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Isolation</span><span class="w"> </span><span class="nf">isolation</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="n">Isolation</span><span class="p">.</span><span class="na">DEFAULT</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 超时时间</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 事务需要在一定时间内提交，如不提交则进行回滚</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 默认-1，设置时间以秒单位进行计算 </span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="nf">timeout</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="o">-</span><span class="n">1</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 是否只读</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 读：查询操作；写：添加、修改、删除操作</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 默认值false，表示可以进行读、写操作</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 设置true后 只能查询</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">readOnly</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 回滚</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 设置出现哪些异常进行回滚 </span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Class</span><span class="o">&lt;?</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Throwable</span><span class="o">&gt;[]</span><span class="w"> </span><span class="nf">rollbackFor</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{};</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="nf">rollbackForClassName</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{};</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 不回滚</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 设置出现哪些异常不进行回滚 </span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Class</span><span class="o">&lt;?</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Throwable</span><span class="o">&gt;[]</span><span class="w"> </span><span class="nf">noRollbackFor</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{};</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="nf">noRollbackForClassName</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{};</span><span class="w">
+<li><code>@Transactional(propagation=Propagation.REQUIRED)</code>：如果当前有事务，那么加入事务, 没有的话新建一个，用于确保所有操作都在同一个事务中进行，这也是Spring提供的默认传播行为；
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Transactional</span><span class="p">(</span><span class="n">propagation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Propagation</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">methodB</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 1. 如果调用方 methodA 有事务，methodB 将加入该事务。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 2. 如果调用方没有事务，methodB 将创建一个新的事务。</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h4 id="失效情况">失效情况</h4>
+</span></span></span></code></pre></div></li>
+<li><code>@Transactional(propagation=Propagation.REQUIRES_NEW)</code>：不管是否存在事务，都创建一个新的事务，如果当前已经存在一个事务，则将当前事务挂起，新的执行完毕，继续执行老的事务；
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Transactional</span><span class="p">(</span><span class="n">propagation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Propagation</span><span class="p">.</span><span class="na">REQUIRES_NEW</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">methodB</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 1. 如果调用方 methodA 有事务，methodB 将挂起该事务并创建一个新的事务。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 2. 如果调用方没有事务，methodB 将创建一个新的事务。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li><code>@Transactional(propagation=Propagation.MANDATORY)</code>：必须在一个已有的事务中执行，否则抛出异常。如果当前方法已经存在一个事务，那么加入这个事务，如果当前没有事务，则抛出异常；适用于必须在现有事务中执行的操作；
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Transactional</span><span class="p">(</span><span class="n">propagation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Propagation</span><span class="p">.</span><span class="na">MANDATORY</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">methodB</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 1. 如果调用方 methodA 有事务，methodB 将加入该事务。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 2. 如果调用方没有事务，methodB 将抛出异常。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li><code>@Transactional(propagation=Propagation.NEVER)</code>：必须在一个没有的事务中执行，否则抛出异常(与Propagation.MANDATORY相反)；适用于某些操作强制不允许在事务内执行；
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Transactional</span><span class="p">(</span><span class="n">propagation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Propagation</span><span class="p">.</span><span class="na">NEVER</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">methodB</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 1. 如果调用方 methodA 有事务，methodB 将抛出异常。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 2. 如果调用方没有事务，methodB 将以非事务方式执行。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li><code>@Transactional(propagation=Propagation.SUPPORTS)</code>：如果当前存在事务，则加入该事务，如果当前没有事务，则以非事务方式执行；适用于某些不强制需要事务控制的情况；
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Transactional</span><span class="p">(</span><span class="n">propagation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Propagation</span><span class="p">.</span><span class="na">SUPPORTS</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">methodB</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 1. 如果调用方 methodA 有事务，methodB 将加入该事务。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 2. 如果调用方没有事务，methodB 将以非事务方式执行。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li><code>@Transactional(propagation=Propagation.NOT_SUPPORTED)</code>：Spring不为这个方法开启事务，即总是以非事务方式执行。如果当前已经存在一个事务，则将当前事务挂起；适用于不希望在事务中执行的操作，比如复杂的查询操作，不需要事务控制；
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Transactional</span><span class="p">(</span><span class="n">propagation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Propagation</span><span class="p">.</span><span class="na">NOT_SUPPORTED</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">methodB</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 1. 如果调用方 methodA 有事务，methodB 将挂起该事务并以非事务方式执行。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 2. 如果调用方没有事务，methodB 将以非事务方式执行。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li><code>@Transactional(propagation=Propagation.NESTED)</code>：如果当前方法已经存在一个事务，则创建一个嵌套事务。如果当前没有事务，则创建一个新事务；适用于需要嵌套事务支持的场景，例如部分操作需要回滚，但不影响主事务；
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Transactional</span><span class="p">(</span><span class="n">propagation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Propagation</span><span class="p">.</span><span class="na">NESTED</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">methodB</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 1. 如果调用方 methodA 有事务，methodB 将创建一个嵌套事务。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 2. 如果调用方没有事务，methodB 将创建一个新的事务。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+</ul>
+<p>在大多数情况下，如果想要确保所有操作都在同一个事务中进行，<code>REQUIRED</code>这个默认传播行为已经足够。
+但是随着事务越来越大，执行时间也会变长，就需要将这个大事务拆分成多个事务，如果确保这个事务能够拆分成多个事务，就需要指定Spring的事务传播行为。
+比如，在用户注册时候，需要记录注册日志，这时候可以将记录日志的操作单独划分为一个事务，而注册是另一个单独的事务，可以将保存日志的方法指定<code>Propagation.REQUIRES_NEW</code>从而实现。</p>
+<h3 id="spring事务的原理">Spring事务的原理</h3>
+<p>在Spring框架中，事务管理的实现是通过集成数据库事务API来实现的。具体来说，Spring事务管理的核心在于使用各种 <code>PlatformTransactionManager</code> 接口的实现类，这些实现类会调用底层数据库事务API来管理事务。</p>
+<p><code>@Transactional</code>主要是利用Spring Aop实现的。
+当一个方法使用了<code>@Transactional</code>注解，在运行时，JVM为该Bean创建一个代理对象，并且在调用目标方法的时候进行使用<code>TransactionInterceptor</code>拦截，代理对象负责在调用目标方法之前开启事务，然后执行方法的逻辑。
+方法执行成功，则提交事务，如果执行方法中出现异常，则回滚事务。
+同时Spring利用<code>ThreadLocal</code>会将事务资源（如数据库连接）与当前线程绑定，以确保在同一事务中共享资源，这些资源在事务提交或回滚时会被清理。</p>
+<p>使用<code>@Transactional</code>注解会触发以下步骤：</p>
 <ol>
-<li>如果某个方法是非public的，那么@Transactional就会失效，因为底层cglib是基于父子类来实现的，子类是不能重载父类的private方法，所以无法很好利用代理，这种情况下会导致@Transactional失效</li>
-<li>使用的数据库引擎不支持事务，例如在使用mysql的时候使用MyISAM引擎不支持事务，InnoDB支持，并且从mysql5.5之后开始默认的存储引擎就为InnoDB。</li>
-<li>调用的问题，因为Spring事务是基于代理来实现的，所以某个加了@Transactional的方法只有是被代理对象调用时，那么这个注解才会生效，所以当被代理对象来调用这个方法那么事务就不会生效，简单的可以理解为添加了@Transactional注解的方法不能在同一个类中调用，否则会使事务失效。</li>
-<li>@Transactional 注解属性 propagation 设置错误，若是错误的配置以下三种 propagation ，事务将不会发生回滚：
+<li>创建事务代理对象；</li>
+<li>调用目标方法时，事务代理拦截调用；</li>
+<li>事务拦截器决定开启事务，并调用底层数据库事务API；</li>
+<li>执行目标方法方法中的业务逻辑；</li>
+<li>方法执行完毕后，事务拦截器决定提交或回滚事务，调用底层数据库事务API；</li>
+</ol>
+<p><code>@Transactional</code>注解失效情况：</p>
+<ol>
+<li>如果某个方法是非public的，那么<code>@Transactional</code>就会失效。因为事务的底层是利用<code>cglib</code>代理实现，<code>cglib</code>是基于父子类来实现的，子类是不能重载父类的private方法，所以无法很好利用代理，这种情况下会导致@Transactional失效；</li>
+<li>使用的数据库引擎不支持事务。因为Spring的事务调用的也是数据库事务的API，如果数据库都不支持事务，那么<code>@Transactional</code>注解也就失效了；</li>
+<li>添加了<code>@Transactional</code>注解的方法不能在同一个类中调用，否则会使事务失效。这是因为Spring AOP通过代理来管理事务，自调用不会经过代理；</li>
+<li><code>@Transactional</code> 注解属性 <code>propagation</code> 设置错误，若是错误的配置以下三种 <code>propagation</code>，事务将不会发生回滚：
 <ul>
-<li>TransactionDefinition.PROPAGATION_SUPPORTS：如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。</li>
-<li>TransactionDefinition.PROPAGATION_NOT_SUPPORTED：以非事务方式运行，如果当前存在事务，则把当前事务挂起。</li>
-<li>TransactionDefinition.PROPAGATION_NEVER：以非事务方式运行，如果当前存在事务，则抛出异常。</li>
+<li><code>TransactionDefinition.PROPAGATION_SUPPORTS</code>：如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。</li>
+<li><code>TransactionDefinition.PROPAGATION_NOT_SUPPORTED</code>：以非事务方式运行，如果当前存在事务，则把当前事务挂起。</li>
+<li><code>TransactionDefinition.PROPAGATION_NEVER</code>：以非事务方式运行，如果当前存在事务，则抛出异常。</li>
 </ul>
 </li>
-<li>@Transactional 注解属性 rollbackFor 设置错误：rollbackFor 可以指定能够触发事务回滚的异常类型。Spring默认抛出了未检查unchecked异常（继承自RuntimeException 的异常）或者 Error才回滚事务；其他异常不会触发回滚事务。如果在事务中抛出其他类型的异常，但却期望 Spring 能够回滚事务，就需要指定 rollbackFor属性。</li>
-<li>异常被 catch 了 导致@Transactional失效：当事务方法中抛出一个异常后，应该是需要表示当前事务需要 rollback ，如果在事务方法中手动捕获了该异常，那么事务方法则会任务当前事务应该正常 commit，此时就会出现事务方法中明明有报错信息表示当前事务需要 rollback 但是事务方法任务是正常，出现了前后不一致，也是因为这样就会抛出 UnexpectedRollbackException异常。</li>
+<li><code>@Transactional</code>注解属性<code>rollbackFor</code>设置错误，<code>rollbackFor</code>可以指定能够触发事务回滚的异常类型。默认情况下，Spring仅在抛出未检查异常（继承自<code>RuntimeException</code>）时回滚事务。对于受检异常（继承自 <code>Exception</code>），事务不会回滚，除非明确配置了<code>rollbackFor</code>属性；</li>
+<li>异常被捕获了，导致<code>@Transactional</code>失效。当事务方法中抛出一个异常后，应该是需要表示当前事务需要<code>rollback</code>，如果在事务方法中手动捕获了该异常，那么事务方法则会认为当前事务应该正常提交，此时就会出现事务方法中明明有报错信息表示当前事务需要回滚，但是事务方法认为是正常，出现了前后不一致，也是因为这样就会抛出<code>UnexpectedRollbackException</code>异常；</li>
 </ol>
-<h4 id="原理-2">原理</h4>
-<p>利用Spring Aop实现的。 当一个方法使用了@Transactional注解，在运行时，JVM为该Bean创建一个代理对象，并且在调用该方法的时候进行使用TransactionInterceptor拦截，在方法执行之前会开启一个事务，然后执行方法的逻辑。
-方法执行成功，则提交事务。如果执行方法中出现异常，则回滚事务。</p>
+<h2 id="参考文章">参考文章</h2>
+<ul>
+<li><a href="https://blog.csdn.net/scjava/article/details/109587619">https://blog.csdn.net/scjava/article/details/109587619</a></li>
+<li><a href="https://spring.io/projects/spring-boot">https://spring.io/projects/spring-boot</a></li>
+</ul>
 </div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">
