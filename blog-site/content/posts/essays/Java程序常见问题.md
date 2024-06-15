@@ -527,7 +527,7 @@ JVM参数说明：https://www.oracle.com/java/technologies/javase/vmoptions-jsp.
 
 如果应用程序没有接入APM，可以在生产环境装一下arthas，利用trace接口方法和火焰图，大概能分析是那一块比较慢，定位能力稍微有点粗糙，亦可以利用程序中的告警日志定位问题。
 
-### 解决办法
+### 解决方案
 如果已经定位到具体是哪里的问题了，那么就可以进行解决，如果是最新的功能引起的，那么最快的办法就是回退版本。
 以下是几种常见接口慢的情况。
 
@@ -570,6 +570,100 @@ JVM参数说明：https://www.oracle.com/java/technologies/javase/vmoptions-jsp.
 - 接口需要加动态配置开关；能够快速切断流量或降级某些非核心服务调用；
 - 设计程序自愈能力；比如如果数据有问题，用配置好的程序逻辑自动去修复；
 
-## @Transactional不生效
+## @Transactional
+`@Transactional`是开发过程中使用比较频繁的注解，但是使用不当也会导致事务失效甚至导致一些其他问题，下面是使用`@Transactional`遇到的几种问题。
 
+### @Transactional失效情况
+1. 如果某个方法是非public的，那么`@Transactional`就会失效。因为事务的底层是利用`cglib`代理实现，`cglib`是基于父子类来实现的，子类是不能重载父类的private方法，所以无法很好利用代理，这种情况下会导致@Transactional失效；
+2. 使用的数据库引擎不支持事务。因为Spring的事务调用的也是数据库事务的API，如果数据库都不支持事务，那么`@Transactional`注解也就失效了；
+3. 添加了`@Transactional`注解的方法不能在同一个类中调用，否则会使事务失效。这是因为Spring AOP通过代理来管理事务，自调用不会经过代理；
+4. `@Transactional` 注解属性 `propagation` 设置错误，若是错误的配置以下三种 `propagation`，事务将不会发生回滚：
+   - `TransactionDefinition.PROPAGATION_SUPPORTS`：如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。
+   - `TransactionDefinition.PROPAGATION_NOT_SUPPORTED`：以非事务方式运行，如果当前存在事务，则把当前事务挂起。
+   - `TransactionDefinition.PROPAGATION_NEVER`：以非事务方式运行，如果当前存在事务，则抛出异常。
+5. `@Transactional`注解属性`rollbackFor`设置错误，`rollbackFor`可以指定能够触发事务回滚的异常类型。默认情况下，Spring仅在抛出未检查异常（继承自`RuntimeException`）时回滚事务。对于受检异常（继承自 `Exception`），事务不会回滚，除非明确配置了`rollbackFor`属性；
+6. 异常被捕获了，导致`@Transactional`失效。当事务方法中抛出一个异常后，应该是需要表示当前事务需要`rollback`，如果在事务方法中手动捕获了该异常，那么事务方法则会认为当前事务应该正常提交，此时就会出现事务方法中明明有报错信息表示当前事务需要回滚，但是事务方法认为是正常，出现了前后不一致，也是因为这样就会抛出`UnexpectedRollbackException`异常；
 
+我们在使用`@Transactional`时，要避免出现上述情况，以确保 `@Transactional` 注解正确生效，从而实现事务管理的可靠性和一致性。
+
+### @Transactional遇到锁
+看到这么一段代码，原来当Transactional碰到锁，有个大坑，觉得很有意思，于是便记录下来。
+
+```java
+@Service
+public class ServiceOne{
+    // 设置一把可重入的公平锁
+    private Lock lock = new ReentrantLock(true);
+    
+    @Transactional(rollbackFor = Exception.class)
+    public Result  func(long seckillId, long userId) {
+        lock.lock();
+        // 执行数据库操作——查询商品库存数量
+        // 如果 库存数量 满足要求 执行数据库操作——减少库存数量——模拟卖出货物操作
+        lock.unlock();
+    }
+}
+```
+`func`方法是原子操作，为了解决并发访问的问题，用`lock`把整个代码包裹了起来。
+首先这段代码是存在问题的，什么问题呢？就是这么使用锁，是会发生超卖问题的。
+
+前提是使用MySQL数据库的可重复读隔离机制，如果是高并发的情况下，假设真的就有多个线程同时调用`func`方法。
+要保证一定不能出现超卖的情况，那么就需要事务的开启与提交能完整的包裹在`lock`与`unlock`之间。
+
+为什么要保证事务的开启与提交，完整的包裹在`lock`与`unlock`之间呢？
+
+举个例子，假设现在库存就只有一个了，这个时候 A，B 两个线程来请求下单。A 请求先拿到锁，然后查询出库存为一，可以下单，走了下单流程，把库存减为 0 了。
+但是由于 A 先执行了 `unlock` 操作，而未提交事务，先释放了锁。B 线程看到后马上就冲过来拿到了锁，并执行了查询库存的操作。
+这个时候 A 线程还没来得及提交事务，所以 B 读取到的库存还是 1，如果程序没有做好控制，也走了下单流程，此时就造成了超卖。
+
+那怎么保证事务的开启与提交，完整的包裹在`lock`与`unlock`之间呢？
+
+先来了解一下事务的启动和结束时机，这里直接说结论。
+事务的启动时机，在执行到它们之后的第一个操作数据库表的语句，事务才算是真正启动。在上述示例代码中第一个SQL是在加锁之后执行的，所以先加锁再开启事务。
+事务的提交是在目标方法执行之后。具体代码可以参考：`TransactionAspectSupport.invokeWithTransaction`方法，从其中可以看出，`invocation.proceedWithInvocation` 是在`commitTransactionAfterReturning`前面的。
+
+所以怎样保证呢？对于声明式事务，解决办法是把锁加在方法外面。如果一定需要加在里面，也可以使用编程式事务。
+```java
+ public void func(long seckillId, long userId) {
+    DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
+    definition.setIsolationLevel(TransactionDefinition.ISOLATION_REPEATABLE_READ);
+    TransactionStatus status = transactionManager.getTransaction(definition);
+    lock.lock();
+    try {
+       // 执行数据库操作——查询商品库存数量
+       // 如果 库存数量 满足要求 执行数据库操作——减少库存数量——模拟卖出货物操作
+        transactionManager.commit(status);
+    } catch (Exception e) {
+        transactionManager.rollback(status);
+    } finally {
+        lock.unlock();
+    }
+ }
+```
+```java
+@Service
+public class ServiceOne{
+    // 设置一把可重入的公平锁
+    private Lock lock = new ReentrantLock(true);
+    
+    @Autowired
+    private ServiceTwo serviceTwo;
+    
+    public Result  func(long seckillId, long userId) {
+        lock.lock();
+        serviceTwo.sellProduct();
+        lock.unlock();
+    }
+
+}
+
+@Service
+public class ServiceTwo{
+    
+   @Transactional(rollbackFor = Exception.class)
+   public void sellProduct(){
+      // 执行数据库操作——查询商品库存数量
+      // 如果 库存数量 满足要求 执行数据库操作——减少库存数量——模拟卖出货物操作
+   }
+}
+```
