@@ -1,9 +1,10 @@
 ---
-title: "Java参考资料（持续更新）"
+title: "【置顶】Java资源及参考资料，持续更新..."
 date: 2024-03-20
 draft: false
 tags: ["Java"]
 slug: "java-resource"
+weight: 2
 ---
 
 ## 大厂技术博客
@@ -14,8 +15,6 @@ slug: "java-resource"
 - 有道技术博客: http://techblog.youdao.com
 - 字节跳动博客: https://opensource.bytedance.com/blog
 - 淘宝前端团队: https://fed.taobao.org/blogs
-- Oracle博客: https://blogs.oracle.com/poonam
-
 
 
 ## 常用资源网站
@@ -41,6 +40,7 @@ slug: "java-resource"
 - deepinmind的技术博客: http://it.deepinmind.com
 - JavaSE规范: https://docs.oracle.com/javase/specs
 - Web前端导航: https://www.alloyteam.com/nav
-- 计算机考研论坛：http://www.cskaoyan.com/forum.php
+- 计算机考研论坛: http://www.cskaoyan.com/forum.php
+- 一线互联网大厂技术开源文章分享: https://i4t.com/
 
 

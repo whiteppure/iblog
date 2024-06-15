@@ -1486,9 +1486,8 @@ JVM参数说明：https://www.oracle.com/java/technologies/javase/vmoptions-jsp.
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">lock</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p><code>func</code>方法是原子操作，为了解决并发访问的问题，用<code>lock</code>把整个代码包裹了起来。
-首先这段代码是存在问题的，什么问题呢？就是这么使用锁，是会发生超卖问题的。</p>
-<p>前提是使用MySQL数据库的可重复读隔离机制，如果是高并发的情况下，假设真的就有多个线程同时调用<code>func</code>方法。
+</span></span></span></code></pre></div><p><code>func</code>方法是原子操作，所以使用事务，为了解决并发访问的问题，用<code>lock</code>把整个代码包裹了起来，这么使用锁和事务，是会发生超卖问题的。</p>
+<p>在使用MySQL数据库的可重复读隔离机制，如果是高并发的情况下，假设真的就有多个线程同时调用<code>func</code>方法。
 要保证一定不能出现超卖的情况，那么就需要事务的开启与提交能完整的包裹在<code>lock</code>与<code>unlock</code>之间。</p>
 <p>为什么要保证事务的开启与提交，完整的包裹在<code>lock</code>与<code>unlock</code>之间呢？</p>
 <p>举个例子，假设现在库存就只有一个了，这个时候 A，B 两个线程来请求下单。A 请求先拿到锁，然后查询出库存为一，可以下单，走了下单流程，把库存减为 0 了。
