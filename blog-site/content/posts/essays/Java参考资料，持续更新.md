@@ -1,5 +1,5 @@
 ---
-title: "【置顶】Java资源及参考资料，持续更新..."
+title: "【置顶】Java资源干货，持续更新..."
 date: 2024-03-20
 draft: false
 tags: ["Java"]
@@ -17,30 +17,28 @@ weight: 2
 - 淘宝前端团队: https://fed.taobao.org/blogs
 
 
-## 常用资源网站
+## 干货资源网站
 - Java工程师成神之路: https://hollischuang.github.io/toBeTopJavaer
 - CyC2018: http://www.cyc2018.xyz
+- JavaFamily: https://github.com/AobingJava/JavaFamily
+- SpringBoot 学习/面试指南: https://snailclimb.gitee.io/springboot-guide
+- 互联网进阶知识扫盲: https://doocs.github.io/advanced-java
+- Java-Spring学习指南: https://www.baeldung.com/
 - Netty学习手册: https://dongzl.github.io/netty-handbook
 - ThreadLocal: http://www.threadlocal.cn
-- 互联网进阶知识扫盲: https://doocs.github.io/advanced-java
-- SpringBoot 学习/面试指南: https://snailclimb.gitee.io/springboot-guide
-- Java-Spring学习指南: https://www.baeldung.com/
-- JavaFamily: https://github.com/AobingJava/JavaFamily
+- 图说设计模式: https://design-patterns.readthedocs.io/zh_CN/latest/index.html
+- 深入分析synchronized: https://www.cnblogs.com/aspirant/p/11470858.html
 - 常用Java类库大全: https://www.21doc.net/java/awesomejava
+- JavaSE规范: https://docs.oracle.com/javase/specs
 - Java论坛: http://bbs.chinaunix.net/forum-26-1.html
 - 五分钟学算法: https://www.cxyxiaowu.com
 - iMySql老叶茶馆: https://imysql.com
 - 资源文档鸠摩搜索: https://www.jiumodiary.com
 - Quick Reference: https://quickref.cn
 - Chrome插件安装包: https://crxdl.com
-- 图说设计模式: https://design-patterns.readthedocs.io/zh_CN/latest/index.html
-- 深入分析synchronized: https://www.cnblogs.com/aspirant/p/11470858.html
+- 计算机考研论坛: http://www.cskaoyan.com/forum.php
+- 一线互联网大厂技术开源文章分享: https://i4t.com/
+- Web前端导航: https://www.alloyteam.com/nav
 - 阮一峰博客: http://www.ruanyifeng.com/blog
 - hollis博客: https://www.hollischuang.com
 - deepinmind的技术博客: http://it.deepinmind.com
-- JavaSE规范: https://docs.oracle.com/javase/specs
-- Web前端导航: https://www.alloyteam.com/nav
-- 计算机考研论坛: http://www.cskaoyan.com/forum.php
-- 一线互联网大厂技术开源文章分享: https://i4t.com/
-
-

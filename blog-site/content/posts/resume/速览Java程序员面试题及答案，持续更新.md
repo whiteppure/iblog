@@ -1,110 +1,173 @@
 ---
 title: "【置顶】速览Java程序员面试题及答案，持续更新..."
-date: 2024-05-01
+date: 2024-06-17
 draft: false
 tags: ["面试","Java"]
 slug: "interview-junior-javaer"
 weight: 1
 ---
 
-为方便面试复习，本文几乎涵盖了Java所有的知识点，包括：Java基础、网络与安全、常见框架、分布式服务治理、数据库、常见算法等。
-如果全都理解并吸收，相信你能轻松通过大部分面试。
+为方便面试，整理了一篇关于面试的资料。本文几乎涵盖了Java所有的知识点，包括：Java基础、网络与安全、常见框架、分布式服务治理、数据库、算法与数据结构、开发过程中问题处理以及一些架构方案。
+如果全都理解并吸收，相信能轻松通过大部分面试。
 
-字数较多，为了方便阅读，本文只是简短的概述了面试题的答案，在此不做详细解析，如要详细解析，本文所有的知识点都能在此博客上找到对应的答案。
-如有遗漏或错误，欢迎在评论留言补充，我会及时的修正。
+由于面试题巨多，为了方便阅读，本文收集了主要的一些面试题，并简短的概述了面试题的答案，在此不做详细解析。如有遗漏或错误，欢迎在评论留言补充，我会及时的修正。
+
+| 版本号 | 修订日期       | 修订内容 |
+|-----|------------|------|
+| 1.0 | 2024-06-17 | 初始版本 |
+
 
 ## Java基础
+
+### 基础汇总
+#### 如何克隆一个对象
+#### String类为什么要设计成不可变的
+#### String类有没有长度限制
+#### 为什么String在JDK9改变了存储结构
+
+
 ### 多线程
-#### 说说线程池工作流程
-#### 说说synchronized工作原理
-#### 说说ReentrantLock、AQS原理
-#### CAS原理知道吗
+#### 对并发编程的理解
+#### 简述线程池原理
+#### 线程池中线程复用的原理
+#### 说说synchronized作用及原理
+#### 简述synchronized锁升级过程
+#### 说说volatile作用及原理
+#### AQS知道吗
+#### CAS知道吗
 #### ThreadLocal用过吗
-#### 在多线程并发中怎么保证线程安全
+#### ThreadLocal内存泄漏如何避免
+#### 谈谈你对线程安全的理解
+
 
 ### 集合
-#### HashMap是怎么存储数据
+#### HashMap底层是如何实现的
+#### HashMap底层为什么要用红黑树
+#### HashMap为什么不一开始就用红黑树代替链表
+#### HashMap怎么解决哈希冲突
+#### HashMap为什么负载因子默认是0.75
+#### HashMap如果指定容量大小为10，实际大小是多少
+#### HashMap初始化容量设置多少合适
 #### HashMap的怎么扩容
 #### ArrayList怎么扩容
-#### 线程安全集合用过吗
+#### ArrayList如何安全删除
+#### ArrayList与LinkedList区别是什么
+#### HashSet如何保证数据不重复
 #### 什么时候需要重写equals与hashCode
-#### 怎么克隆一个集合
+#### 线程安全集合用过吗
 
 
 ### IO与序列化
-- [AIO、BIO、NIO等，IO模型](/iblog/posts/java/rookie-io/#io模型httphollischuanggiteeiotobetopjavaerbasicsjava-basiclinux-ioidlinux-5种io模型)
-- [Java序列化底层原理](/iblog/posts/java/rookie-io/#序列化底层原理httphollischuanggiteeiotobetopjavaerbasicsjava-basicserialize-principleid序列化底层原理)
-- [序列化与单例模式](/iblog/posts/java/rookie-io/#序列化与单例模式httphollischuanggiteeiotobetopjavaerbasicsjava-basicserialize-singletonid序列化对单例的破坏)
+#### 如何序列化
+#### serialVersionUID作用
+#### 如何自定义的序列化和反序列化策略
+#### 为什么序列化可以破坏单例了
+#### NIO、BIO、AIO分别是什么
+#### IO复用模型及NIO实现原理
+
 
 ### 设计模式
+#### 为什么要用设计模式
+#### 说说你对设计模式的理解
+#### 平时开发过程中怎样使用设计模式
+#### 说说静态代理和动态代理区别及使用场景
+#### 模板设计模式
+#### 策略设计模式
+#### 职责链设计模式
 
-### 常见算法
+
+### 数据结构与算法
 #### 手写一个负载算法
+#### 手写一个限流算法
 #### 排序算法知道几种
-#### 手写一个二分查找
+#### 手写二分查找
 #### KMP算法知道吗
+#### 手写二叉树的遍历方式
+#### 怎么反转一个链表
+#### 实现LRU缓存
+#### 用两个栈实现一个队列
+
+
 
 ### JVM
-- [JVM内存区域划分及功能](/iblog/posts/jvm/java-memory-divide/#java内存区域划分)
-- [Java类加载机制](/iblog/posts/jvm/java-memory-divide/#java类加载机制)
-- [JVM垃圾回收机制](/iblog/posts/jvm/java-memory-divide/#jvm垃圾回收机制iblogpostsjvmjava-garbage-collection)
-- [JVM参数调优](/iblog/posts/essays/java-always-problems/#jvm参数调优)
+#### 简述JVM内存区域划分
+#### 简述对象实例化过程
+#### 简述Java类加载机制
+#### 哪些对象可以作为GCRoots
+#### 调用System.gc会进行垃圾回收吗
+#### finalize方法作用是什么
+#### 对象分配内存步骤
+#### 如何判定一个对象是否是垃圾
+#### 说说CMS垃圾回收器工作原理
+#### 说说G1垃圾回收器工作原理
+#### 为什么要有很多垃圾回收器
+#### 频繁FullGC如何处理
+#### 如何进行JVM参数调优
 
+
+[//]: # (todo 写到了这里...)
 ### 网络与安全
-- [网络协议](/iblog/posts/essays/net-program-java/#网络协议)
-- [Socket](/iblog/posts/essays/net-program-java/#socket)
-- SQL注入
-- CSRF攻击
-- XSS攻击
+#### 常见网络协议
+#### 如何自定义一个网络协议
+#### 如何防范SQL注入
+#### 如何防范CSRF攻击
+#### 如何防范XSS攻击
+
 
 
 ## 常见框架
-### Redis与缓存
-- [缓存击穿、缓存穿透、缓存雪崩](/iblog/posts/essays/java-redis/#redis与缓存)
-- [Redis数据类型](/iblog/posts/essays/java-redis/#redis数据类型)
-- [Redis AOF、RDB持久化机制](/iblog/posts/essays/java-redis/#redis持久化)
-- [Redis部署策略](/iblog/posts/essays/java-redis/#redis部署策略)
-- [Redis分布式锁](/iblog/posts/essays/java-redis/#redis分布式锁)
-- [Redis事务](/iblog/posts/essays/java-redis/#redis事务)
-- [Redis内存淘汰策略](/iblog/posts/essays/java-redis/#redis内存淘汰策略)
-- [Redis大Key问题](/iblog/posts/essays/java-redis/#redis大key问题)
-- [Redis双写一致性问题](/iblog/posts/essays/java-redis/#redis数据库双写一致性问题)
+### Redis
+#### 缓存击穿、缓存穿透、缓存雪崩解决方案
+#### Redis使用场景
+#### Redis为什么这么快
+#### Redis数据类型有几种
+#### Redis持久化机制知道吗
+#### Redis部署策略
+#### Redis事务
+#### 如何实现Redis分布式锁
+#### Redis内存淘汰策略
+#### 怎么处理Redis大Key
+#### Redis双写一致性问题
 
-### JMS消息模型与Kafka
-- [点对点、发布订阅消息模型](/iblog/posts/essays/java-mq/#jms消息模型)
-- [Kafka发布订阅工作流程](/iblog/posts/essays/java-mq/#发布订阅工作流程)
-- [Kafka生产者数据存储](/iblog/posts/essays/java-mq/#生产者文件存储)
-- [Kafka生产者数据可靠性保证](/iblog/posts/essays/java-mq/#生产者数据可靠性保证)
-- [Kafka生产者数据一致性保证](/iblog/posts/essays/java-mq/#生产者数据一致性保证)
-- [Kafka生产者ack机制](/iblog/posts/essays/java-mq/#生产者ack机制)
-- [ExactlyOnce与事务机制](/iblog/posts/essays/java-mq/#kafka事务)
-- [Kafka消费分配策略](/iblog/posts/essays/java-mq/#消费者分区分配策略)
-- [Kafka重复消费和漏消费](/iblog/posts/essays/java-mq/#消费者消费数据问题)
-- [Kafka消息积压](/iblog/posts/essays/java-mq/#消息积压)
-- [对比其他MQ特点及使用场景](/iblog/posts/essays/java-mq/#常见mq对比)
+
+### Kafka
+#### 点对点、发布订阅消息模型
+#### Kafka发布订阅工作流程
+#### Kafka生产者数据存储
+#### Kafka生产者数据可靠性保证
+#### Kafka生产者数据一致性保证
+#### Kafka生产者ack机制
+#### ExactlyOnce与事务机制
+#### Kafka消费分配策略
+#### Kafka重复消费和漏消费
+#### Kafka消息积压
+#### 对比其他MQ特点及使用场景
+
 
 ### Elasticsearch
-- [特点及使用场景]()
-- [读数据流程](/iblog/posts/essays/elasticsearch/#读数据流程)
-- [写数据流程](/iblog/posts/essays/elasticsearch/#写数据流程)
-- [更新数据流程](/iblog/posts/essays/elasticsearch/#更新流程)
-- [搜索数据流程](/iblog/posts/essays/elasticsearch/#搜索数据过程)
-- [文档搜索、近实时搜索](/iblog/posts/essays/elasticsearch/#文档搜索)
-- [在数据量很大的情况下，如何提高查询效率](/iblog/posts/essays/elasticsearch/#优化)
+#### 特点及使用场景
+#### 读数据流程
+#### 写数据流程
+#### 更新数据流程
+#### 搜索数据流程
+#### 文档搜索、近实时搜索
+#### 在数据量很大的情况下，如何提高查询效率
+
 
 ### Netty
-- [Netty使用优缺点、场景](/iblog/posts/essays/java-netty/#概述)
-- [Netty Reactor模型](/iblog/posts/essays/java-netty/#线程模型演变)
-- [TCP粘包、拆包及解决方案](/iblog/posts/essays/java-netty/#tcp粘包拆包及解决方案)
+#### Netty使用优缺点、场景
+#### Netty底层原理知道吗
+#### TCP粘包、拆包及解决方案
+
 
 ### Spring
-- [对Spring的理解](/iblog/posts/spring/java-spring/#对spring的理解)
-- [Bean生命周期](/iblog/posts/spring/java-spring/#bean的生命周期)
-- [Bean自动装配原理](/iblog/posts/spring/java-spring/#bean的自动装配)
-- [IOC容器启动流程](/iblog/posts/spring/java-spring/#spring启动流程)
-- [AOP动态代理](/iblog/posts/spring/java-spring/#aop)
-- [Spring循环依赖与三级缓存](/iblog/posts/spring/java-spring/#spring循环依赖与三级缓存)
-- [Spring事务传播与隔离级别](/iblog/posts/spring/java-spring/#spring循环依赖与三级缓存)
+#### 对Spring的理解
+#### Bean生命周期
+#### Bean自动装配原理
+#### IOC容器启动流程
+#### AOP动态代理
+#### Spring循环依赖与三级缓存
+#### Spring事务
 
 
 ## 分布式
@@ -113,24 +176,24 @@ weight: 1
 ### 服务治理治的是什么
 ### 分布式断路思想与Hystrix
 ### 微服务网关Spring Cloud Gateway
-### Base、CAP分布式事务
-### 分布式锁
-### 分布式ID
+### Base、CAP分布式事务知道吗
+### 分布式锁用过吗
+### 分布式ID用过吗
 
 
 ## 数据库
 ### 数据库基础
 #### 存储结构
 #### 索引与存储引擎
-#### 事务隔离级别
+#### ACID事务
 #### 行锁和表锁
 
 ### 分库分表
 #### 为什么要分库分表
 #### 分库分表拆分方案
-#### 分库分表迁移方案
+#### 分库分表数据迁移方案
 
-### 索引与SQL优化
+### SQL优化
 #### 怎么排查慢SQL
 #### SQL优化思路
 #### SQL优化方法
@@ -141,10 +204,11 @@ weight: 1
 ### 线上CPU突然飚高怎么处理
 ### 死锁了怎么办
 ### 内存泄漏怎么排查怎么处理
+### 内存溢出了怎么处理
 ### 如何处理数据量较大的情况
 
 
-## 设计示例代码
-- [管道流设计模式结合业务](/iblog/posts/essays/pipeline-business/)
-- [整合支付功能](/iblog/posts/essays/pay-code/)
-- [整合文件上传功能](/iblog/posts/essays/uploadfile-code/)
+## 设计方案
+### 设计一个二级缓存
+### 设计一个能支持多个平台的支付功能
+### 设计一个流程引擎

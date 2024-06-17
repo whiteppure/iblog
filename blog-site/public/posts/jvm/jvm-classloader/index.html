@@ -940,7 +940,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h2 id="双亲委派模型">双亲委派模型</h2>
 <p><img alt="双亲委派模型" src="/iblog/posts/annex/images/essays/%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B.png"></p>
-<p>ClassLoader 类使用委托模型来搜索类和资源。每个 ClassLoader 实例都有一个相关的父类加载器。需要查找类或资源时，ClassLoader 实例会在试图亲自查找类或资源之前，将搜索类或资源的任务委托给其父类加载器。
+<p>ClassLoader 类使用委托模型来搜索类和资源，每个 ClassLoader 实例都有一个相关的父类加载器。需要查找类或资源时，ClassLoader 实例会在试图亲自查找类或资源之前，将搜索类或资源的任务委托给其父类加载器。
 这种层次关系称为<strong>类加载器的双亲委派模型。</strong> 我们把每一层上面的类加载器叫做当前层类加载器的父加载器，当然，它们之间的父子关系并不是通过继承关系来实现的，而是使用组合关系来复用父加载器中的代码。
 该模型在JDK1.2期间被引入并广泛应用于之后几乎所有的Java程序中，但它并不是一个<strong>强制性的约束模型</strong>，而是Java设计者们推荐给开发者的一种类的加载器实现方式。</p>
 <h3 id="工作流程">工作流程</h3>
