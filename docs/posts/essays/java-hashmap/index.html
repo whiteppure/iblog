@@ -690,8 +690,8 @@ And when they become too small (due to removal or resizing) they are converted b
 </span></span><span class="line"><span class="cl">        else if ((e = tab[index = (n - 1) &amp; hash]) != null) {
 </span></span><span class="line"><span class="cl">            TreeNode&lt;K,V&gt; hd = null, tl = null;
 </span></span><span class="line"><span class="cl">            do {
-</span></span><span class="line"><span class="cl">                TreeNode&lt;K,V&gt; p = replacementTreeNode(e, null);
-</span></span><span class="line"><span class="cl">                if (tl == null)
+</span></span><span class="line"><span class="cl">                TreeNode&lt;K,V&gt; p = replacementTreeNode(e, null);<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>                if (tl == null)
 </span></span><span class="line"><span class="cl">                    hd = p;
 </span></span><span class="line"><span class="cl">                else {
 </span></span><span class="line"><span class="cl">                    p.prev = tl;
