@@ -1,0 +1,16 @@
+{{ $top := where .Site.RegularPages "Params.top" true }}
+<div class="content">
+    <div class="list_with_title">
+        <div class="listing_title">置顶</div>
+        <div class="listing">
+            {{ range $top }}
+            <div class="listing_item">
+                <div class="listing_post">
+                    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                    <div class="post_time"><span class="date">{{ .Date.Format "2006-01-02" }}</span></div>
+                </div>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</div>

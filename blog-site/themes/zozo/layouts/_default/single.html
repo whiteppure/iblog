@@ -35,22 +35,23 @@
                     <div class="post_title post_detail_title">
                         <h2 id="post_single_title">{{ .Title }}</h2>
                         <span id="post_page_title_date" class="date">{{ .Date.Format "2006.01.02" }}</span>
+                        {{ if .Site.Params.enableVisitor }}
+                        <span id="busuanzi_container_page_pv" class="m-l-10">
+                          阅读量<span id="busuanzi_value_page_pv"></span>次
+                        </span>
+                        {{ end }}
                     </div>
                     <div class="post_content markdown">{{ .Content }}</div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">
+                            <!--标签 文章分类 -->
                             <div id="post_footer_info" class="info">
                                 <span class="field tags">
                                     <i class="ri-stack-line"></i>
                                     {{ with .Params.tags }}
                                         {{ range . }}
                                         <a href="{{ "tags" | absURL }}/{{ . | urlize }}/">{{ . }}</a>
-                                        {{ end }}
                                     {{ end }}
-                                    {{ if .Site.Params.enableVisitor }}
-                                      <span id="busuanzi_container_page_pv">
-                                          阅读量<span id="busuanzi_value_page_pv"></span>次
-                                      </span>
                                     {{ end }}
                                 </span>
                             </div>

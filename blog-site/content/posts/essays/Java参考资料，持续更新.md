@@ -1,10 +1,10 @@
 ---
-title: "【置顶】Java资源干货，持续更新..."
+title: "Java资源干货，持续更新..."
 date: 2024-03-20
 draft: false
-tags: ["Java"]
+tags: ["Java","持续更新","资源"]
 slug: "java-resource"
-weight: 2
+top: true
 ---
 
 ## 大厂技术博客

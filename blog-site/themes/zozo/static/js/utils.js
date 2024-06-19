@@ -61,17 +61,37 @@ function wordExport(contentNode) {
     var options = {
         maxWidth: 624
     };
+
     // Clone selected element before manipulating it
     var markup = $(contentNode).clone();
+
     // Remove hidden elements from the output
     markup.each(function() {
-        var self = $(contentNode);
-        if (self.is(':hidden'))
-            self.remove();
+        var self = $(this);
+        if (self.is(':hidden')) self.remove();
+    });
+
+    // Handle <code> tags within .highlight class
+    markup.find('.highlight code').each(function() {
+        var content = $(this).html();
+        var classes = $(this).attr('class');
+        var styles = 'font-family: Consolas, \'Courier New\', Courier, monospace; background: #f5f5f5; border: 1px solid #ccc; padding: 2px 4px; display: inline-block; white-space: pre-wrap;';
+
+        // Replace the <code> tag with a styled <div>
+        $(this).replaceWith('<div style="' + styles + '" class="' + classes + '">' + content + '</div>');
+    });
+
+    // Handle <pre> tags
+    markup.find('pre').each(function() {
+        var content = $(this).html();
+        var styles = 'white-space: pre-wrap; background: #f5f5f5; border: 1px solid #ccc; padding: 10px; overflow: auto; font-family: Consolas, \'Courier New\', Courier, monospace;';
+
+        // Replace the <pre> tag with a styled <div>
+        $(this).replaceWith('<div style="' + styles + '">' + content + '</div>');
     });
 
     // Embed all images using Data URLs
-    var images = Array();
+    var images = [];
     var img = markup.find('img');
     for (var i = 0; i < img.length; i++) {
         // Calculate dimensions of output image
@@ -109,8 +129,18 @@ function wordExport(contentNode) {
     }
     mhtmlBottom += "--NEXT.ITEM-BOUNDARY--";
 
-    //TODO: load css from included stylesheet
-    var styles = "";
+    // Load CSS styles for <pre> and <code> tags
+    var styles = `
+        pre {
+            background: #f5f5f5;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: Consolas, 'Courier New', Courier, monospace;
+        }
+    `;
 
     // Aggregate parts of the file together
     var fileContent = static.mhtml.top.replace("_html_", static.mhtml.head.replace("_styles_", styles) + static.mhtml.body.replace("_body_", markup.html())) + mhtmlBottom;
@@ -119,5 +149,6 @@ function wordExport(contentNode) {
     var blob = new Blob([fileContent], {
         type: "application/msword;charset=utf-8"
     });
-    return fileContent
+
+    return blob;
 }

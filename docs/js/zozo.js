@@ -185,8 +185,10 @@ function getNotContent(){
     // 顶部标签导航
     document.getElementById('site_nav'),
     // 顶部内容
+    document.getElementById('post_single_title'),
     document.getElementById('post_header'),
     // 底部信息
+    document.getElementById('busuanzi_container_page_pv'),
     document.getElementById('post_footer_info'),
     document.getElementById('footer_powered_by'),
     document.getElementById('footer_slogan'),

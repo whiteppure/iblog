@@ -206,7 +206,7 @@ function html2md(htmlData){
 
     // 换行处理，1.替换 [~wrap] 为 ‘\n’   2.首行换行删去。   3.将其他过长的换行删去。
     pureHtml = pureHtml.replace(/\[\~wrap\]/ig,'\n')
-                       .replace(/\n{3,}/g,'\n\n')
+                       .replace(/\n{3,}/g,'\n')
 
     // 代码 <code> ,根据上面的数组恢复code,然后将code替换
     if(codeContent !== null){
