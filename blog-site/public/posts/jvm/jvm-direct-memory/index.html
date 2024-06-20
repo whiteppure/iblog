@@ -12,7 +12,7 @@
 	
     
     
-    <meta name="description" content="直接内存不是虚拟机运行时数据区的一部分，也不是《Java虚拟机规范》中定义的内存区域。 直接内存是在Java堆外的、直接向系统申请的内存区间。 操作直接内存演示代码" />
+    <meta name="description" content="直接内存不是虚拟机运行时数据区的一部分，也不是《Java虚拟机规范》中定义的内存区域。直接内存是在Java堆外的、直接向系统申请的内存区间。 操作直接内存演示代码" />
     
 
     
@@ -147,8 +147,7 @@
                         </span>
                         
                     </div>
-                    <div class="post_content markdown"><p>直接内存不是虚拟机运行时数据区的一部分，也不是《Java虚拟机规范》中定义的内存区域。
-直接内存是在Java堆外的、直接向系统申请的内存区间。</p>
+                    <div class="post_content markdown"><p>直接内存不是虚拟机运行时数据区的一部分，也不是《Java虚拟机规范》中定义的内存区域。直接内存是在Java堆外的、直接向系统申请的内存区间。</p>
 <p>操作直接内存演示代码：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
 </span></span><span class="line"><span class="cl">    public static void main(String[] args) {
@@ -166,10 +165,9 @@
 </span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>使用NIO，通过存在堆中的直接内存操作本地内存</p>
-<p><img alt="IO读写" src="/iblog/posts/annex/images/essays/IO%E8%AF%BB%E5%86%99.png">
-<img alt="NIO读写" src="/iblog/posts/annex/images/essays/NIO%E8%AF%BB%E5%86%99.png"></p>
-<p>通常，访问直接内存的速度会优于Java堆。即读写性能高。因此出于性能考虑，读写频繁的场合可能会考虑使用直接内存。
-Java的NIO库允许Java程序使用直接内存，用于数据缓冲区。</p>
+<p><img alt="IO读写" src="/iblog/posts/annex/images/essays/IO%E8%AF%BB%E5%86%99.png"></p>
+<p><img alt="NIO读写" src="/iblog/posts/annex/images/essays/NIO%E8%AF%BB%E5%86%99.png"></p>
+<p>通常，访问直接内存的速度会优于Java堆。即读写性能高。因此出于性能考虑，读写频繁的场合可能会考虑使用直接内存。Java的NIO库允许Java程序使用直接内存，用于数据缓冲区。</p>
 <p>直接内存也存在 <code>OutOfMemoryError</code> 异常:<code>OutOfMemoryError: Direct buffer memory</code></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
 </span></span><span class="line"><span class="cl">    private static final int BUFFER = 1024 * 1024 * 20;
@@ -192,14 +190,13 @@ Java的NIO库允许Java程序使用直接内存，用于数据缓冲区。</p>
 </span></span><span class="line"><span class="cl">        }
 </span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>由于直接内存在Java堆外，因此它的大小不会直接受限于<code>-Xmx</code>指定的最大堆大小，但是系统内存是有限的，
-Java堆和直接内存的总和依然受限于操作系统能给出的最大内存。</p>
+</span></span></code></pre></div><p>由于直接内存在Java堆外，因此它的大小不会直接受限于<code>-Xmx</code>指定的最大堆大小，但是系统内存是有限的，Java堆和直接内存的总和依然受限于操作系统能给出的最大内存。</p>
 <p>直接内存缺点：</p>
 <ul>
 <li>分配回收成本较高</li>
 <li>不受JVM内存回收管理</li>
 </ul>
-<p>直接内存大小可以通过 <code>MaxDirectMemorySize</code> 设置，如果不指定，默认与堆的最大值<code>-Xmx</code>参数值一致.</p>
+<p>直接内存大小可以通过 <code>MaxDirectMemorySize</code> 设置，如果不指定，默认与堆的最大值<code>-Xmx</code>参数值一致。</p>
 </div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">
