@@ -6,19 +6,18 @@ tags: ["Java", "JVM"]
 slug: "java-garbage-collector"
 ---
 
-## 垃圾回收器
 如果说收集算法是内存回收的方法论，那么垃圾收集器就是内存回收的具体实现。
 
 虽然我们对各个收集器进行比较，但并非要挑选出一个最好的收集器。
 因为直到现在为止还没有最好的垃圾收集器出现，更加没有万能的垃圾收集器，我们能做的就是根据具体应用场景选择适合自己的垃圾收集器。
 
-### 垃圾回收器发展史
+## 垃圾回收器发展史
 垃圾收集器是和JVM一脉相承的，它是和JVM进行搭配使用，在不同的使用场景对应的收集器也是有区别。
 有了虚拟机，就一定需要收集垃圾的机制，这就是`Garbage Collection`，对应的产品我们称为`Garbage Collector`。
 
 经典GC：
-- 1999年随JDK1.3.1一起来的是串行方式的serialGc，它是第一款GC。ParNew垃圾收集器是Serial收集器的多线程版本
-- 2002年2月26日，`Parallel GC` 和 `Concurrent Mark Sweep GC`跟随JDK1.4.2一起发布·
+- 1999年随JDK1.3.1一起来的是串行方式的serialGc，它是第一款GC。ParNew垃圾收集器是Serial收集器的多线程版本。
+- 2002年2月26日，`Parallel GC` 和 `Concurrent Mark Sweep GC`跟随JDK1.4.2一起发布。
 - `Parallel GC` 在JDK6之后成为HotSpot默认GC。
 - 2012年，在JDK1.7u4版本中，G1可用。
 - 2017年，JDK9中G1变成默认的垃圾收集器，以替代CMS。
@@ -29,65 +28,27 @@ slug: "java-garbage-collector"
 - 2019年3月，JDK12发布。增强G1，自动返回未用堆内存给操作系统。同时，引入 `Shenandoah GC`：低停顿时间的GC（Experimental）。·2019年9月，JDK13发布。增强ZGC，自动返回未用堆内存给操作系统。
 - 2020年3月，JDK14发布。删除CMS垃圾回收器。扩展zGC在 MacOS 和 Windows 上的应用
 
-### 垃圾回收器分类
+## 垃圾回收器分类
 垃圾收集器没有在规范中进行过多的规定，可以由不同的厂商、不同版本的JVM来实现。
 
-由于JDK的版本处于高速迭代过程中，因此Java发展至今已经衍生了众多的GC版本。
-> Java不同版本新特性学习思路：
-语法层面：Lambda表达式、switch、自动拆箱装箱、enum
-API层面：Stream API、新的日期时间、Optional、String、集合框架
-底层优化：JVM优化、GC的变化、元空间、静态域、字符串常量池位置变化
+由于JDK的版本处于高速迭代过程中，因此Java发展至今已经衍生了众多的GC版本。从不同角度分析垃圾收集器，可以将GC分为不同的类型。
 
-从不同角度分析垃圾收集器，可以将GC分为不同的类型。
-
-#### 按线程数分类
+### 按线程数分类
 - 串行垃圾回收器：在单核CPU的硬件情况下，该收集器会在工作时冻结所有应用程序线程，这使它在所有目的和用途上都无法在服务器环境中使用。
   ![串行垃圾回收器](/iblog/posts/annex/images/essays/串行垃圾回收器.png)
 - 并行垃圾回收器：在停止用户线程之后，多条GC线程并行进行垃圾回收。和串行回收相反，并行收集可以运用多个CPU同时执行垃圾回收，因此提升了应用的吞吐量。
   ![并行垃圾回收器](/iblog/posts/annex/images/essays/并行垃圾回收器.png)
 
-#### 按工作模式分类
+### 按工作模式分类
 - 并发式垃圾回收器：不会出现STW现象，指多条垃圾收集线程同时进行工作，GC线程和用户线程同时运行，不会出现STW现象。
   ![并发垃圾回收器](/iblog/posts/annex/images/essays/并发垃圾回收器.png)
 - 独占式垃圾回收器：会出现STW现象，一旦运行，就停止应用程序中的所有用户线程，直到垃圾回收过程完全结束。
 
-#### 按处理方式分类
-- 压缩式垃圾回收器：压缩式垃圾回收器会在回收完成后，对存活对象进行压缩整理，消除回收后的碎片。所以在为对象分配内存的时候用[指针碰撞](https://whiteppure.github.io/iblog/posts/jvm/java-object/#创建对象的过程及步骤)
-- 非压缩式垃圾回收器：非压缩式的垃圾回收器不进行整理这步操作。所以在为为对象分配内存的时候使用[空闲列表](https://whiteppure.github.io/iblog/posts/jvm/java-object/#创建对象的过程及步骤)
+### 按处理方式分类
+- 压缩式垃圾回收器：压缩式垃圾回收器会在回收完成后，对存活对象进行压缩整理，消除回收后的碎片。所以在为对象分配内存的时候用[指针碰撞](https://whiteppure.github.io/iblog/posts/jvm/java-object/#创建对象的过程及步骤)；
+- 非压缩式垃圾回收器：非压缩式的垃圾回收器不进行整理这步操作。所以在为为对象分配内存的时候使用[空闲列表](https://whiteppure.github.io/iblog/posts/jvm/java-object/#创建对象的过程及步骤)；
 
-### 7种经典的垃圾回收器
-- 串行回收器：`Serial`、`Serial old`
-- 并行回收器：`ParNew`、`Parallel Scavenge`、`Parallel old`
-- 并发回收器：`CMS`、`G1`、`ZGC`
-
-#### 垃圾回收器与垃圾分代
-![收集器与垃圾分代之间的关系](/iblog/posts/annex/images/essays/收集器与垃圾分代之间的关系.png)
-
-- 新生代收集器：`Serial`、`ParNew`、`Parallel Scavenge`
-- 老年代收集器：`Serial old`、`Parallel old`、`CMS`
-- 整堆收集器：`G1`、`ZGC`
-
-#### 垃圾收集器的组合关系
-![垃圾回收器组合关系](/iblog/posts/annex/images/essays/垃圾回收器组合关系.png)
-
-- 两个收集器间有连线，表明它们可以搭配使用
-    - `Serial/Serial old`
-    - `Serial/CMS`
-    - `ParNew/Serial old`、
-    - `ParNew/CMS、Parallel` 
-    - `Scavenge/Serial 0ld`
-    - `Parallel Scavenge/Parallel old`
-    - `G1`
-- `Serial old`和`CMS`之间的连线表示，`Serial old`作为CMS出现"Concurrent Mode Failure"失败的后备预案
-- 红色虚线表示，在JDK 8时将`Serial + CMS`、`ParNew + Serial old`这两个组合声明为废弃；并在JDK9中完全取消了这些组合的支持
-- 绿色虚线表示，JDK14中：弃用`Parallel Scavenge`和`Serial old` 组合
-- 青色虚线表示，在JDK14中删除CMS垃圾回收器
-
-> PS 为什么要有很多垃圾回收器?
-因为垃圾回收器没有最好的实现，想要STW时间段的就需要吞吐量少一点；所以我们选择的只是对具体应用最合适的收集器。
-针对不同的场景，提供不同的垃圾收集器，来提高垃圾收集的性能。
-
-### 查看默认垃圾收集器
+## 查看默认垃圾收集器
 JDK 默认垃圾收集器（使用 java -XX:+PrintCommandLineFlags -version 命令查看）：
 - JDK 8：Parallel Scavenge（新生代）+ Parallel Old（老年代）
 - JDK 9 ~ JDK20: G1
@@ -106,16 +67,17 @@ public class MainTest {
     }
 }
 ```
+
 输出结果
 ```
 -XX:InitialHeapSize=268435456 -XX:MaxHeapSize=4294967296 -XX:+PrintCommandLineFlags -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseParallelGC 
 ```
 
-使用命令行指令：jinfo -flag 垃圾回收器参数 进程ID
+使用命令行指令：`jinfo -flag`
 
 ![jinfo命令查看GC](/iblog/posts/annex/images/essays/jinfo命令查看GC.png)
 
-### 评估垃圾回收器性能指标
+## 评估垃圾回收器性能指标
 - 吞吐量：运行用户代码的时间占总运行时间的比例（总运行时间 = 程序的运行时间 + 内存回收的时间）。
 - 垃圾收集开销：吞吐量的补数，垃圾收集所用时间与总运行时间的比例。
   - 暂停时间：执行垃圾收集时，程序的工作线程被暂停的时间。
@@ -127,25 +89,24 @@ public class MainTest {
 这三项里，暂停时间的重要性日益凸显。因为随着硬件发展，内存占用多些越来越能容忍，硬件性能的提升也有助于降低收集器运行时对应用程序的影响，即提高了吞吐量。
 而内存的扩大，对延迟反而带来负面效果。
 
-一款优秀的收集器通常最多同时满足其中的两项。 简单来说，主要抓住吞吐量、暂停时间这两点。
+一款优秀的收集器通常最多同时满足其中的两项，简单来说，主要抓住吞吐量、暂停时间这两点。
 
-#### 吞吐量
+### 吞吐量
 吞吐量就是CPU用于运行用户代码的时间与CPU总消耗时间的比值。`吞吐量=运行用户代码时间 /(运行用户代码时间+垃圾收集时间)`
 
 在注重吞吐量的这种情况下，应用程序能容忍较高的暂停时间，因此，高吞吐量的应用程序有更长的时间基准，快速响应是不必考虑的。
 吞吐量优先，意味着在单位时间内，STW的时间最短。
 
-#### 暂停时间
+### 暂停时间
 暂停时间是指一个时间段内应用程序线程暂停，让GC线程执行的状态，它关系着用户的体验。
 
-例如：GC期间100毫秒的暂停时间意味着在这100毫秒期间内没有应用程序线程是活动的。暂停时间优先，意味着尽可能让单次STW的时间最短。
+例如，GC期间100毫秒的暂停时间意味着在这100毫秒期间内没有应用程序线程是活动的。暂停时间优先，意味着尽可能让单次STW的时间最短。
 
-#### 吞吐量对比暂停时间
+### 吞吐量对比暂停时间
 高吞吐量较好，因为这会让应用程序的最终用户感觉只有应用程序线程在做“生产性”工作，直觉上吞吐量越高程序运行越快。
 
 低暂停时间较好因为从最终用户的角度来看不管是GC还是其他原因导致一个应用被挂起始终是不好的。
-这取决于应用程序的类型，有时候甚至短暂的200毫秒暂停都可能打断终端用户体验。
-因此，具有低的较大暂停时间是非常重要的，特别是对于一个交互式应用程序。
+这取决于应用程序的类型，有时候甚至短暂的200毫秒暂停都可能打断终端用户体验。因此，具有低的较大暂停时间是非常重要的，特别是对于一个交互式应用程序。
 
 不幸的是”高吞吐量”和”低暂停时间”是相互矛盾的。
 
@@ -154,6 +115,38 @@ public class MainTest {
 
 所以，在设计或使用GC算法时，我们必须确定我们的目标：一个GC算法只可能针对两个目标之一即只专注于较大吞吐量或最小暂停时间，或尝试找到一个二者的折中。
 
+## 7种经典的垃圾回收器
+- 串行回收器：`Serial`、`Serial old`
+- 并行回收器：`ParNew`、`Parallel Scavenge`、`Parallel old`
+- 并发回收器：`CMS`、`G1`、`ZGC`
+
+### 垃圾回收器与垃圾分代
+![收集器与垃圾分代之间的关系](/iblog/posts/annex/images/essays/收集器与垃圾分代之间的关系.png)
+
+- 新生代收集器：`Serial`、`ParNew`、`Parallel Scavenge`
+- 老年代收集器：`Serial old`、`Parallel old`、`CMS`
+- 整堆收集器：`G1`、`ZGC`
+
+### 垃圾收集器的组合关系
+![垃圾回收器组合关系](/iblog/posts/annex/images/essays/垃圾回收器组合关系.png)
+
+- 两个收集器间有连线，表明它们可以搭配使用
+    - `Serial/Serial old`
+    - `Serial/CMS`
+    - `ParNew/Serial old`、
+    - `ParNew/CMS、Parallel`
+    - `Scavenge/Serial 0ld`
+    - `Parallel Scavenge/Parallel old`
+    - `G1`
+- `Serial old`和`CMS`之间的连线表示，`Serial old`作为CMS出现"Concurrent Mode Failure"失败的后备预案
+- 红色虚线表示，在JDK 8时将`Serial + CMS`、`ParNew + Serial old`这两个组合声明为废弃；并在JDK9中完全取消了这些组合的支持
+- 绿色虚线表示，JDK14中：弃用`Parallel Scavenge`和`Serial old` 组合
+- 青色虚线表示，在JDK14中删除CMS垃圾回收器
+
+**为什么要有很多垃圾回收器？**
+
+因为垃圾回收器没有最好的实现，想要STW时间段的就需要吞吐量少一点；所以我们选择的只是对具体应用最合适的收集器。
+针对不同的场景，提供不同的垃圾收集器，来提高垃圾收集的性能。
 ### Serial GC
 `Serial GC`由于弊端较大，只有放在单核CPU上才能充分发挥其作用，由于现在都是多核CPU已经不用串行收集器了，所以以下内容了解即可。
 对于交互较强的应用而言，这种垃圾收集器是不能接受的。一般在Java web应用程序中是不会采用串行垃圾收集器的。
@@ -165,15 +158,16 @@ public class MainTest {
 
 ![serial-GC](/iblog/posts/annex/images/essays/serial-GC.png)
 
-`Serial GC`是一个单线程的收集器，但它的“单线程”的意义并不仅仅说明它只会使用一个CPU或一条收集线程去完成垃圾收集工作，更重要的是在它进行垃圾收集时，必须暂停其他所有的工作线程，直到它收集结束
+`Serial GC`是一个单线程的收集器，但它的“单线程”的意义并不仅仅说明它只会使用一个CPU或一条收集线程去完成垃圾收集工作，更重要的是在它进行垃圾收集时，必须暂停其他所有的工作线程，直到它收集结束。
 
-`Serial GC`的优点, 简单而高效（与其他收集器的单线程比），对于限定单个CPU的环境来说，`Serial GC`由于没有线程交互的开销，专心做垃圾收集自然可以获得最高的单线程收集效率。
+`Serial GC`的优点， 简单而高效（与其他收集器的单线程比），对于限定单个CPU的环境来说，`Serial GC`由于没有线程交互的开销，专心做垃圾收集自然可以获得最高的单线程收集效率。
 是运行在client模式下的虚拟机是个不错的选择。
 
 运行任意程序，设置虚拟机参数如下，当设置使用`Serial GC`时，新生代和老年代都会使用串行收集器。
 ```
 -XX:+PrintCommandLineFlags -XX:+UseSerialGC
 ```
+
 输出
 ```
 -XX:InitialHeapSize=268435456 -XX:MaxHeapSize=4294967296 -XX:+PrintCommandLineFlags -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseSerialGC 
@@ -227,7 +221,7 @@ CMS 的优点是：并发收集、低停顿，但缺点也很明显：
 - CMS 无法处理浮动垃圾，当 CMS 在进行垃圾回收的时候，应用程序还在不断地产生垃圾，这些垃圾会在 CMS 垃圾回收结束之后产生，这些垃圾就是浮动垃圾，CMS 无法处理这些浮动垃圾，只能在下一次 GC 时清理掉。
 
 ### G1
-G1 (Garbage-First) 是一款面向服务器的垃圾收集器，主要针对配备多颗处理器及大容量内存的机器. 以极高概率满足 GC 停顿时间要求的同时,还具备高吞吐量性能特征。
+G1 (Garbage-First) 是一款面向服务器的垃圾收集器，主要针对配备多颗处理器及大容量内存的机器. 以极高概率满足 GC 停顿时间要求的同时，还具备高吞吐量性能特征。
 在 JDK 1.7 时引入，在 JDK 9 时取代 CMS 成为了默认的垃圾收集器。G1 有五个属性：分代、增量、并行、标记整理、可预测的停顿。
 
 1. 分代：
