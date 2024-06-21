@@ -1965,8 +1965,8 @@ The encoding flag will indicate which encoding is used.</p>
 <p>基于String的数据结构，<code>StringBuffer</code>和<code>StringBuilder</code>也同样做了修改</p>
 <h3 id="不可变性">不可变性</h3>
 <p>value数组被声明为<code>final</code>，这意味着value数组初始化之后就不能再引用其它数组。
-并且 String 内部没有改变 value 数组的方法，因此可以保证<code>String</code>不可变；
-String是Java中一个不可变的类，所以他一旦一个string对象在内存(堆)中被创建出来，他就无法被修改。</p>
+并且 String 内部没有改变 value 数组的方法，因此可以保证<code>String</code>不可变。
+String是Java中一个不可变的类，所以一旦一个string对象在内存中被创建出来，他就无法被修改。</p>
 <p>下面代码说明String是不可变的：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
 </span></span><span class="line"><span class="cl">    String str = new String(&#34;good&#34;);
@@ -1988,24 +1988,13 @@ String是Java中一个不可变的类，所以他一旦一个string对象在内�
 </span></span></code></pre></div><p><strong>特别要注意的是，String类的所有方法都没有改变字符串本身的值，都是返回了一个新的对象。字符串不可变的根本原因应是处于安全性考虑。</strong></p>
 <p>不可变性优点：</p>
 <ol>
-<li>可以缓存 hash 值</li>
+<li>可以缓存 hash 值。因为<code>String</code>的<code>hash</code>值经常被使用,像<code>Set、Map</code>结构中的 key 值也需要用到<code>HashCode</code>来保证唯一性和一致性，因此不可变的 <code>HashCode</code> 才是安全可靠的。</li>
+<li><code>String</code>常量池的需要。字符串常量池的基础就是字符串的不可变性，如果字符串是可变的，那想一想，常量池就没必要存在了。如果一个 <code>String</code> 对象已经被创建过了，那么就会从<code>String</code>常量池中取得引用。只有<code>String</code>是不可变的，才可能使用<code>String</code>常量池。</li>
+<li>安全性。<code>String</code>经常作为参数,<code>String</code>不可变性可以保证参数不可变。例如在作为网络连接参数的情况下如果<code>String</code>是可变的，那么在网络连接过程中，<code>String</code>被改变，改变<code>String</code>对象的那一方以为现在连接的是其它主机,而实际情况却不一定是。
+实际项目中会用到，比如数据库连接串、账号、密码等字符串，只有不可变的连接串、用户名和密码才能保证安全性。</li>
+<li>线程安全。字符串在 Java 中的使用频率可谓高之又高，那在高并发的情况下不可变性也使得对字符串的读写操作不用考虑多线程竞争的情况。
+<code>String</code>不可变性天生具备线程安全,可以在多个线程中安全地使用。</li>
 </ol>
-<p>因为<code>String</code>的<code>hash</code>值经常被使用,像<code>Set、Map</code>结构中的 key 值也需要用到<code>HashCode</code>来保证唯一性和一致性，因此不可变的 <code>HashCode</code> 才是安全可靠的</p>
-<ol start="2">
-<li>String常量池的需要</li>
-</ol>
-<p>字符串常量池的基础就是字符串的不可变性，如果字符串是可变的，那想一想，常量池就没必要存在了。
-如果一个 <code>String</code> 对象已经被创建过了，那么就会从<code>String常量池中取得引用。只有</code>String`是不可变的，才可能使用 String常量池。</p>
-<ol start="3">
-<li>安全性</li>
-</ol>
-<p><code>String</code>经常作为参数,<code>String</code>不可变性可以保证参数不可变。例如在作为网络连接参数的情况下如果<code>String</code>是可变的，那么在网络连接过程中，<code>String</code>被改变，改变<code>String</code>对象的那一方以为现在连接的是其它主机,而实际情况却不一定是.
-实际项目中会用到,比如数据库连接串、账号、密码等字符串，只有不可变的连接串、用户名和密码才能保证安全性.</p>
-<ol start="4">
-<li>线程安全</li>
-</ol>
-<p>字符串在 Java 中的使用频率可谓高之又高，那在高并发的情况下不可变性也使得对字符串的读写操作不用考虑多线程竞争的情况.
-String不可变性天生具备线程安全,可以在多个线程中安全地使用.</p>
 <h3 id="使用">使用</h3>
 <h4 id="创建字符串">创建字符串</h4>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// String 直接创建

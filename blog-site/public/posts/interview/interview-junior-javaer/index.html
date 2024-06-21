@@ -127,8 +127,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%a6%82%e4%bd%95%e5%85%8b%e9%9a%86%e4%b8%80%e4%b8%aa%e5%af%b9%e8%b1%a1">
-                    如何克隆一个对象
+                <a class="nav-link text-left" href="#%e5%a6%82%e4%bd%95%e5%a4%8d%e5%88%b6%e4%b8%80%e4%b8%aa%e5%af%b9%e8%b1%a1">
+                    如何复制一个对象
                 </a>
             </li>
             
@@ -223,8 +223,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e7%ae%80%e8%bf%b0%e4%bb%80%e4%b9%88%e6%98%af%e5%8f%8d%e5%b0%84%e4%bb%a5%e5%8f%8a%e5%ae%83%e7%9a%84%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af">
-                    简述什么是反射以及它的应用场景
+                <a class="nav-link text-left" href="#%e7%ae%80%e8%bf%b0%e5%8f%8d%e5%b0%84%e4%bb%a5%e5%8f%8a%e5%ae%83%e7%9a%84%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af">
+                    简述反射以及它的应用场景
                 </a>
             </li>
             
@@ -669,38 +669,6 @@
             <li class="nav-item">
                 <a class="nav-link text-left" href="#%e4%bb%80%e4%b9%88%e6%98%af%e4%b9%90%e8%a7%82%e9%94%81%e5%92%8c%e6%82%b2%e8%a7%82%e9%94%81">
                     什么是乐观锁和悲观锁
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e4%bb%80%e4%b9%88%e6%98%afhappens-before%e8%a7%84%e5%88%99">
-                    什么是Happens-Before规则
                 </a>
             </li>
             
@@ -6455,16 +6423,164 @@
                     <div class="post_content markdown"><p>为方便面试，不至于在网上像一个无头苍蝇乱翻，整理了一篇关于面试的资料。本文几乎涵盖了Java所有的知识点，包括：Java基础、网络与安全、常见框架、分布式服务治理、数据库、算法与数据结构、开发中遇到的一些问题以及一些架构设计方案。
 如果全都理解并吸收，相信能轻松通过大部分面试。</p>
 <p>本文中的面试题更偏向于底层，为方便阅读，在此只简短概述面试题的答案，不做详细解析。
-本资料完全公开免费，资料中的面试题，大多为原创，但也有小部分参考于网络，我将尽可能的把问题和答案写的通俗易懂。</p>
-<p>如果复制或者引用请尊重劳动成果，注明链接。
-本人时间精力有限，如有遗漏或错误，欢迎在评论留言补充，我会及时的完善修正。</p>
+本资料完全公开免费，资料中的面试题，大多为原创，但也有小部分参考于网络，我将尽可能的把问题和答案概括的通俗易懂。</p>
+<p>本人时间精力有限，如有遗漏或错误，欢迎在评论留言补充，我会及时的完善修正。</p>
 <h2 id="java基础">Java基础</h2>
 <h3 id="基础汇总">基础汇总</h3>
-<h4 id="如何克隆一个对象">如何克隆一个对象</h4>
+<h4 id="如何复制一个对象">如何复制一个对象</h4>
+<p>在实际开发中，复制、转换对象是非常常用的操作，如将一个DTO转化成PO，PO转换成VO等。</p>
+<p>要想复制一个对象，需要实现<code>Cloneable</code>接口，然后重写<code>clone()</code>方法。至于你想要怎么克隆，是深克隆还是浅克隆，关键是你这个<code>clone()</code>方法怎么写。
+虽然<code>Cloneable</code>和<code>clone()</code>方法在Java中是标准的浅拷贝方式，但它们在实际开发中不太常用，主要是因为使用<code>clone()</code>方法来拷贝一个对象即复杂又有风险，它会抛出异常，并且还需要类型转换。
+在实际开发中，一般都是使用第三方类库，如<code>BeanUtils</code>，不过这种方式大多为浅拷贝。</p>
+<p>不过面试问这种问题，一般都是在问浅拷贝和深拷贝。</p>
+<ul>
+<li>浅拷贝创建一个新对象，这个新对象的字段内容与原对象相同，但如果字段是引用类型（比如数组、对象），浅拷贝只复制引用地址，不复制引用的实际对象。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">MyObject</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Cloneable</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">array</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">MyObject</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">array</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">array</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">clone</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">CloneNotSupportedException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kd">super</span><span class="p">.</span><span class="na">clone</span><span class="p">();</span><span class="w"> </span><span class="c1">// 浅拷贝</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">arr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="n">3</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">MyObject</span><span class="w"> </span><span class="n">original</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MyObject</span><span class="p">(</span><span class="n">42</span><span class="p">,</span><span class="w"> </span><span class="n">arr</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">MyObject</span><span class="w"> </span><span class="n">copy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">MyObject</span><span class="p">)</span><span class="w"> </span><span class="n">original</span><span class="p">.</span><span class="na">clone</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">original</span><span class="p">.</span><span class="na">array</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">99</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">copy</span><span class="p">.</span><span class="na">array</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="p">);</span><span class="w"> </span><span class="c1">// 输出 99</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">CloneNotSupportedException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>深拷贝创建一个新对象，这个新对象和原对象完全独立，包括复制所有引用类型字段的实际对象，而不仅仅是引用地址。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">MyObject</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Cloneable</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">array</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">MyObject</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">array</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">array</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">MyObject</span><span class="w"> </span><span class="nf">clone</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">CloneNotSupportedException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">arrayCopy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">array</span><span class="p">.</span><span class="na">clone</span><span class="p">();</span><span class="w"> </span><span class="c1">// 复制数组</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MyObject</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">arrayCopy</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">arr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="n">3</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">MyObject</span><span class="w"> </span><span class="n">original</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MyObject</span><span class="p">(</span><span class="n">42</span><span class="p">,</span><span class="w"> </span><span class="n">arr</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">MyObject</span><span class="w"> </span><span class="n">copy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">original</span><span class="p">.</span><span class="na">clone</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">original</span><span class="p">.</span><span class="na">array</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">99</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">copy</span><span class="p">.</span><span class="na">array</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="p">);</span><span class="w"> </span><span class="c1">// 输出 1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">CloneNotSupportedException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+</ul>
 <h4 id="string类为什么设计成不可变的">String类为什么设计成不可变的</h4>
+<p>面试问这个问题，可以从<code>String</code>类的优点这个思路回答。</p>
+<ol>
+<li>字符串不可变的根本原因我认为应是出于对数据的安全性考虑。<code>String</code>经常作为参数，<code>String</code>不可变性可以保证参数不可变。
+实际项目中会用到，比如数据库连接串、账号、密码等字符串，只有不可变的连接串、用户名和密码才能保证安全性。</li>
+<li>线程安全。字符串在Java中的使用频率可谓高之又高，那在高并发的情况下不可变性也使得对字符串的读写操作不用考虑多线程竞争的情况。
+不可变的字符串在多线程环境中是安全的。由于<code>String</code>对象一旦创建就不能被修改，因此多个线程可以安全地共享相同的<code>String</code>实例，而不需要担心数据被修改。</li>
+<li><code>String</code>常量池的需要。字符串常量池的基础就是字符串的不可变性，如果字符串是可变的，那想一想，常量池就没必要存在了。
+如果一个<code>String</code> 对象已经被创建过了，那么就会从<code>String</code>常量池中取得引用。只有<code>String</code>是不可变的，才可能使用 String常量池。</li>
+<li>可以缓存<code>hash</code>值。因为<code>String</code>的<code>hash</code>值经常被使用,像<code>Set</code>、<code>Map</code>结构中的<code>key</code>值也需要用到<code>HashCode</code>来保证唯一性和一致性，因此不可变的<code>HashCode</code>才是安全可靠的。</li>
+</ol>
 <h4 id="string类有没有长度限制">String类有没有长度限制</h4>
-<h4 id="简述什么是反射以及它的应用场景">简述什么是反射以及它的应用场景</h4>
+<p><code>String</code>类是有长度限制的。Java中的<code>String</code>内部是用一个字符数组<code>char[]</code>存储字符数据的，数组的最大长度限制由Java虚拟机规范决定。
+理论上，Java数组的最大长度是<code>Integer.MAX_VALUE(2^31 - 1)</code>，即2147483647，但在实际操作中，能分配的最大数组长度受可用内存限制。</p>
+<p>但是并不是这样，实际上在程序编译期根据<code>StringJVM常量池</code>规范<code>String</code>字符串在声明时最大为 65535。
+字符串字面量的长度不能超过 65535 个字符（注意是字符，不是字节）。如果字符串字面量长度超过这个限制，编译器会抛出错误。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkStringConstant</span><span class="p">(</span><span class="n">DiagnosticPosition</span><span class="w"> </span><span class="n">var1</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">var2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">nerrs</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">var2</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">var2</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">((</span><span class="n">String</span><span class="p">)</span><span class="n">var2</span><span class="p">).</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">65535</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">log</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="n">var1</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;limit.string&#34;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="o">++</span><span class="k">this</span><span class="p">.</span><span class="na">nerrs</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>所以<code>String</code>类长度限制是多少？</p>
+<ul>
+<li>在编译期间，长度不能超过 65535 个字符；</li>
+<li>在运行期，<code>String</code>对象的长度理论上可以达到<code>Integer.MAX_VALUE (2^31 - 1)</code>个字符，即 2,147,483,647 个字符，大概4G。
+然而，在实际应用中，字符串的最大长度受限于可用内存和JVM配置；</li>
+</ul>
+<p>在程序开发中，如果你用<code>String</code>变量接收<code>Base64</code>图片或音频视频，需要注意不要超过程序运行时字符串的最大阈值。</p>
+<h4 id="简述反射以及它的应用场景">简述反射以及它的应用场景</h4>
+<p>在Java程序运行状态中，对于任意一个实体类，都能够知道这个类的所有属性和方法，对于任意一个对象，都能够调用它的任意方法和属性，以及使用该信息来创建、操作和销毁对象。
+这种动态获取信息以及动态调用对象方法的功能称为Java语言的反射机制。</p>
+<p>把Java程序比喻成一个复杂的机器，但是每个零件都是封装在盒子里面的，你无法直接看到里面的具体构造。
+反射就像是你用一种特殊的工具，可以打开这些盒子并查看里面的零件，甚至可以重新组装它们或者在需要的时候加入新的零件。
+这种能力让你在机器运行时能够动态地调整和改进它的组件，但是打开和处理每个盒子都需要额外的时间和努力，因此使用反射可能会带来一些性能上的成本。</p>
+<p>Java反射在许多场景中都有广泛的应用，主要包括以下方面：</p>
+<ul>
+<li>最常见的是搭配注解使用，获取运行时的方法参数、注解值。在许多框架中有对应的示例，比如Spring的<code>@Autowired</code>、<code>@Value</code>等注解；</li>
+<li>动态代理也是基于反射来实现的。在运行时生成代理类，通过反射，可以动态地创建代理类，并在运行时将方法调用转发给目标对象；</li>
+</ul>
 <h4 id="简述java中的泛型是如何实现的">简述Java中的泛型是如何实现的</h4>
+<p>Java中的泛型通过一种称为类型擦除的机制实现。声明了泛型的<code>.java</code>源代码，在编译生成<code>.class</code>文件之后，泛型相关的信息就消失了。
+可以认为，源代码中泛型相关的信息，就是提供给编译器用的，泛型信息对Java编译器可以见，而对Java虚拟机不可见。</p>
+<p>关于如何实现泛型，Java官方文档中有对应的解释，<a href="https://docs.oracle.com/javase/tutorial/java/generics/erasure.html">原文</a>如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Generics were introduced to the Java language to provide tighter type checks at compile time and to support generic programming. To implement generics, the Java compiler applies type erasure to:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">- Replace all type parameters in generic types with their bounds or Object if the type parameters are unbounded. The produced bytecode, therefore, contains only ordinary classes, interfaces, and methods.
+</span></span><span class="line"><span class="cl">- Insert type casts if necessary to preserve type safety.
+</span></span><span class="line"><span class="cl">- Generate bridge methods to preserve polymorphism in extended generic types.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Type erasure ensures that no new classes are created for parameterized types; consequently, generics incur no runtime overhead.
+</span></span></code></pre></div><p>以下是实现类型擦除的步骤：</p>
+<ol>
+<li>当你写泛型代码时，Java编译器会在编译阶段进行类型检查，确保你使用的类型是正确的。例如，如果你声明一个<code>List&lt;String&gt;</code>，编译器会确保你只能向这个列表添加字符串；</li>
+<li>一旦编译完成，所有的泛型类型信息都会被移除，这个过程叫做“类型擦除”。在类型擦除过程中：
+<ul>
+<li>泛型类型参数被替换：所有的泛型类型参数会被替换为它们的上界（如果没有指定上界，就替换为<code>Object</code>）。</li>
+<li>插入必要的类型转换：在必要的地方，编译器会插入类型转换，以确保类型安全。</li>
+</ul>
+</li>
+<li>当泛型类被继承，并且子类使用具体类型时，编译器会生成桥接方法来保证子类的方法正确覆盖父类的方法。桥接方法是编译器自动生成的，用来保证多态性和类型一致性；
+<br><br>假设有一个父类和一个子类：
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Parent</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">getValue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">Child</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Parent</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getValue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;child value&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div>编译后，<code>Child</code>类中会有一个桥方法：
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Child</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Parent</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getValue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;child value&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 生成的桥方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">getValue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">getValue</span><span class="p">();</span><span class="w"> </span><span class="c1">// 调用实际的getValue方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+</ol>
 <h3 id="多线程">多线程</h3>
 <h4 id="说说你对并发编程的理解">说说你对并发编程的理解</h4>
 <h4 id="简述线程池原理">简述线程池原理</h4>
@@ -6478,7 +6594,6 @@
 <h4 id="如何避免threadlocal内存泄漏">如何避免ThreadLocal内存泄漏</h4>
 <h4 id="谈谈你对线程安全的理解">谈谈你对线程安全的理解</h4>
 <h4 id="什么是乐观锁和悲观锁">什么是乐观锁和悲观锁</h4>
-<h4 id="什么是happens-before规则">什么是Happens-Before规则</h4>
 <h3 id="集合">集合</h3>
 <h4 id="hashmap底层是如何实现的">HashMap底层是如何实现的</h4>
 <h4 id="hashmap底层为什么要用红黑树">HashMap底层为什么要用红黑树</h4>

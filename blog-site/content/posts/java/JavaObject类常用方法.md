@@ -7,9 +7,9 @@ slug: "rookie-objectclass-methods"
 ---
 
 ## 概览
-Object 类位于 `java.lang` 包中，编译时会自动导入，我们创建一个类时，如果没有明确继承一个父类，那么它就会自动继承`Object`，成为`Object`的子类。
-
-`Object`类可以显示继承，也可以隐式继承,效果都是一样的。
+Object 类位于 `java.lang` 包中，编译时会自动导入。
+当我们创建一个类时，如果没有明确继承一个父类，那么它就会自动继承`Object`，成为`Object`的子类。
+`Object`类可以显示继承，也可以隐式继承，效果都是一样的。
 ```
 class A extends Object{
     // to do
@@ -62,9 +62,9 @@ System.out.println(x.equals(y)); // true
 System.out.println(x == y);      // false
 ```
 
-`equals()`作用是判断两个对象是否相等,但一般有两种情况:
-1. 类没有覆盖`equals`方法,则相当于通过 `==`来比较这两个对象的地址;
-2. 类覆盖`equals`方法,一般我们通过`equals()`来比较两个对象的内容是否相等,相等则返回true；
+`equals()`作用是判断两个对象是否相等，但一般有两种情况:
+1. 类没有覆盖`equals`方法，则相当于通过 `==`来比较这两个对象的地址;
+2. 类覆盖`equals`方法，一般我们通过`equals()`来比较两个对象的内容是否相等，相等则返回true；
 
 `equals()`在不重写的情况下与 `==` 作用一样都是比较的内存中的地址.但是`equals()`可以重写。
 
@@ -177,7 +177,7 @@ class Person {
 ### hashCode与equals
 `hashCode()`返回散列值，而`equals()`是用来判断两个对象是否等价。等价的两个对象散列值一定相同，但是散列值相同的两个对象不一定等价。
 
-`equals()`地址比较是通过对象的哈希值来比较的。`hash`值是由`hashCode`方法产生的，`hashCode`属于`Object`类的本地方法,默认使用`==`比较两个对象,如果`equals()`相等`,hashcode`一定相等,如果`hashcode`相等,`equals`不一定相等。
+`equals()`地址比较是通过对象的哈希值来比较的。`hash`值是由`hashCode`方法产生的，`hashCode`属于`Object`类的本地方法，默认使用`==`比较两个对象，如果`equals()`相等`，hashcode`一定相等，如果`hashcode`相等，`equals`不一定相等。
 
 所以在覆盖 `equals()` 方法时应当总是覆盖` hashCode() `方法，保证等价的两个对象散列值也相等。
 
@@ -243,7 +243,7 @@ public int hashCode() {
 ```
 
 ### 重写toString方法
-当我们打印一个对象的引用时，实际是默认调用这个对象的`toString()`方法,当打印的对象所在类没有重写`Object`中的`toString()`方法时，默认调用的是`Object`类中`toString()`方法.返回此对象所在的类及对应的堆空间对象实体的首地址值。
+当我们打印一个对象的引用时，实际是默认调用这个对象的`toString()`方法，当打印的对象所在类没有重写`Object`中的`toString()`方法时，默认调用的是`Object`类中`toString()`方法.返回此对象所在的类及对应的堆空间对象实体的首地址值。
 ```
 public class MainTest {
     public static void main(String[] args) {
@@ -558,7 +558,7 @@ System.out.println(e2.get(2)); // 2
 - `finalize`方法的执行时间是没有保障的，它完全由GC线程决定，极端情况下，若不发生GC，则`finalize`方法将没有执行机会;因为优先级比较低，即使主动调用该方法，也不会因此就直接进行回收；
 - 一个糟糕的`finalize`方法会严重影响GC的性能;
 
-**由于`finalize`方法的存在,虚拟机中的对象一般可能处于三种状态：**
+**由于`finalize`方法的存在，虚拟机中的对象一般可能处于三种状态：**
 
 如果从所有的根节点都无法访问到某个对象，说明对象己经不再使用了。一般来说，此对象需要被回收。但事实上，也并非是“非死不可”的，这时候它们暂时处于“缓刑”阶段。一个无法触及的对象有可能在某一个条件下“复活”自己，如果这样，那么对它的回收就是不合理的，为此，虚拟机中定义了的对象可能的三种状态：
 - 可触及的：从根节点开始，可以到达这个对象；对象存活被使用；
@@ -652,14 +652,14 @@ public class MainTest {
 需要注意的是`wait`方法与`sleep`方法，很多人分不清他俩。
 
 `sleep`和`wait`方法异同点：
-- `sleep()`属于`Thread`类,`wait()`属于`Object`类；
-- `sleep()`和`wait()`都会抛出`InterruptedException`异常,这个异常属于`checkedException`不可避免；
-- 两者比较的共同之处是，都是使程序等待多长时间。不同的是调用`sleep()`不会释放锁,会使线程堵塞,而调用`wait()`会释放锁,让线程进入等待状态,用 `notify()、notifyall()`可以唤醒,或者等待时间到了； 这是因为，如果没有释放锁，那么其它线程就无法进入对象的同步方法或者同步控制块中，那么就无法执行 `notify()` 或者 `notifyAll()` 来唤醒挂起的线程，造成死锁。
-- `wait()`必须在同步`synchronized`块里使用,`sleep()`可以在任意地方使用；
+- `sleep()`属于`Thread`类，`wait()`属于`Object`类；
+- `sleep()`和`wait()`都会抛出`InterruptedException`异常，这个异常属于`checkedException`不可避免；
+- 两者比较的共同之处是，都是使程序等待多长时间。不同的是调用`sleep()`不会释放锁，会使线程堵塞，而调用`wait()`会释放锁，让线程进入等待状态，用 `notify()、notifyall()`可以唤醒，或者等待时间到了； 这是因为，如果没有释放锁，那么其它线程就无法进入对象的同步方法或者同步控制块中，那么就无法执行 `notify()` 或者 `notifyAll()` 来唤醒挂起的线程，造成死锁。
+- `wait()`必须在同步`synchronized`块里使用，`sleep()`可以在任意地方使用；
 
-**其中"`wait()`必须在同步`synchronized`块里使用"，使其不止`wait`方法,`notify、notifyAll`也和`wait`方法一样,必须在`synchronized`块里使用，为什么呢？**
+**其中"`wait()`必须在同步`synchronized`块里使用"，使其不止`wait`方法，`notify、notifyAll`也和`wait`方法一样，必须在`synchronized`块里使用，为什么呢？**
 
-- 是为了避免丢失唤醒问题。假设没有`synchronized`修饰，使用了`wait`方法而没有设置等待时间，也没有调用唤醒方法或者唤醒方法调用的时机不对,这个线程将会永远的堵塞下去。
+- 是为了避免丢失唤醒问题。假设没有`synchronized`修饰，使用了`wait`方法而没有设置等待时间，也没有调用唤醒方法或者唤醒方法调用的时机不对，这个线程将会永远的堵塞下去。
 - `wait()、notify、notifyAll`方法调用的时候要释放锁，你都没给它加锁，他怎么释放锁，所以如果没在`synchronized`块中调用`wait()、notify、notifyAll`方法是肯定抛异常的。
 
 

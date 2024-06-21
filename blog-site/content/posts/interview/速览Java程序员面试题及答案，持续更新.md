@@ -11,21 +11,178 @@ top: true
 如果全都理解并吸收，相信能轻松通过大部分面试。
 
 本文中的面试题更偏向于底层，为方便阅读，在此只简短概述面试题的答案，不做详细解析。
-本资料完全公开免费，资料中的面试题，大多为原创，但也有小部分参考于网络，我将尽可能的把问题和答案写的通俗易懂。
+本资料完全公开免费，资料中的面试题，大多为原创，但也有小部分参考于网络，我将尽可能的把问题和答案概括的通俗易懂。
 
-如果复制或者引用请尊重劳动成果，注明链接。
 本人时间精力有限，如有遗漏或错误，欢迎在评论留言补充，我会及时的完善修正。
 
 
 ## Java基础
 
 ### 基础汇总
-#### 如何克隆一个对象
-#### String类为什么设计成不可变的
-#### String类有没有长度限制
-#### 简述什么是反射以及它的应用场景
-#### 简述Java中的泛型是如何实现的
+#### 如何复制一个对象
+在实际开发中，复制、转换对象是非常常用的操作，如将一个DTO转化成PO，PO转换成VO等。
 
+要想复制一个对象，需要实现`Cloneable`接口，然后重写`clone()`方法。至于你想要怎么克隆，是深克隆还是浅克隆，关键是你这个`clone()`方法怎么写。
+虽然`Cloneable`和`clone()`方法在Java中是标准的浅拷贝方式，但它们在实际开发中不太常用，主要是因为使用`clone()`方法来拷贝一个对象即复杂又有风险，它会抛出异常，并且还需要类型转换。
+在实际开发中，一般都是使用第三方类库，如`BeanUtils`，不过这种方式大多为浅拷贝。
+
+不过面试问这种问题，一般都是在问浅拷贝和深拷贝。
+- 浅拷贝创建一个新对象，这个新对象的字段内容与原对象相同，但如果字段是引用类型（比如数组、对象），浅拷贝只复制引用地址，不复制引用的实际对象。
+    ```java
+    class MyObject implements Cloneable {
+        int value;
+        int[] array;
+    
+        MyObject(int value, int[] array) {
+            this.value = value;
+            this.array = array;
+        }
+    
+        @Override
+        protected Object clone() throws CloneNotSupportedException {
+            return super.clone(); // 浅拷贝
+        }
+    
+        public static void main(String[] args) {
+            try {
+                int[] arr = {1, 2, 3};
+                MyObject original = new MyObject(42, arr);
+                MyObject copy = (MyObject) original.clone();
+                original.array[0] = 99;
+                System.out.println(copy.array[0]); // 输出 99
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    ```
+- 深拷贝创建一个新对象，这个新对象和原对象完全独立，包括复制所有引用类型字段的实际对象，而不仅仅是引用地址。
+    ```java
+    class MyObject implements Cloneable {
+        int value;
+        int[] array;
+    
+        MyObject(int value, int[] array) {
+            this.value = value;
+            this.array = array;
+        }
+    
+        @Override
+        protected MyObject clone() throws CloneNotSupportedException {
+            int[] arrayCopy = array.clone(); // 复制数组
+            return new MyObject(value, arrayCopy);
+        }
+    
+        public static void main(String[] args) {
+            try {
+                int[] arr = {1, 2, 3};
+                MyObject original = new MyObject(42, arr);
+                MyObject copy = original.clone();
+                original.array[0] = 99;
+                System.out.println(copy.array[0]); // 输出 1
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    ```
+
+#### String类为什么设计成不可变的
+面试问这个问题，可以从`String`类的优点这个思路回答。
+
+1. 字符串不可变的根本原因我认为应是出于对数据的安全性考虑。`String`经常作为参数，`String`不可变性可以保证参数不可变。
+实际项目中会用到，比如数据库连接串、账号、密码等字符串，只有不可变的连接串、用户名和密码才能保证安全性。
+2. 线程安全。字符串在Java中的使用频率可谓高之又高，那在高并发的情况下不可变性也使得对字符串的读写操作不用考虑多线程竞争的情况。
+不可变的字符串在多线程环境中是安全的。由于`String`对象一旦创建就不能被修改，因此多个线程可以安全地共享相同的`String`实例，而不需要担心数据被修改。
+3. `String`常量池的需要。字符串常量池的基础就是字符串的不可变性，如果字符串是可变的，那想一想，常量池就没必要存在了。
+如果一个`String` 对象已经被创建过了，那么就会从`String`常量池中取得引用。只有`String`是不可变的，才可能使用 String常量池。
+4. 可以缓存`hash`值。因为`String`的`hash`值经常被使用,像`Set`、`Map`结构中的`key`值也需要用到`HashCode`来保证唯一性和一致性，因此不可变的`HashCode`才是安全可靠的。
+
+#### String类有没有长度限制
+`String`类是有长度限制的。Java中的`String`内部是用一个字符数组`char[]`存储字符数据的，数组的最大长度限制由Java虚拟机规范决定。
+理论上，Java数组的最大长度是`Integer.MAX_VALUE(2^31 - 1)`，即2147483647，但在实际操作中，能分配的最大数组长度受可用内存限制。
+
+但是并不是这样，实际上在程序编译期根据`StringJVM常量池`规范`String`字符串在声明时最大为 65535。
+字符串字面量的长度不能超过 65535 个字符（注意是字符，不是字节）。如果字符串字面量长度超过这个限制，编译器会抛出错误。
+```java
+private void checkStringConstant(DiagnosticPosition var1, Object var2) {
+    if (this.nerrs == 0 && var2 != null && var2 instanceof String && ((String)var2).length() >= 65535) {
+        this.log.error(var1, "limit.string", new Object[0]);
+        ++this.nerrs;
+    }
+}
+```
+
+所以`String`类长度限制是多少？
+- 在编译期间，长度不能超过 65535 个字符；
+- 在运行期，`String`对象的长度理论上可以达到`Integer.MAX_VALUE (2^31 - 1)`个字符，即 2,147,483,647 个字符，大概4G。
+然而，在实际应用中，字符串的最大长度受限于可用内存和JVM配置；
+
+在程序开发中，如果你用`String`变量接收`Base64`图片或音频视频，需要注意不要超过程序运行时字符串的最大阈值。
+
+#### 简述反射以及它的应用场景
+在Java程序运行状态中，对于任意一个实体类，都能够知道这个类的所有属性和方法，对于任意一个对象，都能够调用它的任意方法和属性，以及使用该信息来创建、操作和销毁对象。
+这种动态获取信息以及动态调用对象方法的功能称为Java语言的反射机制。
+
+把Java程序比喻成一个复杂的机器，但是每个零件都是封装在盒子里面的，你无法直接看到里面的具体构造。
+反射就像是你用一种特殊的工具，可以打开这些盒子并查看里面的零件，甚至可以重新组装它们或者在需要的时候加入新的零件。
+这种能力让你在机器运行时能够动态地调整和改进它的组件，但是打开和处理每个盒子都需要额外的时间和努力，因此使用反射可能会带来一些性能上的成本。
+
+Java反射在许多场景中都有广泛的应用，主要包括以下方面：
+- 最常见的是搭配注解使用，获取运行时的方法参数、注解值。在许多框架中有对应的示例，比如Spring的`@Autowired`、`@Value`等注解；
+- 动态代理也是基于反射来实现的。在运行时生成代理类，通过反射，可以动态地创建代理类，并在运行时将方法调用转发给目标对象；
+
+#### 简述Java中的泛型是如何实现的
+Java中的泛型通过一种称为类型擦除的机制实现。声明了泛型的`.java`源代码，在编译生成`.class`文件之后，泛型相关的信息就消失了。
+可以认为，源代码中泛型相关的信息，就是提供给编译器用的，泛型信息对Java编译器可以见，而对Java虚拟机不可见。
+
+关于如何实现泛型，Java官方文档中有对应的解释，[原文](https://docs.oracle.com/javase/tutorial/java/generics/erasure.html)如下：
+```
+Generics were introduced to the Java language to provide tighter type checks at compile time and to support generic programming. To implement generics, the Java compiler applies type erasure to:
+
+- Replace all type parameters in generic types with their bounds or Object if the type parameters are unbounded. The produced bytecode, therefore, contains only ordinary classes, interfaces, and methods.
+- Insert type casts if necessary to preserve type safety.
+- Generate bridge methods to preserve polymorphism in extended generic types.
+
+Type erasure ensures that no new classes are created for parameterized types; consequently, generics incur no runtime overhead.
+```
+
+以下是实现类型擦除的步骤：
+1. 当你写泛型代码时，Java编译器会在编译阶段进行类型检查，确保你使用的类型是正确的。例如，如果你声明一个`List<String>`，编译器会确保你只能向这个列表添加字符串；
+2. 一旦编译完成，所有的泛型类型信息都会被移除，这个过程叫做“类型擦除”。在类型擦除过程中：
+   - 泛型类型参数被替换：所有的泛型类型参数会被替换为它们的上界（如果没有指定上界，就替换为`Object`）。
+   - 插入必要的类型转换：在必要的地方，编译器会插入类型转换，以确保类型安全。
+3. 当泛型类被继承，并且子类使用具体类型时，编译器会生成桥接方法来保证子类的方法正确覆盖父类的方法。桥接方法是编译器自动生成的，用来保证多态性和类型一致性；
+   <br><br>假设有一个父类和一个子类：
+    ```java
+    class Parent<T> {
+        public T getValue() {
+            return null;
+        }
+    }
+    
+    class Child extends Parent<String> {
+        @Override
+        public String getValue() {
+            return "child value";
+        }
+    }
+    ```
+    编译后，`Child`类中会有一个桥方法：
+    ```java
+    class Child extends Parent<String> {
+        @Override
+        public String getValue() {
+            return "child value";
+        }
+    
+        // 生成的桥方法
+        @Override
+        public Object getValue() {
+            return getValue(); // 调用实际的getValue方法
+        }
+    }
+    ```
 
 ### 多线程
 #### 说说你对并发编程的理解
@@ -40,7 +197,6 @@ top: true
 #### 如何避免ThreadLocal内存泄漏
 #### 谈谈你对线程安全的理解
 #### 什么是乐观锁和悲观锁
-#### 什么是Happens-Before规则
 
 
 ### 集合
