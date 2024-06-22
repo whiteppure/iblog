@@ -567,8 +567,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#string-%e7%b1%bb">
-                    String 类
+                <a class="nav-link text-left" href="#string%e7%b1%bb">
+                    String类
                 </a>
             </li>
             
@@ -623,6 +623,34 @@
             <li class="nav-item">
                 <a class="nav-link text-left" href="#%e4%b8%8d%e5%8f%af%e5%8f%98%e6%80%a7">
                     不可变性
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#new-stringabc%e4%bc%9a%e5%88%9b%e5%bb%ba%e5%87%a0%e4%b8%aa%e5%af%b9%e8%b1%a1">
+                    new String(“abc”)会创建几个对象
                 </a>
             </li>
             
@@ -1098,8 +1126,9 @@
 </tbody>
 </table>
 <p>一个byte(字节)等于8个bit(位)，bit是最小的单位，1b(字节)=8bit(位)。一般情况下，一个汉字是两个字节，英文与数字是一个字节。</p>
-<p><code>Float</code>和<code>Double</code>的最小值和最大值都是以科学记数法的形式输出的，结尾的&quot;E+数字&quot;表示E之前的数字要乘以10的多少次方.比如<code>3.14E3</code>就是<code>3.14 × 10^3 =3140</code>，<code>3.14E-3</code> 就是 <code>3.14 x 10^-3 =0.00314</code>.</p>
-<p>boolean 只有两个值，<code>true、false</code>，可以使用 1 bit 来存储，但是具体大小没有明确规定。JVM 会在编译时期将 boolean 类型的数据转换为 int，使用 1 来表示 true，0 表示 false。JVM 支持 boolean 数组，但是是通过读写 byte 数组来实现的。</p>
+<p><code>Float</code>和<code>Double</code>的最小值和最大值都是以科学记数法的形式输出的，结尾的&quot;E+数字&quot;表示E之前的数字要乘以10的多少次方，比如<code>3.14E3</code>就是<code>3.14 × 10^3 =3140</code>，<code>3.14E-3</code> 就是 <code>3.14 x 10^-3 =0.00314</code>。</p>
+<p>boolean 只有两个值，<code>true、false</code>，可以使用 1 bit 来存储，但是具体大小没有明确规定。
+JVM 会在编译时期将 boolean 类型的数据转换为 int，使用 1 来表示 true，0 表示 false。JVM 支持 boolean 数组，但是是通过读写 byte 数组来实现的。</p>
 <h3 id="基本类型转换">基本类型转换</h3>
 <p>在Java中，类型转换是将一种数据类型的值转换为另一种数据类型的过程。
 整型、常量、字符型数据可以混合运算。运算前，不同类型的数据先转化为同一类型，然后进行运算。</p>
@@ -1522,52 +1551,30 @@ Java类从加载到虚拟机内存中开始，到卸载出内存为止，它的�
 Class常量池中保存了各种常量，而这些常量都是开发者定义出来，需要在程序的运行期使用的。
 Java代码在进行<code>javac</code>编译的时候，在<code>class</code>文件中不会保存各个方法、字段的最终内存布局信息，因此这些字段、方法的符号引用不经过运行期转换的话无法得到真正的内存入口地址，也就无法直接被虚拟机使用。
 当虚拟机运行时，需要从常量池获得对应的符号引用，再在类创建时或运行时解析、翻译到具体的内存地址之中。
-Class常量池是用来保存常量的一个媒介场所，并且是一个中间场所。在JVM真的运行时，需要把常量池中的常量加载到内存中.</p>
+Class常量池是用来保存常量的一个媒介场所，并且是一个中间场所。在JVM真的运行时，需要把常量池中的常量加载到内存中。</p>
 <h4 id="运行时常量池">运行时常量池</h4>
-<p>运行时常量池是每一个类或接口的常量池的运行时表示形式。</p>
-<p>它包括了若干种不同的常量，从编译期可知的数值字面量到必须运行期解析后才能获得的方法或字段引用。
-运行时常量池扮演了类似传统语言中符号表的角色，不过它存储数据范围比通常意义上的符号表要更为广泛。</p>
-<p>每一个运行时常量池都分配在 Java 虚拟机的方法区之中，在类和接口被加载到虚拟机后，对应的运行时常量池就被创建出来。</p>
-<ul>
-<li>保存在方法区中的叫运行时常量池。
-在 class/字节码 文件中的叫class常量池（静态常量池）。</li>
-</ul>
-<p>简单说来就是JVM在完成类装载操作后，将class文件中的常量池载入到内存中，并保存在方法区中。
-我们常说的常量池，就是指方法区中的运行时常量池。</p>
-<p>运行时常量池类似于传统编程语言中的符号表，但是它所包含的数据却比符号表要更加丰富一些。</p>
-<p>当创建类或接口的运行时常量池时，如果构造运行时常量池所需的内存空间超过了方法区所能提供的最大值，则JVM会抛outOfMemoryError异常。</p>
-<h5 id="存放位置及存放来源">存放位置及存放来源</h5>
-<p>在不同版本的JDK中，运行时常量池所处的位置也不一样.以<code>HotSpot</code>为例：JDK1.7之前方法区位于永久代，由于一些原因在JDK1.8时彻底祛除了永久代，用元空间代替。</p>
-<p>根据JVM规范，JVM内存共分为虚拟机栈，堆，方法区，程序计数器，本地方法栈五个部分。
-运行时常量池存放在JVM内存模型中的方法区中。</p>
-<blockquote>
-<p>方法区：</p>
-<ul>
-<li>被所有方法线程共享的一块内存区域.</li>
-<li>用于存储已经被虚拟机加载的类信息，常量，静态变量等.</li>
-<li>这个区域的内存回收目标主要针对常量池的回收和堆类型的卸载.</li>
-</ul>
-</blockquote>
-<p><strong>运行时常量池是方法区的一部分</strong><code>.class</code>文件中除了有类的版本、字段、方法、接口等描述信息外，还有一项信息是常量池，用于存放<strong>编译期</strong>生成的<strong>各种字面量和符号引用</strong>，这部分内容将在类加载后进入方法区的运行时常量池中存放。</p>
-<p>运行时常量池中包含多种不同的常量，包括编译期就已经明确的数值字面量，也包括到运行期解析后才能够获得的方法或者字段引用。
-此时不再是常量池中的符号地址了，这里换为真实地址。</p>
-<p>运行时常量池内容包含了class常量池中的常量和字符串常量池中的内容。运行时常量池，相对于class文件常量池的另一重要特征是：具备动态性。</p>
+<p>运行时常量池是每一个类或接口的常量池的运行时表示形式。
+每一个运行时常量池都分配在Java虚拟机的方法区之中，在类和接口被加载到虚拟机后，对应的运行时常量池就被创建出来。
+当创建类或接口的运行时常量池时，如果构造运行时常量池所需的内存空间，超过了方法区所能提供的最大值，则JVM会抛<code>OutOfMemoryError</code>异常。</p>
+<p>简单说来就是JVM在完成类装载操作后，将<code>class</code>文件中的常量池载入到内存中，并保存在方法区中，我们常说的常量池，就是指方法区中的运行时常量池。
+根据JVM规范，JVM内存共分为虚拟机栈、堆、方法区、程序计数器、本地方法栈五个部分，运行时常量池存放在JVM内存模型中的方法区中。
+在不同版本的JDK中，运行时常量池所处的位置也不一样。以<code>HotSpot</code>为例，JDK1.7之前方法区位于永久代，由于一些原因在JDK1.8时彻底祛除了永久代，用元空间代替。</p>
+<p>运行时常量池内容包含了Class常量池中的常量和字符串常量池中的内容。
+它包含多种不同的常量，也包括编译期就已经明确的数值字面量、到运行期解析后才能够获得的方法或者字段引用。
+它扮演了类似传统语言中符号表的角色，不过它存储数据范围比通常意义上的符号表要更为广泛。</p>
+<p>保存在JVM方法区中的叫运行时常量池，在 class/字节码 文件中的叫Class常量池（静态常量池）。
+与类文件中的Class常量池不同的是，运行时常量池是在类加载到内存后动态生成的，相对于Class文件常量池的另一重要特征是具备动态性。
+运行时常量池的动态性体现在它不仅仅是简单地静态存储常量值，而是支持了Java程序在运行时动态加载类、操作字符串、实现动态代理和利用反射等高级特性。
+例如，反射机制可以通过运行时常量池中的符号引用动态加载类、获取和调用方法等。</p>
 <h4 id="字符串常量池">字符串常量池</h4>
-<p>在JVM中，为了减少相同的字符串的重复创建，为了达到节省内存的目的。会单独开辟一块内存，用于保存字符串常量，这个内存区域被叫做字符串常量池。
-字符串常量池保存着所有字符串字面量，这些字面量在编译时期就确定。</p>
-<h5 id="内存分配">内存分配</h5>
-<p>不同版本JDK内存分配情况：Java6及以前，字符串常量池存放在永久代，Java7将字符串常量池的位置调整到Java堆内。</p>
-<p><strong>字符串常量池为什么要调整位置？</strong></p>
-<p>JDK7中将字符串常量池放到了堆空间中。因为对永久代的回收效率很低，只有在Full GC的时候才会触发。</p>
-<p>Full GC 是老年代的空间不足、永久代不足时才会触发。
-这就导致字符串常量池回收效率不高。而我们开发中会有大量的字符串被创建，回收效率低，导致永久代内存不足。
-所以JDK7之后将字符串常量池放到堆里，能及时回收内存，避免出现<code>OOM</code>错误。</p>
-<p>简单说来：</p>
-<ul>
-<li>永久代垃圾回收频率低；而字符串使用频率比较高，不能及时回收字符串，会导致导致永久代内存不足。</li>
-<li>永久代的默认比较小；因字符串大量使用，所以会导致<code>OOM</code>错误。</li>
-</ul>
-<p><strong>如何证明Java8中的字符串常量池方到了堆中？</strong></p>
+<p>在JVM中，为了减少相同的字符串的重复创建，为了达到节省内存的目的，会单独开辟一块内存，用于保存字符串常量，这个内存区域被叫做字符串常量池。
+字符串常量池保存着所有字符串字面量，这些字面量在编译时期就被确定。</p>
+<p>字符串常量池不同版本JDK中位置是不一样的，Java6及以前，字符串常量池存放在永久代，Java7将字符串常量池的位置调整到Java堆内。
+那么字符串常量池为什么要调整位置？</p>
+<p>是为了优化内存管理和避免特定情况下的内存溢出问题。
+在早期的Java版本（如JDK 6及之前），字符串常量池通常是存放在永久代，GC对永久代的回收效率很低，只有在<code>Full GC</code>的时候才会触发，这就导致字符串常量池回收效率不高。
+而我们开发过程中，使用频率比较高，会有大量的字符串被创建，如果无法及时回收，容易导致永久代内存不足。所以JDK7之后将字符串常量池放到堆里，能及时回收内存，避免出现<code>OOM</code>错误。</p>
+<p>如何证明Java8中的字符串常量池方到了堆中？</p>
 <p>代码演示：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
 </span></span><span class="line"><span class="cl">    // 虚拟机参数： -Xmx6m -Xms6m -XX:MetaspaceSize=10m -XX:MaxMetaspaceSize=10m
@@ -1579,10 +1586,21 @@ Class常量池是用来保存常量的一个媒介场所，并且是一个中间
 </span></span><span class="line"><span class="cl">        }
 </span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>抛出异常证明Java8中的字符串常量池方到了堆中</p>
+</span></span></code></pre></div><p>抛出异常证明Java8中的字符串常量池方到了堆中。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Exception in thread &#34;main&#34; java.lang.OutOfMemoryError: Java heap space
-</span></span></code></pre></div><h5 id="intern方法">intern方法</h5>
-<p>intern是一个native方法，调用的是底层C的方法</p>
+</span></span></code></pre></div><p>在Java中，字符串常量池是由JVM自动管理的，开发者通常不需要显式地将字符串加入到字符串常量池中。
+Java中的字符串常量池有以下几种方式来存储字符串：</p>
+<ul>
+<li>直接量赋值: 当代码中直接使用双引号定义字符串时，例如 &ldquo;hello&rdquo;，这个字符串常量会自动被加入到字符串常量池中。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">String</span><span class="w"> </span><span class="n">str1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;hello&#34;</span><span class="p">;</span><span class="w"> </span><span class="c1">// &#34;hello&#34;会被加入字符串常量池</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">String</span><span class="w"> </span><span class="n">str3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;hel&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;lo&#34;</span><span class="p">;</span><span class="w"> </span><span class="c1">// 编译器会将&#34;hel&#34; + &#34;lo&#34;优化为&#34;hello&#34;，并将&#34;hello&#34;放入字符串常量池</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>调用String类的<code>intern()</code>方法：调用这个方法可以将字符串添加到字符串常量池中，并返回常量池中字符串的引用。
+如果字符串常量池中已经存在相同内容的字符串，则返回常量池中字符串的引用。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">String</span><span class="w"> </span><span class="n">str2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="s">&#34;hello&#34;</span><span class="p">).</span><span class="na">intern</span><span class="p">();</span><span class="w"> </span><span class="c1">// 将字符串&#34;hello&#34;添加到字符串常量池，并返回常量池中的引用</span><span class="w">
+</span></span></span></code></pre></div></li>
+</ul>
+<p>关于<code>intern</code>是一个<code>native</code>方法，调用的是底层C的方法：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">    <span class="o">/**</span>
 </span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="n">Returns</span> <span class="n">a</span> <span class="n">canonical</span> <span class="n">representation</span> <span class="k">for</span> <span class="n">the</span> <span class="n">string</span> <span class="n">object</span><span class="o">.</span>
 </span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
@@ -1604,10 +1622,11 @@ Class常量池是用来保存常量的一个媒介场所，并且是一个中间
 </span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="o">&lt;</span><span class="n">cite</span><span class="o">&gt;</span><span class="n">The</span> <span class="n">Java</span><span class="o">&amp;</span><span class="n">trade</span><span class="p">;</span> <span class="n">Language</span> <span class="n">Specification</span><span class="o">&lt;/</span><span class="n">cite</span><span class="o">&gt;.</span>
 </span></span><span class="line"><span class="cl">     <span class="o">*/</span>
 </span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">native</span> <span class="ne">String</span> <span class="n">intern</span><span class="p">();</span>
-</span></span></code></pre></div><p><code>intern</code>方法文档注释大意是：字符串池最初是空的，由String类私有地维护。在调用intern方法时，如果池中已经包含了由equals(object)方法确定的与该字符串对象相等的字符串，则返回池中的字符串。
+</span></span></code></pre></div><p><code>intern</code>方法文档注释大意是：字符串池最初是空的，由String类私有地维护。
+在调用<code>intern</code>方法时，如果池中已经包含了由<code>equals(object)</code>方法确定的与该字符串对象相等的字符串，则返回池中的字符串。
 否则，该字符串对象将被添加到池中，并返回对该字符串对象的引用。</p>
-<p><strong>当一个字符串调用 <code>intern()</code> 方法时，如果 String Pool 中已经存在一个字符串和该字符串值相等（使用 <code>equals()</code>方法进行确定），那么就会返回 String Pool 中字符串的引用；否则，就会在 String Pool 中添加一个新的字符串，并返回这个新字符串的引用.</strong></p>
-<p>下面示例中，s1 和 s2 采用<code> new String()</code> 的方式新建了两个不同字符串，而 s3 和 s4 是通过 <code>s1.intern()</code> 方法取得一个字符串引用。<code>intern()</code> 首先把 s1 引用的字符串放到 String Pool 中，然后返回这个字符串引用。因此 s3 和 s4 引用的是同一个字符串。</p>
+<p>下面示例中s1和s2采用<code>new String()</code>的方式新建了两个不同字符串，而s3和s4是通过<code>s1.intern()</code>方法取得一个字符串引用。
+<code>intern()</code>首先把s1引用的字符串放到<code>String Pool</code>中，然后返回这个字符串引用，因此s3和s4引用的是同一个字符串。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
 </span></span><span class="line"><span class="cl">    public static void main(String[] args) {
 </span></span><span class="line"><span class="cl">        String s1 = new String(&#34;aaa&#34;);
@@ -1618,9 +1637,7 @@ Class常量池是用来保存常量的一个媒介场所，并且是一个中间
 </span></span><span class="line"><span class="cl">        System.out.println(s3 == s4);           // true
 </span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>上面的示例说明了可以使用 String的<code>intern()</code>方法在程序运行过程中将字符串添加到字符串常量池中。</p>
-<p><strong>空间效率测试</strong></p>
-<p>对于程序中大量使用存在的字符串时，尤其存在很多已经重复的字符串时，使用<code>intern()</code>方法能够节省内存空间。</p>
+</span></span></code></pre></div><p>对于程序中大量使用存在的字符串时，尤其存在很多已经重复的字符串时，使用<code>intern()</code>方法能够节省内存空间。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
 </span></span><span class="line"><span class="cl">    static final int MAX_COUNT = 1000 * 10000;
 </span></span><span class="line"><span class="cl">    static final String[] arr = new String[MAX_COUNT];
@@ -1647,9 +1664,113 @@ Class常量池是用来保存常量的一个媒介场所，并且是一个中间
 <img alt="不用intern方法测试" src="/iblog/posts/annex/images/essays/%E4%B8%8D%E7%94%A8intern%E6%96%B9%E6%B3%95%E6%B5%8B%E8%AF%95.png"></p>
 <p>使用<code>intern</code>方法后
 <img alt="使用intern方法测试" src="/iblog/posts/annex/images/essays/%E4%BD%BF%E7%94%A8intern%E6%96%B9%E6%B3%95%E6%B5%8B%E8%AF%95.png"></p>
-<h5 id="经典案例">经典案例</h5>
-<p><strong>String常量池常考的一个问题就是<code>new String(&quot;abc&quot;)</code>会创建几个对象?</strong></p>
-<p>答案: 两个字符串对象(前提是 String常量池中还没有 &ldquo;abc&rdquo; 字符串对象).</p>
+<p>字符串常量池是不会存储相同内容的字符串的，字符串常量池其实是一个固定大小的<code>Hashtable</code>。
+如果放进字符串常量池的字符串非常多，就会造成Hash冲突严重，从而导致链表会很长，而链表长了后直接会造成的影响就是当调用<code>String.intern()</code>时性能会大幅下降。</p>
+<p>使用参数<code>-XX:StringTablesize</code>可设置字符串常量池的的长度，可以配置不同版本的Java，运行下列代码，使用命令进行查看<code>stringTableSize</code>大小：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">jsp(获取程序进程ID) -&gt; jinfo -flag StringTableSize 进程ID
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            Thread.sleep(1000000);
+</span></span><span class="line"><span class="cl">        } catch (InterruptedException e) {
+</span></span><span class="line"><span class="cl">            e.printStackTrace();
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>不同JDK版本字符串常量池的的长度：</p>
+<ul>
+<li>在JDK6中<code>stringTable</code>是固定的，为1009的长度，所以如果常量池中的字符串过多就会导致效率下降很快。<code>-XX:StringTablesize</code>设置没有要求，可随意设置；</li>
+<li>在JDK7中，<code>stringTable</code>的长度默认值是60013，<code>-XX:StringTablesize</code>设置没有要求，可随意设置；</li>
+<li>在JDK8中，<code>stringTable</code>的长度默认为 60013，但不能低于 1009。</li>
+</ul>
+<h4 id="为什么需要常量池">为什么需要常量池</h4>
+<p>一个Java源文件中的类、接口，编译后产生一个字节码文件。
+而Java中的字节码需要数据支持，通常这种数据会很大以至于不能直接存到字节码里，换另一种方式，可以存到常量池，这个字节码包含了指向常量池的引用，在动态链接的时候会用到运行时常量池。</p>
+<p>比如：如下的代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class SimpleClass {
+</span></span><span class="line"><span class="cl">    public void sayHello() {
+</span></span><span class="line"><span class="cl">        System.out.println(&#34;hello&#34;);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>虽然上述代码生成的class文件只有194字节，但是里面却使用了<code>String</code>、<code>System</code>、<code>PrintStream</code>及<code>Object</code>等结构。
+这里的代码量其实很少了，如果代码多的话，引用的结构将会更多，这样就体现出常量池的作用了。</p>
+<p>常量池是为了避免频繁的创建和销毁对象而影响系统性能，其实现了对象的共享，避免了相同内容的字符串的创建，节省了内存，省去了创建相同字符串的时间，同时提升了性能。</p>
+<h2 id="string类">String类</h2>
+<p>String是Java中一个比较基础的类，广泛应用 在 Java 编程中，在Java中字符串属于对象，Java 提供了 String 类来创建和操作字符串.</p>
+<p>String被声明为<code>final</code>，因此它不可被继承(当然Integer等包装类也不能被继承)；</p>
+<p>String实现了Serializable接口：表示字符串是支持序列化的。实现了Comparable接口：表示string可以比较大小；</p>
+<h3 id="为什么jdk9改变了存储结构">为什么JDK9改变了存储结构</h3>
+<p><strong>在 Java 8 中，String 内部使用 char 数组存储数据。</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public final class String
+</span></span><span class="line"><span class="cl">    implements java.io.Serializable, Comparable&lt;String&gt;, CharSequence {
+</span></span><span class="line"><span class="cl">    /** The value is used for character storage. */
+</span></span><span class="line"><span class="cl">    private final char value[];
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p><strong>在 Java 9 之后，String 类的实现改用 byte 数组存储字符串，同时使用 coder 来标识使用了哪种编码。</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public final class String
+</span></span><span class="line"><span class="cl">    implements java.io.Serializable, Comparable&lt;String&gt;, CharSequence {
+</span></span><span class="line"><span class="cl">    /** The value is used for character storage. */
+</span></span><span class="line"><span class="cl">    private final byte[] value;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /** The identifier of the encoding used to encode the bytes in {@code value}. */
+</span></span><span class="line"><span class="cl">    private final byte coder;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p><a href="http://openjdk.java.net/jeps/254">那么为什么要改变内存存储结构呢？</a>
+官方的解释：</p>
+<blockquote>
+<p>The current implementation of the String class stores characters in a char array, using two bytes (sixteen bits) for each character.
+Data gathered from many different applications indicates that strings are a major component of heap usage and,
+moreover, that most String objects contain only Latin-1 characters. Such characters require only one byte of storage,
+hence half of the space in the internal char arrays of such String objects is going unused.</p>
+<p>We propose to change the internal representation of the String class from a UTF-16 char array to a byte array plus an encoding-flag field.
+The new String class will store characters encoded either as ISO-8859-1/Latin-1 (one byte per character),
+or as UTF-16 (two bytes per character), based upon the contents of the string.
+The encoding flag will indicate which encoding is used.</p>
+</blockquote>
+<p>大意：String类的当前实现将字符存储在char数组中，每个字符使用两个字节(16位)。
+从许多不同的应用程序收集的数据表明，字符串是堆使用的主要组成部分，而且，大多数字符串对象只包含拉丁字符。
+这些字符只需要一个字节的存储空间，因此这些字符串对象的内部char数组中有一半的空间将不会使用。</p>
+<p>我们建议将String类的内部表示从UTF-16字符数组更改为一个字节数组加上一个编码标志字段。
+新的String类将根据字符串的内容存储编码为ISO-8859-1/Latin-1(每个字符一个字节)或UTF-16(每个字符两个字节)的字符。
+编码标志将指示所使用的编码。</p>
+<p>简单说来就是用char数组存，有些数据占不了两个字节，所以为了节约资源改成byte数组存放；
+如果存放的不是拉丁文则需要占两个字节，所以还需要加上编码标记。</p>
+<p>基于String的数据结构，<code>StringBuffer</code>和<code>StringBuilder</code>也同样做了修改</p>
+<h3 id="不可变性">不可变性</h3>
+<p>value数组被声明为<code>final</code>，这意味着value数组初始化之后就不能再引用其它数组。
+并且 String 内部没有改变 value 数组的方法，因此可以保证<code>String</code>不可变。
+String是Java中一个不可变的类，所以一旦一个string对象在内存中被创建出来，他就无法被修改。</p>
+<p>下面代码说明String是不可变的：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
+</span></span><span class="line"><span class="cl">    String str = new String(&#34;good&#34;);
+</span></span><span class="line"><span class="cl">    char [] ch = {&#39;t&#39;,&#39;e&#39;,&#39;s&#39;,&#39;t&#39;};
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public void change(String str, char ch []) {
+</span></span><span class="line"><span class="cl">        str = &#34;test ok&#34;;
+</span></span><span class="line"><span class="cl">        System.out.println( &#34;chanage方法里str=&#34; + str); // chanage方法里str=test ok
+</span></span><span class="line"><span class="cl">        ch[0] = &#39;b&#39;;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        MainTest ex = new MainTest();
+</span></span><span class="line"><span class="cl">        ex.change(ex.str, ex.ch);
+</span></span><span class="line"><span class="cl">        System.out.println(ex.str); // good
+</span></span><span class="line"><span class="cl">        System.out.println(ex.ch);// best
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p><strong>特别要注意的是，String类的所有方法都没有改变字符串本身的值，都是返回了一个新的对象。字符串不可变的根本原因应是处于安全性考虑。</strong></p>
+<p>不可变性优点：</p>
+<ol>
+<li>可以缓存 hash 值。因为<code>String</code>的<code>hash</code>值经常被使用，像<code>Set、Map</code>结构中的 key 值也需要用到<code>HashCode</code>来保证唯一性和一致性，因此不可变的 <code>HashCode</code> 才是安全可靠的。</li>
+<li><code>String</code>常量池的需要。字符串常量池的基础就是字符串的不可变性，如果字符串是可变的，那想一想，常量池就没必要存在了。如果一个 <code>String</code> 对象已经被创建过了，那么就会从<code>String</code>常量池中取得引用。只有<code>String</code>是不可变的，才可能使用<code>String</code>常量池。</li>
+<li>安全性。<code>String</code>经常作为参数，<code>String</code>不可变性可以保证参数不可变。例如在作为网络连接参数的情况下如果<code>String</code>是可变的，那么在网络连接过程中，<code>String</code>被改变，改变<code>String</code>对象的那一方以为现在连接的是其它主机，而实际情况却不一定是。
+实际项目中会用到，比如数据库连接串、账号、密码等字符串，只有不可变的连接串、用户名和密码才能保证安全性。</li>
+<li>线程安全。字符串在 Java 中的使用频率可谓高之又高，那在高并发的情况下不可变性也使得对字符串的读写操作不用考虑多线程竞争的情况。
+<code>String</code>不可变性天生具备线程安全，可以在多个线程中安全地使用。</li>
+</ol>
+<h3 id="new-stringabc会创建几个对象">new String(&ldquo;abc&rdquo;)会创建几个对象</h3>
+<p>面试中经常问的一个问题是，<code>new String(&quot;abc&quot;)</code>会创建几个对象？</p>
+<p>答案: 两个字符串对象，前提是String常量池中还没有 &ldquo;abc&rdquo; 字符串对象。</p>
 <ul>
 <li>&ldquo;abc&rdquo; 属于字符串字面量，因此编译时期会在 String 常量池 中创建一个字符串对象，指向这个 &ldquo;abc&rdquo; 字符串字面量;</li>
 <li>而使用 new 的方式会在堆中创建一个字符串对象。</li>
@@ -1743,114 +1864,6 @@ Class常量池是用来保存常量的一个媒介场所，并且是一个中间
 <li>如果没有，则会把<strong>对象的引用地址复制一份，放入串池</strong>，并返回串池中的引用地址</li>
 </ul>
 <p><img alt="JDK78字符串常量池案例解析" src="/iblog/posts/annex/images/essays/JDK78%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F%E6%B1%A0%E6%A1%88%E4%BE%8B%E8%A7%A3%E6%9E%90.png"></p>
-<h5 id="注意">注意</h5>
-<p>字符串常量池是不会存储相同内容的字符串的。</p>
-<p>字符串常量池其实是一个固定大小的<code>Hashtable</code>;
-如果放进字符串常量池的string非常多，就会造成Hash冲突严重，从而导致链表会很长，而链表长了后直接会造成的影响就是当调用string.intern时性能会大幅下降。</p>
-<p>使用VM参数<code>-XX:StringTablesize</code>可设置字符串常量池的的长度；</p>
-<p>不同JDK版本字符串常量池的的长度：</p>
-<ul>
-<li>在JDK6中stringTable是固定的，为1009的长度，所以如果常量池中的字符串过多就会导致效率下降很快。<code>-XX:StringTablesize</code>设置没有要求，可随意设置；</li>
-<li>在JDK中，stringTable的长度默认值是60013；<code>-XX:StringTablesize</code>设置没有要求，可随意设置；</li>
-<li>在JDK8中，StringTable可以设置的最小值为1009;stringTable的长度默认值是60013；</li>
-</ul>
-<p>可以配置不同版本的JRE，运行下列代码，然后使用 <code>jsp(获取程序进程ID) -&gt; jinfo -flag StringTableSize 进程ID</code>命令进行查看stringTableSize</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        try {
-</span></span><span class="line"><span class="cl">            Thread.sleep(1000000);
-</span></span><span class="line"><span class="cl">        } catch (InterruptedException e) {
-</span></span><span class="line"><span class="cl">            e.printStackTrace();
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><h4 id="为什么需要常量池">为什么需要常量池</h4>
-<p>一个Java源文件中的类、接口，编译后产生一个字节码文件。
-而Java中的字节码需要数据支持，通常这种数据会很大以至于不能直接存到字节码里，换另一种方式，可以存到常量池，这个字节码包含了指向常量池的引用。
-在动态链接的时候会用到运行时常量池。</p>
-<p>比如：如下的代码：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class SimpleClass {
-</span></span><span class="line"><span class="cl">    public void sayHello() {
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;hello&#34;);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>虽然上述代码生成的class文件只有194字节，但是里面却使用了String、System、PrintStream及Object等结构。
-这里的代码量其实很少了，如果代码多的话，引用的结构将会更多，这样就需要用到常量池了。</p>
-<p>常量池是为了避免频繁的创建和销毁对象而影响系统性能，其实现了对象的共享.
-避免了相同内容的字符串的创建，节省了内存，省去了创建相同字符串的时间，同时提升了性能.</p>
-<h2 id="string-类">String 类</h2>
-<p>String是Java中一个比较基础的类.广泛应用 在 Java 编程中，在Java中字符串属于对象，Java 提供了 String 类来创建和操作字符串.</p>
-<p>String被声明为<code>final</code>，因此它不可被继承(当然Integer等包装类也不能被继承)；</p>
-<p>String实现了Serializable接口：表示字符串是支持序列化的。实现了Comparable接口：表示string可以比较大小；</p>
-<h3 id="为什么jdk9改变了存储结构">为什么JDK9改变了存储结构</h3>
-<p><strong>在 Java 8 中，String 内部使用 char 数组存储数据。</strong></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public final class String
-</span></span><span class="line"><span class="cl">    implements java.io.Serializable, Comparable&lt;String&gt;, CharSequence {
-</span></span><span class="line"><span class="cl">    /** The value is used for character storage. */
-</span></span><span class="line"><span class="cl">    private final char value[];
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p><strong>在 Java 9 之后，String 类的实现改用 byte 数组存储字符串，同时使用 coder 来标识使用了哪种编码。</strong></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public final class String
-</span></span><span class="line"><span class="cl">    implements java.io.Serializable, Comparable&lt;String&gt;, CharSequence {
-</span></span><span class="line"><span class="cl">    /** The value is used for character storage. */
-</span></span><span class="line"><span class="cl">    private final byte[] value;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /** The identifier of the encoding used to encode the bytes in {@code value}. */
-</span></span><span class="line"><span class="cl">    private final byte coder;
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p><a href="http://openjdk.java.net/jeps/254">那么为什么要改变内存存储结构呢？</a>
-官方的解释：</p>
-<blockquote>
-<p>The current implementation of the String class stores characters in a char array, using two bytes (sixteen bits) for each character.
-Data gathered from many different applications indicates that strings are a major component of heap usage and,
-moreover, that most String objects contain only Latin-1 characters. Such characters require only one byte of storage,
-hence half of the space in the internal char arrays of such String objects is going unused.</p>
-<p>We propose to change the internal representation of the String class from a UTF-16 char array to a byte array plus an encoding-flag field.
-The new String class will store characters encoded either as ISO-8859-1/Latin-1 (one byte per character),
-or as UTF-16 (two bytes per character), based upon the contents of the string.
-The encoding flag will indicate which encoding is used.</p>
-</blockquote>
-<p>大意：String类的当前实现将字符存储在char数组中，每个字符使用两个字节(16位)。
-从许多不同的应用程序收集的数据表明，字符串是堆使用的主要组成部分，而且，大多数字符串对象只包含拉丁字符。
-这些字符只需要一个字节的存储空间，因此这些字符串对象的内部char数组中有一半的空间将不会使用。</p>
-<p>我们建议将String类的内部表示从UTF-16字符数组更改为一个字节数组加上一个编码标志字段。
-新的String类将根据字符串的内容存储编码为ISO-8859-1/Latin-1(每个字符一个字节)或UTF-16(每个字符两个字节)的字符。
-编码标志将指示所使用的编码。</p>
-<p>简单说来就是用char数组存，有些数据占不了两个字节，所以为了节约资源改成byte数组存放；
-如果存放的不是拉丁文则需要占两个字节，所以还需要加上编码标记。</p>
-<p>基于String的数据结构，<code>StringBuffer</code>和<code>StringBuilder</code>也同样做了修改</p>
-<h3 id="不可变性">不可变性</h3>
-<p>value数组被声明为<code>final</code>，这意味着value数组初始化之后就不能再引用其它数组。
-并且 String 内部没有改变 value 数组的方法，因此可以保证<code>String</code>不可变。
-String是Java中一个不可变的类，所以一旦一个string对象在内存中被创建出来，他就无法被修改。</p>
-<p>下面代码说明String是不可变的：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
-</span></span><span class="line"><span class="cl">    String str = new String(&#34;good&#34;);
-</span></span><span class="line"><span class="cl">    char [] ch = {&#39;t&#39;,&#39;e&#39;,&#39;s&#39;,&#39;t&#39;};
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public void change(String str, char ch []) {
-</span></span><span class="line"><span class="cl">        str = &#34;test ok&#34;;
-</span></span><span class="line"><span class="cl">        System.out.println( &#34;chanage方法里str=&#34; + str); // chanage方法里str=test ok
-</span></span><span class="line"><span class="cl">        ch[0] = &#39;b&#39;;
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        MainTest ex = new MainTest();
-</span></span><span class="line"><span class="cl">        ex.change(ex.str, ex.ch);
-</span></span><span class="line"><span class="cl">        System.out.println(ex.str); // good
-</span></span><span class="line"><span class="cl">        System.out.println(ex.ch);// best
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p><strong>特别要注意的是，String类的所有方法都没有改变字符串本身的值，都是返回了一个新的对象。字符串不可变的根本原因应是处于安全性考虑。</strong></p>
-<p>不可变性优点：</p>
-<ol>
-<li>可以缓存 hash 值。因为<code>String</code>的<code>hash</code>值经常被使用，像<code>Set、Map</code>结构中的 key 值也需要用到<code>HashCode</code>来保证唯一性和一致性，因此不可变的 <code>HashCode</code> 才是安全可靠的。</li>
-<li><code>String</code>常量池的需要。字符串常量池的基础就是字符串的不可变性，如果字符串是可变的，那想一想，常量池就没必要存在了。如果一个 <code>String</code> 对象已经被创建过了，那么就会从<code>String</code>常量池中取得引用。只有<code>String</code>是不可变的，才可能使用<code>String</code>常量池。</li>
-<li>安全性。<code>String</code>经常作为参数，<code>String</code>不可变性可以保证参数不可变。例如在作为网络连接参数的情况下如果<code>String</code>是可变的，那么在网络连接过程中，<code>String</code>被改变，改变<code>String</code>对象的那一方以为现在连接的是其它主机，而实际情况却不一定是。
-实际项目中会用到，比如数据库连接串、账号、密码等字符串，只有不可变的连接串、用户名和密码才能保证安全性。</li>
-<li>线程安全。字符串在 Java 中的使用频率可谓高之又高，那在高并发的情况下不可变性也使得对字符串的读写操作不用考虑多线程竞争的情况。
-<code>String</code>不可变性天生具备线程安全，可以在多个线程中安全地使用。</li>
-</ol>
 <h3 id="使用">使用</h3>
 <h4 id="创建字符串">创建字符串</h4>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// String 直接创建
