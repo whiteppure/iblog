@@ -92,39 +92,6 @@ public class MainTest {
 
 ![jstat](/iblog/posts/annex/images/essays/jstat.png)
 
-## OOM
-一旦堆区中的内存大小超过`-Xmx`所指定的最大内存时，将会抛出`outOfMemoryError`异常。
-
-代码演示OOM
-```
-public class MainTest {
-    public static void main(String[] args) {
-        ArrayList<Object> list = new ArrayList<>();
-        while (true){
-//            try {
-//                Thread.sleep(1000000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-            list.add(new Picture(new Random().nextInt(1024 * 1024)));
-        }
-    }
-}
-
-class Picture {
-    private int data;
-    public Picture(int data) {
-        this.data = data;
-    }
-}
-```
-![OOM](/iblog/posts/annex/images/essays/OOM.png)
-
-出现OOM错误后，可以通过 `VisualVM` 这个工具查看具体是什么参数造成的。
-`jvisual` 工具在 `jdk /bin/jvisualvm.exe`或在编译器idea中下载jvisual插件。
-
-![jvisual-OOM](/iblog/posts/annex/images/essays/jvisual-OOM.png)
-
 
 ## 年轻代与老年代
 存储在JVM中的Java对象，按照生命周期可以被划分为两类：
@@ -227,7 +194,7 @@ JVM在进行GC时，并非每次都对上面三个内存区域一起回收的，
 - 部分收集：不是完整收集整个Java堆的垃圾收集。其中又分为：
   - 新生代收集（MinorGC/YoungGC）：只是新生代的垃圾收集
   - 老年代收集（MajorGC/OldGC）：只是老年代的圾收集。目前，只有CMSGC会有单独收集老年代的行为。注意，很多时候Major GC会和FullGC混淆使用，需要具体分辨是老年代回收还是整堆回收。
-  - 混合收集（MixedGC）：收集整个新生代以及部分老年代的垃圾收集。目前，只有G1 GC会有这种行为。
+  - 混合收集（MixedGC）：收集整个新生代以及部分老年代的垃圾收集，目前，只有G1 GC会有这种行为。
 - 整堆收集（FullGC）：收集整个Java堆和方法区的垃圾收集。
 
 ### Minor GC
@@ -236,11 +203,11 @@ JVM在进行GC时，并非每次都对上面三个内存区域一起回收的，
 Minor GC会引发STW，暂停其它用户的线程，等垃圾回收结束，用户线程才恢复运行。
 
 ### Major GC
-当GC发生在老年代时则被称为MajorGc或者FullGC。一般的，MinorGc的发生频率要比MajorGC高很多，即老年代中垃圾回收发生的频率将大大低于年轻代。
-出现了MajorGc，经常会伴随至少一次的Minor GC，但非绝对的，在Parallel Scavenge收集器的收集策略里，就有直接进行MajorGC的策略选择过程。
+当GC发生在老年代时则被称为MajorGC或者FullGC。一般的，MinorGC的发生频率要比MajorGC高很多，即老年代中垃圾回收发生的频率将大大低于年轻代。
+出现了MajorGC，经常会伴随至少一次的Minor GC，但非绝对的，在Parallel Scavenge收集器的收集策略里，就有直接进行MajorGC的策略选择过程。
 
 也就是在老年代空间不足时，会先尝试触发MinorGC。
-如果之后空间还不足，则触发Major GC，Major GC的速度一般会比MinorGc慢10倍以上，STW的时间更长，如果Major GC后，内存还不足就报OOM了。
+如果之后空间还不足，则触发Major GC，Major GC的速度一般会比MinorGC慢10倍以上，STW的时间更长，如果Major GC后，内存还不足就报OOM了。
 
 ### Full GC
 触发Full GC的情况有如下几种：

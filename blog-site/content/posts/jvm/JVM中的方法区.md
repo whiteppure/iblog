@@ -39,8 +39,8 @@ Java虚拟机定义了若干种程序运行期间会使用到的运行时数据�
 方法区和永久代以及元空间的关系很像 Java 中接口和类的关系，类实现了接口，这里的类就可以看作是永久代和元空间，接口可以看作是方法区，也就是说永久代以及元空间是 HotSpot 虚拟机对虚拟机规范中方法区的两种实现方式。
 并且永久代是 JDK 1.8 之前的方法区实现，JDK 1.8 及以后方法区的实现变成了元空间。
 
-## HotSpot中JDK7与JDK8
-在JDK7及以前，习惯上把方法区，称为永久代。JDK8开始，使用元空间取代了永久代。JDK 1.8后，元空间存放在直接内存中。
+## JDK7与JDK8的方法区
+在HotSpot，JDK7及以前，习惯上把方法区，称为永久代。JDK8开始，使用元空间取代了永久代，JDK 1.8后，元空间存放在直接内存中。
 <div style="width: 45%;display: inline-block">
     <img src="/iblog/posts/annex/images/essays/jvm1.8之前.png" alt="jvm1.8之前">
 </div>
@@ -48,8 +48,7 @@ Java虚拟机定义了若干种程序运行期间会使用到的运行时数据�
     <img src="/iblog/posts/annex/images/essays/jvm1.8.png" alt="jvm1.8">
 </div>
 
-元空间的本质和永久代类似，都是对JVM规范中方法区的实现。不过元空间与永久代最大的区别在于：元空间不在虚拟机设置的内存中，而是使用本地内存。
-
+元空间的本质和永久代类似，都是对JVM规范中方法区的实现。不过元空间与永久代最大的区别在于，元空间不在虚拟机设置的内存中，而是使用本地内存。
 永久代、元空间二者并不只是名字变了，内部结构也调整了。根据《Java虚拟机规范》的规定，如果方法区无法满足新的内存分配需求时，将抛出OOM异常。
 
 ## 设置方法区大小
@@ -68,46 +67,11 @@ Java虚拟机定义了若干种程序运行期间会使用到的运行时数据�
 可通过`-XX:MetaspaceSize=size`设置初始的元空间大小。
 
 对于一个64位的服务器端JVM来说，其默认的`-XX:MetaspaceSize`值为21M。
-这就是初始的高水位线，一旦触及这个水位线，FullGC将会被触发并卸载没用的类即这些类对应的类加载器不再存活然后这个高水位线将会重置。
+这就是初始的高水位线，一旦触及这个水位线，`FullGC`将会被触发并卸载没用的类即这些类对应的类加载器不再存活然后这个高水位线将会重置。
 新的高水位线的值取决于GC后释放了多少元空间。如果释放的空间不足，那么在不超过`MaxMetaspaceSize`时，适当提高该值。如果释放空间过多，则适当降低该值。
 
-如果初始化的高水位线设置过低，上述高水位线调整情况会发生很多次。通过垃圾回收器的日志可以观察到FullGC多次调用。
+如果初始化的高水位线设置过低，上述高水位线调整情况会发生很多次。通过垃圾回收器的日志可以观察到`FullGC`多次调用。
 **为了避免频繁地GC，建议将`-XX:MetaspaceSize=size`设置为一个相对较高的值。**
-
-## OOM
-JDK8 方法区/元空间 OOM代码演示
-
-设置虚拟机参数
-```
--XX:MetaspaceSize=10m -XX:MaxMetaspaceSize=10m
-```
-```
-public class MainTest  extends ClassLoader{
-    public static void main(String[] args) {
-        MainTest mainTest = new MainTest();
-        int count = 0;
-        try {
-            for (int i = 0; i < 1000; i++) {
-
-                ClassWriter classWriter = new ClassWriter(0);
-                classWriter.visit(Opcodes.V1_8,Opcodes.ACC_PUBLIC ,"Class" + i,null,"java/lang/Object",null);
-
-                byte[] bytes = classWriter.toByteArray();
-                mainTest.defineClass("Class" + i, bytes, 0, bytes.length);
-                count ++;
-            }
-        }finally {
-            System.out.println(count);
-        }
-    }
-}
-```
-
-如何解决OOM或堆栈的异常？
-1. 要解决OOM异常或堆栈的异常，一般的手段是首先通过内存映像分析工具，对dump出来的堆转储快照进行分析，重点是确认内存中的对象是否是必要的，也就是要先分清楚到底是出现了内存泄漏（Memory Leak）还是内存溢出（Memory Overflow）。
-2. 如果是内存泄漏，可进一步通过工具查看泄漏对象到GC Roots的引用链。于是就能找到泄漏对象是通过怎样的路径与GCRoots相关联并导致垃圾收集器无法自动回收它们的。
-掌握了泄漏对象的类型信息，以及GCRoots引用链的信息，就可以比较准确地定位出泄漏代码的位置。
-3. 如果不存在内存泄漏，换句话说就是内存中的对象确实都还必须存活着，那就应当检查虚拟机的堆参数（-Xmx与-Xms），与机器物理内存对比看是否还可以调大，从代码上检查是否存在某些对象生命周期过长、持有状态时间过长的情况，尝试减少程序运行期的内存消耗。
 
 ## 方法区的内部结构
 方法区用于存储已被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等。

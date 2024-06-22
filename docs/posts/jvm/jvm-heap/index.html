@@ -167,30 +167,6 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#oom">
-                    OOM
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
                 <a class="nav-link text-left" href="#%e5%b9%b4%e8%bd%bb%e4%bb%a3%e4%b8%8e%e8%80%81%e5%b9%b4%e4%bb%a3">
                     年轻代与老年代
                 </a>
@@ -882,33 +858,6 @@
 <p><img alt="PrintGCDetails查看堆内存" src="/iblog/posts/annex/images/essays/PrintGCDetails%E6%9F%A5%E7%9C%8B%E5%A0%86%E5%86%85%E5%AD%98.png"></p>
 <p>在程序运行过程中可以通过<code>jstat</code>命令来查看堆内存大小。</p>
 <p><img alt="jstat" src="/iblog/posts/annex/images/essays/jstat.png"></p>
-<h2 id="oom">OOM</h2>
-<p>一旦堆区中的内存大小超过<code>-Xmx</code>所指定的最大内存时，将会抛出<code>outOfMemoryError</code>异常。</p>
-<p>代码演示OOM</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        ArrayList&lt;Object&gt; list = new ArrayList&lt;&gt;();
-</span></span><span class="line"><span class="cl">        while (true){
-</span></span><span class="line"><span class="cl">//            try {
-</span></span><span class="line"><span class="cl">//                Thread.sleep(1000000);
-</span></span><span class="line"><span class="cl">//            } catch (InterruptedException e) {
-</span></span><span class="line"><span class="cl">//                e.printStackTrace();
-</span></span><span class="line"><span class="cl">//            }
-</span></span><span class="line"><span class="cl">            list.add(new Picture(new Random().nextInt(1024 * 1024)));
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">class Picture {
-</span></span><span class="line"><span class="cl">    private int data;
-</span></span><span class="line"><span class="cl">    public Picture(int data) {
-</span></span><span class="line"><span class="cl">        this.data = data;
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p><img alt="OOM" src="/iblog/posts/annex/images/essays/OOM.png"></p>
-<p>出现OOM错误后，可以通过 <code>VisualVM</code> 这个工具查看具体是什么参数造成的。
-<code>jvisual</code> 工具在 <code>jdk /bin/jvisualvm.exe</code>或在编译器idea中下载jvisual插件。</p>
-<p><img alt="jvisual-OOM" src="/iblog/posts/annex/images/essays/jvisual-OOM.png"></p>
 <h2 id="年轻代与老年代">年轻代与老年代</h2>
 <p>存储在JVM中的Java对象，按照生命周期可以被划分为两类：
 一类是生命周期较短的瞬时对象，这类对象的创建和消亡都非常迅速，生命周期短的，及时回收；
@@ -986,7 +935,7 @@ Major GC 和 Full GC出现 STW 的时间，是Minor GC的10倍以上。</p>
 <ul>
 <li>新生代收集（MinorGC/YoungGC）：只是新生代的垃圾收集</li>
 <li>老年代收集（MajorGC/OldGC）：只是老年代的圾收集。目前，只有CMSGC会有单独收集老年代的行为。注意，很多时候Major GC会和FullGC混淆使用，需要具体分辨是老年代回收还是整堆回收。</li>
-<li>混合收集（MixedGC）：收集整个新生代以及部分老年代的垃圾收集。目前，只有G1 GC会有这种行为。</li>
+<li>混合收集（MixedGC）：收集整个新生代以及部分老年代的垃圾收集，目前，只有G1 GC会有这种行为。</li>
 </ul>
 </li>
 <li>整堆收集（FullGC）：收集整个Java堆和方法区的垃圾收集。</li>
@@ -996,10 +945,10 @@ Major GC 和 Full GC出现 STW 的时间，是Minor GC的10倍以上。</p>
 每次Minor GC会清理年轻代的垃圾，因为Java对象大多都具备朝生夕灭的特性，所以Minor GC非常频繁，一般回收速度也比较快。
 Minor GC会引发STW，暂停其它用户的线程，等垃圾回收结束，用户线程才恢复运行。</p>
 <h3 id="major-gc">Major GC</h3>
-<p>当GC发生在老年代时则被称为MajorGc或者FullGC。一般的，MinorGc的发生频率要比MajorGC高很多，即老年代中垃圾回收发生的频率将大大低于年轻代。
-出现了MajorGc，经常会伴随至少一次的Minor GC，但非绝对的，在Parallel Scavenge收集器的收集策略里，就有直接进行MajorGC的策略选择过程。</p>
+<p>当GC发生在老年代时则被称为MajorGC或者FullGC。一般的，MinorGC的发生频率要比MajorGC高很多，即老年代中垃圾回收发生的频率将大大低于年轻代。
+出现了MajorGC，经常会伴随至少一次的Minor GC，但非绝对的，在Parallel Scavenge收集器的收集策略里，就有直接进行MajorGC的策略选择过程。</p>
 <p>也就是在老年代空间不足时，会先尝试触发MinorGC。
-如果之后空间还不足，则触发Major GC，Major GC的速度一般会比MinorGc慢10倍以上，STW的时间更长，如果Major GC后，内存还不足就报OOM了。</p>
+如果之后空间还不足，则触发Major GC，Major GC的速度一般会比MinorGC慢10倍以上，STW的时间更长，如果Major GC后，内存还不足就报OOM了。</p>
 <h3 id="full-gc">Full GC</h3>
 <p>触发Full GC的情况有如下几种：</p>
 <ol>
