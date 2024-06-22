@@ -184,6 +184,8 @@ Type erasure ensures that no new classes are created for parameterized types; co
     }
     ```
 
+#### new Integer(12)与int b=12是否相等
+
 ### 多线程
 #### 说说你对并发编程的理解
 #### 简述线程池原理
