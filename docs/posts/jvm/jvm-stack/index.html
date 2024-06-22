@@ -871,21 +871,21 @@ Java方法有两种返回函数的方式，一种是正常的函数返回，使�
 <p>byte、short、char 在存储前被转换为int，boolean也被转换为int，0表示false，非0表示true，long和double则占据两个slot。
 JVM会为局部变量表中的每一个Slot都分配一个访问索引，通过这个索引即可成功访问到局部变量表中指定的局部变量值。</p>
 <p>当一个实例方法被调用的时候，它的方法参数和方法体内部定义的局部变量将会按照顺序被复制到局部变量表中的每一个slot上。
-如果需要访问局部变量表中一个64bit的局部变量值时，只需要使用前一个索引即可，比如：访问long或doub1e类型变量。</p>
-<p>如果当前帧是由构造方法或者实例方法创建的，那么该对象引用this将会存放在index为0的s1ot处，其余的参数按照参数表顺序继续排列。</p>
+如果需要访问局部变量表中一个64bit的局部变量值时，只需要使用前一个索引即可，比如：访问long或double类型变量。</p>
+<p>如果当前帧是由构造方法或者实例方法创建的，那么该对象引用this将会存放在index为0的slot处，其余的参数按照参数表顺序继续排列。</p>
 <p><img alt="slot" src="/iblog/posts/annex/images/essays/slot.png"></p>
 <h4 id="slot重复利用">Slot重复利用</h4>
 <p>栈帧中的局部变量表中的槽位是可以重用的，如果一个局部变量过了其作用域，那么在其作用域之后申明的新的局部变就很有可能会复用过期局部变量的槽位，从而达到节省资源的目的。</p>
 <p>代码演示</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public void test() {
-</span></span><span class="line"><span class="cl">        int a = 0;
-</span></span><span class="line"><span class="cl">        {
-</span></span><span class="line"><span class="cl">            int b = 0;
-</span></span><span class="line"><span class="cl">            b = a + 1;
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        int c = a + 1;
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p><img alt="slot重复利用" src="/iblog/posts/annex/images/essays/slot%E9%87%8D%E5%A4%8D%E5%88%A9%E7%94%A8.png"></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">test</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><img alt="slot重复利用" src="/iblog/posts/annex/images/essays/slot%E9%87%8D%E5%A4%8D%E5%88%A9%E7%94%A8.png"></p>
 <h4 id="静态变量与局部变量">静态变量与局部变量</h4>
 <p>变量的分类：</p>
 <ul>
@@ -929,7 +929,7 @@ JVM会为局部变量表中的每一个Slot都分配一个访问索引，通过�
 <p>在Java源文件被编译到字节码文件中时，所有的变量和方法引用都作为符号引用（symbolic Reference）保存在class文件的常量池里。
 比如：描述一个方法调用了另外的其他方法时，就是通过<strong>常量池</strong>中指向方法的符号引用来表示的。那么动态链接的作用，就是为了将这些符号引用转换为调用方法的直接引用。</p>
 <p><strong>为什么需要运行时常量池？</strong></p>
-<p>因为在不同的方法，都可能调用常量或者方法，所以只需要存储一份即可，节省了空间。常量池的作用：就是为了提供一些符号和常量，便于指令的识别</p>
+<p>因为在不同的方法，都可能调用常量或者方法，所以只需要存储一份即可，节省了空间。常量池的作用：就是为了提供一些符号和常量，便于指令的识别。</p>
 <h3 id="方法返回值">方法返回值</h3>
 <p>存放调用该方法的PC寄存器的值，当一个方法开始执行后，只有两种方式可以退出：</p>
 <ol>
