@@ -953,8 +953,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e7%bc%96%e7%a0%81%e9%97%ae%e9%a2%98">
-                    编码问题
+                <a class="nav-link text-left" href="#string%e7%b1%bb%e4%b8%8e%e7%bc%96%e7%a0%81">
+                    String类与编码
                 </a>
             </li>
             
@@ -1015,40 +1015,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e4%b9%b1%e7%a0%81%e5%8e%9f%e5%9b%a0">
-                    乱码原因
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e7%9b%b8%e5%85%b3%e6%96%b9%e6%b3%95">
-                    相关方法
+                <a class="nav-link text-left" href="#%e7%bc%96%e7%a0%81%e4%b8%8e%e8%a7%a3%e7%a0%81">
+                    编码与解码
                 </a>
             </li>
             
@@ -2141,390 +2109,132 @@ Java中的字符串常量池有以下几种方式来存储字符串：</p>
 在实际开发中还可以进行优化，<code>StringBuilder</code> 的空参构造器，默认的字符串容量是16，如果需要存放的数据过多，容量就会进行扩容，我们可以设置默认初始化更大的长度，来减少扩容的次数。
 如果我们能够确定，前前后后需要添加的字符串不高于某个限定值，那么建议使用构造器创建一个阈值的长度。</p>
 <h4 id="常用方法">常用方法</h4>
-<p>基于Java8整理.如果查看其他方法请参照<a href="https://docs.oracle.com/javase/8/docs/api/index.html">Java8API官方文档</a> <code>java.lang.String</code></p>
-<h5 id="substring">substring</h5>
-<p>对字符串进行截取.返回一个新的字符串，它是此字符串的一个子字符串.</p>
-<p>源码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public String substring(int beginIndex) {
-</span></span><span class="line"><span class="cl">        // 判空
-</span></span><span class="line"><span class="cl">        if (beginIndex &lt; 0) {
-</span></span><span class="line"><span class="cl">            throw new StringIndexOutOfBoundsException(beginIndex);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        // 需要截取的长度不能超过源字符的长度
-</span></span><span class="line"><span class="cl">        int subLen = value.length - beginIndex;
-</span></span><span class="line"><span class="cl">        if (subLen &lt; 0) {
-</span></span><span class="line"><span class="cl">            throw new StringIndexOutOfBoundsException(subLen);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        // 如果传入的长度不等于被截字符串的长度 则创建新的字符串
-</span></span><span class="line"><span class="cl">        return (beginIndex == 0) ? this : new String(value, beginIndex, subLen);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    public String substring(int beginIndex, int endIndex) {
-</span></span><span class="line"><span class="cl">        if (beginIndex &lt; 0) {
-</span></span><span class="line"><span class="cl">            throw new StringIndexOutOfBoundsException(beginIndex);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        if (endIndex &gt; value.length) {
-</span></span><span class="line"><span class="cl">            throw new StringIndexOutOfBoundsException(endIndex);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        int subLen = endIndex - beginIndex;
-</span></span><span class="line"><span class="cl">        if (subLen &lt; 0) {
-</span></span><span class="line"><span class="cl">            throw new StringIndexOutOfBoundsException(subLen);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        return ((beginIndex == 0) &amp;&amp; (endIndex == value.length)) ? this
-</span></span><span class="line"><span class="cl">                : new String(value, beginIndex, subLen);
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>使用</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        String str = &#34;123456&#34;;
-</span></span><span class="line"><span class="cl">        String substring = str.substring(2);
-</span></span><span class="line"><span class="cl">        // 3456
-</span></span><span class="line"><span class="cl">        System.out.println(substring);
-</span></span><span class="line"><span class="cl">        // 索引从1开始截取字符串
-</span></span><span class="line"><span class="cl">        String substring2 = str.substring(2,4);
-</span></span><span class="line"><span class="cl">        // 34
-</span></span><span class="line"><span class="cl">        System.out.println(substring2);
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><h5 id="replace">replace</h5>
-<p>替换字符串.返回一个新的字符串，它是通过用 <code>newChar</code> 替换此字符串中出现的所有 <code>oldChar</code> 得到的.</p>
-<p>源码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> public String replace(char oldChar, char newChar) {
-</span></span><span class="line"><span class="cl">        // 校验: 需要进行替换新旧字符不能相同
-</span></span><span class="line"><span class="cl">        if (oldChar != newChar) {
-</span></span><span class="line"><span class="cl">            // 获取源字符串中的长度
-</span></span><span class="line"><span class="cl">            int len = value.length;
-</span></span><span class="line"><span class="cl">            int i = -1;
-</span></span><span class="line"><span class="cl">            // 获取源字符串
-</span></span><span class="line"><span class="cl">            char[] val = value; /* avoid getfield opcode */
-</span></span><span class="line"><span class="cl">            // 判断源字符串是否存在 需要替换的旧字符
-</span></span><span class="line"><span class="cl">            while (++i &lt; len) {
-</span></span><span class="line"><span class="cl">                if (val[i] == oldChar) {
-</span></span><span class="line"><span class="cl">                    break;
-</span></span><span class="line"><span class="cl">                }
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">            if (i &lt; len) {
-</span></span><span class="line"><span class="cl">                // 创建新的字符数组 用于替换后保存新字符串 
-</span></span><span class="line"><span class="cl">                char buf[] = new char[len];
-</span></span><span class="line"><span class="cl">                for (int j = 0; j &lt; i; j++) {
-</span></span><span class="line"><span class="cl">                    // 将旧字符存入到新字符数组
-</span></span><span class="line"><span class="cl">                    buf[j] = val[j];
-</span></span><span class="line"><span class="cl">                }
-</span></span><span class="line"><span class="cl">                while (i &lt; len) {
-</span></span><span class="line"><span class="cl">                    char c = val[i];
-</span></span><span class="line"><span class="cl">                    // 替换字符
-</span></span><span class="line"><span class="cl">                    buf[i] = (c == oldChar) ? newChar : c;
-</span></span><span class="line"><span class="cl">                    i++;
-</span></span><span class="line"><span class="cl">                }
-</span></span><span class="line"><span class="cl">                // 创建新字符串对象
-</span></span><span class="line"><span class="cl">                return new String(buf, true);
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        return this;
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>使用</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        String str = &#34;123456&#34;;
-</span></span><span class="line"><span class="cl">        // 223456
-</span></span><span class="line"><span class="cl">        System.out.println(str.replace(&#39;1&#39;, &#39;2&#39;));
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><h5 id="replaceall">replaceAll</h5>
-<p>使用给定的 <code>replacement</code> 替换此字符串所有匹配给定的正则表达式的子字符串.</p>
-<p>源码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public String replaceAll(String regex, String replacement) {
-</span></span><span class="line"><span class="cl">        return Pattern.compile(regex).matcher(this).replaceAll(replacement);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">    
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    // complile 解析正则表达式 获得 Pattern对象
-</span></span><span class="line"><span class="cl">    public static Pattern compile(String regex) {
-</span></span><span class="line"><span class="cl">        return new Pattern(regex, 0);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    //matcher 获取匹配器对象
-</span></span><span class="line"><span class="cl">    public Matcher matcher(CharSequence input) {
-</span></span><span class="line"><span class="cl">        if (!compiled) {
-</span></span><span class="line"><span class="cl">            synchronized(this) {
-</span></span><span class="line"><span class="cl">                if (!compiled)
-</span></span><span class="line"><span class="cl">                    compile();
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        Matcher m = new Matcher(this, input);
-</span></span><span class="line"><span class="cl">        return m;
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    // replaceAll 进行字符串替换
-</span></span><span class="line"><span class="cl">    public String replaceAll(String replacement) {
-</span></span><span class="line"><span class="cl">    // 对当前Matcher类进行重置，即对其中记录匹配结果的开始和结束位置索引，以及分组信息重置
-</span></span><span class="line"><span class="cl">        reset();
-</span></span><span class="line"><span class="cl">        // 执行第一次搜索
-</span></span><span class="line"><span class="cl">        boolean result = find();
-</span></span><span class="line"><span class="cl">         // 第一次搜索匹配成功
-</span></span><span class="line"><span class="cl">        if (result) {
-</span></span><span class="line"><span class="cl">            // 用于记录最终的替换结果字符串
-</span></span><span class="line"><span class="cl">            StringBuffer sb = new StringBuffer();
-</span></span><span class="line"><span class="cl">            do {
-</span></span><span class="line"><span class="cl">            // 重点：用于将从上一次匹配子字符串的下一个索引位置开始，到当前匹配的子字符串的结束索引位置的所有字符 append到字符串sb中
-</span></span><span class="line"><span class="cl">                appendReplacement(sb, replacement);
-</span></span><span class="line"><span class="cl">                result = find();
-</span></span><span class="line"><span class="cl">            } while (result);
-</span></span><span class="line"><span class="cl">            // 将从最后一次匹配子字符串的下一个索引位置，到字符串的结尾的所有字符append到字符串sb中
-</span></span><span class="line"><span class="cl">            appendTail(sb);
-</span></span><span class="line"><span class="cl">            return sb.toString();
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        return text.toString();
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>重点看一下<code>replaceAll</code>中调用的<code>appendReplacement</code>方法</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public Matcher appendReplacement(StringBuffer sb, String replacement) {
-</span></span><span class="line"><span class="cl">            
-</span></span><span class="line"><span class="cl">            // ...
-</span></span><span class="line"><span class="cl">            
-</span></span><span class="line"><span class="cl">            // 用于跟踪 replacement 字符串的索引
-</span></span><span class="line"><span class="cl">            int cursor = 0;
-</span></span><span class="line"><span class="cl">            
-</span></span><span class="line"><span class="cl">            // 对当前匹配到子字符串替换后的结果字符串
-</span></span><span class="line"><span class="cl">            StringBuffer result = new StringBuffer();
-</span></span><span class="line"><span class="cl">            
-</span></span><span class="line"><span class="cl">            // 遍历 replacement字符串
-</span></span><span class="line"><span class="cl">            while (cursor &lt; replacement.length()) {
-</span></span><span class="line"><span class="cl">                
-</span></span><span class="line"><span class="cl">                char nextChar = replacement.charAt(cursor);
-</span></span><span class="line"><span class="cl">                
-</span></span><span class="line"><span class="cl">                if (nextChar == &#39;\\&#39;) {
-</span></span><span class="line"><span class="cl">                    // 重点1：当字符为&#39;\&#39;时，跳过，并获取其后面的字符，追加到result
-</span></span><span class="line"><span class="cl">                    cursor++;
-</span></span><span class="line"><span class="cl">                    nextChar = replacement.charAt(cursor);
-</span></span><span class="line"><span class="cl">                    result.append(nextChar);
-</span></span><span class="line"><span class="cl">                    cursor++;
-</span></span><span class="line"><span class="cl">                } else if (nextChar == &#39;$&#39;) {
-</span></span><span class="line"><span class="cl">                    
-</span></span><span class="line"><span class="cl">                    // 重点2：当字符为$时，跳过，并获取其后面的数值，并以此如果$后面第一个不为数字则抛异常，
-</span></span><span class="line"><span class="cl">                    // Skip past $
-</span></span><span class="line"><span class="cl">                    cursor++;
-</span></span><span class="line"><span class="cl">                    
-</span></span><span class="line"><span class="cl">                    // The first number is always a group
-</span></span><span class="line"><span class="cl">                    int refNum = (int)replacement.charAt(cursor) - &#39;0&#39;;
-</span></span><span class="line"><span class="cl">                    
-</span></span><span class="line"><span class="cl">                    // 此处代码用于计算$符号后的数值，数值结果赋予 refNum
-</span></span><span class="line"><span class="cl">                    // ...
-</span></span><span class="line"><span class="cl">                    
-</span></span><span class="line"><span class="cl">                    // group(refNum) 用于获取正则表达式第refNum个分组表示的字符串，不详说了
-</span></span><span class="line"><span class="cl">                    if (group(refNum) != null)
-</span></span><span class="line"><span class="cl">                         // 追加到result
-</span></span><span class="line"><span class="cl">                        result.append(group(refNum));
-</span></span><span class="line"><span class="cl">                } else {
-</span></span><span class="line"><span class="cl">                    
-</span></span><span class="line"><span class="cl">                    // 当前字符不为\ 或 $ 则直接追加到result
-</span></span><span class="line"><span class="cl">                    result.append(nextChar);
-</span></span><span class="line"><span class="cl">                    cursor++;
-</span></span><span class="line"><span class="cl">                }
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">            
-</span></span><span class="line"><span class="cl">            // 将从上一次匹配的子字符串的结尾索引，到当前匹配的第一个字符串索引的字符串追加到sb
-</span></span><span class="line"><span class="cl">            // lastAppendPosition参数为上一次执行appendReplacement方法最后追加的字符在原始字符串中的索引位置。
-</span></span><span class="line"><span class="cl">            // first 参数为当前待替换的子字符串的首个字符在原始字符串中的索引位置
-</span></span><span class="line"><span class="cl">            sb.append(getSubSequence(lastAppendPosition, first));
-</span></span><span class="line"><span class="cl">            
-</span></span><span class="line"><span class="cl">            // 将当前配置子字符串替换后的结果字符串追加到sb
-</span></span><span class="line"><span class="cl">            sb.append(result.toString());
-</span></span><span class="line"><span class="cl">            
-</span></span><span class="line"><span class="cl">            // 更新lastAppendPosition，供下一个匹配执行appendReplacement方法使用
-</span></span><span class="line"><span class="cl">            lastAppendPosition = last;
-</span></span><span class="line"><span class="cl">            
-</span></span><span class="line"><span class="cl">            /* sb中追加了当前匹配的子字符串与前一次匹配子字符串中间的字符，以及当前匹配子字符串被替换后的字符串
-</span></span><span class="line"><span class="cl">             */
-</span></span><span class="line"><span class="cl">            return this;
-</span></span><span class="line"><span class="cl">        }
-</span></span></code></pre></div><p><code>replaceAll</code>中第二个参数<code>replacement</code>中，\ 有转义的作用， $ 用于获取分组匹配的当前子字符串 因为引入了 $ 符的分组功能，所以为了解决能输出 $ 字符，故引入 \ 转义功能.</p>
-<p>使用</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        String str = &#34;111111&#34;;
-</span></span><span class="line"><span class="cl">        // 222222
-</span></span><span class="line"><span class="cl">        System.out.println(str.replaceAll(&#34;1&#34;, &#34;2&#34;));
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><h5 id="valueof">valueOf</h5>
-<p>该方法作用是将对象转成String类型.</p>
-<p>源码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static String valueOf(Object obj) {
-</span></span><span class="line"><span class="cl">        return (obj == null) ? &#34;null&#34; : obj.toString();
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>使用</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        Integer integer = 11111;
-</span></span><span class="line"><span class="cl">        String str = String.valueOf(integer);
-</span></span><span class="line"><span class="cl">        // 11111
-</span></span><span class="line"><span class="cl">        System.out.println(str);
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><h3 id="长度限制">长度限制</h3>
-<p>翻阅String源码在String源码中发现有定义字符串长度的构造函数</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    // count 就是 字符串定义长度 
-</span></span><span class="line"><span class="cl">    public String(char value[], int offset, int count) {
-</span></span><span class="line"><span class="cl">        if (offset &lt; 0) {
-</span></span><span class="line"><span class="cl">            throw new StringIndexOutOfBoundsException(offset);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        if (count &lt;= 0) {
-</span></span><span class="line"><span class="cl">            if (count &lt; 0) {
-</span></span><span class="line"><span class="cl">                throw new StringIndexOutOfBoundsException(count);
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">            if (offset &lt;= value.length) {
-</span></span><span class="line"><span class="cl">                this.value = &#34;&#34;.value;
-</span></span><span class="line"><span class="cl">                return;
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        // Note: offset or count might be near -1&gt;&gt;&gt;1.
-</span></span><span class="line"><span class="cl">        if (offset &gt; value.length - count) {
-</span></span><span class="line"><span class="cl">            throw new StringIndexOutOfBoundsException(offset + count);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        this.value = Arrays.copyOfRange(value, offset, offset+count);
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>通过源码可以看到<code>int</code>的最大长度就是<code>String</code>的支持的最大长度.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        // 2,147,483,648 = 2^31 - 1 
-</span></span><span class="line"><span class="cl">        System.out.println(Integer.MAX_VALUE);
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p><strong>注意<code>new String(char value[], int offset, int count)</code>是运行时<code>String</code>支持的最大长度.</strong></p>
-<p>在<code>String</code>编译声明期间，用<code>javac</code>编译 长度为<code>2^31 -1</code>的字符串.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        // 长度: 2^31 -1
-</span></span><span class="line"><span class="cl">        String str = &#34;1111 ... &#34;;
-</span></span><span class="line"><span class="cl">        System.out.println(str);
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">java: 常量字符串过长
-</span></span></code></pre></div><p>在<code>Gen</code>类中相关报错信息源码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">private</span> <span class="n">void</span> <span class="n">checkStringConstant</span><span class="p">(</span><span class="n">DiagnosticPosition</span> <span class="n">var1</span><span class="p">,</span> <span class="ne">Object</span> <span class="n">var2</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">this</span><span class="o">.</span><span class="n">nerrs</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">var2</span> <span class="o">!=</span> <span class="n">null</span> <span class="o">&amp;&amp;</span> <span class="n">var2</span> <span class="n">instanceof</span> <span class="ne">String</span> <span class="o">&amp;&amp;</span> <span class="p">((</span><span class="ne">String</span><span class="p">)</span><span class="n">var2</span><span class="p">)</span><span class="o">.</span><span class="n">length</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mi">65535</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">this</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">var1</span><span class="p">,</span> <span class="s2">&#34;limit.string&#34;</span><span class="p">,</span> <span class="n">new</span> <span class="ne">Object</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-</span></span><span class="line"><span class="cl">        <span class="o">++</span><span class="n">this</span><span class="o">.</span><span class="n">nerrs</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>可以看到源码中如果<code>String</code>长度大于等于65535会导致编译失败</p>
-<p>在编译期的时候，字面量要进字符串常量池.所以要遵守<a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.4.3">《Java®虚拟机规范》(Java8)中对字符串常量池的描述.</a></p>
-<p><code>CONSTANT_String_info</code> 用于表示 <code>java.lang.String</code> 类型的常量对象结构体</p>
-<p><code>CONSTANT_String_info</code>格式如下:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">CONSTANT_String_info {
-</span></span><span class="line"><span class="cl">    u1 tag;
-</span></span><span class="line"><span class="cl">    u2 string_index;
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><blockquote>
-<p><strong>tag</strong><br>
-结构<code>CONSTANT_String_info</code>的标签项的值为<code>CONSTANT_String(8)</code></p>
-</blockquote>
-<blockquote>
-<p><strong>string_index</strong><br>
-<code>string_index</code> 项的值必须是对常量池的有效索引，常量池在该索引处的项必须是 <code>CONSTANT_Utf8_info</code> 结构，表示一组 <code>Unicode</code> 码点序列，这组 Unicode 码点序列最终会被初始化为一个 下 <code>Unicode</code> 对象</p>
-</blockquote>
-<p><code>CONSTANT_Utf8_info</code>是一个<code>CONSTANT_Utf8</code>类型的常量池数据项，它存储的是一个常量字符串。常量池中的所有字面量几乎都是通过<code>CONSTANT_Utf8_info</code>描述的。<code>CONSTANT_Utf8_info</code>的定义如下：</p>
+<p>基于Java8整理，如果查看其他方法请参照<a href="https://docs.oracle.com/javase/8/docs/api/index.html">Java8API官方文档</a>。</p>
+<ul>
+<li><code>substring</code>对字符串进行截取.返回一个新的字符串，它是此字符串的一个子字符串；
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;123456&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">substring</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">str</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 3456</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">substring</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 索引从1开始截取字符串</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">substring2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">str</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">2</span><span class="p">,</span><span class="n">4</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 34</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">substring2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li><code>replace</code>替换字符串.返回一个新的字符串，它是通过用 <code>newChar</code> 替换此字符串中出现的所有 <code>oldChar</code> 得到的；
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;123456&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 223456</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">str</span><span class="p">.</span><span class="na">replace</span><span class="p">(</span><span class="sc">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;2&#39;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li><code>replaceAll</code>使用给定的 <code>replacement</code> 替换此字符串所有匹配给定的正则表达式的子字符串；
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;111111&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 222222</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">str</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&#34;1&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;2&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li><code>valueOf</code>该方法作用是将对象转成<code>String</code>类型；
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Integer</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">11111</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">integer</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 11111</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">str</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+</ul>
+<h3 id="长度限制">长度限制</h3>
+<p>Java中的<code>String</code>内部是用一个字符数组<code>char[]</code>存储字符数据的，数组的最大长度限制由Java虚拟机规范决定。
+所以理论上，Java数组的最大长度是<code>Integer.MAX_VALUE(2^31 - 1)</code>，即2147483647，这也是String的长度限制，但在实际操作中，能分配的最大数组长度受可用内存限制。</p>
+<p>但是并不是这样，实际上在程序编译期根据<code>StringJVM常量池</code>规范<code>String</code>字符串在声明时最大为65534。
+字符串字面量的长度不能超过65535字符，如果字符串字面量长度超过这个限制，编译器会抛出错误。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkStringConstant</span><span class="p">(</span><span class="n">DiagnosticPosition</span><span class="w"> </span><span class="n">var1</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">var2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">nerrs</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">var2</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">var2</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">((</span><span class="n">String</span><span class="p">)</span><span class="n">var2</span><span class="p">).</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">65535</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">log</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="n">var1</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;limit.string&#34;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="o">++</span><span class="k">this</span><span class="p">.</span><span class="na">nerrs</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>还有一点，<code>Stirng</code>长度之所以会受限制，是因JVM规范对常量池有所限制。
+<a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.4.7">CONSTANT_Utf8_info</a>是一个<code>CONSTANT_Utf8</code>类型的常量池数据项，它存储的是一个常量字符串。
+常量池中的所有字面量几乎都是通过<code>CONSTANT_Utf8_info</code>描述的，<code>CONSTANT_Utf8_info</code>的定义如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ONSTANT_Utf8_info {
 </span></span><span class="line"><span class="cl">    u1 tag;
 </span></span><span class="line"><span class="cl">    u2 length;
 </span></span><span class="line"><span class="cl">    u1 bytes[length];
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p><code>length</code>则指明了 <code>bytes</code>数组的长度，其类型为<code>u2</code></p>
-<p>通过查阅《JVM规范》发现<code>u2</code>表示两个字节的无符号数，那么1个字节有8位，2个字节就有16位。16位无符号数可表示的最大值位<code>2^16 - 1 = 65535</code>。也就是说，<code>Class</code>文件中常量池的格式规定了，其字符串常量的长度不能超过65535。</p>
-<p><strong>关于编译器字符串最大长度65534的问题</strong></p>
-<blockquote>
-<p>如果一个方法的Java虚拟机代码长度正好是65535字节，并且以一个1字节长的指令结束，那么该指令不能被异常处理程序保护。编译器作者可以通过将任何方法、实例初始化方法或静态初始化器(任何代码数组的大小)生成的Java虚拟机代码的最大大小限制为65534字节来解决这个问题</p>
-</blockquote>
-<p><strong>简单来说</strong></p>
-<ul>
-<li>在程序运行时String最大长度为int最大长度为<code>2^31 -1</code></li>
-<li>在程序编译期根据<code>String</code>JVM常量池规范String字符串在声明时最大为 65535，但是为了修复<code>Java</code>的遗留问题改为65534</li>
+</span></span></code></pre></div><ul>
+<li><code>tag</code>：<code>CONSTANT_Utf8_info</code>结构的标记项值为<code>CONSTANT_Utf8(1)</code>；</li>
+<li><code>length</code>：<code>length</code>项的值表示字节数组中的字节数，而不是结果字符串的长度，其类型为<code>u2</code>；</li>
+<li><code>bytes[]</code>：字节数组包含字符串的字节数；</li>
 </ul>
-<p>在程序开发中，需要注意如果你用<code>String</code>变量接收Base64图片或音频视频需要注意不要超过在程序运行时字符串的最大阈值.</p>
-<h3 id="编码问题">编码问题</h3>
-<p>因为全世界有很多编程人员，有很多语言，不同的国家使用不同的语言，如果说没有一套统一的编码规则，这么多语言混在一起，很容易出现乱码现象，本着既方便又节约内存的理念大家基本都是用<code>utf-8</code>码来编写程序.</p>
+<p>到了这里长度终于出来了，那就是<code>length</code>。通过查阅《JVM规范》发现<code>u2</code>表示两个字节的无符号数，那么1个字节有8位，2个字节就有16位。
+16位无符号数可表示的最大值位<code>2^16 - 1 = 65535</code>。也就是说，<code>Class</code>文件中常量池的格式规定了，每个字符串常量的最大长度为65535字节。</p>
+<p>所以对<code>String</code>的长度限制主要有两点：</p>
+<ol>
+<li><code>Class</code>文件中常量池的格式规定了，每个字符串常量的最大长度为65535字节；</li>
+<li><code>checkStringConstant</code>方法，规定字符串字面量的长度不能超过65535字符，即最大65534个字符；</li>
+</ol>
+<p>所以一个字符串字面量最多可以包含65534个字符，但它的存储空间（字节数）并不会超过65535字节。</p>
+<p>所以<code>String</code>类长度限制是多少？</p>
+<ul>
+<li>在编译期间，长度不能超过65535个字符，即最大65534个字符，但65534个字符存储空间不会超过65535字节；</li>
+<li>在运行期，<code>String</code>对象的长度理论上可以达到<code>Integer.MAX_VALUE (2^31 - 1)</code>个字符，即 2,147,483,647 个字符，大概4G。
+在实际应用中，字符串的最大长度受限于可用内存和JVM配置；</li>
+</ul>
+<p>在程序开发中，如果用<code>String</code>变量接收<code>Base64</code>图片或音频视频，需要注意不要超过程序运行时字符串的最大阈值。</p>
+<h3 id="string类与编码">String类与编码</h3>
+<p>Java中的<code>String</code>类是基于<code>Unicode</code>字符集设计的，它可以存储任意<code>Unicode</code>字符。
+<code>Unicode</code>为世界上几乎所有的字符集提供了唯一的标识码，因此Java的<code>String</code>类可以处理多语言字符和符号。</p>
 <h4 id="unicode">Unicode</h4>
-<blockquote>
-<p>Unicode（中文：万国码、国际码、统一码、单一码）是计算机科学领域里的一项业界标准。它对世界上大部分的文字系统进行了整理、编码，使得计算机可以用更为简单的方式来呈现和处理文字.</p>
-</blockquote>
-<blockquote>
-<p>Unicode伴随着通用字符集的标准而发展，同时也以书本的形式对外发表。Unicode至今仍在不断增修，每个新版本都加入更多新的字符。目前最新的版本为2018年6月5日公布的11.0.0，已经收录超过13万个字符（第十万个字符在2005年获采纳）。Unicode涵盖的数据除了视觉上的字形、编码方法、标准的字符编码外，还包含了字符特性，如大小写字母。</p>
-</blockquote>
-<p><code>Unicode</code>是一种编码规范，是为解决全球字符通用编码而设计的，而<code>UTF-8 UTF-16</code>等是这种规范的一种实现.<code>Unicode</code>是字符集而<code>UTF-8</code>是编码规则。</p>
-<p>Java内部采用<code>Unicode</code>编码规范，也就是支持多语言的，具体采用的<code>UTF-16</code>编码方式.</p>
-<p><strong>不管程序过程中用到了<code>GBK</code>还是<code>ISO8859-1</code>等格式，在存储与传递的过程中实际传递的都是<code>Unicode</code>编码的数据，要想接收到的值不出现乱码，就要保证传过去的时候用的是X编码，接收的时候也用X编码来转换接收</strong></p>
-<h4 id="乱码原因">乱码原因</h4>
-<p><strong>编码时格式和解码时格式不一致.</strong></p>
-<p><code>string</code>在文件里面底层保存形式是二进制，底层用<code>byte[]</code>数组存储(Java9. Java8是用<code>char</code>数组储存).<code>byte[]</code>数组里面的内容可以按照不同的编码格式存放.在读取字符串的时候，也可以按照不同的解码格式存放.这样就造成了<strong>乱码</strong>.</p>
-<p>简单理解为</p>
-<p>在编码(字符串到字节)的时候是用一种编码;而在解码(从字节到字符串)的时候用另一种编码;所以导致乱码问题.<strong>所以想要避免乱码问题最简单的办法就是从始至终，都用同一种字符格式</strong></p>
-<h4 id="相关方法">相关方法</h4>
-<p><code>String</code>类有两种比较常用的操作编码方式</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    // 注意处理异常
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) throws UnsupportedEncodingException {
-</span></span><span class="line"><span class="cl">        // 本地使用的是 utf-8 的编码
-</span></span><span class="line"><span class="cl">        String str = &#34;你好&#34;;
-</span></span><span class="line"><span class="cl">        byte[] bytes = str.getBytes(&#34;utf-8&#34;);
-</span></span><span class="line"><span class="cl">        // 你好
-</span></span><span class="line"><span class="cl">        System.out.println(new String(bytes));
-</span></span><span class="line"><span class="cl">        String string = new String(str.getBytes(), &#34;utf-8&#34;);
-</span></span><span class="line"><span class="cl">        // 你好
-</span></span><span class="line"><span class="cl">        System.out.println(string);
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><h5 id="getbytesstring-charsetname">getBytes(String charsetName)</h5>
-<p>该方法会根据指定的<code>decode</code>编码返回某字符串在该编码下的<code>byte</code>数组表示</p>
-<p>源码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public byte[] getBytes(String charsetName)
-</span></span><span class="line"><span class="cl">            throws UnsupportedEncodingException {
-</span></span><span class="line"><span class="cl">        if (charsetName == null) throw new NullPointerException();
-</span></span><span class="line"><span class="cl">        return StringCoding.encode(charsetName, value, 0, value.length);
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p><code>StringCoding.encode</code>方法</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// len: 当前字符串长度
-</span></span><span class="line"><span class="cl">static byte[] encode(String charsetName, char[] ca, int off, int len)
-</span></span><span class="line"><span class="cl">        throws UnsupportedEncodingException
-</span></span><span class="line"><span class="cl">    {
-</span></span><span class="line"><span class="cl">        StringEncoder se = deref(encoder);
-</span></span><span class="line"><span class="cl">        // 如果为空 默认ISO-8859-1
-</span></span><span class="line"><span class="cl">        String csn = (charsetName == null) ? &#34;ISO-8859-1&#34; : charsetName;
-</span></span><span class="line"><span class="cl">        // 
-</span></span><span class="line"><span class="cl">        if ((se == null) || !(csn.equals(se.requestedCharsetName())
-</span></span><span class="line"><span class="cl">                              || csn.equals(se.charsetName()))) {
-</span></span><span class="line"><span class="cl">            se = null;
-</span></span><span class="line"><span class="cl">            try {
-</span></span><span class="line"><span class="cl">                // 根据编码获取 Charset对象
-</span></span><span class="line"><span class="cl">                Charset cs = lookupCharset(csn);
-</span></span><span class="line"><span class="cl">                if (cs != null)
-</span></span><span class="line"><span class="cl">                    se = new StringEncoder(cs, csn);
-</span></span><span class="line"><span class="cl">            } catch (IllegalCharsetNameException x) {}
-</span></span><span class="line"><span class="cl">            if (se == null)
-</span></span><span class="line"><span class="cl">                throw new UnsupportedEncodingException (csn);
-</span></span><span class="line"><span class="cl">            set(encoder, se);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        return se.encode(ca, off, len);
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><h5 id="new-stringbyte-bytes-string-charsetname">new String(byte bytes[], String charsetName)</h5>
-<p>该方法为字节数组构造</p>
-<p><code>char[]</code>数组是以<code>unicode</code>码来存储的，<code>String</code>和<code>char</code>为内存形式.<code>byte</code>是网络传输或存储的序列化形式.可以通过<code>charset</code>来解码指定的<code>byte</code>数组，将其解码成<code>unicode</code>的<code>char[]</code>数组，构造<code>String</code>.</p>
-<p>源码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public String(byte bytes[], String charsetName)
-</span></span><span class="line"><span class="cl">            throws UnsupportedEncodingException {
-</span></span><span class="line"><span class="cl">        this(bytes, 0, bytes.length, charsetName);
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public String(byte bytes[], int offset, int length, String charsetName)
-</span></span><span class="line"><span class="cl">            throws UnsupportedEncodingException {
-</span></span><span class="line"><span class="cl">        if (charsetName == null)
-</span></span><span class="line"><span class="cl">            throw new NullPointerException(&#34;charsetName&#34;);
-</span></span><span class="line"><span class="cl">        checkBounds(bytes, offset, length);
-</span></span><span class="line"><span class="cl">        this.value = StringCoding.decode(charsetName, bytes, offset, length);
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    static char[] decode(String charsetName, byte[] ba, int off, int len)
-</span></span><span class="line"><span class="cl">        throws UnsupportedEncodingException
-</span></span><span class="line"><span class="cl">    {
-</span></span><span class="line"><span class="cl">        StringDecoder sd = deref(decoder);
-</span></span><span class="line"><span class="cl">        String csn = (charsetName == null) ? &#34;ISO-8859-1&#34; : charsetName;
-</span></span><span class="line"><span class="cl">        if ((sd == null) || !(csn.equals(sd.requestedCharsetName())
-</span></span><span class="line"><span class="cl">                              || csn.equals(sd.charsetName()))) {
-</span></span><span class="line"><span class="cl">            sd = null;
-</span></span><span class="line"><span class="cl">            try {
-</span></span><span class="line"><span class="cl">                Charset cs = lookupCharset(csn);
-</span></span><span class="line"><span class="cl">                if (cs != null)
-</span></span><span class="line"><span class="cl">                    sd = new StringDecoder(cs, csn);
-</span></span><span class="line"><span class="cl">            } catch (IllegalCharsetNameException x) {}
-</span></span><span class="line"><span class="cl">            if (sd == null)
-</span></span><span class="line"><span class="cl">                throw new UnsupportedEncodingException(csn);
-</span></span><span class="line"><span class="cl">            set(decoder, sd);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        return sd.decode(ba, off, len);
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div></div>
+<p><code>Unicode</code>（中文：万国码、国际码、统一码、单一码）是计算机科学领域里的一项业界标准。
+它对世界上大部分的文字系统进行了整理、编码，使得计算机可以用更为简单的方式来呈现和处理文字。</p>
+<p><code>Unicode</code>伴随着通用字符集的标准而发展，同时也以书本的形式对外发表。<code>Unicode</code>至今仍在不断增修，每个新版本都加入更多新的字符。
+目前最新的版本为2018年6月5日公布的11.0.0，已经收录超过13万个字符（第十万个字符在2005年获采纳）。
+<code>Unicode</code>涵盖的数据除了视觉上的字形、编码方法、标准的字符编码外，还包含了字符特性，如大小写字母。</p>
+<p><code>Unicode</code>是一种编码规范，是为解决全球字符通用编码而设计的，而<code>UTF-8</code>、<code>UTF-16</code>等是这种规范的一种实现，<code>Unicode</code>是字符集而<code>UTF-8</code>是编码规则。
+在Java虚拟机内部，<code>String</code>对象的存储是以<code>UTF-16</code>编码形式进行的。<code>UTF-16</code>编码是一种<code>Unicode</code>字符集的编码方式，它采用16位（即2个字节）编码单元来表示大部分字符，辅助字符则需要使用4个字节来表示。</p>
+<p>不管程序过程中用到了<code>GBK</code>还是<code>ISO8859-1</code>等格式，在存储与传递的过程中实际传递的都是<code>Unicode</code>编码的数据，要想接收到的值不出现乱码，就要保证传过去的时候用的是X编码，接收的时候也用X编码来转换接收。</p>
+<h4 id="编码与解码">编码与解码</h4>
+<p>字符串的编码和解码在Java中是非常常见和重要的操作，特别是在处理文件、网络通信或与外部系统交互时。</p>
+<ul>
+<li>编码是将字符串转换为字节序列的过程；</li>
+<li>解码是将字节序列转换为字符串的过程；</li>
+</ul>
+<p>字符串的编码和解码代码演示：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">StringEncodingExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">originalString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;Hello, 你好&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">charsetName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;UTF-8&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 编码：String -&gt; byte[]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">utf8Bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">originalString</span><span class="p">.</span><span class="na">getBytes</span><span class="p">(</span><span class="n">charsetName</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Encoded UTF-8 bytes: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">bytesToHex</span><span class="p">(</span><span class="n">utf8Bytes</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 解码：byte[] -&gt; String</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">decodedString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">utf8Bytes</span><span class="p">,</span><span class="w"> </span><span class="n">charsetName</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Decoded String: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">decodedString</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">UnsupportedEncodingException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 辅助方法：将字节数组转换为十六进制字符串表示</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">bytesToHex</span><span class="p">(</span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">bytes</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">StringBuilder</span><span class="w"> </span><span class="n">sb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StringBuilder</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">byte</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">bytes</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">sb</span><span class="p">.</span><span class="na">append</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">&#34;%02X &#34;</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">sb</span><span class="p">.</span><span class="na">toString</span><span class="p">().</span><span class="na">trim</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>在解码时，可能会出现乱码，原因是编码时格式和解码时格式不一致导致。
+即在编码时，是用一种编码，而在解码时，用的是另一种编码，所以导致乱码问题。所以想要避免乱码问题最简单的办法就是从始至终，都用同一种字符格式。</p>
+</div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">
                             

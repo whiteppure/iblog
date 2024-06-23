@@ -1069,45 +1069,9 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
 如果我们能够确定，前前后后需要添加的字符串不高于某个限定值，那么建议使用构造器创建一个阈值的长度。
 
 #### 常用方法
-[//]: # (写到了这里)
-基于Java8整理.如果查看其他方法请参照[Java8API官方文档](https://docs.oracle.com/javase/8/docs/api/index.html) `java.lang.String`
- 
-##### substring
-对字符串进行截取.返回一个新的字符串，它是此字符串的一个子字符串.
-
-源码
-```
-    public String substring(int beginIndex) {
-        // 判空
-        if (beginIndex < 0) {
-            throw new StringIndexOutOfBoundsException(beginIndex);
-        }
-        // 需要截取的长度不能超过源字符的长度
-        int subLen = value.length - beginIndex;
-        if (subLen < 0) {
-            throw new StringIndexOutOfBoundsException(subLen);
-        }
-        // 如果传入的长度不等于被截字符串的长度 则创建新的字符串
-        return (beginIndex == 0) ? this : new String(value, beginIndex, subLen);
-    }
-    
-    public String substring(int beginIndex, int endIndex) {
-        if (beginIndex < 0) {
-            throw new StringIndexOutOfBoundsException(beginIndex);
-        }
-        if (endIndex > value.length) {
-            throw new StringIndexOutOfBoundsException(endIndex);
-        }
-        int subLen = endIndex - beginIndex;
-        if (subLen < 0) {
-            throw new StringIndexOutOfBoundsException(subLen);
-        }
-        return ((beginIndex == 0) && (endIndex == value.length)) ? this
-                : new String(value, beginIndex, subLen);
-    }
-```
-使用
-```
+基于Java8整理，如果查看其他方法请参照[Java8API官方文档](https://docs.oracle.com/javase/8/docs/api/index.html)。
+- `substring`对字符串进行截取.返回一个新的字符串，它是此字符串的一个子字符串；
+    ```java
     public static void main(String[] args) {
         String str = "123456";
         String substring = str.substring(2);
@@ -1118,247 +1082,40 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
         // 34
         System.out.println(substring2);
     }
-```
-
-##### replace
-替换字符串.返回一个新的字符串，它是通过用 `newChar` 替换此字符串中出现的所有 `oldChar` 得到的.
-
-源码
-```
- public String replace(char oldChar, char newChar) {
-        // 校验: 需要进行替换新旧字符不能相同
-        if (oldChar != newChar) {
-            // 获取源字符串中的长度
-            int len = value.length;
-            int i = -1;
-            // 获取源字符串
-            char[] val = value; /* avoid getfield opcode */
-            // 判断源字符串是否存在 需要替换的旧字符
-            while (++i < len) {
-                if (val[i] == oldChar) {
-                    break;
-                }
-            }
-            if (i < len) {
-                // 创建新的字符数组 用于替换后保存新字符串 
-                char buf[] = new char[len];
-                for (int j = 0; j < i; j++) {
-                    // 将旧字符存入到新字符数组
-                    buf[j] = val[j];
-                }
-                while (i < len) {
-                    char c = val[i];
-                    // 替换字符
-                    buf[i] = (c == oldChar) ? newChar : c;
-                    i++;
-                }
-                // 创建新字符串对象
-                return new String(buf, true);
-            }
-        }
-        return this;
-    }
-```
-使用
-```
+    ```
+- `replace`替换字符串.返回一个新的字符串，它是通过用 `newChar` 替换此字符串中出现的所有 `oldChar` 得到的；
+    ```java
     public static void main(String[] args) {
         String str = "123456";
         // 223456
         System.out.println(str.replace('1', '2'));
     }
-```
-
-##### replaceAll
-使用给定的 `replacement` 替换此字符串所有匹配给定的正则表达式的子字符串.
-
-源码
-```
-    public String replaceAll(String regex, String replacement) {
-        return Pattern.compile(regex).matcher(this).replaceAll(replacement);
-    }
-    
-```
-```
-    // complile 解析正则表达式 获得 Pattern对象
-    public static Pattern compile(String regex) {
-        return new Pattern(regex, 0);
-    }
-    
-    //matcher 获取匹配器对象
-    public Matcher matcher(CharSequence input) {
-        if (!compiled) {
-            synchronized(this) {
-                if (!compiled)
-                    compile();
-            }
-        }
-        Matcher m = new Matcher(this, input);
-        return m;
-    }
-    
-    // replaceAll 进行字符串替换
-    public String replaceAll(String replacement) {
-    // 对当前Matcher类进行重置，即对其中记录匹配结果的开始和结束位置索引，以及分组信息重置
-        reset();
-        // 执行第一次搜索
-        boolean result = find();
-         // 第一次搜索匹配成功
-        if (result) {
-            // 用于记录最终的替换结果字符串
-            StringBuffer sb = new StringBuffer();
-            do {
-            // 重点：用于将从上一次匹配子字符串的下一个索引位置开始，到当前匹配的子字符串的结束索引位置的所有字符 append到字符串sb中
-                appendReplacement(sb, replacement);
-                result = find();
-            } while (result);
-            // 将从最后一次匹配子字符串的下一个索引位置，到字符串的结尾的所有字符append到字符串sb中
-            appendTail(sb);
-            return sb.toString();
-        }
-        return text.toString();
-    }
-```
-重点看一下`replaceAll`中调用的`appendReplacement`方法
-```
-    public Matcher appendReplacement(StringBuffer sb, String replacement) {
-            
-            // ...
-            
-            // 用于跟踪 replacement 字符串的索引
-            int cursor = 0;
-            
-            // 对当前匹配到子字符串替换后的结果字符串
-            StringBuffer result = new StringBuffer();
-            
-            // 遍历 replacement字符串
-            while (cursor < replacement.length()) {
-                
-                char nextChar = replacement.charAt(cursor);
-                
-                if (nextChar == '\\') {
-                    // 重点1：当字符为'\'时，跳过，并获取其后面的字符，追加到result
-                    cursor++;
-                    nextChar = replacement.charAt(cursor);
-                    result.append(nextChar);
-                    cursor++;
-                } else if (nextChar == '$') {
-                    
-                    // 重点2：当字符为$时，跳过，并获取其后面的数值，并以此如果$后面第一个不为数字则抛异常，
-                    // Skip past $
-                    cursor++;
-                    
-                    // The first number is always a group
-                    int refNum = (int)replacement.charAt(cursor) - '0';
-                    
-                    // 此处代码用于计算$符号后的数值，数值结果赋予 refNum
-                    // ...
-                    
-                    // group(refNum) 用于获取正则表达式第refNum个分组表示的字符串，不详说了
-                    if (group(refNum) != null)
-                         // 追加到result
-                        result.append(group(refNum));
-                } else {
-                    
-                    // 当前字符不为\ 或 $ 则直接追加到result
-                    result.append(nextChar);
-                    cursor++;
-                }
-            }
-            
-            // 将从上一次匹配的子字符串的结尾索引，到当前匹配的第一个字符串索引的字符串追加到sb
-            // lastAppendPosition参数为上一次执行appendReplacement方法最后追加的字符在原始字符串中的索引位置。
-            // first 参数为当前待替换的子字符串的首个字符在原始字符串中的索引位置
-            sb.append(getSubSequence(lastAppendPosition, first));
-            
-            // 将当前配置子字符串替换后的结果字符串追加到sb
-            sb.append(result.toString());
-            
-            // 更新lastAppendPosition，供下一个匹配执行appendReplacement方法使用
-            lastAppendPosition = last;
-            
-            /* sb中追加了当前匹配的子字符串与前一次匹配子字符串中间的字符，以及当前匹配子字符串被替换后的字符串
-             */
-            return this;
-        }
-```
-`replaceAll`中第二个参数`replacement`中，\ 有转义的作用， $ 用于获取分组匹配的当前子字符串 因为引入了 $ 符的分组功能，所以为了解决能输出 $ 字符，故引入 \ 转义功能.
-
-使用
-```
+    ```
+- `replaceAll`使用给定的 `replacement` 替换此字符串所有匹配给定的正则表达式的子字符串；
+    ```java
     public static void main(String[] args) {
         String str = "111111";
         // 222222
         System.out.println(str.replaceAll("1", "2"));
     }
-```
-
-##### valueOf
-该方法作用是将对象转成String类型.
-
-源码
-```
-    public static String valueOf(Object obj) {
-        return (obj == null) ? "null" : obj.toString();
-    }
-```
-使用
-```
+    ```
+- `valueOf`该方法作用是将对象转成`String`类型；
+    ```java
     public static void main(String[] args) {
         Integer integer = 11111;
         String str = String.valueOf(integer);
         // 11111
         System.out.println(str);
     }
-```
+    ```
 
 ### 长度限制
-翻阅String源码在String源码中发现有定义字符串长度的构造函数
-```
-    // count 就是 字符串定义长度 
-    public String(char value[], int offset, int count) {
-        if (offset < 0) {
-            throw new StringIndexOutOfBoundsException(offset);
-        }
-        if (count <= 0) {
-            if (count < 0) {
-                throw new StringIndexOutOfBoundsException(count);
-            }
-            if (offset <= value.length) {
-                this.value = "".value;
-                return;
-            }
-        }
-        // Note: offset or count might be near -1>>>1.
-        if (offset > value.length - count) {
-            throw new StringIndexOutOfBoundsException(offset + count);
-        }
-        this.value = Arrays.copyOfRange(value, offset, offset+count);
-    }
-```
-通过源码可以看到`int`的最大长度就是`String`的支持的最大长度.
-```
-    public static void main(String[] args) {
-        // 2,147,483,648 = 2^31 - 1 
-        System.out.println(Integer.MAX_VALUE);
-    }
-```
-**注意`new String(char value[], int offset, int count)`是运行时`String`支持的最大长度.**
+Java中的`String`内部是用一个字符数组`char[]`存储字符数据的，数组的最大长度限制由Java虚拟机规范决定。
+所以理论上，Java数组的最大长度是`Integer.MAX_VALUE(2^31 - 1)`，即2147483647，这也是String的长度限制，但在实际操作中，能分配的最大数组长度受可用内存限制。
 
-
-在`String`编译声明期间，用`javac`编译 长度为`2^31 -1`的字符串.
-```
-    public static void main(String[] args) {
-        // 长度: 2^31 -1
-        String str = "1111 ... ";
-        System.out.println(str);
-    }
-```
-```
-java: 常量字符串过长
-```
-
-在`Gen`类中相关报错信息源码
-```
+但是并不是这样，实际上在程序编译期根据`StringJVM常量池`规范`String`字符串在声明时最大为65534。
+字符串字面量的长度不能超过65535字符，如果字符串字面量长度超过这个限制，编译器会抛出错误。
+```java
 private void checkStringConstant(DiagnosticPosition var1, Object var2) {
     if (this.nerrs == 0 && var2 != null && var2 instanceof String && ((String)var2).length() >= 65535) {
         this.log.error(var1, "limit.string", new Object[0]);
@@ -1366,27 +1123,10 @@ private void checkStringConstant(DiagnosticPosition var1, Object var2) {
     }
 }
 ```
-可以看到源码中如果`String`长度大于等于65535会导致编译失败
 
-在编译期的时候，字面量要进字符串常量池.所以要遵守[《Java®虚拟机规范》(Java8)中对字符串常量池的描述.](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.4.3)
-
-`CONSTANT_String_info` 用于表示 `java.lang.String` 类型的常量对象结构体
-
-`CONSTANT_String_info`格式如下:
-``` 
-CONSTANT_String_info {
-    u1 tag;
-    u2 string_index;
-}
-```
-
-> **tag**<br>
-> 结构`CONSTANT_String_info`的标签项的值为`CONSTANT_String(8)`
-
-> **string_index**<br>
-> `string_index` 项的值必须是对常量池的有效索引，常量池在该索引处的项必须是 `CONSTANT_Utf8_info` 结构，表示一组 `Unicode` 码点序列，这组 Unicode 码点序列最终会被初始化为一个 下 `Unicode` 对象
-
-`CONSTANT_Utf8_info`是一个`CONSTANT_Utf8`类型的常量池数据项，它存储的是一个常量字符串。常量池中的所有字面量几乎都是通过`CONSTANT_Utf8_info`描述的。`CONSTANT_Utf8_info`的定义如下：
+还有一点，`Stirng`长度之所以会受限制，是因JVM规范对常量池有所限制。
+[CONSTANT_Utf8_info](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.4.7)是一个`CONSTANT_Utf8`类型的常量池数据项，它存储的是一个常量字符串。
+常量池中的所有字面量几乎都是通过`CONSTANT_Utf8_info`描述的，`CONSTANT_Utf8_info`的定义如下：
 ```
 ONSTANT_Utf8_info {
     u1 tag;
@@ -1394,138 +1134,78 @@ ONSTANT_Utf8_info {
     u1 bytes[length];
 }
 ```
-`length`则指明了 `bytes`数组的长度，其类型为`u2`
+- `tag`：`CONSTANT_Utf8_info`结构的标记项值为`CONSTANT_Utf8(1)`；
+- `length`：`length`项的值表示字节数组中的字节数，而不是结果字符串的长度，其类型为`u2`；
+- `bytes[]`：字节数组包含字符串的字节数；
 
-通过查阅《JVM规范》发现`u2`表示两个字节的无符号数，那么1个字节有8位，2个字节就有16位。16位无符号数可表示的最大值位`2^16 - 1 = 65535`。也就是说，`Class`文件中常量池的格式规定了，其字符串常量的长度不能超过65535。
+到了这里长度终于出来了，那就是`length`。通过查阅《JVM规范》发现`u2`表示两个字节的无符号数，那么1个字节有8位，2个字节就有16位。
+16位无符号数可表示的最大值位`2^16 - 1 = 65535`。也就是说，`Class`文件中常量池的格式规定了，每个字符串常量的最大长度为65535字节。
 
+所以对`String`的长度限制主要有两点：
+1. `Class`文件中常量池的格式规定了，每个字符串常量的最大长度为65535字节；
+2. `checkStringConstant`方法，规定字符串字面量的长度不能超过65535字符，即最大65534个字符；
 
-**关于编译器字符串最大长度65534的问题**
->如果一个方法的Java虚拟机代码长度正好是65535字节，并且以一个1字节长的指令结束，那么该指令不能被异常处理程序保护。编译器作者可以通过将任何方法、实例初始化方法或静态初始化器(任何代码数组的大小)生成的Java虚拟机代码的最大大小限制为65534字节来解决这个问题
+所以一个字符串字面量最多可以包含65534个字符，但它的存储空间（字节数）并不会超过65535字节。
 
-**简单来说**
-- 在程序运行时String最大长度为int最大长度为`2^31 -1`
-- 在程序编译期根据`String`JVM常量池规范String字符串在声明时最大为 65535，但是为了修复`Java`的遗留问题改为65534
+所以`String`类长度限制是多少？
+- 在编译期间，长度不能超过65535个字符，即最大65534个字符，但65534个字符存储空间不会超过65535字节；
+- 在运行期，`String`对象的长度理论上可以达到`Integer.MAX_VALUE (2^31 - 1)`个字符，即 2,147,483,647 个字符，大概4G。
+  在实际应用中，字符串的最大长度受限于可用内存和JVM配置；
 
-在程序开发中，需要注意如果你用`String`变量接收Base64图片或音频视频需要注意不要超过在程序运行时字符串的最大阈值.
+在程序开发中，如果用`String`变量接收`Base64`图片或音频视频，需要注意不要超过程序运行时字符串的最大阈值。
 
-### 编码问题
-
-因为全世界有很多编程人员，有很多语言，不同的国家使用不同的语言，如果说没有一套统一的编码规则，这么多语言混在一起，很容易出现乱码现象，本着既方便又节约内存的理念大家基本都是用`utf-8`码来编写程序.
+### String类与编码
+Java中的`String`类是基于`Unicode`字符集设计的，它可以存储任意`Unicode`字符。
+`Unicode`为世界上几乎所有的字符集提供了唯一的标识码，因此Java的`String`类可以处理多语言字符和符号。
 
 #### Unicode
-> Unicode（中文：万国码、国际码、统一码、单一码）是计算机科学领域里的一项业界标准。它对世界上大部分的文字系统进行了整理、编码，使得计算机可以用更为简单的方式来呈现和处理文字.
+`Unicode`（中文：万国码、国际码、统一码、单一码）是计算机科学领域里的一项业界标准。
+它对世界上大部分的文字系统进行了整理、编码，使得计算机可以用更为简单的方式来呈现和处理文字。
 
-> Unicode伴随着通用字符集的标准而发展，同时也以书本的形式对外发表。Unicode至今仍在不断增修，每个新版本都加入更多新的字符。目前最新的版本为2018年6月5日公布的11.0.0，已经收录超过13万个字符（第十万个字符在2005年获采纳）。Unicode涵盖的数据除了视觉上的字形、编码方法、标准的字符编码外，还包含了字符特性，如大小写字母。
+`Unicode`伴随着通用字符集的标准而发展，同时也以书本的形式对外发表。`Unicode`至今仍在不断增修，每个新版本都加入更多新的字符。
+目前最新的版本为2018年6月5日公布的11.0.0，已经收录超过13万个字符（第十万个字符在2005年获采纳）。
+`Unicode`涵盖的数据除了视觉上的字形、编码方法、标准的字符编码外，还包含了字符特性，如大小写字母。
 
-`Unicode`是一种编码规范，是为解决全球字符通用编码而设计的，而`UTF-8 UTF-16`等是这种规范的一种实现.`Unicode`是字符集而`UTF-8`是编码规则。
+`Unicode`是一种编码规范，是为解决全球字符通用编码而设计的，而`UTF-8`、`UTF-16`等是这种规范的一种实现，`Unicode`是字符集而`UTF-8`是编码规则。
+在Java虚拟机内部，`String`对象的存储是以`UTF-16`编码形式进行的。`UTF-16`编码是一种`Unicode`字符集的编码方式，它采用16位（即2个字节）编码单元来表示大部分字符，辅助字符则需要使用4个字节来表示。
 
-Java内部采用`Unicode`编码规范，也就是支持多语言的，具体采用的`UTF-16`编码方式.
+不管程序过程中用到了`GBK`还是`ISO8859-1`等格式，在存储与传递的过程中实际传递的都是`Unicode`编码的数据，要想接收到的值不出现乱码，就要保证传过去的时候用的是X编码，接收的时候也用X编码来转换接收。
 
-**不管程序过程中用到了`GBK`还是`ISO8859-1`等格式，在存储与传递的过程中实际传递的都是`Unicode`编码的数据，要想接收到的值不出现乱码，就要保证传过去的时候用的是X编码，接收的时候也用X编码来转换接收**
+#### 编码与解码
+字符串的编码和解码在Java中是非常常见和重要的操作，特别是在处理文件、网络通信或与外部系统交互时。
+- 编码是将字符串转换为字节序列的过程；
+- 解码是将字节序列转换为字符串的过程；
 
-#### 乱码原因
-**编码时格式和解码时格式不一致.**
+字符串的编码和解码代码演示：
+```java
+public class StringEncodingExample {
 
-`string`在文件里面底层保存形式是二进制，底层用`byte[]`数组存储(Java9. Java8是用`char`数组储存).`byte[]`数组里面的内容可以按照不同的编码格式存放.在读取字符串的时候，也可以按照不同的解码格式存放.这样就造成了**乱码**.
+    public static void main(String[] args) {
+        String originalString = "Hello, 你好";
+        String charsetName = "UTF-8";
 
-简单理解为
+        // 编码：String -> byte[]
+        try {
+            byte[] utf8Bytes = originalString.getBytes(charsetName);
+            System.out.println("Encoded UTF-8 bytes: " + bytesToHex(utf8Bytes));
 
-在编码(字符串到字节)的时候是用一种编码;而在解码(从字节到字符串)的时候用另一种编码;所以导致乱码问题.**所以想要避免乱码问题最简单的办法就是从始至终，都用同一种字符格式**
-
-#### 相关方法
-
-`String`类有两种比较常用的操作编码方式
-```
-    // 注意处理异常
-    public static void main(String[] args) throws UnsupportedEncodingException {
-        // 本地使用的是 utf-8 的编码
-        String str = "你好";
-        byte[] bytes = str.getBytes("utf-8");
-        // 你好
-        System.out.println(new String(bytes));
-        String string = new String(str.getBytes(), "utf-8");
-        // 你好
-        System.out.println(string);
-    }
-```
-##### getBytes(String charsetName)
-该方法会根据指定的`decode`编码返回某字符串在该编码下的`byte`数组表示
-
-源码
-```
-    public byte[] getBytes(String charsetName)
-            throws UnsupportedEncodingException {
-        if (charsetName == null) throw new NullPointerException();
-        return StringCoding.encode(charsetName, value, 0, value.length);
-    }
-```
-`StringCoding.encode`方法
-```
-// len: 当前字符串长度
-static byte[] encode(String charsetName, char[] ca, int off, int len)
-        throws UnsupportedEncodingException
-    {
-        StringEncoder se = deref(encoder);
-        // 如果为空 默认ISO-8859-1
-        String csn = (charsetName == null) ? "ISO-8859-1" : charsetName;
-        // 
-        if ((se == null) || !(csn.equals(se.requestedCharsetName())
-                              || csn.equals(se.charsetName()))) {
-            se = null;
-            try {
-                // 根据编码获取 Charset对象
-                Charset cs = lookupCharset(csn);
-                if (cs != null)
-                    se = new StringEncoder(cs, csn);
-            } catch (IllegalCharsetNameException x) {}
-            if (se == null)
-                throw new UnsupportedEncodingException (csn);
-            set(encoder, se);
+            // 解码：byte[] -> String
+            String decodedString = new String(utf8Bytes, charsetName);
+            System.out.println("Decoded String: " + decodedString);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-        return se.encode(ca, off, len);
     }
-```
 
-
-##### new String(byte bytes[], String charsetName)
-该方法为字节数组构造
-
-`char[]`数组是以`unicode`码来存储的，`String`和`char`为内存形式.`byte`是网络传输或存储的序列化形式.可以通过`charset`来解码指定的`byte`数组，将其解码成`unicode`的`char[]`数组，构造`String`.
-
-源码
-```
-    public String(byte bytes[], String charsetName)
-            throws UnsupportedEncodingException {
-        this(bytes, 0, bytes.length, charsetName);
-    }
-```
-```
-    public String(byte bytes[], int offset, int length, String charsetName)
-            throws UnsupportedEncodingException {
-        if (charsetName == null)
-            throw new NullPointerException("charsetName");
-        checkBounds(bytes, offset, length);
-        this.value = StringCoding.decode(charsetName, bytes, offset, length);
-    }
-```
-```
-    static char[] decode(String charsetName, byte[] ba, int off, int len)
-        throws UnsupportedEncodingException
-    {
-        StringDecoder sd = deref(decoder);
-        String csn = (charsetName == null) ? "ISO-8859-1" : charsetName;
-        if ((sd == null) || !(csn.equals(sd.requestedCharsetName())
-                              || csn.equals(sd.charsetName()))) {
-            sd = null;
-            try {
-                Charset cs = lookupCharset(csn);
-                if (cs != null)
-                    sd = new StringDecoder(cs, csn);
-            } catch (IllegalCharsetNameException x) {}
-            if (sd == null)
-                throw new UnsupportedEncodingException(csn);
-            set(decoder, sd);
+    // 辅助方法：将字节数组转换为十六进制字符串表示
+    private static String bytesToHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02X ", b));
         }
-        return sd.decode(ba, off, len);
+        return sb.toString().trim();
     }
+}
 ```
+在解码时，可能会出现乱码，原因是编码时格式和解码时格式不一致导致。
+即在编码时，是用一种编码，而在解码时，用的是另一种编码，所以导致乱码问题。所以想要避免乱码问题最简单的办法就是从始至终，都用同一种字符格式。
