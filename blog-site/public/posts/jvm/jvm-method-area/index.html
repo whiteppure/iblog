@@ -95,8 +95,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#hotspot%e4%b8%adjdk7%e4%b8%8ejdk8">
-                    HotSpot中JDK7与JDK8
+                <a class="nav-link text-left" href="#jdk7%e4%b8%8ejdk8%e7%9a%84%e6%96%b9%e6%b3%95%e5%8c%ba">
+                    JDK7与JDK8的方法区
                 </a>
             </li>
             
@@ -181,30 +181,6 @@
             
         </ul>
         
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#oom">
-                    OOM
-                </a>
-            </li>
-            
-            
         </ul>
         
         </ul>
@@ -580,16 +556,16 @@
 <p>方法区和永久代以及元空间是什么关系呢？</p>
 <p>方法区和永久代以及元空间的关系很像 Java 中接口和类的关系，类实现了接口，这里的类就可以看作是永久代和元空间，接口可以看作是方法区，也就是说永久代以及元空间是 HotSpot 虚拟机对虚拟机规范中方法区的两种实现方式。
 并且永久代是 JDK 1.8 之前的方法区实现，JDK 1.8 及以后方法区的实现变成了元空间。</p>
-<h2 id="hotspot中jdk7与jdk8">HotSpot中JDK7与JDK8</h2>
-<p>在JDK7及以前，习惯上把方法区，称为永久代。JDK8开始，使用元空间取代了永久代。JDK 1.8后，元空间存放在直接内存中。</p>
+<h2 id="jdk7与jdk8的方法区">JDK7与JDK8的方法区</h2>
+<p>在HotSpot，JDK7及以前，习惯上把方法区，称为永久代。JDK8开始，使用元空间取代了永久代，JDK 1.8后，元空间存放在直接内存中。</p>
 <div style="width: 45%;display: inline-block">
     <img src="/iblog/posts/annex/images/essays/jvm1.8之前.png" alt="jvm1.8之前">
 </div>
 <div style="width: 45%;display: inline-block">
     <img src="/iblog/posts/annex/images/essays/jvm1.8.png" alt="jvm1.8">
 </div>
-<p>元空间的本质和永久代类似，都是对JVM规范中方法区的实现。不过元空间与永久代最大的区别在于：元空间不在虚拟机设置的内存中，而是使用本地内存。</p>
-<p>永久代、元空间二者并不只是名字变了，内部结构也调整了。根据《Java虚拟机规范》的规定，如果方法区无法满足新的内存分配需求时，将抛出OOM异常。</p>
+<p>元空间的本质和永久代类似，都是对JVM规范中方法区的实现。不过元空间与永久代最大的区别在于，元空间不在虚拟机设置的内存中，而是使用本地内存。
+永久代、元空间二者并不只是名字变了，内部结构也调整了。根据《Java虚拟机规范》的规定，如果方法区无法满足新的内存分配需求时，将抛出OOM异常。</p>
 <h2 id="设置方法区大小">设置方法区大小</h2>
 <p>方法区的大小不必是固定的，JVM可以根据应用的需要动态调整。</p>
 <h3 id="jdk7及之前">JDK7及之前</h3>
@@ -602,40 +578,10 @@
 与永久代不同，如果不指定大小，默认情况下，虚拟机会耗尽所有的可用系统内存。如果元数据区发生溢出，虚拟机一样会抛出异常<code>OutOfMemoryError:Metaspace</code>。
 可通过<code>-XX:MetaspaceSize=size</code>设置初始的元空间大小。</p>
 <p>对于一个64位的服务器端JVM来说，其默认的<code>-XX:MetaspaceSize</code>值为21M。
-这就是初始的高水位线，一旦触及这个水位线，FullGC将会被触发并卸载没用的类即这些类对应的类加载器不再存活然后这个高水位线将会重置。
+这就是初始的高水位线，一旦触及这个水位线，<code>FullGC</code>将会被触发并卸载没用的类即这些类对应的类加载器不再存活然后这个高水位线将会重置。
 新的高水位线的值取决于GC后释放了多少元空间。如果释放的空间不足，那么在不超过<code>MaxMetaspaceSize</code>时，适当提高该值。如果释放空间过多，则适当降低该值。</p>
-<p>如果初始化的高水位线设置过低，上述高水位线调整情况会发生很多次。通过垃圾回收器的日志可以观察到FullGC多次调用。
+<p>如果初始化的高水位线设置过低，上述高水位线调整情况会发生很多次。通过垃圾回收器的日志可以观察到<code>FullGC</code>多次调用。
 <strong>为了避免频繁地GC，建议将<code>-XX:MetaspaceSize=size</code>设置为一个相对较高的值。</strong></p>
-<h2 id="oom">OOM</h2>
-<p>JDK8 方法区/元空间 OOM代码演示</p>
-<p>设置虚拟机参数</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-XX:MetaspaceSize=10m -XX:MaxMetaspaceSize=10m
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">MainTest</span>  <span class="k">extends</span> <span class="n">ClassLoader</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">MainTest</span> <span class="n">mainTest</span> <span class="o">=</span> <span class="n">new</span> <span class="n">MainTest</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="ne">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">try</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="ne">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">                <span class="n">ClassWriter</span> <span class="n">classWriter</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ClassWriter</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">                <span class="n">classWriter</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">Opcodes</span><span class="o">.</span><span class="n">V1_8</span><span class="p">,</span><span class="n">Opcodes</span><span class="o">.</span><span class="n">ACC_PUBLIC</span> <span class="p">,</span><span class="s2">&#34;Class&#34;</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span><span class="n">null</span><span class="p">,</span><span class="s2">&#34;java/lang/Object&#34;</span><span class="p">,</span><span class="n">null</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">                <span class="n">byte</span><span class="p">[]</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">classWriter</span><span class="o">.</span><span class="n">toByteArray</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">                <span class="n">mainTest</span><span class="o">.</span><span class="n">defineClass</span><span class="p">(</span><span class="s2">&#34;Class&#34;</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="n">bytes</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bytes</span><span class="o">.</span><span class="n">length</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">                <span class="n">count</span> <span class="o">++</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span><span class="n">finally</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="n">count</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>如何解决OOM或堆栈的异常？</p>
-<ol>
-<li>要解决OOM异常或堆栈的异常，一般的手段是首先通过内存映像分析工具，对dump出来的堆转储快照进行分析，重点是确认内存中的对象是否是必要的，也就是要先分清楚到底是出现了内存泄漏（Memory Leak）还是内存溢出（Memory Overflow）。</li>
-<li>如果是内存泄漏，可进一步通过工具查看泄漏对象到GC Roots的引用链。于是就能找到泄漏对象是通过怎样的路径与GCRoots相关联并导致垃圾收集器无法自动回收它们的。
-掌握了泄漏对象的类型信息，以及GCRoots引用链的信息，就可以比较准确地定位出泄漏代码的位置。</li>
-<li>如果不存在内存泄漏，换句话说就是内存中的对象确实都还必须存活着，那就应当检查虚拟机的堆参数（-Xmx与-Xms），与机器物理内存对比看是否还可以调大，从代码上检查是否存在某些对象生命周期过长、持有状态时间过长的情况，尝试减少程序运行期的内存消耗。</li>
-</ol>
 <h2 id="方法区的内部结构">方法区的内部结构</h2>
 <p>方法区用于存储已被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等。</p>
 <p><img alt="方法区内部结构" src="/iblog/posts/annex/images/essays/%E6%96%B9%E6%B3%95%E5%8C%BA%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84.png"></p>
