@@ -102,8 +102,7 @@ top: true
 `String`类是有长度限制的。Java中的`String`内部是用一个字符数组`char[]`存储字符数据的，数组的最大长度限制由Java虚拟机规范决定。
 理论上，Java数组的最大长度是`Integer.MAX_VALUE(2^31 - 1)`，即2147483647，但在实际操作中，能分配的最大数组长度受可用内存限制。
 
-但是并不是这样，实际上在程序编译期根据`StringJVM常量池`规范`String`字符串在声明时最大为65534。
-字符串字面量的长度不能超过65535字符，如果字符串字面量长度超过这个限制，编译器会抛出错误。
+但是并不是这样，字符串字面量的长度不能超过65535字符，如果字符串字面量长度超过这个限制，编译器会抛出错误。
 ```java
 private void checkStringConstant(DiagnosticPosition var1, Object var2) {
     if (this.nerrs == 0 && var2 != null && var2 instanceof String && ((String)var2).length() >= 65535) {
@@ -208,6 +207,8 @@ Type erasure ensures that no new classes are created for parameterized types; co
     ```
 
 #### new Integer(12)与int b=12是否相等
+
+#### new String("abc")会产生几个对象
 
 ### 多线程
 #### 说说你对并发编程的理解

@@ -315,6 +315,38 @@
             
         <ul class="nav">
             
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#new-stringabc%e4%bc%9a%e4%ba%a7%e7%94%9f%e5%87%a0%e4%b8%aa%e5%af%b9%e8%b1%a1">
+                    new String(“abc”)会产生几个对象
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
             
             <li class="nav-item">
                 <a class="nav-link text-left" href="#%e5%a4%9a%e7%ba%bf%e7%a8%8b">
@@ -6538,8 +6570,7 @@
 <h4 id="string类有没有长度限制">String类有没有长度限制</h4>
 <p><code>String</code>类是有长度限制的。Java中的<code>String</code>内部是用一个字符数组<code>char[]</code>存储字符数据的，数组的最大长度限制由Java虚拟机规范决定。
 理论上，Java数组的最大长度是<code>Integer.MAX_VALUE(2^31 - 1)</code>，即2147483647，但在实际操作中，能分配的最大数组长度受可用内存限制。</p>
-<p>但是并不是这样，实际上在程序编译期根据<code>StringJVM常量池</code>规范<code>String</code>字符串在声明时最大为65534。
-字符串字面量的长度不能超过65535字符，如果字符串字面量长度超过这个限制，编译器会抛出错误。</p>
+<p>但是并不是这样，字符串字面量的长度不能超过65535字符，如果字符串字面量长度超过这个限制，编译器会抛出错误。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkStringConstant</span><span class="p">(</span><span class="n">DiagnosticPosition</span><span class="w"> </span><span class="n">var1</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">var2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">nerrs</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">var2</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">var2</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">((</span><span class="n">String</span><span class="p">)</span><span class="n">var2</span><span class="p">).</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">65535</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">log</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="n">var1</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;limit.string&#34;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="p">);</span><span class="w">
@@ -6635,6 +6666,7 @@
 </span></span></span></code></pre></div></li>
 </ol>
 <h4 id="new-integer12与int-b12是否相等">new Integer(12)与int b=12是否相等</h4>
+<h4 id="new-stringabc会产生几个对象">new String(&ldquo;abc&rdquo;)会产生几个对象</h4>
 <h3 id="多线程">多线程</h3>
 <h4 id="说说你对并发编程的理解">说说你对并发编程的理解</h4>
 <h4 id="简述线程池原理">简述线程池原理</h4>
