@@ -599,7 +599,6 @@ hr {
 }
 
 table {
-  width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
 }
@@ -611,7 +610,6 @@ table th {
 table th, table td {
   padding: 10px 20px;
   border: 1px solid #dfe2e5;
-  text-align: left;
 }
 
 
@@ -663,7 +661,7 @@ a.back_to_top:hover span {
   color: #555555;
 }
 
-@media print, screen and (max-width: 1000px) {
+@media print, screen and (max-width: 680px) {
   .nav_container {
     position: relative;
     z-index: 999;
@@ -691,32 +689,52 @@ a.back_to_top:hover span {
     right: 0;
     display: block;
   }
-  /* 按钮隐藏*/
-  #top_to_back,#content_hidden,#back_to_top,#search-btn{
+  .back_to_top {
     display: none !important;
   }
 }
 
-/*1800以上*/
-@media screen and (min-width: 1800px) {
-  .content{
-    width: 95%;
+@media screen and (min-width: 1600px) {
+  .main {
+    width: 1000px;
   }
-  .main{
-    width: 50%;
+  .nav_container {
+    width: 840px;
   }
-  .header{
-    width: 95%;
-  }
-  .nav_container{
-    width: 95%;
+  .header,
+  .content {
+    width: 820px;
   }
 }
 
-@media (min-width: 1000px) and (max-width: 1350px) {
-  #page-scrollspy{
-    display: none;
+@media ( max-width: 900px ) and (min-width: 375px) {
+  .main {
+    width: 95%;
+    margin-top: 20px;
   }
+  .nav_container {
+    width: 95%;
+  }
+  .header,
+  .content {
+    width: 90%;
+  }
+  .post_page {
+    padding-top: 0;
+  }
+  .footer a {
+    margin: 0 6px;
+  }
+  .post {
+    margin-top: 40px;
+  }
+  .post .post_title a {
+    font-size: 1.4rem;
+  }
+  .post_footer {
+    padding-bottom: 30px;
+  }
+
 }
 
 
