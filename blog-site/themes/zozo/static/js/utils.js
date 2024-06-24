@@ -49,7 +49,7 @@ function downloadFile(fileFullName,fileFullType,content){
 }
 
 
-
+// 导出word
 function wordExport(contentNode) {
     var static = {
         mhtml: {
@@ -152,3 +152,4 @@ function wordExport(contentNode) {
 
     return blob;
 }
+

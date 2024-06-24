@@ -265,15 +265,15 @@ public static void main(String[] args) {
 // ...
 ```
 ```java
-    public static void main(String[] args) {
-        int var1 = 1;
-        int var2 = 0;
-        if (var2 > 1){
-            var1 = 1;
-        } else {
-            var1 = 2;
-        }
-    }
+  public static void main(String[] args) {
+      int var1 = 1;
+      int var2 = 0;
+      if (var2 > 1){
+          var1 = 1;
+      } else {
+          var1 = 2;
+      }
+  }
 ```
 ```class
   // ...

@@ -147,6 +147,78 @@ $(document).ready((function (_this) {
 })(this))
 
 
+// 监听点击图像
+document.addEventListener('DOMContentLoaded', (event) => {
+  var modal = document.createElement('div');
+  modal.setAttribute('id', 'myModal');
+  modal.setAttribute('class', 'modal');
+  document.body.appendChild(modal);
+
+  var modalImg = document.createElement('img');
+  modalImg.setAttribute('class', 'modal-content');
+  modalImg.setAttribute('id', 'img01');
+  modal.appendChild(modalImg);
+
+  var span = document.createElement('span');
+  span.setAttribute('class', 'close');
+  span.innerHTML = '&times;';
+  modal.appendChild(span);
+
+  var prev = document.createElement('span');
+  prev.setAttribute('class', 'prev');
+  prev.innerHTML = '&#10094;';
+  modal.appendChild(prev);
+
+  var next = document.createElement('span');
+  next.setAttribute('class', 'next');
+  next.innerHTML = '&#10095;';
+  modal.appendChild(next);
+
+  var images = document.querySelectorAll('img');
+  var currentIndex = -1;
+
+  images.forEach((img, index) => {
+    img.style.cursor = 'pointer';
+    img.onclick = function() {
+      modal.style.display = 'flex';
+      modalImg.src = this.src;
+      currentIndex = index;
+    }
+  });
+
+  span.onclick = function() {
+    modal.style.display = 'none';
+  }
+
+  prev.onclick = function() {
+    currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+    modalImg.src = images[currentIndex].src;
+  }
+
+  next.onclick = function() {
+    currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+    modalImg.src = images[currentIndex].src;
+  }
+
+  modal.onclick = function(event) {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  }
+
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+      modal.style.display = 'none';
+    }
+    if (event.key === 'ArrowLeft') {
+      prev.click();
+    }
+    if (event.key === 'ArrowRight') {
+      next.click();
+    }
+  });
+});
+
 
 function hiddenNotContent(){
   const notContentObjs = getNotContent();
@@ -210,5 +282,4 @@ function getNotContent(){
     document.getElementById('fastSearch')
   ]
 }
-
 

@@ -8,6 +8,15 @@
   z-index: 1;
 }
 
+.darkmode--activated .main{
+  box-shadow: 0 10px 20px 0 rgba(222, 222, 222, 0.7);
+  background: rgba(222, 222, 222);
+}
+.darkmode--activated .post{
+  background: rgba(222, 222, 222);
+}
+
+
 html {
   background-color: #f7f7f7;
   -webkit-font-smoothing: antialiased;
@@ -30,7 +39,7 @@ html::-webkit-scrollbar-thumb {
 }
 
 body {
-  color: #333333;
+  color: #000;
   font-family: "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 16px;
   width: 100%;
@@ -560,16 +569,16 @@ hr {
 
 .markdown blockquote {
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   margin: 2.5em 0;
-  padding: 0 0 0 50px;
-  font-style: italic;
+  padding: 10px;
   color: #555555;
-  border-left: none;
+  border-left: 8px solid #dddfe4;
+  background: #eef0f4;
 }
 
 .markdown blockquote:before {
-  content: '“';
+  /*content: '“';*/
   display: block;
   font-family: times, sans-serif;
   font-style: normal;
@@ -661,7 +670,7 @@ a.back_to_top:hover span {
   color: #555555;
 }
 
-@media print, screen and (max-width: 680px) {
+@media print, screen and (max-width: 1000px) {
   .nav_container {
     position: relative;
     z-index: 999;
@@ -675,7 +684,7 @@ a.back_to_top:hover span {
     width: 100%;
     background-color: #ffffff;
     -webkit-box-shadow: 0 10px 20px 0 rgba(236, 236, 236, 0.86);
-            box-shadow: 0 10px 20px 0 rgba(236, 236, 236, 0.86);
+    box-shadow: 0 10px 20px 0 rgba(236, 236, 236, 0.86);
   }
   .nav_container .site_nav ul {
     float: none;
@@ -689,54 +698,35 @@ a.back_to_top:hover span {
     right: 0;
     display: block;
   }
-  .back_to_top {
+  /* 按钮隐藏*/
+  #top_to_back,#content_hidden,#back_to_top,#search-btn,
+  #darkmode-layer,#darkmode-toggle,
+  #icon_more{
     display: none !important;
   }
 }
 
-@media screen and (min-width: 1600px) {
-  .main {
-    width: 1000px;
+/*1800以上*/
+@media screen and (min-width: 1800px) {
+  .content{
+    width: 95%;
   }
-  .nav_container {
-    width: 840px;
+  .main{
+    width: 50%;
   }
-  .header,
-  .content {
-    width: 820px;
+  .header{
+    width: 95%;
+  }
+  .nav_container{
+    width: 95%;
   }
 }
 
-@media ( max-width: 900px ) and (min-width: 375px) {
-  .main {
-    width: 95%;
-    margin-top: 20px;
+@media (min-width: 1000px) and (max-width: 1350px) {
+  #page-scrollspy{
+    display: none;
   }
-  .nav_container {
-    width: 95%;
-  }
-  .header,
-  .content {
-    width: 90%;
-  }
-  .post_page {
-    padding-top: 0;
-  }
-  .footer a {
-    margin: 0 6px;
-  }
-  .post {
-    margin-top: 40px;
-  }
-  .post .post_title a {
-    font-size: 1.4rem;
-  }
-  .post_footer {
-    padding-bottom: 30px;
-  }
-
 }
-
 
 
 /*animation starts*/
