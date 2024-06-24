@@ -6269,23 +6269,23 @@ JDK1.8版本的<code>ConcurrentHashMap</code>的数据结构已经接近<code>Ha
     }).showWidget();
 
     function addDarkmodeWidget(){
-        
         const hours = new Date().getHours();
-        
-        new Darkmode({
-            right: '32px', 
-            bottom: 'unset', 
-            
-            time: '0.3s', 
-            mixColor: '#f7f7f7', 
-            backgroundColor: '#f7f7f7', 
-            buttonColorDark: '#212121', 
-            buttonColorLight: '#f7f7f7', 
-            saveInCookies: false, 
-            autoMatchOsTheme: true 
-        }).toggle();
-        
+        if (hours >= 19 || hours <= 5){
+            new Darkmode({
+                right: '32px', 
+                bottom: 'unset', 
+                
+                time: '0.3s', 
+                mixColor: '#f7f7f7', 
+                backgroundColor: '#f7f7f7', 
+                buttonColorDark: '#212121', 
+                buttonColorLight: '#f7f7f7', 
+                saveInCookies: false, 
+                autoMatchOsTheme: true 
+            }).toggle();
+        }
     }
+    
     
 </script>
 
