@@ -1138,8 +1138,8 @@
                         
                     </div>
                     <div class="post_content markdown"><h2 id="基本类型">基本类型</h2>
-<p>Java语言提供了八种基本类型。六种数值类型（四个整数型，两个浮点型），一种字符类型，还有一种布尔型，俗称4类8种。</p>
-<p>这里只介绍称4类8种，实际上，Java中还存在另外一种基本类型 <code>void</code>，它也有对应的包装类<code>java.lang.Void</code>，不过我们无法直接对它们进行操作。</p>
+<p>Java语言提供了八种基本类型。六种数值类型（四个整数型，两个浮点型），一种字符类型，还有一种布尔型，俗称4类8种。
+这里只介绍称4类8种，实际上，Java中还存在另外一种基本类型 <code>void</code>，它也有对应的包装类<code>java.lang.Void</code>，不过我们无法直接对它们进行操作。</p>
 <table>
 <thead>
 <tr>
@@ -1243,8 +1243,8 @@ JVM 会在编译时期将 boolean 类型的数据转换为 int，使用 1 来表
 </span></span></code></pre></div></li>
 </ul>
 <h4 id="显式类型转换">显式类型转换</h4>
-<p>显式类型转换也叫强制类型转换，显式类型转换在可能出现数据丢失或溢出的风险的情况下进行，需要使用强制类型转换运算符。</p>
-<p>基本类型的显式转换顺序：</p>
+<p>显式类型转换也叫强制类型转换，显式类型转换在可能出现数据丢失或溢出的风险的情况下进行，需要使用强制类型转换运算符。
+基本类型的显式转换顺序：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">double -&gt; float -&gt; long -&gt; int -&gt; short -&gt; byte
 </span></span><span class="line"><span class="cl">double -&gt; float -&gt; long -&gt; int -&gt; char
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// double -&gt; float -&gt; long -&gt; int -&gt; short -&gt; byte</span><span class="w">
@@ -1261,8 +1261,8 @@ JVM 会在编译时期将 boolean 类型的数据转换为 int，使用 1 来表
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kt">int</span><span class="w"> </span><span class="n">intVal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="n">longVal</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kt">char</span><span class="w"> </span><span class="n">charValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="w"> </span><span class="n">intVal</span><span class="p">;</span><span class="w">
 </span></span></span></code></pre></div><h4 id="隐式类型转换">隐式类型转换</h4>
-<p>隐式类型转换是指编译器在编译时自动完成的类型转换，也称为自动类型转换。与显示类型转换相反，这种转换通常在没有数据丢失风险的情况下进行。</p>
-<p>Java 会自动将较小的基本数据类型转换为较大的基本数据类型，以避免数据丢失。转换顺序如下：</p>
+<p>隐式类型转换是指编译器在编译时自动完成的类型转换，也称为自动类型转换。与显示类型转换相反，这种转换通常在没有数据丢失风险的情况下进行。
+Java 会自动将较小的基本数据类型转换为较大的基本数据类型，以避免数据丢失。转换顺序如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">byte -&gt; short -&gt; int -&gt; long -&gt; float -&gt; double
 </span></span><span class="line"><span class="cl">char -&gt; int -&gt; long -&gt; float -&gt; double
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// byte -&gt; short -&gt; int -&gt; long -&gt; float -&gt; double</span><span class="w">
@@ -1363,7 +1363,7 @@ JVM 会在编译时期将 boolean 类型的数据转换为 int，使用 1 来表
 </span></span></span></code></pre></div><p><code>int</code>的自动装箱是通过<code>Integer.valueOf()</code>方法来实现的，<code>Integer</code>的自动拆箱都是通过 <code>integer.intValue</code>来实现的。</p>
 <p>其实自动装箱和自动拆箱是Java中的语法糖，用于简化基本数据类型和其对应包装类型之间的转换操作。
 当将基本数据类型赋值给对应的包装类型时，编译器会调用包装类型的<code>valueOf()</code>方法来创建一个包装对象，并将基本数据类型的值传递给这个方法；
-当需要使用包装类型对象中的值进行基本数据类型的操作时，编译器会自动调用包装类型对象的<code>xxxValue()</code>方法，将包装对象转换为对应的基本数据类型值；</p>
+当需要使用包装类型对象中的值进行基本数据类型的操作时，编译器会自动调用包装类型对象的<code>xxxValue()</code>方法，将包装对象转换为对应的基本数据类型值。</p>
 <p>自动装箱和拆箱虽然方便，但是在使用的时候也需要注意一些问题：</p>
 <ul>
 <li>比较：包装对象的数值比较，不能简单的使用<code>==</code>，虽然 -128 到 127 之间的数字可以，但是这个范围之外还是需要使用 <code>equals</code>方法进行比较；</li>
@@ -1383,57 +1383,57 @@ JVM 会在编译时期将 boolean 类型的数据转换为 int，使用 1 来表
 <p>在JDK 1.8所有的数值类缓冲池中，<code>Integer</code>的缓冲池<code>IntegerCache</code>很特殊，这个缓冲池的下界是-128，上界默认是127，但是这个上界是可调的，在启动JVM的时候，通过<code>-XX:AutoBoxCacheMax=&lt;size&gt;</code>来指定这个缓冲池的大小，该选项在 JVM 初始化的时候会设定一个名为<code>java.lang.IntegerCache.high</code>系统属性，然后 <code>IntegerCache</code>初始化的时候就会读取该系统属性来决定上界。</p>
 <p>使用<code>Integer.valueOf()</code>方法来创建<code>Integer</code>对象时，会优先从缓冲池中获取对象，如果缓冲池中不存在该值的对象，则会创建一个新的对象。
 <code>new Integer(123)</code>，这种方式会显式地创建一个新的<code>Integer</code>对象，每次调用<code>new Integer(123)</code>都会创建一个新的对象实例。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Integer x = new Integer(123);
-</span></span><span class="line"><span class="cl">Integer y = new Integer(123);
-</span></span><span class="line"><span class="cl">System.out.println(x == y);    // false 因为是两个不同的对象实例
-</span></span><span class="line"><span class="cl">Integer z = Integer.valueOf(123);
-</span></span><span class="line"><span class="cl">Integer k = Integer.valueOf(123);
-</span></span><span class="line"><span class="cl">System.out.println(z == k);   // true 因为返回的是同一个缓存池中的对象实例
-</span></span></code></pre></div><p><code>Integer.valueOf()</code>方法的实现比较简单，就是先判断值是否在缓存池中，如果在的话就直接返回缓存池的内容。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Integer</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Integer</span><span class="p">(</span><span class="n">123</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Integer</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Integer</span><span class="p">(</span><span class="n">123</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">y</span><span class="p">);</span><span class="w">    </span><span class="c1">// false 因为是两个不同的对象实例</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Integer</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">123</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Integer</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">123</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">k</span><span class="p">);</span><span class="w">   </span><span class="c1">// true 因为返回的是同一个缓存池中的对象实例</span><span class="w">
+</span></span></span></code></pre></div><p><code>Integer.valueOf()</code>方法的实现比较简单，就是先判断值是否在缓存池中，如果在的话就直接返回缓存池的内容。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public static Integer valueOf(int i) {
 </span></span><span class="line"><span class="cl">    if (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)
 </span></span><span class="line"><span class="cl">        return IntegerCache.cache[i + (-IntegerCache.low)];
 </span></span><span class="line"><span class="cl">    return new Integer(i);
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>在 Java 8 中，<code>Integer</code>缓存池的大小默认为 -128~127，在源码中也能看到具体的实现。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">static final int low = -128;
-</span></span><span class="line"><span class="cl">static final int high;
-</span></span><span class="line"><span class="cl">static final Integer cache[];
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">static {
-</span></span><span class="line"><span class="cl">    // high value may be configured by property
-</span></span><span class="line"><span class="cl">    int h = 127;
-</span></span><span class="line"><span class="cl">    String integerCacheHighPropValue =
-</span></span><span class="line"><span class="cl">        sun.misc.VM.getSavedProperty(&#34;java.lang.Integer.IntegerCache.high&#34;);
-</span></span><span class="line"><span class="cl">    if (integerCacheHighPropValue != null) {
-</span></span><span class="line"><span class="cl">        try {
-</span></span><span class="line"><span class="cl">            int i = parseInt(integerCacheHighPropValue);
-</span></span><span class="line"><span class="cl">            i = Math.max(i, 127);
-</span></span><span class="line"><span class="cl">            // Maximum array size is Integer.MAX_VALUE
-</span></span><span class="line"><span class="cl">            h = Math.min(i, Integer.MAX_VALUE - (-low) -1);
-</span></span><span class="line"><span class="cl">        } catch( NumberFormatException nfe) {
-</span></span><span class="line"><span class="cl">            // If the property cannot be parsed into an int, ignore it.
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">    high = h;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    cache = new Integer[(high - low) + 1];
-</span></span><span class="line"><span class="cl">    int j = low;
-</span></span><span class="line"><span class="cl">    for(int k = 0; k &lt; cache.length; k++)
-</span></span><span class="line"><span class="cl">        cache[k] = new Integer(j++);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // range [-128, 127] must be interned (JLS7 5.1.7)
-</span></span><span class="line"><span class="cl">    assert IntegerCache.high &gt;= 127;
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>而编译器会在自动装箱过程会调用 <code>valueOf()</code>方法，因此多个值相同且值在缓存池范围内的<code>Integer</code>实例使用自动装箱来创建，那么就会引用相同的对象。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">low</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">128</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">high</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">cache</span><span class="o">[]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">static</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// high value may be configured by property</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">127</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">integerCacheHighPropValue</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">sun</span><span class="p">.</span><span class="na">misc</span><span class="p">.</span><span class="na">VM</span><span class="p">.</span><span class="na">getSavedProperty</span><span class="p">(</span><span class="s">&#34;java.lang.Integer.IntegerCache.high&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">integerCacheHighPropValue</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parseInt</span><span class="p">(</span><span class="n">integerCacheHighPropValue</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">max</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">127</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// Maximum array size is Integer.MAX_VALUE</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">min</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">MAX_VALUE</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="o">-</span><span class="n">low</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="n">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="p">(</span><span class="w"> </span><span class="n">NumberFormatException</span><span class="w"> </span><span class="n">nfe</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// If the property cannot be parsed into an int, ignore it.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">high</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">cache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Integer</span><span class="o">[</span><span class="p">(</span><span class="n">high</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">low</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">1</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">low</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">cache</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">cache</span><span class="o">[</span><span class="n">k</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Integer</span><span class="p">(</span><span class="n">j</span><span class="o">++</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// range [-128, 127] must be interned (JLS7 5.1.7)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">assert</span><span class="w"> </span><span class="n">IntegerCache</span><span class="p">.</span><span class="na">high</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">127</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>而编译器会在自动装箱过程会调用 <code>valueOf()</code>方法，因此多个值相同且值在缓存池范围内的<code>Integer</code>实例使用自动装箱来创建，那么就会引用相同的对象。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Integer m = 123;
 </span></span><span class="line"><span class="cl">Integer n = 123;
 </span></span><span class="line"><span class="cl">System.out.println(m == n); // true
 </span></span></code></pre></div><p>所以<code>Integer</code>、<code>int </code>在 <code>-127~128</code>之间是不会创建新的对象的，即</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> Integer a = new Integer(12);
-</span></span><span class="line"><span class="cl"> int b = 12;
-</span></span><span class="line"><span class="cl"> System.out.println(a==b);//true
-</span></span></code></pre></div><h2 id="引用类型">引用类型</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Integer</span><span class="p">(</span><span class="n">12</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">12</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">a</span><span class="o">==</span><span class="n">b</span><span class="p">);</span><span class="c1">//true</span><span class="w">
+</span></span></span></code></pre></div><h2 id="引用类型">引用类型</h2>
 <p>在Java中，引用类型是指除了基本数据类型之外的所有类型，它们都是通过指向一个对象(类似于C的指针)来访问和操作的，所以叫做引用类型。所有引用类型的默认值都是<code>null</code>。</p>
 <p>引用类型主要包括：</p>
 <ul>
@@ -1502,8 +1502,8 @@ Java 中的浮点数类型 (<code>float</code>和<code>double</code>)是用来�
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><h3 id="对象的比较">对象的比较</h3>
-<p>在Java中，引用类型的比较涉及到比较对象的引用值，而不是对象的内容。这是因为在Java中，每个对象变量存储的是对象的引用地址，而不是对象本身。</p>
-<p>使用<code>==</code>操作符比较两个对象引用时，比较的是它们在内存中的地址是否相同，即是否引用同一个对象。</p>
+<p>在Java中，引用类型的比较涉及到比较对象的引用值，而不是对象的内容。这是因为在Java中，每个对象变量存储的是对象的引用地址，而不是对象本身。
+使用<code>==</code>操作符比较两个对象引用时，比较的是它们在内存中的地址是否相同，即是否引用同一个对象。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">String</span><span class="w"> </span><span class="n">str1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="s">&#34;hello&#34;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">String</span><span class="w"> </span><span class="n">str2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="s">&#34;hello&#34;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">String</span><span class="w"> </span><span class="n">str3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">str1</span><span class="p">;</span><span class="w">
@@ -1594,12 +1594,12 @@ Java 中的浮点数类型 (<code>float</code>和<code>double</code>)是用来�
 目前Java虚拟机已经可以支持很多除Java语言以外的语言了，如Groovy、JRuby、Jython、Scala等。之所以可以支持，就是因为这些语言也可以被编译成字节码。
 而虚拟机并不关心字节码是有哪种语言编译而来的。</p>
 <p>来看一下字节码文件，将下面代码通过<code>javac</code>命令编译：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class HelloWorld {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        String s = &#34;123&#34;;
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>生成<code>.class</code>文件.<code>vi</code>命令查看：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HelloWorld</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;123&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>生成<code>.class</code>文件.<code>vi</code>命令查看：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Êþº¾^@^@^@4^@^Q
 </span></span><span class="line"><span class="cl">^@^D^@^M^H^@^N^G^@^O^G^@^P^A^@^F&lt;init&gt;^A^@^C()V^A^@^DCode^A^@^OLineNumberTable^A^@^Dmain^A^@^V([Ljava/lang/String;)V^A^@
 </span></span><span class="line"><span class="cl">SourceFile^A^@^OHelloWorld.java^L^@^E^@^F^A^@^C123^A^@7com/example/springboot/example/security/util/HelloWorld^A^@^Pjava/lang/Object^@!^@^C^@^D^@^@^@^@^@^B^@^A^@^E^@^F^@^A^@^G^@^@^@^]^@^A^@^A^@^@^@^E*·^@^A±^@^@^@^A^@^H^@^@^@^F^@^A^@^@^@^C^@        ^@      ^@
@@ -1663,12 +1663,12 @@ Class常量池是用来保存常量的一个媒介场所，并且是一个中间
 <p>一个Java源文件中的类、接口，编译后产生一个字节码文件。
 而Java中的字节码需要数据支持，通常这种数据会很大以至于不能直接存到字节码里，换另一种方式，可以存到常量池，这个字节码包含了指向常量池的引用，在动态链接的时候会用到运行时常量池。</p>
 <p>比如：如下的代码：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class SimpleClass {
-</span></span><span class="line"><span class="cl">    public void sayHello() {
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;hello&#34;);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>虽然上述代码生成的class文件只有194字节，但是里面却使用了<code>String</code>、<code>System</code>、<code>PrintStream</code>及<code>Object</code>等结构。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SimpleClass</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">sayHello</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;hello&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>虽然上述代码生成的class文件只有194字节，但是里面却使用了<code>String</code>、<code>System</code>、<code>PrintStream</code>及<code>Object</code>等结构。
 这里的代码量其实很少了，如果代码多的话，引用的结构将会更多，这样就体现出常量池的作用了。</p>
 <p>常量池是为了避免频繁的创建和销毁对象而影响系统性能，其实现了对象的共享，避免了相同内容的字符串的创建，节省了内存，省去了创建相同字符串的时间，同时提升了性能。</p>
 <h2 id="string类型">String类型</h2>
@@ -1678,28 +1678,28 @@ Class常量池是用来保存常量的一个媒介场所，并且是一个中间
 此外，<code>String</code>实现了<code>Comparable</code>接口，使得字符串对象可以进行自然排序。</p>
 <h3 id="为什么jdk9改变了存储结构">为什么JDK9改变了存储结构</h3>
 <p>在Java8中，<code>String</code>内部使用<code>char</code>数组存储数据。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public final class String
-</span></span><span class="line"><span class="cl">    implements java.io.Serializable, Comparable&lt;String&gt;, CharSequence {
-</span></span><span class="line"><span class="cl">    /** The value is used for character storage. */
-</span></span><span class="line"><span class="cl">    private final char value[];
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>在Java9之后，<code>String</code>类的实现改用<code>byte</code>数组存储字符串，同时使用 <code>oder</code>来标识使用了哪种编码。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public final class String
-</span></span><span class="line"><span class="cl">    implements java.io.Serializable, Comparable&lt;String&gt;, CharSequence {
-</span></span><span class="line"><span class="cl">    /** The value is used for character storage. */
-</span></span><span class="line"><span class="cl">    private final byte[] value;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /** The identifier of the encoding used to encode the bytes in {@code value}. */
-</span></span><span class="line"><span class="cl">    private final byte coder;
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p><a href="http://openjdk.java.net/jeps/254">那么为什么要改变存储结构呢？</a>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kd">class</span> <span class="nc">String</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">implements</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">Serializable</span><span class="p">,</span><span class="w"> </span><span class="n">Comparable</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">CharSequence</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/** The value is used for character storage. */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">value</span><span class="o">[]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>在Java9之后，<code>String</code>类的实现改用<code>byte</code>数组存储字符串，同时使用 <code>oder</code>来标识使用了哪种编码。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kd">class</span> <span class="nc">String</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">implements</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">Serializable</span><span class="p">,</span><span class="w"> </span><span class="n">Comparable</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">CharSequence</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/** The value is used for character storage. */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/** The identifier of the encoding used to encode the bytes in {@code value}. */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">byte</span><span class="w"> </span><span class="n">coder</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><a href="http://openjdk.java.net/jeps/254">那么为什么要改变存储结构呢？</a>
 官方的解释：</p>
 <blockquote>
 <p>The current implementation of the String class stores characters in a char array, using two bytes (sixteen bits) for each character.
 Data gathered from many different applications indicates that strings are a major component of heap usage and,
 moreover, that most String objects contain only Latin-1 characters. Such characters require only one byte of storage,
-hence half of the space in the internal char arrays of such String objects is going unused.</p>
-<p>We propose to change the internal representation of the String class from a UTF-16 char array to a byte array plus an encoding-flag field.
+hence half of the space in the internal char arrays of such String objects is going unused.<br>
+We propose to change the internal representation of the String class from a UTF-16 char array to a byte array plus an encoding-flag field.
 The new String class will store characters encoded either as ISO-8859-1/Latin-1 (one byte per character),
 or as UTF-16 (two bytes per character), based upon the contents of the string.
 The encoding flag will indicate which encoding is used.</p>
@@ -1717,24 +1717,24 @@ The encoding flag will indicate which encoding is used.</p>
 <p><code>String</code>类型具有不可变性，因为底层存储的value数组被声明为<code>final</code>，这意味着value数组初始化之后就不能再引用其它数组。
 <code>String</code>是Java中一个不可变的类，所以一旦一个string对象在内存中被创建出来，他就无法被修改。</p>
 <p>下面代码说明String是不可变的：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
-</span></span><span class="line"><span class="cl">    String str = new String(&#34;good&#34;);
-</span></span><span class="line"><span class="cl">    char [] ch = {&#39;t&#39;,&#39;e&#39;,&#39;s&#39;,&#39;t&#39;};
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public void change(String str, char ch []) {
-</span></span><span class="line"><span class="cl">        str = &#34;test ok&#34;;
-</span></span><span class="line"><span class="cl">        System.out.println( &#34;chanage方法里str=&#34; + str); // chanage方法里str=test ok
-</span></span><span class="line"><span class="cl">        ch[0] = &#39;b&#39;;
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        MainTest ex = new MainTest();
-</span></span><span class="line"><span class="cl">        ex.change(ex.str, ex.ch);
-</span></span><span class="line"><span class="cl">        System.out.println(ex.str); // good
-</span></span><span class="line"><span class="cl">        System.out.println(ex.ch);// best
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p><code>String</code>类的所有方法都没有改变字符串本身的值，都是返回了一个新的对象，那么为什么要把<code>String</code>类设计成不可变的呢？</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MainTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="s">&#34;good&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="o">[]</span><span class="w"> </span><span class="n">ch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="sc">&#39;t&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;s&#39;</span><span class="p">,</span><span class="sc">&#39;t&#39;</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">change</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">str</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">ch</span><span class="w"> </span><span class="o">[]</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;test ok&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="w"> </span><span class="s">&#34;chanage方法里str=&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">str</span><span class="p">);</span><span class="w"> </span><span class="c1">// chanage方法里str=test ok</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ch</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;b&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">MainTest</span><span class="w"> </span><span class="n">ex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MainTest</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ex</span><span class="p">.</span><span class="na">change</span><span class="p">(</span><span class="n">ex</span><span class="p">.</span><span class="na">str</span><span class="p">,</span><span class="w"> </span><span class="n">ex</span><span class="p">.</span><span class="na">ch</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">ex</span><span class="p">.</span><span class="na">str</span><span class="p">);</span><span class="w"> </span><span class="c1">// good</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">ex</span><span class="p">.</span><span class="na">ch</span><span class="p">);</span><span class="c1">// best</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>String</code>类的所有方法都没有改变字符串本身的值，都是返回了一个新的对象，那么为什么要把<code>String</code>类设计成不可变的呢？</p>
 <ol>
 <li>字符串不可变的根本原因我认为应是出于对数据的安全性考虑。<code>String</code>经常作为参数，<code>String</code>不可变性可以保证参数不可变。
 实际项目中会用到，比如数据库连接串、账号、密码等字符串，只有不可变的连接串、用户名和密码才能保证安全性。</li>
@@ -1748,19 +1748,19 @@ The encoding flag will indicate which encoding is used.</p>
 <p><code>new String(&quot;abc&quot;)</code>会创建几个对象？ 这是面试中经常问的一个问题，先说答案两个字符串对象，前提是<code>String</code>常量池中还没有 &ldquo;abc&rdquo; 字符串对象。
 第一个对象是&quot;abc&quot;，它属于字符串字面量，因此编译时期会在字符串常量池中创建一个字符串对象，指向这个 &ldquo;abc&rdquo; 字符串字面量，而使用<code>new</code>的方式会在堆中创建一个字符串对象。</p>
 <p>来证明一下，到底是不是创建了两个对象，先看一下JDK8 中<code>new String()</code>源代码：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">/**</span>
-</span></span><span class="line"><span class="cl"> <span class="o">*</span> <span class="n">Initializes</span> <span class="n">a</span> <span class="n">newly</span> <span class="n">created</span> <span class="p">{</span><span class="err">@</span><span class="n">code</span> <span class="ne">String</span><span class="p">}</span> <span class="n">object</span> <span class="n">so</span> <span class="n">that</span> <span class="n">it</span> <span class="n">represents</span>
-</span></span><span class="line"><span class="cl"> <span class="o">*</span> <span class="n">the</span> <span class="n">same</span> <span class="n">sequence</span> <span class="n">of</span> <span class="n">characters</span> <span class="n">as</span> <span class="n">the</span> <span class="n">argument</span><span class="p">;</span> <span class="ow">in</span> <span class="n">other</span> <span class="n">words</span><span class="p">,</span> <span class="n">the</span>
-</span></span><span class="line"><span class="cl"> <span class="o">*</span> <span class="n">newly</span> <span class="n">created</span> <span class="n">string</span> <span class="n">is</span> <span class="n">a</span> <span class="n">copy</span> <span class="n">of</span> <span class="n">the</span> <span class="n">argument</span> <span class="n">string</span><span class="o">.</span> <span class="n">Unless</span> <span class="n">an</span>
-</span></span><span class="line"><span class="cl"> <span class="o">*</span> <span class="n">explicit</span> <span class="n">copy</span> <span class="n">of</span> <span class="p">{</span><span class="err">@</span><span class="n">code</span> <span class="n">original</span><span class="p">}</span> <span class="n">is</span> <span class="n">needed</span><span class="p">,</span> <span class="n">use</span> <span class="n">of</span> <span class="n">this</span> <span class="n">constructor</span> <span class="n">is</span>
-</span></span><span class="line"><span class="cl"> <span class="o">*</span> <span class="n">unnecessary</span> <span class="n">since</span> <span class="n">Strings</span> <span class="n">are</span> <span class="n">immutable</span><span class="o">.</span>
-</span></span><span class="line"><span class="cl"> <span class="o">*</span>
-</span></span><span class="line"><span class="cl"> <span class="o">*/</span>
-</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="ne">String</span><span class="p">(</span><span class="ne">String</span> <span class="n">original</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">this</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">original</span><span class="o">.</span><span class="n">value</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">this</span><span class="o">.</span><span class="n">hash</span> <span class="o">=</span> <span class="n">original</span><span class="o">.</span><span class="n">hash</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>文档注释大意：初始化新创建的<code>String</code>对象，使其表示与实参相同的字符序列，换句话说，新创建的字符串是实参字符串的副本。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * Initializes a newly created {@code String} object so that it represents
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * the same sequence of characters as the argument; in other words, the
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * newly created string is a copy of the argument string. Unless an
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * explicit copy of {@code original} is needed, use of this constructor is
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * unnecessary since Strings are immutable.
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="nf">String</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">original</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">original</span><span class="p">.</span><span class="na">value</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">original</span><span class="p">.</span><span class="na">hash</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>文档注释大意：初始化新创建的<code>String</code>对象，使其表示与实参相同的字符序列，换句话说，新创建的字符串是实参字符串的副本。
 除非需要显式复制形参的值，否则没有必要使用这个构造函数，因为字符串是不可变的。</p>
 <p>用字节码看一下，创建一个测试类，其<code>main</code>方法中使用这种方式来创建字符串对象。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
@@ -2106,8 +2106,8 @@ Java中的字符串常量池有以下几种方式来存储字符串：</p>
 由于其线程安全性，每个方法调用都有同步开销，所以<code>StringBuffer</code>的性能比<code>StringBuilder</code>稍慢。</p>
 <p>与<code>String</code>类不同的是，<code>StringBuffer</code>和<code>StringBuilder</code>类的对象能够被多次的修改，并且不产生新的未使用对象。
 如果你需要一个可修改的字符串，应该使用<code>StringBuffer</code>或者<code>StringBuilder</code>，但是会有大量时间浪费在垃圾回收上，因为每次试图修改都有新的<code>String</code>对象被创建出来。</p>
-<p>通过<code>StringBuilder</code>的<code>append()</code>方式添加字符串的效率，要远远高于<code>String</code>的字符串拼接方法.
-在实际开发中还可以进行优化，<code>StringBuilder</code> 的空参构造器，默认的字符串容量是16，如果需要存放的数据过多，容量就会进行扩容，我们可以设置默认初始化更大的长度，来减少扩容的次数。
+<p>通过<code>StringBuilder</code>的<code>append()</code>方式添加字符串的效率，要远远高于<code>String</code>的字符串拼接方法。
+在实际开发中还可以进行优化，<code>StringBuilder</code>的空参构造器，默认的字符串容量是16，如果需要存放的数据过多，容量就会进行扩容，我们可以设置默认初始化更大的长度，来减少扩容的次数。
 如果我们能够确定，前前后后需要添加的字符串不高于某个限定值，那么建议使用构造器创建一个阈值的长度。</p>
 <h4 id="常用方法">常用方法</h4>
 <p>基于Java8整理，如果查看其他方法请参照<a href="https://docs.oracle.com/javase/8/docs/api/index.html">Java8API官方文档</a>。</p>
@@ -2178,7 +2178,7 @@ Java中的字符串常量池有以下几种方式来存储字符串：</p>
 <li><code>checkStringConstant</code>方法，规定字符串字面量的长度不能超过65535字符，即最大65534个字符；</li>
 </ol>
 <p>所以一个字符串字面量最多可以包含65534个字符，但它的存储空间（字节数）并不会超过65535字节。</p>
-<p>所以<code>String</code>类长度限制是多少？</p>
+<p>那么<code>String</code>类长度限制是多少？</p>
 <ul>
 <li>在编译期间，长度不能超过65535个字符，即最大65534个字符，但65534个字符存储空间不会超过65535字节；</li>
 <li>在运行期，<code>String</code>对象的长度理论上可以达到<code>Integer.MAX_VALUE (2^31 - 1)</code>个字符，即 2,147,483,647 个字符，大概4G。

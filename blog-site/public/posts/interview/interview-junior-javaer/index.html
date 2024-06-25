@@ -6667,7 +6667,60 @@
 </span></span></span></code></pre></div></li>
 </ol>
 <h4 id="new-integer12与int-b12是否相等">new Integer(12)与int b=12是否相等</h4>
-<h4 id="new-stringabc会产生几个对象">new String(&ldquo;abc&rdquo;)会产生几个对象</h4>
+<p>这道题考察的是Integer缓存池。<code>Integer</code>缓存池的大小默认为<code>-128~127</code>。
+所以<code>Integer</code>、<code>int </code>在 <code>-127~128</code>之间是不会创建新的对象的，即</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> Integer a = new Integer(12);
+</span></span><span class="line"><span class="cl"> int b = 12;
+</span></span><span class="line"><span class="cl"> System.out.println(a==b);//true
+</span></span></code></pre></div><h4 id="new-stringabc会产生几个对象">new String(&ldquo;abc&rdquo;)会产生几个对象</h4>
+<p>答案两个字符串对象，前提是<code>String</code>常量池中还没有 &ldquo;abc&rdquo; 字符串对象。
+第一个对象是&quot;abc&quot;，它属于字符串字面量，因此编译时期会在字符串常量池中创建一个字符串对象，指向这个 &ldquo;abc&rdquo; 字符串字面量，而使用<code>new</code>的方式会在堆中创建一个字符串对象。</p>
+<p>来证明一下，到底是不是创建了两个对象，先看一下JDK8 中<code>new String()</code>源代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * Initializes a newly created {@code String} object so that it represents
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * the same sequence of characters as the argument; in other words, the
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * newly created string is a copy of the argument string. Unless an
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * explicit copy of {@code original} is needed, use of this constructor is
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * unnecessary since Strings are immutable.
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="nf">String</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">original</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">original</span><span class="p">.</span><span class="na">value</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">original</span><span class="p">.</span><span class="na">hash</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>文档注释大意：初始化新创建的<code>String</code>对象，使其表示与实参相同的字符序列，换句话说，新创建的字符串是实参字符串的副本。
+除非需要显式复制形参的值，否则没有必要使用这个构造函数，因为字符串是不可变的。</p>
+<p>用字节码看一下，创建一个测试类，其<code>main</code>方法中使用这种方式来创建字符串对象。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MainTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="s">&#34;abc&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>使用<code>javap -verbose</code>命令进行反编译，得到以下内容：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// ...
+</span></span><span class="line"><span class="cl">Constant pool:
+</span></span><span class="line"><span class="cl">// ...
+</span></span><span class="line"><span class="cl">   #2 = Class              #18            // java/lang/String
+</span></span><span class="line"><span class="cl">   #3 = String             #19            // abc
+</span></span><span class="line"><span class="cl">// ...
+</span></span><span class="line"><span class="cl">  #18 = Utf8               java/lang/String
+</span></span><span class="line"><span class="cl">  #19 = Utf8               abc
+</span></span><span class="line"><span class="cl">// ...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  public static void main(java.lang.String[]);
+</span></span><span class="line"><span class="cl">    descriptor: ([Ljava/lang/String;)V
+</span></span><span class="line"><span class="cl">    flags: ACC_PUBLIC, ACC_STATIC
+</span></span><span class="line"><span class="cl">    Code:
+</span></span><span class="line"><span class="cl">      stack=3, locals=2, args_size=1
+</span></span><span class="line"><span class="cl">         0: new           #2                  // class java/lang/String
+</span></span><span class="line"><span class="cl">         3: dup
+</span></span><span class="line"><span class="cl">         4: ldc           #3                  // String abc
+</span></span><span class="line"><span class="cl">         6: invokespecial #4                  // Method java/lang/String.&#34;&lt;init&gt;&#34;:(Ljava/lang/String;)V
+</span></span><span class="line"><span class="cl">         9: astore_1
+</span></span><span class="line"><span class="cl">// ...
+</span></span></code></pre></div><p>在<code>Constant Pool</code>中，<code>#19</code>存储这字符串字面量<code>&quot;abc&quot;</code>，<code>#3</code>是<code>String Pool</code>的字符串对象，它指向<code>#19</code>这个字符串字面量。
+在<code>main</code>方法中，<code>0:</code>行使用<code>new #2</code>在堆中创建一个字符串对象，并且使用<code>ldc #3</code>将<code>String Pool</code>中的字符串对象作为<code>String</code>构造函数的参数。
+所以能看到使用<code>new String()</code>的方式创建字符串是创建两个对象。</p>
 <h3 id="多线程">多线程</h3>
 <h4 id="说说你对并发编程的理解">说说你对并发编程的理解</h4>
 <h4 id="简述线程池原理">简述线程池原理</h4>

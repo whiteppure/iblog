@@ -207,8 +207,72 @@ Type erasure ensures that no new classes are created for parameterized types; co
     ```
 
 #### new Integer(12)与int b=12是否相等
+这道题考察的是Integer缓存池。`Integer`缓存池的大小默认为`-128~127`。
+所以`Integer`、`int `在 `-127~128`之间是不会创建新的对象的，即
+```
+ Integer a = new Integer(12);
+ int b = 12;
+ System.out.println(a==b);//true
+```
 
 #### new String("abc")会产生几个对象
+答案两个字符串对象，前提是`String`常量池中还没有 "abc" 字符串对象。
+第一个对象是"abc"，它属于字符串字面量，因此编译时期会在字符串常量池中创建一个字符串对象，指向这个 "abc" 字符串字面量，而使用`new`的方式会在堆中创建一个字符串对象。
+
+来证明一下，到底是不是创建了两个对象，先看一下JDK8 中`new String()`源代码：
+```java
+/**
+ * Initializes a newly created {@code String} object so that it represents
+ * the same sequence of characters as the argument; in other words, the
+ * newly created string is a copy of the argument string. Unless an
+ * explicit copy of {@code original} is needed, use of this constructor is
+ * unnecessary since Strings are immutable.
+ *
+ */
+public String(String original) {
+    this.value = original.value;
+    this.hash = original.hash;
+}
+```
+文档注释大意：初始化新创建的`String`对象，使其表示与实参相同的字符序列，换句话说，新创建的字符串是实参字符串的副本。
+除非需要显式复制形参的值，否则没有必要使用这个构造函数，因为字符串是不可变的。
+
+用字节码看一下，创建一个测试类，其`main`方法中使用这种方式来创建字符串对象。
+```java
+public class MainTest {
+    public static void main(String[] args) {
+        String s = new String("abc");
+    }
+}
+```
+
+使用`javap -verbose`命令进行反编译，得到以下内容：
+```
+// ...
+Constant pool:
+// ...
+   #2 = Class              #18            // java/lang/String
+   #3 = String             #19            // abc
+// ...
+  #18 = Utf8               java/lang/String
+  #19 = Utf8               abc
+// ...
+
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=3, locals=2, args_size=1
+         0: new           #2                  // class java/lang/String
+         3: dup
+         4: ldc           #3                  // String abc
+         6: invokespecial #4                  // Method java/lang/String."<init>":(Ljava/lang/String;)V
+         9: astore_1
+// ...
+```
+在`Constant Pool`中，`#19`存储这字符串字面量`"abc"`，`#3`是`String Pool`的字符串对象，它指向`#19`这个字符串字面量。
+在`main`方法中，`0:`行使用`new #2`在堆中创建一个字符串对象，并且使用`ldc #3`将`String Pool`中的字符串对象作为`String`构造函数的参数。
+所以能看到使用`new String()`的方式创建字符串是创建两个对象。
 
 ### 多线程
 #### 说说你对并发编程的理解

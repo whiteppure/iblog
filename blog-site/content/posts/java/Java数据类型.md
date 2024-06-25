@@ -9,7 +9,6 @@ slug: "rookie-datatype"
 
 ## 基本类型
 Java语言提供了八种基本类型。六种数值类型（四个整数型，两个浮点型），一种字符类型，还有一种布尔型，俗称4类8种。
-
 这里只介绍称4类8种，实际上，Java中还存在另外一种基本类型 `void`，它也有对应的包装类`java.lang.Void`，不过我们无法直接对它们进行操作。
 
 | 类型    | 位数   | 范围                               | 默认值  | 示例                                    | 备注                                                 |
@@ -56,7 +55,6 @@ JVM 会在编译时期将 boolean 类型的数据转换为 int，使用 1 来表
 
 #### 显式类型转换
 显式类型转换也叫强制类型转换，显式类型转换在可能出现数据丢失或溢出的风险的情况下进行，需要使用强制类型转换运算符。
-
 基本类型的显式转换顺序：
 ```
 double -> float -> long -> int -> short -> byte
@@ -84,7 +82,6 @@ char charValue = (char) intVal;
 
 #### 隐式类型转换
 隐式类型转换是指编译器在编译时自动完成的类型转换，也称为自动类型转换。与显示类型转换相反，这种转换通常在没有数据丢失风险的情况下进行。
-
 Java 会自动将较小的基本数据类型转换为较大的基本数据类型，以避免数据丢失。转换顺序如下：
 ```
 byte -> short -> int -> long -> float -> double
@@ -179,7 +176,7 @@ public static  void main(String[]args){
 
 其实自动装箱和自动拆箱是Java中的语法糖，用于简化基本数据类型和其对应包装类型之间的转换操作。
 当将基本数据类型赋值给对应的包装类型时，编译器会调用包装类型的`valueOf()`方法来创建一个包装对象，并将基本数据类型的值传递给这个方法；
-当需要使用包装类型对象中的值进行基本数据类型的操作时，编译器会自动调用包装类型对象的`xxxValue()`方法，将包装对象转换为对应的基本数据类型值；
+当需要使用包装类型对象中的值进行基本数据类型的操作时，编译器会自动调用包装类型对象的`xxxValue()`方法，将包装对象转换为对应的基本数据类型值。
 
 自动装箱和拆箱虽然方便，但是在使用的时候也需要注意一些问题：
 - 比较：包装对象的数值比较，不能简单的使用`==`，虽然 -128 到 127 之间的数字可以，但是这个范围之外还是需要使用 `equals`方法进行比较；
@@ -201,7 +198,7 @@ public static  void main(String[]args){
 
 使用`Integer.valueOf()`方法来创建`Integer`对象时，会优先从缓冲池中获取对象，如果缓冲池中不存在该值的对象，则会创建一个新的对象。
 `new Integer(123)`，这种方式会显式地创建一个新的`Integer`对象，每次调用`new Integer(123)`都会创建一个新的对象实例。
-```
+```java
 Integer x = new Integer(123);
 Integer y = new Integer(123);
 System.out.println(x == y);    // false 因为是两个不同的对象实例
@@ -220,7 +217,7 @@ public static Integer valueOf(int i) {
 ```
 
 在 Java 8 中，`Integer`缓存池的大小默认为 -128~127，在源码中也能看到具体的实现。
-```
+```java
 static final int low = -128;
 static final int high;
 static final Integer cache[];
@@ -259,7 +256,7 @@ Integer n = 123;
 System.out.println(m == n); // true
 ```
 所以`Integer`、`int `在 `-127~128`之间是不会创建新的对象的，即
-```
+```java
  Integer a = new Integer(12);
  int b = 12;
  System.out.println(a==b);//true
@@ -347,7 +344,6 @@ public class Main {
 
 ### 对象的比较
 在Java中，引用类型的比较涉及到比较对象的引用值，而不是对象的内容。这是因为在Java中，每个对象变量存储的是对象的引用地址，而不是对象本身。
-
 使用`==`操作符比较两个对象引用时，比较的是它们在内存中的地址是否相同，即是否引用同一个对象。
 ```java
 String str1 = new String("hello");
@@ -458,7 +454,7 @@ public class HelloWorld {
 而虚拟机并不关心字节码是有哪种语言编译而来的。
 
 来看一下字节码文件，将下面代码通过`javac`命令编译：
-```
+```java
 public class HelloWorld {
     public static void main(String[] args) {
         String s = "123";
@@ -542,7 +538,7 @@ Class常量池是用来保存常量的一个媒介场所，并且是一个中间
 而Java中的字节码需要数据支持，通常这种数据会很大以至于不能直接存到字节码里，换另一种方式，可以存到常量池，这个字节码包含了指向常量池的引用，在动态链接的时候会用到运行时常量池。
 
 比如：如下的代码：
-```
+```java
 public class SimpleClass {
     public void sayHello() {
         System.out.println("hello");
@@ -563,7 +559,7 @@ public class SimpleClass {
 
 ### 为什么JDK9改变了存储结构
 在Java8中，`String`内部使用`char`数组存储数据。
-```
+```java
 public final class String
     implements java.io.Serializable, Comparable<String>, CharSequence {
     /** The value is used for character storage. */
@@ -572,7 +568,7 @@ public final class String
 ```
 
 在Java9之后，`String`类的实现改用`byte`数组存储字符串，同时使用 `oder`来标识使用了哪种编码。
-```
+```java
 public final class String
     implements java.io.Serializable, Comparable<String>, CharSequence {
     /** The value is used for character storage. */
@@ -588,9 +584,8 @@ public final class String
 > The current implementation of the String class stores characters in a char array, using two bytes (sixteen bits) for each character. 
 Data gathered from many different applications indicates that strings are a major component of heap usage and,
 moreover, that most String objects contain only Latin-1 characters. Such characters require only one byte of storage,
-hence half of the space in the internal char arrays of such String objects is going unused.
->
->We propose to change the internal representation of the String class from a UTF-16 char array to a byte array plus an encoding-flag field.
+hence half of the space in the internal char arrays of such String objects is going unused.<br>
+We propose to change the internal representation of the String class from a UTF-16 char array to a byte array plus an encoding-flag field.
 The new String class will store characters encoded either as ISO-8859-1/Latin-1 (one byte per character), 
 or as UTF-16 (two bytes per character), based upon the contents of the string. 
 The encoding flag will indicate which encoding is used.
@@ -612,7 +607,7 @@ The encoding flag will indicate which encoding is used.
 `String`是Java中一个不可变的类，所以一旦一个string对象在内存中被创建出来，他就无法被修改。
 
 下面代码说明String是不可变的：
-```
+```java
 public class MainTest {
     String str = new String("good");
     char [] ch = {'t','e','s','t'};
@@ -647,7 +642,7 @@ public class MainTest {
 第一个对象是"abc"，它属于字符串字面量，因此编译时期会在字符串常量池中创建一个字符串对象，指向这个 "abc" 字符串字面量，而使用`new`的方式会在堆中创建一个字符串对象。
 
 来证明一下，到底是不是创建了两个对象，先看一下JDK8 中`new String()`源代码：
-```
+```java
 /**
  * Initializes a newly created {@code String} object so that it represents
  * the same sequence of characters as the argument; in other words, the
@@ -1064,8 +1059,8 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
 与`String`类不同的是，`StringBuffer`和`StringBuilder`类的对象能够被多次的修改，并且不产生新的未使用对象。
 如果你需要一个可修改的字符串，应该使用`StringBuffer`或者`StringBuilder`，但是会有大量时间浪费在垃圾回收上，因为每次试图修改都有新的`String`对象被创建出来。
 
-通过`StringBuilder`的`append()`方式添加字符串的效率，要远远高于`String`的字符串拼接方法.
-在实际开发中还可以进行优化，`StringBuilder` 的空参构造器，默认的字符串容量是16，如果需要存放的数据过多，容量就会进行扩容，我们可以设置默认初始化更大的长度，来减少扩容的次数。
+通过`StringBuilder`的`append()`方式添加字符串的效率，要远远高于`String`的字符串拼接方法。
+在实际开发中还可以进行优化，`StringBuilder`的空参构造器，默认的字符串容量是16，如果需要存放的数据过多，容量就会进行扩容，我们可以设置默认初始化更大的长度，来减少扩容的次数。
 如果我们能够确定，前前后后需要添加的字符串不高于某个限定值，那么建议使用构造器创建一个阈值的长度。
 
 #### 常用方法
@@ -1146,7 +1141,7 @@ ONSTANT_Utf8_info {
 
 所以一个字符串字面量最多可以包含65534个字符，但它的存储空间（字节数）并不会超过65535字节。
 
-所以`String`类长度限制是多少？
+那么`String`类长度限制是多少？
 - 在编译期间，长度不能超过65535个字符，即最大65534个字符，但65534个字符存储空间不会超过65535字节；
 - 在运行期，`String`对象的长度理论上可以达到`Integer.MAX_VALUE (2^31 - 1)`个字符，即 2,147,483,647 个字符，大概4G。
   在实际应用中，字符串的最大长度受限于可用内存和JVM配置；

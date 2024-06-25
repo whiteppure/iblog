@@ -412,7 +412,7 @@ public static void main(String[] args) {
     }
 }
 ```
-总的来说正则表达式是对字符串操作的一种逻辑公式，用事先定义好的一些特定字符、及这些特定字符的组合，组成一个"规则字符串"，这个"规则字符串"用来表达对字符串的一种过滤逻辑。
+总的来说，正则表达式是对字符串操作的一种逻辑公式，用事先定义好的一些特定字符、及这些特定字符的组合，组成一个"规则字符串"，这个"规则字符串"用来表达对字符串的一种过滤逻辑。
 正则表达式的灵活性、逻辑性和功能性非常的强，可以迅速地用极简单的方式达到字符串的复杂控制，但是对于刚接触的人来说比较晦涩难懂。以下是常用正则表达式：
 
 | 描述                     | 正则表达式                                                                                    |
@@ -921,7 +921,7 @@ Java在`java.math`包中提供的API类`BigDecimal`，用来对超过16位有效
 Java中提供了大数字(超过16位有效位)的操作类，即`java.math.BinInteger`类和`java.math.BigDecimal`类，用于高精度计算。
 其中`BigInteger`类是针对大整数的处理类，而`BigDecimal`类则是针对大小数的处理类。`BigDecimal`类的实现用到了`BigIntege`类，不同的是`BigDecimal`加入了小数的概念。
 
-### 基本使用
+### 基本用法
 `BigDecimal`一共有两种方法可以进行初始化赋值，构造器初始化赋值，`valueOf`方法初始化赋值。
 在使用`BigDecimal`中参数为`double`类型的构造器时，发现存储结果并不准确。
 ```java
@@ -1158,7 +1158,7 @@ public static void main(String[] args) {
 ## Math
 `java.lang.Math`，该类和Java中的运算息息相关。`Math`类是一个工具类，被`final`修饰，构造方法是私有的，大部分方法都被`public static`修饰。
 
-基本使用：
+基本用法：
 ```java
 public static void main(String[] args) {
   // 计算平方根
