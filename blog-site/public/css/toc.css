@@ -1,6 +1,6 @@
 /* toc style */
 .toc {
-    height: 80%;
+    height: 90%;
     position: fixed;
     top: 50%;
     left: 3%;
@@ -9,9 +9,18 @@
     background-color: #f6f6f6;
     border-radius: 5px;
     padding-bottom: 1rem;
-    font-size: 14px;
+    font-size: 13px;
     overflow: scroll !important;
+    white-space: nowrap;     /* 禁止文本换行 */
+    text-overflow: ellipsis; /* 使用省略号表示超出的文本 */
 }
+/*1800以上*/
+@media screen and (min-width: 1800px) {
+    .toc {
+        font-size: 14px;
+    }
+}
+
 .toc::-webkit-scrollbar {
     /*滚动条整体样式*/
     width : 7px;  /*高宽分别对应横竖滚动条的尺寸*/
@@ -38,7 +47,7 @@
     line-height: 1rem;
 }
 .toc-nav{
-    margin-left: -25px;
+    margin-left: -30px;
 }
 
 /* ignore h1 header */
