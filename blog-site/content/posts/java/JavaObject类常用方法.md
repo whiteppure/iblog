@@ -178,12 +178,10 @@ class Person {
 `hashCode()`返回散列值，而`equals()`是用来判断两个对象是否等价。等价的两个对象散列值一定相同，但是散列值相同的两个对象不一定等价。
 
 `equals()`地址比较是通过对象的哈希值来比较的。`hash`值是由`hashCode`方法产生的，`hashCode`属于`Object`类的本地方法，默认使用`==`比较两个对象，如果`equals()`相等`，hashcode`一定相等，如果`hashcode`相等，`equals`不一定相等。
-
 所以在覆盖 `equals()` 方法时应当总是覆盖` hashCode() `方法，保证等价的两个对象散列值也相等。
 
-下面的代码中，新建了两个等价的对象，并将它们添加到`HashSet`中。我们希望将这两个对象当成一样的，只在集合中添加一个对象，但是**因为`EqualExample`没有实现`hashCode()`方法，因此这两个对象的散列值是不同的，最终导致集合添加了两个等价的对象。**
-
-```
+下面的代码中，新建了两个等价的对象，并将它们添加到`HashSet`中。我们希望将这两个对象当成一样的，只在集合中添加一个对象，但是因为`EqualExample`没有实现`hashCode()`方法，因此这两个对象的散列值是不同的，最终导致集合添加了两个等价的对象。
+```java
 public class MainTest {
     public static void main(String[] args) {
         EqualExample e1 = new EqualExample(1, 1, 1);
@@ -197,9 +195,8 @@ public class MainTest {
         System.out.println(set.size());
     }
 }
-
 ```
-所以**在覆盖 `equals()`方法时应当总是覆盖`hashCode()`方法，保证等价的两个对象散列值也相等。**
+所以在覆盖 `equals()`方法时应当总是覆盖`hashCode()`方法，保证等价的两个对象散列值也相等。
 
 ### 重写hashCode方法
 重写`hashCode`方法规则：

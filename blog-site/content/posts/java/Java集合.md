@@ -7,115 +7,195 @@ slug: "rookie-java-container"
 ---
 
 ## 概述
-Java中的集合主要包括 `Collection` 和 `Map` 两种，`Collection` 存储着对象的集合，而 `Map` 存储着键值对（两个对象）的映射表。
+Java中的集合主要包括`Collection`和`Map`两种，`Collection`存储着对象的集合，而`Map`存储着键值对的映射表。
 
 ![Java中的集合-01](/iblog/posts/annex/images/essays/Java中的集合-01.jpg)
 
-如果你看过ArrayList类源码，就知道ArrayList底层是通过数组来存储元素的，所以如果严格来说，数组也算集合的一种。
-
 ## 数组
+如果你看过`ArrayList`类源码，就知道`ArrayList`底层是通过数组来存储元素的，所以如果严格来说，数组也算集合的一种。
 Java中提供的数组是用来存储固定大小的同类型元素，所以Java数组就是同类数据元素的集合。
+在Java中，数组是一种非常常用的数据结构，用于存储同一类型的一组元素。
+```java
+// 定义一个整数数组
+int[] intArray;
 
-数组是引用数据类型，如果使用了没有开辟空间的数组，则一定会出现`NullPointerException`异常信息。所以数组本质上也是Java对象，能够向下或者向上转型,能使用`instanceof`关键字。
+// 初始化数组并赋值
+intArray = new int[5]; // 数组长度为5，每个元素默认值为0
+
+// 定义并初始化数组
+int[] anotherArray = {1, 2, 3, 4, 5}; // 定义并同时赋值
 ```
-// 数组的父类也是Object,可以将a向上转型到Object  
-int[] a = new int[8];  
-Object obj = a ; 
 
-// 可以进行向下转型 
-int[] b = (int[])obj;  
+数组是引用数据类型，如果使用了没有开辟空间的数组，则一定会出现`NullPointerException`异常信息。
+所以数组本质上也是Java对象，能够向下或者向上转型，能使用`instanceof`关键字。
+```java
+int[] intArray; // 声明数组但未初始化
+System.out.println(intArray[0]); // 这将导致 NullPointerException
 
-// 可以用instanceof关键字进行类型判定 
-if(obj instanceof int[]){ 
+
+Object obj = new int[5]; // 向上转型
+if (obj instanceof int[]) {
+int[] array = (int[]) obj; // 向下转型
+    System.out.println("Successfully casted obj to int[]");
 }
 ```
+数组由于其连续的内存分配和高效的下标访问，具有高访问效率，但其固定大小、插入删除低效、单一类型限制和高内存要求使其在实际应用中不如集合灵活
+所以我们应该优选集合，而不是数组。只有在已证明性能成为问题的时候，并且确定切换到数组对性能提高有帮助时，才应该将项目重构为使用数组。
 
-> `void  method_name(int ... value)`方法中变参就是当数组处理的，参数为定参的编译后就是数组。一个方法只能有一个变参，即使是不同的类型也不行，变参参数只能在形参列表的末尾，如果传入的是数组，则只能传一个。
+### 变长参数
+在Java中，变长参数在方法定义中处理方式与数组相同。
+变长参数允许你传递任意数量的参数到一个方法中，编译时会将其处理为一个数组。例如：
+```java
+public void methodName(int... values) {
+    for (int value : values) {
+        System.out.println(value);
+    }
+}
+// 在这个方法中，可以传递任意数量的整数
+methodName(1, 2, 3); // 传递三个参数
+methodName(4, 5); // 传递两个参数
+methodName(); // 传递零个参数
+```
+一个方法只能有一个变长参数，即使是不同类型也不行。并且变长参数必须是方法参数列表中的最后一个参数。
 
-### 优缺点
-数组优点:
-- 数组元素的内存地址是连续分配的，所以通过下标访问元素的效率很高，可以快速找到指定下标为n的元素的地址；
-
-数组缺点:
-- 数组一旦初始化之后长度是固定的不能变的；
-- 数组进行元素的删除和插入操作的时候，效率比较低,需要移动大量的元素；
-- 数组元素的类型只能是一种；
-- 数组元素的内存地址是连续分配的,对内存要求高一些;相对于链表结构比较,链表的内存是连续不连续都可以；
-
-数组的优点是效率高，但为此，所付出的代价就是数组对象的大小被固定。这也使得在工作中，数组并不实用。所以我们应该优选容器，而不是数组。只有在已证明性能成为问题的时候，并且确定切换到数组对性能提高有帮助时，才应该将项目重构为使用数组。
-
-### 操作数组
+### 定义数组
 由于数组没有提供任何的封装，所有对元素的操作，都是通过自定义的方法实现的，对数组元素的操作比较麻烦，好在Java自带了一些API供开发者调用。
-
-#### 定义数组
+```java
+int[] array1 = { 1,2,3,4,5 }; 
+int[] array2 = new int[10];
+int[] array3 = new int[]{ 1,2,3,4,5 };
 ```
- int[] array1 = { 1,2,3,4,5 }; 
- int[] array2 = new int[10];
- int[] array3 = new int[]{ 1,2,3,4,5 };
-```
-需要注意的是[],写在数组名称的前后都可以,但是推荐第一种写法：
-```
-  int[] array1 = { 1,2,3,4,5 };
-  int array2[] = { 1,2,3,4,5 };
+需要注意的是[]，写在数组名称的前后都可以，但是推荐第一种写法：
+```java
+int[] array1 = { 1,2,3,4,5 };
+int array2[] = { 1,2,3,4,5 };
 ```
 
-#### 遍历数组
-````
- for (int i = 0; i < array1.length; i++) {
-       System.out.println(array1[i]);
- }
-````
+### 遍历数组
+在Java中，遍历数组有多种不同的方式，每种方式适合不同的情况和需求。以下是几种常见的遍历数组的方式：
+1. 使用普通for循环；
+    ```java
+    int[] array = {1, 2, 3, 4, 5};
+    
+    for (int i = 0; i < array.length; i++) {
+        System.out.println(array[i]);
+    }
+    ```
+2. 使用增强for循环；
+    ````java
+    int[] array = {1, 2, 3, 4, 5};
+    
+    for (int num : array) {
+        System.out.println(num);
+    }
+    ````
+3. 使用Java 8的`Stream API`；
+    ```java
+    int[] array = {1, 2, 3, 4, 5};
+    
+    Arrays.stream(array).forEach(num -> System.out.println(num));
+    ```
 
-#### 数组去重
-````
-// 最简单方法，利用 hashSet 集合去重
-Set<Integer> set2 = new HashSet<Integer>();
-for (int i = 0; i < arr11.length; i++) {
-    set2.add(arr11[i]);
-}
-````
+### 数组去重
+1. 如果数组元素是对象类型（如`String`、`Integer`等），可以利用集合类的特性来进行去重。这种方法简单直接，适用于不需要保持原始顺序的情况；
+    ```java
+    public class ArrayDuplicateRemoval {
+        public static void main(String[] args) {
+            // 示例数组
+            Integer[] array = {1, 2, 3, 3, 4, 5, 1, 2};
+            
+            // 使用Set去重
+            Set<Integer> set = new LinkedHashSet<>(Arrays.asList(array));
+            Integer[] result = set.toArray(new Integer[0]);
+            
+            // 输出去重后的数组
+            System.out.println(Arrays.toString(result));
+        }
+    }
+    ```
+2. Java 8引入的`Stream API`提供了一种更加函数式和流畅的方式进行数组去重。这种方法同样适用于对象类型数组，且可以保持元素的原始顺序；
+    ```java
+    public class ArrayDuplicateRemoval {
+        public static void main(String[] args) {
+            // 示例数组
+            Integer[] array = {1, 2, 3, 3, 4, 5, 1, 2};
+            
+            // 使用Stream API去重
+            Integer[] result = Arrays.stream(array)
+                                     .distinct()
+                                     .toArray(Integer[]::new);
+            
+            // 输出去重后的数组
+            System.out.println(Arrays.toString(result));
+        }
+    }
+    ```
 
-#### 数组与集合转换
-```
-// 数组转成set集合
-Set<String> set = new HashSet<String>(Arrays.asList(array2));
+### 数组转集合
+1. 使用`Arrays.asList()`方法；
+    ```java
+    public class ArrayToCollection {
+        public static void main(String[] args) {
+            // 示例数组
+            String[] array = {"A", "B", "C", "D"};
+            
+            // 将数组转换为List
+            List<String> list = Arrays.asList(array);
+            
+            // 输出List
+            System.out.println(list);
+        }
+    }
+    ```
+2. 使用`Collections.addAll()`方法；
+    ```java
+    public class ArrayToCollection {
+        public static void main(String[] args) {
+            // 示例数组
+            String[] array = {"A", "B", "C", "D"};
+            
+            // 创建一个空的List
+            List<String> list = new ArrayList<>();
+            
+            // 将数组元素添加到List中
+            Collections.addAll(list, array);
+            
+            // 输出List
+            System.out.println(list);
+        }
+    }
+    ```
+3. 使用`Stream API`；
+    ```java
+    public class ArrayToCollection {
+        public static void main(String[] args) {
+            // 示例数组
+            String[] array = {"A", "B", "C", "D"};
+            
+            // 将数组转换为List
+            List<String> list = Stream.of(array).collect(Collectors.toList());
+            
+            // 输出List
+            System.out.println(list);
+        }
+    }
+    ```
 
-// 数组转list 
-List<String > list2 = Arrays.asList(array);
-```
-
-#### 数组排序
-```
- // 原生方法 或 8种排序算法
- Arrays.sort(arr);
-```
-
-#### 复制数组
-```
-// 待复制的数组
-int[] arr = {1, 2, 3, 4};
-
-// 指定新数组的长度
-int[] arr2 = Arrays.copyOf(arr, 10);
-
-// 只复制从索引[1]到索引[3]之间的元素（不包括索引[3]的元素）
-int[] arr3 = Arrays.copyOfRange(arr, 1, 3);
-```
 ## ArrayList
-在List接口实现类中，最常用的就是ArrayList,ArrayList 类是一个可以动态修改的数组，与普通数组的区别就是它是没有固定大小的限制，可以添加或删除元素。
-
-ArrayList 继承了 AbstractList ，并实现了 List、RandomAccess, Cloneable 接口：
-```
-public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAccess,Cloneable,Serializable
+在`List`接口实现类中，最常用的就是`ArrayList`，`ArrayList`类是一个可以动态修改的数组，与普通数组的区别就是它是没有固定大小的限制，可以添加或删除元素。
+`ArrayList`继承了`AbstractList`，并实现了`List`、`RandomAccess`，`Cloneable`接口：
+```java
+public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAccess,Cloneable,Serializable{}
 ```
 
 ### RandomAccess
-Random是随机的意思，Access是访问的意思，合起来就是随机访问的意思。
+`Random`是随机的意思，`Access`是访问的意思，合起来`RandomAccess`就是随机访问的意思。
+`RandomAccess`接口是一个标记接口，用来标记实现的`List`集合具备快速随机访问的能力。
+所有的`List`实现都支持随机访问的，只是基于基本结构的不同，实现的速度不同罢了。
 
-RandomAccess接口是一个标记接口，用来标记实现的List集合具备快速随机访问的能力。所有的List实现都支持随机访问的，只是基于基本结构的不同，实现的速度不同罢了。
-
-当一个List拥有快速访问功能时，其遍历方法采用随机访问速度最快，而没有快速随机访问的List采用顺序访问的速度最快。如果集合中的数据量过大需要遍历时，此时需要格外注意，因为不同的遍历方式会影响很大，可以使用`instanceof`关键字来判断该类有没有RandomAccess标记:
-```
+当一个`List`拥有快速访问功能时，其遍历方法采用随机访问速度最快，而没有快速随机访问的`List`采用顺序访问的速度最快。
+如果集合中的数据量过大需要遍历时，此时需要格外注意，因为不同的遍历方式会影响很大，可以使用`instanceof`关键字来判断该类有没有`RandomAccess`标记：
+```text
 // 假设 list 数据量非常大,推荐写法
 List<Object> list = ...;
 
@@ -131,126 +211,29 @@ if(list instanceof RandomAccess){
     }
 }
 ```
-在List中ArrayList被RandomAccess接口标记，而LinkedList没有被RandomAccess接口标记，所以ArrayList适合随机访问，LinkedList适合顺序访问。
+在`List`中`ArrayList`被`RandomAccess`接口标记，而`LinkedList`没有被`RandomAccess`接口标记，所以`ArrayList`适合随机访问，而`LinkedList`适合顺序访问。
 
 ### Cloneable
-Cloneable接口是Java开发中常用的一个接口之一,它是一个标记接口。
+`Cloneable`接口是Java开发中常用的一个接口之一，它是一个标记接口。
+如果一个想要拷贝一个对象，就需要重写`Object`中的`clone`方法并让其实现`Cloneable`接口。如果只重写`clone`方法，不实现`Cloneable`接口就会报`CloneNotSupportedException`异常。
 
-如果一个想要拷贝一个对象，就需要重写Object中的clone方法并让其实现Cloneable接口，如果只重写clone方法，不实现Cloneable接口就会报CloneNotSupportedException异常。
-
-JDK中clone方法源码：
-```
+`clone`方法源码：
+```java
 protected native Object clone() throws CloneNotSupportedException;
 ```
-应当注意的是，`clone()` 方法并不是 `Cloneable` 接口的方法，而是 `Object` 的一个 `protected` 方法。`Cloneable` 接口只是规定，如果一个类没有实现 `Cloneable` 接口又调用了 `clone()` 方法，就会抛出 `CloneNotSupportedException`。
+应当注意的是，`clone()` 方法并不是 `Cloneable` 接口的方法，而是 `Object` 的一个 `protected` 方法。
+`Cloneable` 接口只是规定，如果一个类没有实现 `Cloneable` 接口又调用了 `clone()` 方法，就会抛出 `CloneNotSupportedException`。
+换言之，`clone`方法规定了想要拷贝对象，就需要实现`Cloneable`方法，`clone`方法让`Cloneable`接口变得有意义。
 
-换言之，clone方法规定了想要拷贝对象，就需要实现Cloneable方法，clone方法让Cloneable接口变得有意义。
+拷贝分为浅拷贝与深拷贝：
+- 浅拷贝：被复制对象的所有值属性都含有与原来对象的相同，而所有的对象引用属性仍然指向原来的对象；
+- 深拷贝：在浅拷贝的基础上，所有引用其他对象的变量也进行了`clone`，并指向被复制过的新对象；
 
-#### 浅拷贝与深拷贝
-- 浅拷贝：被复制对象的所有值属性都含有与原来对象的相同，而所有的对象引用属性仍然指向原来的对象。
-- 深拷贝：在浅拷贝的基础上，所有引用其他对象的变量也进行了`clone`，并指向被复制过的新对象。
-
-如果一个被复制的属性都是基本类型，那么只需要实现当前类的`cloneable`机制就可以了，此为浅拷贝。
-
+如果一个被复制的属性都是基本类型，那么只需要实现当前类的`Cloneable`机制就可以了，此为浅拷贝。
 如果被复制对象的属性包含其他实体类对象引用，那么这些实体类对象都需要实现`cloneable`接口并覆盖`clone()`方法。
-
-**浅拷贝：**
-```
-public class ShallowCloneExample implements Cloneable {
-
-    private int[] arr;
-
-    public ShallowCloneExample() {
-        arr = new int[10];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = i;
-        }
-    }
-
-    public void set(int index, int value) {
-        arr[index] = value;
-    }
-
-    public int get(int index) {
-        return arr[index];
-    }
-
-    @Override
-    protected ShallowCloneExample clone() throws CloneNotSupportedException {
-        return (ShallowCloneExample) super.clone();
-    }
-}
-
-```
-
-```
-ShallowCloneExample e1 = new ShallowCloneExample();
-ShallowCloneExample e2 = null;
-try {
-    e2 = e1.clone();
-} catch (CloneNotSupportedException e) {
-    e.printStackTrace();
-}
-e1.set(2, 222);
-System.out.println(e2.get(2)); // 222
-```
-
-**深拷贝：**
-```
-public class DeepCloneExample implements Cloneable {
-
-    private int[] arr;
-
-    public DeepCloneExample() {
-        arr = new int[10];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = i;
-        }
-    }
-
-    public void set(int index, int value) {
-        arr[index] = value;
-    }
-
-    public int get(int index) {
-        return arr[index];
-    }
-
-    @Override
-    protected DeepCloneExample clone() throws CloneNotSupportedException {
-        DeepCloneExample result = (DeepCloneExample) super.clone();
-        result.arr = new int[arr.length];
-        for (int i = 0; i < arr.length; i++) {
-            result.arr[i] = arr[i];
-        }
-        return result;
-    }
-}
-
-```
-
-```
-DeepCloneExample e1 = new DeepCloneExample();
-DeepCloneExample e2 = null;
-try {
-    e2 = e1.clone();
-} catch (CloneNotSupportedException e) {
-    e.printStackTrace();
-}
-e1.set(2, 222);
-System.out.println(e2.get(2)); // 2
-```
-#### ArrayList中clone方法
-clone方法调用栈：
-```
-clone 
-    -> Object.clone
-    -> Arrays.copyOf(T[] original, int newLength)
-    -> Arrays.copyOf(U[] original, int newLength, Class<? extends T[]> newType)
-```
-
-文档注释大意：返回这个ArrayList实例的浅拷贝(元素本身不会被复制)。
-```
+`ArrayList`中`clone`方法可以创建一个浅拷贝。
+```java
+// ArrayList类
 public class ArrayList implements Cloneable {
 
     transient Object[] elementData;     
@@ -276,9 +259,8 @@ public class ArrayList implements Cloneable {
         }
     }
 }
-```
 
-```
+// Arrays类
 public class Arrays{
    public static <T> T[] copyOf(T[] original, int newLength) {
         return (T[]) copyOf(original, newLength, original.getClass());
@@ -294,17 +276,56 @@ public class Arrays{
     }
 }
 ```
-ArrayList中clone方法底层是调用父类的clone方法，父类没有重写clone方法所以调用的是Object类的clone方法。
+在`ArrayList`中核心方法最终调用`Arrays.copyOf`方法，其中调用`Arrays.newInstance`方法或者创建一个新数组，`Arrays.newInstance`方法作用，是创建具有指定组件类型和长度的新数组。
+所以不论怎样都会创建一个`Object`数组。最后使用`System.arraycopy`方法将之前的旧数组中的元素拷贝到新创建的数组中，然后赋值给`ArrayList.elementData`对象并返回。
 
-在ArrayList中核心方法最终调用`Arrays.copyOf`方法,不论怎样都会创建一个Object数组。
-> `Arrays.newInstance(Class<?> componentType,int length)`方法作用，创建具有指定组件类型和长度的新数组。
+如果需要深拷贝，即复制对象及其引用的所有对象，需要手动实现拷贝逻辑，通常涉及遍历列表并复制每个元素。
+```java
+class Item implements Cloneable {
+    String name;
 
-最终使用`System.arraycopy`方法将之前的旧数组中的元素拷贝到新创建的数组中，然后赋值给`ArrayList.elementData`对象并返回。
+    Item(String name) {
+        this.name = name;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+}
+
+public class ArrayListCopy {
+    public static void main(String[] args) throws CloneNotSupportedException {
+        // 创建并初始化一个ArrayList
+        ArrayList<Item> originalList = new ArrayList<>();
+        originalList.add(new Item("A"));
+        originalList.add(new Item("B"));
+        originalList.add(new Item("C"));
+
+        // 深拷贝
+        ArrayList<Item> deepCopy = new ArrayList<>();
+        for (Item item : originalList) {
+            deepCopy.add((Item) item.clone());
+        }
+
+        // 修改原始列表的元素
+        originalList.get(0).name = "Z";
+
+        // 输出结果
+        System.out.println("Original List: " + originalList);
+        System.out.println("Deep Copy: " + deepCopy);
+    }
+}
+```
 
 ### ArrayList扩容
-因为ArrayList底层使用数组保存数据的，而数组一旦被创建就不能改变大小，但是ArrayList的长度是可以改变的，所以可以通过ArrayList类中的add方法找到数组扩容方法。
-
-add方法调用栈：
+因为`ArrayLis`t底层使用数组保存数据的，而数组一旦被创建就不能改变大小，但是`ArrayList`的长度是可以改变的，所以可以通过`ArrayList`类中的`add`方法找到数组扩容方法。
+`add`方法调用栈：
 ```
 add 
     -> ensureCapacityInternal()
@@ -312,7 +333,8 @@ add
     -> ensureExplicitCapacity()
     -> grow()
 ```
-```
+通过`add`方法，最终找到了`grow`方法，也就是扩容的核心方法：
+```java
     private void grow(int minCapacity) {
         // overflow-conscious code
         int oldCapacity = elementData.length;
@@ -325,53 +347,44 @@ add
         elementData = Arrays.copyOf(elementData, newCapacity);
     }
 ```
-ArrayList容量：如果没有指定容量创建数组，默认会创建一个长度为10的数组用来保存元素，之后通过：
-```
+在`ArrayList`如果没有指定容量创建数组，默认会创建一个长度为10的数组用来保存元素，之后通过`grow`方法中的这段代码：
+```java
  int newCapacity = oldCapacity + (oldCapacity >> 1);
 ```
-每次扩容都是原容量的1.5倍。
-> `>>`,右移几位就是相当于除以2的几次幂
-  `<<`,左移几位就是相当于乘以2的几次幂
+`>>`右移几位就是相当于除以2的几次幂，所以每次扩容都是原容量的1.5倍。最后通过`Arrays.copyOf`方法将之前的数组中元素，全部移到新创建的数组上。
 
-最后通过Arrays.copyOf方法将之前的数组中元素，全部移到新创建的数组上。
-
-由于频繁的扩容数组会对性能产生影响，如果在ArrayList中要存储很大的数据，就需要在ArrayList的有参构造中指定数组的长度：
-```
+由于频繁的扩容数组会对性能产生影响，如果在`ArrayList`中要存储很大的数据，需要在`ArrayList`的有参构造中指定数组的长度，来减少扩容的次数。
+需要注意的是创建指定长度的`ArrayList`，在没有`add`之前`ArrayList`中的数组已经初始化了，但是`List`的大小没变，因为`List`的大小是由`size`决定的。
+```java
 List<String> list = new ArrayList(1000000);
 ```
-需要注意的是创建指定长度的ArrayList，在没有add之前ArrayList中的数组已经初始化了，但是List的大小没变，因为List的大小是由size决定的。
 
 ### ArrayList与LinkedList
-ArrayList与LinkedList性能比较是一道经典的面试题，ArrayList查找快，增删慢；而LinkedList增删快，查找慢。
+`ArrayList`与`LinkedList`性能比较是一道经典的面试题，先说答案`ArrayList`查找快，增删慢，而`LinkedList`增删快，查找慢。
+造成这种原因是因为底层的数据结构不一样。`ArrayList`底层是数组，而数组的中的元素内存分配都是连续的，并且数组中的元素只能存放一种，这就造成了数组中的元素地址是有规律的，数组中查找元素快速的原因正是利用了这一特点。
+查询方式为: 首地址＋(元素类型长度*下标)。例如：`new int arr[5];``arr`数组的地址假设为`0x1000`，那么`arr[3]`地址可看作为 `0x1000 + (3 * 4)`，3为数组下标，4为int元素类型长度。
 
-造成这种原因是因为底层的数据结构不一样，ArrayList底层是数组，而数组的中的元素内存分配都是连续的，并且数组中的元素只能存放一种，这就造成了数组中的元素地址是有规律的，数组中查找元素快速的原因正是利用了这一特点。
-> 查询方式为: 首地址＋（元素长度＊下标）
-> 例如：new int arr[5]; arr数组的地址假设为0x1000，arr[0] ~ arr[5] 地址可看作为 0x1000 + i * 4。
+而`LinkedList`在Java中的底层结构是对象，每一个对象结点中都保存了下一个结点的位置形成的链表结构，由于`LinkedList`元素的地址是不连续的，所以没办法按照数组那样去查找，所以就比较慢。
 
-而LinkedList在Java中的底层结构是对象，每一个对象结点中都保存了下一个结点的位置形成的链表结构，由于LinkedList元素的地址是不连续的，所以没办法按照数组那样去查找，所以就比较慢。
+由于数组一旦分配了大小就不能改变，所以`ArrayList`在进行添加操作时会创建新的数组，如果要添加到`ArrayList`中的指定的位置，是通过`System.arraycopy`方法将数组进行复制，新的数组会将待插入的指定位置空余出来，最后在将元素添加到集合中。
+在进行删除操作时是通过`System.arraycopy`方法，将待删除元素后面剩余元素复制到待删除元素的位置。当`ArrayList`里有大量数据时，这时候去频繁插入或删除元素会触发底层数组频繁拷贝，所以效率不高，还会造成内存空间的浪费。
 
-由于数组一旦分配了大小就不能改变，所以ArrayList在进行添加操作时会创建新的数组，如果要添加到ArrayList中的指定的位置，是通过System.arraycopy方法将数组进行复制，新的数组会将待插入的指定位置空余出来，最后在将元素添加到集合中。
-
-在进行删除操作时是通过System.arraycopy方法，将待删除元素后面剩余元素复制到待删除元素的位置。当ArrayList里有大量数据时，这时候去频繁插入或删除元素会触发底层数组频繁拷贝，效率不高，还会造成内存空间的浪费。
-
-LinkedList在进行添加，删除操作时，会用二分查找法找到将要添加或删除的元素，之后再设置对象的下一个结点来进行添加或删除操作。
+`LinkedList`在进行添加，删除操作时，会用二分查找法找到将要添加或删除的元素，之后再设置对象的下一个结点来进行添加或删除操作，所以增加删除的效率高。
 > 二分查找法：也称为折半查找法，是一种适用于大量数据查找的方法，但是要求数据必须的排好序的，每次以中间的值进行比较，根据比较的结果可以直接舍去一半的值，直至全部找完（可能会找不到）或者找到数据为止。
-> 
-> 此处LinkedList会比较查找的元素是距离头结点比较近，还是尾结点比较近，距离哪边较近则从哪边开始查找。
+此处LinkedList会比较查找的元素是距离头结点比较近，还是尾结点比较近，距离哪边较近则从哪边开始查找。
 
-ArrayList，获取元素效率非常的高，时间复杂度是O(1)，而查找，插入和删除元素效率似乎不太高，时间复杂度为O(n)。
+`ArrayList`获取元素效率非常的高，时间复杂度是`O(1)`，而查找、插入和删除元素效率似乎不太高，时间复杂度为`O(n)`。
+`LinkedList`与`ArrayList`相反，获取第几个元素依次遍历复杂度`O(n)`，添加到末尾复杂度`O(1)`，添加到指定位置复杂度`O(n)`，删除元素直接指针指向操作复杂度`O(1)`。
 
-LinkedList，正与ArrayList相反，获取第几个元素依次遍历复杂度O(n)，添加到末尾复杂度O(1)，**添加到指定位置复杂度O(n)**，删除元素，直接指针指向操作复杂度O(1)。
+注意，`ArrayList`的增删不一定比`LinkedList`效率低，但是`ArrayList`查找效率一定比`LinkedList`高。
+如果在靠近末尾的地方插入，那么`ArrayList`只需要移动较少的数据，而`LinkedList`则需要一直查找到列表尾部，反而耗费较多时间，这时`ArrayList`就比`LinkedList`要快。
 
-**注意，ArrayList的增删不一定比LinkedList效率低，但是ArrayList查找效率一定比LinkedList高，如果在List靠近末尾的地方插入，那么ArrayList只需要移动较少的数据，而LinkedList则需要一直查找到列表尾部，反而耗费较多时间，这时ArrayList就比LinkedList要快。**
+所以在实际开发中，`ArrayList`适用于需要快速随机访问和较少插入删除操作的场景，而`LinkedList`适用于频繁插入删除操作和需要实现队列或双端队列的场景。
 
-使用场景：
-- 如果应用程序对数据有较多的随机访问，ArrayList要优于LinkedList；
-- 如果应用程序有更多的插入或者删除操作，较少的随机访问，LinkedList要优于ArrayList；
-
-### 线程安全问题
-众所周知，ArrayList是线程不安全的：
-```
+### 线程安全
+众所周知，`ArrayList`是线程不安全的，因为它不保证在多线程环境下的同步操作，这意味着多个线程同时访问和修改同一个`ArrayList`对象时可能会导致数据不一致或抛出异常。
+为避免偶然，多试几次这个代码，很大情况会出现`ConcurrentModificationException`，即同步修改异常。
+```java
 public class MainTest {
     // 如果没有报错，需要多试几次
     public static void main(String[] args) {
@@ -385,32 +398,251 @@ public class MainTest {
     }
 }
 ```
-为避免偶然事件，请重复多试几次上面的代码,很大情况会出现`ConcurrentModificationException`"同步修改异常"：
+出现该异常的原因是`fail-fast`机制。在查看源码的时候，发现调用`remove`方法时，会执行`checkForComodification`方法。
+若`modCount` 不等于`expectedModCount`，则抛出`ConcurrentModificationException`异常。
+```java
+final void checkForComodification() {
+    if (modCount != expectedModCount)
+        throw new ConcurrentModificationException();
+}
 ```
-java.util.ConcurrentModificationException
-```
-出现该异常的原因是，当某个线程正在执行 `add()`方法时,被某个线程打断,添加到一半被打断,没有被添加完。
+那为什么会抛出`ConcurrentModificationException`异常呢？
+在调用`add`方法时，会修改`modCount++`。一个线程调用`add`方法，一个线程调用`next`遍历方法，都共同读取`modCount`变量的值。
+因为是多线程操作，就很容易出现`modCount != expectedModCount`，所以便抛出异常。
+```java
+// 添加元素到指定的位置
+public void add(int index, E element) {
+    if (index > size || index < 0)
+        throw new IndexOutOfBoundsException(
+                "Index: " + index + ", Size: " + size);
 
-保证ArrayList线程安全有以下几种方法：
-- 可以使用 `Vector` 来代替 `ArrayList`,`Vector` 是线程安全的 `ArrayList`,但是由于底层是加了`synchronized`,性能略差不推荐使用;
-    ```
+    // 修改modCount
+    ensureCapacity(size + 1);  // Increments modCount!!
+    System.arraycopy(elementData, index, elementData, index + 1,
+            size - index);
+    elementData[index] = element;
+    size++;
+}
+```
+
+因此，在多线程环境中使用`ArrayList`时，需要手动同步操作，或者使用线程安全的集合类。保证`ArrayList`线程安全有以下几种方法：
+1. 可以使用 `Vector` 来代替 `ArrayList`。`Vector`是线程安全的`ArrayList`，但是由于底层是加了`synchronized`，性能略差不推荐使用；
+    ```java
     List list = new Vector();
     list.add(UUID.randomUUID().toString());
     ```
-- 使用`Collections.synchronizedArrayList()` 来创建 `ArrayList`；使用 `Collections` 工具类来创建 `ArrayList` 的思路是,在 `ArrayList` 的外边套了一个`synchronized`外壳,来使 `ArrayList` 线程安全;
-    ```
+2. 使用`Collections.synchronizedArrayList()` 来创建 `ArrayList`。使用`Collections`工具类来创建`ArrayList`的思路是，在`ArrayList`的外边套了一个`synchronized`外壳，来保证`ArrayList`线程安全；
+    ```java
     List list = Collections.synchronizedArrayList();
     list.add(UUID.randomUUID().toString());
     ```
-- 使用`CopyOnWriteArrayList()`来保证 `ArrayList` 线程安全；`CopyWriteArrayList`字面意思就是在写的时候复制,主要思想就是读写分离的思想。`CopyWriteArrayList`之所以线程安全的原因是在源码里面使用`ReentrantLock`，所以保证了某个线程在写的时候不会被打断；
-    ```
+3. 使用`CopyOnWriteArrayList()`来保证 `ArrayList` 线程安全。`CopyWriteArrayList`字面意思就是在写的时候复制，主要思想就是读写分离的思想。
+`CopyWriteArrayList`之所以线程安全的原因是在源码里面使用`ReentrantLock`，所以保证了某个线程在写的时候不会被打断；
+    ```java
     CopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();
     list.add(UUID.randomUUID().toString());
     ```
-## Set
-- TreeSet：基于红黑树实现，支持有序性操作，例如根据一个范围查找元素的操作。但是查找效率不如 HashSet，HashSet 查找的时间复杂度为 O(1)，TreeSet 则为 O(logN)；
-- HashSet：基于哈希表实现，支持快速查找，但不支持有序性操作。并且失去了元素的插入顺序信息，也就是说使用 Iterator 遍历 HashSet 得到的结果是不确定的。HashSet的value作为hashmap的key，来保证不重复；
-- LinkedHashSet：具有 HashSet 的查找效率，且内部使用双向链表维护元素的插入顺序；
+### ArrayList安全删除
+在`ArrayList`中删除元素时，"安全删除" 指的是在删除元素过程中避免出现异常或错误，并确保集合的结构和元素的状态保持一致。
+在使用增强型`for-each`循环遍历`ArrayList`时，如果尝试删除元素，会抛出`ConcurrentModificationException`。
+```java
+public class ArrayListError {
+    public static void main(String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+        list.add("A");
+        list.add("B");
+        list.add("C");
+        list.add("D");
+
+        for (String element : list) {
+            if ("B".equals(element)) {
+                list.remove(element); // 这会抛出 ConcurrentModificationException
+            }
+        }
+    }
+}
+```
+
+在前面讲过`add`方法，会操作`modCount`变量的值，在查看源码的时候，发现调用`remove`方法时，也会操作`modCount`变量的值。
+当调用`remove`方法时执行了`modCount++`，此时`modCount`变成了`N+1`。
+然后接着遍历调用`next`方法，调用`checkForComodification`比较`expectedModCount`和`modCount`的大小，此时`modCount != expectedModCount`，便抛出异常。
+```java
+final void checkForComodification() {
+    if (modCount != expectedModCount)
+        throw new ConcurrentModificationException();
+}
+
+ // 删除指定位置的元素 
+public E remove(int index) {
+    RangeCheck(index);
+
+    // 修改modCount
+    modCount++;
+    E oldValue = (E) elementData[index];
+
+    int numMoved = size - index - 1;
+    if (numMoved > 0)
+        System.arraycopy(elementData, index+1, elementData, index, numMoved);
+    elementData[--size] = null; // Let gc do its work
+
+    return oldValue;
+}
+```
+
+## HashSet
+`HashSet`是基于`HashMap`来实现的，支持快速查找，但不支持有序性操作。实现了`Set`接口，同时还实现了序列化和可克隆化。
+`Set`不允许存储重复的元素，即集合中的元素是唯一的。当试图添加一个已经存在的元素时，`add`方法会返回`false`，并且集合不会发生改变。
+```java
+public class HashSetExample {
+    public static void main(String[] args) {
+        // 创建一个 HashSet 实例
+        HashSet<String> set = new HashSet<>();
+
+        // 添加元素
+        set.add("Apple");
+        set.add("Banana");
+        set.add("Orange");
+
+        // 打印 HashSet
+        System.out.println("HashSet: " + set);
+
+        // 尝试添加重复元素
+        boolean added = set.add("Apple");
+        System.out.println("Added duplicate element: " + added); // 输出: false
+
+        // 删除元素
+        set.remove("Banana");
+        System.out.println("After removing 'Banana': " + set);
+    }
+}
+```
+
+### 去重原理
+`HashSet`内部实际上是由一个`HashMap`实例支持的，其中`HashMap`的键值对中的键存储了`HashSet`中的元素，而值则是一个占位对象，用来表示键已经存在。
+
+当调用 `HashSet` 的 `add(E e)` 方法添加元素时，首先会调用元素 `e` 的 `hashCode()` 方法获取其哈希码。`HashSet` 根据哈希码确定元素在内部 `HashMap` 的存储位置。
+如果该位置上已经存在一个元素，则使用 `equals()` 方法比较新元素 `e` 与已存在的元素是否相等。
+如果 `equals()` 方法返回 `true`，则认为新元素与已存在元素相同，不进行添加操作，返回 `false`。
+如果 `equals()` 方法返回 `false`，则说明哈希码冲突，但实际上是不同的对象，此时将新元素添加到 `HashSet` 中，返回 `true`。
+如果该位置上不存在任何元素，则直接将新元素添加到 `HashSet` 中，并返回 `true`。
+
+简单来说，`HashSet` 利用对象的哈希码和`equals`方法来确保集合中不存储重复的元素。
+当添加新元素时，先计算其哈希码确定存储位置，如果位置上已存在相同哈希码且通过`equals`方法比较相等的元素，则不添加，否则添加新元素到集合中。
+
+尝试阅读 HashSet 的具体实现源码，HashSet 添加方法的实现源码如下：
+```java
+// hashmap 中 put() 返回 null 时，表示操作成功
+public boolean add(E e) {
+    return map.put(e, PRESENT)==null;
+}
+
+// 返回值：如果插入位置没有元素则返回 null，否则返回上一个元素
+public V put(K key, V value) {
+   return putVal(hash(key), key, value, false, true);
+}
+
+final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
+               boolean evict) {
+   Node<K, V>[] tab;
+   Node<K, V> p;
+   int n, i;
+   //如果哈希表为空，调用 resize() 创建一个哈希表，并用变量 n 记录哈希表长度
+   if ((tab = table) == null || (n = tab.length) == 0)
+      n = (tab = resize()).length;
+   /**
+    * 如果指定参数 hash 在表中没有对应的桶，即为没有碰撞
+    * Hash函数，(n - 1) & hash 计算 key 将被放置的槽位
+    * (n - 1) & hash 本质上是 hash % n 位运算更快
+    */
+   if ((p = tab[i = (n - 1) & hash]) == null)
+      // 直接将键值对插入到 map 中即可
+      tab[i] = newNode(hash, key, value, null);
+   else {// 桶中已经存在元素
+      Node<K, V> e;
+      K k;
+      // 比较桶中第一个元素(数组中的结点)的 hash 值相等，key 相等
+      if (p.hash == hash &&
+              ((k = p.key) == key || (key != null && key.equals(k))))
+         // 将第一个元素赋值给 e，用 e 来记录
+         e = p;
+         // 当前桶中无该键值对，且桶是红黑树结构，按照红黑树结构插入
+      else if (p instanceof TreeNode)
+         e = ((TreeNode<K, V>) p).putTreeVal(this, tab, hash, key, value);
+         // 当前桶中无该键值对，且桶是链表结构，按照链表结构插入到尾部
+      else {
+         for (int binCount = 0; ; ++binCount) {
+            // 遍历到链表尾部
+            if ((e = p.next) == null) {
+               p.next = newNode(hash, key, value, null);
+               // 检查链表长度是否达到阈值，达到将该槽位节点组织形式转为红黑树
+               if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
+                  treeifyBin(tab, hash);
+               break;
+            }
+            // 链表节点的<key, value>与 put 操作<key, value>
+            // 相同时，不做重复操作，跳出循环
+            if (e.hash == hash &&
+                    ((k = e.key) == key || (key != null && key.equals(k))))
+               break;
+            p = e;
+         }
+      }
+      // 找到或新建一个 key 和 hashCode 与插入元素相等的键值对，进行 put 操作
+      if (e != null) { // existing mapping for key
+         // 记录 e 的 value
+         V oldValue = e.value;
+         /**
+          * onlyIfAbsent 为 false 或旧值为 null 时，允许替换旧值
+          * 否则无需替换
+          */
+         if (!onlyIfAbsent || oldValue == null)
+            e.value = value;
+         // 访问后回调
+         afterNodeAccess(e);
+         // 返回旧值
+         return oldValue;
+      }
+   }
+   // 更新结构化修改信息
+   ++modCount;
+   // 键值对数目超过阈值时，进行 rehash
+   if (++size > threshold)
+      resize();
+   // 插入后回调
+   afterNodeInsertion(evict);
+   return null;
+}
+```
+从上述源码可以看出，当将一个键值对放入 HashMap 时，首先根据 key 的 hashCode() 返回值决定该 Entry 的存储位置。如果有两个 key 的 hash 值相同，则会判断这两个元素 key 的 equals() 是否相同，如果相同就返回 true，说明是重复键值对，那么 HashSet 中 add() 方法的返回值会是 false，表示 HashSet 添加元素失败。
+因此，如果向 HashSet 中添加一个已经存在的元素，新添加的集合元素不会覆盖已有元素，从而保证了元素的不重复。
+如果不是重复元素，put 方法最终会返回 null，传递到 HashSet 的 add 方法就是添加成功。
+
+### equals与hashCode
+因为`HashSet`，底层用到了`equals`和`hashCode`方法，如果对象中的`equals`和`hashCode`方法没有正确地重写，可能会导致`HashSet`在判断元素相等性时出现问题，从而允许添加相同的元素。
+
+`equals()`地址比较是通过对象的哈希值来比较的。`hash`值是由`hashCode`方法产生的，`hashCode`属于`Object`类的本地方法，默认使用`==`比较两个对象，如果`equals()`相等`，hashcode`一定相等，如果`hashcode`相等，`equals`不一定相等。
+所以在覆盖`equals()`方法时应当总是覆盖` hashCode() `方法，保证等价的两个对象散列值也相等。
+
+下面的代码中，新建了两个等价的对象，并将它们添加到`HashSet`中。我们希望将这两个对象当成一样的，只在集合中添加一个对象，但是因为`EqualExample`没有实现`hashCode()`方法，因此这两个对象的散列值是不同的，最终导致集合添加了两个等价的对象。
+```java
+public class MainTest {
+    public static void main(String[] args) {
+        EqualExample e1 = new EqualExample(1, 1, 1);
+        EqualExample e2 = new EqualExample(1, 1, 1);
+        // true
+        System.out.println(e1.equals(e2));
+        HashSet<EqualExample> set = new HashSet<>();
+        set.add(e1);
+        set.add(e2);
+        // 2
+        System.out.println(set.size());
+    }
+}
+```
+所以在覆盖 `equals()`方法时应当总是覆盖`hashCode()`方法，保证等价的两个对象散列值也相等。
+
+### 线程安全
+
 
 ## Queue
 队列是一种经常使用的集合。Queue实际上是实现了一个先进先出（FIFO：First In First Out）的有序列表。它和List的区别在于，List可以在任意位置添加和删除元素，而Queue只有两个操作：
