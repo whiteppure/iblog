@@ -1811,17 +1811,17 @@ The encoding flag will indicate which encoding is used.</p>
 在早期的Java版本（如JDK 6及之前），字符串常量池通常是存放在永久代，GC对永久代的回收效率很低，只有在<code>Full GC</code>的时候才会触发，这就导致字符串常量池回收效率不高。
 而我们开发过程中，使用频率比较高，会有大量的字符串被创建，如果无法及时回收，容易导致永久代内存不足。所以JDK7之后将字符串常量池放到堆里，能及时回收内存，避免出现<code>OOM</code>错误。</p>
 <p>如何证明Java8中的字符串常量池方到了堆中？代码演示：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
-</span></span><span class="line"><span class="cl">    // 虚拟机参数： -Xmx6m -Xms6m -XX:MetaspaceSize=10m -XX:MaxMetaspaceSize=10m
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        HashSet&lt;String&gt; hashSet = new HashSet&lt;&gt;();
-</span></span><span class="line"><span class="cl">        short i = 0;
-</span></span><span class="line"><span class="cl">        while (true) {
-</span></span><span class="line"><span class="cl">            hashSet.add(String.valueOf(i++).intern());
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>抛出异常证明Java8中的字符串常量池方到了堆中。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MainTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 虚拟机参数： -Xmx6m -Xms6m -XX:MetaspaceSize=10m -XX:MaxMetaspaceSize=10m</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">HashSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">hashSet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">short</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">hashSet</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">i</span><span class="o">++</span><span class="p">).</span><span class="na">intern</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>抛出异常证明Java8中的字符串常量池方到了堆中。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Exception in thread &#34;main&#34; java.lang.OutOfMemoryError: Java heap space
 </span></span></code></pre></div><p>关于JDK1.6、JDK1.7字符串常量池，有一道相关的面试题。下列代码在JDK1.6、JDK1.7中执行结果不同：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {

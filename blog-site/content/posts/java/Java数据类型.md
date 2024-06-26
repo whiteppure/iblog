@@ -636,7 +636,6 @@ public class MainTest {
    如果一个`String` 对象已经被创建过了，那么就会从`String`常量池中取得引用。只有`String`是不可变的，才可能使用 字符串常量池。
 4. 可以缓存`hash`值。因为`String`的`hash`值经常被使用，像`Set`、`Map`结构中的`key`值也需要用到`HashCode`来保证唯一性和一致性，因此不可变的`HashCode`才是安全可靠的。
 
-
 ### new String("abc")会创建几个对象
 `new String("abc")`会创建几个对象？ 这是面试中经常问的一个问题，先说答案两个字符串对象，前提是`String`常量池中还没有 "abc" 字符串对象。
 第一个对象是"abc"，它属于字符串字面量，因此编译时期会在字符串常量池中创建一个字符串对象，指向这个 "abc" 字符串字面量，而使用`new`的方式会在堆中创建一个字符串对象。
@@ -716,7 +715,7 @@ Constant pool:
 而我们开发过程中，使用频率比较高，会有大量的字符串被创建，如果无法及时回收，容易导致永久代内存不足。所以JDK7之后将字符串常量池放到堆里，能及时回收内存，避免出现`OOM`错误。
 
 如何证明Java8中的字符串常量池方到了堆中？代码演示：
-```
+```java
 public class MainTest {
     // 虚拟机参数： -Xmx6m -Xms6m -XX:MetaspaceSize=10m -XX:MaxMetaspaceSize=10m
     public static void main(String[] args) {
@@ -762,7 +761,6 @@ JDK1.7起，将这个字符串对象尝试放入字符串常量池：
 - 如果没有，则会把**对象的引用地址复制一份，放入串池**，并返回串池中的引用地址；
 
 ![JDK78字符串常量池案例解析](/iblog/posts/annex/images/essays/JDK78字符串常量池案例解析.png)
-
 
 #### intern方法
 在Java中，字符串常量池是由JVM自动管理的，开发者通常不需要显式地将字符串加入到字符串常量池中。
