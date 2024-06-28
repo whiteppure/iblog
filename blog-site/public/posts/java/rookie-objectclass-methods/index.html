@@ -913,23 +913,23 @@
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><h3 id="hashcode与equals">hashCode与equals</h3>
 <p><code>hashCode()</code>返回散列值，而<code>equals()</code>是用来判断两个对象是否等价。等价的两个对象散列值一定相同，但是散列值相同的两个对象不一定等价。</p>
-<p><code>equals()</code>地址比较是通过对象的哈希值来比较的。<code>hash</code>值是由<code>hashCode</code>方法产生的，<code>hashCode</code>属于<code>Object</code>类的本地方法，默认使用<code>==</code>比较两个对象，如果<code>equals()</code>相等<code>，hashcode</code>一定相等，如果<code>hashcode</code>相等，<code>equals</code>不一定相等。</p>
-<p>所以在覆盖 <code>equals()</code> 方法时应当总是覆盖<code>hashCode()</code>方法，保证等价的两个对象散列值也相等。</p>
-<p>下面的代码中，新建了两个等价的对象，并将它们添加到<code>HashSet</code>中。我们希望将这两个对象当成一样的，只在集合中添加一个对象，但是<strong>因为<code>EqualExample</code>没有实现<code>hashCode()</code>方法，因此这两个对象的散列值是不同的，最终导致集合添加了两个等价的对象。</strong></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        EqualExample e1 = new EqualExample(1, 1, 1);
-</span></span><span class="line"><span class="cl">        EqualExample e2 = new EqualExample(1, 1, 1);
-</span></span><span class="line"><span class="cl">        // true
-</span></span><span class="line"><span class="cl">        System.out.println(e1.equals(e2));
-</span></span><span class="line"><span class="cl">        HashSet&lt;EqualExample&gt; set = new HashSet&lt;&gt;();
-</span></span><span class="line"><span class="cl">        set.add(e1);
-</span></span><span class="line"><span class="cl">        set.add(e2);
-</span></span><span class="line"><span class="cl">        // 2
-</span></span><span class="line"><span class="cl">        System.out.println(set.size());
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>所以<strong>在覆盖 <code>equals()</code>方法时应当总是覆盖<code>hashCode()</code>方法，保证等价的两个对象散列值也相等。</strong></p>
+<p><code>equals()</code>地址比较是通过对象的哈希值来比较的。<code>hash</code>值是由<code>hashCode</code>方法产生的，<code>hashCode</code>属于<code>Object</code>类的本地方法，默认使用<code>==</code>比较两个对象，如果<code>equals()</code>相等<code>，hashcode</code>一定相等，如果<code>hashcode</code>相等，<code>equals</code>不一定相等。
+所以在覆盖 <code>equals()</code> 方法时应当总是覆盖<code>hashCode()</code>方法，保证等价的两个对象散列值也相等。</p>
+<p>下面的代码中，新建了两个等价的对象，并将它们添加到<code>HashSet</code>中。我们希望将这两个对象当成一样的，只在集合中添加一个对象，但是因为<code>EqualExample</code>没有实现<code>hashCode()</code>方法，因此这两个对象的散列值是不同的，最终导致集合添加了两个等价的对象。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MainTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">EqualExample</span><span class="w"> </span><span class="n">e1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">EqualExample</span><span class="p">(</span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">EqualExample</span><span class="w"> </span><span class="n">e2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">EqualExample</span><span class="p">(</span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">e1</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">e2</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">HashSet</span><span class="o">&lt;</span><span class="n">EqualExample</span><span class="o">&gt;</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">e1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">set</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">e2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">set</span><span class="p">.</span><span class="na">size</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>所以在覆盖 <code>equals()</code>方法时应当总是覆盖<code>hashCode()</code>方法，保证等价的两个对象散列值也相等。</p>
 <h3 id="重写hashcode方法">重写hashCode方法</h3>
 <p>重写<code>hashCode</code>方法规则：</p>
 <ul>
