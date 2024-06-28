@@ -903,11 +903,6 @@ static int capacity(int expectedSize) {
 随着`HashMap`中的元素增加，`Hash`碰撞导致获取元素方法的效率就会越来越低。为了保证获取元素方法的效率，所以针对`HashMap`中的数组进行扩容。
 扩容数组的方式只能再去开辟一个新的数组，并把之前的元素转移到新数组上。
 
-在`HashMap`中有一个概念叫`loadFactor`，即负载因子，它表示`HashMap`满的程度，默认值为`0.75f`，也就是说默认情况下，当`HashMap`中元素个数达到了容量的3/4的时候就会进行自动扩容。
-```java
- if (++size > threshold)
-    resize();
-```
 `HashMap`的容量是有上限的，必须小于`1<<30`，即`1073741824`。如果容量超出了这个数，则不再增长，且阈值会被设置为`Integer.MAX_VALUE`：
 ```java
 // Java8
@@ -922,6 +917,11 @@ if (oldCapacity == MAXIMUM_CAPACITY) {
 }
 ```
 
+在`HashMap`中有一个概念叫`loadFactor`，即负载因子，它表示`HashMap`满的程度，默认值为`0.75f`，也就是说默认情况下，当`HashMap`中元素个数达到了容量的3/4的时候就会进行自动扩容。
+```java
+ if (++size > threshold)
+    resize();
+```
 为什么负载因子默认设置为0.75？
 ```java
 /**
@@ -947,84 +947,87 @@ If the initial capacity is greater than the maximum number of entries divided by
 - 为了提升扩容效率，`HashMap`的容量有一个固定的要求，那就是一定是2的幂。如果负载因子是3/4的话，那么和容量的乘积结果就可以是一个整数；
 
 #### 1.7扩容
-- JDK1.7: 先扩容在添加元素；
-- `新容量 = 旧容量 * 2`
-- `新阈值 = 新容量 * 负载因子`
-
-```
-void addEntry(int hash, K key, V value, int bucketIndex) {  
-    //size：The number of key-value mappings contained in this map.  
-    //threshold：The next size value at which to resize (capacity * load factor)  
-    //数组扩容条件：1.已经存在的key-value mappings的个数大于等于阈值  
-    //             2.底层数组的bucketIndex坐标处不等于null  
-    if ((size >= threshold) && (null != table[bucketIndex])) {  
-        resize(2 * table.length);//扩容之后，数组长度变了  
-        hash = (null != key) ? hash(key) : 0;//为什么要再次计算一下hash值呢？  
-        bucketIndex = indexFor(hash, table.length);//扩容之后，数组长度变了，在数组的下标跟数组长度有关，得重算。  
-    }  
-    createEntry(hash, key, value, bucketIndex);  
-} 
-```
-```
-void resize(int newCapacity) {   //传入新的容量
-    Entry[] oldTable = table;    //引用扩容前的Entry数组
-    int oldCapacity = oldTable.length;
-    if (oldCapacity == MAXIMUM_CAPACITY) {  //扩容前的数组大小如果已经达到最大(2^30)了
-        threshold = Integer.MAX_VALUE; //修改阈值为int的最大值(2^31-1)，这样以后就不会扩容了
-        return;
-    }
-
-    Entry[] newTable = new Entry[newCapacity];  //初始化一个新的Entry数组
-    transfer(newTable);                         //！！将数据转移到新的Entry数组里
-    table = newTable;                           //HashMap的table属性引用新的Entry数组
-    threshold = (int) (newCapacity * loadFactor);//修改阈值
-}
-```
-通过transfer方法将旧数组上的元素转移到扩容后的新数组上
-```
-void transfer(Entry[] newTable) {
-    Entry[] src = table;                   //src引用了旧的Entry数组
-    int newCapacity = newTable.length;
-    for (int j = 0; j < src.length; j++) { //遍历旧的Entry数组
-        Entry<K, V> e = src[j];             //取得旧Entry数组的每个元素
-        if (e != null) {
-            src[j] = null;//释放旧Entry数组的对象引用（for循环后，旧的Entry数组不再引用任何对象）
-            do {
-                Entry<K, V> next = e.next;
-                int i = indexFor(e.hash, newCapacity); //！！重新计算每个元素在数组中的位置
-                e.next = newTable[i]; //标记[1]
-                newTable[i] = e;      //将元素放在数组上
-                e = next;             //访问下一个Entry链上的元素
-            } while (e != null);
-        }
-    }
-}
-```
+扩容步骤：
+1. 当插入新的键值对使得元素数量超过阈值时，`HashMap`会进行扩容；
+   ```java
+   void addEntry(int hash, K key, V value, int bucketIndex) {  
+       //size：The number of key-value mappings contained in this map.  
+       //threshold：The next size value at which to resize (capacity * load factor)  
+       //数组扩容条件：1.已经存在的key-value mappings的个数大于等于阈值  
+       //             2.底层数组的bucketIndex坐标处不等于null  
+       if ((size >= threshold) && (null != table[bucketIndex])) {  
+           resize(2 * table.length);//扩容之后，数组长度变了  
+           hash = (null != key) ? hash(key) : 0;//为什么要再次计算一下hash值呢？  
+           bucketIndex = indexFor(hash, table.length);//扩容之后，数组长度变了，在数组的下标跟数组长度有关，得重算。  
+       }  
+       createEntry(hash, key, value, bucketIndex);  
+   } 
+   ```
+2. 创建一个新的数组，新的容量是原来的两倍，新阈值=新容量*负载因子；
+   ```java
+   void resize(int newCapacity) {   //传入新的容量
+       Entry[] oldTable = table;    //引用扩容前的Entry数组
+       int oldCapacity = oldTable.length;
+       if (oldCapacity == MAXIMUM_CAPACITY) {  //扩容前的数组大小如果已经达到最大(2^30)了
+           threshold = Integer.MAX_VALUE; //修改阈值为int的最大值(2^31-1)，这样以后就不会扩容了
+           return;
+       }
+   
+       Entry[] newTable = new Entry[newCapacity];  //初始化一个新的Entry数组
+       transfer(newTable);                         //！！将数据转移到新的Entry数组里
+       table = newTable;                           //HashMap的table属性引用新的Entry数组
+       threshold = (int) (newCapacity * loadFactor);//修改阈值
+   }
+   ```
+3. 将旧表中的所有元素重新计算哈希值，并放入新表中：通过`transfer`方法将旧数组上的元素转移到扩容后的新数组上。遍历旧表中的每个桶，对于每个桶中的每个节点，重新计算它们在新表中的索引位置，将节点放入新表的相应位置；
+   ```java
+   void transfer(Entry[] newTable) {
+       Entry[] src = table;                   //src引用了旧的Entry数组
+       int newCapacity = newTable.length;
+       for (int j = 0; j < src.length; j++) { //遍历旧的Entry数组
+           Entry<K, V> e = src[j];             //取得旧Entry数组的每个元素
+           if (e != null) {
+               src[j] = null;//释放旧Entry数组的对象引用（for循环后，旧的Entry数组不再引用任何对象）
+               do {
+                   Entry<K, V> next = e.next;
+                   int i = indexFor(e.hash, newCapacity); //！！重新计算每个元素在数组中的位置
+                   e.next = newTable[i]; //标记[1]
+                   newTable[i] = e;      //将元素放在数组上
+                   e = next;             //访问下一个Entry链上的元素
+               } while (e != null);
+           }
+       }
+   }
+   ```
+4. 将旧表引用指向新表；
 
 #### 1.8扩容
-- JDK1.8: 先添加元素在扩容；
-容量变为原来的2倍，阈值也变为原来的2倍。容量和阈值都变为原来的2倍时，负载因子还是不变。
+Java1.8的`HashMap`扩容原理与1.7类似，但有一些重要改进。
+在1.8时做了一些优化，文档注释写的很清楚："元素的位置要么是在原位置，要么是在原位置再移动**2次幂的位置**"。也就是对比1.7的迁移到新的数组上省去了重新计算`hash`值的时间。
 
-在1.8时做了一些优化，文档注释写的很清楚："元素的位置要么是在原位置，要么是在原位置再移动2次幂的位置"。也就是对比1.7的迁移到新的数组上省去了重新计算hash值的时间。
-
-这里的"2次幂的位置"是指长度为原来数组元素的两倍的位置;举个例子,现在容量为16，要扩容到32，要将之前的元素迁移过去，要根据hash值来判断迁移过去的位置；假设元素A：hash值：0101 0101；根据代码`h & (length - 1)`可得`元素A & 15`、`元素A & 31`
+这里的"2次幂的位置"是指长度为原来数组元素两倍的位置。
+假设旧容量是16，那么其二进制表示是`10000`，扩容后的新容量是32，其二进制表示是`100000`。`HashMap`通过`h & (length - 1)`计算索引。
+在扩容之前，容量为16，根据公式`hash & (oldCapacity - 1)`计算，因为`oldCapacity - 1`的二进制是`0000 1111`，那么计算索引时使用的是哈希值的低四位。
 ```
 扩容之前的位置：
   0101 0101
 & 0000 1111
 ————————————
   0000 0101
-
+```
+扩容后，新的索引还是通过`hash & (newCapacity - 1)`计算的，若容量为32，因为`newCapacity - 1`的二进制是`0001 1111`，那么计算索引时使用的是哈希值的低五位。
+```
 扩容之后的位置：
   0101 0101
 & 0001 1111
 ————————————
   0001 0101
 ```
-发现规律：扩容前的hash值和扩容后的hash值，如果元素A二进制形式第三位如果是0，扩容之后就还是原来的位置，如果是1扩容后就是原来的位置加16，而16就是扩容的大小。
-
-
-```
+扩容后，新的索引位置只受到哈希值高位的影响，所以叫高位优化。
+高位优化的关键在于，如果一个哈希值在旧容量下的索引是`index`，那么在新容量下，这个哈希值要么在`index`位置，要么在`index + oldCapacity`位置。
+例如上面的例子，容量为16，扩容之前的位置为`0000 0101`即5，扩容之后的位置为`0001 0101`即21（16+5）。
+通过这种高位优化技术，Java1.8中的`HashMap`在扩容时无需重新计算所有元素的哈希值，只需根据哈希值的高位来判断元素的新位置，所以提高了扩容的效率。
+```java
  /**
      * Initializes or doubles table size.  If null, allocates in
      * accord with initial capacity target held in field threshold.
@@ -1069,23 +1072,28 @@ void transfer(Entry[] newTable) {
                 if ((e = oldTab[j]) != null) {
                     oldTab[j] = null;
                     if (e.next == null)
+                       // 单个节点，直接移动到新表中的新位置
                         newTab[e.hash & (newCap - 1)] = e;
                     else if (e instanceof TreeNode)
+                       // 红黑树节点，处理红黑树的拆分逻辑
                         ((TreeNode<K,V>)e).split(this, newTab, j, oldCap);
                     else { // preserve order
+                       // 处理链表节点，使用高位优化技术重新分配节点
                         Node<K,V> loHead = null, loTail = null;
                         Node<K,V> hiHead = null, hiTail = null;
                         Node<K,V> next;
                         do {
                             next = e.next;
+                           // 判断节点在新表中的位置，高位优化的关键
                             if ((e.hash & oldCap) == 0) {
+                               // 保持在原位置（低位链表）
                                 if (loTail == null)
                                     loHead = e;
                                 else
                                     loTail.next = e;
                                 loTail = e;
-                            }
-                            else {
+                            }else {
+                               // 移动到新位置（高位链表）
                                 if (hiTail == null)
                                     hiHead = e;
                                 else
@@ -1093,6 +1101,8 @@ void transfer(Entry[] newTable) {
                                 hiTail = e;
                             }
                         } while ((e = next) != null);
+
+                       // 将低位链表和高位链表分别放入新表中的相应位置
                         if (loTail != null) {
                             loTail.next = null;
                             newTab[j] = loHead;
