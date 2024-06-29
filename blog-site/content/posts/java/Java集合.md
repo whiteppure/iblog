@@ -39,7 +39,7 @@ int[] array = (int[]) obj; // 向下转型
     System.out.println("Successfully casted obj to int[]");
 }
 ```
-数组由于其连续的内存分配和高效的下标访问，具有高访问效率，但其固定大小、插入删除低效、单一类型限制和高内存要求使其在实际应用中不如集合灵活
+数组由于其连续的内存分配和高效的下标访问，具有高访问效率，但其固定大小、插入删除低效、单一类型限制和高内存要求使其在实际应用中不如集合灵活，
 所以我们应该优选集合，而不是数组。只有在已证明性能成为问题的时候，并且确定切换到数组对性能提高有帮助时，才应该将项目重构为使用数组。
 
 ### 变长参数
@@ -661,7 +661,7 @@ public class MainTest {
 - `Collections.synchronizedSet`集合工具类解决；
 - 使用 `CopyOnWriteArraySet`保证集合线程安全；
 
-由于性能因素，一般情况使用 `CopyOnWriteArraySet`场景较多，代码演示
+由于性能因素，一般情况使用 `CopyOnWriteArraySet`场景较多，代码演示：
 ```java
 public class MainTest {
     public static void main(String[] args) {
