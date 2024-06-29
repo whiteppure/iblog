@@ -931,7 +931,7 @@ Java中提供的数组是用来存储固定大小的同类型元素，所以Java
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="p">)</span><span class="w"> </span><span class="n">obj</span><span class="p">;</span><span class="w"> </span><span class="c1">// 向下转型</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Successfully casted obj to int[]&#34;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>数组由于其连续的内存分配和高效的下标访问，具有高访问效率，但其固定大小、插入删除低效、单一类型限制和高内存要求使其在实际应用中不如集合灵活
+</span></span></span></code></pre></div><p>数组由于其连续的内存分配和高效的下标访问，具有高访问效率，但其固定大小、插入删除低效、单一类型限制和高内存要求使其在实际应用中不如集合灵活，
 所以我们应该优选集合，而不是数组。只有在已证明性能成为问题的时候，并且确定切换到数组对性能提高有帮助时，才应该将项目重构为使用数组。</p>
 <h3 id="变长参数">变长参数</h3>
 <p>在Java中，变长参数在方法定义中处理方式与数组相同。
@@ -1478,7 +1478,7 @@ Java中提供的数组是用来存储固定大小的同类型元素，所以Java
 <li><code>Collections.synchronizedSet</code>集合工具类解决；</li>
 <li>使用 <code>CopyOnWriteArraySet</code>保证集合线程安全；</li>
 </ul>
-<p>由于性能因素，一般情况使用 <code>CopyOnWriteArraySet</code>场景较多，代码演示</p>
+<p>由于性能因素，一般情况使用 <code>CopyOnWriteArraySet</code>场景较多，代码演示：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MainTest</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">CopyOnWriteArraySet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CopyOnWriteArraySet</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
