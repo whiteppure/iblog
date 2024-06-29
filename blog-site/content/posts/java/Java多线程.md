@@ -1703,7 +1703,7 @@ Thread 4	当前最新实际值：100
 ````
 
 ### J.U.C.
-`java.util.concurrent.locks`包下常用的类与接口是`jdk1.5`后新增的。`lock`的出现是为了弥补`synchronized`关键字解决不了的一些问题。
+`java.util.concurrent.locks`包下常用的类与接口是`JDK1.5`后新增的。`lock`的出现是为了弥补`synchronized`关键字解决不了的一些问题。
 
 例如：当一个代码块被`synchronized`修饰了，一个线程获取了对应的锁，并执行该代码块时，其他线程只能一直等待，等待获取锁的线程释放锁，如果这个线程因为某些原因被堵塞了，没有释放锁，那么其他线程只能一直等待下去。导致效率很低。
 
@@ -3370,7 +3370,7 @@ private int expungeStaleEntry(int staleSlot) {
 | HashSet    | 使用Collections.synchronizedSet、CopyOnWriteArraySet         |
 | HashMap    | 使用HashTable、Collections.synchronizedMap、ConcurrentHashMap |
 
-### ArrayList线程不安全
+### ArrayList
 `ArrayList`线程不安全代码演示        
 ```
 public class MainTest {
@@ -3391,7 +3391,7 @@ java.util.ConcurrentModificationException
 ```
 出现该异常的原因是，当某个线程正在执行 `add()`方法时，被某个线程打断，添加到一半被打断，没有被添加完。
 
-#### 解决ArrayList线程不安全问题
+解决ArrayList线程不安全问题：
 - 可以使用 `Vector` 来代替 `ArrayList`，`Vector` 是线程安全的 `ArrayList`，但是由于，并发量太小，被淘汰;
 - 使用 `Collections.synchronizedArrayList()` 来创建 `ArrayList`；使用 `Collections` 工具类来创建 `ArrayList` 的思路是，在 `ArrayList` 的外边套了一个`synchronized`外壳，来使 `ArrayList` 线程安全;
 - 使用 `CopyOnWriteArrayList()`来保证 `ArrayList` 线程安全；
@@ -3410,7 +3410,7 @@ public class MainTest {
     }
 }
 ```
-#### CopyWriteArrayList原理
+#### CopyWriteArrayList
 `CopyWriteArrayList` 字面意思就是在写的时候复制，思想就是读写分离的思想。以下是 `CopyOnWriteArrayList` 的 `add()` 方法源码
 ```
 /** The array, accessed only via getArray/setArray. */
@@ -3502,8 +3502,8 @@ public CopyOnWriteArraySet() {
 参照[CopyWriteArrayList原理](#CopyWriteArrayList原理)
 
 ### HashMap
-`HashMap` 也是线程不安全的集合类，在多线程环境下使用同样会出现`java.util.ConcurrentModificationException`。
-```
+`HashMap`也是线程不安全的集合类，在多线程环境下使用同样会出现`java.util.ConcurrentModificationException`。
+```java
 public class MainTest {
     public static void main(String[] args) {
         HashMap<String,Object> map = new HashMap<>();
@@ -3516,23 +3516,20 @@ public class MainTest {
     }
 }
 ```
-再多线程环境下`HashMap`不仅会出现`ConcurrentModificationException`问题；
-更严重的是，当多个线程中的 `HashMap` 同时扩容时，再使用put方法添加元素，如果hash值相同，可能出现同时在同一数组下用链表表示，造成闭环，导致在get时会出现死循环，CPU飙升到100%。
+在多线程环境下`HashMap`不仅会出现`ConcurrentModificationException`问题，更严重的是，当多个线程中的 `HashMap` 同时扩容时，再使用`put`方法添加元素，如果`hash`值相同，可能出现同时在同一数组下用链表表示，造成闭环，导致在`get`时会出现死循环，CPU飙升到100%。
 
 解决方案：
 - 使用 `HashTable`来保证线程安全;
 - `Collections.synchronizedMap()` 使用集合工具类;
-- `ConcurrentHashMap<>()` 来保证线程安全;
+- `ConcurrentHashMap` 来保证线程安全;
 
-上面的`HashTable`、`Collections.synchronizedMap()`因为性能的原因，在多线程环境下很少使用，一般都会使用`ConcurrentHashMap<>()`。
+#### HashTable
+`HashTable`、`Collections.synchronizedMap()`因为性能的原因，在多线程环境下很少使用，一般都会使用`ConcurrentHashMap`。
 
 `HashTable`性能低的原因，就是直接加了`synchronized`修饰；
-当使用put方法时，通过hash算法判断应该分配到哪一个数组上，如果分配到同一个数组上，即发生hash冲突，这个时候加锁是没问题的；但是一旦不发生hash冲突，再去加锁，性能就不太好了。
-
-可理解为`HashTable`性能不好的原因就是锁的粒度太粗了。
-
-`HashTable`put方法源码
-```
+当使用`put`方法时，通过`hash`算法判断应该分配到哪一个数组上，如果分配到同一个数组上，即发生`hash`冲突，这个时候加锁是没问题的；但是一旦不发生`hash`冲突，再去加锁，性能就不太好了。
+可理解为`HashTable`性能不好的原因就是锁的粒度太粗了。`HashTable``put`方法源码：
+```java
 public synchronized V put(K key, V value) {
         // Make sure the value is not null
         if (value == null) {
@@ -3558,25 +3555,23 @@ public synchronized V put(K key, V value) {
     }
 ```
 
-### ConcurrentHashMap
-`ConcurrentHashMap`原理简单理解为：`HashMap` + 分段锁。
-因为`HashMap`在jdk1.7与jdk1.8结构上做了调整，所以`ConcurrentHashMap`在jdk1.7与jdk1.8结构上也有所不同。
+#### ConcurrentHashMap
+`ConcurrentHashMap`原理简单理解为，`HashMap` + 分段锁。
+因为`HashMap`在JDK1.7与JDK1.8结构上做了调整，所以`ConcurrentHashMap`在JDK1.7与JDK1.8结构上也有所不同。
 
-在阅读之前建议掌握`HashMap`基本原理、CAS、`synchronized`、`lock`以及对多线程并发有一定了解。
-
-#### jdk1.7ConcurrentHashMap
+##### JDK1.7ConcurrentHashMap
 JDK1.7采用`segment`的分段锁机制实现线程安全，其中`segment`类继承自`ReentrantLock`。用`ReentrantLock`、CAS来保证线程安全。
 
 ![jdk1.7ConcurrentHashMap](/iblog/posts/annex/images/essays/jdk1.7ConcurrentHashMap.png)
 
-jdk1.7的`ConcurrentHashMap`结构：
+JDK1.7的`ConcurrentHashMap`结构：
 - `segment`: 每一个`segment`数组就相当于一个`HashMap`；
 - `HashEntry`: 等同于`HashMap`中`Entry`，用于存放K，V键值对；
 - 节点：每个节点对应`ConcurrentHashMap`存放的值；
 
-jdk1.7`ConcurrentHashMap`之所以能够保证线程安全，主要原因是在每个`segment`数组上加了锁，俗称分段锁，细化了锁的粒度。
+JDK1.7`ConcurrentHashMap`之所以能够保证线程安全，主要原因是在每个`segment`数组上加了锁，俗称分段锁，细化了锁的粒度。
 
-jdk1.7`ConcurrentHashMap.put`方法源码
+JDK1.7`ConcurrentHashMap.put`方法源码
 ```
     public V put(K key， V value) {
         Segment<K,V> s;
@@ -3642,7 +3637,6 @@ while ((seg = (Segment<K，V>)UNSAFE.getObjectVolatile(ss, u))
 }
 ```
 
-
 `Segment.put`方法源码；为了保证线程安全，执行put方法要保证要加到锁，如果没加到锁就会执行`scanAndLockForPut`方法；
 这个方法就会保证一定要加到锁；
 ```
@@ -3691,7 +3685,7 @@ static final int MAX_SCAN_RETRIES =
 
 ```
 
-#### jdk1.8ConcurrentHashMap
+##### JDK1.8ConcurrentHashMap
 JDK1.8的实现已经摒弃了 `Segment` 的概念，而是直接用 `Node数组+链表/红黑树`的数据结构来实现，并发控制使用 `synchronized` 和CAS来操作，整个看起来就像是优化过且线程安全的`HashMap`;
 虽然在JDK1.8中还能看到 `Segment` 的数据结构，但是已经简化了属性，只是为了兼容旧版本。
 
@@ -3915,7 +3909,6 @@ private final void addCount(long x, int check) {
 - 如果`f == null`，则在`table`中的i位置放入fwd，这个过程是采用`Unsafe.compareAndSwapObjectf`方法实现的，实现了节点的并发移动。
 - 如果f是链表的头节点，就构造一个反序链表，把他们分别放在`nextTable`的i和i+n的位置上，移动完成，采用`Unsafe.putObjectVolatile`方法给`table`原位置赋值fwd。
 - 如果f是`TreeBin`节点，也做一个反序处理，并判断是否需要`untreeify`，把处理的结果分别放在nextTable的i和i+n的位置上，移动完成，同样采用`Unsafe.putObjectVolatile`方法给`table`原位置赋值fwd。
-
 
 ## 参考文章
 - http://hollischuang.gitee.io/tobetopjavaer/#/basics/concurrent-coding/synchronized

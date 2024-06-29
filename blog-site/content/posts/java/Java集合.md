@@ -641,6 +641,51 @@ public class MainTest {
 ```
 所以在覆盖`equals`方法时应当总是覆盖`hashCode`方法，保证等价的两个对象散列值也相等。
 
+### 线程安全
+`HashSet`和`ArrayList`类似，也是线程不安全的集合类，也会报`ConcurrentModificationException` 异常。代码演示线程不安全示例：
+```java
+public class MainTest {
+    public static void main(String[] args) {
+        HashSet<String> set = new HashSet<>();
+        for(int i=0; i< 10; i++) {
+            new Thread(() -> {
+                set.add(UUID.randomUUID().toString());
+                System.out.println(set);
+            },String.valueOf(i)).start();
+        }
+    }
+}
+```
+
+参照`ArrayList`解决方案，得到`HashSet`两种解决方案：
+- `Collections.synchronizedSet`集合工具类解决；
+- 使用 `CopyOnWriteArraySet`保证集合线程安全；
+
+由于性能因素，一般情况使用 `CopyOnWriteArraySet`场景较多，代码演示
+```java
+public class MainTest {
+    public static void main(String[] args) {
+        CopyOnWriteArraySet<String> set = new CopyOnWriteArraySet<>();
+        for(int i=0; i< 10; i++) {
+            new Thread(() -> {
+                set.add(UUID.randomUUID().toString());
+                System.out.println(set);
+            },String.valueOf(i)).start();
+        }
+    }
+}
+```
+`CopyOnWriteArraySet`底层调用的是`CopyOnWriteArrayList`：
+```java
+private final CopyOnWriteArrayList<E> al;
+/**
+ * Creates an empty set.
+ */
+public CopyOnWriteArraySet() {
+    al = new CopyOnWriteArrayList<E>();
+}
+```
+
 ## Queue
 在Java中，队列是一种常用的数据结构，用于按顺序存储元素，通常以先进先出(`FIFO`：`First In First Out`)的方式进行操作。
 它和`List`的区别在于，`List`可以在任意位置添加和删除元素，而队列只有两个操作，把元素添加到队列末尾，或者从队列头部取出元素。
@@ -1120,4 +1165,21 @@ Java1.8的`HashMap`扩容原理与1.7类似，但有一些重要改进。
 ```
 
 ### 线程安全
+`HashMap`也是线程不安全的集合类，在多线程环境下使用同样会出现`ConcurrentModificationException`。
+```java
+public class MainTest {
+    public static void main(String[] args) {
+        HashMap<String,Object> map = new HashMap<>();
+        for(int i=0; i< 10; i++) {
+            new Thread(() -> {
+                map.put(UUID.randomUUID().toString(),Thread.currentThread().getName());
+                System.out.println(map);
+            },String.valueOf(i)).start();
+        }
+    }
+}
+```
+更严重的是，当多个线程中的 `HashMap` 同时扩容时，再使用`put`方法添加元素，如果`hash`值相同，可能出现同时在同一数组下用链表表示，造成闭环，导致在`get`时会出现死循环，CPU飙升到100%。
 
+在大多数并发场景中，推荐使用`ConcurrentHashMap`，因为它设计用于高并发环境，并且在大多数情况下性能优于使用同步包装或手动同步的`HashMap`。
+`ConcurrentHashMap`原理简单理解为，`HashMap` + 分段锁。因为`HashMap`在JDK1.7与JDK1.8结构上做了调整，所以`ConcurrentHashMap`在JDK1.7与JDK1.8结构上也有所不同。

@@ -2154,8 +2154,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#arraylist%e7%ba%bf%e7%a8%8b%e4%b8%8d%e5%ae%89%e5%85%a8">
-                    ArrayList线程不安全
+                <a class="nav-link text-left" href="#arraylist">
+                    ArrayList
                 </a>
             </li>
             
@@ -2184,40 +2184,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e8%a7%a3%e5%86%b3arraylist%e7%ba%bf%e7%a8%8b%e4%b8%8d%e5%ae%89%e5%85%a8%e9%97%ae%e9%a2%98">
-                    解决ArrayList线程不安全问题
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#copywritearraylist%e5%8e%9f%e7%90%86">
-                    CopyWriteArrayList原理
+                <a class="nav-link text-left" href="#copywritearraylist">
+                    CopyWriteArrayList
                 </a>
             </li>
             
@@ -2300,72 +2268,44 @@
             
         <ul class="nav">
             
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#hashtable">
+                    HashTable
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
             
             <li class="nav-item">
                 <a class="nav-link text-left" href="#concurrenthashmap">
                     ConcurrentHashMap
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#jdk17concurrenthashmap">
-                    jdk1.7ConcurrentHashMap
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#jdk18concurrenthashmap">
-                    jdk1.8ConcurrentHashMap
                 </a>
             </li>
             
@@ -4073,7 +4013,7 @@ Unsafe类中的所有方法都是<strong>native</strong>修饰的，也就是说
 </span></span><span class="line"><span class="cl">Thread 4	修改是否成功false	当前最新实际版本号：3
 </span></span><span class="line"><span class="cl">Thread 4	当前最新实际值：100
 </span></span></code></pre></div><h3 id="juc">J.U.C.</h3>
-<p><code>java.util.concurrent.locks</code>包下常用的类与接口是<code>jdk1.5</code>后新增的。<code>lock</code>的出现是为了弥补<code>synchronized</code>关键字解决不了的一些问题。</p>
+<p><code>java.util.concurrent.locks</code>包下常用的类与接口是<code>JDK1.5</code>后新增的。<code>lock</code>的出现是为了弥补<code>synchronized</code>关键字解决不了的一些问题。</p>
 <p>例如：当一个代码块被<code>synchronized</code>修饰了，一个线程获取了对应的锁，并执行该代码块时，其他线程只能一直等待，等待获取锁的线程释放锁，如果这个线程因为某些原因被堵塞了，没有释放锁，那么其他线程只能一直等待下去。导致效率很低。</p>
 <p>因此就需要有一种机制可以不让等待的线程一直无期限地等待下去（比如只等待一定的时间或者能够响应中断），通过Lock就可以办到。</p>
 <p><code>lock</code>与<code>synchronized</code>最大的区别就是<code>lock</code>能够手动控制锁，而<code>synchronized</code>是JVM控制的。所以<code>lock</code>更加灵活。<code>lock</code>锁的粒度要优于<code>synchronized</code>。
@@ -5591,7 +5531,7 @@ Java的线程是映射到操作系统原生线程之上的，如果要阻塞或�
 </tr>
 </tbody>
 </table>
-<h3 id="arraylist线程不安全">ArrayList线程不安全</h3>
+<h3 id="arraylist">ArrayList</h3>
 <p><code>ArrayList</code>线程不安全代码演示</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
 </span></span><span class="line"><span class="cl">    public static void main(String[] args) {
@@ -5607,7 +5547,7 @@ Java的线程是映射到操作系统原生线程之上的，如果要阻塞或�
 </span></span></code></pre></div><p>为避免偶然事件，请重复多试几次上面的代码，很大情况会出现<code>ConcurrentModificationException</code>&ldquo;同步修改异常&rdquo;</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">java.util.ConcurrentModificationException
 </span></span></code></pre></div><p>出现该异常的原因是，当某个线程正在执行 <code>add()</code>方法时，被某个线程打断，添加到一半被打断，没有被添加完。</p>
-<h4 id="解决arraylist线程不安全问题">解决ArrayList线程不安全问题</h4>
+<p>解决ArrayList线程不安全问题：</p>
 <ul>
 <li>可以使用 <code>Vector</code> 来代替 <code>ArrayList</code>，<code>Vector</code> 是线程安全的 <code>ArrayList</code>，但是由于，并发量太小，被淘汰;</li>
 <li>使用 <code>Collections.synchronizedArrayList()</code> 来创建 <code>ArrayList</code>；使用 <code>Collections</code> 工具类来创建 <code>ArrayList</code> 的思路是，在 <code>ArrayList</code> 的外边套了一个<code>synchronized</code>外壳，来使 <code>ArrayList</code> 线程安全;</li>
@@ -5625,7 +5565,7 @@ Java的线程是映射到操作系统原生线程之上的，如果要阻塞或�
 </span></span><span class="line"><span class="cl">        }
 </span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><h4 id="copywritearraylist原理">CopyWriteArrayList原理</h4>
+</span></span></code></pre></div><h4 id="copywritearraylist">CopyWriteArrayList</h4>
 <p><code>CopyWriteArrayList</code> 字面意思就是在写的时候复制，思想就是读写分离的思想。以下是 <code>CopyOnWriteArrayList</code> 的 <code>add()</code> 方法源码</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/** The array, accessed only via getArray/setArray. */
 </span></span><span class="line"><span class="cl">    private transient volatile Object[] array;
@@ -5705,69 +5645,67 @@ Java的线程是映射到操作系统原生线程之上的，如果要阻塞或�
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>参照<a href="/iblog/posts/java/rookie-multi-thread/#CopyWriteArrayList原理">CopyWriteArrayList原理</a></p>
 <h3 id="hashmap">HashMap</h3>
-<p><code>HashMap</code> 也是线程不安全的集合类，在多线程环境下使用同样会出现<code>java.util.ConcurrentModificationException</code>。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        HashMap&lt;String,Object&gt; map = new HashMap&lt;&gt;();
-</span></span><span class="line"><span class="cl">        for(int i=0; i&lt; 10; i++) {
-</span></span><span class="line"><span class="cl">            new Thread(() -&gt; {
-</span></span><span class="line"><span class="cl">                map.put(UUID.randomUUID().toString(),Thread.currentThread().getName());
-</span></span><span class="line"><span class="cl">                System.out.println(map);
-</span></span><span class="line"><span class="cl">            },String.valueOf(i)).start();
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>再多线程环境下<code>HashMap</code>不仅会出现<code>ConcurrentModificationException</code>问题；
-更严重的是，当多个线程中的 <code>HashMap</code> 同时扩容时，再使用put方法添加元素，如果hash值相同，可能出现同时在同一数组下用链表表示，造成闭环，导致在get时会出现死循环，CPU飙升到100%。</p>
+<p><code>HashMap</code>也是线程不安全的集合类，在多线程环境下使用同样会出现<code>java.util.ConcurrentModificationException</code>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MainTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="w"> </span><span class="n">10</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">().</span><span class="na">toString</span><span class="p">(),</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">map</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">},</span><span class="n">String</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">i</span><span class="p">)).</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>在多线程环境下<code>HashMap</code>不仅会出现<code>ConcurrentModificationException</code>问题，更严重的是，当多个线程中的 <code>HashMap</code> 同时扩容时，再使用<code>put</code>方法添加元素，如果<code>hash</code>值相同，可能出现同时在同一数组下用链表表示，造成闭环，导致在<code>get</code>时会出现死循环，CPU飙升到100%。</p>
 <p>解决方案：</p>
 <ul>
 <li>使用 <code>HashTable</code>来保证线程安全;</li>
 <li><code>Collections.synchronizedMap()</code> 使用集合工具类;</li>
-<li><code>ConcurrentHashMap&lt;&gt;()</code> 来保证线程安全;</li>
+<li><code>ConcurrentHashMap</code> 来保证线程安全;</li>
 </ul>
-<p>上面的<code>HashTable</code>、<code>Collections.synchronizedMap()</code>因为性能的原因，在多线程环境下很少使用，一般都会使用<code>ConcurrentHashMap&lt;&gt;()</code>。</p>
+<h4 id="hashtable">HashTable</h4>
+<p><code>HashTable</code>、<code>Collections.synchronizedMap()</code>因为性能的原因，在多线程环境下很少使用，一般都会使用<code>ConcurrentHashMap</code>。</p>
 <p><code>HashTable</code>性能低的原因，就是直接加了<code>synchronized</code>修饰；
-当使用put方法时，通过hash算法判断应该分配到哪一个数组上，如果分配到同一个数组上，即发生hash冲突，这个时候加锁是没问题的；但是一旦不发生hash冲突，再去加锁，性能就不太好了。</p>
-<p>可理解为<code>HashTable</code>性能不好的原因就是锁的粒度太粗了。</p>
-<p><code>HashTable</code>put方法源码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public synchronized V put(K key, V value) {
-</span></span><span class="line"><span class="cl">        // Make sure the value is not null
-</span></span><span class="line"><span class="cl">        if (value == null) {
-</span></span><span class="line"><span class="cl">            throw new NullPointerException();
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        // Makes sure the key is not already in the hashtable.
-</span></span><span class="line"><span class="cl">        Entry&lt;?,?&gt; tab[] = table;
-</span></span><span class="line"><span class="cl">        int hash = key.hashCode();
-</span></span><span class="line"><span class="cl">        int index = (hash &amp; 0x7FFFFFFF) % tab.length;
-</span></span><span class="line"><span class="cl">        @SuppressWarnings(&#34;unchecked&#34;)
-</span></span><span class="line"><span class="cl">        Entry&lt;K,V&gt; entry = (Entry&lt;K,V&gt;)tab[index];
-</span></span><span class="line"><span class="cl">        for(; entry != null ; entry = entry.next) {
-</span></span><span class="line"><span class="cl">            if ((entry.hash == hash) &amp;&amp; entry.key.equals(key)) {
-</span></span><span class="line"><span class="cl">                V old = entry.value;
-</span></span><span class="line"><span class="cl">                entry.value = value;
-</span></span><span class="line"><span class="cl">                return old;
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        addEntry(hash, key, value, index);
-</span></span><span class="line"><span class="cl">        return null;
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><h3 id="concurrenthashmap">ConcurrentHashMap</h3>
-<p><code>ConcurrentHashMap</code>原理简单理解为：<code>HashMap</code> + 分段锁。
-因为<code>HashMap</code>在jdk1.7与jdk1.8结构上做了调整，所以<code>ConcurrentHashMap</code>在jdk1.7与jdk1.8结构上也有所不同。</p>
-<p>在阅读之前建议掌握<code>HashMap</code>基本原理、CAS、<code>synchronized</code>、<code>lock</code>以及对多线程并发有一定了解。</p>
-<h4 id="jdk17concurrenthashmap">jdk1.7ConcurrentHashMap</h4>
+当使用<code>put</code>方法时，通过<code>hash</code>算法判断应该分配到哪一个数组上，如果分配到同一个数组上，即发生<code>hash</code>冲突，这个时候加锁是没问题的；但是一旦不发生<code>hash</code>冲突，再去加锁，性能就不太好了。
+可理解为<code>HashTable</code>性能不好的原因就是锁的粒度太粗了。<code>HashTable``put</code>方法源码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">synchronized</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="nf">put</span><span class="p">(</span><span class="n">K</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Make sure the value is not null</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">NullPointerException</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Makes sure the key is not already in the hashtable.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Entry</span><span class="o">&lt;?</span><span class="p">,</span><span class="o">?&gt;</span><span class="w"> </span><span class="n">tab</span><span class="o">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">table</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">key</span><span class="p">.</span><span class="na">hashCode</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">hash</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">0x7FFFFFFF</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">tab</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nd">@SuppressWarnings</span><span class="p">(</span><span class="s">&#34;unchecked&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span><span class="p">)</span><span class="n">tab</span><span class="o">[</span><span class="n">index</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="p">(;</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">entry</span><span class="p">.</span><span class="na">next</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">entry</span><span class="p">.</span><span class="na">hash</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">hash</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">entry</span><span class="p">.</span><span class="na">key</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">key</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">V</span><span class="w"> </span><span class="n">old</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">entry</span><span class="p">.</span><span class="na">value</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">entry</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">old</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">addEntry</span><span class="p">(</span><span class="n">hash</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">index</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h4 id="concurrenthashmap">ConcurrentHashMap</h4>
+<p><code>ConcurrentHashMap</code>原理简单理解为，<code>HashMap</code> + 分段锁。
+因为<code>HashMap</code>在JDK1.7与JDK1.8结构上做了调整，所以<code>ConcurrentHashMap</code>在JDK1.7与JDK1.8结构上也有所不同。</p>
+<h5 id="jdk17concurrenthashmap">JDK1.7ConcurrentHashMap</h5>
 <p>JDK1.7采用<code>segment</code>的分段锁机制实现线程安全，其中<code>segment</code>类继承自<code>ReentrantLock</code>。用<code>ReentrantLock</code>、CAS来保证线程安全。</p>
 <p><img alt="jdk1.7ConcurrentHashMap" src="/iblog/posts/annex/images/essays/jdk1.7ConcurrentHashMap.png"></p>
-<p>jdk1.7的<code>ConcurrentHashMap</code>结构：</p>
+<p>JDK1.7的<code>ConcurrentHashMap</code>结构：</p>
 <ul>
 <li><code>segment</code>: 每一个<code>segment</code>数组就相当于一个<code>HashMap</code>；</li>
 <li><code>HashEntry</code>: 等同于<code>HashMap</code>中<code>Entry</code>，用于存放K，V键值对；</li>
 <li>节点：每个节点对应<code>ConcurrentHashMap</code>存放的值；</li>
 </ul>
-<p>jdk1.7<code>ConcurrentHashMap</code>之所以能够保证线程安全，主要原因是在每个<code>segment</code>数组上加了锁，俗称分段锁，细化了锁的粒度。</p>
-<p>jdk1.7<code>ConcurrentHashMap.put</code>方法源码</p>
+<p>JDK1.7<code>ConcurrentHashMap</code>之所以能够保证线程安全，主要原因是在每个<code>segment</code>数组上加了锁，俗称分段锁，细化了锁的粒度。</p>
+<p>JDK1.7<code>ConcurrentHashMap.put</code>方法源码</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public V put(K key， V value) {
 </span></span><span class="line"><span class="cl">        Segment&lt;K,V&gt; s;
 </span></span><span class="line"><span class="cl">        if (value == null)
@@ -5864,7 +5802,7 @@ Java的线程是映射到操作系统原生线程之上的，如果要阻塞或�
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">static final int MAX_SCAN_RETRIES =
 </span></span><span class="line"><span class="cl">            Runtime.getRuntime().availableProcessors() &gt; 1 ? 64 : 1;
-</span></span></code></pre></div><h4 id="jdk18concurrenthashmap">jdk1.8ConcurrentHashMap</h4>
+</span></span></code></pre></div><h5 id="jdk18concurrenthashmap">JDK1.8ConcurrentHashMap</h5>
 <p>JDK1.8的实现已经摒弃了 <code>Segment</code> 的概念，而是直接用 <code>Node数组+链表/红黑树</code>的数据结构来实现，并发控制使用 <code>synchronized</code> 和CAS来操作，整个看起来就像是优化过且线程安全的<code>HashMap</code>;
 虽然在JDK1.8中还能看到 <code>Segment</code> 的数据结构，但是已经简化了属性，只是为了兼容旧版本。</p>
 <p>JDK1.8中彻底放弃了<code>Segment</code>转而采用的是<code>Node</code>，其设计思想也不再是JDK1.7中的分段锁思想；
