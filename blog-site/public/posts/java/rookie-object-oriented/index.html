@@ -432,38 +432,6 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#super">
-                    super
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
                 <a class="nav-link text-left" href="#%e6%8a%bd%e8%b1%a1%e7%b1%bb%e4%b8%8e%e6%8e%a5%e5%8f%a3">
                     抽象类与接口
                 </a>
@@ -2573,263 +2541,226 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><h3 id="继承">继承</h3>
-<p>继承可以使用现有类的所有功能，并在无需重新编写原来的类的情况下对这些功能进行扩展。通过继承创建的新类称为“子类”或“派生类”，被继承的类称为“基类”、“父类”或“超类”。继承的过程，就是从一般到特殊的过程.<strong>要实现继承，可以通过“继承”（Inheritance）和“组合”（Composition）来实现.</strong> 继承概念的实现方式有两类：实现继承与接口继承。实现继承是指直接使用基类的属性和方法而无需额外编码的能力；接口继承是指仅使用属性和方法的名称、但是子类必须提供实现的能力.</p>
-<blockquote>
-<p>继承: 如果多个类的某个部分的功能相同,那么可以抽象出一个类来,把相同的部分放到父类中,让他们继承这个类</p>
-<p>实现：如果多个类处理的目标是一样的，但是处理的方法方式不同，那么就定义一个接口，也就是一个<strong>标准</strong>，让他们的实现这个接口，各自实现自己具体的处理方法来处理那个目标</p>
-</blockquote>
-<p><strong>继承的根本原因是因为要复用，而实现的根本原因是需要定义一个标准.</strong></p>
-<h4 id="继承与组合">继承与组合</h4>
-<p>继承是实现复用代码的重要手段,但是继承会破坏封装.组合也是代码复用的重要方式,可以提供良好的封装性.</p>
-<h5 id="实现继承">实现继承</h5>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">//</span> <span class="err">继承</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">MainTest</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">B</span> <span class="n">b</span> <span class="o">=</span> <span class="n">new</span> <span class="n">B</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="n">b</span><span class="o">.</span><span class="n">test</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="n">A</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">protected</span> <span class="ne">int</span> <span class="n">i</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">protected</span> <span class="n">void</span> <span class="n">test</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;I am super class ... &#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="n">B</span>  <span class="k">extends</span> <span class="n">A</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">//</span> <span class="err">调用父类成员</span> 
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">t</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>通过以上代码,可以发现,子类可以访问父类的成员变量方法,并且通过重写可以改变父类方法实现.从而破坏了封装性.</p>
-<blockquote>
-<p>在继承结构中，父类的内部细节对于子类是可见的。所以我们通常也可以说通过继承的代码复用是一种<strong>白盒式代码复用</strong>。（如果基类的实现发生改变，那么派生类的实现也将随之改变。这样就导致了子类行为的不可预知性；）</p>
-</blockquote>
-<p>为了保证父类有良好的封装性,不会对子类随意更改,设计父类时应遵循以下原则:</p>
-<blockquote>
+<p>继承可以使用父类的所有功能，并在无需重新编写原来类的情况下对这些功能进行扩展。 通过继承创建的新类称为“子类”或“派生类”，被继承的类称为“基类”、“父类”或“超类”。
+继承的过程，就是从一般到特殊的过程。继承概念的实现方式有两种，<strong>实现继承</strong>与<strong>接口继承</strong>。实现继承是指直接使用基类的属性和方法而无需额外编码的能力；接口继承是指仅使用属性和方法的名称、但是子类必须提供实现的能力。</p>
 <ul>
-<li>尽量隐藏父类的内部数据.尽量把所有父类的所有成员变量都用<code>private</code>修饰,不要让子类直接访问父类的成员.</li>
-<li>不要让子类随意的修改访问父类的方法.父类中那些仅为辅助其他的工具方法,应该使用private修饰,让子类无法访问该方法;如果父类中的方法需要被外部类调用,则需以public修饰,但又不希望重写父类方法可以使用final来修饰方法;但如果希望父类某个方法被重写,但又不希望其他类访问自由,可以使用protected修饰.</li>
-<li>尽量不要在父类构造器中调用将要被子类重写的方法.</li>
+<li>实现继承：如果多个类的某个部分的功能相同，那么可以抽象出一个类来，把相同的部分放到父类中，让他们继承这个类；</li>
+<li>接口继承：如果多个类处理的目标是一样的，但是处理的方法方式不同，那么就定义一个接口，也就是一个标准，让他们的实现这个接口，各自实现自己具体的处理方法来处理那个目标；</li>
 </ul>
-</blockquote>
-<p>继承是类与类或者接口与接口之间最常见的关系,继承是一种<code>is-a</code>关系。</p>
-<h5 id="实现组合">实现组合</h5>
-<p>组合是把旧类对象作为新类对象的成员变量组合进来,用以实现新类的功能.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">public class MainTest {
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        B b = new B(new A());
-</span></span><span class="line"><span class="cl">        b.test();
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">class A {
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    protected int i;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    protected void test() {
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;I am super class ... &#34;);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">}
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">class B {
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    private final A a;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public B(A a) {
-</span></span><span class="line"><span class="cl">        this.a = a;
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">    public void test() {
-</span></span><span class="line"><span class="cl">        // 复用 A 类提供的 test 方法
-</span></span><span class="line"><span class="cl">        a.test();
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><blockquote>
-<p>组合是通过对现有的对象进行拼装（组合）产生新的、更复杂的功能。因为在对象之间，各自的内部细节是不可见的，所以我们也说这种方式的代码复用是<strong>黑盒式代码复用</strong>。（因为组合中一般都定义一个类型，所以在编译期根本不知道具体会调用哪个实现类的方法）</p>
-</blockquote>
-<p>组合强调的是整体与部分、拥有的关系，即<code>has-a</code>的关系.</p>
-<h5 id="比较">比较</h5>
-<blockquote>
-<p>继承，在写代码的时候就要指名具体继承哪个类，所以，在编译期就确定了关系。（从基类继承来的实现是无法在运行期动态改变的，因此降低了应用的灵活性。）</p>
-</blockquote>
-<blockquote>
-<p>组合，在写代码的时候可以采用面向接口编程。所以，类的组合关系一般在运行期确定。</p>
-</blockquote>
+<p>继承的根本原因是因为要复用，而实现的根本原因是需要定义一个标准。</p>
+<h4 id="继承与组合">继承与组合</h4>
+<p>继承是实现复用代码的重要手段，但是继承会破坏封装；组合也是代码复用的重要方式，可以提供良好的封装性。</p>
 <table>
 <thead>
 <tr>
+<th>特性</th>
 <th>组合</th>
 <th>继承</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>优点：不破坏封装，整体类与局部类之间松耦合，彼此相对独立</td>
-<td>缺点：破坏封装，子类与父类之间紧密耦合，子类依赖于父类的实现，子类缺乏独立性</td>
+<td>优点</td>
+<td>不破坏封装，整体类与局部类之间松耦合，彼此相对独立；具有较好的可扩展性；支持动态组合，运行时可以选择不同类型的局部对象；整体类可以对局部类进行包装，提供新的接口。</td>
+<td>子类能自动继承父类的接口；支持扩展父类的功能；创建子类对象时无需创建父类对象。</td>
 </tr>
 <tr>
-<td>优点：具有较好的可扩展性</td>
-<td>缺点：支持扩展，但是往往以增加系统结构的复杂度为代价</td>
-</tr>
-<tr>
-<td>优点：支持动态组合。在运行时，整体对象可以选择不同类型的局部对象</td>
-<td>缺点：不支持动态继承。在运行时，子类无法选择不同的父类</td>
-</tr>
-<tr>
-<td>优点：整体类可以对局部类进行包装，封装局部类的接口，提供新的接口</td>
-<td>缺点：子类不能改变父类的接口</td>
-</tr>
-<tr>
-<td>缺点：整体类不能自动获得和局部类同样的接口</td>
-<td>优点：子类能自动继承父类的接口</td>
-</tr>
-<tr>
-<td>缺点：创建整体类的对象时，需要创建所有局部类的对象</td>
-<td>优点：创建子类的对象时，无须创建父类的对象</td>
+<td>缺点</td>
+<td>整体类不能自动获得和局部类同样的接口；创建整体类对象时需要创建所有局部类的对象。</td>
+<td>破坏封装，子类与父类之间紧密耦合，子类依赖于父类的实现，缺乏独立性；增加系统结构的复杂度；不支持动态继承，子类无法选择不同的父类。</td>
 </tr>
 </tbody>
 </table>
-<h5 id="使用选择">使用选择</h5>
-<p>经过以上比较,可以得出结论: 组合比继承更加灵活.所以在写代码如果这个功能组合和继承都能够完成,那么应该优先选择组合.
-但是继承在一些场景还是要优先于组合的.</p>
-<blockquote>
+<p>在设计中，通常会同时使用继承和组合来实现代码的复用和关系建模，具体根据需求和设计原则来选择合适的关系模型。
+组合比继承更加灵活，所以在写代码如果这个功能组合和继承都能够完成，那么应该优先选择组合，但是继承在一些场景还是要优先于组合的：</p>
 <ul>
 <li>继承要慎用，其使用场合仅限于你确信使用该技术有效的情况。一个判断方法是，问一问自己是否需要从新类向基类进行向上转型。如果是必须的，则继承是必要的。反之则应该好好考虑是否需要继承。</li>
-<li>只有当子类真正是超类的子类型时，才适合用继承。换句话说，对于两个类A和B，只有当两者之间确实存在is-a关系的时候，类B才应该继承类A。</li>
+<li>只有当子类真正是超类的子类型时，才适合用继承。换句话说，对于两个类A和B，只有当两者之间确实存在<code>is-a</code>关系的时候，类B才应该继承类A。</li>
 </ul>
-</blockquote>
-<h4 id="super">super</h4>
+<p>通过下列代码可以发现，子类可以访问父类的成员变量方法，并且通过重写可以改变父类方法实现从而破坏了封装性。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 继承</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MainTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">B</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">B</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">b</span><span class="p">.</span><span class="na">test</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">A</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">test</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;I am super class ... &#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">B</span><span class="w">  </span><span class="kd">extends</span><span class="w"> </span><span class="n">A</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 调用父类成员 </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">t</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="kd">super</span><span class="p">.</span><span class="na">i</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>在继承结构中，父类的内部细节对于子类是可见的。所以我们通常也可以说通过继承的代码复用是一种白盒式代码复用。
+如果基类的实现发生改变，那么派生类的实现也将随之改变，这样就导致了子类行为的不可预知性。</p>
+<p>为了保证父类有良好的封装性，不会对子类随意更改，设计父类时应遵循以下原则：</p>
 <ul>
-<li>访问父类的构造函数：可以使用<code>super()</code>函数访问父类的构造函数，从而委托父类完成一些初始化的工作。<strong>应该注意到，子类一定会调用父类的构造函数来完成初始化工作，一般是调用父类的默认构造函数</strong>，<strong>如果子类需要调用父类其它构造函数，那么就可以使用super函数。</strong></li>
-<li>访问父类的成员：如果子类重写了父类的某个方法，可以通过使用 <code>super </code>关键字来引用父类的方法实现。</li>
+<li>尽量隐藏父类的内部数据.尽量把所有父类的所有成员变量都用<code>private</code>修饰,不要让子类直接访问父类的成员；</li>
+<li>不要让子类随意的修改访问父类的方法，父类中那些仅为辅助其他的工具方法，应该使用<code>private</code>修饰，让子类无法访问该方法。如果父类中的方法需要被外部类调用，则需以<code>public</code>修饰，但又不希望重写父类方法可以使用<code>final</code>来修饰方法；
+但如果希望父类某个方法被重写，但又不希望其他类访问自由，可以使用<code>protected</code>修饰；</li>
+<li>尽量不要在父类构造器中调用将要被子类重写的方法；</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">SuperExample</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">protected</span> <span class="ne">int</span> <span class="n">x</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">protected</span> <span class="ne">int</span> <span class="n">y</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">SuperExample</span><span class="p">(</span><span class="ne">int</span> <span class="n">x</span><span class="p">,</span> <span class="ne">int</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">this</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">this</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;SuperExample.func()&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">SuperExtendExample</span> <span class="k">extends</span> <span class="n">SuperExample</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="ne">int</span> <span class="n">z</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">SuperExtendExample</span><span class="p">(</span><span class="ne">int</span> <span class="n">x</span><span class="p">,</span> <span class="ne">int</span> <span class="n">y</span><span class="p">,</span> <span class="ne">int</span> <span class="n">z</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">super</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">this</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">z</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">super</span><span class="o">.</span><span class="k">func</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;SuperExtendExample.func()&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="n">SuperExample</span> <span class="n">e</span> <span class="o">=</span> <span class="n">new</span> <span class="n">SuperExtendExample</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="k">func</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl"><span class="n">SuperExample</span><span class="o">.</span><span class="k">func</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="n">SuperExtendExample</span><span class="o">.</span><span class="k">func</span><span class="p">()</span>
-</span></span></code></pre></div><h4 id="抽象类与接口">抽象类与接口</h4>
-<p>抽象类和接口也是Java继承体系中的重要组成部分.抽象类是用来捕捉子类的通用特性的，而接口则是抽象方法的集合；抽象类不能被实例化，只能被用作子类的超类，是被用来创建继承层级里子类的模板，而接口只是一种形式，接口自身不能做任何事情。</p>
-<h5 id="抽象类">抽象类</h5>
-<p><strong>抽象类和抽象方法都使用<code>abstract</code>关键字进行声明。如果一个类中包含抽象方法，那么这个类必须声明为抽象类。</strong></p>
-<p>抽象类和普通类最大的区别是，抽象类不能被实例化，需要继承抽象类才能实例化其子类。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="n">abstract</span> <span class="k">class</span> <span class="n">AbstractClassExample</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">protected</span> <span class="ne">int</span> <span class="n">x</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="ne">int</span> <span class="n">y</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">abstract</span> <span class="n">void</span> <span class="n">func1</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">func2</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;func2&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">AbstractExtendClassExample</span> <span class="k">extends</span> <span class="n">AbstractClassExample</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">func1</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;func1&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="err">实例化抽象类</span>
-</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="n">AbstractClassExample</span> <span class="n">ac1</span> <span class="o">=</span> <span class="n">new</span> <span class="n">AbstractClassExample</span><span class="p">();</span> 
-</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="err">实例化抽象类子类</span>
-</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="n">AbstractClassExample</span> <span class="n">ac2</span> <span class="o">=</span> <span class="n">new</span> <span class="n">AbstractExtendClassExample</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="n">ac2</span><span class="o">.</span><span class="n">func1</span><span class="p">();</span>
-</span></span></code></pre></div><h5 id="接口">接口</h5>
-<p><strong>接口是抽象类的延伸，在 Java 8 之前，它可以看成是一个完全抽象的类，也就是说它不能有任何的方法实现。</strong></p>
-<p><strong>从 Java 8 开始</strong>，<strong>接口也可以拥有默认的方法实现</strong>，这是因为不支持默认方法的接口的维护成本太高了。在 Java 8 之前，如果一个接口想要添加新的方法，那么要修改所有实现了该接口的类,现在不用修改所有实现该接口的类.</p>
-<p>接口的成员（字段 + 方法）默认都是<code>public</code>的，并且不允许定义为<code>private</code>或者 <code>protected</code>。</p>
-<p>接口的字段默认都是用<code>static</code>和<code>final</code>修饰的.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public interface InterfaceExample {
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    void func1();
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    default void func2(){
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;func2&#34;);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    int x = 123;
-</span></span><span class="line"><span class="cl">    // int y;               // Variable &#39;y&#39; might not have been initialized
-</span></span><span class="line"><span class="cl">    public int z = 0;       // Modifier &#39;public&#39; is redundant for interface fields
-</span></span><span class="line"><span class="cl">    // private int k = 0;   // Modifier &#39;private&#39; not allowed here
-</span></span><span class="line"><span class="cl">    // protected int l = 0; // Modifier &#39;protected&#39; not allowed here
-</span></span><span class="line"><span class="cl">    // private void fun3(); // Modifier &#39;private&#39; not allowed here
-</span></span><span class="line"><span class="cl">}
-</span></span><span class="line"><span class="cl">public class InterfaceImplementExample implements InterfaceExample {
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    public void func1() {
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;func1&#34;);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">// InterfaceExample ie1 = new InterfaceExample(); // &#39;InterfaceExample&#39; is abstract; cannot be instantiated
-</span></span><span class="line"><span class="cl">InterfaceExample ie2 = new InterfaceImplementExample();
-</span></span><span class="line"><span class="cl">ie2.func1();//func1
-</span></span><span class="line"><span class="cl">System.out.println(InterfaceExample.x);//123
-</span></span></code></pre></div><p>Java的接口可以多继承</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">interface</span> <span class="n">Action</span> <span class="k">extends</span> <span class="n">Serializable</span><span class="p">,</span><span class="n">AutoCloseable</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="o">//</span> <span class="n">to</span> <span class="k">do</span> <span class="o">...</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h5 id="比较-1">比较</h5>
-<p>从设计层面上看，抽象类提供了一种<code>is-a</code>关系，那么就必须满足里式替换原则，即子类对象必须能够替换掉所有父类对象。而接口更像是一种 <code>like-a</code> 关系，它只是提供一种方法实现契约，并不要求接口和实现接口的类具有 <code>is-a</code> 关系。
+<p><code>super</code>关键字通常用在继承的子类中，通常有以下作用：</p>
+<ul>
+<li>访问父类的构造函数：可以使用<code>super</code>函数访问父类的构造函数，从而委托父类完成一些初始化的工作。
+应该注意到，子类一定会调用父类的构造函数来完成初始化工作，一般是调用父类的默认构造函数，如果子类需要调用父类其它构造函数，那么就可以使用<code>super</code>函数。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Parent</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Parent</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Parent constructor&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">Child</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Parent</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Child</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">();</span><span class="w"> </span><span class="c1">// 调用父类构造方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Child constructor&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>访问父类的成员：如果子类重写了父类的某个方法，可以通过使用<code>super </code>关键字来引用父类的方法实现。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Parent</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;Parent&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">Child</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Parent</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;Child&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">displayName</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Child&#39;s name: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">name</span><span class="p">);</span><span class="w">     </span><span class="c1">// 输出 Child</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Parent&#39;s name: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="kd">super</span><span class="p">.</span><span class="na">name</span><span class="p">);</span><span class="w"> </span><span class="c1">// 输出 Parent</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>在子类中调用父类的方法：这对于子类重写父类方法时，希望在子类方法中调用父类方法的场景非常有用。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Parent</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">display</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Parent&#39;s display method&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">Child</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Parent</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">display</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">.</span><span class="na">display</span><span class="p">();</span><span class="w"> </span><span class="c1">// 调用父类的display方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Child&#39;s display method&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+</ul>
+<p>继承是类与类或者接口与接口之间最常见的关系，继承是一种<code>is-a</code>的关系。而组合强调的是整体与部分、拥有的关系，即<code>has-a</code>的关系。
+组合是把旧类对象作为新类对象的成员变量组合进来，用以实现新类的功能。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MainTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">B</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">B</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">A</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">b</span><span class="p">.</span><span class="na">test</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">A</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">test</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;I am super class ... &#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">B</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">B</span><span class="p">(</span><span class="n">A</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">test</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 复用 A 类提供的 test 方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">a</span><span class="p">.</span><span class="na">test</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>组合是通过对现有的对象进行拼装产生新的、更复杂的功能。因为在对象之间，各自的内部细节是不可见的，所以我们也说这种方式的代码复用是黑盒式代码复用。因为组合中一般都定义一个类型，所以在编译期根本不知道具体会调用哪个实现类的方法。</p>
+<h4 id="抽象类与接口">抽象类与接口</h4>
+<p>抽象类和接口也是Java继承体系中的重要组成部分。
+抽象类是用来捕捉子类的通用特性的，而接口则是抽象方法的集合；抽象类不能被实例化，只能被用作子类的超类，是被用来创建继承层级里子类的模板，而接口只是一种形式，自身不能做任何事情。</p>
+<p>抽象类和抽象方法都使用<code>abstract</code>关键字进行声明。如果一个类中包含抽象方法，那么这个类必须声明为抽象类。
+抽象类和普通类最大的区别是，抽象类不能被实例化，需要继承抽象类才能实例化其子类。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AbstractClassExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">func1</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">func2</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;func2&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AbstractExtendClassExample</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">AbstractClassExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">func1</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;func1&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 实例化抽象类</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// AbstractClassExample ac1 = new AbstractClassExample(); </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 实例化抽象类子类</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// AbstractClassExample ac2 = new AbstractExtendClassExample();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// ac2.func1();</span><span class="w">
+</span></span></span></code></pre></div><p>接口是抽象类的延伸，在Java8之前，它可以看成是一个完全抽象的类，也就是说它不能有任何的方法实现。
+但从Java8 开始，接口也可以拥有默认的方法实现，这是因为不支持默认方法的接口的维护成本太高了。在Java8之前，如果一个接口想要添加新的方法，那么要修改所有实现了该接口的类，现在不用修改所有实现该接口的类。</p>
+<p>接口中的成员（字段、方法）默认都是<code>public</code>的，并且不允许定义为<code>private</code>或者 <code>protected</code>。
+接口的字段默认都是用<code>static</code>和<code>final</code>修饰的。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">InterfaceExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">func1</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">default</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">func2</span><span class="p">(){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;func2&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">123</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// int y;               // Variable &#39;y&#39; might not have been initialized</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">       </span><span class="c1">// Modifier &#39;public&#39; is redundant for interface fields</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// private int k = 0;   // Modifier &#39;private&#39; not allowed here</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// protected int l = 0; // Modifier &#39;protected&#39; not allowed here</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// private void fun3(); // Modifier &#39;private&#39; not allowed here</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">InterfaceImplementExample</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">InterfaceExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">func1</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;func1&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>Java的接口可以多继承：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">interface</span> <span class="nc">Action</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Serializable</span><span class="p">,</span><span class="n">AutoCloseable</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="c1">// to do ...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>从设计层面上看，抽象类提供了一种<code>is-a</code>关系，那么就必须满足里式替换原则，即子类对象必须能够替换掉所有父类对象。
+而接口更像是一种 <code>like-a</code> 关系，它只是提供一种方法实现契约，并不要求接口和实现接口的类具有 <code>is-a</code> 关系。
 抽象类是一种自下而上的思想，而接口是一种自上而下的思想。抽象类是将多个类的公共特点聚合到同一个类中，然后实现父类的方法；接口更像是对类的一种约束，其他类调用实现某接口的类。</p>
-<p>从语法角度来看，一个类可以实现多个接口，但是不能继承多个抽象类；接口的字段只能是<code>static</code>和<code>final</code>类型的，而抽象类的字段没有这种限制，接口的成员只能是<code>public</code>的，而抽象类的成员可以有多种访问权限。</p>
-<h5 id="使用选择-1">使用选择</h5>
-<p><strong>使用接口</strong></p>
-<ul>
-<li>需要让不相关的类都实现一个方法，例如:不相关的类都可以实现 <code>Compareable</code> 接口中的 <code>compareTo()</code> 方法；</li>
-<li>需要使用多重继承。</li>
-</ul>
-<p><strong>使用抽象类</strong></p>
-<ul>
-<li>需要在几个相关的类中共享代码。</li>
-<li>需要能控制继承来的成员的访问权限，而不是都为<code>public</code>。</li>
-<li>需要继承非静态和非常量字段。</li>
-</ul>
-<p><strong>在很多情况下，接口优先于抽象类。因为接口没有抽象类严格的类层次结构要求，可以灵活地为一个类添加行为。并且从 Java 8 开始，接口也可以有默认的方法实现，使得修改接口的成本也变的很低。</strong></p>
+<p>从语法角度来看，一个类可以实现多个接口，但是不能继承多个抽象类。接口的字段只能是<code>static</code>和<code>final</code>类型的，而抽象类的字段没有这种限制，接口的成员只能是<code>public</code>的，而抽象类的成员可以有多种访问权限。</p>
+<p>接口适合的情况包括需要让不相关的类都实现相同方法，例如实现<code>Comparable</code>接口中的<code>compareTo</code>方法，以及需要实现类似多重继承的效果。
+抽象类则更适合于多个相关类需要共享代码逻辑，或者需要控制继承来的成员访问权限，以及需要继承非静态和非常量字段的场景。选择使用接口或抽象类取决于设计需求和代码结构的具体情况。</p>
+<p>在很多情况下，接口优先于抽象类。因为接口没有抽象类严格的类层次结构要求，可以灵活地为一个类添加行为。
+并且从Java8开始，接口也可以有默认的方法实现，使得修改接口的成本也变的很低。</p>
 <h3 id="多态">多态</h3>
-<p>多态即多种表现形态;同一个行为具有多个不同表现形式或形态的能力.</p>
+<p>多态即多种表现形态，同一个行为具有多个不同表现形式或形态的能力。</p>
 <p>多态存在的前提</p>
 <ul>
 <li>有类继承或者接口实现</li>
@@ -2837,26 +2768,26 @@
 <li>父类的引用指向子类的对象;例如：<code>Parent p = new Child();</code></li>
 </ul>
 <p>简单说来: 父类引用指向子类对象，调用方法时会调用子类的实现，而不是父类的实现，称为多态.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="k">class</span> <span class="n">Parent</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">void</span> <span class="n">contextLoads</span><span class="p">(){</span>
-</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;i am Parent ... &#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="n">Child</span>  <span class="k">extends</span> <span class="n">Parent</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
-</span></span><span class="line"><span class="cl">    <span class="n">void</span> <span class="n">contextLoads</span><span class="p">(){</span>
-</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;i am Child ... &#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="n">mainTest</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Parent</span> <span class="n">child</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Child</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="n">i</span> <span class="n">am</span> <span class="n">Child</span> <span class="o">...</span> 
-</span></span><span class="line"><span class="cl">        <span class="n">child</span><span class="o">.</span><span class="n">contextLoads</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h4 id="优缺点">优缺点</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Parent</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">contextLoads</span><span class="p">(){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;i am Parent ... &#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">Child</span><span class="w">  </span><span class="kd">extends</span><span class="w"> </span><span class="n">Parent</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">contextLoads</span><span class="p">(){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;i am Child ... &#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">mainTest</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Parent</span><span class="w"> </span><span class="n">child</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Child</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// i am Child ... </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">child</span><span class="p">.</span><span class="na">contextLoads</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h4 id="优缺点">优缺点</h4>
 <p><strong>优点</strong></p>
 <ul>
 <li>消除类型之间的耦合关系</li>
@@ -5469,7 +5400,7 @@ cglib.jar包含asm.jar包。报错内容是<code>ClassVisitor</code>的父类不
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="o">/**</span>
 </span></span><span class="line"><span class="cl"> <span class="o">*</span> <span class="err">中介者</span>
-</span></span><span class="line"><span class="cl"> <span class="o">*/</span>
+</span></span><span class="line"><span class="cl"> <span class="o">*</span><span class="err">/</span>
 </span></span><span class="line"><span class="cl"><span class="n">abstract</span> <span class="k">class</span> <span class="n">Mediator</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">abstract</span> <span class="n">void</span> <span class="n">register</span><span class="p">(</span><span class="ne">String</span> <span class="n">colleagueName</span><span class="p">,</span> <span class="n">Colleague</span> <span class="n">colleague</span><span class="p">);</span>
