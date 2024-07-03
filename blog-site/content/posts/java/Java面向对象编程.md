@@ -6,7 +6,7 @@ tags: ["Java", "Java基础"]
 slug: "rookie-object-oriented"
 ---
 
-
+## 概览
 面向对象简称OO(`object-oriented`)是相对面向过程(`procedure-oriented`)来说的，是一种编程思想，Java就是一门面向对象的语言，包括三大特性和六大原则。
 其中，三大特性指的是封装、继承和多态。六大原则指的是单一职责原则、开放封闭原则、迪米特原则、里氏替换原则、依赖倒置原则以及接口隔离原则。
 其中，单一职责原则是指一个类应该是一组相关性很高的函数和数据的封装，这是为了提高程序的内聚性，而其他五个原则是通过抽象来实现的，目的是为了降低程序的耦合性以及提高可扩展性。
@@ -14,83 +14,89 @@ slug: "rookie-object-oriented"
 面向对象编程简称OOP(`Object-oriented programming`)，是将事务高度抽象化的编程模式。
 面向对象编程是以功能来划分问题的，将问题分解成一个一个步骤，对每个步骤进行相应的抽象，形成对应对象，通过不同对象之间的调用，组合成某个功能解决问题。
 
-## 对比面向过程
-面向过程编程简称POP(Procedural oriented programming),面向过程是以过程为中心的编程思想.是自顶而下的编程.
+面向对象是对比面向过程来说的，面向过程编程简称POP(`Procedural oriented programming`)。
+面向过程编程是一种以过程为中心的编程方式，主要通过一系列步骤来处理数据。程序通过调用函数一步步完成任务，每个函数都执行特定的操作。
+```java
+// 面向过程编程示例：计算矩形面积
 
-举个例子: 下五子棋
-```
-面向过程 {
+public class ProceduralExample {
+    // 定义计算面积的函数
+    public static int calculateArea(int width, int height) {
+        return width * height;
+    }
 
-  1.开始游戏
-
-  2.黑子先走
-
-  3.绘制画面
-
-  4.判断输赢
-
-  5.轮到白子
-
-  6.绘制画面
-
-  7.判断输赢
-
-  8.返回到 黑子先走
+    public static void main(String[] args) {
+        int width = 5;
+        int height = 10;
+        int area = calculateArea(width, height);
+        System.out.println("矩形的面积是: " + area);
+    }
 }
 ```
 
-```
-面向对象 {
-    1.创建黑棋,白棋
-    
-    2.创建棋盘
-    
-    3.创建规则
-    
-    4.赋予每个对象相关属性和指定行为
-    
-    5.各个功能之间互相调用
+面向对象编程是一种以对象为中心的编程方式，将数据和操作封装在一起，通过对象的交互来完成程序的功能。对象是类的实例，类定义了对象的属性和方法。
+```java
+// 面向对象编程示例：计算矩形面积
+
+// 定义矩形类
+class Rectangle {
+    private int width;
+    private int height;
+
+    // 构造函数
+    public Rectangle(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    // 计算面积的方法
+    public int calculateArea() {
+        return width * height;
+    }
+}
+
+public class ObjectOrientedExample {
+    public static void main(String[] args) {
+        // 创建矩形对象
+        Rectangle rectangle = new Rectangle(5, 10);
+        // 调用对象的方法计算面积
+        int area = rectangle.calculateArea();
+        System.out.println("矩形的面积是: " + area);
+    }
 }
 ```
+通过例子可以看出面向对象更重视不重复造轮子，即创建一次重复使用。
+简而言之，用面向过程的方法写出来的程序是一份蛋炒饭，而用面向对象写出来的程序是一份盖浇饭，就是在一碗白米饭上面浇上一份盖菜，你喜欢什么菜，你就浇上什么菜。
 
-**面向对象是模型化的,你只需抽象出几个类,进行封装成各个功能,通过不同对象之间的调用来解决问题.而面向过程需要把问题分解为几个步骤,每个步骤用对应的函数调用即可.面向过程是具体化的,流程化的,解决一个问题,需要你一步一步的分析,一步一步的实现.**
+面向对象是模型化的，你只需抽象出几个类，进行封装成各个功能，通过不同对象之间的调用来解决问题，而面向过程需要把问题分解为几个步骤，每个步骤用对应的函数调用即可。
+面向过程是具体化的、流程化的，解决一个问题需要你一步一步的分析，一步一步的实现。
+面向对象的底层其实还是面向过程，把面向过程抽象成类，然后进行封装，方便我们我们使用就是面向对象了。
 
-面向对象的底层其实还是面向过程,把面向过程抽象成类,然后进行封装,方便我们我们使用,就是面向对象了.
-
-简而言之,用面向过程的方法写出来的程序是一份蛋炒饭,而用面向对象写出来的程序是一份盖浇饭(就是在一碗白米饭上面浇上一份盖菜，你喜欢什么菜,你就浇上什么菜).
-通过例子可以看出面向对象更重视不重复造轮子,即创建一次,重复使用.
-
-面向对象
-> - 优点：易维护、易复用、易扩展，由于面向对象有封装、继承、多态性的特性，可以设计出低耦合的系统，使系统 更加灵活、更加易于维护。
->
-> - 缺点：性能比面向过程低
-
-面向过程
->- 优点：流程化使得编程任务明确，在开发之前基本考虑了实现方式和最终结果，具体步骤清楚，便于节点分析;    效率高，面向过程强调代码的短小精悍，善于结合数据结构来开发高效率的程序。
->- 缺点：没有面向对象易维护、易复用、易扩展
-
-抽象会使复杂的问题更加简单化,面向对象更符合人类的思维,而面向过程则是机器的思想.
+抽象会使复杂的问题更加简单化，面向对象更符合人类的思维，而面向过程则是机器的思想。
+选择哪种编程范式取决于具体的应用场景和开发需求。对于复杂系统的开发，面向对象更有优势，因为它可以更好地组织和管理代码；而对于一些简单的任务，面向过程可能更加直观和高效。
 
 ## 软件设计原则
-**设计原则的目的是为了让程序达到高内聚、低耦合，提高可扩展性的目的，其实现手段是面向对象的三大特性：封装、继承以及多态。**
+软件设计原则是指导软件开发过程中设计和构建软件系统的一组规则。
+这些规则的目的是为了让程序达到高内聚、低耦合以及提高扩展性，其实现手段是面向对象的三大特性：封装、继承以及多态。
 
-设计原则名称 | 核心思想
----|---
-[单一职责原则](#单一职责原则) | 一个类只负责一个功能领域中的相应职责
-[开放封闭原则](#开放封闭原则) | 软件实体应对扩展开放，而对修改关闭
-[依赖倒转原则](#依赖倒转原则) | 抽象不应该依赖于细节，细节应该依赖于抽象
-[里氏替换原则](#里氏替换原则) | 所有引用基类对象的地方能够透明地使用其子类的对象
-[接口隔离原则](#接口隔离原则) | 使用多个专门的接口，而不使用单一的总接口
-[合成复用原则](#合成复用原则) | 尽量使用对象组合，而不是继承来达到复用的目的
-[迪米特法则](#迪米特法则) | 一个软件实体应当尽可能少地与其他实体发生相互作用
+| 设计原则名称   | 核心思想                                                         |
+| -------------- | ---------------------------------------------------------------- |
+| 单一职责原则   | 一个类只负责一个特定的职责                                       |
+| 开放封闭原则   | 软件实体应该可以扩展，但不应该修改其已有代码                     |
+| 依赖倒转原则   | 高层模块不应该依赖低层模块，两者都应该依赖抽象；抽象不应该依赖细节，细节应该依赖抽象 |
+| 里氏替换原则   | 任何基类可以出现的地方，子类也可以出现                           |
+| 接口隔离原则   | 使用多个专门的接口，而不是一个通用的接口                         |
+| 合成复用原则   | 优先使用组合而不是继承来实现代码复用                             |
+| 迪米特法则     | 一个对象应尽量少地了解其他对象，从而降低耦合度                   |
 
 
 ### 单一职责原则
-> **其核心思想为：一个类，最好只做一件事，只有一个引起它的变化。单一职责原则可降低类的复杂度,提高代码可读性,可维护性,降低变更风险.** 单一职责原则可以看做是低耦合、高内聚在面向对象原则上的引申，将职责定义为引起变化的原因，以提高内聚性来减少引起变化的原因。职责过多，可能引起它变化的原因就越多，这将导致职责依赖，相互之间就产生影响，从而大大损伤其内聚性和耦合度。通常意义下的单一职责，就是指只有一种单一功能，不要为类实现过多的功能点，以保证实体只有一个引起它变化的原因。 专注，是一个人优良的品质；同样的，单一也是一个类的优良设计。交杂不清的职责将使得代码看起来特别别扭牵一发而动全身，有失美感和必然导致丑陋的系统错误风险。
-
-代码实现
-
-```
+其核心思想为，一个类最好只做一件事。单一职责原则可降低类的复杂度，提高代码可读性、可维护性、降低变更风险。
+单一职责原则可以看做是低耦合、高内聚在面向对象原则上的引申，将职责定义为引起变化的原因，以提高内聚性来减少引起变化的原因。
+职责过多，可能引起它变化的原因就越多，这将导致职责依赖，相互之间就产生影响，从而大大损伤其内聚性和耦合度。
+通常意义下的单一职责，就是指只有一种单一功能，不要为类实现过多的功能点，以保证实体只有一个引起它变化的原因。
+专注，是一个人优良的品质；同样的，单一也是一个类的优良设计。交杂不清的职责将使得代码看起来特别别扭牵一发而动全身，有失美感和必然导致丑陋的系统错误风险。
+```java
 public class MainTest {
     public static void main(String[] args) {
         Vehicle vehicle = new Vehicle();
@@ -111,7 +117,7 @@ class Vehicle{
 }
 
 ```
-```
+```java
 // 解决
 public class MainTest {
     public static void main(String[] args) {
@@ -134,9 +140,8 @@ class Flight {
     }
 }
 ```
-**通常情况下,我们应当遵循单一职责原则,只要逻辑足够简单,才可以在代码里边违反单一职责原则;只要类中方法数量足够少,可以在方法级别保持单一职责原则.**
-
-```
+只要类中方法数量足够少，可以在方法级别保持单一职责原则。
+```java
 public class MainTest {
     public static void main(String[] args) {
         Vehicle2 vehicle2 = new Vehicle2();
@@ -160,18 +165,17 @@ class Vehicle2 {
 ```
 
 ### 开放封闭原则
-> **软件实体应该是可扩展的，而不可修改的。也就是，对(提供方)扩展开放，对(使用方)修改封闭的。** 开放封闭原则主要体现在两个方面
->- 对扩展开放，意味着有新的需求或变化时，可以对现有代码进行扩展，以适应新的情况。
->- 对修改封闭，意味着类一旦设计完成，就可以独立完成其工作，而不要对其进行任何尝试的修改。 
->
->实现开放封闭原则的核心思想就是对抽象编程，而不对具体编程，因为抽象相对稳定。让类依赖于固定的抽象，所以修改就是封闭的；而通过面向对象的继承和多态机制，又可以实现对抽象类的继承，通过覆写其方法来改变固有行为，实现新的拓展方法，所以就是开放的。 “需求总是变化”没有不变的软件，所以就需要用封闭开放原则来封闭变化满足需求，同时还能保持软件内部的封装体系稳定，不被需求的变化影响。**编程中遵循其他原则,以及使用其他设计模式的目的就是为了遵循开闭原则.**
+软件实体应该是可扩展的，而不可修改的。也就是对提供方扩展开放，对使用方修改封闭的。开放封闭原则主要体现在两个方面：
+- 对扩展开放，意味着有新的需求或变化时，可以对现有代码进行扩展，以适应新的情况。
+- 对修改封闭，意味着类一旦设计完成，就可以独立完成其工作，而不要对其进行任何尝试的修改。 
 
-当软件需要变化时,尽量使用扩展的软件实体的方式行为来实现变化,而不是通过修改已有的代码来实现变化.
+实现开放封闭原则的核心思想是对抽象编程，而不对具体编程。
+因为抽象相对稳定，让类依赖于固定的抽象，所以修改就是封闭的；而通过面向对象的继承和多态机制，又可以实现对抽象类的继承，通过覆写其方法来改变固有行为，实现新的拓展方法，所以就是开放的。
+需求总是变化，当我们给程序添加或者修改功能时，需要用开放封闭原则来封闭变化满足需求，同时还能保持软件内部的封装体系稳定，不被需求的变化影响。
+编程中遵循其他原则，以及使用其他设计模式的目的就是为了遵循开闭原则。
 
-代码实现
-
-```
-
+当软件需要变化时，尽量使用扩展的软件实体的方式行为来实现变化，而不是通过修改已有的代码来实现变化。
+```java
 public class MainTest {
     public static void main(String[] args) {
         Mother mother = new Mother();
@@ -220,90 +224,76 @@ class Mother {
 ```
 
 ### 依赖倒置原则
-> **该原则依赖于抽象。具体而言就是高层模块不依赖于底层模块，二者都同依赖于抽象；抽象不依赖于具体，具体依赖于抽象。** 我们知道，依赖一定会存在于类与类、模块与模块之间。当两个模块之间存在紧密的耦合关系时，最好的方法就是分离接口和实现：在依赖之间定义一个抽象的接口使得高层模块调用接口，而底层模块实现接口的定义，以此来有效控制耦合关系，达到依赖于抽象的设计目标。 抽象的稳定性决定了系统的稳定性，因为抽象是不变的，依赖于抽象是面向对象设计的精髓，也是依赖倒置原则的核心。 依赖于抽象是一个通用的原则，而某些时候依赖于细节则是在所难免的，必须权衡在抽象和具体之间的取舍，方法不是一层不变的。**依赖于抽象，就是对接口编程，不要对实现编程。**
+该原则依赖于抽象，具体而言就是高层模块不依赖于底层模块，二者都同依赖于抽象，抽象不依赖于具体，具体依赖于抽象。
+我们知道，依赖一定会存在于类与类、模块与模块之间。当两个模块之间存在紧密的耦合关系时，最好的方法就是分离接口和实现，即在依赖之间定义一个抽象的接口使得高层模块调用接口，而底层模块实现接口的定义，以此来有效控制耦合关系，达到依赖于抽象的设计目标。
+抽象的稳定性决定了系统的稳定性，因为抽象是不变的，依赖于抽象是面向对象设计的精髓，也是依赖倒置原则的核心。
+依赖于抽象是一个通用的原则，而某些时候依赖于细节则是在所难免的，必须权衡在抽象和具体之间的取舍。
 
-代码实现
-```
+依赖于抽象，就是对接口编程，不要对实现编程。
+```java
+// 定义一个接口，表示消息发送者
+interface MessageSender {
+    void sendMessage(String message);
+}
 
-public class MainTest {
+// 实现接口的EmailSender类
+class EmailSender implements MessageSender {
+    @Override
+    public void sendMessage(String message) {
+        System.out.println("Sending email with message: " + message);
+    }
+}
 
+// 实现接口的SmsSender类
+class SmsSender implements MessageSender {
+    @Override
+    public void sendMessage(String message) {
+        System.out.println("Sending SMS with message: " + message);
+    }
+}
+
+// 高层模块的MessageService类依赖于MessageSender接口
+class MessageService {
+    private MessageSender sender;
+
+    // 通过构造函数注入依赖
+    public MessageService(MessageSender sender) {
+        this.sender = sender;
+    }
+
+    public void processMessage(String message) {
+        // 使用MessageSender接口发送消息
+        sender.sendMessage(message);
+    }
+}
+
+public class Main {
     public static void main(String[] args) {
-        Computer computer = new Computer();
-        // 对接口编程，不要对实现编程
-        // 如果没有接口 则代码很难实现扩展
-        Disk disk = new CustomDisk();
-        Memory memory = new CustomMemory();
+        // 使用EmailSender发送消息
+        MessageSender emailSender = new EmailSender();
+        MessageService emailService = new MessageService(emailSender);
+        emailService.processMessage("Hello via Email!");
 
-        computer.setDisk(disk);
-        computer.setMemory(memory);
-        computer.run();
-    }
-
-}
-
-interface Disk{
-    void diskMethod();
-}
-
-interface Memory{
-    void memoryMethod();
-}
-
-class CustomDisk implements Disk{
-
-    @Override
-    public void diskMethod() {
-        System.out.println("i am disk ...");
-    }
-}
-
-class  CustomMemory implements Memory{
-
-    @Override
-    public void memoryMethod() {
-        System.out.println("i am memory ...");
-    }
-}
-
-class Computer {
-
-    private Memory memory;
-
-    private Disk disk;
-
-    public void setDisk(Disk disk) {
-        this.disk = disk;
-    }
-
-    public void setMemory(Memory memory) {
-        this.memory = memory;
-    }
-
-    public Disk getDisk() {
-        return disk;
-    }
-
-    public Memory getMemory() {
-        return memory;
-    }
-    public void run() {
-        System.out.println(" computer is running ...");
-        memory.memoryMethod();
-        disk.diskMethod();
+        // 使用SmsSender发送消息
+        MessageSender smsSender = new SmsSender();
+        MessageService smsService = new MessageService(smsSender);
+        smsService.processMessage("Hello via SMS!");
     }
 }
 ```
-
 
 ### 接口隔离原则
-> **使用多个小的专门的接口，而不要使用一个大的总接口。** 具体而言，接口隔离原则体现在：接口应该是内聚的，应该避免“胖”接口。一个类对另外一个类的依赖应该建立在最小的接口上，不要强迫依赖不用的方法，这是一种接口污染。 接口有效地将细节和抽象隔离，体现了对抽象编程的一切好处，接口隔离强调接口的单一性。而胖接口存在明显的弊端，会导致实现的类型必须完全实现接口的所有方法、属性等；而某些时候，实现类型并非需要所有的接口定义，在设计上这是“浪费”，而且在实施上这会带来潜在的问题，对胖接口的修改将导致一连串的客户端程序需要修改，有时候这是一种灾难。在这种情况下，将胖接口分解为多个特点的定制化方法，使得客户端仅仅依赖于它们的实际调用的方法，从而解除了客户端不会依赖于它们不用的方法。 
->
->分离的手段主要有以下两种：
->- 委托分离，通过增加一个新的类型来委托客户的请求，隔离客户和接口的直接依赖，但是会增加系统的开销。
->- 多重继承分离，通过接口多继承来实现客户的需求，这种方式是较好的。
+使用多个小的专门的接口，而不要使用一个大的总接口。具体而言，接口隔离原则体现在，接口应该是内聚的，应该避免“胖”接口。
+一个类对另外一个类的依赖应该建立在最小的接口上，不要强迫依赖不用的方法，这是一种接口污染。
+接口有效地将细节和抽象隔离，体现了对抽象编程的一切好处，接口隔离强调接口的单一性，而胖接口存在明显的弊端，会导致实现的类型必须完全实现接口的所有方法、属性等。
+某些时候，实现类并非需要所有的接口定义，在设计上这是“浪费”，而且在实施上这会带来潜在的问题，对胖接口的修改将导致一连串的客户端程序需要修改，有时候这是一种灾难。
+在这种情况下，应该将胖接口**分离**为多个特点的定制化方法，使得客户端仅仅依赖于它们的实际调用的方法，从而解除了客户端不会依赖于它们不用的方法。 
 
-代码实现
-```
+分离的手段主要有以下两种：
+- 委托分离，通过增加一个新的类型来委托客户的请求，隔离客户和接口的直接依赖，但是会增加系统的开销。
+- 多重继承分离，通过接口多继承来实现客户的需求，这种方式是较好的。
+
+```java
 public class MainTest {
     public static void main(String[] args) {
         FuncImpl func = new FuncImpl();
@@ -347,17 +337,19 @@ class FuncImpl implements Function1,Function2,Function3{
 }
 ```
 
-
 ### 里氏替换原则
-> **子类必须能够替换其基类。** 这一思想体现为对继承机制的约束规范，只有子类能够替换基类时，才能保证系统在运行期内识别子类，这是保证继承复用的基础。在父类和子类的具体行为中，必须严格把握继承层次中的关系和特征，将基类替换为子类，程序的行为不会发生任何变化。同时，这一约束反过来则是不成立的，子类可以替换基类，但是基类不一定能替换子类。 里氏替换原则，主要着眼于对抽象和多态建立在继承的基础上，因此只有遵循了里氏替换原则，才能保证继承复用是可靠地。
->
->实现的方法是面向接口编程：将公共部分抽象为基类接口或抽象类，通过`Extract Abstract Class`，在子类中通过覆写父类的方法实现新的方式支持同样的职责。 里氏替换原则是关于继承机制的设计原则，违反了里氏替换原则就必然导致违反开放封闭原则。 里氏替换原则能够保证系统具有良好的拓展性，同时实现基于多态的抽象机制，能够减少代码冗余，避免运行期的类型判别。
+里氏替换原则这一思想体现为对继承机制的约束规范，只有子类能够替换基类时，才能保证系统在运行期内识别子类，这是保证继承复用的基础。
+在父类和子类的具体行为中，必须严格把握继承层次中的关系和特征，将基类替换为子类，程序的行为不会发生任何变化。
+同时这一约束反过来则是不成立的，子类可以替换基类，但是基类不一定能替换子类。
+里氏替换原则，主要着眼于对抽象和多态建立在继承的基础上，因此只有遵循了里氏替换原则，才能保证继承复用是可靠地。
 
-简单来说就是子类可以扩展父类的功能,但是尽量不要重写父类的功能.如果通过重写父类方法来完成新的功能,这样写起来虽然简单,但整个体系的可复用性会非常差,特别是运用多态比较频繁时,程序运行出错的概率会非常大.
+实现的方法是面向接口编程，即将公共部分抽象为基类接口或抽象类，在子类中通过覆写父类的方法实现新的方式支持同样的职责。
+里氏替换原则是关于继承机制的设计原则，违反了里氏替换原则就必然导致违反开放封闭原则。
+里氏替换原则能够保证系统具有良好的拓展性，同时实现基于多态的抽象机制，能够减少代码冗余，避免运行期的类型判别。
 
-代码实现
-```
-
+简单来说就是子类可以扩展父类的功能，而不应该改变父类原有的功能。
+如果通过重写父类方法来完成新的功能，这样写起来虽然简单，但整个体系的可复用性会非常差，特别是运用多态比较频繁时，程序运行出错的概率会非常大。
+```java
 public class MainTest {
     public static void main(String[] args) {
         Rectangle rectangle = new Rectangle();
@@ -366,9 +358,9 @@ public class MainTest {
         resize(rectangle);
         print(rectangle);
         System.out.println("=======================");
-        // 因为 Square类 重写了父类set的方法导致调用时出错
         Rectangle square = new Square();
         square.setWidth(10);
+        // 因为 Square类 重写了父类 setWidth setHeight 方法，会导致 while 循环变成一个无限循环
         resize(square);
         print(square);
     }
@@ -384,9 +376,8 @@ public class MainTest {
     }
 }
 
+// 正方形
 class Square  extends Rectangle{
-    private Integer width;
-    private Integer height;
 
     @Override
     public void setWidth(Integer width) {
@@ -400,6 +391,8 @@ class Square  extends Rectangle{
         super.setHeight(height);
     }
 }
+
+// 长方形
 class Rectangle {
     private Integer width;
     private Integer height;
@@ -423,175 +416,167 @@ class Rectangle {
 ```
 
 ### 合成复用原则
-> **尽量使用对象组合，而不是继承来达到复用的目的。** 在面向对象设计中，可以通过两种方法在不同的环境中复用已有的设计和实现，**即通过组合/聚合关系或通过继承，但首先应该考虑使用组合/聚合**，组合/聚合可以使系统更加灵活，降低类与类之间的耦合度，一个类的变化对其他类造成的影响相对较少；其次才考虑继承，在使用继承时，需要严格遵循里氏代换原则，有效使用继承会有助于对问题的理解，降低复杂度，而滥用继承反而会增加系统构建和维护的难度以及系统的复杂度，因此需要慎重使用继承复用。
+在面向对象设计中，可以通过两种方法在不同的环境中复用已有的设计和实现，即通过组合/聚合关系或通过继承。
+首先应该考虑使用组合/聚合，因为组合/聚合可以使系统更加灵活，降低类与类之间的耦合度，一个类的变化对其他类造成的影响相对较少；
+其次才考虑继承，在使用继承时，需要严格遵循里氏代换原则，有效使用继承会有助于对问题的理解，降低复杂度，而滥用继承反而会增加系统构建和维护的难度以及系统的复杂度，因此需要慎重使用继承复用。
 
-代码实现
+尽量使用对象组合，而不是继承来达到复用的目的。
+```java
+// 引擎接口
+interface Engine {
+    void start();
+}
 
-详见[继承与组合](#继承与组合)
+// 电动引擎
+class ElectricEngine implements Engine {
+    @Override
+    public void start() {
+        System.out.println("Electric engine starts...");
+    }
+}
+
+// 燃油引擎
+class GasEngine implements Engine {
+    @Override
+    public void start() {
+        System.out.println("Gas engine starts...");
+    }
+}
+
+// 汽车类
+class Car {
+    private Engine engine;
+
+    public Car(Engine engine) {
+        this.engine = engine;
+    }
+
+    public void start() {
+        engine.start();
+        System.out.println("Car starts...");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // 创建一个电动引擎汽车
+        Engine electricEngine = new ElectricEngine();
+        Car electricCar = new Car(electricEngine);
+        electricCar.start();
+
+        System.out.println("=======================");
+
+        // 创建一个燃油引擎汽车
+        Engine gasEngine = new GasEngine();
+        Car gasCar = new Car(gasEngine);
+        gasCar.start();
+    }
+}
+```
 
 ### 迪米特法则
-> 迪米特法则又叫最少知识原则，就是说一个对象应当对其他对象有尽可能少的了解。
-其核心思想是: **降低类之间的耦合.如果类与类之间的关系越密切，耦合度越大，当一个类发生改变时，对另一个类的影响也越大.一个对象应该对其他对象有最少的了解。** 通俗地讲，一个类应该对自己需要耦合或调用的类知道得最少，你（被耦合或调用的类）的内部是如何复杂都和我没关系，那是你的事情，我就知道你提供的`public`方法，我就调用这么多，其他的一概不关心.迪米特法则其根本思想，是强调了类之间的松耦合。类之间的耦合越弱，越有利于复用，一个处在弱耦合的类被修改，不会对有关系的类造成搏击，也就是说，信息的隐藏促进了软件的复用。
+迪米特法则又叫最少知识原则，就是说一个对象应当对其他对象有尽可能少的了解。其核心思想为，降低类之间的耦合。
+如果类与类之间的关系越密切，耦合度越大，当一个类发生改变时，对另一个类的影响也越大，所以一个对象应该对其他对象有最少的了解。
+通俗地讲，一个类应该对自己需要耦合或调用的类知道得最少，被耦合或调用的类的内部是如何复杂都和我没关系，那是你的事情，我就知道你提供的`public`方法，我就调用这么多，其他的一概不关心。
+迪米特法则其根本思想，是强调了类之间的松耦合。类之间的耦合越弱，越有利于复用，一个处在弱耦合的类被修改，不会对有关系的类造成搏击，也就是说，信息的隐藏促进了软件的复用。
 
-迪米特法则还有个更简单的定义：只与直接的朋友通信
+迪米特法则还有个更简单的定义，只与直接的**朋友**交谈，不跟“陌生人”说话。
+>朋友定义：每个对象都会与其他对象有耦合关系，只要两个对象之间有耦合关系，我们就说这两个对象之间是朋友关系。
+耦合的方式很多：依赖、关联、组合、聚合等。其中，我们称出现成员变量、方法参数、方法返回值中的类为直接的朋友，而出现在局部变量中的类不是直接的朋友。
+也就是说，陌生的类最好不要以局部变量的形式出现在类的内部。
 
-朋友定义：**每个对象都会与其他对象有耦合关系，只要两个对象之间有耦合关系，我们就说这两个对象之间是朋友关系。** 耦合的方式很多，依赖，关联，组合，聚合等。其中，我们称出现**成员变量，方法参数，方法返回值中的类为直接的朋友**，而出现在**局部变量中的类不是直接的朋友**。也就是说，**陌生的类最好不要以局部变量的形式出现在类的内部。**
+```java
+// 学生类
+class Student {
+    private String name;
+    private Class myClass;
 
-代码实现
-```
-public class MainTest {
+    public Student(String name, Class myClass) {
+        this.name = name;
+        this.myClass = myClass;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    // 查询自己的班级信息
+    public void queryClassInfo() {
+        String className = myClass.getClassName();
+        System.out.println(name + " is in class " + className);
+    }
+}
+
+// 班级类
+class Class {
+    private String className;
+
+    public Class(String className) {
+        this.className = className;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+}
+
+// 老师类
+class Teacher {
+    private String name;
+
+    public Teacher(String name) {
+        this.name = name;
+    }
+
+    // 不符合迪米特法则的方法示例，直接返回班级名
+    // public String getStudentClass(Student student) {
+    //     return student.myClass.getClassName();
+    // }
+
+    // 通过学生对象调用公共方法获取班级信息
+    public String getStudentClass(Student student) {
+        return student.queryClassInfo();
+    }
+}
+
+public class Main {
     public static void main(String[] args) {
-        //创建了一个 SchoolManager 对象
-        SchoolManager schoolManager = new SchoolManager();
-        // SchoolManager直接朋友: CollegeManager (方法参数) Employee(返回值)
-        // CollegeEmployee以局部变量的形式出现在SchoolManager类中 所以违反了迪米特法则
-        schoolManager.printAllEmployee(new CollegeManager());
-    }
-}
+        // 创建班级
+        Class class1 = new Class("Class 1");
 
+        // 创建学生并设置班级
+        Student student = new Student("Alice", class1);
 
-class Employee {
-    private String id;
+        // 学生查询自己的班级信息
+        student.queryClassInfo();
 
-    public String getId() {
-        return id;
-    }
+        System.out.println("=======================");
 
-    public void setId(String id) {
-        this.id = id;
-    }
-}
-
-
-class CollegeEmployee {
-    private String id;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-}
-
-class CollegeManager {
-    public List<CollegeEmployee> getAllEmployee() {
-        List<CollegeEmployee> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            CollegeEmployee emp = new CollegeEmployee();
-            emp.setId("学院员工 id= " + i);
-            list.add(emp);
-        }
-        return list;
-    }
-}
-
-class SchoolManager {
-
-    public List<Employee> getAllEmployee() {
-        List<Employee> list = new ArrayList<>();
-
-        for (int i = 0; i < 5; i++) {
-            //这里我们增加了 5 个员工到
-            Employee emp = new Employee();
-            emp.setId("学校总部员工 id= " + i);
-            list.add(emp);
-        }
-        return list;
-    }
-
-    void printAllEmployee(CollegeManager sub) {
-        //获取到学院员工
-        List<CollegeEmployee> list1 = sub.getAllEmployee();
-        System.out.println("------------学院员工------------");
-        for (CollegeEmployee e : list1) {
-            System.out.println(e.getId());
-        }
-        //获取到学校总部员工
-        List<Employee> list2 = this.getAllEmployee();
-        System.out.println("------------学校总部员工------------");
-        for (Employee e : list2) {
-            System.out.println(e.getId());
-        }
-    }
-}
-```
-```
-
-class CollegeManager {
-    public List<CollegeEmployee> getAllEmployee() {
-        List<CollegeEmployee> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            CollegeEmployee emp = new CollegeEmployee();
-            emp.setId("学院员工 id= " + i);
-            list.add(emp);
-        }
-        return list;
-    }
-    // 修改后
-    public void printAllEmployee() {
-        List<CollegeEmployee> list1 = this.getAllEmployee();
-        System.out.println("------------学院员工------------");
-        for (CollegeEmployee e : list1) {
-            System.out.println(e.getId());
-        }
-    }
-}
-
-class SchoolManager {
-
-    public List<Employee> getAllEmployee() {
-        List<Employee> list = new ArrayList<>();
-
-        for (int i = 0; i < 5; i++) {
-            //这里我们增加了 5 个员工到
-            Employee emp = new Employee();
-            emp.setId("学校总部员工 id= " + i);
-            list.add(emp);
-        }
-        return list;
-    }
-
-    void printAllEmployee(CollegeManager sub) {
-        //获取到学院员工
-        // 修改后
-        sub.printAllEmployee();
-
-        //获取到学校总部员工
-        List<Employee> list2 = this.getAllEmployee();
-        System.out.println("------------学校总部员工------------");
-        for (Employee e : list2) {
-            System.out.println(e.getId());
-        }
+        // 创建老师并查询学生的班级信息
+        Teacher teacher = new Teacher("Mr. Smith");
+        String studentClass = teacher.getStudentClass(student);
+        System.out.println(student.getName() + " is in class " + studentClass);
     }
 }
 ```
 
-
-## 三大特性
+## 面向对象三大特性
+面向对象编程具有三大基本特性，它们是：封装、继承、多态。这些特性是面向对象编程语言如Java、Python等的基础。
+面向对象编程的三大特性共同作用，使得程序设计更加灵活、可扩展和易于维护。
+封装提供了数据的安全性和访问控制，继承实现了代码的重用和层次化设计，多态增加了代码的适应性和灵活性。这些特性共同构成了面向对象编程范式的核心，是现代软件开发中广泛应用的重要基础。
 
 ### 封装
+封装是面向对象方法的重要原则，就是把对象的属性和操作（或服务）结合为一个独立的整体，并尽可能隐藏对象的内部实现细节。
+简单的说，一个类就是一个封装了数据以及操作这些数据的代码的逻辑实体。在一个对象内部，某些代码或某些数据可以是私有的，不能被外界访问。
+通过这种方式，对象对内部数据提供了不同级别的保护，以防止程序中无关的部分意外的改变或错误的使用了对象的私有部分。
 
-封装是面向对象方法的重要原则，就是把对象的属性和操作（或服务）结合为一个独立的整体，并尽可能隐藏对象的内部实现细节.简单的说,一个类就是一个封装了数据以及操作这些数据的代码的逻辑实体。在一个对象内部，**某些代码或某些数据可以是私有的**，不能被外界访问。通过这种方式，对象对内部数据提供了不同级别的保护，以防止程序中无关的部分意外的改变或错误的使用了对象的私有部分。
-
-
-**封装的目的是增强安全性和简化编程,使用者不必了解具体的实现细节,而只是要通过外部接口,以特定的访问权限来使用类的成员.**
-
-#### 优点
-
--  良好的封装能够减少耦合;提高了可维护性和灵活性以及可重用性;
--  类内部的结构可以自由修改;
-- 可以对成员变量进行更精确的控制;
--  隐藏信息，实现细节;
-
-#### 访问权限
-
-Java的封装可以通过修改属性的可见性限制对属性的访问来体现.
-
-**Java 中有三个访问权限修饰符：private、protected 以及 public，如果不加访问修饰符，表示包级可见(default)。**
-
+良好的封装能够减少耦合，提高了可维护性和灵活性以及可重用性，允许类内部结构自由修改，并对成员变量进行精确控制，同时有效隐藏信息和实现细节。
+封装的目的是增强安全性和简化编程，使用者不必了解具体的实现细节，而只是要通过外部接口以特定的访问权限来使用类的成员。
+其中包括`private`、`protected`和`public`三个访问权限修饰符，如果不加修饰符，则表示包级可见（`default`）。
 
 | 修饰符       | 当前类 | 同一包下 | 其他包的子类 | 不同包的子类 | 其他包 |
 |-----------|-----|------|--------|--------|-----|
@@ -600,30 +585,26 @@ Java的封装可以通过修改属性的可见性限制对属性的访问来体�
 | default   | Y   | Y    | Y      | N      | N   |
 | private   | Y   | N    | N      | N      | N   |
 
-这四种访问权限的控制符能够控制类中成员的可见性.当然需要满足在不使用Java反射的情况下.
+这四种访问权限的控制符能够控制类中成员的可见性，当然需要满足在不使用Java反射的情况下。
+- `private`：仅在定义它们的类内部可见。
+- `protected`：同一个包内的类和该类的子类可以访问。
+- `default`：包级可见性，同一个包内的类可以访问。
+- `public`：任何类都可以访问。
 
-**注意**
-- `protected`用于修饰成员,表示在继承体系中成员对于子类可见.如果不存在继承关系则不能访问`protected`修饰的实例.
-- 类可见表示其它类可以用这个类创建实例对象;
-- 成员可见表示其它类可以用这个类的实例对象访问到该成员;
+设计良好的模块会隐藏所有的实现细节，把它的`API`与它的实现清晰地隔离开来。
+模块之间只通过它们的`API`进行通信，一个模块不需要知道其他模块的内部工作情况，这个概念被称为信息隐藏或封装。因此访问权限应当尽可能地使每个类或者成员不被外界访问。
+如果子类的方法重写了父类的方法，那么子类中该方法的访问级别不允许低于父类的访问级别。这是为了确保可以使用父类实例的地方都可以使用子类实例，也就是确保满足里氏替换原则。
 
-设计良好的模块会隐藏所有的实现细节，把它的 API 与它的实现清晰地隔离开来。模块之间只通过它们的 API 进行通信，一个模块不需要知道其他模块的内部工作情况，这个概念被称为**信息隐藏或封装**。因此**访问权限应当尽可能地使每个类或者成员不被外界访问**。
-
-**如果子类的方法重写了父类的方法，那么子类中该方法的访问级别不允许低于父类的访问级别**。这是为了确保可以使用父类实例的地方都可以使用子类实例，也就是确保满足**里氏替换原则**。
-
-**某个类的字段决不能是公有的，因为这么做的话就失去了对这个字段修改行为的控制，其他类可以对其随意修改。**
-例如下面的例子中，``AccessExample``拥有id公有字段，如果在某个时刻，我们想要使用`int`存储`id`字段，那么就需要修改所有类中的代码。
-
-```
+某个类的字段决不能是公有的，因为这么做的话就失去了对这个字段修改行为的控制，其他类可以对其随意修改。
+下面的例子中，`AccessExample`拥有id公有字段，如果在某个时刻，我们想要使用`int`存储`id`字段，那么就需要修改所有类中的代码。
+```java
 public class AccessExample {
     public String id;
     // public int id;
 }
 ```
-
-可以使用公有的 ``getter`` 和 ``setter`` 方法来替换公有字段，这样的话就可以控制对字段的修改行为。实现了封装
-
-```
+可以使用公有的`getter`和`setter`方法来替换公有字段，这样的话就可以控制对字段的修改行为，实现了封装。
+```java
 public class AccessExample {
 
     private int id;
@@ -637,10 +618,8 @@ public class AccessExample {
     }
 }
 ```
-
-**但是也有例外，如果是包级私有的类或者私有的嵌套类，那么直接暴露成员不会有特别大的影响。**
-
-```
+但是也有例外，如果是包级私有的类或者私有的嵌套类，那么直接暴露成员不会有特别大的影响。
+```java
 public class AccessWithInnerClassExample {
 
     private class InnerClass {
@@ -659,7 +638,6 @@ public class AccessWithInnerClassExample {
 }
 ```
 
-
 ### 继承
 继承可以使用现有类的所有功能，并在无需重新编写原来的类的情况下对这些功能进行扩展。通过继承创建的新类称为“子类”或“派生类”，被继承的类称为“基类”、“父类”或“超类”。继承的过程，就是从一般到特殊的过程.**要实现继承，可以通过“继承”（Inheritance）和“组合”（Composition）来实现.** 继承概念的实现方式有两类：实现继承与接口继承。实现继承是指直接使用基类的属性和方法而无需额外编码的能力；接口继承是指仅使用属性和方法的名称、但是子类必须提供实现的能力.
 
@@ -670,7 +648,6 @@ public class AccessWithInnerClassExample {
 **继承的根本原因是因为要复用，而实现的根本原因是需要定义一个标准.**
 
 #### 继承与组合
-
 继承是实现复用代码的重要手段,但是继承会破坏封装.组合也是代码复用的重要方式,可以提供良好的封装性.
 
 ##### 实现继承
