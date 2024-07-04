@@ -2,7 +2,7 @@
 title: "Js换肤特效"
 date: 2018-11-14
 draft: false
-tags: ["Js", "玩具"]
+tags: ["JS", "玩具"]
 slug: "js-trans-skin"
 ---
 

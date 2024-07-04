@@ -2,7 +2,7 @@
 title: "Js雪花飘落"
 date: 2018-12-25
 draft: false
-tags: ["Js", "玩具"]
+tags: ["JS", "玩具"]
 slug: "js-snow"
 ---
 

@@ -2,7 +2,7 @@
 title: "Js折纸导航栏"
 date: 2018-10-25
 draft: false
-tags: ["Js", "玩具"]
+tags: ["JS", "玩具"]
 slug: "js-paper-folding"
 ---
 

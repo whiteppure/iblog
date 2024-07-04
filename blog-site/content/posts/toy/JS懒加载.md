@@ -2,7 +2,7 @@
 title: "Js懒加载"
 date: 2018-09-21
 draft: false
-tags: ["Js", "玩具"]
+tags: ["JS", "玩具"]
 slug: "js-loadding-lazy"
 ---
 

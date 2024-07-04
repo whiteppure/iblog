@@ -2,7 +2,7 @@
 title: "Js生日礼物"
 date: 2018-08-24
 draft: false
-tags: ["Js", "玩具"]
+tags: ["JS", "玩具"]
 slug: "js-birthday-gift"
 ---
 

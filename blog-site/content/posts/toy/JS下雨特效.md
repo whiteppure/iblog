@@ -2,7 +2,7 @@
 title: "Js下雨特效"
 date: 2018-12-10
 draft: false
-tags: ["Js", "玩具"]
+tags: ["JS", "玩具"]
 slug: "js-rain"
 ---
 

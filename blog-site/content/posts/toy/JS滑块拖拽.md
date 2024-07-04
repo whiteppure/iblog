@@ -2,7 +2,7 @@
 title: "Js滑块拖拽"
 date: 2018-09-08
 draft: false
-tags: ["Js", "玩具"]
+tags: ["JS", "玩具"]
 slug: "js-box-drag"
 ---
 
