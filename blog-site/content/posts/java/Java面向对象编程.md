@@ -1,5 +1,5 @@
 ---
-title: "面向对象"
+title: "Java面向对象"
 date: 2021-02-15
 draft: false
 tags: ["Java", "Java基础"]
