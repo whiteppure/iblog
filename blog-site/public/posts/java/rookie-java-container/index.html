@@ -1214,7 +1214,7 @@ Java中提供的数组是用来存储固定大小的同类型元素，所以Java
 </span></span></span></code></pre></div><h3 id="arraylist与linkedlist">ArrayList与LinkedList</h3>
 <p><code>ArrayList</code>与<code>LinkedList</code>性能比较是一道经典的面试题，先说答案<code>ArrayList</code>查找快，增删慢，而<code>LinkedList</code>增删快，查找慢。
 造成这种原因是因为底层的数据结构不一样。<code>ArrayList</code>底层是数组，而数组的中的元素内存分配都是连续的，并且数组中的元素只能存放一种，这就造成了数组中的元素地址是有规律的，数组中查找元素快速的原因正是利用了这一特点。
-查询方式为: 首地址＋(元素类型长度*下标)。例如：<code>new int arr[5];``arr</code>数组的地址假设为<code>0x1000</code>，那么<code>arr[3]</code>地址可看作为 <code>0x1000 + (3 * 4)</code>，3为数组下标，4为int元素类型长度。</p>
+查询方式为: 首地址＋(元素类型长度*下标)。例如：<code>new int arr[5]; arr</code>数组的地址假设为<code>0x1000</code>，那么<code>arr[3]</code>地址可看作为 <code>0x1000 + (3 * 4)</code>，3为数组下标，4为int元素类型长度。</p>
 <p>而<code>LinkedList</code>在Java中的底层结构是对象，每一个对象结点中都保存了下一个结点的位置形成的链表结构，由于<code>LinkedList</code>元素的地址是不连续的，所以没办法按照数组那样去查找，所以就比较慢。</p>
 <p>由于数组一旦分配了大小就不能改变，所以<code>ArrayList</code>在进行添加操作时会创建新的数组，如果要添加到<code>ArrayList</code>中的指定的位置，是通过<code>System.arraycopy</code>方法将数组进行复制，新的数组会将待插入的指定位置空余出来，最后在将元素添加到集合中。
 在进行删除操作时是通过<code>System.arraycopy</code>方法，将待删除元素后面剩余元素复制到待删除元素的位置。当<code>ArrayList</code>里有大量数据时，这时候去频繁插入或删除元素会触发底层数组频繁拷贝，所以效率不高，还会造成内存空间的浪费。</p>

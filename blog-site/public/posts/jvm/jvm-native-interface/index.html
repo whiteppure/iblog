@@ -322,8 +322,8 @@
 还有，如果我们要使用一些Java语言本身没有提供封装的操作系统的特性时，我们也需要使用本地方法。</p>
 <h3 id="suns-java">Sun&rsquo;s Java</h3>
 <p>Sun的解释器是用C实现的，这使得它能像一些普通的C一样与外部交互。jre大部分是用Java实现的，它也通过一些本地方法与外界交互。
-例如：类<code>java.lang.Thread</code>的<code>setPriority()</code>方法是用Java实现的，但是它实现调用的是该类里的本地方法<code>setPriorityo()</code>。
-这个本地方法是用C实现的，并被植入JVM内部，在Windows 95的平台上，这个本地方法最终将调用Win32 <code>setPriority()</code>API。
+例如：类<code>java.lang.Thread</code>的<code>setPriority</code>方法是用Java实现的，但是它实现调用的是该类里的本地方法<code>setPriorityo</code>。
+这个本地方法是用C实现的，并被植入JVM内部，在Windows 95的平台上，这个本地方法最终将调用Win32 <code>setPriority</code>API。
 这是一个本地方法的具体实现由JVM直接提供，更多的情况是本地方法由外部的动态链接库提供，然后被JVM调用。</p>
 </div>
                     <div id="post_footer" class="post_footer">

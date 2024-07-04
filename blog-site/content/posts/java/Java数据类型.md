@@ -659,7 +659,7 @@ public String(String original) {
 除非需要显式复制形参的值，否则没有必要使用这个构造函数，因为字符串是不可变的。
 
 用字节码看一下，创建一个测试类，其`main`方法中使用这种方式来创建字符串对象。
-```
+```java
 public class MainTest {
     public static void main(String[] args) {
         String s = new String("abc");
@@ -733,7 +733,7 @@ Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
 ```
 
 关于JDK1.6、JDK1.7字符串常量池，有一道相关的面试题。下列代码在JDK1.6、JDK1.7中执行结果不同：
-```
+```java
 public class MainTest {
     public static void main(String[] args) {
         String s3 = new String("1") + new String("1"); // ==> new String("11"); 并不会在字符串常量池创建 "11"
@@ -778,27 +778,27 @@ Java中的字符串常量池有以下几种方式来存储字符串：
 
 关于`intern`是一个`native`方法，调用的是底层C的方法：
 ```
-    /**
-     * Returns a canonical representation for the string object.
-     * <p>
-     * A pool of strings, initially empty, is maintained privately by the
-     * class {@code String}.
-     * <p>
-     * When the intern method is invoked, if the pool already contains a
-     * string equal to this {@code String} object as determined by
-     * the {@link #equals(Object)} method, then the string from the pool is
-     * returned. Otherwise, this {@code String} object is added to the
-     * pool and a reference to this {@code String} object is returned.
-     * <p>
-     * It follows that for any two strings {@code s} and {@code t},
-     * {@code s.intern() == t.intern()} is {@code true}
-     * if and only if {@code s.equals(t)} is {@code true}.
-     * <p>
-     * All literal strings and string-valued constant expressions are
-     * interned. String literals are defined in section 3.10.5 of the
-     * <cite>The Java&trade; Language Specification</cite>.
-     */
-    public native String intern();
+/**
+ * Returns a canonical representation for the string object.
+ * <p>
+ * A pool of strings, initially empty, is maintained privately by the
+ * class {@code String}.
+ * <p>
+ * When the intern method is invoked, if the pool already contains a
+ * string equal to this {@code String} object as determined by
+ * the {@link #equals(Object)} method, then the string from the pool is
+ * returned. Otherwise, this {@code String} object is added to the
+ * pool and a reference to this {@code String} object is returned.
+ * <p>
+ * It follows that for any two strings {@code s} and {@code t},
+ * {@code s.intern() == t.intern()} is {@code true}
+ * if and only if {@code s.equals(t)} is {@code true}.
+ * <p>
+ * All literal strings and string-valued constant expressions are
+ * interned. String literals are defined in section 3.10.5 of the
+ * <cite>The Java&trade; Language Specification</cite>.
+ */
+public native String intern();
 ```
 `intern`方法文档注释大意是：字符串池最初是空的，由String类私有地维护。
 在调用`intern`方法时，如果池中已经包含了由`equals(object)`方法确定的与该字符串对象相等的字符串，则返回池中的字符串。
@@ -806,7 +806,7 @@ Java中的字符串常量池有以下几种方式来存储字符串：
 
 下面示例中s1和s2采用`new String()`的方式新建了两个不同字符串，而s3和s4是通过`s1.intern()`方法取得一个字符串引用。
 `intern()`首先把s1引用的字符串放到`String Pool`中，然后返回这个字符串引用，因此s3和s4引用的是同一个字符串。
-```
+```java
 public class MainTest {
     public static void main(String[] args) {
         String s1 = new String("aaa");
@@ -820,7 +820,7 @@ public class MainTest {
 ```
 
 对于程序中大量使用存在的字符串时，尤其存在很多已经重复的字符串时，使用`intern()`方法能够节省内存空间。
-```
+```java
 public class MainTest {
     static final int MAX_COUNT = 1000 * 10000;
     static final String[] arr = new String[MAX_COUNT];
@@ -858,7 +858,7 @@ public class MainTest {
 ```
 jsp(获取程序进程ID) -> jinfo -flag StringTableSize 进程ID
 ```
-```
+```java
 public class MainTest {
     public static void main(String[] args) {
         try {
@@ -951,13 +951,13 @@ public class MainTest {
 语法糖让程序更加简洁，有更高的可读性。
 
 为了探究“+”拼接的原理，用`javap -verbose`命令进行反编译看一下：
-```
-    public static void main(String[] args) {
-        String str1 = "123";
-        String str2 = "456";
-        String str3 = str1 + str2;
-        System.out.println(str3);
-    }
+```java
+public static void main(String[] args) {
+    String str1 = "123";
+    String str2 = "456";
+    String str3 = str1 + str2;
+    System.out.println(str3);
+}
 ```
 ```
 // ...
@@ -1016,7 +1016,7 @@ public class StringBuilderExample {
 
 #### StringBuffer与StringBuilder
 `Stringbuilder`和`StringBuffer`是字符串拼接的两种实现类，它们有相同的父类：
-```
+```java
 abstract class AbstractStringBuilder implements Appendable, CharSequence {
     /**
      * The value is used for character storage.
@@ -1034,7 +1034,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
 
 `StringBuffer`和`StringBuilder`是 Java 提供的用于处理字符串的类，二者的主要区别在于线程安全性和性能方面。拿`append`方法举例：
 - `StringBuilder.append`方法
-    ```
+    ```java
         @Override
         public StringBuilder append(String str) {
             super.append(str);
@@ -1042,7 +1042,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
         }
     ```
 - `StringBuffer.append`方法
-    ```
+    ```java
       @Override
       public synchronized StringBuffer append(String str) {
           toStringCache = null;

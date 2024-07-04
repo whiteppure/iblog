@@ -40,7 +40,6 @@ JVM支持着Java语言本身和运行时库，它是Java程序赖以生存的平
 
 ### Sun's Java
 Sun的解释器是用C实现的，这使得它能像一些普通的C一样与外部交互。jre大部分是用Java实现的，它也通过一些本地方法与外界交互。
-例如：类`java.lang.Thread`的`setPriority()`方法是用Java实现的，但是它实现调用的是该类里的本地方法`setPriorityo()`。
-这个本地方法是用C实现的，并被植入JVM内部，在Windows 95的平台上，这个本地方法最终将调用Win32 `setPriority()`API。
+例如：类`java.lang.Thread`的`setPriority`方法是用Java实现的，但是它实现调用的是该类里的本地方法`setPriorityo`。
+这个本地方法是用C实现的，并被植入JVM内部，在Windows 95的平台上，这个本地方法最终将调用Win32 `setPriority`API。
 这是一个本地方法的具体实现由JVM直接提供，更多的情况是本地方法由外部的动态链接库提供，然后被JVM调用。
-
