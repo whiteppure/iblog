@@ -12,7 +12,7 @@
 	
     
     
-    <meta name="description" content="异常类型 Throwable 可以用来表示任何可以作为异常抛出的类，分为两种：Error 和 Exception。 其中 Error 用来表示Java程序无法处理的错误；这类错误一般与硬件有关，与程" />
+    <meta name="description" content="异常类型 Throwable可以用来表示任何可以作为异常抛出的类，分为两种：Error 和 Exception。 其中Error用来表示Java程序无法处理的错误，这类" />
     
 
     
@@ -120,8 +120,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%bc%82%e5%b8%b8%e9%93%be">
-                    异常链
+                <a class="nav-link text-left" href="#%e5%bc%82%e5%b8%b8%e7%9a%84%e4%bc%a0%e6%92%ad">
+                    异常的传播
                 </a>
             </li>
             
@@ -170,8 +170,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#trycatch">
-                    try..catch..
+                <a class="nav-link text-left" href="#try-catch">
+                    try-catch
                 </a>
             </li>
             
@@ -198,36 +198,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#finally">
-                    finally
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#try-with-resources">
-                    try-with-resources
+                <a class="nav-link text-left" href="#try-catch-finally">
+                    try-catch-finally
                 </a>
             </li>
             
@@ -256,6 +228,34 @@
             <li class="nav-item">
                 <a class="nav-link text-left" href="#throwsthrow">
                     throws、throw
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%bc%82%e5%b8%b8%e9%93%be">
+                    异常链
                 </a>
             </li>
             
@@ -489,6 +489,30 @@
         
         
         
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%8f%82%e8%80%83%e6%96%87%e7%ab%a0">
+                    参考文章
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
 
     </div>
 
@@ -593,237 +617,353 @@
                         </span>
                         
                     </div>
-                    <div class="post_content markdown"><p><img alt="Java异常分类" src="/iblog/posts/annex/images/essays/Java%E5%BC%82%E5%B8%B8%E5%88%86%E7%B1%BB.png"></p>
-<h2 id="异常类型">异常类型</h2>
-<p><code>Throwable</code> 可以用来表示任何可以作为异常抛出的类，分为两种：<code>Error</code> 和 <code>Exception</code>。</p>
-<p>其中 <code>Error</code> 用来表示Java程序无法处理的错误；这类错误一般与硬件有关，与程序本身无关，通常由系统进行处理，程序本身无法捕获和处理。是不可控制的。</p>
-<p><code>Exception</code> 分为两种：运行时异常和检查型异常。</p>
+                    <div class="post_content markdown"><h2 id="异常类型">异常类型</h2>
+<p><img alt="Java异常分类" src="/iblog/posts/annex/images/essays/Java%E5%BC%82%E5%B8%B8%E5%88%86%E7%B1%BB.png"></p>
+<p><code>Throwable</code>可以用来表示任何可以作为异常抛出的类，分为两种：<code>Error</code> 和 <code>Exception</code>。
+其中<code>Error</code>用来表示Java程序无法处理的错误，这类错误一般与硬件有关，与程序本身无关，通常由系统进行处理，程序本身无法捕获和处理，是不可控制的。</p>
+<p><code>Exception</code>分为两种：运行时异常和检查型异常。</p>
 <ul>
-<li>受检异常 ：需要用<code>try...catch...</code>语句捕获并进行处理，并且可以从异常中恢复；
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public void test() throws MyException{}
-</span></span></code></pre></div>Java编译器对检查性异常会要求我们进行<code>catch</code>，必须得进行捕获，否则编译不过去。Java认为检查性异常都可以被处理，所以必须显示的处理 <code>checked</code> 异常。
-常见的检查性异常有<code>IOException</code>，<code>SqlException</code>。
-当我们希望我们的⽅法调⽤者， 明确的处理⼀些特殊情况的时候， 就应该使⽤受检异常。</li>
-<li>非受检异常 ：是程序运行时错误。例如：除 0 会引发 <code>ArithmeticException</code> ，此时程序崩溃并且无法恢复。
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public void test() {
-</span></span><span class="line"><span class="cl">    int a = 1;
-</span></span><span class="line"><span class="cl">    int b = a/0;
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div>这种异常⼀般可以理解为是代码原因导致的。
-⽐如发⽣空指针、 数组越界等。 所以， 只要代码写的没问题， 这些异常都是可以避免的。
-也就不需要我们显⽰的进⾏处理。</li>
+<li>受检异常：需要用<code>try...catch... </code>语句捕获并进行处理，并且可以从异常中恢复；
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">test</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">MyException</span><span class="p">{}</span><span class="w">
+</span></span></span></code></pre></div>Java编译器对检查性异常会要求我们进行<code>catch</code>，必须得进行捕获，否则编译不过去。Java认为检查性异常都可以被处理，所以必须显示的处理<code>checked</code>异常。
+常见的检查性异常有<code>IOException</code>、<code>SqlException</code>。当我们希望我们的⽅法调⽤者，明确的处理⼀些特殊情况的时候，就应该使⽤受检异常。</li>
+<li>非受检异常：是程序运行时错误。例如：除0会引发 <code>ArithmeticException</code>，此时程序崩溃并且无法恢复。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">test</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">/</span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div>这种异常⼀般可以理解为是代码原因导致的。⽐如发⽣空指针、数组越界等。所以，只要代码写的没问题，这些异常都是可以避免的。也就不需要我们显⽰的进⾏处理。</li>
 </ul>
-<p><code>Exception</code> 表⽰程序需要捕捉、 需要处理的常，是由与程序设计的不完善⽽出现的问题，程序必须处理的问题。</p>
-<blockquote>
-<p>异常和错误的区别：异常(Exception)能被程序本身可以处理，错误(Error)是无法处理。</p>
-</blockquote>
+<p><code>Exception</code>表⽰程序需要捕捉、需要处理的常，是由与程序设计的不完善⽽出现的问题，程序必须处理的问题。
+异常和错误的区别是，异常能被程序本身可以处理，错误是无法处理。</p>
 <h2 id="自定义异常">自定义异常</h2>
-<p>在 Java 中可以自定义异常。编写自己的异常类时需要注意：</p>
-<ul>
-<li>所有异常都必须是 <code>Throwable</code> 的子类。</li>
-<li>如果希望写一个<strong>检查性异常</strong>类，则需要继承 <code>Exception</code> 类。</li>
-<li>如果你想写一个<strong>运行时异常</strong>类，那么需要继承 <code>RuntimeException</code> 类。</li>
-</ul>
-<p>大多数情况下都会继承<code>RuntimeException</code>,自定义运行时异常。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">MainTest</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">void</span> <span class="n">context</span><span class="p">()</span> <span class="n">throws</span> <span class="n">TestException</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">throw</span> <span class="n">new</span> <span class="n">TestException</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    <span class="n">void</span>  <span class="n">context2</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">throw</span> <span class="n">new</span> <span class="n">Test2Exception</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="n">TestException</span> <span class="err">为受检异常</span> <span class="err">程序必须要处理否则编译不通过</span>
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="n">TestException</span> <span class="k">extends</span> <span class="n">Exception</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="n">Test2Exception为运行时异常</span> <span class="err">可以不进行处理</span>
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="n">Test2Exception</span> <span class="k">extends</span> <span class="n">RuntimeException</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h2 id="异常链">异常链</h2>
-<blockquote>
-<p>异常链是Java中⾮常流⾏的异常处理概念， 是指在进⾏⼀个异常处理时抛出了另外⼀个异常， 由此产⽣了⼀个异常链条。</p>
-</blockquote>
-<p>如果因为因为异常你决定抛出⼀个新的异常， 你⼀定要包含原有的异常， 这样， 处理程序才可以通过<code>getCause()</code>和<code>initCause()</code>⽅法来访问异常最终的根源。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        try {
-</span></span><span class="line"><span class="cl">            int a = 1;
-</span></span><span class="line"><span class="cl">            int b = a / 0;
-</span></span><span class="line"><span class="cl">        } catch (ArithmeticException e) {
-</span></span><span class="line"><span class="cl">            throw new RuntimeException(&#34;除以零异常&#34;, e);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>在此示例中，当捕获到<code>ArithmeticException</code>时，将创建一个新的<code>RuntimeException</code>异常，并附加原始的异常原因，并将异常链抛出到下一个更高级别的异常处理程序。</p>
-<h2 id="处理异常">处理异常</h2>
-<p>异常的处理⽅式有两种:</p>
+<p>在Java中，自定义异常类可以帮助你创建特定于你的应用程序的异常类型，这些异常类型可以提供更清晰的错误描述，并使错误处理更加灵活和精确。
+在Java中自定义异常，但所有自定义异常都必须是<code>Throwable</code>的子类。
+如果希望写一个检查性异常类，则需要继承<code>Exception</code>类。如果你想写一个运行时异常类，那么需要继承<code>RuntimeException</code>类。</p>
+<p>自定义受检查异常：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 创建一个自定义的受检查异常类</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyCheckedException</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">MyCheckedException</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">(</span><span class="n">message</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">MyCheckedException</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="n">cause</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">(</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">cause</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 使用自定义异常</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Test</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">myMethod</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">MyCheckedException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 条件判断或业务逻辑</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MyCheckedException</span><span class="p">(</span><span class="s">&#34;This is a custom checked exception.&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>自定义运行时异常：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 创建一个自定义的非受检查异常类</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyUncheckedException</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">RuntimeException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">MyUncheckedException</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">(</span><span class="n">message</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">MyUncheckedException</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="n">cause</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">(</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">cause</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 使用自定义异常</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Test</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">myMethod</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 条件判断或业务逻辑</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MyUncheckedException</span><span class="p">(</span><span class="s">&#34;This is a custom unchecked exception.&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="异常的传播">异常的传播</h2>
+<p>在Java中，异常传播指的是当一个方法内部抛出异常时，异常如何在调用栈中向上传播的过程。
+理解异常传播是异常处理机制中的重要部分，对于编写健壮的代码和良好的异常处理策略至关重要。</p>
+<p>当一个方法内部抛出异常时，异常会沿着调用链向上传播给调用者。这个过程描述了异常如何从方法内部向外部传递，并最终在调用栈中找到合适的异常处理器来处理异常。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ExceptionPropagationExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">method1</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Exception caught in main method: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">method1</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">method2</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">RuntimeException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;RuntimeException caught in method1: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">method2</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">method3</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">method3</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 人为地抛出一个异常</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="s">&#34;Exception occurred in method3&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>异常传播的基本过程：</p>
 <ol>
-<li>⾃⼰处理。</li>
-<li>向上抛， 交给调⽤者处理。</li>
+<li>当方法内部抛出一个异常（使用<code>throw</code>关键字），异常对象被创建并包含了当前异常的堆栈信息，包括方法调用路径。</li>
+<li>异常从抛出它的方法开始，沿着方法调用链向上传播。每当方法内部抛出异常时，JVM将控制权传递给调用该方法的上级方法。</li>
+<li>异常会继续沿着调用链向上移动，直到找到合适的异常处理器来处理异常。处理器可以是<code>try-catch</code>块、异常处理方法或者不处理异常而继续向上传播。</li>
+<li>如果找到了与抛出的异常匹配的<code>catch</code>块或者方法签名中声明的<code>throws</code>子句，异常被捕获并在这里进行处理。处理可以包括记录日志、恢复操作或者向上抛出另一个异常。</li>
+<li>如果异常没有在当前方法中被捕获处理，它将继续向上传播，控制权交给调用当前方法的方法。这个过程继续直到异常被捕获或者传播到了调用栈的顶部。</li>
+<li>如果异常传播到了调用栈的顶部仍然没有被处理，通常情况下会导致程序终止，并打印异常的堆栈跟踪信息，这有助于开发人员定位和解决问题。</li>
 </ol>
-<p>不要丢弃异常，捕获异常后需要进行相关处理。如果用户觉得不能很好地处理该异常，就让它继续传播，传到别的地方去处理，或者把一个低级的异常转换成应用级的异常，重新抛出。
-千万不能捕获了之后什么也不做。 或者只是使⽤<code>e.printStacktrace</code>。如果是练习这样写也就算了，但是在正式的环境上不能这样做。正式环境请使用日志记录。</p>
+<h2 id="处理异常">处理异常</h2>
+<p>异常的处理⽅式有两种，⾃⼰处理，向上抛出交给调⽤者处理。</p>
+<p>需要注意的是，一般情况下不要丢弃异常，捕获异常后需要进行相关处理。
+如果用户觉得不能很好地处理该异常，就让它继续传播，传到别的地方去处理，或者把一个低级的异常转换成应用级的异常，重新抛出。
+千万不能捕获了之后什么也不做，或者只是使⽤<code>e.printStacktrace</code>。如果是练习这样写也就算了，但是在正式的环境上千万不能这样做。实际开发中应该使用日志记录。</p>
+<p>写完代码后请一定要检查下，代码中千万不要有<code>printStackTrace</code>。
+不能直接使用<code>printStackTrace</code>打印异常的原因在于它可能泄露敏感信息、未将异常信息记录到日志系统中、使得错误难以追踪和管理、影响系统性能，并且通常缺乏必要的上下文信息。
+因此，在正式开发中，应使用日志框架记录异常信息，以便更好地监控和调试应用程序。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ExceptionHandlingExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Logger</span><span class="w"> </span><span class="n">logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="n">ExceptionHandlingExample</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">divide</span><span class="p">(</span><span class="n">10</span><span class="p">,</span><span class="w"> </span><span class="n">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Result: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">result</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ArithmeticException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 使用日志记录异常信息</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">logger</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&#34;Division by zero error&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 或者根据业务逻辑重新抛出应用级异常</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CustomApplicationException</span><span class="p">(</span><span class="s">&#34;Failed to divide numbers&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">divide</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 自定义应用级异常</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CustomApplicationException</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">RuntimeException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">CustomApplicationException</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="n">cause</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">(</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">cause</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="try-catch">try-catch</h3>
+<p>自己处理异常指在当前方法内部通过<code>try-catch</code>语句捕获并处理异常，而不是将异常传播给调用者处理。
+这种方式适合于可以预见并且能够恢复的异常情况。处理异常的目的是在发生异常时执行某些逻辑，例如提供默认值、记录日志、给用户友好的错误提示等。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ExceptionHandlingExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">divide</span><span class="p">(</span><span class="n">10</span><span class="p">,</span><span class="w"> </span><span class="n">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Result: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">result</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ArithmeticException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Error: Division by zero is not allowed. Defaulting result to 0.&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 给出一个默认值</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Result: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">result</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">divide</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>在Java中，一个<code>try</code>语句可以对应多个<code>catch</code>块来进行多重捕获。
+如果在<code>try</code>语句块中发生异常，异常会被依次传递给每个<code>catch</code>块，直到找到匹配的<code>catch</code>块进行处理。如果没有匹配的<code>catch</code>块，异常会继续向上抛出。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MultiCatchExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">numbers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="n">3</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">numbers</span><span class="o">[</span><span class="n">5</span><span class="o">]</span><span class="p">);</span><span class="w"> </span><span class="c1">// ArrayIndexOutOfBoundsException</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">10</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// ArithmeticException</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ArrayIndexOutOfBoundsException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Array index is out of bounds: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ArithmeticException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Arithmetic error occurred: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;An unexpected error occurred: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>从JDK7开始，Java引入了多个异常类型的合并处理，这使得可以将多个不同类型的异常在一个<code>catch</code>块中捕获和处理。
+这种特性可以减少重复的代码，并提高异常处理的简洁性和可读性。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MultiCatchExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">numbers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="n">3</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">numbers</span><span class="o">[</span><span class="n">5</span><span class="o">]</span><span class="p">);</span><span class="w"> </span><span class="c1">// ArrayIndexOutOfBoundsException</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">10</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// ArithmeticException</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ArrayIndexOutOfBoundsException</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">ArithmeticException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;An error occurred: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;An unexpected error occurred: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="try-catch-finally">try-catch-finally</h3>
+<p><code>try</code> 语句块不止可以与 <code>catch</code> 连用，也可以与<code>finally</code>连用，但是 <code>catch</code> 不能与 <code>finally</code> 连用。
+<code>try-catch-finally</code>结构与异常密切相关，它是Java中用于处理异常的基本结构之一，用于确保资源的正确关闭和异常的正确处理。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TryCatchFinallyExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">BufferedReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BufferedReader</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">FileReader</span><span class="p">(</span><span class="s">&#34;file.txt&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">line</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">((</span><span class="n">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">readLine</span><span class="p">())</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">line</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Error reading file: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">reader</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">reader</span><span class="p">.</span><span class="na">close</span><span class="p">();</span><span class="w"> </span><span class="c1">// 确保关闭资源</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Error closing reader: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>根据JVM规范，如果<code>try</code>语句块里边有返回值则返回<code>try</code>语句块里边的；
+如果<code>try</code>语句块和<code>finally</code>语句块都有<code>return</code>，则忽略<code>try</code>语句块里边的使用<code>finally</code>语句块里边的<code>return</code>；
+<code>finally</code>语句块是在<code>try</code>语句块或者<code>catch</code>语句块中的<code>return</code>语句之前执行的，无论是否发生异常，<code>finally</code>代码块中的代码总会被执行。
+一般情况下如果方法有返回值，切忌不要在<code>finally</code>中写<code>return</code>，这样会使得程序结构变得混乱。</p>
 <blockquote>
-<p>写完代码后请一定要检查下，代码中千万不要有printStackTrace()。因为printStackTrace()只会在控制台上输出错误的堆栈信息，他只适合于用来代码调试。</p>
+<p><code>finally</code>语句块什么时候不执行？
+如果当一个线程在执行<code>try</code>语句块或者<code>catch</code>语句块时被打断（interrupted）或者被终止（killed）或退出虚拟机(<code>System.exit(0)</code>)，与其相对应的<code>finally</code>语句块可能不会执行。
+还有更极端的情况，就是在线程运行<code>try</code>语句块或者<code>catch</code>语句块时，突然死机或者断电，<code>finally</code>语句块肯定不会执行了。</p>
 </blockquote>
-<p><code>catch</code>语句应该指定具体的异常类型。不能把不该捕获的异常也捕获了;如果<code>finally</code>里面也会抛出异常，也一样需要使用<code>try..catch</code>处理。</p>
-<h3 id="trycatch">try..catch..</h3>
-<p>在Java中如果需要处理异常，必须先对异常通过<code>try..catch..</code>进行捕获，然后再对异常情况进行处理。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">try{
-</span></span><span class="line"><span class="cl">   // 程序代码
-</span></span><span class="line"><span class="cl">}catch(异常类型1 异常的变量名1){
-</span></span><span class="line"><span class="cl">  // 程序代码
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>一个 <code>try</code> 对应多个 <code>catch</code>,进行多重捕获。</p>
-<p>可以在 <code>try</code> 语句后面添加任意数量的 <code>catch</code> 块。如果发生异常，异常被抛给第一个 <code>catch</code> 块。如果不匹配，它会被传递给第二个 <code>catch</code> 块。
-如此，直到异常被捕获或者通过所有的 <code>catch</code> 块。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">try{
-</span></span><span class="line"><span class="cl">   // 程序代码
-</span></span><span class="line"><span class="cl">}catch(异常类型1 异常的变量名1){
-</span></span><span class="line"><span class="cl">  // 程序代码
-</span></span><span class="line"><span class="cl">}catch(异常类型2 异常的变量名2){
-</span></span><span class="line"><span class="cl">  // 程序代码
-</span></span><span class="line"><span class="cl">}catch(异常类型3 异常的变量名3){
-</span></span><span class="line"><span class="cl">  // 程序代码
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>在JDK7之后，可以将 <code>catch</code> 语句块折叠,这意味着可以将多个不同类型的异常合并处理。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">try{
-</span></span><span class="line"><span class="cl">  // 程序代码
-</span></span><span class="line"><span class="cl">} catch (异常类型1 | 异常类型2 | 异常类型3 e) {
-</span></span><span class="line"><span class="cl">  // 程序代码
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><h3 id="finally">finally</h3>
-<p><code>try..catch..</code>通常连用用来捕获异常；<code>try..catch..finally..</code>也可以连用。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">try{
-</span></span><span class="line"><span class="cl">  // 程序代码
-</span></span><span class="line"><span class="cl">  return a;
-</span></span><span class="line"><span class="cl">}catch(异常类型2 异常的变量名2){
-</span></span><span class="line"><span class="cl">  // 程序代码
-</span></span><span class="line"><span class="cl">  return b;
-</span></span><span class="line"><span class="cl">}finally{
-</span></span><span class="line"><span class="cl">  // 程序代码
-</span></span><span class="line"><span class="cl">  return c;
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>对于<code>try..catch..finally..</code>语句块中执行顺序的解释</p>
-<p>根据JVM规范:</p>
-<ul>
-<li>如果 <code>try</code> 语句块里边有返回值则返回 <code>try</code> 语句块里边的;</li>
-<li>如果 <code>try</code> 语句块和 <code>finally</code> 语句块都有 <code>return</code>,则忽略 <code>try</code> 语句块里边的使用 <code>finally</code> 语句块里边的 <code>return</code>;</li>
-<li><code>finally</code> 语句块是在 <code>try</code> 语句块或者 <code>catch</code> 语句块中的 <code>return</code> 语句之前执行的;</li>
-<li>无论是否发生异常，<code>finally</code> 代码块中的代码总会被执行;</li>
-</ul>
-<p>如果方法有返回值，切忌不要再 <code>finally</code> 中使用 <code>return</code>，这样会使得程序结构变得混乱。</p>
-<blockquote>
-<p>finally语句块什么时候不执行 ？</p>
-<p>如果当一个线程在执行 try 语句块或者 catch 语句块时被打断（interrupted）或者被终止（killed）或退出虚拟机(<code>System.exit(0)</code>)，与其相对应的 finally 语句块可能不会执行。
-还有更极端的情况，就是在线程运行 try 语句块或者 catch 语句块时，突然死机或者断电，finally 语句块肯定不会执行了。</p>
-</blockquote>
-<p>JVM先会把<code>try</code>或者 <code>catch</code>代码块中的返回值保留，再来执行 <code>finally</code> 代码块中的语句，等到 <code>finally</code> 代码块执行完毕之后，在把之前保留的返回值给返回出去。
-这条规则（保留返回值），只适用于 <code>return</code> 和 <code>throw</code> 语句，不适用于 <code>break</code> 和 <code>continue</code> 语句，因为它们根本就没有返回值。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MyTest {
-</span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl">	public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        // main 代码块中的执行结果为：1
-</span></span><span class="line"><span class="cl">		System.out.println(&#34;main 代码块中的执行结果为：&#34; + myMethod());
-</span></span><span class="line"><span class="cl">	}
-</span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl">	public static int myMethod() {
-</span></span><span class="line"><span class="cl">		int i = 1;
-</span></span><span class="line"><span class="cl">		try {
-</span></span><span class="line"><span class="cl">			System.out.println(&#34;try 代码块被执行！&#34;);
-</span></span><span class="line"><span class="cl">			return i;
-</span></span><span class="line"><span class="cl">		} finally {
-</span></span><span class="line"><span class="cl">			++i;
-</span></span><span class="line"><span class="cl">			System.out.println(&#34;finally 代码块被执行！&#34;);
-</span></span><span class="line"><span class="cl">			System.out.println(&#34;finally 代码块中的i = &#34; + i);
-</span></span><span class="line"><span class="cl">		}
-</span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl">	}
-</span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p><code>try</code> 语句块不止可以与 <code>catch</code> 连用，也可以与 <code>finally</code> 连用，但是 <code>catch</code> 不能与 <code>finally</code> 连用。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">try{
-</span></span><span class="line"><span class="cl">  // 程序代码
-</span></span><span class="line"><span class="cl">} finally{
-</span></span><span class="line"><span class="cl">  // 程序代码
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><h3 id="try-with-resources">try-with-resources</h3>
-<p>由于<code>..finally..</code>语句块中的代码一般情况下一定会执行，所以经常用来关闭资源。</p>
-<p>代码演示</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        InputStream in = null;
-</span></span><span class="line"><span class="cl">        try {
-</span></span><span class="line"><span class="cl">            in = new FileInputStream(&#34;awsl&#34;);
-</span></span><span class="line"><span class="cl">            in.read();
-</span></span><span class="line"><span class="cl">        } catch (IOException e) {
-</span></span><span class="line"><span class="cl">            e.printStackTrace();
-</span></span><span class="line"><span class="cl">        } finally {
-</span></span><span class="line"><span class="cl">            if (in != null) {
-</span></span><span class="line"><span class="cl">                try {
-</span></span><span class="line"><span class="cl">                    in.close();
-</span></span><span class="line"><span class="cl">                } catch (IOException e) {
-</span></span><span class="line"><span class="cl">                    e.printStackTrace();
-</span></span><span class="line"><span class="cl">                }
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>自从JDK7之后，支持<code>try-with-resources</code>的写法,这种写法对比之前更清晰、明了：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        try (InputStream in = new FileInputStream(&#34;awsl&#34;)) {
-</span></span><span class="line"><span class="cl">            in.read();
-</span></span><span class="line"><span class="cl">        } catch (IOException e) {
-</span></span><span class="line"><span class="cl">            e.printStackTrace();
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>这种写法其实是Java语法糖。</p>
-<blockquote>
-<p>Java语法糖</p>
-<p>1.什么是语法糖?
-语法糖（Syntactic sugar），也译为糖衣语法，是由英国计算机科学家彼得·兰丁发明的一个术语，指计算机语言中添加的某种语法，这种语法对语言的功能没有影响，但是更方便程序员使用。</p>
-<p>2.能够带来的好处
-语法糖让程序更加简洁，有更高的可读性</p>
-<p>3.有哪些语法糖?
-1.自动拆箱、装箱
-2.泛型擦除
-3.不定长参数
-4.迭代器
-5.枚举
-6.switch支持枚举和字符串
-7.内部类
-8.try-with-resources
-9.lambda</p>
-</blockquote>
-<h3 id="throwsthrow">throws、throw</h3>
-<p>处理异常的方法，除了可以捕获异常，也可以将其丢给调用者进行处理。</p>
-<ul>
-<li><code>throws</code> 用在方法上声明异常,子类继承的时候要继承该异常或者该异常的子类,不处理异常,谁调用该方法谁处理异常；
-<code>throws</code>抛出异常时，它的调用者也要申明抛出异常或者捕获，不然编译报错。
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public static void main(String[] args) throws Exception {}
-</span></span></code></pre></div></li>
-<li><code>throw</code>用于方法内部，抛出的是异常对象。调用者可以不申明或不捕获（这是非常不负责任的方式）但编译器不会报错。
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">throw new RuntimeException(&#34;这是运行中的异常&#34;);
-</span></span></code></pre></div></li>
-</ul>
-<p><code>throws</code>表示出现异常的一种可能性，告诉调用者这个方法是危险的，并不一定会发生这些异常；<code>throw</code>则是抛出了异常，执行<code>throw</code>则一定抛出了某种异常对象。
+<p>无论是否发生异常，<code>finally</code>代码块中的代码总会被执行。根据这个特性，<code>finally</code>块确保在代码执行过程中发生异常时，资源得到正确释放，所以经常用来关闭资源。
+自从JDK7之后，支持<code>try-with-resources</code>的写法，这种写法对比之前更清晰、明了：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MainTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">InputStream</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FileInputStream</span><span class="p">(</span><span class="s">&#34;awsl&#34;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">in</span><span class="p">.</span><span class="na">read</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>JVM先会把<code>try</code>或者<code>catch</code>代码块中的返回值保留，再来执行<code>finally</code>代码块中的语句，等到<code>finally</code>代码块执行完毕之后，在把之前保留的返回值给返回出去。
+这条规则只适用于<code>return</code>和<code>throw</code>语句，不适用于<code>break</code>和<code>continue</code>语句，因为它们根本就没有返回值。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// main 代码块中的执行结果为：1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;main 代码块中的执行结果为：&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">myMethod</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">myMethod</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">			</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;try 代码块被执行！&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">			</span><span class="k">return</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">			</span><span class="o">++</span><span class="n">i</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">			</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;finally 代码块被执行！&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">			</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;finally 代码块中的i = &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="throwsthrow">throws、throw</h3>
+<p>向上抛出交给调用者处理，这种方式通过在方法签名中使用<code>throws</code>关键字将异常向上抛出，交由调用该方法的代码处理。适用于方法本身无法或者不适合处理异常的情况。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ExceptionHandlingExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">process</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Error: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">process</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">divide</span><span class="p">(</span><span class="n">10</span><span class="p">,</span><span class="w"> </span><span class="n">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Result: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">result</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ArithmeticException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Caught ArithmeticException: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 处理部分异常逻辑</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 可能抛出其他类型的异常</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Exception</span><span class="p">(</span><span class="s">&#34;A different kind of exception occurred.&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">divide</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">ArithmeticException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>throws</code>用在方法上声明异常，子类继承的时候要继承该异常或者该异常的子类，不处理异常，谁调用该方法谁处理异常。
+<code>throws</code>抛出异常时，它的调用者也要申明抛出异常或者捕获，不然编译报错。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">divide</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">ArithmeticException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>throw</code>用于方法内部，抛出的是异常对象。调用者可以不申明或不捕获但编译器不会报错。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">process</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Error: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>throws</code>表示出现异常的一种可能性，告诉调用者这个方法是危险的，并不一定会发生这些异常。<code>throw</code>则是抛出了异常，执行<code>throw</code>则一定抛出了某种异常对象。
 两者都是消极处理异常的方式（这里的消极并不是说这种方式不好），只是抛出或者可能抛出异常，但是不会由方法去处理异常，真正的处理异常由此方法的上层调用处理。</p>
-<h2 id="经验总结">经验总结</h2>
-<p>参考文章：</p>
-<ul>
-<li><a href="https://www.hollischuang.com/archives/5528">https://www.hollischuang.com/archives/5528</a></li>
-<li><a href="https://stackify.com/best-practices-exceptions-java">https://stackify.com/best-practices-exceptions-java</a></li>
-</ul>
+<h3 id="异常链">异常链</h3>
+<p>异常链则是一种特定的异常处理技术，通过在捕获异常时将原始异常作为参数传递给新的异常，这样来保留原始异常的详细信息。
+如果因为一个异常你决定抛出⼀个新的异常，⼀定要包含原有的异常，这样处理程序才可以通过<code>getCause</code>方法和<code>initCause</code>⽅法来访问异常最终的根源。
+这样做有助于调试和了解错误的根本原因。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 定义一个自定义异常</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyCustomException</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">MyCustomException</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">(</span><span class="n">message</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">MyCustomException</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="n">cause</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">(</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">cause</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 一个可能抛出异常的方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SomeService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 模拟抛出一个IOException</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IOException</span><span class="p">(</span><span class="s">&#34;IO error occurred&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 使用异常链来包装原始异常</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Main</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">SomeService</span><span class="w"> </span><span class="n">service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SomeService</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">service</span><span class="p">.</span><span class="na">doSomething</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 包装原始异常并抛出新的自定义异常</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MyCustomException</span><span class="p">(</span><span class="s">&#34;Failed to do something due to IO error&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="经验总结">经验总结</h2>
+<p>处理异常是软件开发中至关重要的一部分，有效的异常处理可以提高系统的健壮性、可靠性和用户体验。以下是处理异常的一些经验总结：</p>
 <h3 id="不要滥用异常">不要滥用异常</h3>
 <p>要谨慎地使用异常，异常捕获的代价非常高昂，异常使用过多会严重影响程序的性能。
-如果在程序中能够用if语句和<code>boolean</code>变量来进行逻辑判断，那么尽量减少异常的使用，从而避免不必要的异常捕获和处理。</p>
+如果在程序中能够用<code>if</code>语句和<code>boolean</code>变量来进行逻辑判断，那么尽量减少异常的使用，从而避免不必要的异常捕获和处理。</p>
 <h3 id="空catch">空catch</h3>
-<p>千万不要使用空的<code>catch</code>块:</p>
+<p>千万不要使用空的<code>catch</code>块：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">try{
 </span></span><span class="line"><span class="cl"> // ...
 </span></span><span class="line"><span class="cl">}catch(IOException e){
@@ -832,7 +972,7 @@
 </span></span></code></pre></div><p>在捕获了异常之后什么都不做，相当于忽略了这个异常。空的<code>catch</code>块意味着你在程序中隐藏了错误和异常，并且很可能导致程序出现不可控的执行结果。
 如果你非常肯定捕获到的异常不会以任何方式对程序造成影响，最好用日志将该异常进行记录，以便日后方便更新和维护。</p>
 <h3 id="吞掉异常">吞掉异常</h3>
-<p>请不要在<code>catch</code>块中吞掉异常:</p>
+<p>请不要在<code>catch</code>块中吞掉异常：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">catch (NoSuchMethodException e) {
 </span></span><span class="line"><span class="cl">   return null;
 </span></span><span class="line"><span class="cl">}
@@ -840,8 +980,8 @@
 <h3 id="精确处理异常">精确处理异常</h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public void foo() throws Exception { //错误做法
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>一定要尽量避免上面的代码，因为他的调用者完全不知道错误的原因到底是什么。</p>
-<p>在方法声明中，可以由方法抛出一些特定受检异常。如果有多个，那就分别抛出多个，这样这个方法的使用者才会分别针对每个异常做特定的处理，从而避免发生故障。</p>
+</span></span></code></pre></div><p>一定要尽量避免上面的代码，因为他的调用者完全不知道错误的原因到底是什么。
+在方法声明中，可以由方法抛出一些特定受检异常。如果有多个，那就分别抛出多个，这样这个方法的使用者才会分别针对每个异常做特定的处理，从而避免发生故障。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public void foo() throws SpecificException1, SpecificException2 { 
 </span></span><span class="line"><span class="cl">//正确做法
 </span></span><span class="line"><span class="cl">}
@@ -852,9 +992,9 @@
 </span></span><span class="line"><span class="cl">catch (Exception e) {
 </span></span><span class="line"><span class="cl">    log.error(&#34;method has failed&#34;, e);
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>上面代码，最大的问题就是，如果<code>someMethod()</code>的开发者在里面新增了一个特定的异常，并且预期是调用方能够特殊的对他进行处理。</p>
-<p>但是调用者直接<code>catch了Exception</code>类，就会导致永远无法知道<code>someMethod</code>的具体变化细节。这久可能导致在运行的过程中在某一个时间点程序崩溃。</p>
-<p>更不要去捕获<code>Throwable</code>类。因为Java中的<code>Error</code>也可以是<code>Throwable</code>的子类。但是<code>Error</code>是Java虚拟机本身无法控制的。Java虚拟机甚至可能不会在出现任何错误时请求用户的<code>catch</code>子句。</p>
+</span></span></code></pre></div><p>上面代码，最大的问题就是，如果<code>someMethod()</code>的开发者在里面新增了一个特定的异常，并且预期是调用方能够特殊的对他进行处理。
+但是调用者直接<code>catch了Exception</code>类，就会导致永远无法知道<code>someMethod</code>的具体变化细节。这久可能导致在运行的过程中在某一个时间点程序崩溃。
+更不要去捕获<code>Throwable</code>类，因为Java中的<code>Error</code>也可以是<code>Throwable</code>的子类。但是<code>Error</code>是Java虚拟机本身无法控制的。Java虚拟机甚至可能不会在出现任何错误时请求用户的<code>catch</code>子句。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">try {
 </span></span><span class="line"><span class="cl">    someMethod();
 </span></span><span class="line"><span class="cl">} 
@@ -867,7 +1007,7 @@
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">catch (NoSuchMethodException e) {
 </span></span><span class="line"><span class="cl">    throw new MyServiceException(&#34;Some information: &#34; + e.getMessage());  //错误做法
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>上面的命令可能会丢失掉主异常的堆栈跟踪。正确的方法是:</p>
+</span></span></code></pre></div><p>上面的命令可能会丢失掉主异常的堆栈跟踪。正确的方法是：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">catch (NoSuchMethodException e) {
 </span></span><span class="line"><span class="cl">     throw new MyServiceException(&#34;Some information: &#34; , e);  //正确做法
 </span></span><span class="line"><span class="cl">}
@@ -879,7 +1019,7 @@
 </span></span></code></pre></div><p>抛出和日志记录可能会在日志文件中产生多个日志消息,这就会导致同一个问题，却在日志中有很多不同的错误信息，使得开发人员陷入混乱。</p>
 <h3 id="选择异常">选择异常</h3>
 <p>一旦你决定抛出异常，你就要决定抛出抛出检查异常还是非检查异常。</p>
-<p>检查异常导致了太多的<code>try…catch</code>代码，可能有很多检查异常对开发人员来说是无法合理地进行处理的，比如:<code>SQLException</code>，而开发人员却不得不去进行<code>try…catch</code>，这样就会导致经常出现这样一种情况：逻辑代码只有很少的几行，而进行异常捕获和处理的代码却有很多行。
+<p>检查异常导致了太多的<code>try…catch</code>代码，可能有很多检查异常对开发人员来说是无法合理地进行处理的，比如：<code>SQLException</code>，而开发人员却不得不去进行<code>try…catch</code>，这样就会导致经常出现这样一种情况：逻辑代码只有很少的几行，而进行异常捕获和处理的代码却有很多行。
 这样不仅导致逻辑代码阅读起来晦涩难懂，而且降低了程序的性能。</p>
 <p>建议尽量避免检查异常的使用，如果确实该异常情况出现很的普遍，需要提醒调用者注意处理的话，就使用检查异常；否则使用非检查异常。
 因此，在一般情况下，尽量将检查异常转变为非检查异常交给上层处理。</p>
@@ -889,8 +1029,13 @@
 </span></span><span class="line"><span class="cl">}finally{
 </span></span><span class="line"><span class="cl">  cleanUp();    //如果在这里再抛出一个异常，那么try中的exception将会丢失
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>在上面的例子中，如果<code>someMethod()</code>抛出一个异常，并且在<code>finally</code>块中，<code>cleanUp()</code>也抛出一个异常，那么初始的<code>exception</code>(正确的错误异常)将永远丢失。</p>
-<p>但是，如果你不想处理<code>someMethod()</code>中的异常，但是仍然需要做一些清理工作，那么在<code>finally</code>块中进行清理。不要使用<code>catch</code>块。</p>
+</span></span></code></pre></div><p>在上面的例子中，如果<code>someMethod()</code>抛出一个异常，并且在<code>finally</code>块中，<code>cleanUp()</code>也抛出一个异常，那么初始的<code>exception</code>将永远丢失。
+但是如果你不想处理<code>someMethod()</code>中的异常，但是仍然需要做一些清理工作，那么在<code>finally</code>块中进行清理。不要使用<code>catch</code>块。</p>
+<h2 id="参考文章">参考文章</h2>
+<ul>
+<li><a href="https://www.hollischuang.com/archives/5528">https://www.hollischuang.com/archives/5528</a></li>
+<li><a href="https://stackify.com/best-practices-exceptions-java">https://stackify.com/best-practices-exceptions-java</a></li>
+</ul>
 </div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">
