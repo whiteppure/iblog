@@ -1,5 +1,5 @@
 ---
-title: "Object类方法"
+title: "JavaObject类方法"
 date: 2021-07-10
 draft: false
 tags: ["Java", "Java基础"]
