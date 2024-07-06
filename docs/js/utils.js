@@ -6,7 +6,7 @@ function isMobileReq() {
 
 
 function isEmpty(obj){
-    return obj === undefined || obj === null
+    return obj === undefined || obj === null || obj === '';
 }
 
 

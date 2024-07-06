@@ -44,7 +44,12 @@
         
         <script>
             (function(){
-                if (prompt('请输入文章密码') !== "20220422resume"){
+                var passwordInput = prompt("请输入文章密码");
+                if (passwordInput == null || passwordInput === ''){
+                    alert('密码不能为空！');
+                    return
+                }
+                if (passwordInput !== "20220422resume"){
                     alert('密码错误！');
                     if (history.length === 1) {
                         window.opener = null;

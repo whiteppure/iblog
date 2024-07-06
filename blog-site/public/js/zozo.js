@@ -121,6 +121,19 @@ $('[data-fancybox="gallery"]').fancybox({
   },
 });
 
+// 判断如果是非电脑端则隐藏按钮
+$(document).ready((function (_this) {
+  // 判断是否为电脑端
+  if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    // 如果是电脑端，则显示按钮
+    $('#icon_more').show();
+    $('#darkmode-toggle').show();
+  } else {
+    // 如果不是电脑端，则隐藏按钮
+    $('#icon_more').hide();
+    $('#darkmode-toggle').hide();
+  }
+}))
 
 // 点击更多图标
 $(document).ready((function (_this) {
