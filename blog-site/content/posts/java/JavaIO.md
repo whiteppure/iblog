@@ -8,8 +8,9 @@ slug: "rookie-io"
 
 ## 概览
 IO，即`in`和`out`的缩写，也就是输入和输出，指应用程序和外部设备之间的数据传递，常见的外部设备包括文件、管道、网络连接。
-传统的IO是通过流技术来处理的。`Java IO`通过数据流、序列化和文件系统提供输入和输出。
+从计算机结构的角度来看IO，IO就是描述了计算机系统和外部设备之间通信的过程。
 
+传统的IO是通过流技术来处理的。`Java IO`通过数据流、序列化和文件系统提供输入和输出。
 流（`Stream`），是一个抽象的概念，是指一连串的数据（字符或字节），是以先进先出的方式发送信息的通道。
 代表任何有能力产出数据的数据源对象或者是有能力接受数据的接收端对象。流的作用就是为数据源和目的地建立一个输送通道。
 
@@ -235,6 +236,56 @@ class User implements Serializable {
 }
 ```
 
+`Serializable`明明就是一个空的接口，它是怎么保证只有实现了该接口的方法才能进行序列化与反序列化的呢？
+对象的序列化过程是通过`ObjectOutputStream`和`ObjectInputputStream`来实现的。在`ObjectOutputStream`中`writeObject`的调用栈如下：
+```text
+ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("stringlist"));
+objectOutputStream.writeObject(stringList);
+IOUtils.close(objectOutputStream);
+
+writeObject
+    --->writeObject0
+    --->writeOrdinaryObject
+    --->writeSerialData
+    --->invokeWriteObject
+```
+`writeObject0`方法中有这么一段代码：
+```java
+/**
+ * Underlying writeObject/writeUnshared implementation.
+ */
+private void writeObject0(Object obj, boolean unshared) throws IOException {
+    boolean oldMode = bout.setBlockDataMode(false);
+    depth++;
+    try {
+       // ... 
+
+        // remaining cases
+        if (obj instanceof String) {
+            writeString((String) obj, unshared);
+        } else if (cl.isArray()) {
+            writeArray(obj, desc, unshared);
+        } else if (obj instanceof Enum) {
+            writeEnum((Enum<?>) obj, desc, unshared);
+        // =============================
+        } else if (obj instanceof Serializable) {
+            writeOrdinaryObject(obj, desc, unshared);
+        } else {
+            if (extendedDebugInfo) {
+                throw new NotSerializableException(
+                    cl.getName() + "\n" + debugInfoStack.toString());
+            } else {
+                throw new NotSerializableException(cl.getName());
+            }
+        }
+        // =============================
+    } finally {
+        // ... 
+    }
+}
+```
+在进行序列化操作时，会判断要被序列化的类是否是`String`、`Enum`、`Array`和`Serializable`类型，如果不是则直接抛出`NotSerializableException`。
+
 #### Externalizable
 `Externalizable`继承了`Serializable`，该接口中定义了两个抽象方法：`writeExternal`()与`readExternal()`。
 当使用`Externalizable`接口来进行序列化与反序列化的时候，需要开发人员重写`writeExternal()`与`readExternal()`。
@@ -335,10 +386,9 @@ private static String address;
 ```
 当你不希望某个成员变量的状态被序列化时，可以使用`transient`关键字。通常这种情况是因为该变量的状态是临时的，或者该变量包含敏感信息（如密码），不应在序列化过程中保存。
 
-### serialVersionUID
-[//]: # (写到了这里)
-虚拟机是否允许反序列化， 不仅取决于类路径和功能代码是否⼀致， ⼀个⾮常重要的⼀点是两个类的序列化 ID 是否⼀致， 即`serialVersionUID`要求⼀致。
-因为⽂件存储中的内容可能被篡改，为了保证数据的安全，在进⾏反序列化时，JVM会把传来的字节流中的`serialVersionUID`与本地相应实体类的`serialVersionUID`进⾏⽐较， 如果相同就认为是⼀致的， 可以进⾏反序列化。
+#### serialVersionUID
+虚拟机是否允许反序列化， 不仅取决于类路径和功能代码是否⼀致，⼀个⾮常重要的⼀点是两个类的序列化 ID 是否⼀致，即`serialVersionUID`要求⼀致。
+因为⽂件存储中的内容可能被篡改，为了保证数据的安全，在进⾏反序列化时，JVM会把传来的字节流中的`serialVersionUID`与本地相应实体类的`serialVersionUID`进⾏⽐较，如果相同就认为是⼀致的，可以进⾏反序列化。
 否则就会出现序列化版本不⼀致的异常，即`InvalidCastException`。
 
 `Serializable`接口注释：
@@ -351,17 +401,10 @@ since the default serialVersionUID computation is highly sensitive to class deta
 and can thus result in unexpectedInvalidClassExceptions during deserialization.
   
 大意：当实现`java.io.Serializable`接口的类没有显式地定义⼀个`serialVersionUID`变量时候，Java序列化机制会根据编译的Class⾃动⽣成⼀个`serialVersionUID`作序列化版本⽐较⽤,
-这种情况下，如果Class⽂件没有发⽣变化，就算再编译多次， `serialVersionUID`也不会变化的。但是，如果发⽣了变化，那么这个⽂件对应的`serialVersionUID`也就会发⽣变化。
+这种情况下，如果`class`⽂件没有发⽣变化，就算再编译多次，`serialVersionUID`也不会变化的。但是如果发⽣了变化，那么这个⽂件对应的`serialVersionUID`也就会发⽣变化。
 
-Java强烈建议用户自定义一个`serialVersionUID`,因为默认的`serialVersinUID`对于class的细节非常敏感，
-反序列化时可能会导致`InvalidClassException`这个异常。
-
-代码演示序列化、反序列化加上`serialVersionUID`
-```
-private static final long serialVersionUID = 1L;
-```
-
-```
+Java强烈建议用户自定义一个`serialVersionUID`，如果我们没有在类中明确的定义一个`serialVersionUID`的话，反序列化时可能会导致`InvalidClassException`这个异常。
+```java
 public class MainTest {
     public static void main(String[] args) {
         System.out.println("----------序列化对象----------");
@@ -395,7 +438,6 @@ public class MainTest {
 }
 
 class User implements Serializable {
-    private static final long serialVersionUID = 1L;
 
     private String name;
     private String age;
@@ -426,66 +468,71 @@ class User implements Serializable {
 }
 ```
 ```
-java.io.InvalidClassException: co.test.User; local class incompatible: stream classdesc serialVersionUID = -1643371274357194431, local class serialVersionUID = 1
+java.io.InvalidClassException: com.test.User; local class incompatible: stream classdesc serialVersionUID = -2986778152837257883, local class serialVersionUID = 7961728318907695402
 ```
 
 代码调用链：
+```text
+ObjectInputStream.readObject 
+    -> readObject0
+    -> readOrdinaryObject
+    -> readClassDesc
+    -> readNonProxyDesc
+    -> ObjectStreamClass.initNonProxy
 ```
-ObjectInputStream.readObject -> readObject0 -> readOrdinaryObject -> readClassDesc -> readNonProxyDesc -> ObjectStreamClass.initNonProxy
-```
-
 在`initNonProxy`中 ，关键代码如下：
-```
- void initNonProxy(ObjectStreamClass model,
-                      Class<?> cl,
-                      ClassNotFoundException resolveEx,
-                      ObjectStreamClass superDesc)
-        throws InvalidClassException
-    {
-        long suid = Long.valueOf(model.getSerialVersionUID());
-        ObjectStreamClass osc = null;
-        if (cl != null) {
-            osc = lookup(cl, true);
-            if (osc.isProxy) {
-                throw new InvalidClassException(
-                        "cannot bind non-proxy descriptor to a proxy class");
-            }
-            if (model.isEnum != osc.isEnum) {
-                throw new InvalidClassException(model.isEnum ?
-                        "cannot bind enum descriptor to a non-enum class" :
-                        "cannot bind non-enum descriptor to an enum class");
-            }
+```java
+void initNonProxy(ObjectStreamClass model,
+                  Class<?> cl,
+                  ClassNotFoundException resolveEx,
+                  ObjectStreamClass superDesc)
+    throws InvalidClassException {
+    long suid = Long.valueOf(model.getSerialVersionUID());
+    ObjectStreamClass osc = null;
+    if (cl != null) {
+        osc = lookup(cl, true);
+        if (osc.isProxy) {
+            throw new InvalidClassException(
+                    "cannot bind non-proxy descriptor to a proxy class");
+        }
+        if (model.isEnum != osc.isEnum) {
+            throw new InvalidClassException(model.isEnum ?
+                    "cannot bind enum descriptor to a non-enum class" :
+                    "cannot bind non-enum descriptor to an enum class");
+        }
 
-            // ========== 判断反序列化 serializableUID 是否一致 ========== start//
-            if (model.serializable == osc.serializable &&
-                    !cl.isArray() &&
-                    suid != osc.getSerialVersionUID()) {
-                throw new InvalidClassException(osc.name,
-                        "local class incompatible: " +
-                                "stream classdesc serialVersionUID = " + suid +
-                                ", local class serialVersionUID = " +
-                                osc.getSerialVersionUID());
-            }
-            // ========== 判断反序列化 serializableUID 是否一致 ========== end//
+        // ========== 判断反序列化 serializableUID 是否一致 ========== start//
+        if (model.serializable == osc.serializable &&
+                !cl.isArray() &&
+                suid != osc.getSerialVersionUID()) {
+            throw new InvalidClassException(osc.name,
+                    "local class incompatible: " +
+                            "stream classdesc serialVersionUID = " + suid +
+                            ", local class serialVersionUID = " +
+                            osc.getSerialVersionUID());
+        }
+        // ========== 判断反序列化 serializableUID 是否一致 ========== end//
+        
+        // 在反序列化过程中，对serialVersionUID做了比较，如果发现不相等，则直接抛出异常
+        if (!classNamesEqual(model.name, osc.name)) {
+            throw new InvalidClassException(osc.name,
+                    "local class name incompatible with stream class " +
+                            "name \"" + model.name + "\"");
+        }
 
-            if (!classNamesEqual(model.name, osc.name)) {
-                throw new InvalidClassException(osc.name,
-                        "local class name incompatible with stream class " +
-                                "name \"" + model.name + "\"");
-            }
-            
-            // ...
-   
+        // ...
+    }
+}
 ```
-`getSerialVersionUID`方法：
-
-```
+其中`getSerialVersionUID`方法：
+```java
 public long getSerialVersionUID() {
     // REMIND: synchronize instead of relying on volatile?
     if (suid == null) {
         suid = AccessController.doPrivileged(
             new PrivilegedAction<Long>() {
                 public Long run() {
+                    // 生成一个默认的serialVersionUID
                     return computeDefaultSUID(cl);
                 }
             }
@@ -494,49 +541,37 @@ public long getSerialVersionUID() {
     return suid.longValue();
 }
 ```
+这也就是报错的原因，在没有定义`serialVersionUID`的时候，会调用`computeDefaultSUID`方法，生成一个默认的`serialVersionUID`。
+所以如果一个类实现了`Serializable`接口，一定要记得定义`serialVersionUID`，否则会发生异常。`serialVersionUID`有两种显示的生成方式： 
+- 默认的`1L`，比如：`private static final long serialVersionUID = 1L; `
+- 根据类名、接口名、成员方法及属性等来生成一个64位的哈希字段，比如：`private static final  long   serialVersionUID = xxxxL;`
 
-在没有定义`serialVersionUID`的时候，会调用`computeDefaultSUID`方法，生成一个默认的`serialVersionUID`。
-
-`serialVersionUID`有两种显示的生成方式： 
-- 默认的1L，比如：`private static final long serialVersionUID = 1L; `
-- 根据类名、接口名、成员方法及属性等来生成一个64位的哈希字段，比如： `private static final  long   serialVersionUID = xxxxL;`
-
-第二种方式可通过编译器进行配置：
+可通过编译器进行设置，让它帮忙提示：
 ![idea检查serialVersionUID](/iblog/posts/annex/images/essays/idea检查serialVersionUID.png)
 
 ![idea自动生成serialVersionUID](/iblog/posts/annex/images/essays/idea自动生成serialVersionUID.png)
 
-### 序列化底层原理
-
-#### 如何自定义的序列化和反序列化策略?
-
-通过在被序列化的类中增加 writeObject 和 readObject 方法来实现。
-
-在`java.util.ArrayList`中我们能找到答案：
-```
+### 自定义序列化和反序列化
+想要实现自定义序列化和反序列化，可以在被序列化的类中增加`writeObject`和`readObject`方法来实现。
+举个例子，看一下`java.util.ArrayList`中的是如何自定义序列化的：
+```java
 public class ArrayList<E> extends AbstractList<E>
-        implements List<E>, RandomAccess, Cloneable, java.io.Serializable
-{
+        implements List<E>, RandomAccess, Cloneable, java.io.Serializable{
     private static final long serialVersionUID = 8683452581122892189L;
     transient Object[] elementData; // non-private to simplify nested class access
     private int size;
 }
-
 ```
-ArrayList实现了`java.io.Serializable`接口，那么我们就可以对它进行序列化及反序列化。
-因为`elementData`是 `transient` 的，所以这个成员变量不会被序列化而保留下来.
-
-ArrayList底层是通过数组实现的。
-那么数组elementData其实就是用来保存列表中的元素的。通过该属性的声明方式我们知道，它是无法通过序列化持久化下来的。
-那么为什么却通过序列化和反序列化把List中的元素保留下来了呢？
-
-```
+`ArrayList`实现了`java.io.Serializable`接口且有自定义`serialVersionUID`，那么我们就可以对它进行序列化及反序列化。
+`ArrayList`底层是通过数组实现的，其中数组`elementData`其实就是用来保存列表中的元素的。
+因为`elementData`是被`transient`修饰的，所以这个成员变量不会被序列化而保留下来。那么为什么却通过序列化和反序列化把`List`中的元素保留下来了呢？
+```java
 public static void main(String[] args) throws IOException, ClassNotFoundException {
         List<String> stringList = new ArrayList<String>();
         stringList.add("hello");
         stringList.add("world");
-        stringList.add("hollis");
-        stringList.add("chuang");
+        stringList.add("123");
+        stringList.add("456");
         System.out.println("init StringList" + stringList);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("stringlist"));
         objectOutputStream.writeObject(stringList);
@@ -551,143 +586,120 @@ public static void main(String[] args) throws IOException, ClassNotFoundExceptio
         }
         System.out.println("new StringList" + newStringList);
     }
-//init StringList[hello, world, hollis, chuang]
-//new StringList[hello, world, hollis, chuang]
-
 ```
+`ArrayList`实际上是动态数组，每次在放满以后自动增长设定的长度值，如果数组自动增长长度设为100，而实际只放了一个元素，那就会序列化99个`null`元素。
+为了保证在序列化的时候不会将这么多`null`同时进行序列化，`ArrayList`把元素数组设置为`transient`。
+为了防止一个包含大量空对象的数组被序列化优化存储，所以`ArrayList`使用`transient`来修饰`elementData`。
+但是作为一个集合，在序列化过程中还必须保证其中的元素可以被持久化下来，所以通过重写`writeObject`和`readObject`方法的方式把其中的元素保留下来。
 
-> 在序列化过程中，如果被序列化的类中定义了`writeObject` 和 `readObject` 方法，虚拟机会试图调用对象类里的 `writeObject` 和 `readObject` 方法，进行用户自定义的序列化和反序列化。
->  
-> 如果没有这样的方法，则默认调用是 `ObjectOutputStream` 的 `defaultWriteObject` 方法以及 `ObjectInputStream` 的 `defaultReadObject` 方法。
->  
-> 用户自定义的 `writeObject` 和 `readObject` 方法可以允许用户控制序列化的过程，比如可以在序列化的过程中动态改变序列化的数值。
-> 对象的序列化过程通过 `ObjectOutputStream` 和 `ObjectInputputStream` 来实现的.
+在序列化过程中，如果被序列化的类中定义了`writeObject`和`readObject`方法，虚拟机会试图调用对象类里的`writeObject`和`readObject`方法，进行用户自定义的序列化和反序列化。
+如果没有这样的方法，则默认调用是`ObjectOutputStream`的`defaultWriteObject`方法以及`ObjectInputStream`的`defaultReadObject`方法。
+用户自定义的`writeObject`和`readObject`方法可以允许用户控制序列化的过程，比如可以在序列化的过程中动态改变序列化的数值。对象的序列化过程通过`ObjectOutputStream`和`ObjectInputputStream`来实现的。
 
+`writeObject`方法把`elementData`数组中的元素遍历的保存到输出流（`ObjectOutputStream`）中。
+```java
+private void writeObject(java.io.ObjectOutputStream s) throws java.io.IOException{
+    // Write out element count, and any hidden stuff
+    int expectedModCount = modCount;
+    s.defaultWriteObject();
 
-ArrayList实际上是动态数组，每次在放满以后自动增长设定的长度值，如果数组自动增长长度设为100，
-而实际只放了一个元素，那就会序列化99个null元素。为了保证在序列化的时候不会将这么多null同时进行序列化，
-ArrayList把元素数组设置为transient。
+    // Write out size as capacity for behavioural compatibility with clone()
+    s.writeInt(size);
 
-为了防止一个包含大量空对象的数组被序列化，为了优化存储，所以，ArrayList使用transient来声明elementData。
-但是，作为一个集合，在序列化过程中还必须保证其中的元素可以被持久化下来，
-所以，通过重写writeObject 和 readObject方法的方式把其中的元素保留下来。
+    // Write out all elements in the proper order.
+    for (int i=0; i<size; i++) {
+        s.writeObject(elementData[i]);
+    }
 
-- `writeObject` 方法把 `elementData` 数组中的元素遍历的保存到输出流（`ObjectOutputStream`）中。
-- `readObject` 方法从输入流（`ObjectInputStream`）中读出对象并保存赋值到 `elementData` 数组中。
-
-
-
-#### 在一个类中定义了 `writeObject` 和 `readObject` 方法，那么这两个方法是怎么被调用的呢?
-
-在使用 `ObjectOutputStream` 的 `writeObject` 方法和 `ObjectInputStream` 的 `readObject` 方法时，会通过反射的方式调用。
-
-`ObjectOutputStream中writeObject`的调用栈：
-> writeObject ---> writeObject0 --->writeOrdinaryObject--->writeSerialData--->**invokeWriteObject**
-
-> 调用表示的 `serializable` 类的 `writeObject` 方法。
-如果类描述符不与类相关联，或者该类是可外部化、不可序列化的，或者没有定义 `writeObject`，
-则抛出 `UnsupportedOperationException`。
->  
->类定义的writeObject方法，如果没有则为null
-
-`invokeWriteObject`方法
+    if (modCount != expectedModCount) {
+        throw new ConcurrentModificationException();
+    }
+}
 ```
-    /**
-     * Invokes the writeObject method of the represented serializable class.
-     * Throws UnsupportedOperationException if this class descriptor is not
-     * associated with a class, or if the class is externalizable,
-     * non-serializable or does not define writeObject.
-     */
-    void invokeWriteObject(Object obj, ObjectOutputStream out)
-        throws IOException, UnsupportedOperationException
-    {
-        requireInitialized();
-        if (writeObjectMethod != null) {
-            try {
+`readObject` 方法从输入流（`ObjectInputStream`）中读出对象并保存赋值到 `elementData` 数组中。
+```java
+private void readObject(java.io.ObjectInputStream s) throws java.io.IOException, ClassNotFoundException {
+    elementData = EMPTY_ELEMENTDATA;
 
-                // ========== 调用writeObject 方法 start========== //
-                writeObjectMethod.invoke(obj, new Object[]{ out });
-                // ========== 调用writeObject 方法 end========== //
+    // Read in size, and any hidden stuff
+    s.defaultReadObject();
 
-            } catch (InvocationTargetException ex) {
-                Throwable th = ex.getTargetException();
-                if (th instanceof IOException) {
-                    throw (IOException) th;
-                } else {
-                    throwMiscException(th);
-                }
-            } catch (IllegalAccessException ex) {
-                // should not occur, as access checks have been suppressed
-                throw new InternalError(ex);
-            }
-        } else {
-            throw new UnsupportedOperationException();
+    // Read in capacity
+    s.readInt(); // ignored
+
+    if (size > 0) {
+        // be like clone(), allocate array based upon size not capacity
+        ensureCapacityInternal(size);
+
+        Object[] a = elementData;
+        // Read in all elements in the proper order.
+        for (int i=0; i<size; i++) {
+            a[i] = s.readObject();
         }
     }
-```
-```
-    /** class-defined writeObject method, or null if none */
-    private Method writeObjectMethod;
+}
 ```
 
+那么在一个类中定义了`writeObject`和`readObject`方法，这两个方法是怎么被调用的呢？ 答案是会通过反射的方式调用。
 
+对象的序列化过程是通过`ObjectOutputStream`和`ObjectInputputStream`来实现的。在`ObjectOutputStream`中`writeObject`的调用栈如下：
+```text
+ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("stringlist"));
+objectOutputStream.writeObject(stringList);
+IOUtils.close(objectOutputStream);
 
-#### 为什么实现了`Serializable`接口就能保证对象序列化？
-
-`ObjectOutputStream中writeObject`的调用栈：
-> writeObject ---> **writeObject0** --->writeOrdinaryObject--->writeSerialData--->invokeWriteObject
-
-`writeObject0`方法
+writeObject
+    --->writeObject0
+    --->writeOrdinaryObject
+    --->writeSerialData
+    --->invokeWriteObject
 ```
- /**
-     * Underlying writeObject/writeUnshared implementation.
-     */
-    private void writeObject0(Object obj, boolean unshared)
-        throws IOException
-    {
-        boolean oldMode = bout.setBlockDataMode(false);
-        depth++;
+其中`invokeWriteObject`方法：
+```java
+/** class-defined writeObject method, or null if none */
+private Method writeObjectMethod;
+
+/**
+ * Invokes the writeObject method of the represented serializable class.
+ * Throws UnsupportedOperationException if this class descriptor is not
+ * associated with a class, or if the class is externalizable,
+ * non-serializable or does not define writeObject.
+ */
+void invokeWriteObject(Object obj, ObjectOutputStream out)
+    throws IOException, UnsupportedOperationException {
+    requireInitialized();
+    if (writeObjectMethod != null) {
         try {
-           // ... 
 
-            // remaining cases
-            if (obj instanceof String) {
-                writeString((String) obj, unshared);
-            } else if (cl.isArray()) {
-                writeArray(obj, desc, unshared);
-            } else if (obj instanceof Enum) {
-                writeEnum((Enum<?>) obj, desc, unshared);
-            // =============================
-            } else if (obj instanceof Serializable) {
-                writeOrdinaryObject(obj, desc, unshared);
+            // ========== 调用writeObject 方法 start========== //
+            writeObjectMethod.invoke(obj, new Object[]{ out });
+            // ========== 调用writeObject 方法 end========== //
+
+        } catch (InvocationTargetException ex) {
+            Throwable th = ex.getTargetException();
+            if (th instanceof IOException) {
+                throw (IOException) th;
             } else {
-                if (extendedDebugInfo) {
-                    throw new NotSerializableException(
-                        cl.getName() + "\n" + debugInfoStack.toString());
-                } else {
-                    throw new NotSerializableException(cl.getName());
-                }
+                throwMiscException(th);
             }
-            // =============================
-        } finally {
-            // ... 
+        } catch (IllegalAccessException ex) {
+            // should not occur, as access checks have been suppressed
+            throw new InternalError(ex);
         }
+    } else {
+        throw new UnsupportedOperationException();
     }
+}
 ```
+文档注释大意：调用表示的`serializable`类的`writeObject`方法，如果类描述符不与类相关联，或者该类是可外部化、不可序列化的，或者没有定义 `writeObject`，则抛出 `UnsupportedOperationException`。
+类定义的`writeObject`方法，如果没有则为`null`。
 
-在进行序列化操作时，会判断要被序列化的类是否是 `String、Enum、Array` 和 `Serializable` 类型，
-如果不是则直接抛出 `NotSerializableException`。
+所以基本可以确定是这个方法调用的，其中`writeObjectMethod.invoke(obj, new Object[]{ out });`是关键，而`writeObjectMethod`就是在序列化类中定义的`writeObject`方法，所以确实是通过反射的方式被调用了。
 
-
-
-### 序列化与单例模式
-
-#### 序列化破坏单例
-为什么序列化可以破坏单例了？
-
-序列化会通过反射调用无参数的构造方法创建一个新的对象。
-
-```
+### 单例与序列化
+单例模式，是设计模式中最简单的一种。通过单例模式可以保证系统中一个类只有一个实例而且该实例易于外界访问，从而方便对实例个数的控制并节约系统资源。
+单例模式真的能够实现实例的唯一性吗？答案是否定的，很多人都知道使用反射可以破坏单例模式，除了反射以外，使用序列化与反序列化也同样会破坏单例。
+```java
 public class MainTest {
     public static void main(String[] args) throws Exception {
         String path = "/Users/whitepure/github/iblog/blog-site/content/posts/rookie/singleton.txt";
@@ -704,7 +716,6 @@ public class MainTest {
         //判断是否是同一个对象
         System.out.println(newInstance == Singleton.getSingleton());
     }
-
 }
 
 class Singleton implements Serializable {
@@ -727,66 +738,72 @@ class Singleton implements Serializable {
     }
 }
 ```
-输出结果为false，对`Singleton` 的序列化与反序列化得到的对象是一个新的对象，这就破坏了 `Singleton` 的单例性。
+输出结果为`false`，结论为`Singleton`的序列化与反序列化得到的对象是一个新的对象，所以序列化破坏了`Singleton`的单例性。
 
-#### 分析原因
-对象的序列化过程通过 `ObjectOutputStream` 和 `ObjectInputputStream` 来实现的
+对象的序列化过程是通过`ObjectOutputStream`和`ObjectInputputStream`来实现的。`ObjectInputStream`中`readObject`的调用栈如下：
+```text
+ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("stringlist"));
+objectOutputStream.writeObject(stringList);
+IOUtils.close(objectOutputStream);
 
-`ObjectInputStream` 中 `readObject` 的调用栈：
-> readObject ---> readObject0 ---> readOrdinary ---> checkResolve
-
-`readOrdinaryObject` 方法
-
-> 读取并返回"ordinary"(即，不是字符串，类，ObjectStreamClass，数组，或枚举常量)对象，如果对象的类是不可解析的，则为null(在这种情况下，ClassNotFoundException将与对象的句柄相关联)。
-设置passHandle为对象的赋值句柄。
-
+readObject
+    ---> readObject0
+    ---> readOrdinary
+    ---> checkResolve
 ```
-    /**
-     * Reads and returns "ordinary" (i.e., not a String, Class,
-     * ObjectStreamClass, array, or enum constant) object, or null if object's
-     * class is unresolvable (in which case a ClassNotFoundException will be
-     * associated with object's handle).  Sets passHandle to object's assigned
-     * handle.
-     */
-    private Object readOrdinaryObject(boolean unshared)
-        throws IOException
-    {
+其中`readOrdinaryObject` 方法：
+文档注释大意：读取并返回"ordinary"(即，不是字符串、类、`ObjectStreamClass`、数组或枚举常量)对象，如果对象的类是不可解析的，则为`null`(在这种情况下，`ClassNotFoundException`将与对象的句柄相关联)。设置`passHandle`为对象的赋值句柄。
+```java
+/**
+ * Reads and returns "ordinary" (i.e., not a String, Class,
+ * ObjectStreamClass, array, or enum constant) object, or null if object's
+ * class is unresolvable (in which case a ClassNotFoundException will be
+ * associated with object's handle).  Sets passHandle to object's assigned
+ * handle.
+ */
+private Object readOrdinaryObject(boolean unshared)
+    throws IOException {
 
-        // ...
+    // ...
 
-        Object obj;
-        try {
-            // `desc.isInstantiable()`: 如果一个 `serializable/externalizable` 的类可以在运行时被实例化，那么该方法就返回true
-            // `desc.newInstance`：该方法通过反射的方式调用无参构造方法新建一个对象
-            obj = desc.isInstantiable() ? desc.newInstance() : null;
-        } catch (Exception ex) {
-            throw (IOException) new InvalidClassException(
-                desc.forClass().getName(),
-                "unable to create instance").initCause(ex);
-        }
-
-        // ...
-
-        // hasReadResolveMethod:如果实现了serializable 或者 externalizable接口的类中包含readResolve则返回true
-        if (obj != null &&
-            handles.lookupException(passHandle) == null &&
-            desc.hasReadResolveMethod())
-        {
-            // invokeReadResolve:通过反射的方式调用要被反序列化的类的readResolve方法。
-            Object rep = desc.invokeReadResolve(obj);
-            if (unshared && rep.getClass().isArray()) {
-                rep = cloneArray(rep);
-            }
-            // ...
-        }
-
-        return obj;
+    Object obj;
+    try {
+        // `desc.isInstantiable()`: 如果一个 `serializable/externalizable` 的类可以在运行时被实例化，那么该方法就返回true
+        // `desc.newInstance`：该方法通过反射的方式调用无参构造方法新建一个对象
+        obj = desc.isInstantiable() ? desc.newInstance() : null;
+    } catch (Exception ex) {
+        throw (IOException) new InvalidClassException(
+            desc.forClass().getName(),
+            "unable to create instance").initCause(ex);
     }
 
+    // ...
+
+    // hasReadResolveMethod:如果实现了serializable 或者 externalizable接口的类中包含readResolve则返回true
+    if (obj != null &&
+        handles.lookupException(passHandle) == null &&
+        desc.hasReadResolveMethod())
+    {
+        // invokeReadResolve:通过反射的方式调用要被反序列化的类的readResolve方法。
+        Object rep = desc.invokeReadResolve(obj);
+        if (unshared && rep.getClass().isArray()) {
+            rep = cloneArray(rep);
+        }
+        // ...
+    }
+
+    return obj;
+}
 ```
-#### 解决
-在 `Singleton` 中定义 `readResolve` 方法，并在该方法中指定要返回的对象的生成策略，就可以防止单例被破坏。
-```
+`desc.isInstantiable`方法作用是，如果一个`serializable`/`externalizable`的类可以在运行时被实例化，那么该方法就返回`true`。 
+如果返回`true`，就会触发`desc.newInstance`方法执行，该方法通过反射的方式调用无参构造方法新建一个对象。
+所以序列化破坏单例的原因是调用了`desc.newInstance`方法，从而序列化会通过反射调用无参数的构造方法创建一个新的对象。
+
+原因清楚了之后，那怎么解决呢？继续向下看`readOrdinaryObject`方法代码。
+`hasReadResolveMethod`方法的作用，如果实现了`serializable`或者`externalizable`接口的类中包含`readResolve`则返回`true`。
+`invokeReadResolve`是通过反射的方式调用要被反序列化的类的`readResolve`方法。
+所以在`Singleton`中定义`readResolve`方法，并在该方法中指定要返回的对象的生成策略，就可以防止单例被破坏。
+```java
 class Singleton implements Serializable {
     private static final long serialVersionUID = 6377402142849822126L;
 
@@ -813,6 +830,7 @@ class Singleton implements Serializable {
 ```
 
 ## IO模型
+[//]: # (写到了这里)
 IO模型共有5种：阻塞IO、非阻塞IO、信号驱动IO、IO多路转接、异步IO。其中，前四个被称为同步IO。
 
 ### 阻塞式IO模型
@@ -949,7 +967,7 @@ position、limit 数值变化：
 - 使用 clear() 清空缓冲区，将position、limit 的值回归到初始值；
 
 代码演示
-```
+```java
 public class MainTest {
     public static void main(String[] args) {
         String str = "abcde";
@@ -1063,7 +1081,6 @@ public class MainTest {
 ```
 #### 通道
 通道(Channel):用于源节点与目标节点的连接。在 `java NIO` 中负责缓冲区中数据的传输。Channel本身不存储数据，需要配合缓冲区进行数据传输。
-
 
 在操作系统中，通道是一种通过执行通道程序管理I/O操作的控制器，它使主机（CPU和内存）与I/O操作之间达到更高的并行程度。
 需要进行I/O操作时，CPU只需启动通道，然后可以继续执行自身程序，通道则执行通道程序，管理与实现I/O操作。
@@ -1282,7 +1299,7 @@ public class MainTest {
 因此，在完成网络通信进行 IO 操作时，由于线程会阻塞，所以服务器端必须为每个客户端都提供一个独立的线程进行处理，当服务器端需要处理大量客户端时，性能急剧下降。
 
 阻塞式IO,代码演示
-```
+```java
 class Client {
     public static void main(String[] args) throws IOException {
         System.out.println("启动客户端 ...");
@@ -1487,8 +1504,5 @@ public class MainTest {
 
 ## 参考文章
 - http://hollischuang.gitee.io/tobetopjavaer
-- http://hollischuang.gitee.io/tobetopjavaer/#/basics/java-basic/linux-io?id=linux-5种io模型
-- http://hollischuang.gitee.io/tobetopjavaer/#/basics/java-basic/serialize-singleton?id=序列化对单例的破坏
-- http://hollischuang.gitee.io/tobetopjavaer/#/basics/java-basic/serialize-principle?id=序列化底层原理
 - https://docs.oracle.com/javase/7/docs/api/java/io/Externalizable.html
 - https://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html
