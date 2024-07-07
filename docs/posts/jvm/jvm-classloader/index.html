@@ -844,7 +844,7 @@ JDK 自带的 BootstrapClassLoader， ExtClassLoader， AppClassLoader 负责加
 <li>启动类加载器(引导类加载器、Bootstrap ClassLoader)：
 <ul>
 <li>该类加载器使用C/C++语言实现的，嵌套在JVM内部，可理解为就是JVM的一部分；</li>
-<li>它用来加载Java的核心库（<code>JAVAHOME/jre/1ib/rt.jar、resources.jar</code>或<code>sun.boot.class.path</code>路径下的内容），用于提供JVM自身需要的类；</li>
+<li>它用来加载Java的核心库（<code>JAVA_HOME/jre/1ib/rt.jar、resources.jar</code>或<code>sun.boot.class.path</code>路径下的内容），用于提供JVM自身需要的类；</li>
 <li>并不继承自<code>java.lang.ClassLoader</code>，没有父加载器；</li>
 <li>加载扩展类和应用程序类加载器，并指定为他们的父类加载器；</li>
 <li>出于安全考虑，Bootstrap启动类加载器只加载包名为java、javax、sun等开头的类；</li>

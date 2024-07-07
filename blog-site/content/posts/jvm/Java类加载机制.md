@@ -210,7 +210,7 @@ public class ClassloaderTest {
 
 1. 启动类加载器(引导类加载器、Bootstrap ClassLoader)：
    - 该类加载器使用C/C++语言实现的，嵌套在JVM内部，可理解为就是JVM的一部分；
-   - 它用来加载Java的核心库（`JAVAHOME/jre/1ib/rt.jar、resources.jar`或`sun.boot.class.path`路径下的内容），用于提供JVM自身需要的类；
+   - 它用来加载Java的核心库（`JAVA_HOME/jre/1ib/rt.jar、resources.jar`或`sun.boot.class.path`路径下的内容），用于提供JVM自身需要的类；
    - 并不继承自`java.lang.ClassLoader`，没有父加载器；
    - 加载扩展类和应用程序类加载器，并指定为他们的父类加载器；
    - 出于安全考虑，Bootstrap启动类加载器只加载包名为java、javax、sun等开头的类；

@@ -1449,7 +1449,7 @@
 </ul>
 <p>其中&quot;<code>wait()</code>必须在同步<code>synchronized</code>块里使用&quot;，使其不止<code>wait</code>方法，<code>notify、notifyAll</code>也和<code>wait</code>方法一样，必须在<code>synchronized</code>块里使用，为什么呢？</p>
 <p>是为了避免丢失唤醒问题。假设没有<code>synchronized</code>修饰，使用了<code>wait</code>方法而没有设置等待时间，也没有调用唤醒方法或者唤醒方法调用的时机不对，这个线程将会永远的堵塞下去。
-<code>wait</code>、<code>notify</code>、<code>notifyAll</code>方法调用的时候要释放锁，你都没给它加锁，他怎么释放锁。所以如果没在<code>synchronized</code>块中调用<code>wait()、notify、notifyAll</code>方法是肯定抛异常的。������</p>
+<code>wait</code>、<code>notify</code>、<code>notifyAll</code>方法调用的时候要释放锁，你都没给它加锁，他怎么释放锁。所以如果没在<code>synchronized</code>块中调用<code>wait()、notify、notifyAll</code>方法是肯定抛异常的。</p>
 </div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">
