@@ -214,15 +214,15 @@ if(list instanceof RandomAccess){
 在`List`中`ArrayList`被`RandomAccess`接口标记，而`LinkedList`没有被`RandomAccess`接口标记，所以`ArrayList`适合随机访问，而`LinkedList`适合顺序访问。
 
 ### Cloneable
-`Cloneable`接口是Java开发中常用的一个接口之一，它是一个标记接口。
+`Cloneable`接口是Java开发中常用的一个接口，它是一个标记接口。
 如果一个想要拷贝一个对象，就需要重写`Object`中的`clone`方法并让其实现`Cloneable`接口。如果只重写`clone`方法，不实现`Cloneable`接口就会报`CloneNotSupportedException`异常。
 
 `clone`方法源码：
 ```java
 protected native Object clone() throws CloneNotSupportedException;
 ```
-应当注意的是，`clone()` 方法并不是 `Cloneable` 接口的方法，而是 `Object` 的一个 `protected` 方法。
-`Cloneable` 接口只是规定，如果一个类没有实现 `Cloneable` 接口又调用了 `clone()` 方法，就会抛出 `CloneNotSupportedException`。
+应当注意的是，`clone()`方法并不是`Cloneable`接口的方法，而是`Object`的一个`protected`方法。
+`Cloneable`接口只是规定，如果一个类没有实现`Cloneable`接口又调用了`clone`方法，就会抛出`CloneNotSupportedException`。
 换言之，`clone`方法规定了想要拷贝对象，就需要实现`Cloneable`方法，`clone`方法让`Cloneable`接口变得有意义。
 
 拷贝分为浅拷贝与深拷贝：
@@ -230,7 +230,7 @@ protected native Object clone() throws CloneNotSupportedException;
 - 深拷贝：在浅拷贝的基础上，所有引用其他对象的变量也进行了`clone`，并指向被复制过的新对象；
 
 如果一个被复制的属性都是基本类型，那么只需要实现当前类的`Cloneable`机制就可以了，此为浅拷贝。
-如果被复制对象的属性包含其他实体类对象引用，那么这些实体类对象都需要实现`cloneable`接口并覆盖`clone`方法。
+如果被复制对象的属性包含其他实体类对象引用，那么这些实体类对象都需要实现`Cloneable`接口并覆盖`clone`方法。
 `ArrayList`中`clone`方法可以创建一个浅拷贝。
 ```java
 // ArrayList类

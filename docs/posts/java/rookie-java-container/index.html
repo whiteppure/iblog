@@ -1085,12 +1085,12 @@ Java中提供的数组是用来存储固定大小的同类型元素，所以Java
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>在<code>List</code>中<code>ArrayList</code>被<code>RandomAccess</code>接口标记，而<code>LinkedList</code>没有被<code>RandomAccess</code>接口标记，所以<code>ArrayList</code>适合随机访问，而<code>LinkedList</code>适合顺序访问。</p>
 <h3 id="cloneable">Cloneable</h3>
-<p><code>Cloneable</code>接口是Java开发中常用的一个接口之一，它是一个标记接口。
+<p><code>Cloneable</code>接口是Java开发中常用的一个接口，它是一个标记接口。
 如果一个想要拷贝一个对象，就需要重写<code>Object</code>中的<code>clone</code>方法并让其实现<code>Cloneable</code>接口。如果只重写<code>clone</code>方法，不实现<code>Cloneable</code>接口就会报<code>CloneNotSupportedException</code>异常。</p>
 <p><code>clone</code>方法源码：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">protected</span><span class="w"> </span><span class="kd">native</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">clone</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">CloneNotSupportedException</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><p>应当注意的是，<code>clone()</code> 方法并不是 <code>Cloneable</code> 接口的方法，而是 <code>Object</code> 的一个 <code>protected</code> 方法。
-<code>Cloneable</code> 接口只是规定，如果一个类没有实现 <code>Cloneable</code> 接口又调用了 <code>clone()</code> 方法，就会抛出 <code>CloneNotSupportedException</code>。
+</span></span></span></code></pre></div><p>应当注意的是，<code>clone()</code>方法并不是<code>Cloneable</code>接口的方法，而是<code>Object</code>的一个<code>protected</code>方法。
+<code>Cloneable</code>接口只是规定，如果一个类没有实现<code>Cloneable</code>接口又调用了<code>clone</code>方法，就会抛出<code>CloneNotSupportedException</code>。
 换言之，<code>clone</code>方法规定了想要拷贝对象，就需要实现<code>Cloneable</code>方法，<code>clone</code>方法让<code>Cloneable</code>接口变得有意义。</p>
 <p>拷贝分为浅拷贝与深拷贝：</p>
 <ul>
@@ -1098,7 +1098,7 @@ Java中提供的数组是用来存储固定大小的同类型元素，所以Java
 <li>深拷贝：在浅拷贝的基础上，所有引用其他对象的变量也进行了<code>clone</code>，并指向被复制过的新对象；</li>
 </ul>
 <p>如果一个被复制的属性都是基本类型，那么只需要实现当前类的<code>Cloneable</code>机制就可以了，此为浅拷贝。
-如果被复制对象的属性包含其他实体类对象引用，那么这些实体类对象都需要实现<code>cloneable</code>接口并覆盖<code>clone</code>方法。
+如果被复制对象的属性包含其他实体类对象引用，那么这些实体类对象都需要实现<code>Cloneable</code>接口并覆盖<code>clone</code>方法。
 <code>ArrayList</code>中<code>clone</code>方法可以创建一个浅拷贝。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// ArrayList类</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ArrayList</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Cloneable</span><span class="w"> </span><span class="p">{</span><span class="w">

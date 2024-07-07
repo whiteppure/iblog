@@ -309,56 +309,24 @@ System.out.println("i=" + i);
 ```
 
 ## clone
-[//]: # (写到了这里)
-在Java中可以使用`clone`方法来创建对象：
+在Java中可以使用`clone`方法用于创建并返回一个对象的副本，对象克隆指的是创建一个新的对象，新对象的内容与原始对象相同。
 ```java
 protected native Object clone() throws CloneNotSupportedException;
 ```
-
-如何对对象进行克隆:
-- 实现`Cloneable`接口，这是一个标记接口，自身没有方法
-- 覆盖`clone()`方法，可见性提升为`public`
+要在自定义类中实现对象的克隆，需要执行以下步骤：
+- 实现`Cloneable`接口，这是一个标记接口，自身没有方法；
+- 覆盖重写`clone`方法，可见性提升为`public`；
 
 ### Cloneable接口
-`clone()`是 `Object` 的 `protected` 方法，它不是被 `public`修饰；一个类不显式的去重写`clone()`，其它类就不能直接去调用该类实例的 `clone()`方法：
+`Cloneable`接口是Java开发中常用的一个接口，它是一个标记接口。
+如果一个想要拷贝一个对象，就需要重写`Object`中的`clone`方法并让其实现`Cloneable`接口。如果只重写`clone`方法，不实现`Cloneable`接口就会报`CloneNotSupportedException`异常。
 ```java
-public class CloneExample {
-    private int a;
-    private int b;
-}
-CloneExample e1 = new CloneExample();
-// CloneExample e2 = e1.clone(); // 'clone()' has protected access in 'java.lang.Object'
+protected native Object clone() throws CloneNotSupportedException;
 ```
-
-重写`clone()`方法得到以下实现：
-```
-public class CloneExample {
-    private int a;
-    private int b;
-
-    @Override
-    public CloneExample clone() throws CloneNotSupportedException {
-        return (CloneExample)super.clone();
-    }
-}
-```
-
-```
-CloneExample e1 = new CloneExample();
-try {
-    CloneExample e2 = e1.clone();
-} catch (CloneNotSupportedException e) {
-    e.printStackTrace();
-}
-```
-
-以上抛出了 `java.lang.CloneNotSupportedException: CloneExample`，这是因为 `CloneExample` 没有实现 `Cloneable` 接口。
-
-应该注意的是，`clone()` 方法并不是 `Cloneable` 接口的方法，而是 `Object` 的一个 `protected` 方法。
-
-`Cloneable` 接口只是规定，如果一个类没有实现 `Cloneable` 接口又调用了 `clone()` 方法，就会抛出 `CloneNotSupportedException`。
-
-```
+应当注意的是，`clone`方法并不是`Cloneable`接口的方法，而是`Object`的一个`protected`方法。
+`Cloneable`接口只是规定，如果一个类没有实现`Cloneable`接口又调用了`clone`方法，就会抛出`CloneNotSupportedException`。
+换言之，`clone`方法规定了想要拷贝对象，就需要实现`Cloneable`方法，`clone`方法让`Cloneable`接口变得有意义。
+```java
 public class CloneExample implements Cloneable {
     private int a;
     private int b;
@@ -371,106 +339,77 @@ public class CloneExample implements Cloneable {
 ```
 
 ### 浅拷贝与深拷贝
-- 浅拷贝：被复制对象的所有值属性都含有与原来对象的相同，而所有的对象引用属性仍然指向原来的对象。
-- 深拷贝：在浅拷贝的基础上，所有引用其他对象的变量也进行了`clone`，并指向被复制过的新对象。
+拷贝分为浅拷贝与深拷贝：
+- 浅拷贝：被复制对象的所有值属性都含有与原来对象的相同，而所有的对象引用属性仍然指向原来的对象；
+- 深拷贝：在浅拷贝的基础上，所有引用其他对象的变量也进行了`clone`，并指向被复制过的新对象；
 
-如果一个被复制的属性都是基本类型，那么只需要实现当前类的`cloneable`机制就可以了，此为浅拷贝。
+如果一个被复制的属性都是基本类型，那么只需要实现当前类的`Cloneable`机制就可以了，此为浅拷贝。
+如果被复制对象的属性包含其他实体类对象引用，那么这些实体类对象都需要实现`Cloneable`接口并覆盖`clone`方法。
 
-如果被复制对象的属性包含其他实体类对象引用，那么这些实体类对象都需要实现`cloneable`接口并覆盖`clone()`方法。
-
-#### 浅拷贝
-```
-public class ShallowCloneExample implements Cloneable {
-
-    private int[] arr;
-
-    public ShallowCloneExample() {
-        arr = new int[10];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = i;
+- 浅拷贝创建一个新对象，这个新对象的字段内容与原对象相同，但如果字段是引用类型（比如数组、对象），浅拷贝只复制引用地址，不复制引用的实际对象。
+    ```java
+    class MyObject implements Cloneable {
+        int value;
+        int[] array;
+    
+        MyObject(int value, int[] array) {
+            this.value = value;
+            this.array = array;
+        }
+    
+        @Override
+        protected Object clone() throws CloneNotSupportedException {
+            return super.clone(); // 浅拷贝
+        }
+    
+        public static void main(String[] args) {
+            try {
+                int[] arr = {1, 2, 3};
+                MyObject original = new MyObject(42, arr);
+                MyObject copy = (MyObject) original.clone();
+                original.array[0] = 99;
+                System.out.println(copy.array[0]); // 输出 99
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
         }
     }
-
-    public void set(int index, int value) {
-        arr[index] = value;
-    }
-
-    public int get(int index) {
-        return arr[index];
-    }
-
-    @Override
-    protected ShallowCloneExample clone() throws CloneNotSupportedException {
-        return (ShallowCloneExample) super.clone();
-    }
-}
-
-```
-
-```
-ShallowCloneExample e1 = new ShallowCloneExample();
-ShallowCloneExample e2 = null;
-try {
-    e2 = e1.clone();
-} catch (CloneNotSupportedException e) {
-    e.printStackTrace();
-}
-e1.set(2, 222);
-System.out.println(e2.get(2)); // 222
-```
-
-#### 深拷贝
-
-```
-public class DeepCloneExample implements Cloneable {
-
-    private int[] arr;
-
-    public DeepCloneExample() {
-        arr = new int[10];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = i;
+    ```
+- 深拷贝创建一个新对象，这个新对象和原对象完全独立，包括复制所有引用类型字段的实际对象，而不仅仅是引用地址。
+    ```java
+    class MyObject implements Cloneable {
+        int value;
+        int[] array;
+    
+        MyObject(int value, int[] array) {
+            this.value = value;
+            this.array = array;
+        }
+    
+        @Override
+        protected MyObject clone() throws CloneNotSupportedException {
+            int[] arrayCopy = array.clone(); // 复制数组
+            return new MyObject(value, arrayCopy);
+        }
+    
+        public static void main(String[] args) {
+            try {
+                int[] arr = {1, 2, 3};
+                MyObject original = new MyObject(42, arr);
+                MyObject copy = original.clone();
+                original.array[0] = 99;
+                System.out.println(copy.array[0]); // 输出 1
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
         }
     }
-
-    public void set(int index, int value) {
-        arr[index] = value;
-    }
-
-    public int get(int index) {
-        return arr[index];
-    }
-
-    @Override
-    protected DeepCloneExample clone() throws CloneNotSupportedException {
-        DeepCloneExample result = (DeepCloneExample) super.clone();
-        result.arr = new int[arr.length];
-        for (int i = 0; i < arr.length; i++) {
-            result.arr[i] = arr[i];
-        }
-        return result;
-    }
-}
-
-```
-
-```
-DeepCloneExample e1 = new DeepCloneExample();
-DeepCloneExample e2 = null;
-try {
-    e2 = e1.clone();
-} catch (CloneNotSupportedException e) {
-    e.printStackTrace();
-}
-e1.set(2, 222);
-System.out.println(e2.get(2)); // 2
-```
+    ```
 
 ### clone的替代
-
-使用 ``clone()`` 方法来拷贝一个对象即复杂又有风险，它会抛出异常，并且还需要类型转换。《Effective Java》 书上讲到，最好不要去使用 `clone()`，可以使用拷贝构造函数或者拷贝工厂来拷贝一个对象。
-
-```
+虽然`Cloneable`和`clone()`方法在Java中是标准的浅拷贝方式，但它们在实际开发中不太常用。主要是因为使用`clone()`方法来拷贝一个对象即复杂又有风险，它会抛出异常，并且还需要类型转换。
+《Effective Java》 书上讲到，最好不要去使用 `clone()`，可以使用拷贝构造函数或者拷贝工厂来拷贝一个对象。
+```java
 public class CloneConstructorExample {
 
     private int[] arr;
@@ -497,10 +436,8 @@ public class CloneConstructorExample {
         return arr[index];
     }
 }
-
 ```
-
-```
+```text
 CloneConstructorExample e1 = new CloneConstructorExample();
 CloneConstructorExample e2 = new CloneConstructorExample(e1);
 e1.set(2, 222);
@@ -508,6 +445,7 @@ System.out.println(e2.get(2)); // 2
 ```
 
 ## finalize
+[//]: # (写到了这里)
 `finalize()`方法是Java提供的对象终止机制，允许开发人员提供对象被销毁之前的自定义处理逻辑。当垃圾回收器发现没有引用指向一个对象，即：垃圾回收此对象之前，总会先调用这个对象的`finalize()`方法。
 
 `finalize()` 方法允许在子类中被重写，用于在对象被回收时进行资源释放。通常在这个方法中进行一些资源释放和清理的工作，比如关闭文件、套接字和数据库连接等。
@@ -552,7 +490,7 @@ System.out.println(e2.get(2)); // 2
     3. `finalize`方法是对象逃脱死亡的最后机会，稍后GC会对`F-Queue`队列中的对象进行第二次标记。如果对象在`finalize`方法中与引用链上的任何一个对象建立了联系，那么在第二次标记时，该对象会被移出“即将回收”集合。之后，对象会再次出现没有引用存在的情况。在这个情况下，`finalize`方法不会被再次调用，对象会直接变成不可触及的状态，也就是说，一个对象的`finalize`方法只会被调用一次。
     
 代码演示对象能否被回收：
-```
+```java
 public class MainTest {
 
     public static MainTest var;
