@@ -7,10 +7,9 @@ slug: "rookie-objectclass-methods"
 ---
 
 ## 概览
-Object 类位于 `java.lang` 包中，编译时会自动导入。
-当我们创建一个类时，如果没有明确继承一个父类，那么它就会自动继承`Object`，成为`Object`的子类。
+`Object`类位于`java.lang`包中，编译时会自动导入。当我们创建一个类时，如果没有明确继承一个父类，那么它就会自动继承`Object`，成为`Object`的子类。
 `Object`类可以显示继承，也可以隐式继承，效果都是一样的。
-```
+```java
 class A extends Object{
     // to do
 }
@@ -19,74 +18,70 @@ class A {
     // to do
 }
 ```
-Java `Object`类是所有类的父类，也就是说 Java 的所有类都继承了`Object`，子类可以使用`Object`的所有方法。
+Java`Object`类是所有类的父类，也就是说Java的所有类都继承了`Object`。因此，`Object`类提供了一组通用的方法，这些方法可以在所有Java对象上调用。
 
-| 方法名称                    | 方法作用                                                      |
-|-------------------------|-----------------------------------------------------------|
-| [equals](#equals)       | 比较两个对象是否相同                                                |
-| [hashCode](#hashCode)   | 获取对象的哈希值                                                  |
-| [toString](#toString)   | 返回对象的字符串表示形式                                              |
-| [clone](#clone)         | 创建并返回一个对象的拷贝                                              |
-| [finalize](#finalize)   | 当垃圾收集确定不再有对对象的引用时，由垃圾收集器在对象上调用                            |
-| [getClass](#getClass)   | 获取对象运行时的类                                                 |
-| [notify](#notify)       | 唤醒在该对象上等待的某个线程                                            |
-| [notifyAll](#notifyAll) | 唤醒在该对象上等待的所有线程                                            |
-| [wait](#wait)           | 让当前线程进入等待(阻塞)状态。直到其他线程调用此对象的`notify()`方法或`notifyAll()`方法。 |
+| 方法名称              | 方法作用                                                      |
+|-------------------|-----------------------------------------------------------|
+| equals    | 比较两个对象是否相同                                                |
+| hashCode | 获取对象的哈希值                                                  |
+| toString | 返回对象的字符串表示形式                                              |
+| clone    | 创建并返回一个对象的拷贝                                              |
+| finalize | 当垃圾收集确定不再有对对象的引用时，由垃圾收集器在对象上调用                            |
+| getClass | 获取对象运行时的类                                                 |
+| notify   | 唤醒在该对象上等待的某个线程                                            |
+| notifyAll | 唤醒在该对象上等待的所有线程                                            |
+| wait      | 让当前线程进入等待(阻塞)状态。直到其他线程调用此对象的`notify()`方法或`notifyAll()`方法。 |
 
 ## equals
-`Object`类中的`equals()`方法作用是比较两个对象，是判断两个对象引用指向的是同一个对象，即比较两个对象的内存地址是否相等。
-
-`Object`类中的`equals()`源码如下
+`equals`方法是Java中的一个重要方法，用于比较两个对象是否相等。默认情况下，`Object`类中的`equals`方法比较的是对象的内存地址，但许多类会重写这个方法以实现自定义的比较逻辑。
+`Object`类中的`equals()`源码如下：
+```java
+  public boolean equals(Object obj) {
+      return (this == obj);
+  }
 ```
-    public boolean equals(Object obj) {
-        return (this == obj);
-    }
-```
+该实现只是简单地比较两个对象的引用是否相同，即是否指向同一个内存地址。
 
 ### 等价关系
-在Java规范中，`equals()`方法的使用存在如下特性：
-- 自反性：`x.equals(x); // true`
-- 对称性：`x.equals(y) == y.equals(x); // true`
-- 传递性： `if (x.equals(y) && y.equals(z))  =>  x.equals(z); // true;`
-- 一致性：`x.equals(y) == x.equals(y); // true` 多次调用`equals()`方法结果不变
-- 与`null`的比较：`x.equals(null); // false;` 对任何不是`null`的对象x调用 `x.equals(null)` 结果都为`false`
+在Java中，`equals`方法用于确定两个对象是否相等。为了正确实现这个方法，必须确保它满足等价关系的要求。等价关系是一种自反的、对称的和传递的关系。
+具体来说，`equals`方法必须遵循以下规则：
+- 自反性：对于任何非`null`的引用值`x`，`x.equals(x)`必须返回`true`。
+- 对称性：对于任何非`null`的引用值`x`和`y`，如果`x.equals(y)`返回`true`，那么`y.equals(x)`也必须返回`true`。
+- 传递性：对于任何非`null`的引用值`x`、`y`和`z`，如果`x.equals(y)`返回`true`，并且`y.equals(z)`返回`true`，那么`x.equals(z)`也必须返回`true`。
+- 一致性：对于任何非`null`的引用值`x`和`y`，只要对象的状态没有改变，多次调用`x.equals(y)`应当返回相同的结果。
+- 非空性：对于任何非`null`的引用值`x`，`x.equals(null)`必须返回`false`。
 
 ### 与双等号
-- 对于基本类型，`==` 判断两个值是否相等，基本类型没有 `equals() `方法。
-- 对于引用类型，`==` 判断两个变量是否引用同一个对象，而 `equals()`判断引用的对象是否等价。
-
-```
+对于基本类型，`==`判断两个值是否相等，基本类型没有`equals()`方法。对于引用类型，`==`判断两个变量是否引用同一个对象，而`equals()`判断引用的对象是否等价。
+```text
 Integer x = new Integer(1);
 Integer y = new Integer(1);
 System.out.println(x.equals(y)); // true
 System.out.println(x == y);      // false
 ```
 
-`equals()`作用是判断两个对象是否相等，但一般有两种情况:
-1. 类没有覆盖`equals`方法，则相当于通过 `==`来比较这两个对象的地址;
-2. 类覆盖`equals`方法，一般我们通过`equals()`来比较两个对象的内容是否相等，相等则返回true；
+`equals()`作用是判断两个对象是否相等，但一般有两种情况：
+1. 类没有覆盖`equals`方法，则相当于通过 `==`来比较这两个对象的地址；
+2. 类覆盖`equals`方法，一般我们通过`equals()`来比较两个对象的内容是否相等，相等则返回`true`；
 
-`equals()`在不重写的情况下与 `==` 作用一样都是比较的内存中的地址.但是`equals()`可以重写。
+之前有一道经典的面试题，问的就是`==`和`equals`的区别。
+`==`运算符比较两个引用是否指向同一个对象。
+`equals`方法比较两个对象的内容是否相等。默认情况下，`Object`类中的`equals`方法比较的是对象的内存地址，但许多类会重写这个方法以比较对象的内容。
 
 ### 重写equals方法
+`equals()`在不重写的情况下与`==`作用一样，都是比较的内存中的地址，但是`equals()`可以重写。
+重写`equals`方法的目的是为了定义对象内容相等的逻辑。默认的`equals`方法比较内存地址，而我们通常需要比较对象的内容。
 重写`equals`方法一般思路：
-- 检查是否为同一个对象的引用，如果是直接返回 true；
-- 检查是否是同一个类型，如果不是，直接返回 false；
-- 将`Object`对象进行转型；
-- 判断每个关键域是否相等;
-
-```
+1. 检查是否为同一个对象的引用，如果是直接返回`true`；
+2. 检查是否是同一个类型，如果不是，直接返回`false`；
+3. 将`Object`对象进行转型；
+4. 判断每个关键域是否相等；
+```java
 public class EqualExample {
 
     private int x;
     private int y;
     private int z;
-
-    public EqualExample(int x, int y, int z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -103,38 +98,36 @@ public class EqualExample {
 ```
 
 ## hashCode
-在Java中`hashcode`方法是`Object`类的`native`方法，返回值为int类型，根据一定的规则将与对象相关的信息（比如对象的存储地址，对象的字段等）映射成一个数值，这个数值称作为hash值(散列值)。
+在Java中`hashcode`方法是`Object`类的`native`方法，返回值为int类型，根据一定的规则将与对象相关的信息，如对象的存储地址，对象的字段等，映射成一个数值，这个数值称作为`hash`值。
+`hashCode`方法在Java中非常重要，尤其在使用哈希表（如`HashMap`、`HashSet`等）时。`hashCode`方法返回一个整数，该整数称为对象的哈希码。这个哈希码用于确定对象在哈希表中的存储位置。
 
-> `hashCode`通用约定:
-> - 若`x.equals(y)`返回true ，则`x.hashCode()==y.hashCode()`，其逆命题不一定成立。
-> - 尽量使 hashCode 方法返回的散列码总体上呈均匀分布，可以提高哈希表的性能。
-> - 程序运行时，若对象的`equals`方法中使用的字段没有改变，则在程序结束前，多次调用`hashCode`方法都应返回相同的散列码；程序结束后再执行时则没有此要求。
+为了使`hashCode`方法正确工作，并确保在集合中对象的行为正确，必须遵循以下约定：
+- 如果两个对象不相等，它们的哈希码不一定要不同。但是不相等的对象产生不同哈希码，总体上呈均匀分布，可以提高哈希表的性能。
+- 在程序的同一执行过程中，只要对象的信息没有被修改，多次调用`hashCode`方法应该返回相同的整数。
+- 如果根据`equals`方法，两个对象是相等的，那么调用这两个对象的`hashCode`方法必须返回相同的整数。
 
 `hashCode`方法源码：
-```
+```java
 public native int hashCode();
 ```
 根据这个方法的声明可知，该方法返回一个`int`类型的数值，并且是本地方法，因此在`Object`类中并没有给出具体的实现。
 
-### 使用场景
-对于包含容器类型的程序设计语言来说，基本上都会涉及到`hashCode`。在Java中也一样，`hashCode`方法的主要作用是为了配合基于散列的集合一起正常运行，这样的散列集合包括`HashSet、HashMap`以及`HashTable`。
+### 唯一性
+对于包含容器类型的程序设计语言来说，基本上都会涉及到`hashCode`。
+在Java中也一样，`hashCode`方法的主要作用是为了配合基于散列的集合一起正常运行，这样的散列集合包括`HashSet、HashMap`以及`HashTable`。
 
-在集合中已经存在上万条数据或者更多的数据场景下向集合中插入对象时，如何判别在集合中是否已经存在该对象了？
+在集合中已经存在上万条数据或更多的数据场景下向集合中插入对象时，如何判别在集合中是否已经存在该对象了？
 
-如果采用`equals`方法去逐一比较，效率必然是一个问题。此时`hashCode`方法的优点就体现出来了。因为两个不同的对象可能会有相同的`hashCode`值，所有不能通过`hashCode`值来判断两个对象是否相等，但是可以直接根据`hashcode`值判断两个对象不等，如果两个对象的`hashCode`值不等，则必定是两个不同的对象。
-当集合要添加新的对象时，先调用这个对象的`hashCode`方法，得到对应的`hashcode`值，如果存放的`hash`值中没有该`hashcode`值，它就可以直接存进去，不用再进行任何比较了；如果存在该`hashcode`值，就调用它的`equals`方法与新元素进行比较，相同的话就不存了，不相同就去存。
+如果采用`equals`方法去逐一比较，效率必然是一个问题，此时`hashCode`方法的优点就体现出来了。
+因为两个不同的对象可能会有相同的`hashCode`值，所有不能通过`hashCode`值来判断两个对象是否相等，但是可以直接根据`hashcode`值判断两个对象不等，如果两个对象的`hashCode`值不等，则必定是两个不同的对象。
+当集合要添加新的对象时，先调用这个对象的`hashCode`方法，得到对应的`hashcode`值，如果存放的`hash`值中没有该`hashcode`值，它就可以直接存进去，不用再进行任何比较了。
+如果存在该`hashcode`值，就调用它的`equals`方法与新元素进行比较，相同的话就不存了，不相同就去存。
 
-> 需要额外注意的是:
-> `设计hashCode()`时最重要的因素就是，无论何时，对同一个对象调用`hashCode()`都应该产生同样的值。
->
->如果在将一个对象用`put()`添加进`HashMap`时产生一个`hashCdoe`值，而用`get()`取出时却产生了另一个`hashCode`值，那么就无法获取该对象了。
->所以如果你的`hashCode`方法依赖于对象中易变的数据，就要当心了，因为此数据发生变化时，`hashCode()`方法就会生成一个不同的散列码，从而获取不到该对象。
->
-> **所以在重写`hashCode`方法和`equals`方法的时候，如果对象中的数据易变，则最好在`equals`方法和`hashCode`方法中不要依赖于该字段。**
-
-
-如下代码
-```
+需要额外注意的是，设计`hashCode`方法时最重要的因素就是，无论何时，对同一个对象调用`hashCode()`都应该产生同样的值。
+如果在将一个对象用`put()`添加进`HashMap`时产生一个`hashCdoe`值，而用`get()`取出时却产生了另一个`hashCode`值，那么就无法获取该对象了。
+所以如果你的`hashCode`方法依赖于对象中易变的数据，就要当心了，因为此数据发生变化时，`hashCode()`方法就会生成一个不同的散列码，从而获取不到该对象。
+所以在重写`hashCode`方法和`equals`方法的时候，如果对象中的数据易变，则最好在`equals`方法和`hashCode`方法中不要依赖于该字段。
+```java
 public class MainTest {
     public static void main(String[] args) {
         Person p1 = new Person("lucy", 22);
@@ -171,16 +164,15 @@ class Person {
         return this.name.equals(((Person) obj).name) && this.age == ((Person) obj).age;
     }
 }
-
 ```
 
 ### hashCode与equals
 `hashCode()`返回散列值，而`equals()`是用来判断两个对象是否等价。等价的两个对象散列值一定相同，但是散列值相同的两个对象不一定等价。
+`equals()`地址比较是通过对象的哈希值来比较的。`hash`值是由`hashCode`方法产生的，`hashCode`属于`Object`类的本地方法，默认使用`==`比较两个对象。
+如果`equals()`相等`，hashcode`一定相等，如果`hashcode`相等，`equals`不一定相等。所以在覆盖`equals`方法时应当总是覆盖`hashCode`方法，保证等价的两个对象散列值也相等。
 
-`equals()`地址比较是通过对象的哈希值来比较的。`hash`值是由`hashCode`方法产生的，`hashCode`属于`Object`类的本地方法，默认使用`==`比较两个对象，如果`equals()`相等`，hashcode`一定相等，如果`hashcode`相等，`equals`不一定相等。
-所以在覆盖 `equals()` 方法时应当总是覆盖` hashCode() `方法，保证等价的两个对象散列值也相等。
-
-下面的代码中，新建了两个等价的对象，并将它们添加到`HashSet`中。我们希望将这两个对象当成一样的，只在集合中添加一个对象，但是因为`EqualExample`没有实现`hashCode()`方法，因此这两个对象的散列值是不同的，最终导致集合添加了两个等价的对象。
+下面的代码中，新建了两个等价的对象，并将它们添加到`HashSet`中。
+我们希望将这两个对象当成一样的，只在集合中添加一个对象，但是因为`EqualExample`没有实现`hashCode()`方法，因此这两个对象的散列值是不同的，最终导致集合添加了两个等价的对象。
 ```java
 public class MainTest {
     public static void main(String[] args) {
@@ -196,22 +188,22 @@ public class MainTest {
     }
 }
 ```
-所以在覆盖 `equals()`方法时应当总是覆盖`hashCode()`方法，保证等价的两个对象散列值也相等。
+所以在覆盖 `equals()`方法时应当总是覆盖`hashCode`方法，保证等价的两个对象散列值也相等。
 
 ### 重写hashCode方法
 重写`hashCode`方法规则：
-- 把某个非零的常数值，保存在一个名为`result`的int类型的常量中
-- 字段值哈希码的计算
-    - 如果是boolean类型，`true`为1，`false`则为0
-    - 如果是`byte、char、short`和`int`类型，需要强制转为int的值
-    - 如果是long类型，计算`(int)(f^(f>>32))`
-    - 如果是float类型，计算`Float.floatToIntBits(f)`
-    - 如果是double类型，计算`Double.doubleToLongBits(f)`，再按照long的方法进行计算
-    - 如果是引用类型，则调用其`hashCode`方法（假设其`hashCode`满足你的需求）
-- 代入公式`result = result * 31 + c`，返回`result`
+- 把某个非零的常数值，保存在一个名为`result`的int类型的常量中；
+- 字段值哈希码的计算：
+    - 如果是`boolean`类型，`true`为1，`false`则为0；
+    - 如果是`byte、char、short`和`int`类型，需要强制转为int的值；
+    - 如果是`long`类型，计算`(int)(f^(f>>32))`；
+    - 如果是`float`类型，计算`Float.floatToIntBits(f)`；
+    - 如果是`double`类型，计算`Double.doubleToLongBits(f)`，再按照`long`的方法进行计算；
+    - 如果是引用类型，则调用其`hashCode`方法，假设其`hashCode`满足你的需求；
+- 代入公式`result = result * 31 + c`，返回`result`；
 
-《Effective Java》的作者推荐使用基于17和31的散列码的算法:
-```
+《Effective Java》的作者推荐使用基于17和31的散列码的算法：
+```java
 @Override
 public int hashCode() {
     int result = 17;
@@ -221,27 +213,37 @@ public int hashCode() {
     return result;
 }
 ```
-Java 7新增的`Objects`类提供了计算`hashCode`的通用方法，可以很简洁实现`hashCode`方法：
-```
+Java7新增的`Objects`类提供了计算`hashCode`的通用方法，可以很简洁实现`hashCode`方法：
+```java
 @Override
 public int hashCode() {
     return Objects.hash(name,age);
 }
 ```
+现在比较流行的写法是用`Lombok`，在类上使用`@EqualsAndHashCode`注解：
+```java
+@EqualsAndHashCode
+public class Person {
+    private String name;
+    private int age;
+
+    // 构造方法、getter、setter等略
+}
+```
 
 ## toString
-`toString`方法是`Object`类里定义的，返回只类型是`String`默认返回类名和它的引用地址:`ToStringExample@4554617c`这种形式，其中@后面的数值为散列码的无符号十六进制表示。
-
-`Object`类`toString`源代码如下：
-```
-    public String toString() {
-        return getClass().getName() + "@" + Integer.toHexString(hashCode());
-    }
+`toString`方法是`Object`类里定义的，默认返回类名和它的引用地址，即`ToStringExample@4554617c`这种形式。其中@后面的数值为散列码的无符号十六进制表示。
+通常情况下，`toString`方法返回一个字符串，该字符串包含对象的状态信息，便于调试和日志记录。`Object`类`toString`源代码如下：
+```java
+public String toString() {
+    return getClass().getName() + "@" + Integer.toHexString(hashCode());
+}
 ```
 
 ### 重写toString方法
-当我们打印一个对象的引用时，实际是默认调用这个对象的`toString()`方法，当打印的对象所在类没有重写`Object`中的`toString()`方法时，默认调用的是`Object`类中`toString()`方法.返回此对象所在的类及对应的堆空间对象实体的首地址值。
-```
+当我们打印一个对象的引用时，实际是默认调用这个对象的`toString`方法。
+当打印的对象所在类没有重写`Object`中的`toString()`方法时，默认调用的是`Object`类中`toString()`方法，返回此对象所在的类及对应的堆空间对象实体的首地址值。
+```java
 public class MainTest {
     public static void main(String[] args) {
         // object.ToStringDemo@511d50c0
@@ -252,8 +254,8 @@ class ToStringDemo {
     private String name;
 }
 ```
-当我们打印对象所在类重写了`toString()`，调用的就是已经重写了的`toString()`方法，一般重写是将类对象的属性信息返回。
-```
+当我们打印对象所在类重写了`toString()`，调用的就是已经重写了的`toString`方法，一般重写是将类对象的属性信息返回。
+```java
 public class MainTest {
     public static void main(String[] args) {
         ToStringDemo toStringDemo = new ToStringDemo();
@@ -278,9 +280,20 @@ class ToStringDemo {
 }
 ```
 
-### 使用
-在进行String类与其他类型的连接操作时，自动调用`toString()`方法：
+### 使用toString
+一般情况下，使用`toString`：
+```java
+public class MainTest {
+    public static void main(String[] args) {
+        // object.ToStringDemo@511d50c0
+        System.out.println(new ToStringDemo().toString());
+    }
+}
 ```
+
+还有有一种隐式的调用方法，当你将一个对象与字符串进行拼接操作时，如果对象不是字符串类型，Java会自动调用该对象的`toString`方法来获取其字符串表示形式，然后再与其他字符串拼接起来。
+这种行为可以让代码更加简洁和易读，而不需要显式调用`toString`方法。 
+```java
 public class MainTest {
     public static void main(String[] args) {
         Date time = new Date();
@@ -289,52 +302,17 @@ public class MainTest {
     }
 }
 ```
-在实际应用中，可以根据需要在用户自定义类型中重写`toString()`方法:
-```
-public class MainTest {
-    public static void main(String[] args) {
-        // null 没有toString()方法 *会报错*
-        Object var0 = null;
-        System.out.println(var0.toString());
-
-        // 布尔型数据true和false返回对应的'true'和'false'
-        Boolean var1 = false;
-        Boolean var2 = true;
-        System.out.println(var1.toString());
-        System.out.println(var2.toString());
-
-        // 字符串类型原值返回
-        String var3 = "string";
-        System.out.println(var3.toString());
-
-        // 正浮点数及NaN、Infinity加引号返回
-        Double var4 = 1.23d;
-        System.out.println(var4.toString());
-        Double nan = Double.NaN;
-        System.out.println(nan.toString());
-        Double negativeInfinity = Double.NEGATIVE_INFINITY;
-        Double positiveInfinity = Double.POSITIVE_INFINITY;
-        System.out.println(negativeInfinity.toString());
-        System.out.println(positiveInfinity.toString());
-
-        // 负浮点数或加'+'号的正浮点数直接跟上.toString()，相当于先运行toString()方法，再添加正负号，转换为数字
-        Double var5 = -1.23d;
-        Double var6 = +1.23d;
-        System.out.println(var5.toString());
-        System.out.println(var6.toString());
-    }
-}
-```
-基本数据类型转换为`String`类型就是调用了对应包装类的`toString()`方法：
-```
+基本数据类型转换为`String`类型也是调用了对应包装类的`toString`方法，如`Integer`、`Double`等。
+```text
 int i = 10;
 System.out.println("i=" + i);
 ```
 
 ## clone
+
 在Java中可以使用`clone`方法来创建对象：
-```
- protected native Object clone() throws CloneNotSupportedException;
+```java
+protected native Object clone() throws CloneNotSupportedException;
 ```
 
 如何对对象进行克隆:
@@ -343,7 +321,7 @@ System.out.println("i=" + i);
 
 ### Cloneable接口
 `clone()`是 `Object` 的 `protected` 方法，它不是被 `public`修饰；一个类不显式的去重写`clone()`，其它类就不能直接去调用该类实例的 `clone()`方法：
-```
+```java
 public class CloneExample {
     private int a;
     private int b;
