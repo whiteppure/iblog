@@ -309,7 +309,7 @@ System.out.println("i=" + i);
 ```
 
 ## clone
-
+[//]: # (写到了这里)
 在Java中可以使用`clone`方法来创建对象：
 ```java
 protected native Object clone() throws CloneNotSupportedException;
