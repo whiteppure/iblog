@@ -19,7 +19,7 @@ slug: "java-object"
 3. 使用第三方库，如`Objenesis`；
 
 ### 对象的创建步骤
-```
+```java
 public class MainTest {
     public static void main(String[] args) {
         Object obj = new Object();
@@ -38,29 +38,29 @@ public class MainTest {
 
 ### 对象的创建过程
 1. 判断对象对应的类是否加载、链接、初始化。虚拟机遇到一条`new`指令，首先去检查这个指令的参数能否在 `Metaspace` 的常量池中定位到一个类的符号引用，并且检查这个符号引用代表的类是否已经被加载，解析和初始化。（即判断类元信息是否存在）。
-如果没有，那么在双亲委派模式下，使用当前类加载器以 `ClassLoader + 包名 + 类名` 为key进行查找对应的 `.class `文件，如果没有找到文件，则抛出 `ClassNotFoundException` 异常，如果找到，则进行类加载，并生成对应的Class对象。
+如果没有，那么在双亲委派模式下，使用当前类加载器以 `ClassLoader + 包名 + 类名` 为`key`进行查找对应的 `.class `文件，如果没有找到文件，则抛出 `ClassNotFoundException` 异常，如果找到，则进行类加载，并生成对应的Class对象。
 2. 为对象分配内存。首先计算对象占用空间的大小，接着在堆中划分一块内存给新对象。如果实例成员变量是引用类型，仅分配引用变量空间即可，即4个字节大小。如果内存规整，则发生指针碰撞；如果内存不规整，虚拟表需要维护一个列表，即空闲列表分配。
 选择哪种分配方式由Java堆是否规整所决定，而Java堆是否规整又由所采用的垃圾收集器是否带有压缩整理功能决定。
    - 指针碰撞：所有用过的内存在一边，空闲的内存放另外一边，中间放着一个指针作为分界点的指示器，分配内存就仅仅是把指针指向空闲那边挪动一段与对象大小相等的距离罢了。
-   如果垃圾收集器选择的是Serial ，ParNew这种基于压缩算法的，虚拟机采用这种分配方式。一般使用带Compact（整理）过程的收集器时，使用指针碰撞。
+   如果垃圾收集器选择的是`Serial` ，`ParNew`这种基于压缩算法的，虚拟机采用这种分配方式。一般使用带Compact（整理）过程的收集器时，使用指针碰撞。
    - 空闲列表分配：虚拟机维护了一个列表，记录上那些内存块是可用的，再分配的时候从列表中找到一块足够大的空间划分给对象实例，并更新列表上的内容。这种分配方式成为了 “空闲列表（Free List）”。
 3. 处理并发问题。
    - 采用CAS配上失败重试保证更新的原子性
-   - 每个线程预先分配TLAB - 通过设置 `-XX:+UseTLAB`参数来设置，在Java8是默认开启的
+   - 每个线程预先分配`TLAB`，通过设置 `-XX:+UseTLAB`参数来设置，在Java8是默认开启的
 4. 初始化分配到的内存，就是给对象属性赋值的操作。给所有属性设置默认值，保证对象实例字段在不赋值时可以直接使用。
-   - 属性的默认初始化
-   - 显示初始化
-   - 代码块中的初始化
-   - 构造器初始化
+   - 属性的默认初始化；
+   - 显示初始化；
+   - 代码块中的初始化；
+   - 构造器初始化；
 5. 设置对象的对象头。将对象的所属类（即类的元数据信息）、对象的 `HashCode` 和对象的GC信息、锁信息等数据存储在对象的对象头中。这个过程的具体设置方式取决于JVM实现。
-6. 执行init方法进行初始化。初始化成员变量，执行实例化代码块，调用类的构造方法，并把堆内对象的首地址赋值给引用变量。
+6. 执行`init`方法进行初始化。初始化成员变量，执行实例化代码块，调用类的构造方法，并把堆内对象的首地址赋值给引用变量。
 因此一般来说（由字节码中跟随 `invokespecial` 指令所决定），new指令之后会接着执行方法，把对象按照程序员的意愿进行初始化，这样一个真正可用的对象才算完成创建出来。
 
 ## 对象组成
 ![Java对象的布局](/iblog/posts/annex/images/essays/Java对象的布局.png)
 
 ### 查看对象的组成
-```
+```xml
 <!-- 引入查看对象布局的依赖 -->
 <dependency>
     <groupId>org.openjdk.jol</groupId>
@@ -68,8 +68,7 @@ public class MainTest {
     <version>0.9</version>
 </dependency>
 ```
-
-```
+```java
 public class MainTest {
     public static void main(String[] args) {
         //这个对象里面是空的什么都没有
@@ -79,8 +78,7 @@ public class MainTest {
 }
 class T{}
 ```
-
-```
+```text
  OFFSET  SIZE   TYPE DESCRIPTION                               VALUE
       0     4        (object header)                           01 00 00 00 (00000001 00000000 00000000 00000000) (1)
       4     4        (object header)                           00 00 00 00 (00000000 00000000 00000000 00000000) (0)
@@ -91,7 +89,6 @@ Space losses: 0 bytes internal + 4 bytes external = 4 bytes total
 ```
 
 在64位JVM下，通过测试的结果我们可以看到Java对象的布局对象头占12byte了，因为JVM规定内存分配的字节必须是8的倍数，否则无法分配内存，所以就出现了4byte的对齐数据。
-
 通过测试发现，Java的对象布局包括：
 - 必定存在一个对象头；
 - 如果分配的JVM分配的字节不是8的倍数的话，还要存在对齐数据；
@@ -106,9 +103,7 @@ Common structure at the beginning of every GC-managed heap object.
 Note that both Java objects and VM-internal objects have a common object header format.
 
 大意：每个GC管理堆对象开始处的公共结构。(每个oop都指向一个对象头)包括关于堆对象布局、类型、GC状态、同步状态和标识散列代码的基本信息。
-**由两个词组成**，在数组中，它后面紧跟着一个长度字段。注意，Java对象和vm内部对象都有一个共同的对象头格式。
-
-其中上面的**两个词**指的是：
+**由两个词组成**，在数组中，它后面紧跟着一个长度字段。其中上面的**两个词**指的是：
 >mark word
 The first word of every object header. Usually a set of bitfields including synchronization state and identity hash code.
  May also be a pointer (with characteristic low bit encoding) to synchronization related information. 
@@ -133,7 +128,7 @@ For Java objects, the "klass" contains a C++ style "vtable".
       8     4        (object header)                           a1 2c 01 20 (10100001 00101100 00000001 00100000) (536947873)
 ```
 
-在`openjdk8-master`中`markOop.hpp`，有对`mark word`的描述
+在`openjdk8-master`中`markOop.hpp`，有对`mark word`的描述：
 ```
 //  32 bits:
 //  --------
@@ -156,9 +151,7 @@ For Java objects, the "klass" contains a C++ style "vtable".
 但有些资料上显示，`mark word`占8字节(64位)，`klass pointer`也占8字节(64位)；
 其实这种说法也正确，因为虚拟机默认开启了指针压缩，所以默认情况下`klass pointer`占4字节(32位)。
 
-**那么`mark word`64位中存放什么呢？**
-
-从上面可以看出，标志词（mark word）主要存放:
+那么`mark word`64位中存放什么呢？ 从上面可以看出，标志词（`mark word`）主要存放:
 ```
 哈希值
 GC分代年龄
@@ -194,7 +187,7 @@ GC分代年龄
 
 对象的状态是5种，但是在`markword`中表示对象状态的`lock`却是2bit，2bit最多能表示4种状态，那么对象的5种状态是怎么表示的？
 
-2bit 排列组合为：00、11、01、10，最多四种，对象锁的状态是联合用`biased_lock: 1` 和 `lock: 2` 表示的：
+`2bit`排列组合为，`00`、`11`、`01`、`10`，最多四种，对象锁的状态是联合用`biased_lock: 1` 和 `lock: 2` 表示的：
 - `biased_lock` ：0， `lock`： 01，表示无锁状态
 - `biased_lock` ：1， `lock`： 01，表示偏向锁状态
 - `lock`： 00，表示轻量级锁状态
@@ -238,53 +231,60 @@ hotspot使用的是直接访问，因为句柄访问开辟了句柄池，所以�
 ![直接访问](/iblog/posts/annex/images/essays/直接访问.png)
 
 ## 对象的终止机制
-`finalize()`方法是Java提供的对象终止机制，允许开发人员提供对象被销毁之前的自定义处理逻辑。
-当垃圾回收器发现没有引用指向一个对象，即：垃圾回收此对象之前，总会先调用这个对象的`finalize()`方法。
-
-`finalize()` 方法允许在子类中被重写，用于在对象被回收时进行资源释放。
-通常在这个方法中进行一些资源释放和清理的工作，比如关闭文件、套接字和数据库连接等。
-
-```
-   /**
-     * Called by the garbage collector on an object when garbage collection
-     * determines that there are no more references to the object.
-     * A subclass overrides the {@code finalize} method to dispose of
-     * system resources or to perform other cleanup.
-     */
-    protected void finalize() throws Throwable { }
+`finalize`方法是Java提供的对象终止机制，允许开发人员提供对象被销毁之前的自定义处理逻辑。
+当垃圾回收器发现没有引用指向一个对象，即垃圾回收此对象之前，总会先调用这个对象的`finalize`方法。
+```java
+/**
+ * Called by the garbage collector on an object when garbage collection
+ * determines that there are no more references to the object.
+ * A subclass overrides the {@code finalize} method to dispose of
+ * system resources or to perform other cleanup.
+ */
+protected void finalize() throws Throwable { }
 ```
 文档注释大意：当GC确定不再有对对象的引用时，由垃圾收集器在对象上调用。子类重写`finalize`方法来释放系统资源或执行其他清理。
 
-简而言之，`finalize`方法是与Java中的垃圾回收器有关系。即：当一个对象变成一个垃圾对象的时候，如果此对象的内存被回收，那么就会调用该类中定义的`finalize`方法。
-当一个对象可被回收时，就需要执行该对象的 `finalize()` 方法，那么就有可能在该方法中让对象重新被引用，从而实现自救。自救只能进行一次，如果回收的对象之前调用了 `finalize()` 方法自救，后面回收时不会再调用该方法。
+简而言之，`finalize`方法是与Java中的垃圾回收器有关系。当一个对象变成一个垃圾对象的时候，如果此对象的内存被回收，那么就会调用该类中定义的`finalize`方法。
+当一个对象可被回收时，就需要执行该对象的`finalize`方法，那么就有可能在该方法中让对象重新被引用，从而实现自救。自救只能进行一次，如果回收的对象之前调用了`finalize`方法自救，后面回收时不会再调用该方法。
 
-**永远不要主动调用某个对象的`finalize`方法应该交给垃圾回收机制调用的原因：**
+`finalize`方法允许在子类中被重写，用于在对象被回收时进行资源释放。
+通常在这个方法中进行一些资源释放和清理的工作，比如关闭文件、套接字和数据库连接等。
+```java
+public class MyClass {
+    @Override
+    protected void finalize() throws Throwable {
+        try {
+            // 执行清理操作，比如关闭文件或释放资源
+            System.out.println("Finalize method called");
+        } finally {
+            super.finalize(); // 确保调用超类的 finalize 方法
+        }
+    }
+}
+```
+尽管`finalize`可以被用来释放资源，但在实际开发中已经被认为是不可靠和过时的方式。永远不要主动调用某个对象的`finalize`方法，应该交给垃圾回收机制调用的原因：
 - 在调用`finalize`方法时时可能会导致对象复活；
-- `finalize`方法的执行时间是没有保障的，它完全由GC线程决定，极端情况下，若不发生GC，则`finalize`方法将没有执行机会;因为优先级比较低，即使主动调用该方法，也不会因此就直接进行回收；
-- 一个糟糕的`finalize`方法会严重影响GC的性能;
-
-**由于`finalize`方法的存在，虚拟机中的对象一般可能处于三种状态：**
+- `finalize`方法的执行时间是没有保障的，它完全由GC线程决定，极端情况下，若不发生GC，则`finalize`方法将没有执行机会。
+  因为优先级比较低，即使主动调用该方法，也不会因此就直接进行回收；
+- 一个糟糕的`finalize`方法会严重影响GC的性能；
 
 如果从所有的根节点都无法访问到某个对象，说明对象己经不再使用了，一般来说，此对象需要被回收。
-但事实上，也并非是“非死不可”的，这时候它们暂时处于“缓刑”阶段。一个无法触及的对象有可能在某一个条件下“复活”自己，如果这样那么对它的回收就是不合理的，为此，虚拟机中定义了的对象可能的三种状态：
+但事实上，也并非是“非死不可”的，这时候它们暂时处于“缓刑”阶段。一个无法触及的对象有可能在某一个条件下“复活”自己，如果这样那么对它的回收就是不合理的，为此虚拟机中定义了的对象可能的三种状态：
 - 可触及的：从根节点开始，可以到达这个对象；对象存活被使用；
 - 可复活的：对象的所有引用都被释放，但是对象有可能在`finalize`中复活；对象被复活，对象在`finalize`方法中被重新使用；
-- 不可触及的：对象的`finalize`方法被调用，并且没有复活，那么就会进入不可触及状态；对象死亡，对象没有被使用；
+- 不可触及的：对象的`finalize`方法被调用，并且没有复活，那么就会进入不可触及状态；对象死亡、对象没有被使用；
 
-只有在对象不可触及时才可以被回收，不可触及的对象不可能被复活，因为`finalize()`只会被调用一次。
-
-**`finalize`对象终止机制判定一个对象能否被回收过程：**
-
+只有在对象不可触及时才可以被回收，不可触及的对象不可能被复活，因为`finalize`只会被调用一次。
 判定一个对象是否可回收，至少要经历两次标记过程：
 - 如果对象没有没有引用链，则进行第一次标记；
 - 进行筛选，判断此对象是否有必要执行`finalize`方法；
     1. 如果对象没有重写`finalize`方法，或者`finalize`方法已经被虚拟机调用过，则虚拟机视为“没有必要执行”，对象被判定为不可触及的。
     2. 如果对象重写了`finalize`方法，且还未执行过，那么会被插入到`F-Queue`队列中，由一个虚拟机自动创建的、低优先级的`Finalizer`线程触发其`finalize`方法执行。
     3. `finalize`方法是对象逃脱死亡的最后机会，稍后GC会对`F-Queue`队列中的对象进行第二次标记。如果对象在`finalize`方法中与引用链上的任何一个对象建立了联系，那么在第二次标记时，该对象会被移出“即将回收”集合。
-    之后对象会再次出现没有引用存在的情况。在这个情况下，`finalize`方法不会被再次调用，对象会直接变成不可触及的状态，也就是说，一个对象的`finalize`方法只会被调用一次。
-    
+       之后对象会再次出现没有引用存在的情况。在这个情况下，`finalize`方法不会被再次调用，对象会直接变成不可触及的状态，也就是说，一个对象的`finalize`方法只会被调用一次。
+
 代码演示对象能否被回收：
-```
+```java
 public class MainTest {
 
     public static MainTest var;

@@ -445,136 +445,348 @@ System.out.println(e2.get(2)); // 2
 ```
 
 ## finalize
-[//]: # (写到了这里)
-`finalize()`方法是Java提供的对象终止机制，允许开发人员提供对象被销毁之前的自定义处理逻辑。当垃圾回收器发现没有引用指向一个对象，即：垃圾回收此对象之前，总会先调用这个对象的`finalize()`方法。
-
-`finalize()` 方法允许在子类中被重写，用于在对象被回收时进行资源释放。通常在这个方法中进行一些资源释放和清理的工作，比如关闭文件、套接字和数据库连接等。
-
+`finalize`方法是Java提供的对象终止机制，允许开发人员提供对象被销毁之前的自定义处理逻辑。
+当垃圾回收器发现没有引用指向一个对象，即垃圾回收此对象之前，总会先调用这个对象的`finalize`方法。
+```java
+/**
+ * Called by the garbage collector on an object when garbage collection
+ * determines that there are no more references to the object.
+ * A subclass overrides the {@code finalize} method to dispose of
+ * system resources or to perform other cleanup.
+ */
+protected void finalize() throws Throwable { }
+```
 文档注释大意：当GC确定不再有对对象的引用时，由垃圾收集器在对象上调用。子类重写`finalize`方法来释放系统资源或执行其他清理。
+
+简而言之，`finalize`方法是与Java中的垃圾回收器有关系。当一个对象变成一个垃圾对象的时候，如果此对象的内存被回收，那么就会调用该类中定义的`finalize`方法。
+当一个对象可被回收时，就需要执行该对象的`finalize`方法，那么就有可能在该方法中让对象重新被引用，从而实现自救。自救只能进行一次，如果回收的对象之前调用了`finalize`方法自救，后面回收时不会再调用该方法。
+
+`finalize`方法允许在子类中被重写，用于在对象被回收时进行资源释放。
+通常在这个方法中进行一些资源释放和清理的工作，比如关闭文件、套接字和数据库连接等。
+```java
+public class MyClass {
+    @Override
+    protected void finalize() throws Throwable {
+        try {
+            // 执行清理操作，比如关闭文件或释放资源
+            System.out.println("Finalize method called");
+        } finally {
+            super.finalize(); // 确保调用超类的 finalize 方法
+        }
+    }
+}
 ```
-   /**
-     * Called by the garbage collector on an object when garbage collection
-     * determines that there are no more references to the object.
-     * A subclass overrides the {@code finalize} method to dispose of
-     * system resources or to perform other cleanup.
-     */
-    protected void finalize() throws Throwable { }
-```
-
-简而言之，`finalize`方法是与Java中的垃圾回收器有关系。即：当一个对象变成一个垃圾对象的时候，如果此对象的内存被回收，那么就会调用该类中定义的`finalize`方法。
-
-当一个对象可被回收时，就需要执行该对象的 `finalize()` 方法，那么就有可能在该方法中让对象重新被引用，从而实现自救。自救只能进行一次，如果回收的对象之前调用了 `finalize()` 方法自救，后面回收时不会再调用该方法。
-
-**永远不要主动调用某个对象的`finalize`方法应该交给垃圾回收机制调用的原因：**
-
+尽管`finalize`可以被用来释放资源，但在实际开发中已经被认为是不可靠和过时的方式。永远不要主动调用某个对象的`finalize`方法，应该交给垃圾回收机制调用的原因：
 - 在调用`finalize`方法时时可能会导致对象复活；
-- `finalize`方法的执行时间是没有保障的，它完全由GC线程决定，极端情况下，若不发生GC，则`finalize`方法将没有执行机会;因为优先级比较低，即使主动调用该方法，也不会因此就直接进行回收；
-- 一个糟糕的`finalize`方法会严重影响GC的性能;
+- `finalize`方法的执行时间是没有保障的，它完全由GC线程决定，极端情况下，若不发生GC，则`finalize`方法将没有执行机会。
+因为优先级比较低，即使主动调用该方法，也不会因此就直接进行回收；
+- 一个糟糕的`finalize`方法会严重影响GC的性能；
 
-**由于`finalize`方法的存在，虚拟机中的对象一般可能处于三种状态：**
-
-如果从所有的根节点都无法访问到某个对象，说明对象己经不再使用了。一般来说，此对象需要被回收。但事实上，也并非是“非死不可”的，这时候它们暂时处于“缓刑”阶段。一个无法触及的对象有可能在某一个条件下“复活”自己，如果这样，那么对它的回收就是不合理的，为此，虚拟机中定义了的对象可能的三种状态：
+如果从所有的根节点都无法访问到某个对象，说明对象己经不再使用了，一般来说，此对象需要被回收。
+但事实上，也并非是“非死不可”的，这时候它们暂时处于“缓刑”阶段。一个无法触及的对象有可能在某一个条件下“复活”自己，如果这样那么对它的回收就是不合理的，为此虚拟机中定义了的对象可能的三种状态：
 - 可触及的：从根节点开始，可以到达这个对象；对象存活被使用；
 - 可复活的：对象的所有引用都被释放，但是对象有可能在`finalize`中复活；对象被复活，对象在`finalize`方法中被重新使用；
-- 不可触及的：对象的`finalize`方法被调用，并且没有复活，那么就会进入不可触及状态；对象死亡，对象没有被使用；
+- 不可触及的：对象的`finalize`方法被调用，并且没有复活，那么就会进入不可触及状态；对象死亡、对象没有被使用；
 
-只有在对象不可触及时才可以被回收。不可触及的对象不可能被复活，因为`finalize()`只会被调用一次。
-
-**`finalize`对象终止机制判定一个对象能否被回收过程：**
-
+只有在对象不可触及时才可以被回收，不可触及的对象不可能被复活，因为`finalize`只会被调用一次。
 判定一个对象是否可回收，至少要经历两次标记过程：
-- 如果对象没有没有引用链，则进行第一次标记
-- 进行筛选，判断此对象是否有必要执行`finalize`方法
-    1. 如果对象没有重写`finalize`方法，或者`finalize`方法已经被虚拟机调用过，则虚拟机视为“没有必要执行”，对象被判定为不可触及的。
-    2. 如果对象重写了`finalize`方法，且还未执行过，那么会被插入到`F-Queue`队列中，由一个虚拟机自动创建的、低优先级的`Finalizer`线程触发其`finalize`方法执行。
-    3. `finalize`方法是对象逃脱死亡的最后机会，稍后GC会对`F-Queue`队列中的对象进行第二次标记。如果对象在`finalize`方法中与引用链上的任何一个对象建立了联系，那么在第二次标记时，该对象会被移出“即将回收”集合。之后，对象会再次出现没有引用存在的情况。在这个情况下，`finalize`方法不会被再次调用，对象会直接变成不可触及的状态，也就是说，一个对象的`finalize`方法只会被调用一次。
-    
+- 如果对象没有没有引用链，则进行第一次标记；
+- 进行筛选，判断此对象是否有必要执行`finalize`方法；
+  1. 如果对象没有重写`finalize`方法，或者`finalize`方法已经被虚拟机调用过，则虚拟机视为“没有必要执行”，对象被判定为不可触及的。
+  2. 如果对象重写了`finalize`方法，且还未执行过，那么会被插入到`F-Queue`队列中，由一个虚拟机自动创建的、低优先级的`Finalizer`线程触发其`finalize`方法执行。
+  3. `finalize`方法是对象逃脱死亡的最后机会，稍后GC会对`F-Queue`队列中的对象进行第二次标记。如果对象在`finalize`方法中与引用链上的任何一个对象建立了联系，那么在第二次标记时，该对象会被移出“即将回收”集合。
+     之后对象会再次出现没有引用存在的情况。在这个情况下，`finalize`方法不会被再次调用，对象会直接变成不可触及的状态，也就是说，一个对象的`finalize`方法只会被调用一次。
+
 代码演示对象能否被回收：
 ```java
 public class MainTest {
 
-    public static MainTest var;
+  public static MainTest var;
 
-    /**
-     * 此方法只能被调用一次
-     * 可对该方法进行注释，来测试finalize方法是否能复活对象
-     */
-    @Override
-    protected void finalize() throws Throwable {
-        System.out.println("调用当前类重写的finalize()方法");
-        // 复活对象 让当前带回收对象重新与引用链中的对象建立联系
-        var = this;
+  /**
+   * 此方法只能被调用一次
+   * 可对该方法进行注释，来测试finalize方法是否能复活对象
+   */
+  @Override
+  protected void finalize() throws Throwable {
+    System.out.println("调用当前类重写的finalize()方法");
+    // 复活对象 让当前带回收对象重新与引用链中的对象建立联系
+    var = this;
+  }
+
+  public static void main(String[] args) throws InterruptedException {
+    var = new MainTest();
+    var = null;
+    System.gc();
+    System.out.println("-----------------第一次gc操作------------");
+    // 因为Finalizer线程的优先级比较低，暂停2秒，以等待它
+    Thread.sleep(2000);
+    if (var == null) {
+      System.out.println("对象已经死了");
+      // 如果第一次对象就死亡了 就终止
+      return;
+    } else {
+      System.out.println("对象还活着");
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        var = new MainTest();
-        var = null;
-        System.gc();
-        System.out.println("-----------------第一次gc操作------------");
-        // 因为Finalizer线程的优先级比较低，暂停2秒，以等待它
-        Thread.sleep(2000);
-        if (var == null) {
-            System.out.println("对象已经死了");
-            // 如果第一次对象就死亡了 就终止
-            return;
-        } else {
-            System.out.println("对象还活着");
-        }
-
-        System.out.println("-----------------第二次gc操作------------");
-        var = null;
-        System.gc();
-        // 下面代码和上面代码是一样的，但是 对象却自救失败了
-        Thread.sleep(2000);
-        if (var == null) {
-            System.out.println("对象已经死了");
-        } else {
-            System.out.println("对象还活着");
-        }
+    System.out.println("-----------------第二次gc操作------------");
+    var = null;
+    System.gc();
+    // 下面代码和上面代码是一样的，但是 对象却自救失败了
+    Thread.sleep(2000);
+    if (var == null) {
+      System.out.println("对象已经死了");
+    } else {
+      System.out.println("对象还活着");
     }
+  }
 
 }
 ```
 
 ## getClass
+`getClass`方法是Java中的一个重要方法，它用于返回对象的运行时类。这个方法定义在`java.lang.Object`类中，因此每个Java对象都可以调用它。
+```java
+/**
+ * Returns the runtime class of this {@code Object}. The returned
+ * {@code Class} object is the object that is locked by {@code
+ * static synchronized} methods of the represented class.
+ */
+ public final native Class<?> getClass();
 ```
-    /**
-     * Returns the runtime class of this {@code Object}. The returned
-     * {@code Class} object is the object that is locked by {@code
-     * static synchronized} methods of the represented class.
-     */
-     public final native Class<?> getClass();
+文档大意：返回这个对象的运行时类，返回的`Class`对象是被表示类的`static synchronized`方法锁定的对象。
+
+`getClass`方法返回对象运行时的类，返回的类型是`Class`类型的对象。可以通过这个`Class`对象来创建调用这个方法的对象和执行一些其他操作，这便是反射的入口。
+```java
+public class MainTest {
+  public static void main(String[] args) throws Exception {
+    String str = "Hello, World!";
+    Class<?> clazz = str.getClass();
+
+    Method method = clazz.getMethod("substring", int.class, int.class);
+    String result = (String) method.invoke(str, 7, 12);
+
+    System.out.println("Result: " + result); // Output: World
+  }
+}
+
 ```
-大意：返回这个对象的运行时类。返回的`Class`对象是被表示类的`static synchronized`方法锁定的对象。
+在某些情况下，需要比较两个对象是否属于同一类型。通过`getClass`方法可以方便地进行类型比较。
+```java
+public class MainTest {
+    public static void main(String[] args) {
+        String str1 = "Hello";
+        String str2 = "World";
+        Integer num = 42;
 
-`getClass`方法返回对象运行时的类。返回的类型是`Class`类型的对象。可以通过这个`Class`对象来创建调用这个方法的对象和执行一些其他操作，这便是反射的入口。
+        if (str1.getClass() == str2.getClass()) {
+            System.out.println("str1 and str2 are of the same type.");
+        }
 
-除了可以使用`getClass`来获取反射入口外，还有一种方法与`getClass()`方法极为相似：获取对象的`.class`属性。
+        if (str1.getClass() != num.getClass()) {
+            System.out.println("str1 and num are of different types.");
+        }
+    }
+}
+```
 
-二者区别：
-- `.class`其实是在java运行时就加载进去的，可以说是编译时期就决定好的
-- `getClass()`是运行程序时动态加载的
+## notify
+`notify`方法用于唤醒在该对象监视器上等待的一个线程。
+如果有多个线程在该对象上等待，具体唤醒哪一个线程是由线程调度器决定的，并且是不确定的。被唤醒的线程将继续执行，从调用`wait`方法的地方开始。
+```java
+public final void notify();
+```
+`notify`适用于有多个线程等待一个共享资源，但每次只能一个线程进行处理的情况。
+例如，生产者-消费者模型中，当有一个生产者线程生产了一个产品，可以使用`notify`唤醒一个消费者线程来消费该产品。
+```java
+class SharedResource {
+    private Queue<Integer> queue = new LinkedList<>();
+    private final int CAPACITY = 5;
 
-## wait、notify、notifyAll
-之所以把这三个方法放在一起，是因为他们是搭配使用的。
+    public synchronized void produce(int value) throws InterruptedException {
+        while (queue.size() == CAPACITY) {
+            wait();
+        }
+        queue.add(value);
+        System.out.println("Produced: " + value);
+        notify(); // 唤醒一个等待的消费者线程
+    }
 
-- `wait`方法的作用是让当前对象上的线程进入等待状态，同时`wait()`也会让当前线程释放它所持有的锁。直到其他线程调用此对象的`notify()`方法或 `notifyAll()` 方法，当前对象上线程被唤醒进入就绪状态。
-- `notify()`和`notifyAll()`的作用，则是唤醒当前对象上的等待线程；`notify()`是(随机)唤醒当前对象上单个线程，而`notifyAll()`是唤醒当前对象上所有的线程。
-- `wait(long timeout)`方法让当前对象上线程处于等待(阻塞)状态，直到其他线程调用此对象的`notify()`方法或`notifyAll()`方法，或者超过指定的时间量，当前线程被唤醒进入就绪状态。
+    public synchronized void consume() throws InterruptedException {
+        while (queue.isEmpty()) {
+            wait();
+        }
+        int value = queue.poll();
+        System.out.println("Consumed: " + value);
+        notify(); // 唤醒一个等待的生产者线程
+    }
+}
 
-需要注意的是`wait`方法与`sleep`方法，很多人分不清他俩。
+public class NotifyExample {
+    public static void main(String[] args) {
+        SharedResource resource = new SharedResource();
 
-`sleep`和`wait`方法异同点：
+        Thread producer = new Thread(() -> {
+            try {
+                for (int i = 0; i < 10; i++) {
+                    resource.produce(i);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+
+        Thread consumer = new Thread(() -> {
+            try {
+                for (int i = 0; i < 10; i++) {
+                    resource.consume();
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+
+        producer.start();
+        consumer.start();
+    }
+}
+```
+
+## notifyAll
+`notifyAll`方法用于唤醒在该对象监视器上等待的所有线程。所有被唤醒的线程将竞争对象的监视器锁，只有一个线程能成功获得锁并继续执行。
+```java
+public final void notifyAll();
+```
+`notifyAll`适用于多个线程等待同一个条件，并且当条件满足时，需要所有等待的线程都重新检查条件的情况。
+例如，在某些复杂的同步场景中，当某个状态变化需要通知所有等待线程时，使用`notifyAll`可以确保所有等待的线程都被唤醒并检查新状态。
+```java
+class SharedResource {
+    private Queue<Integer> queue = new LinkedList<>();
+    private final int CAPACITY = 5;
+
+    public synchronized void produce(int value) throws InterruptedException {
+        while (queue.size() == CAPACITY) {
+            wait();
+        }
+        queue.add(value);
+        System.out.println("Produced: " + value);
+        notifyAll(); // 唤醒所有等待的消费者线程
+    }
+
+    public synchronized void consume() throws InterruptedException {
+        while (queue.isEmpty()) {
+            wait();
+        }
+        int value = queue.poll();
+        System.out.println("Consumed: " + value);
+        notifyAll(); // 唤醒所有等待的生产者线程
+    }
+}
+
+public class NotifyAllExample {
+    public static void main(String[] args) {
+        SharedResource resource = new SharedResource();
+
+        Thread producer1 = new Thread(() -> {
+            try {
+                for (int i = 0; i < 5; i++) {
+                    resource.produce(i);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+
+        Thread producer2 = new Thread(() -> {
+            try {
+                for (int i = 5; i < 10; i++) {
+                    resource.produce(i);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+
+        Thread consumer1 = new Thread(() -> {
+            try {
+                for (int i = 0; i < 5; i++) {
+                    resource.consume();
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+
+        Thread consumer2 = new Thread(() -> {
+            try {
+                for (int i = 0; i < 5; i++) {
+                    resource.consume();
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+
+        producer1.start();
+        producer2.start();
+        consumer1.start();
+        consumer2.start();
+    }
+}
+```
+
+
+
+## wait
+`wait`方法使当前线程进入等待状态，同时`wait()`也会让当前线程释放它所持有的锁。
+直到其他线程调用该对象的`notify`方法或`notifyAll`方法来唤醒它，或者在指定的时间内没有被唤醒。该方法必须在同步块或同步方法中调用。
+```java
+public final void wait() throws InterruptedException;
+public final void wait(long timeout) throws InterruptedException;
+public final void wait(long timeout, int nanos) throws InterruptedException;
+```
+- `wait()`：使当前线程无限期等待，直到被唤醒。
+- `wait(long timeout)`：使当前线程等待指定的毫秒数后自动唤醒。
+- `wait(long timeout, int nanos)`：使当前线程等待指定的时间（以毫秒和纳秒为单位）后自动唤醒。
+
+```java
+public class WaitNotifyExample {
+    private static final Object lock = new Object();
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread waitingThread = new Thread(() -> {
+            synchronized (lock) {
+                try {
+                    System.out.println("Thread is waiting...");
+                    lock.wait();
+                    System.out.println("Thread is resumed.");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        Thread notifyingThread = new Thread(() -> {
+            synchronized (lock) {
+                System.out.println("Thread is notifying...");
+                lock.notify();
+            }
+        });
+
+        waitingThread.start();
+        Thread.sleep(1000); // Ensure waitingThread starts waiting
+        notifyingThread.start();
+    }
+}
+```
+
+需要注意区分`wait`方法与`sleep`方法，很多人分不清。`sleep`和`wait`方法异同点：
 - `sleep()`属于`Thread`类，`wait()`属于`Object`类；
-- `sleep()`和`wait()`都会抛出`InterruptedException`异常，这个异常属于`checkedException`不可避免；
-- 两者比较的共同之处是，都是使程序等待多长时间。不同的是调用`sleep()`不会释放锁，会使线程堵塞，而调用`wait()`会释放锁，让线程进入等待状态，用 `notify()、notifyall()`可以唤醒，或者等待时间到了； 这是因为，如果没有释放锁，那么其它线程就无法进入对象的同步方法或者同步控制块中，那么就无法执行 `notify()` 或者 `notifyAll()` 来唤醒挂起的线程，造成死锁。
+- `sleep()`和`wait()`都会抛出`InterruptedException`异常，这个异常属于`checkedException`是不可避免；
+- 两者比较的共同之处是，都是使程序等待多长时间。不同的是调用`sleep()`不会释放锁，会使线程堵塞，而调用`wait()`会释放锁，让线程进入等待状态，用 `notify()`、`notifyall()`可以唤醒，或者等待时间到了； 这是因为，如果没有释放锁，那么其它线程就无法进入对象的同步方法或者同步控制块中，那么就无法执行 `notify()` 或者 `notifyAll()` 来唤醒挂起的线程，造成死锁。
 - `wait()`必须在同步`synchronized`块里使用，`sleep()`可以在任意地方使用；
 
-**其中"`wait()`必须在同步`synchronized`块里使用"，使其不止`wait`方法，`notify、notifyAll`也和`wait`方法一样，必须在`synchronized`块里使用，为什么呢？**
+其中"`wait()`必须在同步`synchronized`块里使用"，使其不止`wait`方法，`notify、notifyAll`也和`wait`方法一样，必须在`synchronized`块里使用，为什么呢？
 
-- 是为了避免丢失唤醒问题。假设没有`synchronized`修饰，使用了`wait`方法而没有设置等待时间，也没有调用唤醒方法或者唤醒方法调用的时机不对，这个线程将会永远的堵塞下去。
-- `wait()、notify、notifyAll`方法调用的时候要释放锁，你都没给它加锁，他怎么释放锁，所以如果没在`synchronized`块中调用`wait()、notify、notifyAll`方法是肯定抛异常的。
-
-
-
-
+是为了避免丢失唤醒问题。假设没有`synchronized`修饰，使用了`wait`方法而没有设置等待时间，也没有调用唤醒方法或者唤醒方法调用的时机不对，这个线程将会永远的堵塞下去。
+`wait`、`notify`、`notifyAll`方法调用的时候要释放锁，你都没给它加锁，他怎么释放锁。所以如果没在`synchronized`块中调用`wait()、notify、notifyAll`方法是肯定抛异常的。

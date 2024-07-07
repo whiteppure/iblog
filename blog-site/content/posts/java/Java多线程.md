@@ -3499,7 +3499,6 @@ public CopyOnWriteArraySet() {
     al = new CopyOnWriteArrayList<E>();
 }
 ```
-参照[CopyWriteArrayList原理](#CopyWriteArrayList原理)
 
 ### HashMap
 `HashMap`也是线程不安全的集合类，在多线程环境下使用同样会出现`java.util.ConcurrentModificationException`。
@@ -3925,7 +3924,7 @@ private final void addCount(long x, int check) {
 - https://zhuanlan.zhihu.com/p/290991898
 - https://blog.csdn.net/choukekai/article/details/63688332
 - https://blog.csdn.net/zqz_zqz/article/details/70233767
-- [https://oss.stupidzhang.com/img/blog/锁升级过程.png](https://oss.stupidzhang.com/img/blog/锁升级过程.png)
+- https://oss.stupidzhang.com/img/blog/锁升级过程.png
 - https://developer.aliyun.com/topic/download?spm=a2c6h.15028928.J_5293118740.2&id=805
 - https://tech.meituan.com/2018/11/15/java-lock.html
 - https://www.cnblogs.com/aspirant/p/11470858.html
