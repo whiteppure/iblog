@@ -1067,7 +1067,7 @@
                     </div>
                     <div class="post_content markdown"><h2 id="概览">概览</h2>
 <p>Spring是一个轻量级的Java开源框架，为了解决企业应用开发的复杂性而创建的。Spring的核心是控制反转（IOC）和面向切面（AOP）。</p>
-<p>简单来说，Spring是一个分层的JavaSE/EE 一站式轻量级开源框架。在每一层都提供支持。</p>
+<p>简单来说，Spring是一个分层的JavaSE/EE 一站式轻量级开源框架，在每一层都提供支持。</p>
 <ul>
 <li>表示层：spring mvc</li>
 <li>业务层：spring</li>
@@ -1680,17 +1680,17 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 </span></span><span class="line"><span class="cl">    TestDao testDao;
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><h4 id="原理">原理</h4>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/
-</span></span><span class="line"><span class="cl"> * @see AutowiredAnnotationBeanPostProcessor
-</span></span><span class="line"><span class="cl"> */
-</span></span><span class="line"><span class="cl">@Target({ElementType.CONSTRUCTOR, ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-</span></span><span class="line"><span class="cl">@Retention(RetentionPolicy.RUNTIME)
-</span></span><span class="line"><span class="cl">@Documented
-</span></span><span class="line"><span class="cl">public @interface Autowired{}
-</span></span></code></pre></div><p>在<code>@Autowired</code>注解文档注释上面，可以看到与之息息相关的一个类<code>AutowiredAnnotationBeanPostProcessor</code>，即<code>@Autowired</code>后置处理器；
-可以看到该类实现了<code>MergedBeanDefinitionPostProcessor</code>接口，在<code>postProcessMergedBeanDefinition</code>方法上打一个断点，就可以看到<code>@Autowired</code>的调用栈。</p>
-<p><code>@Autowired</code>注解调用栈：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">AbstractApplicationContext.refresh(容器初始化)
+<p>在<code>@Autowired</code>注解文档注释上面，可以看到与之息息相关的一个类<code>AutowiredAnnotationBeanPostProcessor</code>，即<code>@Autowired</code>后置处理器。
+看到该类实现了<code>MergedBeanDefinitionPostProcessor</code>接口，在<code>postProcessMergedBeanDefinition</code>方法上打一个断点，就可以看到<code>@Autowired</code>的调用栈。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @see AutowiredAnnotationBeanPostProcessor
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">CONSTRUCTOR</span><span class="p">,</span><span class="w"> </span><span class="n">ElementType</span><span class="p">.</span><span class="na">METHOD</span><span class="p">,</span><span class="w"> </span><span class="n">ElementType</span><span class="p">.</span><span class="na">PARAMETER</span><span class="p">,</span><span class="w"> </span><span class="n">ElementType</span><span class="p">.</span><span class="na">FIELD</span><span class="p">,</span><span class="w"> </span><span class="n">ElementType</span><span class="p">.</span><span class="na">ANNOTATION_TYPE</span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Documented</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="nd">@interface</span><span class="w"> </span><span class="n">Autowired</span><span class="p">{}</span><span class="w">
+</span></span></span></code></pre></div><p><code>@Autowired</code>注解调用栈：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">AbstractApplicationContext.refresh(容器初始化)
 </span></span><span class="line"><span class="cl">---&gt; registerBeanPostProcessors (注册AutowiredAnnotationBeanPostProcessor) 
 </span></span><span class="line"><span class="cl">---&gt; finishBeanFactoryInitialization
 </span></span><span class="line"><span class="cl">---&gt; AbstractAutowireCapableBeanFactory.doCreateBean
@@ -1698,95 +1698,96 @@ BeanA已经创建，此时会将BeanA赋值给BeanB中的A属性，至此BeanB�
 </span></span><span class="line"><span class="cl">---&gt; MergedBeanDefinitionPostProcessor.postProcessMergedBeanDefinition
 </span></span><span class="line"><span class="cl">---&gt; AutowiredAnnotationBeanPostProcessor.findAutowiringMetadata
 </span></span></code></pre></div><p>核心调用：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="n">postProcessMergedBeanDefinition</span><span class="o">`-&gt;`</span><span class="n">findAutowiringMetadata</span><span class="o">`-&gt;`</span><span class="n">buildAutowiringMetadata</span><span class="w">
-</span></span></span></code></pre></div><p>相关源码：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Override
-</span></span><span class="line"><span class="cl">public void postProcessMergedBeanDefinition(RootBeanDefinition beanDefinition, Class&lt;?&gt; beanType, String beanName) {
-</span></span><span class="line"><span class="cl">    // 调用 findAutowiringMetadata
-</span></span><span class="line"><span class="cl">    InjectionMetadata metadata = findAutowiringMetadata(beanName, beanType, null);
-</span></span><span class="line"><span class="cl">    metadata.checkConfigMembers(beanDefinition);
-</span></span><span class="line"><span class="cl">}
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">private InjectionMetadata findAutowiringMetadata(String beanName, Class&lt;?&gt; clazz, @Nullable PropertyValues pvs) {
-</span></span><span class="line"><span class="cl">		// Fall back to class name as cache key, for backwards compatibility with custom callers.
-</span></span><span class="line"><span class="cl">		String cacheKey = (StringUtils.hasLength(beanName) ? beanName : clazz.getName());
-</span></span><span class="line"><span class="cl">		// Quick check on the concurrent map first, with minimal locking.
-</span></span><span class="line"><span class="cl">		InjectionMetadata metadata = this.injectionMetadataCache.get(cacheKey);
-</span></span><span class="line"><span class="cl">		if (InjectionMetadata.needsRefresh(metadata, clazz)) {
-</span></span><span class="line"><span class="cl">			synchronized (this.injectionMetadataCache) {
-</span></span><span class="line"><span class="cl">				metadata = this.injectionMetadataCache.get(cacheKey);
-</span></span><span class="line"><span class="cl">				if (InjectionMetadata.needsRefresh(metadata, clazz)) {
-</span></span><span class="line"><span class="cl">					if (metadata != null) {
-</span></span><span class="line"><span class="cl">						metadata.clear(pvs);
-</span></span><span class="line"><span class="cl">					}
-</span></span><span class="line"><span class="cl">                    // 调用buildAutowiringMetadata
-</span></span><span class="line"><span class="cl">					metadata = buildAutowiringMetadata(clazz);
-</span></span><span class="line"><span class="cl">					this.injectionMetadataCache.put(cacheKey, metadata);
-</span></span><span class="line"><span class="cl">				}
-</span></span><span class="line"><span class="cl">			}
-</span></span><span class="line"><span class="cl">		}
-</span></span><span class="line"><span class="cl">		return metadata;
-</span></span><span class="line"><span class="cl">	}
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">private InjectionMetadata buildAutowiringMetadata(final Class&lt;?&gt; clazz) {
-</span></span><span class="line"><span class="cl">		LinkedList&lt;InjectionMetadata.InjectedElement&gt; elements = new LinkedList&lt;&gt;();
-</span></span><span class="line"><span class="cl">		Class&lt;?&gt; targetClass = clazz;//需要处理的目标类
-</span></span><span class="line"><span class="cl">       
-</span></span><span class="line"><span class="cl">		do {
-</span></span><span class="line"><span class="cl">			final LinkedList&lt;InjectionMetadata.InjectedElement&gt; currElements = new LinkedList&lt;&gt;();
-</span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl">            /*通过反射获取该类所有的字段，并遍历每一个字段，并通过方法findAutowiredAnnotation遍历每一个字段的所用注解，并如果用autowired修饰了，则返回auotowired相关属性*/  
-</span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl">			ReflectionUtils.doWithLocalFields(targetClass, field -&gt; {
-</span></span><span class="line"><span class="cl">				AnnotationAttributes ann = findAutowiredAnnotation(field);
-</span></span><span class="line"><span class="cl">				if (ann != null) {//校验autowired注解是否用在了static方法上
-</span></span><span class="line"><span class="cl">					if (Modifier.isStatic(field.getModifiers())) {
-</span></span><span class="line"><span class="cl">						if (logger.isWarnEnabled()) {
-</span></span><span class="line"><span class="cl">							logger.warn(&#34;Autowired annotation is not supported on static fields: &#34; + field);
-</span></span><span class="line"><span class="cl">						}
-</span></span><span class="line"><span class="cl">						return;
-</span></span><span class="line"><span class="cl">					}//判断是否指定了required
-</span></span><span class="line"><span class="cl">					boolean required = determineRequiredStatus(ann);
-</span></span><span class="line"><span class="cl">					currElements.add(new AutowiredFieldElement(field, required));
-</span></span><span class="line"><span class="cl">				}
-</span></span><span class="line"><span class="cl">			});
-</span></span><span class="line"><span class="cl">            //和上面一样的逻辑，但是是通过反射处理类的method
-</span></span><span class="line"><span class="cl">			ReflectionUtils.doWithLocalMethods(targetClass, method -&gt; {
-</span></span><span class="line"><span class="cl">				Method bridgedMethod = BridgeMethodResolver.findBridgedMethod(method);
-</span></span><span class="line"><span class="cl">				if (!BridgeMethodResolver.isVisibilityBridgeMethodPair(method, bridgedMethod)) {
-</span></span><span class="line"><span class="cl">					return;
-</span></span><span class="line"><span class="cl">				}
-</span></span><span class="line"><span class="cl">				AnnotationAttributes ann = findAutowiredAnnotation(bridgedMethod);
-</span></span><span class="line"><span class="cl">				if (ann != null &amp;&amp; method.equals(ClassUtils.getMostSpecificMethod(method, clazz))) {
-</span></span><span class="line"><span class="cl">					if (Modifier.isStatic(method.getModifiers())) {
-</span></span><span class="line"><span class="cl">						if (logger.isWarnEnabled()) {
-</span></span><span class="line"><span class="cl">							logger.warn(&#34;Autowired annotation is not supported on static methods: &#34; + method);
-</span></span><span class="line"><span class="cl">						}
-</span></span><span class="line"><span class="cl">						return;
-</span></span><span class="line"><span class="cl">					}
-</span></span><span class="line"><span class="cl">					if (method.getParameterCount() == 0) {
-</span></span><span class="line"><span class="cl">						if (logger.isWarnEnabled()) {
-</span></span><span class="line"><span class="cl">							logger.warn(&#34;Autowired annotation should only be used on methods with parameters: &#34; +
-</span></span><span class="line"><span class="cl">									method);
-</span></span><span class="line"><span class="cl">						}
-</span></span><span class="line"><span class="cl">					}
-</span></span><span class="line"><span class="cl">					boolean required = determineRequiredStatus(ann);
-</span></span><span class="line"><span class="cl">					PropertyDescriptor pd = BeanUtils.findPropertyForMethod(bridgedMethod, clazz);
-</span></span><span class="line"><span class="cl">              	    currElements.add(new AutowiredMethodElement(method, required, pd));
-</span></span><span class="line"><span class="cl">				}
-</span></span><span class="line"><span class="cl">			});
-</span></span><span class="line"><span class="cl">    //用@Autowired修饰的注解可能不止一个，因此都加在currElements这个容器里面，一起处理		
-</span></span><span class="line"><span class="cl">			elements.addAll(0, currElements);
-</span></span><span class="line"><span class="cl">			targetClass = targetClass.getSuperclass();
-</span></span><span class="line"><span class="cl">		}
-</span></span><span class="line"><span class="cl">		while (targetClass != null &amp;&amp; targetClass != Object.class);
-</span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl">		return new InjectionMetadata(clazz, elements);
-</span></span><span class="line"><span class="cl">	}
-</span></span></code></pre></div><p>当<code>Spring</code> 容器启动时，<code>AutowiredAnnotationBeanPostProcessor</code> 组件会被注册到容器中，然后扫描代码，如果带有 <code>@Autowired</code> 注解，则将依赖注入信息封装到 <code>InjectionMetadata</code> 中。</p>
-<p>最后创建 <code>bean</code>，即实例化对象和调用初始化方法，会调用各种 <code>XXXBeanPostProcessor</code> 对 <code>bean</code> 初始化，其中包括<code>AutowiredAnnotationBeanPostProcessor</code>，它负责将相关的依赖注入到容器中。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">postProcessMergedBeanDefinition
+</span></span><span class="line"><span class="cl">---&gt;findAutowiringMetadata
+</span></span><span class="line"><span class="cl">---&gt;buildAutowiringMetadata
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">postProcessMergedBeanDefinition</span><span class="p">(</span><span class="n">RootBeanDefinition</span><span class="w"> </span><span class="n">beanDefinition</span><span class="p">,</span><span class="w"> </span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">beanType</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">beanName</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 调用 findAutowiringMetadata</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">InjectionMetadata</span><span class="w"> </span><span class="n">metadata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">findAutowiringMetadata</span><span class="p">(</span><span class="n">beanName</span><span class="p">,</span><span class="w"> </span><span class="n">beanType</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">metadata</span><span class="p">.</span><span class="na">checkConfigMembers</span><span class="p">(</span><span class="n">beanDefinition</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">private</span><span class="w"> </span><span class="n">InjectionMetadata</span><span class="w"> </span><span class="nf">findAutowiringMetadata</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">beanName</span><span class="p">,</span><span class="w"> </span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">clazz</span><span class="p">,</span><span class="w"> </span><span class="nd">@Nullable</span><span class="w"> </span><span class="n">PropertyValues</span><span class="w"> </span><span class="n">pvs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Fall back to class name as cache key, for backwards compatibility with custom callers.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">cacheKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">StringUtils</span><span class="p">.</span><span class="na">hasLength</span><span class="p">(</span><span class="n">beanName</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">beanName</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">clazz</span><span class="p">.</span><span class="na">getName</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Quick check on the concurrent map first, with minimal locking.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">InjectionMetadata</span><span class="w"> </span><span class="n">metadata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">injectionMetadataCache</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">cacheKey</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">InjectionMetadata</span><span class="p">.</span><span class="na">needsRefresh</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span><span class="w"> </span><span class="n">clazz</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">synchronized</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">injectionMetadataCache</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">metadata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">injectionMetadataCache</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">cacheKey</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">InjectionMetadata</span><span class="p">.</span><span class="na">needsRefresh</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span><span class="w"> </span><span class="n">clazz</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">metadata</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">metadata</span><span class="p">.</span><span class="na">clear</span><span class="p">(</span><span class="n">pvs</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="c1">// 调用buildAutowiringMetadata</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">metadata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buildAutowiringMetadata</span><span class="p">(</span><span class="n">clazz</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">this</span><span class="p">.</span><span class="na">injectionMetadataCache</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">cacheKey</span><span class="p">,</span><span class="w"> </span><span class="n">metadata</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">metadata</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">private</span><span class="w"> </span><span class="n">InjectionMetadata</span><span class="w"> </span><span class="nf">buildAutowiringMetadata</span><span class="p">(</span><span class="kd">final</span><span class="w"> </span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">clazz</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">InjectionMetadata</span><span class="p">.</span><span class="na">InjectedElement</span><span class="o">&gt;</span><span class="w"> </span><span class="n">elements</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LinkedList</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">targetClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clazz</span><span class="p">;</span><span class="c1">//需要处理的目标类</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">do</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">final</span><span class="w"> </span><span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">InjectionMetadata</span><span class="p">.</span><span class="na">InjectedElement</span><span class="o">&gt;</span><span class="w"> </span><span class="n">currElements</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LinkedList</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 通过反射获取该类所有的字段，并遍历每一个字段，并通过方法findAutowiredAnnotation遍历每一个字段的所用注解，</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 如果用autowired修饰了，则返回auotowired相关属性</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ReflectionUtils</span><span class="p">.</span><span class="na">doWithLocalFields</span><span class="p">(</span><span class="n">targetClass</span><span class="p">,</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">AnnotationAttributes</span><span class="w"> </span><span class="n">ann</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">findAutowiredAnnotation</span><span class="p">(</span><span class="n">field</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ann</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="c1">//校验autowired注解是否用在了static方法上</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Modifier</span><span class="p">.</span><span class="na">isStatic</span><span class="p">(</span><span class="n">field</span><span class="p">.</span><span class="na">getModifiers</span><span class="p">()))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">logger</span><span class="p">.</span><span class="na">isWarnEnabled</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&#34;Autowired annotation is not supported on static fields: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">field</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="k">return</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="c1">//判断是否指定了required</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="kt">boolean</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">determineRequiredStatus</span><span class="p">(</span><span class="n">ann</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">currElements</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">AutowiredFieldElement</span><span class="p">(</span><span class="n">field</span><span class="p">,</span><span class="w"> </span><span class="n">required</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 和上面一样的逻辑，但是是通过反射处理类的method</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ReflectionUtils</span><span class="p">.</span><span class="na">doWithLocalMethods</span><span class="p">(</span><span class="n">targetClass</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Method</span><span class="w"> </span><span class="n">bridgedMethod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BridgeMethodResolver</span><span class="p">.</span><span class="na">findBridgedMethod</span><span class="p">(</span><span class="n">method</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">BridgeMethodResolver</span><span class="p">.</span><span class="na">isVisibilityBridgeMethodPair</span><span class="p">(</span><span class="n">method</span><span class="p">,</span><span class="w"> </span><span class="n">bridgedMethod</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">return</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">AnnotationAttributes</span><span class="w"> </span><span class="n">ann</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">findAutowiredAnnotation</span><span class="p">(</span><span class="n">bridgedMethod</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ann</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">method</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">ClassUtils</span><span class="p">.</span><span class="na">getMostSpecificMethod</span><span class="p">(</span><span class="n">method</span><span class="p">,</span><span class="w"> </span><span class="n">clazz</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Modifier</span><span class="p">.</span><span class="na">isStatic</span><span class="p">(</span><span class="n">method</span><span class="p">.</span><span class="na">getModifiers</span><span class="p">()))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">logger</span><span class="p">.</span><span class="na">isWarnEnabled</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&#34;Autowired annotation is not supported on static methods: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">method</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="k">return</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">method</span><span class="p">.</span><span class="na">getParameterCount</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">logger</span><span class="p">.</span><span class="na">isWarnEnabled</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&#34;Autowired annotation should only be used on methods with parameters: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                </span><span class="n">method</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="kt">boolean</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">determineRequiredStatus</span><span class="p">(</span><span class="n">ann</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">PropertyDescriptor</span><span class="w"> </span><span class="n">pd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BeanUtils</span><span class="p">.</span><span class="na">findPropertyForMethod</span><span class="p">(</span><span class="n">bridgedMethod</span><span class="p">,</span><span class="w"> </span><span class="n">clazz</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">currElements</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">AutowiredMethodElement</span><span class="p">(</span><span class="n">method</span><span class="p">,</span><span class="w"> </span><span class="n">required</span><span class="p">,</span><span class="w"> </span><span class="n">pd</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 用@Autowired修饰的注解可能不止一个，因此都加在currElements这个容器里面，一起处理		</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">elements</span><span class="p">.</span><span class="na">addAll</span><span class="p">(</span><span class="n">0</span><span class="p">,</span><span class="w"> </span><span class="n">currElements</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">targetClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">targetClass</span><span class="p">.</span><span class="na">getSuperclass</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">targetClass</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">targetClass</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">Object</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InjectionMetadata</span><span class="p">(</span><span class="n">clazz</span><span class="p">,</span><span class="w"> </span><span class="n">elements</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>当<code>Spring</code> 容器启动时，<code>AutowiredAnnotationBeanPostProcessor</code>组件会被注册到容器中，然后扫描代码。
+如果带有<code>@Autowired</code>注解，则将依赖注入信息封装到<code>InjectionMetadata</code>中。
+最后创建<code>bean</code>，即实例化对象和调用初始化方法，会调用各种<code>XXXBeanPostProcessor</code>对<code>bean</code>初始化，其中包括<code>AutowiredAnnotationBeanPostProcessor</code>，它负责将相关的依赖注入到容器中。</p>
 <h3 id="resourceinject">@Resource、@Inject</h3>
 <p>Spring 自动装配除了<code>@Autowired</code>注解外，也支持JSR-250中的<code>@Resource</code>和JSR-330中的<code>@Inject</code>注解，来进行自动装配；</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class SpringBootExampleTaskApplication {

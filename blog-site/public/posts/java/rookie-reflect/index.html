@@ -96,6 +96,30 @@
             
             
             <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%8f%8d%e5%b0%84%e5%85%a5%e5%8f%a3">
+                    反射入口
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
                 <a class="nav-link text-left" href="#%e6%93%8d%e4%bd%9c%e5%8f%8d%e5%b0%84">
                     操作反射
                 </a>
@@ -118,130 +142,14 @@
             
         <ul class="nav">
             
-        <ul class="nav">
-            
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%8f%8d%e5%b0%84%e5%85%a5%e5%8f%a3">
-                    反射入口
+                <a class="nav-link text-left" href="#%e5%8f%8d%e5%b0%84%e7%89%b9%e7%82%b9">
+                    反射特点
                 </a>
             </li>
             
             
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e8%b0%83%e7%94%a8%e6%96%b9%e6%b3%95">
-                    调用方法
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e8%8e%b7%e5%8f%96%e7%b1%bb%e6%88%90%e5%91%98%e4%bf%a1%e6%81%af">
-                    获取类成员信息
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%88%9b%e5%bb%ba">
-                    创建
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e8%b0%83%e7%94%a8%e6%96%b9%e6%b3%95-1">
-                    调用方法
-                </a>
-            </li>
-            
-            
-        </ul>
-        
         </ul>
         
         </ul>
@@ -284,56 +192,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%8f%8d%e5%b0%84%e7%9a%84%e4%bc%98%e7%82%b9">
-                    反射的优点
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%8f%8d%e5%b0%84%e7%9a%84%e7%bc%ba%e7%82%b9">
-                    反射的缺点
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%8f%8d%e5%b0%84%e7%9a%84%e4%bd%9c%e7%94%a8">
-                    反射的作用
+                <a class="nav-link text-left" href="#%e5%8f%8d%e5%b0%84%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af">
+                    反射应用场景
                 </a>
             </li>
             
@@ -566,370 +426,413 @@
 <p>反射是Java语言的一个特性，它允许程序在运行时来进行自我检查并且对内部的成员进行操作。通过反射，我们可以在运行时获得程序或程序集中每一个类型的成员和成员的信息。
 程序中一般的对象的类型都是在编译期就确定下来的，而Java反射机制可以动态地创建对象并调用其属性，这样的对象的类型在编译期是未知的。</p>
 <p>反射的核心是JVM在运行时动态加载类或调用方法、访问属性，它不需要事先知道运行对象是谁。</p>
+<h2 id="反射入口">反射入口</h2>
+<p>在操作反射前我们要先了解一些Class类。Java的<code>Class</code>类是java反射机制的基础，通过<code>Class</code>类我们可以获得关于一个类的相关信息。
+虚拟机为每种类型管理一个独一无二的<code>Class</code>对象，也就是说每个类都有一个<code>Class</code>对象。运行程序时，Java虚拟机首先检查是否所要加载的类对应的<code>Class</code>对象是否已经加载。
+如果没有加载，JVM就会根据类名查找<code>.class</code>文件，并将其<code>Class</code>对象载入。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w">  </span><span class="nf">Class</span><span class="p">(</span><span class="n">ClassLoader</span><span class="w"> </span><span class="n">loader</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">classLoader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">loader</span><span class="p">;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>Class</code>类的构造器是私有的，只有JVM可以创建<code>Class</code>的对象。因此不可以像普通类一样<code>new</code>一个<code>Class</code>对象，但是却可以通过已有的类得到一个<code>Class</code>对象。
+在运行时获取<code>Class</code>的对象，共有三种方式：</p>
+<ol>
+<li>通过<code>Class.forName()</code>方法。这种方式使用类的全限定名（包名+类名）来获取<code>Class</code>对象，常用于动态加载类。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">try {
+</span></span><span class="line"><span class="cl">    Class&lt;?&gt; clazz = Class.forName(&#34;com.example.MyClass&#34;);
+</span></span><span class="line"><span class="cl">} catch (ClassNotFoundException e) {
+</span></span><span class="line"><span class="cl">    e.printStackTrace();
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div></li>
+<li>通过类的<code>.class</code>属性。这种方式在编译时就已经知道类的类型，适用于静态加载类。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">clazz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MyClass</span><span class="p">.</span><span class="na">class</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>通过对象的<code>getClass()</code>方法。这种方式通过已知对象来获取它的<code>Class</code>对象。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">MyClass</span><span class="w"> </span><span class="n">obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MyClass</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">clazz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">obj</span><span class="p">.</span><span class="na">getClass</span><span class="p">();</span><span class="w">
+</span></span></span></code></pre></div></li>
+</ol>
 <h2 id="操作反射">操作反射</h2>
-<p>在Java中，只要给定类的名字，就可以通过反射机制来获得类的所有信息、调用方法、访问和修改属性等操作
+<p>在Java中，只要给定类的名字，就可以通过反射机制来获得类的所有信息、调用方法、访问和修改属性等操作。
 反射使得程序可以在运行时检查类的结构和行为，而不需要在编译时知道类的具体信息。
 使用反射会有异常出现，注意处理异常。Java中<code>Class</code>类和<code>java.lang.reflect</code>一起对反射提供了支持。</p>
-<h3 id="反射入口">反射入口</h3>
-<p>在操作反射前我们要先了解一些Class类</p>
-<p>Java的Class类是java反射机制的基础,通过Class类我们可以获得关于一个类的相关信息.<br>
-虚拟机为每种类型管理一个独一无二的Class对象。也就是说，每个类（型）都有一个Class对象。运行程序时，Java虚拟机(JVM)首先检查是否所要加载的类对应的Class对象是否已经加载。如果没有加载，JVM就会根据类名查找.class文件，并将其Class对象载入</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">private</span>  <span class="n">Class</span><span class="p">(</span><span class="n">ClassLoader</span> <span class="n">loader</span><span class="p">)</span> <span class="p">{</span> 
-</span></span><span class="line"><span class="cl">    <span class="n">classLoader</span> <span class="o">=</span> <span class="n">loader</span><span class="p">;</span> 
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>class类的构造器时私有的,只有JVM可以创建Class的对象，因此不可以像普通类一样new一个Class对象, 但是却可以通过已有的类得到一个Class对象，共有三种方式</p>
-<p>在运行时获取 class 的对象.</p>
-<ol>
-<li><code>Class.forName(&quot;包名+类名&quot;);</code>
-例如 连接Oracle数据库加载JDBC驱动</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// 注意此种方式请写全类名(包名+类名)
-</span></span><span class="line"><span class="cl">String driver = &#34;oracle.jdbc.driver.OracleDriver&#34;;
-</span></span><span class="line"><span class="cl">Class.forName(driver);
-</span></span></code></pre></div><ol start="2">
-<li><code>类名.class</code></li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Class&lt;?&gt; clazz = int.class;
-</span></span><span class="line"><span class="cl">Class&lt;?&gt; classInt = Integer.TYPE;
-</span></span></code></pre></div><ol start="3">
-<li>调用某个对象的<code>getClass()</code>方法. <code>实例.getClass()</code></li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">StringBuilder str = new StringBuilder(&#34;123&#34;);
-</span></span><span class="line"><span class="cl">Class&lt;?&gt; clazz = str.getClass();
-</span></span></code></pre></div><p>反射可以提供运行时的类信息，并且这个类可以在运行时才加载进来，甚至在编译时期该类的 .class 不存在也可以加载进来。</p>
-<h3 id="调用方法">调用方法</h3>
-<p>创建<code>MainTest</code>类,A类,创建一个B类和C接口.让A类去继承B类.A类实现C接口,<code>MainTest</code>为主类,A类,B类为内部类</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">MainTest</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   <span class="k">class</span> <span class="n">B</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">private</span> <span class="n">void</span> <span class="n">privateMethodB</span><span class="p">(){</span>
-</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;private method B ...&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">void</span> <span class="n">defaultMethodB</span><span class="p">(){</span>
-</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;default method B... &#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">protected</span> <span class="n">void</span> <span class="n">protectedMethodB</span><span class="p">(){</span>
-</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;protected method B...&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="n">void</span> <span class="n">publicMethodB</span><span class="p">(){</span>
-</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;public method B...&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    <span class="n">interface</span> <span class="n">C</span><span class="p">{}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="n">A</span> <span class="k">extends</span> <span class="n">B</span> <span class="n">implements</span> <span class="n">C</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">private</span> <span class="n">void</span> <span class="n">privateMethod</span><span class="p">(){</span>
-</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;private method ...&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">void</span> <span class="n">defaultMethod</span><span class="p">(){</span>
-</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;default method ... &#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">protected</span> <span class="n">void</span> <span class="n">protectedMethod</span><span class="p">(){</span>
-</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;protected method ...&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="n">void</span> <span class="n">publicMethod</span><span class="p">(){</span>
-</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;public method ...&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><ul>
-<li><code>getDeclaredMethods</code> 方法返回类或接口声明的所有方法，包括公共、保护、默认（包）访问和私有方法，但不包括继承的方法。
-执行下边代码</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    @Test
-</span></span><span class="line"><span class="cl">    public void contextLoad() throws ClassNotFoundException {
-</span></span><span class="line"><span class="cl">        Class&lt;?&gt; clazz = Class.forName(&#34;com.test.MainTest$A&#34;);
-</span></span><span class="line"><span class="cl">        Method[] methods = clazz.getDeclaredMethods();
-</span></span><span class="line"><span class="cl">        for (Method method : methods) {
-</span></span><span class="line"><span class="cl">            System.out.println(method);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>打印结果</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public void com.test.MainTest$A.publicMethod()
-</span></span><span class="line"><span class="cl">private void com.test.MainTest$A.privateMethod()
-</span></span><span class="line"><span class="cl">void com.test.MainTest$A.defaultMethod()
-</span></span><span class="line"><span class="cl">protected void com.test.MainTest$A.protectedMethod()
-</span></span></code></pre></div><ul>
-<li><code>getMethods</code>方法返回某个类的所有公用<code>public</code>方法，包括其继承类的公用方法.</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    @Test
-</span></span><span class="line"><span class="cl">    public void contextLoad() throws ClassNotFoundException {
-</span></span><span class="line"><span class="cl">        Class&lt;?&gt; clazz = Class.forName(&#34;com.test.MainTest$A&#34;);
-</span></span><span class="line"><span class="cl">        Method[] methods = clazz.getMethods();
-</span></span><span class="line"><span class="cl">        for (Method method : methods) {
-</span></span><span class="line"><span class="cl">            System.out.println(method);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>打印结果</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public void com.test.MainTest$A.publicMethod()
-</span></span><span class="line"><span class="cl">public void com.test.MainTest$B.publicMethodB()
-</span></span><span class="line"><span class="cl">public final void java.lang.Object.wait() throws java.lang.InterruptedException
-</span></span><span class="line"><span class="cl">public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
-</span></span><span class="line"><span class="cl">public final native void java.lang.Object.wait(long) throws java.lang.InterruptedException
-</span></span><span class="line"><span class="cl">public boolean java.lang.Object.equals(java.lang.Object)
-</span></span><span class="line"><span class="cl">public java.lang.String java.lang.Object.toString()
-</span></span><span class="line"><span class="cl">public native int java.lang.Object.hashCode()
-</span></span><span class="line"><span class="cl">public final native java.lang.Class java.lang.Object.getClass()
-</span></span><span class="line"><span class="cl">public final native void java.lang.Object.notify()
-</span></span><span class="line"><span class="cl">public final native void java.lang.Object.notifyAll()
-</span></span><span class="line"><span class="cl">// 接口也被打印了
-</span></span><span class="line"><span class="cl">public default void com.test.MainTest$C.interfaceC()
-</span></span></code></pre></div><ul>
-<li><code>getMethod</code>方法返回一个特定的方法，其中第一个参数为方法名称，后面的参数为方法的参数对应<code>Class</code>的对象.只能获取到<code>public</code>修饰的方法.能获取到接口和父类的<code>public</code>修饰的方法</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    @Test
-</span></span><span class="line"><span class="cl">    public void contextLoad() throws ClassNotFoundException, NoSuchMethodException {
-</span></span><span class="line"><span class="cl">        Class&lt;?&gt; clazz = Class.forName(&#34;com.test.MainTest$A&#34;);
-</span></span><span class="line"><span class="cl">        System.out.println(clazz.getMethod(&#34;publicMethod&#34;));
-</span></span><span class="line"><span class="cl">//        System.out.println(clazz.getMethod(&#34;defaultMethod&#34;));
-</span></span><span class="line"><span class="cl">//        System.out.println(clazz.getMethod(&#34;protectedMethod&#34;));
-</span></span><span class="line"><span class="cl">//        System.out.println(clazz.getMethod(&#34;privateMethod&#34;));
-</span></span><span class="line"><span class="cl">        System.out.println(clazz.getMethod(&#34;publicMethodB&#34;));
-</span></span><span class="line"><span class="cl">        System.out.println(clazz.getMethod(&#34;interfaceC&#34;));
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>打印结果</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public void com.test.MainTest$A.publicMethod()
-</span></span><span class="line"><span class="cl">public void com.test.MainTest$B.publicMethodB()
-</span></span><span class="line"><span class="cl">public default void com.test.MainTest$C.interfaceC()
-</span></span></code></pre></div><h3 id="获取类成员信息">获取类成员信息</h3>
 <ul>
-<li><code>getFiled</code>：访问公有的成员变量</li>
-<li><code>getDeclaredField</code>：所有已声明的成员变量，但不能得到其父类的成员变量</li>
-<li><code>getFileds</code> 和 <code>getDeclaredFields</code> 方法用法同上（参照 获取方法）.</li>
+<li>反射可以获取类的完整信息，包括类名、包名、父类、接口、构造函数、字段和方法等。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">Class&lt;?&gt; clazz = Class.forName(&#34;java.util.ArrayList&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 获取类名
+</span></span><span class="line"><span class="cl">System.out.println(&#34;Class Name: &#34; + clazz.getName());
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 获取包名
+</span></span><span class="line"><span class="cl">Package pkg = clazz.getPackage();
+</span></span><span class="line"><span class="cl">System.out.println(&#34;Package Name: &#34; + pkg.getName());
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 获取所有构造函数
+</span></span><span class="line"><span class="cl">Constructor&lt;?&gt;[] constructors = clazz.getConstructors();
+</span></span><span class="line"><span class="cl">for (Constructor&lt;?&gt; constructor : constructors) {
+</span></span><span class="line"><span class="cl">    System.out.println(&#34;Constructor: &#34; + constructor);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 获取所有方法
+</span></span><span class="line"><span class="cl">Method[] methods = clazz.getMethods();
+</span></span><span class="line"><span class="cl">for (Method method : methods) {
+</span></span><span class="line"><span class="cl">    System.out.println(&#34;Method: &#34; + method.getName());
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 获取所有字段
+</span></span><span class="line"><span class="cl">Field[] fields = clazz.getDeclaredFields();
+</span></span><span class="line"><span class="cl">for (Field field : fields) {
+</span></span><span class="line"><span class="cl">    System.out.println(&#34;Field: &#34; + field.getName());
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div></li>
+<li>反射可以在运行时创建类的实例，而不需要在编译时知道类的名字。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">Class&lt;?&gt; clazz = Class.forName(&#34;java.util.ArrayList&#34;);
+</span></span><span class="line"><span class="cl">Constructor&lt;?&gt; constructor = clazz.getConstructor();
+</span></span><span class="line"><span class="cl">Object instance = constructor.newInstance();
+</span></span><span class="line"><span class="cl">System.out.println(&#34;Instance: &#34; + instance);
+</span></span></code></pre></div></li>
+<li>反射允许在运行时访问和修改对象的字段，即使字段是私有的。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">Class&lt;?&gt; clazz = Class.forName(&#34;com.example.Person&#34;);
+</span></span><span class="line"><span class="cl">Object person = clazz.getConstructor().newInstance();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 获取私有字段
+</span></span><span class="line"><span class="cl">Field nameField = clazz.getDeclaredField(&#34;name&#34;);
+</span></span><span class="line"><span class="cl">nameField.setAccessible(true);  // 允许访问私有字段
+</span></span><span class="line"><span class="cl">nameField.set(person, &#34;John Doe&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 获取字段值
+</span></span><span class="line"><span class="cl">String name = (String) nameField.get(person);
+</span></span><span class="line"><span class="cl">System.out.println(&#34;Name: &#34; + name);
+</span></span></code></pre></div></li>
+<li>反射可以在运行时调用对象的方法，包括私有方法。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">Class&lt;?&gt; clazz = Class.forName(&#34;com.example.Person&#34;);
+</span></span><span class="line"><span class="cl">Object person = clazz.getConstructor().newInstance();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 获取方法
+</span></span><span class="line"><span class="cl">Method setNameMethod = clazz.getMethod(&#34;setName&#34;, String.class);
+</span></span><span class="line"><span class="cl">Method getNameMethod = clazz.getMethod(&#34;getName&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 调用方法
+</span></span><span class="line"><span class="cl">setNameMethod.invoke(person, &#34;Jane Doe&#34;);
+</span></span><span class="line"><span class="cl">String name = (String) getNameMethod.invoke(person);
+</span></span><span class="line"><span class="cl">System.out.println(&#34;Name: &#34; + name);
+</span></span></code></pre></div></li>
 </ul>
-<h3 id="创建">创建</h3>
+<h2 id="反射特点">反射特点</h2>
+<p>通过反射机制我们可以获得类的各种内容，进行反编译。对于Java这种先编译再运行的语言来说，反射机制可以使代码更加灵活，更加容易实现面向对象.</p>
 <ul>
-<li>创建数组</li>
+<li>反射允许在运行时动态加载类、创建对象、调用方法和访问属性，这使得程序具有更高的灵活性和动态性，可以根据运行时的需求来适应不同的情况。</li>
+<li>反射使得编写通用代码和框架变得更加容易。例如，许多框架和库（如Spring和Hibernate）利用反射来实现依赖注入、持久化等功能，从而提高了代码的复用性和可维护性。</li>
+<li>反射可以帮助解耦合，减少类之间的依赖关系。通过反射，可以在不知道具体类名的情况下操作对象，从而简化了系统的结构和设计。</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public static void testArray() throws ClassNotFoundException {
-</span></span><span class="line"><span class="cl">        Class&lt;?&gt; cls = Class.forName(&#34;java.lang.String&#34;);
-</span></span><span class="line"><span class="cl">        Object array = Array.newInstance(cls,25);
-</span></span><span class="line"><span class="cl">        //往数组里添加内容
-</span></span><span class="line"><span class="cl">        Array.set(array,0,&#34;hello&#34;);
-</span></span><span class="line"><span class="cl">        Array.set(array,1,&#34;Java&#34;);
-</span></span><span class="line"><span class="cl">        Array.set(array,2,&#34;fuck&#34;);
-</span></span><span class="line"><span class="cl">        Array.set(array,3,&#34;Scala&#34;);
-</span></span><span class="line"><span class="cl">        Array.set(array,4,&#34;Clojure&#34;);
-</span></span><span class="line"><span class="cl">        //获取某一项的内容
-</span></span><span class="line"><span class="cl">        System.out.println(Array.get(array,3));
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><ul>
-<li>创建对象
-通过Class类的<code>getConstructor</code>方法得到<code>Constructor</code>类的一个实例，而<code>Constructor</code>类有一个<code>newInstance</code>方法可以创建一个对象实例,创建之前要确保该类存在构造无参构造器</li>
+<p>反射功能虽然强大，但不应任意使用。如果一个功能可以不用反射完成，那么最好就不用。</p>
+<ul>
+<li>性能开销 ：反射操作通常比直接调用要慢。因为反射调用涉及到动态查找方法、字段和进行安全检查，这些步骤在运行时会带来额外的性能开销。在性能敏感的场景下，频繁使用反射可能会导致程序性能下降。</li>
+<li>安全限制 ：反射打破了Java语言的封装性和安全性，可以访问和修改私有成员，甚至可以执行敏感操作。因此在使用反射时需要格外注意安全性问题，避免不必要的暴露和风险。</li>
+<li>内部暴露 ：使用反射可以使代码更加复杂和难以理解。反射操作的代码通常比直接调用的代码更加复杂，可读性较差，可能增加代码维护的困难。</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    @Test
-</span></span><span class="line"><span class="cl">    public void contextLoad() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException {
-</span></span><span class="line"><span class="cl">        Class&lt;?&gt; clazz = Class.forName(&#34;com.test.MainTest&#34;);
-</span></span><span class="line"><span class="cl">        System.out.println(clazz.newInstance());
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>打印结果</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">com.test.MainTest@65e579dc
-</span></span></code></pre></div><h3 id="调用方法-1">调用方法</h3>
-<p>在<code>MainTest</code> 加入该方法</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public void T(){
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;t method invoke ... &#34;);
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>执行</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
-</span></span><span class="line"><span class="cl">        Class&lt;?&gt; outerClass = Class.forName(&#34;com.MainTest&#34;);
-</span></span><span class="line"><span class="cl">        outerClass.getMethod(&#34;T&#34;).invoke(outerClass.newInstance());
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>结果</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">t method invoke ... 
-</span></span></code></pre></div><p>内部类调用方法方式</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
-</span></span><span class="line"><span class="cl">        Class&lt;?&gt; outerClass = Class.forName(&#34;com.MainTest&#34;);
-</span></span><span class="line"><span class="cl">        Class&lt;?&gt; innerClass = Class.forName(&#34;com.MainTest$A&#34;);
-</span></span><span class="line"><span class="cl">        Method method = innerClass.getDeclaredMethod(&#34;publicMethod&#34;);
-</span></span><span class="line"><span class="cl">        Object o = innerClass.getDeclaredConstructors()[0].newInstance(outerClass.newInstance());
-</span></span><span class="line"><span class="cl">        method.invoke(o);
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>执行结果</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public method ...
-</span></span></code></pre></div><p>当内部类私有化（<code>private class InnerClass</code>）时，也可以调用,这里就不列举了</p>
 <h2 id="反射性能">反射性能</h2>
-<h2 id="反射的优点">反射的优点</h2>
-<p>通过反射机制我们可以获得类的各种内容，进行反编译。对于JAVA这种先编译再运行的语言来说，反射机制可以使代码更加灵活，更加容易实现面向对象.</p>
-<ul>
-<li>可扩展性 ：应用程序可以利用全限定名创建可扩展对象的实例，来使用来自外部的用户自定义类。降低模块的耦合性;</li>
-<li>可视化开发环境：可视化开发环境（如IDE）可以从利用反射中可用的类型信息中受益，以帮助程序员编写正确的代码。</li>
-<li>调试器和测试工具 ： 调试器需要能够检查一个类里的私有成员。测试工具可以利用反射来自动地调用类里定义的可被发现的API定义，以确保一组测试中有较高的代码覆盖率。</li>
-</ul>
-<h2 id="反射的缺点">反射的缺点</h2>
-<p>反射功能虽然强大,但不应任意使用.如果一个功能可以不用反射完成，那么最好就不用。通过反射访问代码时，应牢记以下注意事项</p>
-<ul>
-<li>性能开销 ：反射涉及了动态类型的解析，所以 JVM 无法对这些代码进行优化。因此，反射操作的效率要比那些非反射操作低得多。我们应该避免在经常被执行的代码或对性能要求很高的程序中使用反射。</li>
-<li>安全限制 ：使用反射通常需要程序的运行没有安全方面的限制。如果一个程序对安全性提出要求，则最好不要使用反射。</li>
-<li>内部暴露 ：由于反射允许代码执行一些在正常情况下不被允许的操作（例如访问<code>private</code>字段和方法），所以使用反射可能会导致意料之外的副作用，这可能导致代码功能失调并破坏可移植性。反射代码破坏了抽象性，因此可能会随着平台的升级而改变行为.</li>
-</ul>
-<h2 id="反射的作用">反射的作用</h2>
-<ul>
-<li>在运行时判断任意一个对象所属的类;</li>
-<li>在运行时判断任意一个类所具有的成员变量和方法;</li>
-<li>在运行时任意调用一个对象的方法;</li>
-<li>在运行时构造任意一个类的对象;</li>
-</ul>
+<p>Java反射机制提供了一种在运行时动态操作类、方法和属性的强大能力。
+这使得反射成为许多框架和库的基础，如<code>Spring</code>和<code>Hibernate</code>。然而反射的灵活性是有代价的，反射操作通常比直接调用要慢得多。
+以下是一个比较直接方法调用和反射调用性能的示例：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ReflectionPerformanceTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">MyClass</span><span class="w"> </span><span class="n">myClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MyClass</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Method</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MyClass</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getMethod</span><span class="p">(</span><span class="s">&#34;myMethod&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">iterations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">1000000</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 直接调用</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">startTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">nanoTime</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">iterations</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">myClass</span><span class="p">.</span><span class="na">myMethod</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">endTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">nanoTime</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">directCallDuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">endTime</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">startTime</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Direct call duration: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">directCallDuration</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34; ns&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 反射调用</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">startTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">nanoTime</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">iterations</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">method</span><span class="p">.</span><span class="na">invoke</span><span class="p">(</span><span class="n">myClass</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">endTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">nanoTime</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">reflectionCallDuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">endTime</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">startTime</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Reflection call duration: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">reflectionCallDuration</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34; ns&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">MyClass</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">myMethod</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Some operation</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>反射慢的主要原因是在于它绕过了编译时的优化，并且在运行时需要动态查找类信息和进行安全性检查，导致额外的性能开销。</p>
+<ol>
+<li>绕过编译时优化： Java编译器可以在编译时对代码进行优化，如方法内联、常量折叠等，以提高执行效率。
+而反射调用是在运行时动态解析的，编译器无法对其进行类似的优化，导致执行速度相对较慢。</li>
+<li>动态查找和安全检查： 反射允许代码在运行时动态获取类的信息、调用方法和访问字段，甚至能够绕过访问控制。
+因此每次反射调用都需要在运行时进行类信息的查找和安全性检查，这些额外的步骤增加了方法调用的开销，使得反射相比直接调用更为缓慢。</li>
+</ol>
+<p>反射适合于那些需要在运行时动态加载类、调用未知类的方法或访问私有成员的情况。在性能要求严格的地方，尽量避免使用反射。
+如果需要多次反射调用，尽量将反射操作放在静态方法或静态初始化块中，来减少实例化对象的开销，避免重复的反射查找。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">MyClass</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">Method</span><span class="w"> </span><span class="n">myMethod</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">myMethod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MyClass</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getDeclaredMethod</span><span class="p">(</span><span class="s">&#34;methodName&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">myMethod</span><span class="p">.</span><span class="na">setAccessible</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="w"> </span><span class="c1">// 如果是私有方法，需要设置访问权限</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">NoSuchMethodException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">invokeMyMethod</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">InvocationTargetException</span><span class="p">,</span><span class="w"> </span><span class="n">IllegalAccessException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">myMethod</span><span class="p">.</span><span class="na">invoke</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="反射应用场景">反射应用场景</h2>
+<p>反射在Java编程中有广泛的应用场景。它主要用于动态加载类、运行时获取和操作类的信息，以及实现灵活的编程逻辑。
+通过反射，可以实现诸如依赖注入框架，如<code>Spring</code>、ORM框架，如<code>Hibernate</code>、动态代理、自定义注解处理器、插件化系统等功能。
+这些特性使得Java程序能够在运行时动态适应不同的需求和环境，提高了代码的灵活性和可维护性。</p>
 <h3 id="反射与注解">反射与注解</h3>
-<p>注解我们经常会遇到,如:<code>@Override, @Deprecated ...</code></p>
-<p>是否思考过注解是怎样工作的呢? 自定义一个注解体会一下注解是怎样工作的。</p>
-<p>创建注解: <code>MyAnnotation</code></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">import java.lang.annotation.ElementType;
-</span></span><span class="line"><span class="cl">import java.lang.annotation.Retention;
-</span></span><span class="line"><span class="cl">import java.lang.annotation.RetentionPolicy;
-</span></span><span class="line"><span class="cl">import java.lang.annotation.Target;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">@Target({ElementType.METHOD})
-</span></span><span class="line"><span class="cl">@Retention(RetentionPolicy.RUNTIME)
-</span></span><span class="line"><span class="cl">public @interface MyAnnotation {
-</span></span><span class="line"><span class="cl">    String value() default &#34;&#34;;
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>使用注解: <code>MyAnnotationTest</code></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MyAnnotationTest {
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    @MyAnnotation(&#34;123&#34;)
-</span></span><span class="line"><span class="cl">    public void test(String str){
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;invoke test ...param: &#34;+ str);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public void t2(){
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;I am t2 ...&#34;);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>实现注解<code>@MyAnnotation</code></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">import java.lang.reflect.InvocationTargetException;
-</span></span><span class="line"><span class="cl">import java.lang.reflect.Method;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">public class AnnotationInvoke {
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
-</span></span><span class="line"><span class="cl">        // 获取使用@MyAnnotation注解的类,这里举例子 就直接写了,如果想要实现的话可以参照spring扫描包
-</span></span><span class="line"><span class="cl">        Class&lt;MyAnnotationTest&gt; clazz = MyAnnotationTest.class;
-</span></span><span class="line"><span class="cl">        Method[] methods = clazz.getDeclaredMethods();
-</span></span><span class="line"><span class="cl">        for (Method method : methods) {
-</span></span><span class="line"><span class="cl">            //判断该类是否使用了 @MyAnnotation注解
-</span></span><span class="line"><span class="cl">            MyAnnotation annotation = method.getAnnotation(MyAnnotation.class);
-</span></span><span class="line"><span class="cl">            if (annotation != null) {
-</span></span><span class="line"><span class="cl">                // 可以进行一系列操作 ...
-</span></span><span class="line"><span class="cl">                // 获取该方法上 @MyAnnotation 注解的值
-</span></span><span class="line"><span class="cl">                System.out.println(annotation.value());
-</span></span><span class="line"><span class="cl">                // 执行test方法
-</span></span><span class="line"><span class="cl">                if (method.getName().equals(&#34;test&#34;)) {
-</span></span><span class="line"><span class="cl">                    method.invoke(clazz.newInstance(), &#34;hello ...&#34;);
-</span></span><span class="line"><span class="cl">                }
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>执行<code>main</code>方法,结果</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">123
-</span></span><span class="line"><span class="cl">invoke test ...param: hello ...
-</span></span></code></pre></div><h3 id="反射与枚举">反射与枚举</h3>
-<p>经典案例: 用枚举实现单例设计模式,防止反射破坏单例</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">enum</span> <span class="n">EnumSingleton</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">INSTANCE</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">EnumSingleton</span> <span class="n">getInstance</span><span class="p">(){</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">INSTANCE</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="n">throws</span> <span class="n">IllegalAccessException</span><span class="p">,</span> <span class="n">InvocationTargetException</span><span class="p">,</span> <span class="n">InstantiationException</span><span class="p">,</span> <span class="n">NoSuchMethodException</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">EnumSingleton</span> <span class="n">singleton1</span><span class="o">=</span><span class="n">EnumSingleton</span><span class="o">.</span><span class="n">INSTANCE</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">EnumSingleton</span> <span class="n">singleton2</span><span class="o">=</span><span class="n">EnumSingleton</span><span class="o">.</span><span class="n">INSTANCE</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;正常情况下，实例化两个实例是否相同：&#34;</span><span class="o">+</span><span class="p">(</span><span class="n">singleton1</span><span class="o">==</span><span class="n">singleton2</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Constructor</span><span class="o">&lt;</span><span class="n">EnumSingleton</span><span class="o">&gt;</span> <span class="n">constructor</span><span class="o">=</span> <span class="n">null</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">constructor</span> <span class="o">=</span> <span class="n">EnumSingleton</span><span class="o">.</span><span class="k">class</span><span class="o">.</span><span class="n">getDeclaredConstructor</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="n">constructor</span><span class="o">.</span><span class="n">setAccessible</span><span class="p">(</span><span class="bp">true</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">EnumSingleton</span> <span class="n">singleton3</span><span class="o">=</span> <span class="n">null</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">singleton3</span> <span class="o">=</span> <span class="n">constructor</span><span class="o">.</span><span class="n">newInstance</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="n">singleton1</span><span class="o">+</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="o">+</span><span class="n">singleton2</span><span class="o">+</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="o">+</span><span class="n">singleton3</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;通过反射攻击单例模式情况下，实例化两个实例是否相同：&#34;</span><span class="o">+</span><span class="p">(</span><span class="n">singleton1</span><span class="o">==</span><span class="n">singleton3</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>结果</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">正常情况下，实例化两个实例是否相同：true
-</span></span><span class="line"><span class="cl">Exception in thread &#34;main&#34; java.lang.NoSuchMethodException
-</span></span></code></pre></div><p>原因
-<code>Constructor</code>类中 <code>newInstance</code>方法 不能通过反射来创建对象</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">    <span class="err">@</span><span class="n">CallerSensitive</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">T</span> <span class="n">newInstance</span><span class="p">(</span><span class="ne">Object</span> <span class="o">...</span> <span class="n">initargs</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">throws</span> <span class="n">InstantiationException</span><span class="p">,</span> <span class="n">IllegalAccessException</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">               <span class="n">IllegalArgumentException</span><span class="p">,</span> <span class="n">InvocationTargetException</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">override</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">Reflection</span><span class="o">.</span><span class="n">quickCheckMemberAccess</span><span class="p">(</span><span class="n">clazz</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">))</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">Class</span><span class="o">&lt;</span><span class="err">?</span><span class="o">&gt;</span> <span class="n">caller</span> <span class="o">=</span> <span class="n">Reflection</span><span class="o">.</span><span class="n">getCallerClass</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">                <span class="n">checkAccess</span><span class="p">(</span><span class="n">caller</span><span class="p">,</span> <span class="n">clazz</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">((</span><span class="n">clazz</span><span class="o">.</span><span class="n">getModifiers</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">Modifier</span><span class="o">.</span><span class="n">ENUM</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="n">throw</span> <span class="n">new</span> <span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s2">&#34;Cannot reflectively create enum objects&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">ConstructorAccessor</span> <span class="n">ca</span> <span class="o">=</span> <span class="n">constructorAccessor</span><span class="p">;</span>   <span class="o">//</span> <span class="n">read</span> <span class="n">volatile</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">ca</span> <span class="o">==</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">ca</span> <span class="o">=</span> <span class="n">acquireConstructorAccessor</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="err">@</span><span class="n">SuppressWarnings</span><span class="p">(</span><span class="s2">&#34;unchecked&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">T</span> <span class="n">inst</span> <span class="o">=</span> <span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="n">ca</span><span class="o">.</span><span class="n">newInstance</span><span class="p">(</span><span class="n">initargs</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">inst</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span></code></pre></div><p>枚举类无法通过反射来创建对象,原因是<code>newInstance</code>方法加了判断如果是枚举类就抛出异常<code>throw new IllegalArgumentException(&quot;Cannot reflectively create enum objects&quot;);</code></p>
-<p>除了不能创建枚举类的对象外,反射还是能够调用枚举类的方法的</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">enum</span> <span class="n">EnumSingleton</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">EnumSingleton</span> <span class="n">getInstance</span><span class="p">(){</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">INSTANCE</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">getTst</span><span class="p">(){</span>
-</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&#34;enum method ...&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="ne">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="n">throws</span> <span class="n">IllegalAccessException</span><span class="p">,</span> <span class="n">InvocationTargetException</span><span class="p">,</span> <span class="n">InstantiationException</span><span class="p">,</span> <span class="n">NoSuchMethodException</span><span class="p">,</span> <span class="n">ClassNotFoundException</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Class</span><span class="o">&lt;</span><span class="err">?</span><span class="o">&gt;</span> <span class="n">aClass</span> <span class="o">=</span> <span class="n">Class</span><span class="o">.</span><span class="n">forName</span><span class="p">(</span><span class="s2">&#34;com.test.EnumSingleton&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Method</span> <span class="n">getInstance</span> <span class="o">=</span> <span class="n">aClass</span><span class="o">.</span><span class="n">getMethod</span><span class="p">(</span><span class="s2">&#34;getTst&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">枚举对应的</span><span class="n">class没有newInstance方法</span><span class="err">，会报</span><span class="n">NoSuchMethodException</span><span class="err">，应该使用</span><span class="n">getEnumConstants方法</span>
-</span></span><span class="line"><span class="cl">        <span class="ne">Object</span><span class="p">[]</span> <span class="n">oo</span> <span class="o">=</span> <span class="n">aClass</span><span class="o">.</span><span class="n">getEnumConstants</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="n">getInstance</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">oo</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Method</span> <span class="n">getTst</span> <span class="o">=</span> <span class="n">aClass</span><span class="o">.</span><span class="n">getMethod</span><span class="p">(</span><span class="s2">&#34;getTst&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">getTst</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">oo</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>结果</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="k">enum</span> <span class="n">getInstance</span> <span class="o">...</span> 
-</span></span><span class="line"><span class="cl"><span class="k">enum</span> <span class="n">method</span> <span class="o">...</span>
-</span></span></code></pre></div><h3 id="反射与泛型">反射与泛型</h3>
-<p>反射会擦除泛型,因为泛型只在编译期间生效.而反射是在Java程序运行期间生效。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public static void main(String[] args) throws Exception {
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        ArrayList&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        list.add(1);  //这样调用 add 方法只能存储整形，因为泛型类型的实例为 Integer
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        list.getClass().getMethod(&#34;add&#34;, Object.class).invoke(list, &#34;string&#34;);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        for (int i = 0; i &lt; list.size(); i++) 
-</span></span><span class="line"><span class="cl">            System.out.println(list.get(i));// 1 string
-</span></span><span class="line"><span class="cl">        //list.forEach(System.out::print);  //语法详情 见Java8 Lambda表达式
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><h3 id="反射与框架">反射与框架</h3>
-<p><strong>反射最重要的用途就是开发各种通用框架。</strong></p>
-<p>以 spring 的 IOC 框架为例：</p>
-<ul>
-<li>文章: <a href="https://blog.csdn.net/fuzhongmin05/article/details/61614873">反射与工工厂模式实现IOC</a></li>
-</ul>
+<p>反射可以在运行时动态地获取和解析类、方法、字段上的注解信息。利用这个特性我们可以根据注解的内容来实现不同的逻辑，例如自定义的业务规则、权限控制等。</p>
+<p>反射在自定义注解处理器中特别有用，可以通过反射获取类、方法的信息，并根据注解信息生成代码或者进行其他处理。
+这种方式被广泛应用于框架和工具的开发中，例如<code>Spring</code>框架中的各种注解处理器。自定义一个注解体会一下。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 定义一个注解</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Target</span><span class="p">(</span><span class="n">ElementType</span><span class="p">.</span><span class="na">METHOD</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@interface</span><span class="w"> </span><span class="n">MyAnnotation</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="nf">value</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 使用注解的类</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">MyClass</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@MyAnnotation</span><span class="p">(</span><span class="s">&#34;Hello Annotation&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">myMethod</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Method with annotation&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ReflectionAndAnnotationExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">MyClass</span><span class="w"> </span><span class="n">obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MyClass</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">clazz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">obj</span><span class="p">.</span><span class="na">getClass</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 获取方法上的注解信息</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Method</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clazz</span><span class="p">.</span><span class="na">getDeclaredMethod</span><span class="p">(</span><span class="s">&#34;myMethod&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">MyAnnotation</span><span class="w"> </span><span class="n">annotation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">method</span><span class="p">.</span><span class="na">getAnnotation</span><span class="p">(</span><span class="n">MyAnnotation</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">annotation</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Annotation value: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">annotation</span><span class="p">.</span><span class="na">value</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 使用反射调用带有注解的方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">method</span><span class="p">.</span><span class="na">invoke</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="反射与枚举">反射与枚举</h3>
+<p>反射不能用于创建枚举类型的对象。因为枚举类型是单例的，每个枚举常量在Java虚拟机中只有一个实例。通过反射创建新的枚举实例会破坏枚举类型的单例性质。
+Java语言规范明确规定了枚举类型的创建和管理方式，禁止反射机制创建新的枚举实例，来确保枚举类型的安全性和一致性。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">enum</span><span class="w"> </span><span class="n">Day</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">SUNDAY</span><span class="p">,</span><span class="w"> </span><span class="n">MONDAY</span><span class="p">,</span><span class="w"> </span><span class="n">TUESDAY</span><span class="p">,</span><span class="w"> </span><span class="n">WEDNESDAY</span><span class="p">,</span><span class="w"> </span><span class="n">THURSDAY</span><span class="p">,</span><span class="w"> </span><span class="n">FRIDAY</span><span class="p">,</span><span class="w"> </span><span class="n">SATURDAY</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">EnumReflectionExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 获取枚举类型的构造方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Constructor</span><span class="o">&lt;</span><span class="n">Day</span><span class="o">&gt;</span><span class="w"> </span><span class="n">constructor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Day</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getDeclaredConstructor</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 尝试通过反射调用构造方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">constructor</span><span class="p">.</span><span class="na">setAccessible</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Day</span><span class="w"> </span><span class="n">newDay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">constructor</span><span class="p">.</span><span class="na">newInstance</span><span class="p">(</span><span class="s">&#34;NEW_DAY&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">7</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;New Day: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">newDay</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 捕获并打印异常信息</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">java.lang.NoSuchMethodException: Day.&lt;init&gt;(java.lang.String, int)
+</span></span><span class="line"><span class="cl">    at java.lang.Class.getDeclaredConstructor0(Native Method)
+</span></span><span class="line"><span class="cl">    at java.lang.Class.getDeclaredConstructor(Class.java:2178)
+</span></span><span class="line"><span class="cl">    at EnumReflectionExample.main(EnumReflectionExample.java:11)
+</span></span></code></pre></div><p>具体的原因是在<code>Constructor</code>类中的<code>newInstance</code>方法，枚举类无法通过反射来创建对象，原因是<code>newInstance</code>方法加了判断如果是枚举类就抛出异常。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@CallerSensitive</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">newInstance</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">initargs</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">throws</span><span class="w"> </span><span class="n">InstantiationException</span><span class="p">,</span><span class="w"> </span><span class="n">IllegalAccessException</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">           </span><span class="n">IllegalArgumentException</span><span class="p">,</span><span class="w"> </span><span class="n">InvocationTargetException</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">override</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Reflection</span><span class="p">.</span><span class="na">quickCheckMemberAccess</span><span class="p">(</span><span class="n">clazz</span><span class="p">,</span><span class="w"> </span><span class="n">modifiers</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">caller</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Reflection</span><span class="p">.</span><span class="na">getCallerClass</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">checkAccess</span><span class="p">(</span><span class="n">caller</span><span class="p">,</span><span class="w"> </span><span class="n">clazz</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="n">modifiers</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">clazz</span><span class="p">.</span><span class="na">getModifiers</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">Modifier</span><span class="p">.</span><span class="na">ENUM</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">&#34;Cannot reflectively create enum objects&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">ConstructorAccessor</span><span class="w"> </span><span class="n">ca</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">constructorAccessor</span><span class="p">;</span><span class="w">   </span><span class="c1">// read volatile</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ca</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ca</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">acquireConstructorAccessor</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@SuppressWarnings</span><span class="p">(</span><span class="s">&#34;unchecked&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">T</span><span class="w"> </span><span class="n">inst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="w"> </span><span class="n">ca</span><span class="p">.</span><span class="na">newInstance</span><span class="p">(</span><span class="n">initargs</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">inst</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>除了不能创建枚举类的对象外，反射还是能够调用枚举类的方法的。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">enum</span><span class="w"> </span><span class="n">Day</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">SUNDAY</span><span class="p">,</span><span class="w"> </span><span class="n">MONDAY</span><span class="p">,</span><span class="w"> </span><span class="n">TUESDAY</span><span class="p">,</span><span class="w"> </span><span class="n">WEDNESDAY</span><span class="p">,</span><span class="w"> </span><span class="n">THURSDAY</span><span class="p">,</span><span class="w"> </span><span class="n">FRIDAY</span><span class="p">,</span><span class="w"> </span><span class="n">SATURDAY</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">printMessage</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Today is &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">name</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">EnumReflectionExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 获取枚举常量</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Day</span><span class="w"> </span><span class="n">day</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Day</span><span class="p">.</span><span class="na">SUNDAY</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 获取枚举类的 Class 对象</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">clazz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">day</span><span class="p">.</span><span class="na">getClass</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 获取并调用枚举类的方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Method</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clazz</span><span class="p">.</span><span class="na">getMethod</span><span class="p">(</span><span class="s">&#34;printMessage&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">method</span><span class="p">.</span><span class="na">invoke</span><span class="p">(</span><span class="n">day</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="反射与泛型">反射与泛型</h3>
+<p>Java中的泛型是通过类型擦除来实现的，这意味着泛型信息只在编译期间存在，而在运行时则被擦除。所以反射在运行时无法直接获取具体的泛型类型信息。</p>
+<p>类型擦除是Java泛型的一种实现机制，目的是保持与旧版本的兼容性。在编译过程中，泛型类型被替换为其非泛型上限，通常是Object类，并在需要时插入类型转换。
+这样Java编译器在编译期间进行类型检查，而在运行时不保留泛型类型信息。</p>
+<p>通过反射可以绕过Java泛型的类型检查，这利用了Java泛型的类型擦除机制。在编译时，泛型类型被擦除，实际操作的对象是原始类型<code>Object</code>。
+这使得在运行时可以向泛型集合中插入不同类型的元素。但这种做法会导致类型安全性问题，所以在实际开发中应谨慎使用。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">list</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">1</span><span class="p">);</span><span class="w">  </span><span class="c1">//这样调用 add 方法只能存储整形，因为泛型类型的实例为 Integer</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">list</span><span class="p">.</span><span class="na">getClass</span><span class="p">().</span><span class="na">getMethod</span><span class="p">(</span><span class="s">&#34;add&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="p">.</span><span class="na">class</span><span class="p">).</span><span class="na">invoke</span><span class="p">(</span><span class="n">list</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;string&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">list</span><span class="p">.</span><span class="na">size</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">i</span><span class="p">));</span><span class="c1">// 1 string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="反射与框架">反射与框架</h3>
+<p>反射在许多Java框架中起着至关重要的作用，它使得框架能够在运行时动态地操作对象、调用方法和访问字段。
+例如，Spring的核心功能之一是依赖注入，就是利用反射动态地创建和注入对象。Spring使用反射来调用构造函数、设置字段和调用方法。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Autowired</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">MyRepository</span><span class="w"> </span><span class="n">myRepository</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>在<code>@Autowired</code>注解文档注释上面，可以看到与之息息相关的一个类<code>AutowiredAnnotationBeanPostProcessor</code>，即<code>@Autowired</code>后置处理器。
+看到该类实现了<code>MergedBeanDefinitionPostProcessor</code>接口，在<code>postProcessMergedBeanDefinition</code>方法上打一个断点，就可以看到<code>@Autowired</code>的调用栈。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @see AutowiredAnnotationBeanPostProcessor
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">CONSTRUCTOR</span><span class="p">,</span><span class="w"> </span><span class="n">ElementType</span><span class="p">.</span><span class="na">METHOD</span><span class="p">,</span><span class="w"> </span><span class="n">ElementType</span><span class="p">.</span><span class="na">PARAMETER</span><span class="p">,</span><span class="w"> </span><span class="n">ElementType</span><span class="p">.</span><span class="na">FIELD</span><span class="p">,</span><span class="w"> </span><span class="n">ElementType</span><span class="p">.</span><span class="na">ANNOTATION_TYPE</span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Documented</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="nd">@interface</span><span class="w"> </span><span class="n">Autowired</span><span class="p">{}</span><span class="w">
+</span></span></span></code></pre></div><p><code>@Autowired</code>注解调用栈：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">AbstractApplicationContext.refresh(容器初始化)
+</span></span><span class="line"><span class="cl">---&gt; registerBeanPostProcessors (注册AutowiredAnnotationBeanPostProcessor) 
+</span></span><span class="line"><span class="cl">---&gt; finishBeanFactoryInitialization
+</span></span><span class="line"><span class="cl">---&gt; AbstractAutowireCapableBeanFactory.doCreateBean
+</span></span><span class="line"><span class="cl">---&gt; AbstractAutowireCapableBeanFactory.applyMergedBeanDefinitionPostProcessors
+</span></span><span class="line"><span class="cl">---&gt; MergedBeanDefinitionPostProcessor.postProcessMergedBeanDefinition
+</span></span><span class="line"><span class="cl">---&gt; AutowiredAnnotationBeanPostProcessor.findAutowiringMetadata
+</span></span></code></pre></div><p>核心调用：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">postProcessMergedBeanDefinition
+</span></span><span class="line"><span class="cl">---&gt;findAutowiringMetadata
+</span></span><span class="line"><span class="cl">---&gt;buildAutowiringMetadata
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">postProcessMergedBeanDefinition</span><span class="p">(</span><span class="n">RootBeanDefinition</span><span class="w"> </span><span class="n">beanDefinition</span><span class="p">,</span><span class="w"> </span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">beanType</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">beanName</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 调用 findAutowiringMetadata</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">InjectionMetadata</span><span class="w"> </span><span class="n">metadata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">findAutowiringMetadata</span><span class="p">(</span><span class="n">beanName</span><span class="p">,</span><span class="w"> </span><span class="n">beanType</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">metadata</span><span class="p">.</span><span class="na">checkConfigMembers</span><span class="p">(</span><span class="n">beanDefinition</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">private</span><span class="w"> </span><span class="n">InjectionMetadata</span><span class="w"> </span><span class="nf">findAutowiringMetadata</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">beanName</span><span class="p">,</span><span class="w"> </span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">clazz</span><span class="p">,</span><span class="w"> </span><span class="nd">@Nullable</span><span class="w"> </span><span class="n">PropertyValues</span><span class="w"> </span><span class="n">pvs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Fall back to class name as cache key, for backwards compatibility with custom callers.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">cacheKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">StringUtils</span><span class="p">.</span><span class="na">hasLength</span><span class="p">(</span><span class="n">beanName</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">beanName</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">clazz</span><span class="p">.</span><span class="na">getName</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Quick check on the concurrent map first, with minimal locking.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">InjectionMetadata</span><span class="w"> </span><span class="n">metadata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">injectionMetadataCache</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">cacheKey</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">InjectionMetadata</span><span class="p">.</span><span class="na">needsRefresh</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span><span class="w"> </span><span class="n">clazz</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">synchronized</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">injectionMetadataCache</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">metadata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">injectionMetadataCache</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">cacheKey</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">InjectionMetadata</span><span class="p">.</span><span class="na">needsRefresh</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span><span class="w"> </span><span class="n">clazz</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">metadata</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">metadata</span><span class="p">.</span><span class="na">clear</span><span class="p">(</span><span class="n">pvs</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="c1">// 调用buildAutowiringMetadata</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">metadata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buildAutowiringMetadata</span><span class="p">(</span><span class="n">clazz</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">this</span><span class="p">.</span><span class="na">injectionMetadataCache</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">cacheKey</span><span class="p">,</span><span class="w"> </span><span class="n">metadata</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">metadata</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">private</span><span class="w"> </span><span class="n">InjectionMetadata</span><span class="w"> </span><span class="nf">buildAutowiringMetadata</span><span class="p">(</span><span class="kd">final</span><span class="w"> </span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">clazz</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">InjectionMetadata</span><span class="p">.</span><span class="na">InjectedElement</span><span class="o">&gt;</span><span class="w"> </span><span class="n">elements</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LinkedList</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">targetClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clazz</span><span class="p">;</span><span class="c1">//需要处理的目标类</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">do</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">final</span><span class="w"> </span><span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">InjectionMetadata</span><span class="p">.</span><span class="na">InjectedElement</span><span class="o">&gt;</span><span class="w"> </span><span class="n">currElements</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LinkedList</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 通过反射获取该类所有的字段，并遍历每一个字段，并通过方法findAutowiredAnnotation遍历每一个字段的所用注解，</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 如果用autowired修饰了，则返回auotowired相关属性</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ReflectionUtils</span><span class="p">.</span><span class="na">doWithLocalFields</span><span class="p">(</span><span class="n">targetClass</span><span class="p">,</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">AnnotationAttributes</span><span class="w"> </span><span class="n">ann</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">findAutowiredAnnotation</span><span class="p">(</span><span class="n">field</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ann</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="c1">//校验autowired注解是否用在了static方法上</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Modifier</span><span class="p">.</span><span class="na">isStatic</span><span class="p">(</span><span class="n">field</span><span class="p">.</span><span class="na">getModifiers</span><span class="p">()))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">logger</span><span class="p">.</span><span class="na">isWarnEnabled</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&#34;Autowired annotation is not supported on static fields: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">field</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="k">return</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="c1">//判断是否指定了required</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="kt">boolean</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">determineRequiredStatus</span><span class="p">(</span><span class="n">ann</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">currElements</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">AutowiredFieldElement</span><span class="p">(</span><span class="n">field</span><span class="p">,</span><span class="w"> </span><span class="n">required</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 和上面一样的逻辑，但是是通过反射处理类的method</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ReflectionUtils</span><span class="p">.</span><span class="na">doWithLocalMethods</span><span class="p">(</span><span class="n">targetClass</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Method</span><span class="w"> </span><span class="n">bridgedMethod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BridgeMethodResolver</span><span class="p">.</span><span class="na">findBridgedMethod</span><span class="p">(</span><span class="n">method</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">BridgeMethodResolver</span><span class="p">.</span><span class="na">isVisibilityBridgeMethodPair</span><span class="p">(</span><span class="n">method</span><span class="p">,</span><span class="w"> </span><span class="n">bridgedMethod</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">return</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">AnnotationAttributes</span><span class="w"> </span><span class="n">ann</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">findAutowiredAnnotation</span><span class="p">(</span><span class="n">bridgedMethod</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ann</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">method</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">ClassUtils</span><span class="p">.</span><span class="na">getMostSpecificMethod</span><span class="p">(</span><span class="n">method</span><span class="p">,</span><span class="w"> </span><span class="n">clazz</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Modifier</span><span class="p">.</span><span class="na">isStatic</span><span class="p">(</span><span class="n">method</span><span class="p">.</span><span class="na">getModifiers</span><span class="p">()))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">logger</span><span class="p">.</span><span class="na">isWarnEnabled</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&#34;Autowired annotation is not supported on static methods: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">method</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="k">return</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">method</span><span class="p">.</span><span class="na">getParameterCount</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">logger</span><span class="p">.</span><span class="na">isWarnEnabled</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&#34;Autowired annotation should only be used on methods with parameters: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                </span><span class="n">method</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="kt">boolean</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">determineRequiredStatus</span><span class="p">(</span><span class="n">ann</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">PropertyDescriptor</span><span class="w"> </span><span class="n">pd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BeanUtils</span><span class="p">.</span><span class="na">findPropertyForMethod</span><span class="p">(</span><span class="n">bridgedMethod</span><span class="p">,</span><span class="w"> </span><span class="n">clazz</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">currElements</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">AutowiredMethodElement</span><span class="p">(</span><span class="n">method</span><span class="p">,</span><span class="w"> </span><span class="n">required</span><span class="p">,</span><span class="w"> </span><span class="n">pd</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 用@Autowired修饰的注解可能不止一个，因此都加在currElements这个容器里面，一起处理		</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">elements</span><span class="p">.</span><span class="na">addAll</span><span class="p">(</span><span class="n">0</span><span class="p">,</span><span class="w"> </span><span class="n">currElements</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">targetClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">targetClass</span><span class="p">.</span><span class="na">getSuperclass</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">targetClass</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">targetClass</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">Object</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InjectionMetadata</span><span class="p">(</span><span class="n">clazz</span><span class="p">,</span><span class="w"> </span><span class="n">elements</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>通过上面的源码，可以看到Spring在运行时通过反射查找<code>@Autowired</code>注解，并自动注入相关字段。
+Spring框架利用反射遍历目标类及其超类的所有字段和方法，查找并收集所有使用了<code>@Autowired</code>注解的元素。对于每个字段和方法，首先通过反射获取注解信息，如果字段或方法被<code>@Autowired</code>注解修饰且符合条件（如非静态），则将其封装成对应的注入元素（<code>AutowiredFieldElement</code>或<code>AutowiredMethodElement</code>）并添加到当前元素列表中。
+最后，这些注入元素会被封装到<code>InjectionMetadata</code>对象中，并用于实际的依赖注入过程，从而实现Spring的自动注入功能。</p>
 </div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">

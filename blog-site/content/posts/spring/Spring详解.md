@@ -9,7 +9,7 @@ slug: "java-spring"
 ## 概览
 Spring是一个轻量级的Java开源框架，为了解决企业应用开发的复杂性而创建的。Spring的核心是控制反转（IOC）和面向切面（AOP）。
 
-简单来说，Spring是一个分层的JavaSE/EE 一站式轻量级开源框架。在每一层都提供支持。
+简单来说，Spring是一个分层的JavaSE/EE 一站式轻量级开源框架，在每一层都提供支持。
 - 表示层：spring mvc
 - 业务层：spring
 - 持久层：jdbctemplate、spring data
@@ -18,7 +18,6 @@ Spring是一个轻量级的Java开源框架，为了解决企业应用开发的�
 
 ## 对Spring的理解
 Spring是一个轻量级的框架，简化我们的开发，里面重点包含两个模块分别是IOC和AOP。
-
 - IOC叫控制反转，在没用IOC之前都要手动new创建对象，使用IOC之后由容器进行对象的创建，并且由容器来管理对象，减去了开发上的成本，提高了工作效率。
 - AOP叫面向切面编程，在实际项目开发中需要嵌入一些与业务不想关的代码的时候就可以使用AOP。比如，权限日志的增加。
 
@@ -106,7 +105,6 @@ public void refresh() throws BeansException, IllegalStateException {
 10. registerListeners 将容器中和BeanDefinitionMap中的监听器添加到事件监听器中
 11. finishBeanFactoryInitialization 创建单例池，将容器中非懒加载的Bean，单例bean创建对象放入单例池中，包括容器的依赖注入
 12. finishRefresh 容器启动过后，发布事件
-
 
 ## Spring循环依赖与三级缓存
 ![Spring详解-003](/iblog/posts/annex/images/spring/Spring详解-003.png)
@@ -507,6 +505,7 @@ class TestService {
 
 }
 ```
+
 #### 加在方法、参数上
 `@Autowired`注解不仅可以标注在属性上，也可以标注在方法上，当标注在方法上时，Spring容器创建当前对象，就会调用该方法完成赋值，方法使用的参数从IOC容器中获取。
 
@@ -656,8 +655,10 @@ class TestDao1{
 
 
 #### 原理
-```
-/
+在`@Autowired`注解文档注释上面，可以看到与之息息相关的一个类`AutowiredAnnotationBeanPostProcessor`，即`@Autowired`后置处理器。
+看到该类实现了`MergedBeanDefinitionPostProcessor`接口，在`postProcessMergedBeanDefinition`方法上打一个断点，就可以看到`@Autowired`的调用栈。
+```java
+/*
  * @see AutowiredAnnotationBeanPostProcessor
  */
 @Target({ElementType.CONSTRUCTOR, ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
@@ -665,11 +666,8 @@ class TestDao1{
 @Documented
 public @interface Autowired{}
 ```
-在`@Autowired`注解文档注释上面，可以看到与之息息相关的一个类`AutowiredAnnotationBeanPostProcessor`，即`@Autowired`后置处理器；
-可以看到该类实现了`MergedBeanDefinitionPostProcessor`接口，在`postProcessMergedBeanDefinition`方法上打一个断点，就可以看到`@Autowired`的调用栈。
-
 `@Autowired`注解调用栈：
-```
+```text
 AbstractApplicationContext.refresh(容器初始化)
 ---> registerBeanPostProcessors (注册AutowiredAnnotationBeanPostProcessor) 
 ---> finishBeanFactoryInitialization
@@ -678,13 +676,13 @@ AbstractApplicationContext.refresh(容器初始化)
 ---> MergedBeanDefinitionPostProcessor.postProcessMergedBeanDefinition
 ---> AutowiredAnnotationBeanPostProcessor.findAutowiringMetadata
 ```
-
 核心调用：
 ```
-postProcessMergedBeanDefinition`->`findAutowiringMetadata`->`buildAutowiringMetadata
+postProcessMergedBeanDefinition
+--->findAutowiringMetadata
+--->buildAutowiringMetadata
 ```
-相关源码：
-```
+```java
 @Override
 public void postProcessMergedBeanDefinition(RootBeanDefinition beanDefinition, Class<?> beanType, String beanName) {
     // 调用 findAutowiringMetadata
@@ -693,87 +691,86 @@ public void postProcessMergedBeanDefinition(RootBeanDefinition beanDefinition, C
 }
 
 private InjectionMetadata findAutowiringMetadata(String beanName, Class<?> clazz, @Nullable PropertyValues pvs) {
-		// Fall back to class name as cache key, for backwards compatibility with custom callers.
-		String cacheKey = (StringUtils.hasLength(beanName) ? beanName : clazz.getName());
-		// Quick check on the concurrent map first, with minimal locking.
-		InjectionMetadata metadata = this.injectionMetadataCache.get(cacheKey);
-		if (InjectionMetadata.needsRefresh(metadata, clazz)) {
-			synchronized (this.injectionMetadataCache) {
-				metadata = this.injectionMetadataCache.get(cacheKey);
-				if (InjectionMetadata.needsRefresh(metadata, clazz)) {
-					if (metadata != null) {
-						metadata.clear(pvs);
-					}
-                    // 调用buildAutowiringMetadata
-					metadata = buildAutowiringMetadata(clazz);
-					this.injectionMetadataCache.put(cacheKey, metadata);
-				}
-			}
-		}
-		return metadata;
-	}
-
+    // Fall back to class name as cache key, for backwards compatibility with custom callers.
+    String cacheKey = (StringUtils.hasLength(beanName) ? beanName : clazz.getName());
+    // Quick check on the concurrent map first, with minimal locking.
+    InjectionMetadata metadata = this.injectionMetadataCache.get(cacheKey);
+    if (InjectionMetadata.needsRefresh(metadata, clazz)) {
+        synchronized (this.injectionMetadataCache) {
+            metadata = this.injectionMetadataCache.get(cacheKey);
+            if (InjectionMetadata.needsRefresh(metadata, clazz)) {
+                if (metadata != null) {
+                    metadata.clear(pvs);
+                }
+                // 调用buildAutowiringMetadata
+                metadata = buildAutowiringMetadata(clazz);
+                this.injectionMetadataCache.put(cacheKey, metadata);
+            }
+        }
+    }
+    return metadata;
+}
 
 
 private InjectionMetadata buildAutowiringMetadata(final Class<?> clazz) {
-		LinkedList<InjectionMetadata.InjectedElement> elements = new LinkedList<>();
-		Class<?> targetClass = clazz;//需要处理的目标类
-       
-		do {
-			final LinkedList<InjectionMetadata.InjectedElement> currElements = new LinkedList<>();
- 
-            /*通过反射获取该类所有的字段，并遍历每一个字段，并通过方法findAutowiredAnnotation遍历每一个字段的所用注解，并如果用autowired修饰了，则返回auotowired相关属性*/  
- 
-			ReflectionUtils.doWithLocalFields(targetClass, field -> {
-				AnnotationAttributes ann = findAutowiredAnnotation(field);
-				if (ann != null) {//校验autowired注解是否用在了static方法上
-					if (Modifier.isStatic(field.getModifiers())) {
-						if (logger.isWarnEnabled()) {
-							logger.warn("Autowired annotation is not supported on static fields: " + field);
-						}
-						return;
-					}//判断是否指定了required
-					boolean required = determineRequiredStatus(ann);
-					currElements.add(new AutowiredFieldElement(field, required));
-				}
-			});
-            //和上面一样的逻辑，但是是通过反射处理类的method
-			ReflectionUtils.doWithLocalMethods(targetClass, method -> {
-				Method bridgedMethod = BridgeMethodResolver.findBridgedMethod(method);
-				if (!BridgeMethodResolver.isVisibilityBridgeMethodPair(method, bridgedMethod)) {
-					return;
-				}
-				AnnotationAttributes ann = findAutowiredAnnotation(bridgedMethod);
-				if (ann != null && method.equals(ClassUtils.getMostSpecificMethod(method, clazz))) {
-					if (Modifier.isStatic(method.getModifiers())) {
-						if (logger.isWarnEnabled()) {
-							logger.warn("Autowired annotation is not supported on static methods: " + method);
-						}
-						return;
-					}
-					if (method.getParameterCount() == 0) {
-						if (logger.isWarnEnabled()) {
-							logger.warn("Autowired annotation should only be used on methods with parameters: " +
-									method);
-						}
-					}
-					boolean required = determineRequiredStatus(ann);
-					PropertyDescriptor pd = BeanUtils.findPropertyForMethod(bridgedMethod, clazz);
-              	    currElements.add(new AutowiredMethodElement(method, required, pd));
-				}
-			});
-    //用@Autowired修饰的注解可能不止一个，因此都加在currElements这个容器里面，一起处理		
-			elements.addAll(0, currElements);
-			targetClass = targetClass.getSuperclass();
-		}
-		while (targetClass != null && targetClass != Object.class);
- 
-		return new InjectionMetadata(clazz, elements);
-	}
-```
-当`Spring` 容器启动时，`AutowiredAnnotationBeanPostProcessor` 组件会被注册到容器中，然后扫描代码，如果带有 `@Autowired` 注解，则将依赖注入信息封装到 `InjectionMetadata` 中。
+    LinkedList<InjectionMetadata.InjectedElement> elements = new LinkedList<>();
+    Class<?> targetClass = clazz;//需要处理的目标类
+   
+    do {
+        final LinkedList<InjectionMetadata.InjectedElement> currElements = new LinkedList<>();
 
-最后创建 `bean`，即实例化对象和调用初始化方法，会调用各种 `XXXBeanPostProcessor` 对 `bean` 初始化，其中包括`AutowiredAnnotationBeanPostProcessor`，它负责将相关的依赖注入到容器中。
+        // 通过反射获取该类所有的字段，并遍历每一个字段，并通过方法findAutowiredAnnotation遍历每一个字段的所用注解，
+        // 如果用autowired修饰了，则返回auotowired相关属性
+        ReflectionUtils.doWithLocalFields(targetClass, field -> {
+            AnnotationAttributes ann = findAutowiredAnnotation(field);
+            if (ann != null) {//校验autowired注解是否用在了static方法上
+                if (Modifier.isStatic(field.getModifiers())) {
+                    if (logger.isWarnEnabled()) {
+                        logger.warn("Autowired annotation is not supported on static fields: " + field);
+                    }
+                    return;
+                }//判断是否指定了required
+                boolean required = determineRequiredStatus(ann);
+                currElements.add(new AutowiredFieldElement(field, required));
+            }
+        });
+        // 和上面一样的逻辑，但是是通过反射处理类的method
+        ReflectionUtils.doWithLocalMethods(targetClass, method -> {
+            Method bridgedMethod = BridgeMethodResolver.findBridgedMethod(method);
+            if (!BridgeMethodResolver.isVisibilityBridgeMethodPair(method, bridgedMethod)) {
+                return;
+            }
+            AnnotationAttributes ann = findAutowiredAnnotation(bridgedMethod);
+            if (ann != null && method.equals(ClassUtils.getMostSpecificMethod(method, clazz))) {
+                if (Modifier.isStatic(method.getModifiers())) {
+                    if (logger.isWarnEnabled()) {
+                        logger.warn("Autowired annotation is not supported on static methods: " + method);
+                    }
+                    return;
+                }
+                if (method.getParameterCount() == 0) {
+                    if (logger.isWarnEnabled()) {
+                        logger.warn("Autowired annotation should only be used on methods with parameters: " +
+                                method);
+                    }
+                }
+                boolean required = determineRequiredStatus(ann);
+                PropertyDescriptor pd = BeanUtils.findPropertyForMethod(bridgedMethod, clazz);
+                currElements.add(new AutowiredMethodElement(method, required, pd));
+            }
+        });
+        // 用@Autowired修饰的注解可能不止一个，因此都加在currElements这个容器里面，一起处理		
+        elements.addAll(0, currElements);
+        targetClass = targetClass.getSuperclass();
+    }
+    while (targetClass != null && targetClass != Object.class);
+
+    return new InjectionMetadata(clazz, elements);
+}
+```
+当`Spring` 容器启动时，`AutowiredAnnotationBeanPostProcessor`组件会被注册到容器中，然后扫描代码。
+如果带有`@Autowired`注解，则将依赖注入信息封装到`InjectionMetadata`中。
+最后创建`bean`，即实例化对象和调用初始化方法，会调用各种`XXXBeanPostProcessor`对`bean`初始化，其中包括`AutowiredAnnotationBeanPostProcessor`，它负责将相关的依赖注入到容器中。
 
 ### @Resource、@Inject
 Spring 自动装配除了`@Autowired`注解外，也支持JSR-250中的`@Resource`和JSR-330中的`@Inject`注解，来进行自动装配；
