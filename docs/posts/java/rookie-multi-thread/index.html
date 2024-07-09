@@ -126,8 +126,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%b9%b6%e8%a1%8c%e5%b9%b6%e5%8f%91%e4%b8%b2%e8%a1%8c">
-                    并行、并发、串行
+                <a class="nav-link text-left" href="#%e5%b9%b6%e8%a1%8c%e4%b8%b2%e8%a1%8c%e5%b9%b6%e5%8f%91">
+                    并行、串行、并发
                 </a>
             </li>
             
@@ -2451,15 +2451,16 @@
                     </div>
                     <div class="post_content markdown"><h2 id="相关概念">相关概念</h2>
 <h3 id="线程与进程">线程与进程</h3>
-<p><strong>进程</strong>是一个具有一定独立功能的程序关于某个数据集合的一次运行活动。例如，一个正在运行的程序的实例就是一个进程。</p>
-<p><strong>线程</strong>是操作系统能够进行运算调度的最小单位。它被包含在进程之中，是进程中的实际运作单位。</p>
-<p>一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。</p>
+<ul>
+<li>进程是一个具有一定独立功能的程序关于某个数据集合的一次运行活动。例如，一个正在运行的程序的实例就是一个进程。</li>
+<li>线程是操作系统能够进行运算调度的最小单位。它被包含在进程之中，是进程中的实际运作单位。</li>
+</ul>
 <p>进程是操作系统资源分配的基本单位，而线程是处理器任务调度和执行的基本单位。
-一个进程至少有一个线程，一个进程可以运行多个线程，多个线程可共享数据。</p>
-<p>Java 程序是多线程程序，每启动一个Java程序至少我们知道的都会包含一个主线程和一个垃圾回收线程。
+一条线程指的是进程中的一个单一顺序的控制流，一个进程至少有一个线程，一个进程中可以并发多个线程，多个线程可共享数据，每条线程并行执行不同的任务。</p>
+<p>Java程序是多线程程序，每启动一个Java程序，至少我们知道的都会包含一个主线程和一个垃圾回收线程。
 而且启动的时候，每条线程可以并行执行不同的任务。</p>
 <p><img alt="线程与进程的关系" src="/iblog/posts/annex/images/essays/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%85%B3%E7%B3%BB.jpg"></p>
-<h3 id="并行并发串行">并行、并发、串行</h3>
+<h3 id="并行串行并发">并行、串行、并发</h3>
 <ul>
 <li>并行：前提是在多核CPU，多个线程同时被多个CPU执行，同时执行的线程并不会抢占CPU资源。</li>
 <li>串行：前提是在单核CPU条件下，单线程程序执行，不能同时执行，也不能去切换执行，也就是在同一时间段只能做一件事，如果需要做多件事情需要排队执行。</li>
@@ -2475,30 +2476,32 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>单CPU</strong></td>
+<td>单CPU</td>
 <td style="text-align:center">串行</td>
 <td>并发</td>
 </tr>
 <tr>
-<td><strong>多CPU</strong></td>
+<td>多CPU</td>
 <td style="text-align:center">串行</td>
 <td>并行</td>
 </tr>
 </tbody>
 </table>
-<p>无论并行、并发，都可以有多个线程执行，如果是多个线程抢占一个CPU就成了并发，多个CPU同时执行多个线程就是并行。</p>
-<p>对于单CPU的计算机来说，同一时间是只能干一件事儿的，如果是单线程就是串行；如果是多个线程就是并发。
-而对于多CPU的计算机说，同一时间能干多个事，如果多个CPU同时执行多个线程就是并行；如果一个CPU同时执行多个线程就是并行。</p>
+<p>无论并行、并发，都可以有多个线程执行，如果是多个线程抢占一个CPU，交替执行，并且CPU通过时间片轮转等机制切换执行线程，这种情况下称为并发执行。
+多个线程同时被多个CPU执行，并且各个线程之间不会互相抢占CPU资源，这种情况下称为并行执行。每个线程都在自己的CPU核心上独立执行，互不干扰。</p>
+<p>对于单CPU的计算机来说，同一时间是只能干一件事儿的，如果是单线程就是串行，如果是多个线程就是并发。
+而对于多CPU的计算机说，同一时间能干多个事，如果多个CPU同时执行多个线程就是并行，如果一个CPU同时执行多个线程就是并行。</p>
 <p>并行与并发区别图解
 <img alt="并行与并发区别" src="/iblog/posts/annex/images/essays/%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%B9%B6%E5%8F%91%E5%8C%BA%E5%88%AB.png"></p>
 <p>并发是两个队列交替使用一台咖啡机，并行是两个队列同时使用两台咖啡机；
-如果串行，一个队列使用一台咖啡机，那么哪怕前面那个人便秘了去厕所呆半天，后面的人也只能死等着他回来才能去接咖啡，这效率无疑是最低的。</p>
+如果串行，一个队列使用一台咖啡机，那么哪怕前面那个人便秘了去厕所呆半天，后面的人也只能死等着他回来才能去接咖啡，这种效率无疑是最低的。</p>
 <h3 id="同步与异步">同步与异步</h3>
-<p>同步、异步一般是相对与方法来说的。</p>
+<p>同步、异步是描述程序执行模式的两个重要概念。在Java中，同步和异步通常来描述方法。</p>
 <ul>
-<li>同步方法调用一旦开始，调用者必须等到方法调用返回后，才能继续后续的行为；</li>
+<li>同步通常指的是线程的同步执行。同步方法调用一旦开始，调用者必须等到方法调用返回后，才能继续后续的行为；
+例如，使用关键字<code>synchronized</code>或<code>Lock</code>接口可以实现多线程的同步，确保多个线程按照特定的顺序或条件执行。</li>
 <li>异步方法调用更像一个消息传递，一旦开始，方法调用就会立即返回，调用者就可以继续后续的操作；
-异步方法通常会在另外一个线程中执行着。整个过程，不会阻碍调用者的后续工作。</li>
+异步方法通常会在另外一个线程中执行着，整个过程，不会阻碍调用者的后续工作。异步在Java中通常通过多线程、回调函数或<code>Future</code>、<code>CompletableFuture</code>等方式实现。</li>
 </ul>
 <p>只有多线程环境下才会异步调用方法，换言之异步调用方法则需要单独创建一个线程。</p>
 <table>
@@ -2511,50 +2514,43 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>同步</strong></td>
+<td>同步</td>
 <td style="text-align:center">只能同步</td>
 <td>可以同步</td>
 </tr>
 <tr>
-<td><strong>异步</strong></td>
+<td>异步</td>
 <td style="text-align:center">不能异步</td>
 <td>可以异步</td>
 </tr>
 </tbody>
 </table>
-<blockquote>
-<p>线程中的同步(synchronized)机制
-在多线程环境下，一旦一个方法或一段代码被synchronized修饰，也就意味着被同步了；
-在synchronized修饰的作用域中，某一段时间内只允许一个线程进行操作数据，如果有多个线程需要操作则要排队等待。</p>
-</blockquote>
 <h3 id="守护线程">守护线程</h3>
-<blockquote>
-<p>守护线程是指为其他线程服务的线程。在JVM中，所有非守护线程都执行完毕后，无论有没有守护线程，虚拟机都会自动退出。</p>
-</blockquote>
-<p>守护线程也称“服务线程”，在没有用户线程可服务时会自动离开。因为主要是服务其他线程所以在程序中的优先级比较低。</p>
-<p>举例：垃圾回收线程就是一个经典的守护线程，当我们的程序中不再有任何运行的线程,程序就不会再产生垃圾，垃圾回收器也就无事可做；
+<p>守护线程是指为其他线程服务的线程。在JVM中，所有非守护线程都执行完毕后，无论有没有守护线程，虚拟机都会自动退出。
+守护线程也称“服务线程”，在没有用户线程可服务时会自动离开。因为主要是服务其他线程所以在程序中的优先级比较低。</p>
+<p>举例，垃圾回收线程就是一个经典的守护线程，当我们的程序中不再有任何运行的线程,程序就不会再产生垃圾，垃圾回收器也就无事可做。
 所以当垃圾回收线程是JVM上仅剩的线程时，垃圾回收线程会自动离开。它始终在低级别的状态中运行，用于实时监控和管理系统中的可回收资源。</p>
 <p>守护线程在程序中的操作演示</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        int i = 0;
-</span></span><span class="line"><span class="cl">        while (true) {
-</span></span><span class="line"><span class="cl">            Thread daemon = new Thread(() -&gt; {
-</span></span><span class="line"><span class="cl">                System.out.println(&#34;启动线程---&gt;&#34; + Thread.currentThread().getName());
-</span></span><span class="line"><span class="cl">            });
-</span></span><span class="line"><span class="cl">            daemon.setDaemon(i==3);
-</span></span><span class="line"><span class="cl">            daemon.start();
-</span></span><span class="line"><span class="cl">            boolean isDaemon = daemon.isDaemon();
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;当前线程是否是守护线程：&#34; + isDaemon);
-</span></span><span class="line"><span class="cl">            if (isDaemon) {
-</span></span><span class="line"><span class="cl">                break;
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">            i++;
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><h2 id="线程的状态">线程的状态</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MainTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Thread</span><span class="w"> </span><span class="n">daemon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;启动线程---&gt;&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">daemon</span><span class="p">.</span><span class="na">setDaemon</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="n">3</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">daemon</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kt">boolean</span><span class="w"> </span><span class="n">isDaemon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">daemon</span><span class="p">.</span><span class="na">isDaemon</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;当前线程是否是守护线程：&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">isDaemon</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isDaemon</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">break</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">i</span><span class="o">++</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="线程的状态">线程的状态</h2>
 <p>线程状态共包含6种，6中状态又可以互相的转换。</p>
 <p><img alt="线程状态转换" src="/iblog/posts/annex/images/essays/%E7%BA%BF%E7%A8%8B%E8%BD%AC%E6%8D%A2%E5%9B%BE.jpg"></p>
 <ul>
@@ -5601,7 +5597,7 @@ Java的线程是映射到操作系统原生线程之上的，如果要阻塞或�
 </span></span><span class="line"><span class="cl">            lock.unlock();
 </span></span><span class="line"><span class="cl">        }
 </span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p><code>CopyWriteArrayList</code>之所以线程安全的原因是在源码里面使用 <code>ReentrantLock</code>，所以保证了某个线程在写的时候不会被打断；
+</span></span></code></pre></div><p><code>CopyWriteArrayList</code>之所以线程安全的原因是在源码里面使用 <code>ReentrantLock</code>，所以保证了某个线程在写的时候不会被打断。
 可以看到源码开始先是复制了一份数组(因为同一时刻只有一个线程写，其余的线程会读)，在复制的数组上边进行写操作，写好以后在返回 <code>true</code>。
 这样写的就把读写进行了分离.写好以后因为 <code>array</code> 加了 <code>volatile</code> 关键字，所以该数组是对于其他的线程是可见的，就会读取到最新的值.</p>
 <h3 id="hashset">HashSet</h3>
