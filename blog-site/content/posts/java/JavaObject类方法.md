@@ -784,7 +784,7 @@ public class WaitNotifyExample {
 - 两者比较的共同之处是，都是使程序等待多长时间。不同的是调用`sleep()`不会释放锁，会使线程堵塞，而调用`wait()`会释放锁，让线程进入等待状态，用 `notify()`、`notifyall()`可以唤醒，或者等待时间到了；这是因为，如果没有释放锁，那么其它线程就无法进入对象的同步方法或者同步控制块中，那么就无法执行 `notify()` 或者 `notifyAll()` 来唤醒挂起的线程，造成死锁。
 - `wait()`必须在同步`synchronized`块里使用，`sleep()`可以在任意地方使用；
 
-其中"`wait()`必须在同步`synchronized`块里使用"，使其不止`wait`方法，`notify、notifyAll`也和`wait`方法一样，必须在`synchronized`块里使用，为什么呢？
+其中"`wait()`必须在同步`synchronized`块里使用"，不止`wait`方法，`notify、notifyAll`也和`wait`方法一样，必须在`synchronized`块里使用，为什么呢？
 
 是为了避免丢失唤醒问题。假设没有`synchronized`修饰，使用了`wait`方法而没有设置等待时间，也没有调用唤醒方法或者唤醒方法调用的时机不对，这个线程将会永远的堵塞下去。
 `wait`、`notify`、`notifyAll`方法调用的时候要释放锁，你都没给它加锁，他怎么释放锁。所以如果没在`synchronized`块中调用`wait()、notify、notifyAll`方法是肯定抛异常的。

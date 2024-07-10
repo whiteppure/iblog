@@ -1447,7 +1447,7 @@
 <li>两者比较的共同之处是，都是使程序等待多长时间。不同的是调用<code>sleep()</code>不会释放锁，会使线程堵塞，而调用<code>wait()</code>会释放锁，让线程进入等待状态，用 <code>notify()</code>、<code>notifyall()</code>可以唤醒，或者等待时间到了；这是因为，如果没有释放锁，那么其它线程就无法进入对象的同步方法或者同步控制块中，那么就无法执行 <code>notify()</code> 或者 <code>notifyAll()</code> 来唤醒挂起的线程，造成死锁。</li>
 <li><code>wait()</code>必须在同步<code>synchronized</code>块里使用，<code>sleep()</code>可以在任意地方使用；</li>
 </ul>
-<p>其中&quot;<code>wait()</code>必须在同步<code>synchronized</code>块里使用&quot;，使其不止<code>wait</code>方法，<code>notify、notifyAll</code>也和<code>wait</code>方法一样，必须在<code>synchronized</code>块里使用，为什么呢？</p>
+<p>其中&quot;<code>wait()</code>必须在同步<code>synchronized</code>块里使用&quot;，不止<code>wait</code>方法，<code>notify、notifyAll</code>也和<code>wait</code>方法一样，必须在<code>synchronized</code>块里使用，为什么呢？</p>
 <p>是为了避免丢失唤醒问题。假设没有<code>synchronized</code>修饰，使用了<code>wait</code>方法而没有设置等待时间，也没有调用唤醒方法或者唤醒方法调用的时机不对，这个线程将会永远的堵塞下去。
 <code>wait</code>、<code>notify</code>、<code>notifyAll</code>方法调用的时候要释放锁，你都没给它加锁，他怎么释放锁。所以如果没在<code>synchronized</code>块中调用<code>wait()、notify、notifyAll</code>方法是肯定抛异常的。</p>
 </div>

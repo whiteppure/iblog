@@ -871,50 +871,48 @@
 <li>确定是否线程阻塞：线程阻塞也是常见的导致CPU飙高的原因之一。可以通过线程监控工具，如JMC、VisualVM，来检查是否存在长时间阻塞的线程，并分析造成线程阻塞的原因；</li>
 </ol>
 <h2 id="死锁">死锁</h2>
-<p>死锁通常被定义为：如果一个进程集合中的每个进程都在等待只能由此集合中的其他进程才能引发的事件，而无限期陷入僵持的局面称为死锁。</p>
-<p>举个例子，当线程A持有锁a并尝试获取锁b，线程B持有锁b并尝试获取锁a时，就会出现死锁。
-简单来说，死锁问题的产生是由两个或者以上线程并行执行的时候，争夺资源而互相等待造成的。</p>
+<p>死锁是指两个或多个线程在执行过程中，由于竞争资源或者互相等待释放资源而造成的一种僵局，使得所有参与的线程无法继续执行。
+举个例子，当线程A持有锁a并尝试获取锁b，线程B持有锁b并尝试获取锁a时，就会出现死锁。简单来说，死锁问题的产生是由两个或者以上线程并行执行的时候，争夺资源而互相等待造成的。</p>
 <h3 id="排查过程-1">排查过程</h3>
-<p>死锁经常表现为程序的停顿，或者不再响应用户的请求。从操作系统上观察，对应进程的CPU占用率为零，很快会从top的输出中消失。</p>
-<p>这里模拟死锁代码：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">         String lockA = &#34;lockA&#34;;
-</span></span><span class="line"><span class="cl">         String lockB = &#34;lockB&#34;;
-</span></span><span class="line"><span class="cl">        new Thread(new ThreadHolderLock(lockA,lockB),&#34;线程AAA&#34;).start();
-</span></span><span class="line"><span class="cl">        new Thread(new ThreadHolderLock(lockB,lockA),&#34;线程BBB&#34;).start();
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">class ThreadHolderLock implements Runnable{
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    private String lockA;
-</span></span><span class="line"><span class="cl">    private String lockB;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public ThreadHolderLock(String lockA, String lockB){
-</span></span><span class="line"><span class="cl">        this.lockA = lockA;
-</span></span><span class="line"><span class="cl">        this.lockB = lockB;
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    @Override
-</span></span><span class="line"><span class="cl">    public void run() {
-</span></span><span class="line"><span class="cl">        synchronized (lockA){
-</span></span><span class="line"><span class="cl">            System.out.println(Thread.currentThread().getName() + &#34;\t 持有锁 &#34;+ lockA+&#34;, 尝试获得&#34;+ lockB);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">            try {
-</span></span><span class="line"><span class="cl">                Thread.sleep(1000);
-</span></span><span class="line"><span class="cl">            } catch (InterruptedException e) {
-</span></span><span class="line"><span class="cl">                e.printStackTrace();
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">            synchronized (lockB){
-</span></span><span class="line"><span class="cl">                System.out.println(Thread.currentThread().getName() + &#34;\t 持有锁 &#34;+ lockB+&#34;, 尝试获得&#34;+ lockA);
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><ol>
+<p>死锁经常表现为程序的停顿，或者不再响应用户的请求。从操作系统上观察，对应进程的CPU占用率为零，很快会从top的输出中消失。模拟死锁代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MainTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">         </span><span class="n">String</span><span class="w"> </span><span class="n">lockA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;lockA&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">         </span><span class="n">String</span><span class="w"> </span><span class="n">lockB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;lockB&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ThreadHolderLock</span><span class="p">(</span><span class="n">lockA</span><span class="p">,</span><span class="n">lockB</span><span class="p">),</span><span class="s">&#34;线程AAA&#34;</span><span class="p">).</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ThreadHolderLock</span><span class="p">(</span><span class="n">lockB</span><span class="p">,</span><span class="n">lockA</span><span class="p">),</span><span class="s">&#34;线程BBB&#34;</span><span class="p">).</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">ThreadHolderLock</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Runnable</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">lockA</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">lockB</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">ThreadHolderLock</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">lockA</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">lockB</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">lockA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lockA</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">lockB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lockB</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">synchronized</span><span class="w"> </span><span class="p">(</span><span class="n">lockA</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;\t 持有锁 &#34;</span><span class="o">+</span><span class="w"> </span><span class="n">lockA</span><span class="o">+</span><span class="s">&#34;, 尝试获得&#34;</span><span class="o">+</span><span class="w"> </span><span class="n">lockB</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="n">1000</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">InterruptedException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kd">synchronized</span><span class="w"> </span><span class="p">(</span><span class="n">lockB</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;\t 持有锁 &#34;</span><span class="o">+</span><span class="w"> </span><span class="n">lockB</span><span class="o">+</span><span class="s">&#34;, 尝试获得&#34;</span><span class="o">+</span><span class="w"> </span><span class="n">lockA</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><ol>
 <li>使用<code>jps -l</code>命令找到程序进程；</li>
 <li>使用<code>jstack pid</code>命令打印堆栈信息；
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Found one Java-level deadlock:
@@ -951,9 +949,9 @@
 <li>不剥夺条件：线程已获得的资源，在未使用完之前，不能强行剥夺。例如，当线程A已经持有了资源 ，在自己使用完之前不能被其他线程获取，线程 B 如果也想使用此资源，则只能在线程 A 使用完并释放后才能获取。</li>
 <li>循环等待条件：若干线程之间形成一种头尾相接的循环等待资源关系。比如，线程 A 已经持有资源 2，而想请求资源 1， 线程 B 已经获取了资源 1，而想请求资源 2，这就形成资源请求等待的环。</li>
 </ul>
-<p>避免死锁的产生就只需要破环其中一个条件就可以，最常见的并且可行的就是使用资源有序分配法，来破循环等待条件。</p>
-<p>资源有序分配法: 线程 A 和 线程 B 获取资源的顺序要一样，当线程 A 先尝试获取资源 A，然后尝试获取资源 B 的时候，线程 B 同样也是先尝试获取资源 A，然后尝试获取资源 B。也就是说，线程 A 和 线程 B 总是以相同的顺序申请自己想要的资源。</p>
-<p>给资源分配一个全局的唯一编号，进程必须按资源编号的顺序请求资源。这种方法可以避免循环等待，从而防止死锁。</p>
+<p>避免死锁的产生就只需要破环其中一个条件就可以，最常见的并且可行的就是使用资源有序分配法，来破循环等待条件。
+资源有序分配法指的是，线程 A 和 线程 B 获取资源的顺序要一样，当线程 A 先尝试获取资源 A，然后尝试获取资源 B 的时候，线程 B 同样也是先尝试获取资源 A，然后尝试获取资源 B。也就是说，线程 A 和 线程 B 总是以相同的顺序申请自己想要的资源。
+给资源分配一个全局的唯一编号，进程必须按资源编号的顺序请求资源。这种方法可以避免循环等待，从而防止死锁。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Resource</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -1021,9 +1019,9 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><h4 id="使用银行家算法避免死锁">使用银行家算法避免死锁</h4>
 <p><img alt="银行家算法" src="/iblog/posts/annex/images/essays/%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95.png"></p>
-<p>银行家算法：一个避免死锁（Deadlock）的著名算法，是由艾兹格·迪杰斯特拉在1965年为T.H.E系统设计的一种避免死锁产生的算法。它以银行借贷系统的分配策略为基础，判断并保证系统的安全运行。</p>
-<p>在银行中，客户申请贷款的数量是有限的，每个客户在第一次申请贷款时要声明完成该项目所需的最大资金量，在满足所有贷款要求时，客户应及时归还。银行家在客户申请的贷款数量不超过自己拥有的最大值时，都应尽量满足客户的需要。通过判断借贷是否安全，然后决定借不借。</p>
-<p>举例，现有公司B、公司A、公司T，想要从银行分别贷款70亿、40亿、50亿，假设银行只有100亿供放贷，如果借不到企业最大需求的钱，钱将不会归还，怎么才能合理的放贷？</p>
+<p>银行家算法：一个避免死锁的著名算法，是由艾兹格·迪杰斯特拉在1965年为T.H.E系统设计的一种避免死锁产生的算法。它以银行借贷系统的分配策略为基础，判断并保证系统的安全运行。</p>
+<p>在银行中，客户申请贷款的数量是有限的，每个客户在第一次申请贷款时要声明完成该项目所需的最大资金量，在满足所有贷款要求时，客户应及时归还。银行家在客户申请的贷款数量不超过自己拥有的最大值时，都应尽量满足客户的需要。通过判断借贷是否安全，然后决定借不借。
+举例，现有公司B、公司A、公司T，想要从银行分别贷款70亿、40亿、50亿，假设银行只有100亿供放贷，如果借不到企业最大需求的钱，钱将不会归还，怎么才能合理的放贷？</p>
 <table>
 <thead>
 <tr>
