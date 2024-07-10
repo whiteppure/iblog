@@ -1267,8 +1267,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><h2 id="notify">notify</h2>
-<p><code>notify</code>方法用于唤醒在该对象监视器上等待的一个线程。
-如果有多个线程在该对象上等待，具体唤醒哪一个线程是由线程调度器决定的，并且是不确定的。被唤醒的线程将继续执行，从调用<code>wait</code>方法的地方开始。</p>
+<p><code>notify</code>方法用于唤醒在该对象监视器上等待的一个线程。如果有多个线程在该对象上等待，具体唤醒哪一个线程是由线程调度器决定的，并且是不确定的。
+被唤醒的线程将继续执行，从调用<code>wait</code>方法的地方开始。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">notify</span><span class="p">();</span><span class="w">
 </span></span></span></code></pre></div><p><code>notify</code>适用于有多个线程等待一个共享资源，但每次只能一个线程进行处理的情况。
 例如，生产者-消费者模型中，当有一个生产者线程生产了一个产品，可以使用<code>notify</code>唤醒一个消费者线程来消费该产品。</p>
@@ -1444,7 +1444,7 @@
 <ul>
 <li><code>sleep()</code>属于<code>Thread</code>类，<code>wait()</code>属于<code>Object</code>类；</li>
 <li><code>sleep()</code>和<code>wait()</code>都会抛出<code>InterruptedException</code>异常，这个异常属于<code>checkedException</code>是不可避免；</li>
-<li>两者比较的共同之处是，都是使程序等待多长时间。不同的是调用<code>sleep()</code>不会释放锁，会使线程堵塞，而调用<code>wait()</code>会释放锁，让线程进入等待状态，用 <code>notify()</code>、<code>notifyall()</code>可以唤醒，或者等待时间到了； 这是因为，如果没有释放锁，那么其它线程就无法进入对象的同步方法或者同步控制块中，那么就无法执行 <code>notify()</code> 或者 <code>notifyAll()</code> 来唤醒挂起的线程，造成死锁。</li>
+<li>两者比较的共同之处是，都是使程序等待多长时间。不同的是调用<code>sleep()</code>不会释放锁，会使线程堵塞，而调用<code>wait()</code>会释放锁，让线程进入等待状态，用 <code>notify()</code>、<code>notifyall()</code>可以唤醒，或者等待时间到了；这是因为，如果没有释放锁，那么其它线程就无法进入对象的同步方法或者同步控制块中，那么就无法执行 <code>notify()</code> 或者 <code>notifyAll()</code> 来唤醒挂起的线程，造成死锁。</li>
 <li><code>wait()</code>必须在同步<code>synchronized</code>块里使用，<code>sleep()</code>可以在任意地方使用；</li>
 </ul>
 <p>其中&quot;<code>wait()</code>必须在同步<code>synchronized</code>块里使用&quot;，使其不止<code>wait</code>方法，<code>notify、notifyAll</code>也和<code>wait</code>方法一样，必须在<code>synchronized</code>块里使用，为什么呢？</p>

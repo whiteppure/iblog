@@ -55,16 +55,13 @@ Java程序是多线程程序，每启动一个Java程序，至少我们知道的
 | 同步 |  只能同步  | 可以同步   |
 | 异步 |  不能异步  | 可以异步  |
 
-
 ### 守护线程
-[//]: # (写到了这里)
-守护线程是指为其他线程服务的线程。在JVM中，所有非守护线程都执行完毕后，无论有没有守护线程，虚拟机都会自动退出。
-守护线程也称“服务线程”，在没有用户线程可服务时会自动离开。因为主要是服务其他线程所以在程序中的优先级比较低。
+守护线程是指为其他线程服务的线程。守护线程也称“服务线程”，在没有用户线程可服务时会自动离开。因为作用是服务其他线程，所以在程序中的优先级比较低。
+在JVM中，所有非守护线程都执行完毕后，无论有没有守护线程，虚拟机都会自动退出。
 
-举例，垃圾回收线程就是一个经典的守护线程，当我们的程序中不再有任何运行的线程,程序就不会再产生垃圾，垃圾回收器也就无事可做。
+举例，垃圾回收线程就是一个经典的守护线程，当我们的程序中不再有任何运行的线程，程序就不会再产生垃圾，垃圾回收器也就无事可做。
 所以当垃圾回收线程是JVM上仅剩的线程时，垃圾回收线程会自动离开。它始终在低级别的状态中运行，用于实时监控和管理系统中的可回收资源。
-
-守护线程在程序中的操作演示
+守护线程在程序中的操作演示：
 ```java
 public class MainTest {
     public static void main(String[] args) {
@@ -88,44 +85,135 @@ public class MainTest {
 ```
 
 ## 线程的状态
-线程状态共包含6种，6中状态又可以互相的转换。
+线程状态共包含6种，通过`Thread.State`枚举类表示的。6种状态又可以互相的转换，线程状态转换关系：
 
 ![线程状态转换](/iblog/posts/annex/images/essays/线程转换图.jpg)
 
-- 新建状态(New): 创建了线程后尚未启动；
-- 可运行状态(Runnable): 可能正在运行，也可能正在等待 CPU 时间片。包含了运行中(Running)和 就绪（Ready)状态；
-    - 就绪（Ready）:线程对象创建后，其他线程(比如main线程）调用了该对象的 `start()`方法。该状态的线程位于可运行线程池中，等待被线程调度选中并分配cpu使用权 。
-    - 运行中（Runing）：就绪的线程获得了cpu 时间片，开始执行程序代码。
-- 阻塞状态(Blocked): 等待获取一个排它锁，如果其线程释放了锁就会结束此状态；
-- 无限期等待(Wating): 等待其它线程显式地唤醒，否则不会被分配 CPU 时间片；
-- 限期等待(Timed Wating): 无需等待其它线程显式地唤醒，在一定时间之后会被系统自动唤醒;
-- 死亡(Terminated): 可以是线程结束任务之后自己结束，或者产生了异常而结束。
+1. 新建状态(New): 线程被创建但尚未启动。例如，`Thread t = new Thread();` 状态为NEW；调用线程对象的`start()`方法会使线程从NEW状态转变为RUNNABLE状态。
+2. 可运行状态(Runnable): 线程在Java虚拟机中执行中。这包括运行状态和就绪状态，线程可能正在运行，也可能等待操作系统为其分配CPU时间。
+    - 就绪（Ready）：线程已经被创建，等待被调度执行。此时可能有多个线程处于就绪状态，但只有一个线程能够获取CPU时间片执行。
+    - 运行中（Running）：就绪的线程获得了CPU时间片，开始执行程序代码。
+3. 阻塞状态(Blocked): 当一个线程试图进入一个同步代码块或方法，但该同步块已经被其他线程持有时，线程将进入阻塞状态。阻塞状态的线程将等待获取同步锁，一旦获取到锁就可以转变为RUNNABLE状态。
+4. 无限期等待(Waiting): 当线程调用`Object.wait()`、`Thread.join()`或`LockSupport.park()`方法时，它会进入WAITING状态，直到被其他线程显式唤醒。线程被唤醒后可以转变为RUNNABLE状态。
+5. 限期等待(Timed Waiting): 当线程调用带有超时参数的等待方法，如`sleep()`、`wait(timeout)`、`join(timeout)`、`LockSupport.parkNanos()`或`LockSupport.parkUntil()`时，它会进入TIMED_WAITING状态，直到超时时间到达或被其他线程唤醒。
+超时时间到达或被唤醒后可以转变为RUNNABLE状态。
+6. 死亡(Terminated): 线程完成`run()`方法的执行或者因异常而终止时，会进入TERMINATED状态。一旦线程的`run()`方法执行完成或抛出未捕获的异常，线程将进入终止状态。
 
-### 线程中的常用方法
-`sleep`和`wait`方法区别：
-1. `sleep()`属于`Thread`类，`wait()`属于`Object`类；
-2. `sleep()`和``wait()``都会抛出``InterruptedException``异常，这个异常属于`checkedException`不可避免；
-3. 两者比较的共同之处是，都是使程序等待多长时间。不同的是调用`sleep()`不会释放锁，会使线程堵塞，而调用`wait()`会释放锁，让线程进入等待状态，用 `notify()、notifyall()`可以唤醒，或者等待时间到了；
-这是因为，如果没有释放锁，那么其它线程就无法进入对象的同步方法或者同步控制块中，那么就无法执行 `notify()` 或者 `notifyAll()` 来唤醒挂起的线程，造成死锁。
-4. `wait()`必须在同步``synchronized``块里使用，``sleep()``可以在任意地方使用；
+阻塞和等待的区别在于，阻塞是被动的，它是在等待获取一个排它锁。而等待是主动的，通过调用`Thread.sleep()`和`Object.wait()`等方法进入等待。
 
-睡眠和挂起是用来描述行为，而阻塞和等待用来描述状态。
-- 调用 `Thread.sleep()` 方法使线程进入限期等待状态时，常常用“使一个线程睡眠”进行描述。
-- 调用 `Object.wait()` 方法使线程进入限期等待或者无限期等待时，常常用“挂起一个线程”进行描述。
+## 线程相关方法
+- `start()`：启动一个新线程，调用线程的`run()`方法。
+    ```text
+    Thread t = new Thread(() -> {
+        System.out.println("Thread is running");
+    });
+    t.start();
+    ```
+- `run()`：运行线程中的代码。可以通过继承`Thread`类并重写`run()`方法，或通过实现`Runnable`接口并传递给`Thread`类的构造函数。
+    ```text
+    public class MyThread extends Thread {
+        public void run() {
+            System.out.println("Thread is running");
+        }
+    }
+    MyThread t = new MyThread();
+    t.start();
+    ```
+- `sleep(long millis)`：让当前线程休眠指定的毫秒数。
+    ```text
+    try {
+        Thread.sleep(1000); // 休眠1秒
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+    ```
+- `join()`：当有新的线程加入时，主线程会进入等待状态，一直到调用`join()`方法的线程执行结束为止。`join()`方法的实现依赖于对象的`wait()`方法。
+    ```text
+    Thread t = new Thread(() -> {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    });
+    t.start();
+    try {
+        t.join();
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+    ```
+- `yield()`：用于让当前正在执行的线程暂时让出CPU的执行权，使其他线程有机会运行。它不会使线程进入阻塞或等待状态，只是让出当前的CPU时间片，让同等优先权的线程运行。
+如果没有同等优先权的线程，那么`yield()`方法将不会起作用。
+    ```text
+    public void run() {
+        for (int i = 0; i < 5; i++) {
+            System.out.println(threadName + " is running, iteration: " + i);
+            // 暂时让出CPU执行权，给其他线程机会
+            Thread.yield();
+        }
+        System.out.println(threadName + " has finished execution.");
+    }
+    
+    public static void main(String[] args) {
+        Thread thread1 = new Thread(new YieldExample("Thread 1"));
+        Thread thread2 = new Thread(new YieldExample("Thread 2"));
+        thread1.start();
+        thread2.start();
+    }
+    ```
+- `wait()`：使当前线程等待，直到另一个线程调用该对象的`notify()`或`notifyAll()`方法。`wait()`必须在同步``synchronized``块里使用。
+    ```text
+    synchronized (lock) {
+        lock.wait();
+    }
+    ```
+- `notify()`：唤醒一个正在等待该对象的`wait()`方法的线程。如果多个线程都在该对象的监视器上等待，则任意选择一个线程被唤醒。
+`notify()`方法必须与`wait()`方法一起使用，否则会抛出`IllegalMonitorStateException`异常。`notify()`方法必须在同步代码块或同步方法中调用，因为它依赖于对象的监视器锁。
+    ```java
+    public synchronized void doWaitNotify() {
+        Thread waitingThread = new Thread(() -> {
+            try {
+                System.out.println("Thread is waiting...");
+                wait(); // 进入等待状态
+                System.out.println("Thread is notified and resumed.");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+    
+        waitingThread.start();
+    
+        try {
+            Thread.sleep(1000); // 模拟一些操作延迟
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    
+        synchronized (this) {
+            System.out.println("Notifying waiting thread...");
+            notify(); // 唤醒等待的线程
+        }
+    }
+    ```
 
-阻塞和等待的区别在于，阻塞是被动的，它是在等待获取一个排它锁，而等待是主动的，通过调用 `Thread.sleep()` 和 `Object.wait()` 等方法进入等待。
+需要注意区分`wait`方法与`sleep`方法，很多人分不清。`sleep`和`wait`方法异同点：
+- `sleep()`属于`Thread`类，`wait()`属于`Object`类；
+- `sleep()`和`wait()`都会抛出`InterruptedException`异常，这个异常属于`checkedException`是不可避免；
+- 两者比较的共同之处是，都是使程序等待多长时间。不同的是调用`sleep()`不会释放锁，会使线程堵塞，而调用`wait()`会释放锁，让线程进入等待状态，用 `notify()`、`notifyall()`可以唤醒，或者等待时间到了；这是因为，如果没有释放锁，那么其它线程就无法进入对象的同步方法或者同步控制块中，那么就无法执行 `notify()` 或者 `notifyAll()` 来唤醒挂起的线程，造成死锁。
+- `wait()`必须在同步`synchronized`块里使用，`sleep()`可以在任意地方使用；
 
-其他方法：
-- `join()`使当前线程停下来等待，直至另一个调用``join``的线程终止，值得注意的是：线程的在被激活后不一定马上就运行.而是进入到可运行线程的队列中；
-- `yield()`是停止当前线程，让同等优先权的线程运行。如果没有同等优先权的线程，那么``yield()``将不会起作用；
-- `notify()、notifyall()`需要搭配`wait`方法使用，前提条件必须要在`synchronized`代码块里面，因为需要依赖`monitor`对象；
+其中"`wait()`必须在同步`synchronized`块里使用"，使其不止`wait`方法，`notify、notifyAll`也和`wait`方法一样，必须在`synchronized`块里使用，为什么呢？
+
+是为了避免丢失唤醒问题。假设没有`synchronized`修饰，使用了`wait`方法而没有设置等待时间，也没有调用唤醒方法或者唤醒方法调用的时机不对，这个线程将会永远的堵塞下去。
+`wait`、`notify`、`notifyAll`方法调用的时候要释放锁，你都没给它加锁，他怎么释放锁。所以如果没在`synchronized`块中调用`wait()、notify、notifyAll`方法是肯定抛异常的。
 
 ## 创建线程
-在Java中创建一个线程，有且仅有一种方式: 创建一个`Thread`类实例，并调用它的`start`方法。
+在Java中创建一个线程，有且仅有一种方式，创建一个`Thread`类实例，并调用它的`start`方法。
 
 ### Thread类
-通过继承`Thread`类，重写`run()`方法来创建线程。
-```
+最经典也是最常见的方式是通过继承`Thread`类，重写`run()`方法来创建线程。适用于需要直接控制线程生命周期的情况。
+```java
 public class MainTest {
     public static void main(String[] args) {
         ThreadDemo thread1 = new ThreadDemo();
@@ -141,8 +229,8 @@ class ThreadDemo extends Thread {
 ```
 
 ### Runnable接口
-实现 `Runnale` 接口，将它作为 `target` 参数传递给 `Thread` 类构造函数的方式创建线程。
-```
+实现`Runnale`接口，将它作为`target`参数传递给`Thread`类构造函数的方式创建线程。
+```java
 public class MainTest {
     public static void main(String[] args) {
         new Thread(() -> {
@@ -153,10 +241,9 @@ public class MainTest {
 ```
 
 ### Callable接口
-通过实现 `Callable`接口，来创建一个带有返回值的线程。
-
-`在Callable` 执行完之前的这段时间，主线程可以先去做一些其他的事情，事情都做完之后，再获取 `Callable` 的返回结果。可以通过`isDone()`来判断子线程是否执行完。
-```
+`Callable`接口与`Runnable`类似，但它可以返回结果，并且可以抛出异常，需要配合`Future`接口使用。通过实现`Callable`接口，来创建一个带有返回值的线程。
+在`Callable`执行完之前的这段时间，主线程可以先去做一些其他的事情，事情都做完之后，再获取`Callable`的返回结果。可以通过`isDone()`来判断子线程是否执行完。
+```java
 public class MainTest {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         FutureTask<String> futureTask = new FutureTask<>(() -> {
@@ -179,159 +266,133 @@ public class MainTest {
     }
 }
 ```
+在实际开发中，通常使用异步编程工具，如`CompletableFuture`。
+`CompletableFuture`是JDK8的新特性。`CompletableFuture`实现了`CompletionStage`接口和`Future`接口，前者是对后者的一个扩展，增加了异步会点、流式处理、多个`Future`组合处理的能力，使Java在处理多任务的协同工作时更加顺畅便利。
+```java
+public class CompletableFutureRunAsyncExample {
+    public static void main(String[] args) {
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+            // 异步执行的任务，没有返回值
+            System.out.println("Running asynchronously");
+        });
+
+        future.thenRun(() -> {
+            System.out.println("After running asynchronously");
+        });
+
+        future.join(); // 等待任务完成
+
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> "Hello")
+                .thenApply(result -> result + " CompletableFuture!");
+    }
+}
+```
 
 ### 线程池
-线程池做的工作主要是控制运行的线程的数量，处理过程中将任务放入队列，然后在线程创建后启动这些任务，如果线程数量超过了最大数量超出数量的线程排队等候，等其它线程执行完毕，再从队列中取出任务来执行。
+线程池做的工作主要是控制运行的线程的数量，处理过程中将任务放入队列，然后在线程创建后启动这些任务。如果线程数量超过了最大数量超出数量的线程排队等候，等其它线程执行完毕，再从队列中取出任务来执行。
+线程池是一种用于管理和复用线程的机制，可以有效地提高应用程序的性能和资源利用率。它的主要特点为：线程复用，提高响应速度，管理线程。
+- 降低资源消耗，通过重复利用己创建的线程降低线程创建和销毁造成的消耗。
+- 提高响应速度，当任务到达时，任务可以不需要的等到线程创建就能立即执行。
+- 提高线程的管理性，线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。
 
-它的主要特点为：线程复用，控制最大并发数，管理线程。
-
-优点：
-- 降低资源消耗。通过重复利用己创建的线程降低线程创建和销毁造成的消耗。
-- 提高响应速度。当任务到达时，任务可以不需要的等到线程创建就能立即执行。
-- 提高线程的可管理性。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。
-
-#### 常用方式
-通过`Executors`线程池工具类来使用：
-- `Executors.newSingleThreadExecutor()`：创建只有一个线程的线程池
-- `Executors.newFixedThreadPool(int)`：创建固定线程的线程池
-- `Executors.newCachedThreadPool()`：创建一个可缓存的线程池，线程数量随着处理业务数量变化
+#### 使用方式
+在Java中，使用`java.util.concurrent`包中的`Executor`来创建和管理线程池。几种常见的线程池创建方式：
+- `Executors.newSingleThreadExecutor()`：创建只有一个线程的线程池。
+- `Executors.newFixedThreadPool(int)`：创建固定线程的线程池。
+- `Executors.newCachedThreadPool()`：创建一个可缓存的线程池，线程数量随着处理业务数量变化。
 
 这三种常用创建线程池的方式，底层代码都是用`ThreadPoolExecutor`创建的。
 
-##### SingleThreadExecutor
-- 使用`Executors.newSingleThreadExecutor()`创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序执行。
-- `newSingleThreadExecutor` 将 `corePoolSize` 和 `maximumPoolSize` 都设置为1，它使用的 `LinkedBlockingQueue`。
-
-源代码
-```
+1. 使用`Executors.newSingleThreadExecutor()`创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序执行。
+`newSingleThreadExecutor`将`corePoolSize`和`maximumPoolSize`都设置为1，它使用的`LinkedBlockingQueue`。
+    ```java
     public static ExecutorService newSingleThreadExecutor() {
         return new FinalizableDelegatedExecutorService
             (new ThreadPoolExecutor(1, 1,
                                     0L, TimeUnit.MILLISECONDS,
                                     new LinkedBlockingQueue<Runnable>()));
     }
-```
-
-代码演示
-```
-public class MainTest {
-    public static void main(String[] args) {
-        ExecutorService executor1 = null;
-        try {
-            executor1 = Executors.newSingleThreadExecutor();
-            for (int i = 1; i <= 10; i++) {
-                executor1.execute(() -> {
-                    System.out.println(Thread.currentThread().getName() + "执行了");
-                });
+    ```
+    ```java
+    public class MainTest {
+        public static void main(String[] args) {
+            ExecutorService executor1 = null;
+            try {
+                executor1 = Executors.newSingleThreadExecutor();
+                for (int i = 1; i <= 10; i++) {
+                    executor1.execute(() -> {
+                        System.out.println(Thread.currentThread().getName() + "执行了");
+                    });
+                }
+            } finally {
+                executor1.shutdown();
             }
-        } finally {
-            executor1.shutdown();
         }
     }
-}
-```
+    ```
 
-##### FixedThreadPool
-- 使用`Executors.newFixedThreadPool(int)`创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待
-- `newFixedThreadPool` 创建的线程池 `corePoolSize` 和 `maximumPoolSize` 值是相等的，它使用的 `LinkedBlockingQueue`。
-
-源代码
-```
+2. 使用`Executors.newFixedThreadPool(int)`创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。
+`newFixedThreadPool`创建的线程池`corePoolSize`和`maximumPoolSize`值是相等的，它使用的`LinkedBlockingQueue`。
+    ```java
     public static ExecutorService newFixedThreadPool(int nThreads) {
         return new ThreadPoolExecutor(nThreads, nThreads,
                                       0L, TimeUnit.MILLISECONDS,
                                       new LinkedBlockingQueue<Runnable>());
     }
-```
-代码演示
-```
-public class MainTest {
-    public static void main(String[] args) {
-        ExecutorService executor1 = null;
-        try {
-            executor1 = Executors.newFixedThreadPool(10);
-            for (int i = 1; i <= 10; i++) {
-                executor1.execute(() -> {
-                    System.out.println(Thread.currentThread().getName() + "执行了");
-                });
+    ```
+    ```java
+    public class MainTest {
+        public static void main(String[] args) {
+            ExecutorService executor1 = null;
+            try {
+                executor1 = Executors.newFixedThreadPool(10);
+                for (int i = 1; i <= 10; i++) {
+                    executor1.execute(() -> {
+                        System.out.println(Thread.currentThread().getName() + "执行了");
+                    });
+                }
+            } finally {
+                executor1.shutdown();
             }
-        } finally {
-            executor1.shutdown();
         }
     }
-}
-```
-
-##### CachedThreadPool
-- 使用`Executors.newCachedThreadPool()`创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。
-- `newCachedThreadPool` 将 `corePoolSize` 设置为0，将 `maximumPoolSize` 设置为 `Integer.MAX_VALUE`，使用的 `SynchronousQueue`，也就是说来了任务就创建线程运行，当线程空闲超过60秒，就销毁线程。
-
-源代码
-```
+    ```
+3. 使用`Executors.newCachedThreadPool()`创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收则新建线程。
+`newCachedThreadPool`将`corePoolSize`设置为0，将`maximumPoolSize`设置为`Integer.MAX_VALUE`，使用的 `SynchronousQueue`，也就是说来了任务就创建线程运行，当线程空闲超过60秒，就销毁线程。
+    ```java
     public static ExecutorService newCachedThreadPool() {
         return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
                                       60L, TimeUnit.SECONDS,
                                       new SynchronousQueue<Runnable>());
     }
-```
-
-代码演示
-```
-public class MainTest {
-    public static void main(String[] args) {
-        ExecutorService executor1 = null;
-        try {
-            executor1 = Executors.newCachedThreadPool();
-            for (int i = 1; i <= 10; i++) {
-                executor1.execute(() -> {
-                    System.out.println(Thread.currentThread().getName() + "执行了");
-                });
+    ```
+    ```java
+    public class MainTest {
+        public static void main(String[] args) {
+            ExecutorService executor1 = null;
+            try {
+                executor1 = Executors.newCachedThreadPool();
+                for (int i = 1; i <= 10; i++) {
+                    executor1.execute(() -> {
+                        System.out.println(Thread.currentThread().getName() + "执行了");
+                    });
+                }
+            } finally {
+                executor1.shutdown();
             }
-        } finally {
-            executor1.shutdown();
         }
     }
-}
-```
-
-#### 线程池参数
-```
-    public ThreadPoolExecutor(int corePoolSize,
-                              int maximumPoolSize,
-                              long keepAliveTime,
-                              TimeUnit unit,
-                              BlockingQueue<Runnable> workQueue,
-                              ThreadFactory threadFactory,
-                              RejectedExecutionHandler handler) {
-                 // ...
-    }
-```
-- `corePoolSize`: 线程池中的常驻核心线程数，可理解为初始化线程数
-- `maximumPoolSize`：线程池能够容纳同时执行的最大线程数，此值必须大于等于1
-- `threadFactory`：线程工厂；表示生成线程池中工作线程的线程工厂，用于创建线程，一般用默认的即可
-- `workQueue`：任务队列；随着业务量的增多，线程开始慢慢处理不过来，这时候需要放到任务队列中去等待线程处理
-- `rejectedExecutionHandler`：拒绝策略；如果业务越来越多，线程池首先会扩容，扩容后发现还是处理不过来，任务队列已经满了，这时候拒绝接收新的请求
-- `keepAliveTime`：多余的空闲线程的存活时间；如果线程池扩容后，能处理过来，而且数据量并没有那么大，用最初的线程数量就能处理过来，剩下的线程被叫做空闲线程
-- `unit`：多余的空闲线程的存活时间的单位
+    ```
 
 #### 线程池工作原理
 ![线程池工作原理](/iblog/posts/annex/images/essays/线程池工作原理.png)
 
-在创建了线程池后，等待提交过来的任务请求;
-当调用`execute`方法添加一个请求任务时，线程池会做如下判断：
-1. 如果当前运行的线程数小于`corePoolSize`，那么马上创建线程运行该任务
-2. 如果当前运行的线程数大于等于`corePoolSize`，那么该任务会被放入任务队列
-3. 如果这时候任务队列满了且正在运行的线程数还小于`maximumPoolSize`，那么要创建非核心线程立刻运行这个任务(扩容)
-4. 如果任务队列满了且正在运行的线程数等于`maximumPoolSize`，那么线程池会启动饱和拒绝策略来执行
-5. 随着时间的推移，业务量越来越少，线程池中出现了空闲线程，当一个线程无事可做超过一定的时间时，线程池会进行判断：
-如果当前运行的线程数大于 `corePoolSize`，那么这个线程就被停掉，所以线程池的所有任务完成后它最终会收缩到 `corePoolSize` 的大小
-
-#### 四种拒绝策略
-在线程池中，如果任务队列满了并且正在运行的线程个数大于等于允许运行的最大线程数，那么线程池会启动拒绝策略来执行，具体分为下列四种：
-- `AbortPolicy`: 默认拒绝策略；直接抛出`java.util.concurrent.RejectedExecutionException`异常，阻止系统的正常运行；
-- `CallerRunsPolicy`：调用这运行，一种调节机制，该策略既不会抛弃任务，也不会抛出异常，而是将某些任务回退到调用者，从而降低新任务的流量；
-- `DiscardOldestPolicy`：抛弃队列中等待最久的任务，然后把当前任务加入到队列中；
-- `DiscardPolicy`：直接丢弃任务，不给予任何处理也不会抛出异常；如果允许任务丢失，这是一种最好的解决方案；
+在创建了线程池后，等待提交过来的任务请求，当调用`execute`方法添加一个请求任务时，线程池会做如下判断：
+1. 如果当前运行的线程数小于`corePoolSize`，那么马上创建线程运行该任务。
+2. 如果当前运行的线程数大于等于`corePoolSize`，那么该任务会被放入任务队列。
+3. 如果这时候任务队列满了且正在运行的线程数还小于`maximumPoolSize`，那么要创建非核心线程立刻运行这个任务扩容。
+4. 如果任务队列满了且正在运行的线程数等于`maximumPoolSize`，那么线程池会启动饱和拒绝策略来执行。
+5. 随着时间的推移，业务量越来越少，线程池中出现了空闲线程。当一个线程无事可做超过一定的时间时，线程池会进行判断，如果当前运行的线程数大于`corePoolSize`，那么这个线程就被停掉，所以线程池的所有任务完成后它最终会收缩到`corePoolSize`的大小。
 
 #### 阻塞队列
 阻塞队列，顾名思义，首先它是一个队列：
@@ -440,12 +501,80 @@ public class SynchronousQueueDemo {
 }
 ```
 
+#### 线程池参数
+在Java中，线程池的创建和管理通过`java.util.concurrent.ThreadPoolExecutor`类完成。理解这个类构造函数的参数可以帮助我们更好地配置和优化线程池的运行效果。
+```java
+public ThreadPoolExecutor(int corePoolSize,
+                          int maximumPoolSize,
+                          long keepAliveTime,
+                          TimeUnit unit,
+                          BlockingQueue<Runnable> workQueue,
+                          ThreadFactory threadFactory,
+                          RejectedExecutionHandler handler) {
+             // ...
+}
+```
+- `corePoolSize`: 核心线程数。当提交一个新任务时，如果当前运行的线程少于`corePoolSize`，则即使有空闲的工作线程，也会创建一个新线程来执行任务。
+核心线程在`ThreadPoolExecutor`的生命周期内始终存活，除非设置了`allowCoreThreadTimeOut`。
+- `maximumPoolSize`：线程池能够容纳同时执行的最大线程数，此值必须大于等于1。当任务队列满时，如果当前运行的线程数少于`maximumPoolSize`，则会创建新的线程来执行任务。
+- `threadFactory`：线程工厂，一般用默认的即可。用于创建新线程，通常用来给线程设置名称、设置为守护线程等。
+- `workQueue`：任务队列，用于保存等待执行任务的队列。随着业务量的增多，线程开始慢慢处理不过来，这时候需要放到任务队列中去等待线程处理。
+- `rejectedExecutionHandler`：拒绝策略。如果业务越来越多，线程池首先会扩容，扩容后发现还是处理不过来，任务队列已经满了，处理被拒绝任务的策略。
+  1. `AbortPolicy`: 默认拒绝策略；直接抛出`java.util.concurrent.RejectedExecutionException`异常，阻止系统的正常运行；
+  2. `CallerRunsPolicy`：调用这运行，一种调节机制，该策略既不会抛弃任务，也不会抛出异常，而是将某些任务回退到调用者，从而降低新任务的流量；
+  3. `DiscardOldestPolicy`：抛弃队列中等待最久的任务，然后把当前任务加入到队列中；
+  4. `DiscardPolicy`：直接丢弃任务，不给予任何处理也不会抛出异常；如果允许任务丢失，这是一种最好的解决方案；
+- `keepAliveTime`：多余的空闲线程的存活时间。如果线程池扩容后，能处理过来，而且数据量并没有那么大，用最初的线程数量就能处理过来，剩下的线程被叫做空闲线程。
+`keepAliveTime`指的是当线程数超过`corePoolSize`时，多余的空闲线程在等待新任务到来之前可以存活的最长时间。如果设置为0，则超出核心线程数的空闲线程会立即终止。
+- `unit`：`keepAliveTime`参数的时间单位，可以是`TimeUnit.SECONDS`、`TimeUnit.MILLISECONDS`等。
+
+#### 合理配置线程池参数
+合理配置线程池参数，可以分为以下两种情况
+- CPU密集型：CPU密集的意思是该任务需要大量的运算，而没有阻塞，CPU一直全速运行；
+  CPU密集型任务配置尽可能少的线程数量：`参考公式：（CPU核数+1）`
+
+- IO密集型：即该任务需要大量的IO，即大量的阻塞；
+  在IO密集型任务中使用多线程可以大大的加速程序运行，故需要多配置线程数：参考公式：`CPU核数/ (1-阻塞系数) 阻塞系数在0.8~0.9之间`
+
+代码演示
+```
+public class MainTest {
+    public static void main(String[] args) {
+        ExecutorService executor1 = null;
+        try {
+            // 获取CPU核心数
+            int coreNum = Runtime.getRuntime().availableProcessors();
+            /*
+             * 1. IO密集型: CPU核数/ (1-阻塞系数) 阻塞系数在0.8~0.9之间
+             * 2. CPU密集型: CPU核数+1
+             */
+//            int maximumPoolSize = coreNum + 1;
+            int maximumPoolSize = (int) (coreNum / (1 - 0.9));
+            System.out.println("当前线程池最大允许存放：" + maximumPoolSize + "个线程");
+            executor1 = new ThreadPoolExecutor(
+                    2,
+                    maximumPoolSize,
+                    1L,
+                    TimeUnit.SECONDS,
+                    new LinkedBlockingQueue<>(3),
+                    Executors.defaultThreadFactory(),
+                    new ThreadPoolExecutor.CallerRunsPolicy());
+            for (int i = 1; i <= 20; i++) {
+                executor1.execute(() -> {
+                    System.out.println(Thread.currentThread().getName() + "执行了");
+                });
+            }
+        } finally {
+            executor1.shutdown();
+        }
+    }
+}
+```
+
 #### 自定义线程池
-**在实际开发中用哪个线程池？**
-上面的三种一个都不用，我们生产上只能使用自定义的。
+在实际开发中用哪个线程池？上面的三种一个都不用，我们生产上只能使用自定义的。
 
-**`Executors` 中JDK已经给你提供了，为什么不用?**
-
+`Executors` 中JDK已经给你提供了，为什么不用？
 以下内容摘自[《阿里巴巴开发手册》](https://developer.aliyun.com/topic/download?spm=a2c6h.15028928.J_5293118740.2&id=805)
 > 【强制】线程资源必须通过线程池提供，不允许在应用中自行显式创建线程。
   说明：线程池的好处是减少在创建和销毁线程上所消耗的时间以及系统资源的开销，解决资源不足的问题。 如果不使用线程池，有可能造成系统创建大量同类线程而导致消耗完内存或者“过度切换”的问题。
@@ -457,7 +586,7 @@ public class SynchronousQueueDemo {
 
 
 自定义线程池代码演示：
-```
+```java
 public class MainTest {
     public static void main(String[] args) {
         ExecutorService executor1 = null;
@@ -483,7 +612,7 @@ public class MainTest {
 ```
 
 SpringBoot异步配置，自定义线程池代码演示：
-```
+```java
 @EnableAsync
 @Configuration
 public class AsyncConfig {
@@ -553,52 +682,8 @@ public class AsyncConfig {
 }
 ```
 
-#### 合理配置线程池参数
-合理配置线程池参数，可以分为以下两种情况
-- CPU密集型：CPU密集的意思是该任务需要大量的运算，而没有阻塞，CPU一直全速运行；
-  CPU密集型任务配置尽可能少的线程数量：`参考公式：（CPU核数+1）`
-
-- IO密集型：即该任务需要大量的IO，即大量的阻塞；
-  在IO密集型任务中使用多线程可以大大的加速程序运行，故需要多配置线程数：参考公式：`CPU核数/ (1-阻塞系数) 阻塞系数在0.8~0.9之间`
-
-代码演示
-```
-public class MainTest {
-    public static void main(String[] args) {
-        ExecutorService executor1 = null;
-        try {
-            // 获取cpu核心数
-            int coreNum = Runtime.getRuntime().availableProcessors();
-            /*
-             * 1. IO密集型: CPU核数/ (1-阻塞系数) 阻塞系数在0.8~0.9之间
-             * 2. CPU密集型: CPU核数+1
-             */
-//            int maximumPoolSize = coreNum + 1;
-            int maximumPoolSize = (int) (coreNum / (1 - 0.9));
-            System.out.println("当前线程池最大允许存放：" + maximumPoolSize + "个线程");
-            executor1 = new ThreadPoolExecutor(
-                    2,
-                    maximumPoolSize,
-                    1L,
-                    TimeUnit.SECONDS,
-                    new LinkedBlockingQueue<>(3),
-                    Executors.defaultThreadFactory(),
-                    new ThreadPoolExecutor.CallerRunsPolicy());
-            for (int i = 1; i <= 20; i++) {
-                executor1.execute(() -> {
-                    System.out.println(Thread.currentThread().getName() + "执行了");
-                });
-            }
-        } finally {
-            executor1.shutdown();
-        }
-    }
-}
-```
-
 ## 锁
 在Java中根据锁的特性来区分可以分为很多，在程序中"锁"的作用无非就是保证线程安全，线程安全的目的就是保证程序正常执行。
-
 在Java中具体"锁"的实现，无非就三种：使用`synchronized`关键字、调用`juc.locks`包下相关接口、使用`CAS`思想。
 
 ### 公平锁与非公平锁
@@ -1564,7 +1649,7 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
 #### CAS与Unsafe关系
 CAS的作用是比较并交换，就是先拿这个期望值，与主内存的值比较，判断主内存中该位置是否存在期望值，如果存在，则改为新的值，这个修改的过程是具有原子性的。
 
-因为CAS是cpu并发源语，并发源语体现在`Java sun.misc.Unsafa`类上，调用Unsafe类中的CAS方法，JVM会帮我们实现CAS汇编指令。这是一种完全依赖于硬件的功能，通过他实现了原子操作。
+因为CAS是CPU并发源语，并发源语体现在`Java sun.misc.Unsafa`类上，调用Unsafe类中的CAS方法，JVM会帮我们实现CAS汇编指令。这是一种完全依赖于硬件的功能，通过他实现了原子操作。
 由于CAS是一种系统原语，原语属于操作系统用语范畴，是由若干条指令组成的，用于完成某个功能的一个过程，并且原语的执行必须是连续的，在执行过程中不允许被中断，也就是说CAS是一条CPU的原子指令，不会造成数据不一致问题。
 
 > Unsafe类
@@ -3931,3 +4016,4 @@ private final void addCount(long x, int check) {
 - https://blog.csdn.net/javazejian/article/details/72828483
 - https://blog.csdn.net/luoweifu/article/details/46613015
 - https://www.artima.com/insidejvm/ed2/threadsynch.html
+- https://xie.infoq.cn/article/d3afa3e6f9a70155106627ce5

@@ -591,8 +591,8 @@ public class MainTest {
 ```
 
 ## notify
-`notify`方法用于唤醒在该对象监视器上等待的一个线程。
-如果有多个线程在该对象上等待，具体唤醒哪一个线程是由线程调度器决定的，并且是不确定的。被唤醒的线程将继续执行，从调用`wait`方法的地方开始。
+`notify`方法用于唤醒在该对象监视器上等待的一个线程。如果有多个线程在该对象上等待，具体唤醒哪一个线程是由线程调度器决定的，并且是不确定的。
+被唤醒的线程将继续执行，从调用`wait`方法的地方开始。
 ```java
 public final void notify();
 ```
@@ -735,8 +735,6 @@ public class NotifyAllExample {
 }
 ```
 
-
-
 ## wait
 `wait`方法使当前线程进入等待状态，同时`wait()`也会让当前线程释放它所持有的锁。
 直到其他线程调用该对象的`notify`方法或`notifyAll`方法来唤醒它，或者在指定的时间内没有被唤醒。该方法必须在同步块或同步方法中调用。
@@ -783,7 +781,7 @@ public class WaitNotifyExample {
 需要注意区分`wait`方法与`sleep`方法，很多人分不清。`sleep`和`wait`方法异同点：
 - `sleep()`属于`Thread`类，`wait()`属于`Object`类；
 - `sleep()`和`wait()`都会抛出`InterruptedException`异常，这个异常属于`checkedException`是不可避免；
-- 两者比较的共同之处是，都是使程序等待多长时间。不同的是调用`sleep()`不会释放锁，会使线程堵塞，而调用`wait()`会释放锁，让线程进入等待状态，用 `notify()`、`notifyall()`可以唤醒，或者等待时间到了； 这是因为，如果没有释放锁，那么其它线程就无法进入对象的同步方法或者同步控制块中，那么就无法执行 `notify()` 或者 `notifyAll()` 来唤醒挂起的线程，造成死锁。
+- 两者比较的共同之处是，都是使程序等待多长时间。不同的是调用`sleep()`不会释放锁，会使线程堵塞，而调用`wait()`会释放锁，让线程进入等待状态，用 `notify()`、`notifyall()`可以唤醒，或者等待时间到了；这是因为，如果没有释放锁，那么其它线程就无法进入对象的同步方法或者同步控制块中，那么就无法执行 `notify()` 或者 `notifyAll()` 来唤醒挂起的线程，造成死锁。
 - `wait()`必须在同步`synchronized`块里使用，`sleep()`可以在任意地方使用；
 
 其中"`wait()`必须在同步`synchronized`块里使用"，使其不止`wait`方法，`notify、notifyAll`也和`wait`方法一样，必须在`synchronized`块里使用，为什么呢？
