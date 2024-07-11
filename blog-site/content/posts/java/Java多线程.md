@@ -20,7 +20,7 @@ Java程序是多线程程序，每启动一个Java程序，至少我们知道的
 
 ![线程与进程的关系](/iblog/posts/annex/images/essays/线程与进程的关系.jpg)
 
-### 并行、串行、并发
+### 线程并行、串行、并发
 - 并行：前提是在多核CPU，多个线程同时被多个CPU执行，同时执行的线程并不会抢占CPU资源。
 - 串行：前提是在单核CPU条件下，单线程程序执行，不能同时执行，也不能去切换执行，也就是在同一时间段只能做一件事，如果需要做多件事情需要排队执行。
 - 并发：前提是多线程条件下，多个线程抢占一个CPU资源，多个线程被交替执行。因为CPU运算速度很快，所以用户感觉不到线程切换的卡顿。
@@ -83,6 +83,56 @@ public class MainTest {
     }
 }
 ```
+
+### 线程安全
+线程安全是指在多线程环境下，一个类、方法或代码块能够被多个线程安全地访问和修改，不会导致数据不一致性或产生不可预测的行为。线程安全通常通过同步机制实现，来确保多个线程不会同时访问或修改共享资源。
+
+在多线程并发环境中，多个线程共同操作同一个数据，如果最终数据的值与预期不一致，就会出现线程不安全问题。
+为了解决这个问题，Java中最常用的方法是加锁。当一个线程修改某个数据时，其他线程不能访问该数据，直到该线程操作结束并释放锁，其他线程才能继续操作该数据。
+
+线程安全问题的根本原因：
+- CPU切换线程执导致的原子性问题。当CPU在执行线程时进行上下文切换，一个线程的操作可能在执行一半时被中断，导致另一个线程看到不完整的操作结果，从而出现数据不一致。
+    ```java
+    public class Counter {
+        private int count = 0;
+    
+        public void increment() {
+            count++; // 这个操作实际上分为三步：读取count值、增加1、写回count值
+        }
+    }
+    ```
+- 缓存可见性问题。由于CPU、内存、IO设备读写速度差异巨大，为了减少CPU等待IO的时间，在CPU和内存之间引入了高速缓存。多核CPU的情况下，每个核心有自己的缓存，这会导致高速缓存与主内存之间的数据不一致，即一个核心对变量的修改，另一个核心可能看不到。
+    ```java
+    public class SharedData {
+        private boolean flag = false;
+    
+        public void setFlag(boolean value) {
+            flag = value;
+        }
+    
+        public boolean getFlag() {
+            return flag;
+        }
+    }
+    ```
+- 指令优化重排序问题。编译器和处理器为了优化性能，可能会对指令进行重排序，这不会影响单线程环境下的执行结果，但在多线程环境下，可能导致程序行为不可预测。
+    ```java
+    public class Example {
+        private int a = 0;
+        private boolean flag = false;
+    
+        public void write() {
+            a = 1;           // 1
+            flag = true;     // 2
+        }
+    
+        public void read() {
+            if (flag) {      // 3
+                System.out.println(a); // 4
+            }
+        }
+    }
+    ```
 
 ## 线程的状态
 线程状态共包含6种，通过`Thread.State`枚举类表示的。6种状态又可以互相的转换，线程状态转换关系：
@@ -1405,58 +1455,7 @@ public class TryLockExample {
 }
 ```
 
-## 线程安全
-线程安全是指在多线程环境下，一个类、方法或代码块能够被多个线程安全地访问和修改，不会导致数据不一致性或产生不可预测的行为。
-线程安全通常通过同步机制实现，来确保多个线程不会同时访问或修改共享资源。
-
-在多线程并发环境中，多个线程共同操作同一个数据，如果最终数据的值与预期不一致，就会出现线程不安全问题。
-为了解决这个问题，Java中最常用的方法是加锁。当一个线程修改某个数据时，其他线程不能访问该数据，直到该线程操作结束并释放锁，其他线程才能继续操作该数据。
-
-多线程并发出问题的根本原因：
-- CPU切换线程执导致的原子性问题。当CPU在执行线程时进行上下文切换，一个线程的操作可能在执行一半时被中断，导致另一个线程看到不完整的操作结果，从而出现数据不一致。
-    ```java
-    public class Counter {
-        private int count = 0;
-    
-        public void increment() {
-            count++; // 这个操作实际上分为三步：读取count值、增加1、写回count值
-        }
-    }
-    ```
-- 缓存可见性问题。由于CPU、内存、IO设备读写速度差异巨大，为了减少CPU等待IO的时间，在CPU和内存之间引入了高速缓存。多核CPU的情况下，每个核心有自己的缓存，这会导致高速缓存与主内存之间的数据不一致，即一个核心对变量的修改，另一个核心可能看不到。
-    ```java
-    public class SharedData {
-        private boolean flag = false;
-    
-        public void setFlag(boolean value) {
-            flag = value;
-        }
-    
-        public boolean getFlag() {
-            return flag;
-        }
-    }
-    ```
-- 指令优化重排序问题。编译器和处理器为了优化性能，可能会对指令进行重排序，这不会影响单线程环境下的执行结果，但在多线程环境下，可能导致程序行为不可预测。
-    ```java
-    public class Example {
-        private int a = 0;
-        private boolean flag = false;
-    
-        public void write() {
-            a = 1;           // 1
-            flag = true;     // 2
-        }
-    
-        public void read() {
-            if (flag) {      // 3
-                System.out.println(a); // 4
-            }
-        }
-    }
-    ```
-
-### Java内存模型
+## Java内存模型
 [Java内存模型](http://www.cs.umd.edu/~pugh/java/memoryModel/jsr133.pdf)，即JMM（Java Memory Model）本身是一种抽象的概念，并不真实存在。
 它定义了Java程序中多线程间如何通过内存进行交互的规则和规范。屏蔽了各种硬件和操作系统的访问差异的，保证了Java程序在各种平台下对内存的访问都能保证效果一致的机制及规范。
 JMM规定了变量的读取和写入如何在主内存和各线程的工作内存之间进行，保证了并发编程的**原子性**、**可见性**及**有序性**。
@@ -1464,7 +1463,7 @@ JMM规定了变量的读取和写入如何在主内存和各线程的工作内�
 
 ![Java内存模型](/iblog/posts/annex/images/essays/Java内存模型.jpg)
 
-#### 原子性
+### 原子性
 原子性指的是一个操作或一组操作在执行时不可被中断，即这些操作要么全部完成，要么全部不完成。
 在Java中，为了保证原子性，提供了两个高级的字节码指令 `monitorenter` 和 `monitorexit`。对应的就是Java中的关键字 `synchronized`，在Java中只要被`synchronized`修饰就能保证原子性。
 ```java
@@ -1473,7 +1472,7 @@ public synchronized void increment() {
 }
 ```
 
-#### 可见性
+### 可见性
 可见性指的是一个线程对共享变量的修改，能够及时被其他线程看到。Java提供了`volatile`关键字和`synchronized`关键字来保证变量的可见性。
 ```java
 public class SharedData {
@@ -1488,7 +1487,7 @@ public class SharedData {
 }
 ```
 
-#### 有序性
+### 有序性
 有序性指的是程序的执行顺序按照代码的顺序执行，编译器和处理器可能会进行优化，但这些优化不会影响单线程的语义。
 在Java中，可以使用`synchronized`和`volatile`来保证多线程之间操作的有序性。其中`volatile` 关键字会禁止编译器指令重排，来保证。
 `synchronized` 关键字保证同一时刻只允许一条线程操作，而不能禁止指令重排，指令重排并不会影响单线程的顺序，它影响的是多线程并发执行的顺序性，从而保证了有序性。
@@ -1514,10 +1513,10 @@ public class Example {
 - 单线程环境里面确保程序最终执行结果和代码顺序执行的结果一致。处理器在进行重新排序是必须要考虑指令之间的数据依赖；
 - 多线程环境中线程交替执行，由于编译器优化重排的存在，两个线程使用的变量能否保持一致性是无法确定的，结果无法预测；
 
-#### 限制处理器优化
+### 限制处理器优化
 处理器和编译器为了提高执行效率，会对指令进行优化重排序。虽然这种优化不会影响单线程程序的执行结果，但在多线程环境下可能导致意外的行为。
 Java 内存模型通过以下方式限制处理器和编译器的优化：
-- `volatile`关键字：声明为 volatile 的变量会被直接写入主内存，并且在读取时直接从主内存中读取。`volatile` 禁止了指令重排序，保证了变量的可见性和有序性。
+- `volatile`关键字：声明为`volatile`的变量会被直接写入主内存，并且在读取时直接从主内存中读取。`volatile` 禁止了指令重排序，保证了变量的可见性和有序性。
     ```java
     private volatile boolean flag = true;
     ```
@@ -1529,7 +1528,7 @@ Java 内存模型通过以下方式限制处理器和编译器的优化：
     }
     ```
 
-#### 内存屏障
+### 内存屏障
 内存屏障，也称为内存栅栏，是一种用于防止处理器和编译器对内存操作进行重排序的指令。
 内存屏障通过插入特殊的指令来强制某些操作的顺序执行，从而确保多线程环境下的正确性。Java内存模型在底层实现中使用了内存屏障来保证内存操作的有序性和可见性。
 
@@ -1551,7 +1550,7 @@ Java 内存模型通过以下方式限制处理器和编译器的优化：
     // 使用 StoreStore 屏障确保顺序性
     data.flag = true;   // 2. Store 操作
     ```
-3. `LoadStore` 屏障：确保在该屏障之前的所有 `load` 操作都完成后，才能执行该屏障后面的 `store` 操作。这种屏障保证了前面的 `load` 操作对后面的 `store` 操作的可见性。
+3. `LoadStore`屏障：确保在该屏障之前的所有 `load` 操作都完成后，才能执行该屏障后面的 `store` 操作。这种屏障保证了前面的 `load` 操作对后面的 `store` 操作的可见性。
     ```text
     while (!data.flag) {
         // Spin until flag is true
@@ -1559,7 +1558,7 @@ Java 内存模型通过以下方式限制处理器和编译器的优化：
     // 使用 LoadStore 屏障保证顺序性
     int result = data.x;  // 3. Load 操作
     ```
-4. `StoreLoad` 屏障：保证在该屏障之前的所有 `store` 操作都完成后，才能执行该屏障后面的 `load` 操作。这确保了前面的 `store` 操作对后面的 `load` 操作的可见性。
+4. `StoreLoad`屏障：保证在该屏障之前的所有 `store` 操作都完成后，才能执行该屏障后面的 `load` 操作。这确保了前面的 `store` 操作对后面的 `load` 操作的可见性。
     ```text
     data.x = 42;        // 1. Store 操作
     // 使用 StoreLoad 屏障保证可见性
@@ -1572,18 +1571,16 @@ Java 内存模型通过以下方式限制处理器和编译器的优化：
     int result = data.x;  // 3. Load 操作
     ```
 
-### volatile
-[//]: # (写到了这里)
-`volatile`通常被比喻成轻量级的锁，也是Java并发编程中比较重要的一个关键字。`volatile`特点：
-- 保证线程之间的可见性；
-- 禁止指令重排；
-- **不保证原子性，也就是线程不安全；**
+## volatile
+`volatile`通常被比喻成轻量级的锁，是Java并发编程中比较重要的一个关键字。`volatile`作用：
+- 可见性：当一个线程修改了 `volatile` 变量的值，新的值对于其他线程是立即可见的。这避免了其他线程读取到旧的缓存值。
+- 有序性：对 `volatile` 变量的读写操作不会被重排序。所有对 `volatile` 变量的写操作在内存中会按照程序的顺序执行，同时在一个线程中的操作不会重排序到 `volatile` 变量的读写操作之后。
 
-#### 使用案例
-在Java中`volatile` 是一个变量修饰符，只能用来修饰变量。
+注意`volatile`不保证原子性，也就是线程不安全。
 
-`volatile` 典型的使用就是单例模式中的DCL双重检查锁。
-```
+### 使用案例
+在Java中`volatile`是一个变量修饰符，只能用来修饰变量。`volatile`典型的使用就是单例模式中的双重检查锁实现。
+```java
 /**
 多线程下的单例模式 DCL(double check lock)
 **/
@@ -1608,102 +1605,22 @@ class SingletonDemo {
 
 }
 ```
-**为什么在此处要使用`volatile`修饰`singleton`？**
-
-多线程下的DCL单例模式，如果不加 `volatile` 修饰不是绝对安全的，因为在创建对象的时候JVM底层会进行三个步骤:
-1. 分配对象的内存空间
-2. 初始化对象
-3. 设置对象指向刚刚分配的内存地址
+为什么在此处要使用`volatile`修饰`singleton`？ 
+多线程下的DCL单例模式，如果不加`volatile`修饰不是绝对安全的，因为在创建对象的时候JVM底层会进行三个步骤：
+1. 分配对象的内存空间；
+2. 初始化对象；
+3. 设置对象指向刚刚分配的内存地址；
 
 其中步骤2和步骤3是没有数据依赖关系的，而且无论重排前还是重排后的程序执行结果在单线程中并没有改变，因此这种重排优化是允许的。
-所以有可能先执行步骤3在执行步骤2，导致分配的对象不为 `null`，但对象没有被初始化;
+所以有可能先执行步骤3在执行步骤2，导致分配的对象不为`null`，但对象没有被初始化。所以当一个线程获取对象不为`null`时，由于对象未必已经完成初始化，会存在线程不安全的风险。
 
-所以当一个线程获取对象不为 `null` 时，由于对象未必已经完成初始化，会存在线程不安全的风险。
-
-#### 原理
-《深入理解JVM》中对 `volatile` 的描述: 
->一旦一个共享变量（类的成员变量、类的静态成员变量）被 `volatile` 修饰之后，那么就具备了两层语义：
->- 保证了不同线程对这个变量进行操作时的可见性，即一个线程修改了某个变量的值，这新值对其他线程来说是立即可见的；
->- 禁止进行指令重排序，即有序性；
->
->`volatile`只提供了保证访问该变量时，每次都是从内存中读取最新值，并不会使用寄存器缓存该值——每次都会从内存中读取。
-而对该变量的修改，`volatile` 并不提供原子性(线程不安全)的保证;由于及时更新，很可能导致另一线程访问最新变量值，无法跳出循环的情况，多线程下计数器必须使用锁保护.
-
-将[上面的代码](#使用案例)用`javap -v SingletonDemo.class >test.txt`命令执行，将反编译后的字节码指令写入到test文件中，可以看到`ACC_VOLATILE`
-```
-  public static volatile content.posts.rookie.SingletonDemo singleton;
-    descriptor: Lcontent/posts/rookie/SingletonDemo;
-    flags: ACC_PUBLIC, ACC_STATIC, ACC_VOLATILE
-```
-`volatile` 在字节码层面，就是使用访问标志：`ACC_VOLATILE` 来表示，供后续操作此变量时判断访问标志是否为 `ACC_VOLATILE`，来决定是否遵循 `volatile` 的语义处理。
-
-可以从`openjdk8`中找到对应的源码文件
-```
-路径：openjdk8/hotspot/src/share/vm/interpreter/bytecodeInterpreter.cpp
-```
-![volitile字节码](/iblog/posts/annex/images/essays/volitile字节码.png)
-
-重点是`cache->is_volatile()`方法，调用栈
-```
-bytecodeInterpreter.cpp>is_volatile() 
-==> accessFlags.hpp>is_volatile 
-==> bytecodeInterpreter.cpprelease_byte_field_put
-==> oop.inline.hpp>(oopDesc::byte_field_acquire、oopDesc::release_byte_field_put)
-==> orderAccess.hpp
->> orderAccess_linux_x86.inline.hpp.OrderAccess::release_store
-```
-最终调用了`OrderAccess::release_store`
-```
-inline void     OrderAccess::release_store(volatile jbyte*   p, jbyte   v) { *p = v; }
-inline void     OrderAccess::release_store(volatile jshort*  p, jshort  v) { *p = v; }
-```
-可以从上面看到，到C++的实现层面，又使用C++中的 `volatile` 关键字，用来修饰变量，通常用于建立语言级别的内存屏障`memory barrier`。
-在《C++ Programming Language》一书中对 `volatile` 修饰词的解释：
->A volatile specifier is a hint to a compiler that an object may change its value in ways not specified by the language so that aggressive optimizations must be avoided.
-
-- `volatile` 修饰的类型变量表示可以被某些编译器未知的因素更改;
-- 使用 `volatile` 变量时，避免激进的优化; 系统总是重新从内存读取数据，即使它前面的指令刚从内存中读取被缓存，防止出现未知更改和主内存中不一致。
-
-其在64位系统的实现`orderAccess_linux_x86.inline.hpp.OrderAccess::release_store`
-```
-inline void OrderAccess::fence() {
-  if (os::is_MP()) {
-    // always use locked addl since mfence is sometimes expensive
-#ifdef AMD64
-    __asm__ volatile ("lock; addl $0,0(%%rsp)" : : : "cc", "memory");
-#else
-    __asm__ volatile ("lock; addl $0,0(%%esp)" : : : "cc", "memory");
-#endif
-  }
-}
-```
-代码`lock; addl $0,0(%%rsp)`就是lock前缀；
-
-> lock前缀，会保证某个处理器对共享内存的独占使用。
-它将本处理器缓存写入内存，该写入操作会引起其他处理器或内核对应的缓存失效。
-通过独占内存、使其他处理器缓存失效，达到了“指令重排序无法越过内存屏障”的作用。
-
-
-对于 `volatile`修饰的变量，当对 `volatile` 修饰的变量进行写操作的时候，JVM会向处理器发送一条带有 `lock` 前缀的指令，将这个缓存中的变量回写到系统主存中。
-但是就算写回到内存，如果其他处理器缓存的值还是旧的，再执行计算操作就会有问题，所以在多处理器下，为了保证各个处理器的缓存是一致的，就会实现 **缓存一致性协议**
-
->缓存一致性协议: 每个处理器通过嗅探在总线上传播的数据来检查自己缓存的值是不是过期了，当处理器发现自己缓存行对应的内存地址被修改，就会将当前处理器的缓存行设置成无效状态，当处理器要对这个数据进行修改操作的时候，会强制重新从系统内存里把数据读到处理器缓存里。
-
-为了提高CPU处理器的执行速度，在处理器和内存之间增加了多级缓存来提升。但是由于引入了多级缓存，就存在缓存数据不一致问题。
-
-![CPU多级缓存](/iblog/posts/annex/images/essays/CPU多级缓存.jpg)
-
-所以，如果一个变量被 `volatile` 所修饰的话，在每次数据变化之后，其值都会被强制刷入主存。而其他处理器的缓存由于遵守了缓存一致性协议，也会把这个变量的值从主存加载到自己的缓存中。这就保证了一个 `volatile` 在并发编程中，其值在多个缓存中是可见的。
-
-#### volatile与可见性
+### volatile与可见性
 各个线程对主内存中共享变量的操作，都是各个线程各自拷贝到自己的工作内存操作后再写回主内存中的。
 这就可能存在一个线程AAA修改了共享变量X的值还未写回主内存中时 ，另外一个线程BBB又对内存中的一个共享变量X进行操作，但此时A线程工作内存中的共享比那里X对线程B来说并不不可见。
 这种工作内存与主内存同步延迟现象就造成了可见性问题。
 
 这种变量的可见性问题可以用`volatile`来解决。`volatile`的作用简单来说就是当一个线程修改了数据，并且写回主物理内存，其他线程都会得到通知获取最新的数据。
-
-`volatile`可见性，代码演示
-```
+```java
 public class MainTest {
     public static void main(String[] args) {
         A a = new A();
@@ -1718,7 +1635,7 @@ public class MainTest {
             }
             // 用该线程改变A类中 number 变量的值
             a.numberTo100();
-        }， "thread1").start();
+        }, "thread1").start();
         
         // 如果number 等于0，则其他线程会一直等待 则证明 volatile 没有保证变量的可见性；相反则保证了变量的可见性
         while (a.number == 0) {
@@ -1736,9 +1653,104 @@ class A {
     }
 }
 ```
-#### volatile与原子性
-`volatile`原子性，代码演示
+
+为什么`volatile`能确保变量的可见性？
+将上面单例模式DCL实现用命令`javap -v SingletonDemo.class >test.txt`命令执行，将反编译后的字节码指令写入到test文件中，可以看到`ACC_VOLATILE`。
+```text
+public static volatile content.posts.rookie.SingletonDemo singleton;
+descriptor: Lcontent/posts/rookie/SingletonDemo;
+flags: ACC_PUBLIC, ACC_STATIC, ACC_VOLATILE
 ```
+`volatile`在字节码层面，就是使用访问标志`ACC_VOLATILE`来表示，供后续操作此变量时判断访问标志是否为`ACC_VOLATILE`，来决定是否遵循`volatile`的语义处理。
+
+可以从`openjdk8`中找到对应的源码文件：
+```text
+openjdk8/hotspot/src/share/vm/interpreter/bytecodeInterpreter.cpp
+```
+![volitile字节码](/iblog/posts/annex/images/essays/volitile字节码.png)
+
+重点是`cache->is_volatile()`方法，调用栈如下：
+```text
+bytecodeInterpreter.cpp>is_volatile() 
+==> accessFlags.hpp>is_volatile 
+==> bytecodeInterpreter.cpprelease_byte_field_put
+==> oop.inline.hpp>(oopDesc::byte_field_acquire、oopDesc::release_byte_field_put)
+==> orderAccess.hpp
+>> orderAccess_linux_x86.inline.hpp.OrderAccess::release_store
+```
+最终调用了`OrderAccess::release_store`。
+```text
+inline void     OrderAccess::release_store(volatile jbyte*   p, jbyte   v) { *p = v; }
+inline void     OrderAccess::release_store(volatile jshort*  p, jshort  v) { *p = v; }
+```
+可以从上面看到C++的实现层面，又使用C++中的`volatile`关键字，用来修饰变量，通常用于建立语言级别的内存屏障`memory barrier`。
+在《C++ Programming Language》一书中对`volatile`修饰词的解释：
+>A volatile specifier is a hint to a compiler that an object may change its value in ways not specified by the language so that aggressive optimizations must be avoided.
+
+- `volatile`修饰的类型变量表示可以被某些编译器未知的因素更改。
+- 使用 `volatile` 变量时，避免激进的优化。系统总是重新从内存读取数据，即使它前面的指令刚从内存中读取被缓存，防止出现未知更改和主内存中不一致。
+
+其在64位系统的实现`orderAccess_linux_x86.inline.hpp.OrderAccess::release_store`。
+```text
+inline void OrderAccess::fence() {
+  if (os::is_MP()) {
+    // always use locked addl since mfence is sometimes expensive
+#ifdef AMD64
+    __asm__ volatile ("lock; addl $0,0(%%rsp)" : : : "cc", "memory");
+#else
+    __asm__ volatile ("lock; addl $0,0(%%esp)" : : : "cc", "memory");
+#endif
+  }
+}
+```
+其中代码`lock; addl $0,0(%%rsp)`就是常说的**lock前缀**。
+>lock前缀，会保证某个处理器对共享内存的独占使用。它将本处理器缓存写入内存，该写入操作会引起其他处理器或内核对应的缓存失效。通过独占内存、使其他处理器缓存失效，达到了“指令重排序无法越过内存屏障”的作用。
+
+对于 `volatile`修饰的变量，当对 `volatile` 修饰的变量进行写操作的时候，JVM会向处理器发送一条带有`lock`前缀的指令，将这个缓存中的变量回写到系统主存中。
+但是就算写回到内存，如果其他处理器缓存的值还是旧的，再执行计算操作就会有问题，所以在多处理器下，为了保证各个处理器的缓存是一致的，就会实现**缓存一致性协议**。
+>缓存一致性协议: 每个处理器通过嗅探在总线上传播的数据来检查自己缓存的值是不是过期了，当处理器发现自己缓存行对应的内存地址被修改，就会将当前处理器的缓存行设置成无效状态，当处理器要对这个数据进行修改操作的时候，会强制重新从系统内存里把数据读到处理器缓存里。
+
+为了提高CPU处理器的执行速度，在处理器和内存之间增加了多级缓存来提升。但是由于引入了多级缓存，就存在缓存数据不一致问题。
+
+![CPU多级缓存](/iblog/posts/annex/images/essays/CPU多级缓存.jpg)
+
+所以如果一个变量被`volatile`所修饰的话，在每次数据变化之后，其值都会被强制刷入主存。
+而其他处理器的缓存由于遵守了缓存一致性协议，也会把这个变量的值从主存加载到自己的缓存中。这就保证了一个`volatile`在并发编程中，其值在多个缓存中是可见的。
+
+### volatile与有序性
+有序性指的就是代码按照顺序执行，是对比指令重排来说的。计算机在执行程序时，为了提高性能，编译器和处理器常常会做指令重排。
+在上面的使用案例中的代码，单例模式DCL就是一个使用禁止指令重排的案例。
+
+`volatile`禁止指令重排的原因是什么？`volatile` 关键字通过在读写操作前后插入内存屏障来禁止指令重排序，从而确保了内存可见性和操作的有序性。
+
+1. 写入`volatile`变量时：
+- 在写操作之前插入一个 `StoreStore` 屏障，确保在写入 `volatile` 变量之前的所有普通写操作都已经完成。
+- 在写操作之后插入一个 `StoreLoad` 屏障，确保在写入 `volatile` 变量之后的所有普通读操作都能读取到最新的值。
+2. 读取`volatile`变量时：
+- 在读操作之前插入一个 `LoadLoad` 屏障，确保在读取 `volatile` 变量之前的所有普通读操作都已经完成。
+- 在读操作之后插入一个 `LoadStore` 屏障，确保在读取 `volatile` 变量之后的所有普通写操作都能读取到最新的值。
+
+```java
+class Example {
+    private volatile boolean flag = false;
+    private int value = 0;
+
+    public void writer() {
+        value = 42;    // 1. 普通写操作
+        flag = true;   // 2. volatile 写操作
+    }
+
+    public void reader() {
+        if (flag) {    // 3. volatile 读操作
+            int result = value; // 4. 普通读操作
+        }
+    }
+}
+```
+
+### volatile与原子性
+`volatile`不保证原子性，也就是线程不安全。
+```java
 public class MainTest {
 
     public static void main(String[] args) {
@@ -1774,17 +1786,11 @@ class A {
     }
 }
 ```
-**不保证原子性的原因**
-
-由于各个线程之间都是复制主内存的数据到自己的工作空间里边修改数据，CPU的轮询反复切换线程，会导致数据丢失。
-即某个线程修改了数据，准备回主内存，此时CPU切换到另一个线程修改了数据，并且写回到了主内存，此时其他的线程不知道主内存的数据已经被更改，还会执行将之前从主内存复制的数据修改后的，写到主内存，这就导致了数据被覆盖、丢失。
-
-**解决**
+不保证原子性的原因，由于各个线程之间都是复制主内存的数据到自己的工作空间里边修改数据，CPU的轮询反复切换线程，会导致数据丢失。
+即某个线程修改了数据，准备回主内存，此时CPU切换到另一个线程修改了数据，并且写回到了主内存。其他的线程不知道主内存的数据已经被更改，还会执行将之前从主内存复制的数据修改后的，写到主内存，这就导致了数据被覆盖、丢失。
 
 如果要解决原子性的问题，在Java中只能控制线程，在修改的时候不能被中断，即加锁。
-上面的例子可以使用[CAS](#CAS)的实现`AtomicInteger`来解决。
-
-```
+```java
 public class MainTest {
 
     public static void main(String[] args) {
@@ -1827,11 +1833,8 @@ class A {
     }
 }
 ```
-
 对于`AtomicInteger.incrementAndGet`方法来说，原理就是`volatile` + `do...while()` + `CAS`;
-
-`AtomicInteger.incrementAndGet`源码
-```
+```java
 public final int incrementAndGet() {
     return unsafe.getAndAddInt(this, valueOffset, 1) + 1;
 }
@@ -1845,29 +1848,317 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
     return var5;
 }
 ```
-
-用`volatile`修饰该变量，保证该变量被某个线程修改时，保证其他线程中的这个变量的可见性；
-在多线程环境下，CPU轮流切换线程执行，有可能某个线程修改了数据，准备回主内存，此时CPU切换到另一个线程修改了数据，并且写回到了主内存，此时就导致数据的不准确；
+用`volatile`修饰该变量，保证该变量被某个线程修改时，保证其他线程中的这个变量的可见性。
+在多线程环境下，CPU轮流切换线程执行，有可能某个线程修改了数据，准备回主内存，此时CPU切换到另一个线程修改了数据，并且写回到了主内存，此时就导致数据的不准确。
 `do...while()` + `CAS`的作用就是，当某个线程工作内存中的值与主内存中的值，如果不相同就会一直`while`循环下去，之所以用`do..while`是考虑到做自增操作。
 
-#### volatile与有序性
-有序性，指的就是代码按照顺序执行，这个就是对比指令重排来说的；计算机在执行程序时，为了提高性能，编译器和处理器常常会做指令重排。
+## synchronized
+`synchronized`是Java提供的关键字译为同步，是Java中用于实现线程同步的一种机制。它可以确保在同一时间只有一个线程能够执行某段代码，从而避免线程安全问题。
+当它修饰一个方法或者一个代码块的时候，同一时刻最多只有一个线程执行这段代码。`synchronized`关键字在需要原子性、可见性和有序性这三种特性的时候都可以作为其中一种解决方案，大部分并发控制操作都能使用`synchronized`来完成。
 
-在上面的[使用案例](#使用案例)中的代码，DCL就是一个使用禁止指令重排的案例。
+`synchronized`的作用：
+- 互斥性：确保在同一时间只有一个线程可以执行被 `synchronized` 修饰的代码块或方法。
+- 可见性：当一个线程退出 `synchronized` 代码块时，它所做的所有修改对于进入 `synchronized` 代码块的其他线程是可见的。这是通过释放和获得监视器锁来实现的。
 
-**`volatile` 禁止指令重排原因**
+### 使用示例
+| 修饰的对象       | 作用范围     | 作用对象           |
+| ---------------- | ------------ | ------------------ |
+| 同步一个实例方法     | 整个实例方法     | 调用此方法的对象   |
+| 同步一个静态方法 | 整个静态方法 | 此类的所有对象     |
+| 同步代码块-对象  | 整个代码块   | 调用此代码块的对象 |
+| 同步代码块-类   | 整个代码块   | 此类的所有对象     |
 
-由于编译器和处理器都能执行指令重排的优化，如果在指令键加入一条内存屏障(`Memory barrier`)，就会告诉编译器和CPU不管什么指令都不能和这条加入`Memory barrier`指令键重新排序，也就是说**通过内存屏障禁止在内存屏障前后的指令重新排序优化**。
-内存屏障的另一个作用就是强制刷出各种CPU缓存数据，因此任何CPU上的线程都能读取到这些数据的最新值，即可见性。
+- 同步一个实例方法。在这种情况下，`increment`方法被声明为同步方法。当一个线程调用这个方法时，它会获得该实例的监视器锁，其他线程必须等待这个线程释放锁后才能调用这个方法。
+    ```java
+    public synchronized void increment() {
+        count++;
+    }
+    ```
+- 同步一个静态方法。当`synchronized`作用于静态方法时，其锁就是当前类的`class`对象锁。由于静态成员不专属于任何一个实例对象，而是类成员，因此通过`class`对象锁可以控制静态成员的并发操作。
+    ```java
+    public static synchronized void increment() {
+        count++;
+    }
+    ```
+- 同步代码块。在某些情况下，我们编写的方法体可能比较大，同时存在一些比较耗时的操作，而需要同步的代码又只有一小部分，如果直接对整个方法进行同步操作，这样做就有点浪费。此时我们可以使用同步代码块的方式对需要同步的代码进行包裹。
+    ```java
+    public void increment() {
+        synchronized (this) {
+            count++;
+        }
+    }
+    ```
+    除了使用`synchronized(this)`锁定，当然静态方法是没有this对象的，也可以使用`class`对象来做为锁。
+    ```java
+    public void increment() {
+        synchronized (MainTest.class) {
+            count++;
+        }
+    }
+    ```
+
+当如果没有明确的对象作为锁，只是想让一段代码同步时，可以创建一个特殊的对象来充当锁。
+```java
+private byte[] lock = new byte[0];
+public void method(){
+  synchronized(lock) {
+     // .....
+  }
+}
+```
+零长度的`byte`数组对象创建起来将比任何对象都经济。查看编译后的字节码，生成零长度的`byte[]`对象只需3条操作码，而`Object lock = new Object()`则需要7行操作码。
+```text
+byte[] emptyArray = new byte[0];
+
+0: iconst_0       // 将常量0推送到栈顶
+1: newarray byte  // 创建一个新的byte类型数组
+3: astore_1       // 将引用类型的数据存储到局部变量表中
+```
+```text
+Object lock = new Object();
+
+0: new           #2   // 创建一个新的对象
+3: dup                // 复制栈顶的操作数栈顶的值，并将复制值压入栈顶
+4: invokespecial #1   // 调用实例初始化方法, 使用Object.<init>
+7: astore_1           // 将引用类型的数据存储到局部变量表中
+
+```
+
+### 实现原理
+`synchronized`关键字在Java中通过进入和退出一个监视器来实现同步。监视器本质上是一种锁，它可以是类对象锁或实例对象锁。每个对象在JVM中都有一个与之关联的监视器。
+当一个线程进入同步代码块或方法时，它会尝试获得对象的监视器。如果成功获得锁，线程就可以执行同步代码；否则它将被阻塞，直到获得锁为止。
+
+在Java中`synchronized`锁对象时，其实就是改变对象中的对象头的`markword`的锁的标志位来实现的。用`javap -v MainTest.class`命令反编译下面代码。
+```java
+public class MainTest {
+
+    synchronized void demo01() {
+        System.out.println("demo 01");
+    }
+
+    void demo02() {
+        synchronized (MainTest.class) {
+            System.out.println("demo 02");
+        }
+    }
+
+}
+```
+```text
+  synchronized void demo01();
+    descriptor: ()V
+    flags: ACC_SYNCHRONIZED
+    Code:
+      stack=2, locals=1, args_size=1
+         0: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+         3: ldc           #3                  // String demo 01
+         5: invokevirtual #4                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+         8: return
+// ...
+void demo02();
+    descriptor: ()V
+    flags:
+    Code:
+      stack=2, locals=3, args_size=1
+         0: ldc           #5                  // class content/posts/rookie/MainTest
+         2: dup
+         3: astore_1
+         4: monitorenter
+         5: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+         8: ldc           #6                  // String demo 02
+        10: invokevirtual #4                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+        13: aload_1
+        14: monitorexit
+        15: goto          23
+        18: astore_2
+        19: aload_1
+        20: monitorexit
+        21: aload_2
+        22: athrow
+        23: return
+// ...
+```
+通过反编译后代码可以看出：
+- 对于同步方法，JVM采用`ACC_SYNCHRONIZED`标记符来实现同步；
+- 对于同步代码块，JVM采用`monitorenter`、`monitorexit`两个指令来实现同步；
+
+其中同步代码块，有两个`monitorexit`指令的原因是为了保证抛异常的情况下也能释放锁，所以`javac`为同步代码块添加了一个隐式的`try-finally`，在`finally`中会调用`monitorexit`命令释放锁。
+
+[官方文档](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.11.10)中关于同步方法和同步代码块的实现原理描述：
+> 方法级的同步是隐式的。同步方法的常量池中会有一个 `ACC_SYNCHRONIZED` 标志。当某个线程要访问某个方法的时候，会检查是否有 `ACC_SYNCHRONIZED`，如果有设置，则需要先获得监视器锁，然后开始执行方法，方法执行之后再释放监视器锁。这时如果其他线程来请求执行方法，会因为无法获得监视器锁而被阻断住。值得注意的是，如果在方法执行过程中，发生了异常，并且方法内部并没有处理该异常，那么在异常被抛到方法外面之前监视器锁会被自动释放。<br>
+> 同步代码块使用 `monitorenter` 和 `monitorexit` 两个指令实现。可以把执行 `monitorenter` 指令理解为加锁，执行 `monitorexit` 理解为释放锁。 每个对象维护着一个记录着被锁次数的计数器。未被锁定的对象的该计数器为0，当一个线程获得锁（执行 `monitorenter`）后，该计数器自增变为 1 ，当同一个线程再次获得该对象的锁的时候，计数器再次自增。当同一个线程释放锁（执行 `monitorexit` 指令）的时候，计数器再自减。当计数器为0的时候。锁将被释放，其他线程便可以获得锁。
+
+其实无论是`ACC_SYNCHRONIZED`还是`monitorenter`、`monitorexit`都是基于`Monitor`实现的，每一个锁都对应一个`monitor`对象。
+在Java虚拟机(HotSpot)中，`Monitor`是基于C++实现的，由`ObjectMonitor`实现。在`/hotspot/src/share/vm/runtime/objectMonitor.hpp`中有`ObjectMonitor`的实现。
+```text
+// initialize the monitor, exception the semaphore, all other fields
+// are simple integers or pointers
+ObjectMonitor() {
+    _header       = NULL;
+    _count        = 0; //记录个数
+    _waiters      = 0,
+    _recursions   = 0;
+    _object       = NULL;
+    _owner        = NULL;
+    _WaitSet      = NULL; //处于wait状态的线程，会被加入到_WaitSet
+    _WaitSetLock  = 0 ;
+    _Responsible  = NULL ;
+    _succ         = NULL ;
+    _cxq          = NULL ;
+    FreeNext      = NULL ;
+    _EntryList    = NULL ; //处于等待锁block状态的线程，会被加入到该列表
+    _SpinFreq     = 0 ;
+    _SpinClock    = 0 ;
+    OwnerIsThread = 0 ;
+  }
+```
+- `_owner`：指向持有`ObjectMonitor`对象的线程；
+- `_WaitSet`：存放处于`wait`状态的线程队列；
+- `_EntryList`：存放处于等待锁`block`状态的线程队列；
+- `_recursions`：锁的重入次数；
+- `_count`：用来记录该线程获取锁的次数；
+
+当多个线程同时访问一段同步代码时，首先会进入`_EntryList`队列中，当某个线程获取到对象的`monitor`后进入`_Owner`区域，并把`monitor`中的`_owner`变量设置为当前线程，同时`monitor`中的计数器`_count`加1，即获得对象锁。
+
+![synchronized原理](/iblog/posts/annex/images/essays/synchronized原理.gif)
+
+若此时持有`monitor`的线程调用`wait()`方法，将释放当前对象持有的`monitor`，`_owner`变量恢复为`null`，`_count`自减1，同时该线程进入`_WaitSet`集合中等待被唤醒。若当前线程执行完毕也将释放`monitor`并复位变量的值，以便其他线程进入获取`monitor`。
+
+`ObjectMonitor`中其他方法：
+```text
+  bool      try_enter (TRAPS) ;
+  void      enter(TRAPS);
+  void      exit(bool not_suspended, TRAPS);
+  void      wait(jlong millis, bool interruptable, TRAPS);
+  void      notify(TRAPS);
+  void      notifyAll(TRAPS);
+```
+`sychronized`加锁的时候，会调用`objectMonitor`的`enter`方法，解锁的时候会调用`exit`方法。
+在JDK1.6之前，`synchronized`的实现直接调用`ObjectMonitor`的`enter`和`exit`，这种锁被称之为重量级锁，这也是早期`synchronized`效率低的原因。
+所以，在JDK1.6中出现对锁进行了很多的优化，进而出现轻量级锁，偏向锁，锁消除，适应性自旋锁，锁粗化。
+
+> 早期的`synchronized`效率低的原因：
+Java的线程是映射到操作系统原生线程之上的，如果要阻塞或唤醒一个线程就需要操作系统的帮忙，监视器锁`monitor`是依赖于底层的操作系统的`Mutex Lock`来实现的，而操作系统实现线程之间的切换时需要从用户态转换到核心态。因此状态转换需要花费很多的处理器时间。
+对于代码简单的同步块（如被`synchronized`修饰的`get`、`set`方法）状态转换消耗的时间有可能比用户代码执行的时间还要长，所以说`synchronized`是Java语言中一个重量级的操作。也是为什么早期的`synchronized`效率低的原因。
+
+### 锁的升级
+[//]: # (写到了这里)
+![锁的升级](https://oss.stupidzhang.com/img/blog/锁升级过程.png)
+
+在JDK1.6之前，使用`synchronized`被称作重量级锁，重量级锁的实现是基于底层操作系统的`mutex`互斥原语的，这个开销是很大的。所以在JDK1.6时JVM对`synchronized`做了优化。
+
+对象头中`markword`锁状态的表示：
+>- `biased_lock` ：0 `lock`： 01： 表示无锁状态
+>- `biased_lock` ：1 `lock`： 01： 表示偏向锁状态
+>- `lock`： 00： 表示轻量级锁状态
+>- `lock`： 10： 表示重量级锁状态
+>- `lock`： 11： 表示被垃圾回收器标记的状态
+
+对象的锁状态，可以分为4种，级别从低到高依次是：无锁状态、[偏向锁状态](#偏向锁)、[轻量级锁状态](#轻量级锁与重量级锁)和[重量级锁状态](#轻量级锁与重量级锁)。
+其中这几个锁只有重量级锁是需要使用操作系统底层`mutex`互斥原语来实现，其他的锁都是使用对象头来实现的。
+随着锁的竞争，锁可以从偏向锁升级到轻量级锁，再升级的重量级锁。
+
+锁升级过程：
+- 无锁状态：`markword`锁的标志位0，偏向锁的标志位为1；例如：刚被创建出来的对象；
+- 偏向锁：如果一个线程获取了锁，此时`markword`的结构变为偏向锁结构，当这个线程再次请求锁时，无需再做任何同步操作，直接可以获取锁。
+  省去了大量有关锁申请的操作，从而也就提供程序的性能。
+- 轻量级锁：当锁是偏向锁的时候，被另外的线程所访问，偏向锁就会升级为轻量级锁，其他线程会通过自旋的形式尝试获取锁，不会阻塞，从而提高性能；
+- 重量级锁：升级为重量级锁时，锁标志的状态值变为“10”，此时`MarkWord`中存储的是指向重量级锁的指针，此时等待锁的线程都会进入阻塞状态。所以开销是很大;
+
+1. 无锁状态升级为偏向锁：
+   一个对象刚开始实例化的时候，没有任何线程来访问它的时候。它是可偏向的，意味着，它现在认为只可能有一个线程来访问它，所以当第一个线程来访问它的时候，它会偏向这个线程，此时，对象持有偏向锁。
+   偏向第一个线程，这个线程在修改对象头成为偏向锁的时候使用CAS操作，并将对象头中的 `ThreadID` 改成自己的ID，之后再次访问这个对象时，只需要对比ID，不需要再使用CAS在进行操作。
+
+2. 偏向锁升级为轻量级锁：
+   一旦有第二个线程访问这个对象，因为偏向锁不会主动释放，所以第二个线程可以看到对象的偏向状态；
+   这时表明在这个对象上已经存在竞争了，JVM会检查原来持有该对象锁的线程是否依然存活，如果不存活，则可以将对象变为无锁状态，然后重新偏向新的线程，如果原来的线程依然存活，则马上执行那个线程的操作栈，检查该对象的使用情况，如果仍然需要持有偏向锁，则偏向锁升级为轻量级锁。
+   如果不存在使用了，则可以将对象回复成无锁状态，然后重新偏向。
+
+3. 轻量级锁升级为重量级锁：
+   轻量级锁认为竞争存在，但是竞争的程度很轻，一般两个线程对于同一个锁的操作都会错开，或者说稍微等待一下（自旋），另一个线程就会释放锁。
+   但是当自旋超过一定的次数，或者一个线程在持有锁，一个在自旋，又有第三个来访时，轻量级锁膨胀为重量级锁，重量级锁使除了拥有锁的线程以外的线程都阻塞，防止CPU空转。
+
+在所有的锁都启用的情况下线程进入临界区时会先去获取偏向锁，如果已经存在偏向锁了，则会尝试获取轻量级锁，启用自旋锁，如果自旋也没有获取到锁，则使用重量级锁，将没有获取到锁的线程阻塞挂起，直到持有锁的线程执行完同步块唤醒他们；
+
+偏向锁是在无锁争用的情况下使用的，也就是同步代码块在当前线程没有执行完之前，没有其它线程会执行该同步块，一旦有了第二个线程的争用，偏向锁就会升级为轻量级锁，如果轻量级锁自旋到达阈值后，没有获取到锁，就会升级为重量级锁；
+
+锁可以升级，但是不可以降级。有的观点认为 Java 不会进行锁降级。
+实际上，锁降级确实是会发生的，当 JVM 进入[安全点](https://whiteppure.github.io/iblog/posts/jvm/jvm-about/#安全点)（`SafePoint`）的时候，会检查是否有闲置的 `Monitor`，然后试图进行降级。
+
+在 `HotSpot` 虚拟机中是有锁降级的，但是仅仅只发生在 [STW](https://whiteppure.github.io/iblog/posts/jvm/jvm-about/#stw) 的时候，只有垃圾回收线程能够观测到它，也就是说，在我们正常使用的过程中是不会发生锁降级的，只有在 GC 的时候才会降级。
+
+### synchronized与可见性
+可见性是指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值。
+
+Java内存模型规定了所有的变量都存储在主内存中，每条线程还有自己的工作内存，线程的工作内存中保存了该线程中是用到的变量的主内存副本拷贝，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存。
+不同的线程之间也无法直接访问对方工作内存中的变量，线程间变量的传递均需要自己的工作内存和主存之间进行数据同步进行。所以，就可能出现线程1改了某个变量的值，但是线程2不可见的情况。
+被`synchronized`修饰的代码，在开始执行时会加锁，执行完成后会进行解锁。而为了保证可见性，有一条规则是这样的：对一个变量解锁之前，必须先把此变量同步回主存中。这样解锁后，后续线程就可以访问到被修改后的值。
+
+所以，`synchronized`关键字锁住的对象，其值是具有可见性的.
+
+### synchronized与原子性
+原子性是指一个操作是不可中断的，要全部执行完成，要不就都不执行。
+
+线程是CPU调度的基本单位。CPU有时间片的概念，会根据不同的调度算法进行线程调度。当一个线程获得时间片之后开始执行，在时间片耗尽之后，就会失去CPU使用权。所以在多线程场景下，由于时间片在线程间轮换，就会发生原子性问题。
+
+在Java中，为了保证原子性，提供了两个高级的字节码指令``monitorenter``和``monitorexit``。
+这两个字节码指令，在Java中对应的关键字就是``synchronized``。
+
+通过下``monitorexit``和``monitorexit``指令，可以保证被``synchronized``修饰的代码在同一时间只能被一个线程访问，在锁未释放之前，无法被其他线程访问到。因此，在Java中可以使用``synchronized``来保证方法和代码块内的操作是原子性的。
+
+>例如： 线程1在执行``monitorenter``指令的时候，会对Monitor进行加锁，加锁后其他线程无法获得锁，除非线程1主动解锁。
+即使在执行过程中，由于某种原因，比如CPU时间片用完，线程1放弃了CPU，但是，他并没有进行解锁。
+而由于``synchronized``的锁是可重入的，下一个时间片还是只能被他自己获取到，还是会继续执行代码。直到所有代码执行完。这就保证了原子性。
 
 
-### CAS
+### synchronized与有序性
+有序性即程序执行的顺序按照代码的先后顺序执行。
+
+除了引入了时间片以外，由于处理器优化和指令重排等，CPU还可能对输入代码进行乱序执行，比如``load->add->save`` 有可能被优化成``load->save->add``这就是可能存在有序性问题。
+
+这里需要注意的是，``synchronized``是无法禁止指令重排和处理器优化的。也就是说，``synchronized``无法避免上述提到的问题。
+
+那么，为什么还说``synchronized``也提供了有序性保证呢？
+
+> 如果在本线程内观察，所有操作都是天然有序的。如果在一个线程中观察另一个线程，所有操作都是无序的。
+
+以上这句话也是，但是怎么理解呢？简单扩展一下，这其实和``as-if-serial``语义有关。
+
+``as-if-serial``语义的意思指：不管怎么重排序（编译器和处理器为了提高并行度），单线程程序的执行结果都不能被改变。
+编译器和处理器无论如何优化，都必须遵守``as-if-serial``语义。
+
+这里不对``as-if-serial``语义详细展开了，简单说就是``as-if-serial``语义保证了单线程中，指令重排是有一定的限制的，而只要编译器和处理器都遵守了这个语义，那么就可以认为单线程程序是按照顺序执行的。
+当然，实际上还是有重排的，只不过我们无须关心这种重排的干扰。
+
+所以呢，由于``synchronized``修饰的代码，同一时间只能被同一线程访问。那么也就是单线程执行的。所以，可以保证其有序性。
+
+### synchronized与ReentrantLock
+Java 提供了两种锁机制来控制多个线程对共享资源的互斥访问，第一个是 JVM 实现的 `synchronized`，而另一个是 JDK 实现的 `ReentrantLock`。
+
+| 比较               | synchronized                             | ReentrantLock                          |
+| ------------------ | ---------------------------------------- | -------------------------------------- |
+| 锁的实现       | JVM 实现，监视器模式                     | JDK实现，依赖AQS                       |
+| 性能           | 新版本 Java 对 synchronized 进行锁的升级 | synchronized 与 ReentrantLock 大致相同 |
+| 等待可中断     | 不可中断                               | 可中断              |
+| 公平锁         | 非公平锁             | 默认非公平锁，也可以是公平锁                               |
+| 锁绑定多个条件 | 不能绑定                     | 可以同时绑定多个 Condition 对象        |
+| 可重入             | 可重入锁                                 | 可重入锁                               |
+| 释放锁 | 自动释放锁 | 调用 unlock() 释放锁 |
+| 等待唤醒 | 搭配wait()、notify或notifyAll()使用 | 搭配await()/singal()使用 |
+
+`synchronized` 与 `ReentrantLock`最直观的区别就是，在使用`ReentrantLock`的时候需要调用`unlock`方法释放锁，所以为了保证一定释放，通常都是和 `try~finally` 配合使用的。
+
+除非需要使用 `ReentrantLock` 的高级功能，否则优先使用 `synchronized`。
+这是因为 `synchronized` 是 JVM 实现的一种锁机制，JVM 原生地支持它，而 `ReentrantLock` 不是所有的 JDK 版本都支持。
+并且使用 `synchronized` 不用担心没有释放锁而导致死锁问题，因为 JVM 会确保锁的释放。
+
+## CAS
 CAS全称为`Compare and Swap`被译为比较并交换。是一种无锁算法。在不使用锁（没有线程被阻塞）的情况下实现多线程之间的变量同步。
 `java.util.concurrent.atomic` 并发包下的所有原子类都是基于 `CAS` 来实现的。
 
-#### 原理
+### 原理
 以 `AtomicInteger` 原子整型类为例，来看一下CAS实现原理。
-```
+```java
 public class MainTest {
     public static void main(String[] args) {
         new AtomicInteger().compareAndSet(1,2);
@@ -1980,7 +2271,7 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
 }
 ```
 
-#### 如何保证数据一致性
+### 如何保证数据一致性
 从源码可以看出，CAS是通过`Unsafe`调用CPU指令，当CPU中某个处理器对缓存中的共享变量进行了操作，其他处理器会有个嗅探机制，将其他处理器的该共享变量的缓存失效，待其他线程读取时会重新从主内存中读取最新的数据，基于 `MESI` 缓存一致性协议来实现的。
 
 简述，就是通过CPU的缓存一致性协议来保证线程之间的数据一致性的。
@@ -1990,7 +2281,7 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
 ![CPU多级缓存](/iblog/posts/annex/images/essays/CPU多级缓存.jpg)
 
 
-#### CAS与Unsafe关系
+### CAS与Unsafe关系
 CAS的作用是比较并交换，就是先拿这个期望值，与主内存的值比较，判断主内存中该位置是否存在期望值，如果存在，则改为新的值，这个修改的过程是具有原子性的。
 
 因为CAS是CPU并发源语，并发源语体现在`Java sun.misc.Unsafa`类上，调用Unsafe类中的CAS方法，JVM会帮我们实现CAS汇编指令。这是一种完全依赖于硬件的功能，通过他实现了原子操作。
@@ -2001,8 +2292,8 @@ CAS其实是调用了 `Unsafe` 类的方法 `Unsafa` 类是CAS核心类，由于
 Unsafe类存在于sun.misc包中，其内部方法操作可以像C的指针(内存地址)一样直接操作内存，因此Java中CAS操作的执行依赖于Unsafe类的方法。
 Unsafe类中的所有方法都是**native**修饰的，也就是说Unsafe类中的方法都直接**调用操作系统底层资源执行相应任务**。
 
-#### 缺点
-##### 循环时间长开销
+### 缺点
+#### 循环时间长开销
 因为是采用自旋锁的方式来实现所以，自然有自旋锁的缺点，循环时间长开销大，例如：`getAndAddInt` 方法执行，有个`do while`循环，如果CAS失败，一直会进行尝试，如果CAS长时间不成功，可能会给CPU带来很大的开销。
 ```
 public final int getAndAddInt(Object var1, long var2, int var4) {
@@ -2013,12 +2304,11 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
         return var5;
 }
 ```
-##### 多个变量原子性
+#### 多个变量原子性
 只能保证一个共享变量的原子操作，对多个共享变量操作时，循环CAS就无法保证操作的原子性，这个时候就可以用锁来保证原子性。
 但是Java从1.5开始JDK提供了`AtomicReference`类来保证引用对象之间的原子性，可以把多个变量放在一个对象里来进行CAS操作。
 
-##### ABA问题
-
+#### ABA问题
 ABA问题示例代码:
 ````
 public class MainTest {
@@ -2126,7 +2416,7 @@ Thread 4	修改是否成功false	当前最新实际版本号：3
 Thread 4	当前最新实际值：100
 ````
 
-### J.U.C.
+## J.U.C.
 `java.util.concurrent.locks`包下常用的类与接口是`JDK1.5`后新增的。`lock`的出现是为了弥补`synchronized`关键字解决不了的一些问题。
 
 例如：当一个代码块被`synchronized`修饰了，一个线程获取了对应的锁，并执行该代码块时，其他线程只能一直等待，等待获取锁的线程释放锁，如果这个线程因为某些原因被堵塞了，没有释放锁，那么其他线程只能一直等待下去。导致效率很低。
@@ -2136,14 +2426,13 @@ Thread 4	当前最新实际值：100
 `lock`与`synchronized`最大的区别就是`lock`能够手动控制锁，而`synchronized`是JVM控制的。所以`lock`更加灵活。`lock`锁的粒度要优于`synchronized`。
 在实际使用中，自然是能够替代`synchronized`关键字的。
 
-#### 使用
+### 使用
 在实际使用过程中，`lock`也是比较简单的。
 `Lock`和`ReadWriteLock`是两大锁的根接口，`Lock`代表实现类是`ReentrantLock`（可重入锁），`ReadWriteLock`（读写锁）的代表实现类是`ReentrantReadWriteLock`。
 
 ![juc.locks](/iblog/posts/annex/images/essays/juc.locks.png)
 
-##### Lock
-
+#### Lock
 **lock()**
 
 `lock()`方法是平常使用得最多的一个方法，就是用来获取锁。如果锁已被其他线程获取，则进行等待。
@@ -2205,7 +2494,7 @@ public void method() throws InterruptedException {
 
 在`lock`中可以定义多个`Condition`，也就是一个锁，可以对应多个监视器，可以更加细粒度的进行同步协作的处理。
 
-##### ReadWriteLock
+#### ReadWriteLock
 该接口有两个方法：
 ```
 //返回用于读取操作的锁    
@@ -2284,8 +2573,7 @@ class MyCache {
 }
 ```
 
-
-#### LockSupport
+### LockSupport
 `LockSupport`是`java.util.concurrent.locks`包下的一个工具类。
 `LockSupport`类使用了一种名为`Permit`(许可）的概念来做到阻塞和唤醒线程的功能，每个线程都有一个许可(permit)，`permit`只有两个值1和零，默认是零。
 
@@ -2358,8 +2646,7 @@ public class MainTest {
 因为凭证的数量最多为1，连续调用两次`unpark`和调用一次`unpark`效果一样，只会增加一个凭证;
 而调用两次park却需要消费两个凭证，证不够，不能放行。
 
-
-#### AQS
+### AQS
 AQS是指`java.util.concurrent.locks`包下的一个抽象类`AbstractQueuedSynchronizer`译为：抽象的队列同步器。
 
 在JUC包下，能够看到有许多类都继承了AQS，例如，`ReentrantLock 、CountDownLatch 、 ReentrantReadWriteLock 、 Semaphore `；
@@ -2389,7 +2676,7 @@ AQS简单来说，包含一个`status`和一个队列；`status`保存线程持�
 
 ![AQS简单理解](/iblog/posts/annex/images/essays/AQS简单理解.png)
 
-#### ReentrantLock原理
+### ReentrantLock原理
 `ReentrantLock`译为，可重入锁，它的原理用到了AQS。
 
 > AQS里面有个变量叫State，它的值有3种状态：没占用是0，占用了是1，大于1是可重入锁
@@ -2718,7 +3005,7 @@ private void unparkSuccessor(Node node) {
 在当前等待的线程，被唤起后，检查中断状态，如果处于中断状态，那么需要中断当前线程。
 
 
-#### CountDownLatch
+### CountDownLatch
 `count down latch`直译为：倒计时门闩，也可以叫做闭锁。
 > 门闩，汉语词汇。拼音：mén shuān 释义：指门关上后，插在门内使门推不开的滑动插销。
 
@@ -2776,7 +3063,7 @@ public class MainTest {
 每次调用`countDown()`方法可以让计数器减1，底层是[AQS](#AQS)框架，这里就不写了。
 调用了`await()`进行阻塞等待的线程，当计数器减到0后，再执行`await()`之后的代码。
 
-#### CyclicBarrier
+### CyclicBarrier
 `Cyclic Barrier`直译为：循环屏障，是Java中关于线程的计数器，也可以叫它栅栏。
 
 它与`CountDownLatch`的作用是相反的，`CountDownLatch`是定义一个次数，然后减，直到减到0，在去执行一些任务；
@@ -2956,7 +3243,7 @@ private int dowait(boolean timed, long nanos)
 - 某个参与线程被中断;
 - 调用了`CyclicBarrier的reset()`方法。该方法会将屏障重置为初始状态;
 
-#### Semaphore
+### Semaphore
 `Semaphore`译为信号量，有时被称为信号灯。可以用来控制同时访问特定资源的线程数量，通过协调各个线程，以保证合理的使用资源。
 
 > 信号量主要用于两个目的，一个是用于多个共享资源的互斥使用，另一个用于并发线程数量的控制。
@@ -3026,475 +3313,7 @@ public class MainTest {
 - 释放令牌成功之后，同时会唤醒同步队列中的一个线程;
 - 被唤醒的节点会重新尝试去修改`state=state-1`的操作，如果`state>=0`则获取令牌成功，否则重新进入阻塞队列，挂起线程;
 
-
-
-### synchronized
-`synchronized`是Java提供的关键字，可译为同步。可用来给对象、方法或者代码块加锁，当它锁定一个方法或者一个代码块的时候，同一时刻最多只有一个线程执行这段代码。
-
-> `synchronized`关键字在需要原子性、可见性和有序性这三种特性的时候都可以作为其中一种解决方案，看起来是“万能”的。的确，大部分并发控制操作都能使用`synchronized`来完成。
-
-#### 使用
-| 修饰的对象       | 作用范围     | 作用对象           |
-| ---------------- | ------------ | ------------------ |
-| 同步一个实例方法     | 整个实例方法     | 调用此方法的对象   |
-| 同步一个静态方法 | 整个静态方法 | 此类的所有对象     |
-| 同步代码块-对象  | 整个代码块   | 调用此代码块的对象 |
-| 同步代码块-类   | 整个代码块   | 此类的所有对象     |
-
-##### 同步一个方法
-
-代码演示
-```
-public class MainTest {
-
-    //共享资源
-    static int i = 0;
-
-    public static void main(String[] args) throws InterruptedException {
-        MainTest mainTest = new MainTest();
-        Thread thread1 = new Thread(() -> {
-            for (int j = 0; j < 1000000; j++) {
-                mainTest.increase();
-            }
-        }， "线程1");
-        Thread thread2 = new Thread(() -> {
-            for (int j = 0; j < 1000000; j++) {
-                mainTest.increase();
-            }
-        }, "线程2");
-
-        thread1.start();
-        thread2.start();
-
-        // join方法的作用是调用线程等待该线程完成后，才能继续用下运行。
-        thread1.join();
-        thread2.join();
-        System.out.println(i);
-    }
-
-    public synchronized void increase() {
-        i++;
-    }
-
-    // 通过是否使用synchronized来体会
-//    public  void increase() {
-//        i++;
-//    }
-}
-```
-对于上面的代码如果加上`synchronized`最后输出的结果为2000000；
-如果没有加，最后的结果很大程度上是小于2000000的，当然不排除偶然情况，所以这里不是肯定句。
-
-由此可见，当某个线程运行到这个方法时，都要检查有没有其它线程正在用这个方法(或者该类的其他同步方法)，有的话要等待正在使用 `synchronized` 方法的线程运行完这个方法后再运行此线程，没有的话，锁定调用者，然后直接运行。
-
-##### 同步一个静态方法
-当 `synchronized` 作用于静态方法时，其锁就是当前类的class对象锁。由于静态成员不专属于任何一个实例对象，是类成员，因此通过class对象锁可以控制静态 成员的并发操作。
-
-需要注意的是如果一个线程A调用一个实例对象的非`static synchronized`方法，而线程B需要调用这个实例对象所属类的静态 `synchronized` 方法，是允许的，不会发生互斥现象;
-因为访问静态 `synchronized` 方法占用的锁是当前类的class对象，而访问非静态 `synchronized` 方法占用的锁是当前实例对象锁。
-
-代码演示
-```
-public class MainTest {
-
-    //共享资源
-    static int i = 0;
-
-    public static void main(String[] args) throws InterruptedException {
-        MainTest mainTest = new MainTest();
-        Thread thread1 = new Thread(() -> {
-            for (int j = 0; j < 1000000; j++) {
-//                increase();
-                mainTest.increaseNoneStatic();
-            }
-        }， "线程1");
-        Thread thread2 = new Thread(() -> {
-            for (int j = 0; j < 1000000; j++) {
-//                increase();
-//                mainTest.increaseNoneStatic();
-            }
-        }, "线程2");
-
-        thread1.start();
-        thread2.start();
-
-        // join方法的作用是调用线程等待该线程完成后，才能继续用下运行。
-        thread1.join();
-        thread2.join();
-        System.out.println(i);
-    }
-
-    // static修饰 锁住的是类对象
-    public static synchronized void increase() {
-        i++;
-    }
-
-    // 无static修饰 锁住的是调用该方法的 当前对象
-    public synchronized void increaseNoneStatic() {
-        i++;
-    }
-}
-```
-同步一个静态方法，作用于当前类对象加锁，进入同步代码前要获得当前类对象的锁。也就是给当前类加锁，会作用于类的所有对象实例，因为静态成员不属于任何一个实例对象，是类成员（static表明这是该类的一个静态资源，不管new了多少个对象，只有一份，所以对该类的所有对象都加了锁）。
-所以如果一个线程A调用一个实例对象的非静态`synchronized`方法，而线程B需要调用这个实例对象所属类的静态`synchronized`方法，是允许的，不会发生互斥现象，因为访问静态`synchronized`方法占用的锁是当前类的锁，而访问非静态`synchronized`方法占用的锁是当前实例对象锁。
-
-##### 同步代码块
-在某些情况下，我们编写的方法体可能比较大，同时存在一些比较耗时的操作，而需要同步的代码又只有一小部分，如果直接对整个方法进行同步操作，这样做就有点浪费；
-此时我们可以使用同步代码块的方式对需要同步的代码进行包裹。
-
-代码演示
-```
-public class MainTest {
-
-    //共享资源
-    static int i = 0;
-
-    public static void main(String[] args) throws InterruptedException {
-        MainTest mainTest = new MainTest();
-        Thread thread1 = new Thread(() -> {
-            for (int j = 0; j < 1000000; j++) {
-                mainTest.increase();
-            }
-        }, "线程1");
-        Thread thread2 = new Thread(() -> {
-            for (int j = 0; j < 1000000; j++) {
-                mainTest.increase();
-            }
-        }, "线程2");
-
-        thread1.start();
-        thread2.start();
-
-        // join方法的作用是调用线程等待该线程完成后，才能继续用下运行。
-        thread1.join();
-        thread2.join();
-        System.out.println(i);
-    }
-
-    public  void increase() {
-        synchronized (this){
-            i++;
-        }
-    }
-
-//    public  void increase() {
-//        i++;
-//    }
-
-}
-```
-除了使用`synchronized (this)`锁定，当然静态方法是没有this对象的；也可以使用`class`对象，和程序中创建的一些对象来做为锁。
-```
-// class类对象锁
-synchronized(MainTest.class){
-    // ...
-}
-
-// 
-```
-当没有明确的对象作为锁，只是想让一段代码同步时，可以创建一个特殊的对象来充当锁;
-```
-private byte[] lock = new byte[0];
-public void method(){
-  synchronized(lock) {
-     // .....
-  }
-}
-```
-零长度的`byte`数组对象创建起来将比任何对象都经济――查看编译后的字节码：生成零长度的`byte[]`对象只需3条操作码，而`Object lock = new Object()`则需要7行操作码。
-
-当一个线程访问对象的一个`synchronized(this)`同步代码块时，另一个线程仍然可以访问该对象中的非`synchronized(this)`同步代码块。 
-```
-public class MainTest {
-    public static void main(String[] args) {
-        Counter counter = new Counter();
-        Thread thread1 = new Thread(counter, "A");
-        Thread thread2 = new Thread(counter, "B");
-        thread1.start();
-        thread2.start();
-    }
-}
-
-class Counter implements Runnable{
-    private int count;
-
-    public Counter() {
-        count = 0;
-    }
-
-    public void countAdd() {
-        synchronized(this) {
-            for (int i = 0; i < 5; i ++) {
-                try {
-                    System.out.println(Thread.currentThread().getName() + ":" + (count++));
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    //非synchronized代码块，未对count进行读写操作，所以可以不用synchronized
-    public void printCount() {
-        for (int i = 0; i < 5; i ++) {
-            try {
-                System.out.println(Thread.currentThread().getName() + " count:" + count);
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @Override
-    public void run() {
-        String threadName = Thread.currentThread().getName();
-        if (threadName.equals("A")) {
-            countAdd();
-        } else if (threadName.equals("B")) {
-            printCount();
-        }
-    }
-}
-```
-
-#### 原理
-阅读前建议先了解[Java对象头](https://whiteppure.github.io/iblog/posts/jvm/java-object/#对象头)。
-如果你对对象头有了解，你就知道在Java中`synchronized`锁对象时，其实就是改变对象中的对象头的`markword`的锁的标志位来实现的。
-
-通过上面的使用，可以体会到被`synchronized`修饰的代码块及方法，在同一时间，只能被单个线程访问。
-
-用`javap -v MainTest.class` 命令反编译下面代码，我们就能了解到JVM对`synchronized`是怎么处理的了。
-```
-public class MainTest {
-
-    synchronized void demo01() {
-        System.out.println("demo 01");
-    }
-
-    void demo02() {
-        synchronized (MainTest.class) {
-            System.out.println("demo 02");
-        }
-    }
-
-}
-```
-```
-  synchronized void demo01();
-    descriptor: ()V
-    flags: ACC_SYNCHRONIZED
-    Code:
-      stack=2, locals=1, args_size=1
-         0: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
-         3: ldc           #3                  // String demo 01
-         5: invokevirtual #4                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
-         8: return
-// ...
-void demo02();
-    descriptor: ()V
-    flags:
-    Code:
-      stack=2, locals=3, args_size=1
-         0: ldc           #5                  // class content/posts/rookie/MainTest
-         2: dup
-         3: astore_1
-         4: monitorenter
-         5: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
-         8: ldc           #6                  // String demo 02
-        10: invokevirtual #4                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
-        13: aload_1
-        14: monitorexit
-        15: goto          23
-        18: astore_2
-        19: aload_1
-        20: monitorexit
-        21: aload_2
-        22: athrow
-        23: return
-// ...
-```
-通过反编译后代码可以看出：
-- 对于同步方法，JVM采用`ACC_SYNCHRONIZED`标记符来实现同步；
-- 对于同步代码块，JVM采用`monitorenter`、`monitorexit`两个指令来实现同步;
-
-其中同步代码块，有两个`monitorexit`指令的原因是，为了保证抛异常的情况下也能释放锁，所以`javac`为同步代码块添加了一个隐式的`try-finally`，在`finally`中会调用`monitorexit`命令释放锁。
-
-[官方文档](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.11.10)中关于同步方法和同步代码块的实现原理描述
-> 方法级的同步是隐式的。同步方法的常量池中会有一个 `ACC_SYNCHRONIZED` 标志。当某个线程要访问某个方法的时候，会检查是否有 `ACC_SYNCHRONIZED`，如果有设置，则需要先获得监视器锁，然后开始执行方法，方法执行之后再释放监视器锁。这时如果其他线程来请求执行方法，会因为无法获得监视器锁而被阻断住。值得注意的是，如果在方法执行过程中，发生了异常，并且方法内部并没有处理该异常，那么在异常被抛到方法外面之前监视器锁会被自动释放。
-
-> 同步代码块使用 `monitorenter` 和 `monitorexit` 两个指令实现。可以把执行 `monitorenter` 指令理解为加锁，执行 `monitorexit` 理解为释放锁。 每个对象维护着一个记录着被锁次数的计数器。未被锁定的对象的该计数器为0，当一个线程获得锁（执行 `monitorenter`）后，该计数器自增变为 1 ，当同一个线程再次获得该对象的锁的时候，计数器再次自增。当同一个线程释放锁（执行 `monitorexit` 指令）的时候，计数器再自减。当计数器为0的时候。锁将被释放，其他线程便可以获得锁。
-
-其实无论是`ACC_SYNCHRONIZED`还是`monitorenter`、`monitorexit`都是基于`Monitor`实现的，每一个锁都对应一个`monitor`对象;
-在Java虚拟机(HotSpot)中，`Monitor` 是基于C++实现的，由`ObjectMonitor`实现。
-
-在`/hotspot/src/share/vm/runtime/objectMonitor.hpp`中有`ObjectMonitor`的实现
-```
-// initialize the monitor, exception the semaphore, all other fields
-// are simple integers or pointers
-ObjectMonitor() {
-    _header       = NULL;
-    _count        = 0; //记录个数
-    _waiters      = 0,
-    _recursions   = 0;
-    _object       = NULL;
-    _owner        = NULL;
-    _WaitSet      = NULL; //处于wait状态的线程，会被加入到_WaitSet
-    _WaitSetLock  = 0 ;
-    _Responsible  = NULL ;
-    _succ         = NULL ;
-    _cxq          = NULL ;
-    FreeNext      = NULL ;
-    _EntryList    = NULL ; //处于等待锁block状态的线程，会被加入到该列表
-    _SpinFreq     = 0 ;
-    _SpinClock    = 0 ;
-    OwnerIsThread = 0 ;
-  }
-```
-- `_owner`：指向持有`ObjectMonitor`对象的线程
-- `_WaitSet`：存放处于`wait`状态的线程队列
-- `_EntryList`：存放处于等待锁`block`状态的线程队列
-- `_recursions`：锁的重入次数
-- `_count`：用来记录该线程获取锁的次数
-
-当多个线程同时访问一段同步代码时，首先会进入`_EntryList`队列中，当某个线程获取到对象的`monitor`后进入`_Owner`区域并把`monitor`中的`_owner`变量设置为当前线程，同时`monitor`中的计数器`_count`加1。即获得对象锁。
-
-![synchronized原理](/iblog/posts/annex/images/essays/synchronized原理.gif)
-
-若此时持有`monitor`的线程调用`wait()`方法，将释放当前对象持有的`monitor`，`_owner`变量恢复为`null`，`_count`自减1，同时该线程进入`_WaitSet`集合中等待被唤醒。若当前线程执行完毕也将释放`monitor`并复位变量的值，以便其他线程进入获取`monitor`。
-
-由此看来，`monitor`对象存在于每个Java对象的对象头中(存储的是指针)，`synchronized`锁便是通过这种方式获取锁的，也是为什么Java中任意对象可以作为锁的原因。
-
-`ObjectMonitor`中其他方法：
-```
-  bool      try_enter (TRAPS) ;
-  void      enter(TRAPS);
-  void      exit(bool not_suspended, TRAPS);
-  void      wait(jlong millis, bool interruptable, TRAPS);
-  void      notify(TRAPS);
-  void      notifyAll(TRAPS);
-```
-`sychronized`加锁的时候，会调用`objectMonitor`的`enter`方法，解锁的时候会调用`exit`方法。
-在JDK1.6之前，`synchronized` 的实现才会直接调用 `ObjectMonitor`的`enter`和`exit`，这种锁被称之为重量级锁。
-
-> 早期的`synchronized`效率低的原因：
->Java的线程是映射到操作系统原生线程之上的，如果要阻塞或唤醒一个线程就需要操作系统的帮忙，监视器锁`monitor`是依赖于底层的操作系统的`Mutex Lock`来实现的，而操作系统实现线程之间的切换时需要从用户态转换到核心态。因此状态转换需要花费很多的处理器时间。
-对于代码简单的同步块（如被`synchronized`修饰的`get`、`set`方法）状态转换消耗的时间有可能比用户代码执行的时间还要长，所以说`synchronized`是java语言中一个重量级的操作。也是为什么早期的`synchronized`效率低的原因。
-
-所以，在JDK1.6中出现对锁进行了很多的优化，进而出现轻量级锁，偏向锁，锁消除，适应性自旋锁，锁粗化。
-
-#### 锁的升级
-[锁的升级](https://oss.stupidzhang.com/img/blog/锁升级过程.png)
-
-在JDK1.6之前，使用`synchronized`被称作重量级锁，重量级锁的实现是基于底层操作系统的`mutex`互斥原语的，这个开销是很大的。所以在JDK1.6时JVM对`synchronized`做了优化。
-
-对象头中`markword`锁状态的表示：
->- `biased_lock` ：0 `lock`： 01： 表示无锁状态
->- `biased_lock` ：1 `lock`： 01： 表示偏向锁状态
->- `lock`： 00： 表示轻量级锁状态
->- `lock`： 10： 表示重量级锁状态
->- `lock`： 11： 表示被垃圾回收器标记的状态
-
-对象的锁状态，可以分为4种，级别从低到高依次是：无锁状态、[偏向锁状态](#偏向锁)、[轻量级锁状态](#轻量级锁与重量级锁)和[重量级锁状态](#轻量级锁与重量级锁)。
-其中这几个锁只有重量级锁是需要使用操作系统底层`mutex`互斥原语来实现，其他的锁都是使用对象头来实现的。
-随着锁的竞争，锁可以从偏向锁升级到轻量级锁，再升级的重量级锁。
-
-锁升级过程：
-- 无锁状态：`markword`锁的标志位0，偏向锁的标志位为1；例如：刚被创建出来的对象；
-- 偏向锁：如果一个线程获取了锁，此时`markword`的结构变为偏向锁结构，当这个线程再次请求锁时，无需再做任何同步操作，直接可以获取锁。
-省去了大量有关锁申请的操作，从而也就提供程序的性能。
-- 轻量级锁：当锁是偏向锁的时候，被另外的线程所访问，偏向锁就会升级为轻量级锁，其他线程会通过自旋的形式尝试获取锁，不会阻塞，从而提高性能；
-- 重量级锁：升级为重量级锁时，锁标志的状态值变为“10”，此时`MarkWord`中存储的是指向重量级锁的指针，此时等待锁的线程都会进入阻塞状态。所以开销是很大;
-
-1. 无锁状态升级为偏向锁：
-一个对象刚开始实例化的时候，没有任何线程来访问它的时候。它是可偏向的，意味着，它现在认为只可能有一个线程来访问它，所以当第一个线程来访问它的时候，它会偏向这个线程，此时，对象持有偏向锁。
-偏向第一个线程，这个线程在修改对象头成为偏向锁的时候使用CAS操作，并将对象头中的 `ThreadID` 改成自己的ID，之后再次访问这个对象时，只需要对比ID，不需要再使用CAS在进行操作。
-
-2. 偏向锁升级为轻量级锁：
-一旦有第二个线程访问这个对象，因为偏向锁不会主动释放，所以第二个线程可以看到对象的偏向状态；
-这时表明在这个对象上已经存在竞争了，JVM会检查原来持有该对象锁的线程是否依然存活，如果不存活，则可以将对象变为无锁状态，然后重新偏向新的线程，如果原来的线程依然存活，则马上执行那个线程的操作栈，检查该对象的使用情况，如果仍然需要持有偏向锁，则偏向锁升级为轻量级锁。
-如果不存在使用了，则可以将对象回复成无锁状态，然后重新偏向。
-
-3. 轻量级锁升级为重量级锁：
-轻量级锁认为竞争存在，但是竞争的程度很轻，一般两个线程对于同一个锁的操作都会错开，或者说稍微等待一下（自旋），另一个线程就会释放锁。
-但是当自旋超过一定的次数，或者一个线程在持有锁，一个在自旋，又有第三个来访时，轻量级锁膨胀为重量级锁，重量级锁使除了拥有锁的线程以外的线程都阻塞，防止CPU空转。
-
-在所有的锁都启用的情况下线程进入临界区时会先去获取偏向锁，如果已经存在偏向锁了，则会尝试获取轻量级锁，启用自旋锁，如果自旋也没有获取到锁，则使用重量级锁，将没有获取到锁的线程阻塞挂起，直到持有锁的线程执行完同步块唤醒他们；
-
-偏向锁是在无锁争用的情况下使用的，也就是同步代码块在当前线程没有执行完之前，没有其它线程会执行该同步块，一旦有了第二个线程的争用，偏向锁就会升级为轻量级锁，如果轻量级锁自旋到达阈值后，没有获取到锁，就会升级为重量级锁；
-
-锁可以升级，但是不可以降级。有的观点认为 Java 不会进行锁降级。
-实际上，锁降级确实是会发生的，当 JVM 进入[安全点](https://whiteppure.github.io/iblog/posts/jvm/jvm-about/#安全点)（`SafePoint`）的时候，会检查是否有闲置的 `Monitor`，然后试图进行降级。
-
-在 `HotSpot` 虚拟机中是有锁降级的，但是仅仅只发生在 [STW](https://whiteppure.github.io/iblog/posts/jvm/jvm-about/#stw) 的时候，只有垃圾回收线程能够观测到它，也就是说，在我们正常使用的过程中是不会发生锁降级的，只有在 GC 的时候才会降级。
-
-#### synchronized与可见性
-可见性是指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值。
-
-Java内存模型规定了所有的变量都存储在主内存中，每条线程还有自己的工作内存，线程的工作内存中保存了该线程中是用到的变量的主内存副本拷贝，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存。
-不同的线程之间也无法直接访问对方工作内存中的变量，线程间变量的传递均需要自己的工作内存和主存之间进行数据同步进行。所以，就可能出现线程1改了某个变量的值，但是线程2不可见的情况。
-被`synchronized`修饰的代码，在开始执行时会加锁，执行完成后会进行解锁。而为了保证可见性，有一条规则是这样的：对一个变量解锁之前，必须先把此变量同步回主存中。这样解锁后，后续线程就可以访问到被修改后的值。
-
-所以，`synchronized`关键字锁住的对象，其值是具有可见性的.
-
-#### synchronized与原子性
-原子性是指一个操作是不可中断的，要全部执行完成，要不就都不执行。
-
-线程是CPU调度的基本单位。CPU有时间片的概念，会根据不同的调度算法进行线程调度。当一个线程获得时间片之后开始执行，在时间片耗尽之后，就会失去CPU使用权。所以在多线程场景下，由于时间片在线程间轮换，就会发生原子性问题。
-
-在Java中，为了保证原子性，提供了两个高级的字节码指令``monitorenter``和``monitorexit``。
-这两个字节码指令，在Java中对应的关键字就是``synchronized``。
-
-通过下``monitorexit``和``monitorexit``指令，可以保证被``synchronized``修饰的代码在同一时间只能被一个线程访问，在锁未释放之前，无法被其他线程访问到。因此，在Java中可以使用``synchronized``来保证方法和代码块内的操作是原子性的。
-
->例如： 线程1在执行``monitorenter``指令的时候，会对Monitor进行加锁，加锁后其他线程无法获得锁，除非线程1主动解锁。
-即使在执行过程中，由于某种原因，比如CPU时间片用完，线程1放弃了CPU，但是，他并没有进行解锁。
-而由于``synchronized``的锁是可重入的，下一个时间片还是只能被他自己获取到，还是会继续执行代码。直到所有代码执行完。这就保证了原子性。
-
-
-#### synchronized与有序性
-有序性即程序执行的顺序按照代码的先后顺序执行。
-
-除了引入了时间片以外，由于处理器优化和指令重排等，CPU还可能对输入代码进行乱序执行，比如``load->add->save`` 有可能被优化成``load->save->add``这就是可能存在有序性问题。
-
-这里需要注意的是，``synchronized``是无法禁止指令重排和处理器优化的。也就是说，``synchronized``无法避免上述提到的问题。
-
-那么，为什么还说``synchronized``也提供了有序性保证呢？
-
-> 如果在本线程内观察，所有操作都是天然有序的。如果在一个线程中观察另一个线程，所有操作都是无序的。
-
-以上这句话也是，但是怎么理解呢？简单扩展一下，这其实和``as-if-serial``语义有关。
-
-``as-if-serial``语义的意思指：不管怎么重排序（编译器和处理器为了提高并行度），单线程程序的执行结果都不能被改变。
-编译器和处理器无论如何优化，都必须遵守``as-if-serial``语义。
-
-这里不对``as-if-serial``语义详细展开了，简单说就是``as-if-serial``语义保证了单线程中，指令重排是有一定的限制的，而只要编译器和处理器都遵守了这个语义，那么就可以认为单线程程序是按照顺序执行的。
-当然，实际上还是有重排的，只不过我们无须关心这种重排的干扰。
-
-所以呢，由于``synchronized``修饰的代码，同一时间只能被同一线程访问。那么也就是单线程执行的。所以，可以保证其有序性。
-
-### synchronized与ReentrantLock
-Java 提供了两种锁机制来控制多个线程对共享资源的互斥访问，第一个是 JVM 实现的 `synchronized`，而另一个是 JDK 实现的 `ReentrantLock`。
-
-| 比较               | synchronized                             | ReentrantLock                          |
-| ------------------ | ---------------------------------------- | -------------------------------------- |
-| 锁的实现       | JVM 实现，监视器模式                     | JDK实现，依赖AQS                       |
-| 性能           | 新版本 Java 对 synchronized 进行锁的升级 | synchronized 与 ReentrantLock 大致相同 |
-| 等待可中断     | 不可中断                               | 可中断              |
-| 公平锁         | 非公平锁             | 默认非公平锁，也可以是公平锁                               |
-| 锁绑定多个条件 | 不能绑定                     | 可以同时绑定多个 Condition 对象        |
-| 可重入             | 可重入锁                                 | 可重入锁                               |
-| 释放锁 | 自动释放锁 | 调用 unlock() 释放锁 |
-| 等待唤醒 | 搭配wait()、notify或notifyAll()使用 | 搭配await()/singal()使用 |
-
-`synchronized` 与 `ReentrantLock`最直观的区别就是，在使用`ReentrantLock`的时候需要调用`unlock`方法释放锁，所以为了保证一定释放，通常都是和 `try~finally` 配合使用的。
-
-除非需要使用 `ReentrantLock` 的高级功能，否则优先使用 `synchronized`。
-这是因为 `synchronized` 是 JVM 实现的一种锁机制，JVM 原生地支持它，而 `ReentrantLock` 不是所有的 JDK 版本都支持。
-并且使用 `synchronized` 不用担心没有释放锁而导致死锁问题，因为 JVM 会确保锁的释放。
-
-### ThreadLocal
+## ThreadLocal
 `ThreadLocal`文档注释：
 ```
 This class provides thread-local variables.  These variables differ from
@@ -3510,7 +3329,7 @@ This class provides thread-local variables.  These variables differ from
 从线程的角度看，目标变量就象是线程的本地变量，这也是类名中“Local”所要表达的意思。
 说白了`ThreadLocal`就是存放线程的局部变量的。
 
-#### 使用
+### 使用
 在JDK5.0中，`ThreadLocal`已经支持泛型，该类的类名已经变为`ThreadLocal<T>`。API方法也相应进行了调整，新版本的API方法分别是`void set(T value)、T get()`以及`T initialValue()`。
 >关于Object和T的区别：Object是个基类，是个真实存在的类；T是个占位符，表示某个具体的类，仅在编译器有效，最终会被擦除用Object代替。
 
@@ -3612,7 +3431,7 @@ public class MainTest {
 
 总之，`ThreadLocal`类是修饰变量的，是在控制它的作用域，是为了增加变量的种类而已，这才是`ThreadLocal`类诞生的初衷，它的初衷可不是解决线程冲突的。
 
-#### 与同步机制
+### 与同步机制
 `ThreadLocal`类是修饰变量的，重点是在控制变量的作用域，初衷可不是为了解决线程并发和线程冲突的，而是为了让变量的种类变的更多更丰富，方便人们使用罢了。
 很多开发语言在语言级别都提供这种作用域的变量类型。
 
@@ -3633,7 +3452,7 @@ public class MainTest {
 对于多线程资源共享的问题，同步机制采用了“以时间换空间”的方式，而`ThreadLocal`采用了“以空间换时间”的方式。
 前者仅提供一份变量，让不同的线程排队访问，而后者为每一个线程都提供了一份变量，因此可以同时访问而互不影响。
 
-#### 原理
+### 原理
 ```
     public T get() {
         // 获取当前线程
@@ -3709,7 +3528,7 @@ static class Entry extends WeakReference<ThreadLocal<?>> {
 ```
 这样设计的好处是，如果这个变量不再被其他对象使用时，可以自动回收这个`ThreadLoca`l对象，避免可能的[内存泄露](https://whiteppure.github.io/iblog/posts/jvm/jvm-about/#内存泄漏)。
 
-#### 内存泄漏问题
+### 内存泄漏问题
 虽然`ThreadLocalMap`中的key是弱引用，当不存在外部强引用的时候，就会自动被回收，但是`Entry`中的`value`依然是强引用。这个`value`的引用链条如下：
 ```
 Thrad --> ThreadLocalMap --> Entry --> value
@@ -3785,7 +3604,6 @@ private int expungeStaleEntry(int staleSlot) {
 
 比如，你的get()方法总是访问固定几个一直存在的`ThreadLocal`，那么清理动作就不会执行，如果你没有机会调用`set()`和`remove()`，那么这个内存泄漏依然会发生。
 所以，当你不需要这个`ThreadLoca`变量时，主动调用`remove()`，这样是能够避免内存泄漏的。
-
 
 ## 常用的线程安全的集合
 | 线程不安全 | 线程不安全解决方案                                           |
