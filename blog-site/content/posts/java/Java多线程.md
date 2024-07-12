@@ -3001,6 +3001,24 @@ public class ReentrantLockExample {
 }
 ```
 
+#### 对比synchronized
+Java提供了两种锁机制来控制多个线程对共享资源的互斥访问，第一个是JVM实现的 `synchronized`，而另一个是 JDK 实现的 `ReentrantLock`。
+
+| 比较               | synchronized                           | ReentrantLock                   |
+| ------------------ | -------------------------------------- |---------------------------------|
+| 锁的实现       | JVM实现                     | JDK实现                           |
+| 性能           | synchronized 与 ReentrantLock 大致相同 | synchronized 与 ReentrantLock 大致相同 |
+| 等待可中断     | 不可中断                             | 可中断                             |
+| 公平锁         | 非公平锁             | 默认非公平锁，也可以是公平锁                  |
+| 锁绑定多个条件 | 不能绑定                     | 可以同时绑定多个Condition对象             |
+| 可重入             | 可重入锁                               | 可重入锁                            |
+| 释放锁 | 自动释放锁 | 调用 unlock() 释放锁                 |
+| 等待唤醒 | 搭配wait()、notify或notifyAll()使用 | 搭配await()/singal()使用            |
+
+`synchronized`与`ReentrantLock`最直观的区别就是，在使用`ReentrantLock`的时候需要调用`unlock`方法释放锁，所以为了保证一定释放，通常都是和 `try-finally` 配合使用的。
+在实际开发中除非需要使用`ReentrantLock`的高级功能，否则优先使用`synchronized`。
+这是因为`synchronized`是JVM实现的一种锁机制，JVM原生地支持它，而`ReentrantLock`不是所有的JDK版本都支持。并且使用`synchronized`不用担心没有释放锁而导致死锁问题，因为JVM会确保锁的释放。
+
 #### 加锁原理
 `ReentrantLock`原理用到了AQS，而AQS包括一个线程队列和一个`state`变量，`state`，它的值有3种状态：没占用是0，占用了是1，大于1是可重入锁。
 所以`ReentrantLock`加锁过程，可以简单理解为`state`变量的变化。
@@ -3219,50 +3237,57 @@ public final void acquire(int arg) {
 }
 ```
 
-#### 解锁原理
-[//]: # (写到了这里)
+`ReentrantLock`在采用非公平锁构造时，首先检查锁状态，如果锁可用，直接通过CAS设置成持有状态，且把当前线程设置为锁的拥有者。
+如果当前锁已经被持有，那么接下来进行可重入检查，如果可重入，需要为锁状态加上请求数。如果不属于上面两种情况，那么说明锁是被其他线程持有，当前线程应该放入等待队列。
+
+在放入等待队列的过程中，首先要检查队列是否为空队列，如果为空队列，需要创建虚拟的头节点，然后把对当前线程封装的节点加入到队列尾部。
+由于设置尾部节点采用了CAS，为了保证尾节点能够设置成功，`ReentrantLock`采用了无限循环的方式，直到设置成功为止。
+
+在完成放入等待队列任务后，则需要维护节点的状态，以及及时清除处于`Cancel`状态的节点，来帮助垃圾收集器及时回收。
+如果当前节点之前的节点的等待状态小于1，说明当前节点之前的线程处于等待状态，那么当前节点的线程也应处于等待状态。通过`LockSupport`类实现等待挂起的功能。
+当等待的线程被唤起后，检查中断状态，如果处于中断状态，那么需要中断当前线程。
+
+#### 释放锁原理
 ![reentrantLock解锁](/iblog/posts/annex/images/essays/reentrantLock解锁.png)
 
 `ReentrantLock`释放锁调用栈：
+```text
+unlock()
+    --> release()
+    --> tryRelease()
+    --> unparkSuccessor()
 ```
-unlock() --> release() --> tryRelease() --> unparkSuccessor()
-```
-`release`方法，如果`tryRelease`方法返回true，则判队列中的头结点中的`waitStatus`，如果不等于0则，执行`unparkSuccessor`方法，按唤醒队列中等待的线程。
-
-核心就是调用`tryRelease`方法和`unparkSuccessor`方法:
-```
-    public final boolean release(int arg) {
-        if (tryRelease(arg)) {
-            Node h = head;
-            if (h != null && h.waitStatus != 0)
-                unparkSuccessor(h);
-            return true;
-        }
-        return false;
+在`release`方法中如果`tryRelease`方法返回`true`，则判断队列头结点中的`waitStatus`，如果不等于0则执行`unparkSuccessor`方法，按顺序唤醒队列中等待的线程。
+```java
+public final boolean release(int arg) {
+    if (tryRelease(arg)) {
+        Node h = head;
+        if (h != null && h.waitStatus != 0)
+            unparkSuccessor(h);
+        return true;
     }
+    return false;
+}
 ```
-
-`tryRelease`方法作用是尝试释放锁；首先获取当前持有锁线程的`state`，并使其减1;
-如果减一后的`state`值等于0，则认为该线程马上要释放锁，将当前持有锁的线程为null，将0设置为`state`的新值，返回true。
-```
-    protected final boolean tryRelease(int releases) {
-        int c = getState() - releases;
-        if (Thread.currentThread() != getExclusiveOwnerThread())
-            throw new IllegalMonitorStateException();
-        boolean free = false;
-        if (c == 0) {
-            free = true;
-            setExclusiveOwnerThread(null);
-        }
-        setState(c);
-        return free;
+`tryRelease`方法作用是尝试释放锁，首先获取当前持有锁线程的`state`变量并使其减1。
+如果减1后的`state`值等于0，则认为该线程马上要释放锁，将当前持有锁的线程设置为`null`，将0设置为`state`的新值并返回`true`。
+```java
+protected final boolean tryRelease(int releases) {
+    int c = getState() - releases;
+    if (Thread.currentThread() != getExclusiveOwnerThread())
+        throw new IllegalMonitorStateException();
+    boolean free = false;
+    if (c == 0) {
+        free = true;
+        setExclusiveOwnerThread(null);
     }
+    setState(c);
+    return free;
+}
 ```
-
-由于之前加锁等待队列中是自旋机制，由于持有锁的线程唤醒队列中排队的线程，队列中的线程则会尝试再次获取锁。
-
-首先，将头结点从前向后移动一个结点，随后清空该结点的线程对象、该结点的前结点、后结点，即将该结点设置成新的傀儡结点(哨兵结点)，最后结束循环。
-```
+`unparkSuccessor`方法用于唤醒等待队列中的后继节点。首先判断当前节点的等待状态如果小于0，将其设置为0。
+然后从尾部开始向前查找，直到找到一个有效的后继节点，如果找到一个有效的后继节点，唤醒其线程。
+```java
 private void unparkSuccessor(Node node) {
     int ws = node.waitStatus;
     if (ws < 0)
@@ -3278,33 +3303,27 @@ private void unparkSuccessor(Node node) {
     if (s != null)
         LockSupport.unpark(s.thread);
 }
-``` 
-
-**总结**
-
-`ReentrantLock` 在采用非公平锁构造时，首先检查锁状态，如果锁可用，直接通过CAS设置成持有状态，且把当前线程设置为锁的拥有者。
-如果当前锁已经被持有，那么接下来进行可重入检查，如果可重入，需要为锁状态加上请求数。如果不属于上面两种情况，那么说明锁是被其他线程持有，
-当前线程应该放入等待队列。
-
-在放入等待队列的过程中，首先要检查队列是否为空队列，如果为空队列，需要创建虚拟的头节点，然后把对当前线程封装的节点加入到队列尾部。
-由于设置尾部节点采用了CAS，为了保证尾节点能够设置成功，这里采用了无限循环的方式，直到设置成功为止。
-
-在完成放入等待队列任务后，则需要维护节点的状态，以及及时清除处于`Cancel`状态的节点，以帮助垃圾收集器及时回收。
-如果当前节点之前的节点的等待状态小于1，说明当前节点之前的线程处于等待状态(挂起)，那么当前节点的线程也应处于等待状态(挂起)。
-挂起的工作是由 `LockSupport` 类支持的，`LockSupport` 通过JNI调用本地操作系统来完成挂起的任务。
-在当前等待的线程，被唤起后，检查中断状态，如果处于中断状态，那么需要中断当前线程。
+```
 
 ### CountDownLatch类
-`count down latch`直译为：倒计时门闩，也可以叫做闭锁。
+`count down latch`直译为倒计时门闩，也可以叫做闭锁。
 > 门闩，汉语词汇。拼音：mén shuān 释义：指门关上后，插在门内使门推不开的滑动插销。
 
 `CountDownLatch`JDK文档注释：
 > A synchronization aid that allows one or more threads to wait until a set of operations being performed in other threads completes.
 
-大意：一种同步辅助工具，允许一个或多个线程等待，直到在其他线程中执行的一组操作完成。
+文档大意：一种同步辅助工具，允许一个或多个线程等待，直到在其他线程中执行的一组操作完成。
 
-举个例子，晚上教室关门，要同学都离开之后，再关门：
+`CountDownLatch`是Java中的一个同步工具类，用于使一个或多个线程等待其他线程完成一组操作。`CountDownLatch`通过一个计数器实现，该计数器的初始值由构造方法指定，底层还是AQS。
+```java
+public CountDownLatch(int count) {
+    if (count < 0) throw new IllegalArgumentException("count < 0");
+    this.sync = new Sync(count);
+}
 ```
+每调用一次`countDown()`方法，计数器减一，当计数器到达零时，所有因调用`await()`方法而等待的线程都将被唤醒。
+举个例子，晚上教室关门，要等同学都离开之后，再关门：
+```java
 public class MainTest {
     public static void main(String[] args) throws InterruptedException {
         CountDownLatch countDownLatch = new CountDownLatch(7);
@@ -3319,61 +3338,21 @@ public class MainTest {
     }
 }
 ```
-再比如，跑步比赛，裁判的发令枪一响，参赛者就开始跑步：
-```
-public class MainTest {
-    public static void main(String[] args) throws InterruptedException {
-        CountDownLatch countDownLatch = new CountDownLatch(1);
-        for (int i = 0; i < 5; i++) {
-            new Thread(() -> {
-                try {
-                    //准备完毕……运动员都阻塞在这，等待号令
-                    countDownLatch.await();
-                    String parter = "【" + Thread.currentThread().getName() + "】";
-                    System.out.println(parter + "开始执行……");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }).start();
-        }
-        Thread.sleep(2000);// 裁判准备发令
-        countDownLatch.countDown();// 发令枪：执行发令
-    }
-}
-```
-`CountDownLatch`是通过一个计数器来实现的，计数器的初始值为线程的数量；
-可以通过`CountDownLatch`的构造函数，可以指定，不能小于0：
-```
-    public CountDownLatch(int count) {
-        if (count < 0) throw new IllegalArgumentException("count < 0");
-        this.sync = new Sync(count);
-    }
-```
-每次调用`countDown()`方法可以让计数器减1，底层是[AQS](#AQS)框架，这里就不写了。
-调用了`await()`进行阻塞等待的线程，当计数器减到0后，再执行`await()`之后的代码。
 
-### CyclicBarrier
-`Cyclic Barrier`直译为：循环屏障，是Java中关于线程的计数器，也可以叫它栅栏。
-
-它与`CountDownLatch`的作用是相反的，`CountDownLatch`是定义一个次数，然后减，直到减到0，在去执行一些任务；
-而`CyclicBarrier`是定义一个上限次数，然后从零开始加，直到加到定义的上限次数，在去执行一些任务。
-
-> CyclicBarrier与CountDownLatch作用是相反的，CountDownLatch的计数器只能使用一次，而CyclicBarrier的计数器可以使用reset()方法重置，可以使用多次，所以CyclicBarrier能够处理更为复杂的场景。
+### CyclicBarrier类
+`Cyclic Barrier`直译为循环屏障，是Java中关于线程的计数器，也可以叫它栅栏。
 
 `CyclicBarrier`JDK文档注释：
 >A synchronization aid that allows a set of threads to all wait for each other to reach a common barrier point.  CyclicBarriers are useful in programs involving a fixed sized party of threads that must occasionally wait for each other. The barrier is called <em>cyclic</em> because it can be re-used after the waiting threads are released.
 
-大意：一种同步辅助工具，允许一组线程相互等待到达一个共同的障碍点。`cyclicbarrier`在包含固定大小的线程组的程序中非常有用，这些线程必须偶尔相互等待。
-这个屏障被称为`cyclic·`，因为它可以在等待的线程被释放后被重用。
+文档大意：一种同步辅助工具，允许一组线程相互等待到达一个共同的障碍点。`cyclicbarrier`在包含固定大小的线程组的程序中非常有用，这些线程必须偶尔相互等待。
+这个屏障被称为`cyclic`，因为它可以在等待的线程被释放后被重用。
 
-它要做的事情是，让一组线程达到一个屏障（同步点）时被阻塞，直到最后一个线程达到屏障时，所有被屏障拦截的线程才会继续干活线程进入屏障通过`CyclicBarrier.await()`方法。
- 
-简单说就是让一组线程相互等待，当达到一个共同点时，所有之前等待的线程再继续执行，且 `CyclicBarrier` 功能可重复使用。
-
-![CyclicBarrier](/iblog/posts/annex/images/essays/CyclicBarrier.gif)
-
+它与`CountDownLatch`的作用是相反的，`CountDownLatch`是定义一个次数，然后减直到减到0，再去执行一些任务。
+而`CyclicBarrier`是定义一个上限次数，从零开始加，直到加到定义的上限次数，再去执行一些任务。
+`CountDownLatch`的计数器只能使用一次，而`CyclicBarrier`的计数器可以使用`reset()`方法重置，可以使用多次，所以`CyclicBarrier`能够处理更为复杂的场景。
 例如，凑齐七颗龙珠召唤神龙：
-```
+```java
 public class MainTest {
     public static void main(String[] args) {
         CyclicBarrier cyclicBarrier = new CyclicBarrier(7,() -> {
@@ -3392,162 +3371,25 @@ public class MainTest {
     }
 }
 ```
-`CyclicBarrier`原理简单说明：
+`CountDownLatch`要做的事情是，让一组线程达到一个屏障时被阻塞，直到最后一个线程达到屏障时，所有被屏障拦截的线程才会继续干活，线程进入屏障通过`CyclicBarrier.await()`方法。
 
-`CyclicBarrier` 是基于 [ReentrantLock](#ReentrantLock原理) 实现的，其底层也是基于 [AQS](#AQS) 的。
+![CyclicBarrier](/iblog/posts/annex/images/essays/CyclicBarrier.gif)
 
-在 `CyclicBarrier` 类的内部有一个计数器 `count`，当 `count` 不为 0 时，每个线程在到达屏障点会先调用 `await` 方法将自己阻塞，此时计数器会减 1，直到计数器减为 0 的时候，所有因调用 `await` 方法而被阻塞的线程就会被唤醒继续执行。
-当 `count` 计数器变成 0 之后，就会进入下一轮阻塞，此时 `parties`(`parties` 是在 `new CyclicBarrier(parties)` 时设置的值)会将它的值赋值给 `count` 从而实现复用。
+`CyclicBarrier`是基于`ReentrantLock`实现的，其底层也是基于AQS。
+`CyclicBarrier`通过一个内部的计数器和一个锁来实现线程间的协调。当所有线程都调用`await`方法时，计数器递减，当计数器为零时，所有等待的线程将被唤醒，并重置计数器，以便下一次使用。
 
-
-`CyclicBarrier`内部使用了`ReentrantLock`和`Condition`两个类。它有两个构造函数：
-```
-public CyclicBarrier(int parties) {
-    this(parties, null);
-}
- 
-public CyclicBarrier(int parties, Runnable barrierAction) {
-    if (parties <= 0) throw new IllegalArgumentException();
-    this.parties = parties;
-    this.count = parties;
-    this.barrierCommand = barrierAction;
-}
-```
-调用`await`方法的线程告诉`CyclicBarrier`已经到达同步点，然后当前线程被阻塞。
-直到达到定义上限个数的线程都到达了屏障；
-
-参与线程调用了`await`方法，`CyclicBarrier`同样提供带超时时间的`await`和不带超时时间的`await`方法：
-```
-public int await() throws InterruptedException, BrokenBarrierException {
-    try {
-        // 不超时等待
-        return dowait(false, 0L);
-    } catch (TimeoutException toe) {
-        throw new Error(toe); // cannot happen
-    }
-}
-
-public int await(long timeout, TimeUnit unit)
-    throws InterruptedException,
-            BrokenBarrierException,
-            TimeoutException {
-    return dowait(true, unit.toNanos(timeout));
-}
-
-```
-这两个方法最终都会调用`dowait(boolean, long)`方法，它也是`CyclicBarrier`的核心方法：
-```
-private int dowait(boolean timed, long nanos)
-    throws InterruptedException, BrokenBarrierException,
-            TimeoutException {
-    // 获取独占锁
-    final ReentrantLock lock = this.lock;
-    lock.lock();
-    try {
-        // 当前代
-        final Generation g = generation;
-        // 如果这代损坏了，抛出异常
-        if (g.broken)
-            throw new BrokenBarrierException();
- 
-        // 如果线程中断了，抛出异常
-        if (Thread.interrupted()) {
-            // 将损坏状态设置为true
-            // 并通知其他阻塞在此栅栏上的线程
-            breakBarrier();
-            throw new InterruptedException();
-        }
- 
-        // 获取下标
-        int index = --count;
-        // 如果是 0，说明最后一个线程调用了该方法
-        if (index == 0) {  // tripped
-            boolean ranAction = false;
-            try {
-                final Runnable command = barrierCommand;
-                // 执行栅栏任务
-                if (command != null)
-                    command.run();
-                ranAction = true;
-                // 更新一代，将count重置，将generation重置
-                // 唤醒之前等待的线程
-                nextGeneration();
-                return 0;
-            } finally {
-                // 如果执行栅栏任务的时候失败了，就将损坏状态设置为true
-                if (!ranAction)
-                    breakBarrier();
-            }
-        }
- 
-        // loop until tripped, broken, interrupted, or timed out
-        for (;;) {
-            try {
-                 // 如果没有时间限制，则直接等待，直到被唤醒
-                if (!timed)
-                    trip.await();
-                // 如果有时间限制，则等待指定时间
-                else if (nanos > 0L)
-                    nanos = trip.awaitNanos(nanos);
-            } catch (InterruptedException ie) {
-                // 当前代没有损坏
-                if (g == generation && ! g.broken) {
-                    // 让栅栏失效
-                    breakBarrier();
-                    throw ie;
-                } else {
-                    // 上面条件不满足，说明这个线程不是这代的
-                    // 就不会影响当前这代栅栏的执行，所以，就打个中断标记
-                    Thread.currentThread().interrupt();
-                }
-            }
- 
-            // 当有任何一个线程中断了，就会调用breakBarrier方法
-            // 就会唤醒其他的线程，其他线程醒来后，也要抛出异常
-            if (g.broken)
-                throw new BrokenBarrierException();
- 
-            // g != generation表示正常换代了，返回当前线程所在栅栏的下标
-            // 如果 g == generation，说明还没有换代，那为什么会醒了？
-            // 因为一个线程可以使用多个栅栏，当别的栅栏唤醒了这个线程，就会走到这里，所以需要判断是否是当前代。
-            // 正是因为这个原因，才需要generation来保证正确。
-            if (g != generation)
-                return index;
-            
-            // 如果有时间限制，且时间小于等于0，销毁栅栏并抛出异常
-            if (timed && nanos <= 0L) {
-                breakBarrier();
-                throw new TimeoutException();
-            }
-        }
-    } finally {
-        // 释放独占锁
-        lock.unlock();
-    }
-}
-```
-`dowait`方法作用，如果该线程不是最后一个调用`await`方法的线程，则它会一直处于等待状态，除非发生以下情况：
-- 最后一个线程到达，即`index == 0`;
-- 某个参与线程等待超时;
-- 某个参与线程被中断;
-- 调用了`CyclicBarrier的reset()`方法。该方法会将屏障重置为初始状态;
-
-### Semaphore
-`Semaphore`译为信号量，有时被称为信号灯。可以用来控制同时访问特定资源的线程数量，通过协调各个线程，以保证合理的使用资源。
-
-> 信号量主要用于两个目的，一个是用于多个共享资源的互斥使用，另一个用于并发线程数量的控制。
+### Semaphore类
+`Semaphore`译为信号量，有时被称为信号灯。可以用来控制同时访问特定资源的线程数量，通过协调各个线程，保证合理的使用资源。
+信号量主要用于两个目的，一个是用于多个共享资源的互斥使用，另一个用于并发线程数量的控制。
 
 `Semaphore`JDK文档注释：
 > A counting semaphore.  Conceptually, a semaphore maintains a set of permits.  Each {@link #acquire} blocks if necessary until a permit is available, and then takes it.  Each {@link #release} adds a permit, potentially releasing a blocking acquirer. 
 
-大意：计数信号量。从概念上讲，信号量维护一组许可。如果需要，每个`{@link #acquire}`块，直到有一个许可可用，然后获取它。
-每个`{@link #release}`添加一个许可，可能释放一个阻塞的获取者。
-但是，没有实际的permit对象被使用;`{@code Semaphore}`只保留可用数量的计数，并相应地执行操作。
+文档大意：`Semaphore`是一个计数信号量。从概念上讲，信号量维护一组许可。如果需要，每个`acquire`方法调用会阻塞，直到有一个许可可用，然后获取许可。
+每个`release`方法调用会添加一个许可，可能会释放一个阻塞的线程。实际上，`Semaphore`并没有维护实际的许可对象，只是维护一个可用许可的计数，并根据计数执行相应的操作。
 
-简单理解，使用`acquire`方法获取一个令牌(许可)，进入堵塞状态，使用`release`方法则释放一个令牌(许可)唤醒一个堵塞的线程。
-
-举个例子，抢车位，九辆车抢三个车位，车位满了之后只有等里面的车离开停车场外面的车才可以进入:
-```
+举个例子，九辆车抢三个车位，车位满了之后只有等里面的车离开停车场外面的车才可以进入。
+```java
 public class MainTest {
     public static void main(String[] args) {
         
@@ -3572,58 +3414,21 @@ public class MainTest {
 }
 ```
 
-`Semaphore`有两个构造方法，可以通过其中一个构造方法来指定锁的类型，是公平锁还是非公平锁：
-```
-    // 设置令牌（许可）数量
-    public Semaphore(int permits) {
-        sync = new NonfairSync(permits);
-    }
-
-    // 可以设置锁的类型，是否是公平锁
-    public Semaphore(int permits, boolean fair) {
-        sync = fair ? new FairSync(permits) : new NonfairSync(permits);
-    }
-```
-
-`Semaphore`的底层也用到了[AQS](#AQS)。
-
-`Semaphore` 是用来保护一个或者多个共享资源的访问，`Semaphore` 内部维护了一个计数器，其值为可以访问的共享资源的个数。
+`Semaphore`通过一个计数器和一个队列来管理许可和等待线程。它依赖于AQS来实现同步逻辑。
+`Semaphore`是用来保护一个或者多个共享资源的访问，`Semaphore`内部维护了一个计数器，其值为可以访问的共享资源的个数。
 一个线程要访问共享资源，先获得信号量，如果信号量的计数器值大于1，意味着有共享资源可以访问，则使其计数器值减去1，再访问共享资源。
-
 如果计数器值为0，线程进入休眠。当某个线程使用完共享资源后，释放信号量，并将信号量内部的计数器加1，之前进入休眠的线程将被唤醒并再次试图获得信号量。
 
-当调用`semaphore.acquire()`方法时:
-- 当前线程会尝试去同步队列获取一个令牌，获取令牌的过程也就是使用原子操作去修改同步队列的`state` ，获取一个令牌则修改为`state=state-1`;
-- 当计算出来的`state<0`，则代表令牌数量不足，此时会创建一个`Node`节点加入阻塞队列，挂起当前线程;
-- 当计算出来的`state>=0`，则代表获取令牌成功;
-
-当调用`semaphore.release()`方法时:
-- 线程会尝试释放一个令牌，释放令牌的过程也就是把同步队列的`state`修改为`state=state+1`的过程;
-- 释放令牌成功之后，同时会唤醒同步队列中的一个线程;
-- 被唤醒的节点会重新尝试去修改`state=state-1`的操作，如果`state>=0`则获取令牌成功，否则重新进入阻塞队列，挂起线程;
-
-## synchronized与ReentrantLock
-Java 提供了两种锁机制来控制多个线程对共享资源的互斥访问，第一个是 JVM 实现的 `synchronized`，而另一个是 JDK 实现的 `ReentrantLock`。
-
-| 比较               | synchronized                             | ReentrantLock                          |
-| ------------------ | ---------------------------------------- | -------------------------------------- |
-| 锁的实现       | JVM 实现，监视器模式                     | JDK实现，依赖AQS                       |
-| 性能           | 新版本 Java 对 synchronized 进行锁的升级 | synchronized 与 ReentrantLock 大致相同 |
-| 等待可中断     | 不可中断                               | 可中断              |
-| 公平锁         | 非公平锁             | 默认非公平锁，也可以是公平锁                               |
-| 锁绑定多个条件 | 不能绑定                     | 可以同时绑定多个 Condition 对象        |
-| 可重入             | 可重入锁                                 | 可重入锁                               |
-| 释放锁 | 自动释放锁 | 调用 unlock() 释放锁 |
-| 等待唤醒 | 搭配wait()、notify或notifyAll()使用 | 搭配await()/singal()使用 |
-
-`synchronized` 与 `ReentrantLock`最直观的区别就是，在使用`ReentrantLock`的时候需要调用`unlock`方法释放锁，所以为了保证一定释放，通常都是和 `try~finally` 配合使用的。
-
-除非需要使用 `ReentrantLock` 的高级功能，否则优先使用 `synchronized`。
-这是因为 `synchronized` 是 JVM 实现的一种锁机制，JVM 原生地支持它，而 `ReentrantLock` 不是所有的 JDK 版本都支持。
-并且使用 `synchronized` 不用担心没有释放锁而导致死锁问题，因为 JVM 会确保锁的释放。
-
+`Semaphore`的核心方法为：
+- `acquire()`：获取一个许可，如果没有可用的许可，当前线程将被阻塞，直到有许可可用。
+当调用`semaphore.acquire()`方法时，当前线程会尝试去同步队列获取一个令牌，获取令牌的过程也就是使用原子操作去修改同步队列的`state`，获取一个令牌则修改为`state=state-1`。
+当计算出来的`state<0`，则代表令牌数量不足，此时会创建一个`Node`节点加入阻塞队列，挂起当前线程。当计算出来的`state>=0`，则代表获取令牌成功。
+- `release()`：释放一个许可，将其返回到`Semaphore`。
+当调用`semaphore.release()`方法时，线程会尝试释放一个令牌，释放令牌的过程也就是把同步队列的`state`修改为`state=state+1`的过程。
+释放令牌成功之后，同时会唤醒同步队列中的一个线程。被唤醒的节点会重新尝试去修改`state=state-1`的操作，如果`state>=0`则获取令牌成功，否则重新进入阻塞队列，挂起线程。
 
 ## ThreadLocal
+[//]: # (写到了这里)
 `ThreadLocal`文档注释：
 ```
 This class provides thread-local variables.  These variables differ from
@@ -3632,7 +3437,7 @@ This class provides thread-local variables.  These variables differ from
   copy of the variable. 
 ```
 
-大意：这个类提供线程局部变量。这些变量与普通变量的不同之处在于，每个访问它们的线程(通过其get方法或set方法)都有自己的独立初始化的变量副本。
+文档大意：这个类提供线程局部变量。这些变量与普通变量的不同之处在于，每个访问它们的线程(通过其get方法或set方法)都有自己的独立初始化的变量副本。
 
 如文档注释所说，`ThraedLocal`为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立地改变自己的副本，而不会影响其它线程所对应的副本。
 

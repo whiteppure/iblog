@@ -1864,6 +1864,38 @@
             
             
             <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%af%b9%e6%af%94synchronized">
+                    对比synchronized
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
                 <a class="nav-link text-left" href="#%e5%8a%a0%e9%94%81%e5%8e%9f%e7%90%86">
                     加锁原理
                 </a>
@@ -1896,8 +1928,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e8%a7%a3%e9%94%81%e5%8e%9f%e7%90%86">
-                    解锁原理
+                <a class="nav-link text-left" href="#%e9%87%8a%e6%94%be%e9%94%81%e5%8e%9f%e7%90%86">
+                    释放锁原理
                 </a>
             </li>
             
@@ -1954,8 +1986,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#cyclicbarrier">
-                    CyclicBarrier
+                <a class="nav-link text-left" href="#cyclicbarrier%e7%b1%bb">
+                    CyclicBarrier类
                 </a>
             </li>
             
@@ -1982,38 +2014,14 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#semaphore">
-                    Semaphore
+                <a class="nav-link text-left" href="#semaphore%e7%b1%bb">
+                    Semaphore类
                 </a>
             </li>
             
             
         </ul>
         
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#synchronized%e4%b8%8ereentrantlock">
-                    synchronized与ReentrantLock
-                </a>
-            </li>
-            
-            
         </ul>
         
         </ul>
@@ -5401,7 +5409,63 @@ AQS中的队列，是指CLH队列（Craig， Landin， and Hagerste[三个人名
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">thread2</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h4 id="加锁原理">加锁原理</h4>
+</span></span></span></code></pre></div><h4 id="对比synchronized">对比synchronized</h4>
+<p>Java提供了两种锁机制来控制多个线程对共享资源的互斥访问，第一个是JVM实现的 <code>synchronized</code>，而另一个是 JDK 实现的 <code>ReentrantLock</code>。</p>
+<table>
+<thead>
+<tr>
+<th>比较</th>
+<th>synchronized</th>
+<th>ReentrantLock</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>锁的实现</td>
+<td>JVM实现</td>
+<td>JDK实现</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>synchronized 与 ReentrantLock 大致相同</td>
+<td>synchronized 与 ReentrantLock 大致相同</td>
+</tr>
+<tr>
+<td>等待可中断</td>
+<td>不可中断</td>
+<td>可中断</td>
+</tr>
+<tr>
+<td>公平锁</td>
+<td>非公平锁</td>
+<td>默认非公平锁，也可以是公平锁</td>
+</tr>
+<tr>
+<td>锁绑定多个条件</td>
+<td>不能绑定</td>
+<td>可以同时绑定多个Condition对象</td>
+</tr>
+<tr>
+<td>可重入</td>
+<td>可重入锁</td>
+<td>可重入锁</td>
+</tr>
+<tr>
+<td>释放锁</td>
+<td>自动释放锁</td>
+<td>调用 unlock() 释放锁</td>
+</tr>
+<tr>
+<td>等待唤醒</td>
+<td>搭配wait()、notify或notifyAll()使用</td>
+<td>搭配await()/singal()使用</td>
+</tr>
+</tbody>
+</table>
+<p><code>synchronized</code>与<code>ReentrantLock</code>最直观的区别就是，在使用<code>ReentrantLock</code>的时候需要调用<code>unlock</code>方法释放锁，所以为了保证一定释放，通常都是和 <code>try-finally</code> 配合使用的。
+在实际开发中除非需要使用<code>ReentrantLock</code>的高级功能，否则优先使用<code>synchronized</code>。
+这是因为<code>synchronized</code>是JVM实现的一种锁机制，JVM原生地支持它，而<code>ReentrantLock</code>不是所有的JDK版本都支持。并且使用<code>synchronized</code>不用担心没有释放锁而导致死锁问题，因为JVM会确保锁的释放。</p>
+<h4 id="加锁原理">加锁原理</h4>
 <p><code>ReentrantLock</code>原理用到了AQS，而AQS包括一个线程队列和一个<code>state</code>变量，<code>state</code>，它的值有3种状态：没占用是0，占用了是1，大于1是可重入锁。
 所以<code>ReentrantLock</code>加锁过程，可以简单理解为<code>state</code>变量的变化。</p>
 <p>在多线程并发环境下，某个线程持有锁，将<code>state</code>由0设置为1，如果有其他线程再次进入，线程则会经过一系列判断，然后构建<code>Node</code>结点，最终形成双向链表结构。
@@ -5591,64 +5655,63 @@ AQS中的队列，是指CLH队列（Craig， Landin， and Hagerste[三个人名
 </span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">acquireQueued</span><span class="p">(</span><span class="n">addWaiter</span><span class="p">(</span><span class="n">Node</span><span class="p">.</span><span class="na">EXCLUSIVE</span><span class="p">),</span><span class="w"> </span><span class="n">arg</span><span class="p">))</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">selfInterrupt</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h4 id="解锁原理">解锁原理</h4>
+</span></span></span></code></pre></div><p><code>ReentrantLock</code>在采用非公平锁构造时，首先检查锁状态，如果锁可用，直接通过CAS设置成持有状态，且把当前线程设置为锁的拥有者。
+如果当前锁已经被持有，那么接下来进行可重入检查，如果可重入，需要为锁状态加上请求数。如果不属于上面两种情况，那么说明锁是被其他线程持有，当前线程应该放入等待队列。</p>
+<p>在放入等待队列的过程中，首先要检查队列是否为空队列，如果为空队列，需要创建虚拟的头节点，然后把对当前线程封装的节点加入到队列尾部。
+由于设置尾部节点采用了CAS，为了保证尾节点能够设置成功，<code>ReentrantLock</code>采用了无限循环的方式，直到设置成功为止。</p>
+<p>在完成放入等待队列任务后，则需要维护节点的状态，以及及时清除处于<code>Cancel</code>状态的节点，来帮助垃圾收集器及时回收。
+如果当前节点之前的节点的等待状态小于1，说明当前节点之前的线程处于等待状态，那么当前节点的线程也应处于等待状态。通过<code>LockSupport</code>类实现等待挂起的功能。
+当等待的线程被唤起后，检查中断状态，如果处于中断状态，那么需要中断当前线程。</p>
+<h4 id="释放锁原理">释放锁原理</h4>
 <p><img alt="reentrantLock解锁" src="/iblog/posts/annex/images/essays/reentrantLock%E8%A7%A3%E9%94%81.png"></p>
 <p><code>ReentrantLock</code>释放锁调用栈：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">unlock() --&gt; release() --&gt; tryRelease() --&gt; unparkSuccessor()
-</span></span></code></pre></div><p><code>release</code>方法，如果<code>tryRelease</code>方法返回true，则判队列中的头结点中的<code>waitStatus</code>，如果不等于0则，执行<code>unparkSuccessor</code>方法，按唤醒队列中等待的线程。</p>
-<p>核心就是调用<code>tryRelease</code>方法和<code>unparkSuccessor</code>方法:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public final boolean release(int arg) {
-</span></span><span class="line"><span class="cl">        if (tryRelease(arg)) {
-</span></span><span class="line"><span class="cl">            Node h = head;
-</span></span><span class="line"><span class="cl">            if (h != null &amp;&amp; h.waitStatus != 0)
-</span></span><span class="line"><span class="cl">                unparkSuccessor(h);
-</span></span><span class="line"><span class="cl">            return true;
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        return false;
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p><code>tryRelease</code>方法作用是尝试释放锁；首先获取当前持有锁线程的<code>state</code>，并使其减1;
-如果减一后的<code>state</code>值等于0，则认为该线程马上要释放锁，将当前持有锁的线程为null，将0设置为<code>state</code>的新值，返回true。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    protected final boolean tryRelease(int releases) {
-</span></span><span class="line"><span class="cl">        int c = getState() - releases;
-</span></span><span class="line"><span class="cl">        if (Thread.currentThread() != getExclusiveOwnerThread())
-</span></span><span class="line"><span class="cl">            throw new IllegalMonitorStateException();
-</span></span><span class="line"><span class="cl">        boolean free = false;
-</span></span><span class="line"><span class="cl">        if (c == 0) {
-</span></span><span class="line"><span class="cl">            free = true;
-</span></span><span class="line"><span class="cl">            setExclusiveOwnerThread(null);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        setState(c);
-</span></span><span class="line"><span class="cl">        return free;
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>由于之前加锁等待队列中是自旋机制，由于持有锁的线程唤醒队列中排队的线程，队列中的线程则会尝试再次获取锁。</p>
-<p>首先，将头结点从前向后移动一个结点，随后清空该结点的线程对象、该结点的前结点、后结点，即将该结点设置成新的傀儡结点(哨兵结点)，最后结束循环。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">private void unparkSuccessor(Node node) {
-</span></span><span class="line"><span class="cl">    int ws = node.waitStatus;
-</span></span><span class="line"><span class="cl">    if (ws &lt; 0)
-</span></span><span class="line"><span class="cl">        compareAndSetWaitStatus(node, ws, 0);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    Node s = node.next;
-</span></span><span class="line"><span class="cl">    if (s == null || s.waitStatus &gt; 0) {
-</span></span><span class="line"><span class="cl">        s = null;
-</span></span><span class="line"><span class="cl">        for (Node t = tail; t != null &amp;&amp; t != node; t = t.prev)
-</span></span><span class="line"><span class="cl">            if (t.waitStatus &lt;= 0)
-</span></span><span class="line"><span class="cl">                s = t;
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">    if (s != null)
-</span></span><span class="line"><span class="cl">        LockSupport.unpark(s.thread);
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p><strong>总结</strong></p>
-<p><code>ReentrantLock</code> 在采用非公平锁构造时，首先检查锁状态，如果锁可用，直接通过CAS设置成持有状态，且把当前线程设置为锁的拥有者。
-如果当前锁已经被持有，那么接下来进行可重入检查，如果可重入，需要为锁状态加上请求数。如果不属于上面两种情况，那么说明锁是被其他线程持有，
-当前线程应该放入等待队列。</p>
-<p>在放入等待队列的过程中，首先要检查队列是否为空队列，如果为空队列，需要创建虚拟的头节点，然后把对当前线程封装的节点加入到队列尾部。
-由于设置尾部节点采用了CAS，为了保证尾节点能够设置成功，这里采用了无限循环的方式，直到设置成功为止。</p>
-<p>在完成放入等待队列任务后，则需要维护节点的状态，以及及时清除处于<code>Cancel</code>状态的节点，以帮助垃圾收集器及时回收。
-如果当前节点之前的节点的等待状态小于1，说明当前节点之前的线程处于等待状态(挂起)，那么当前节点的线程也应处于等待状态(挂起)。
-挂起的工作是由 <code>LockSupport</code> 类支持的，<code>LockSupport</code> 通过JNI调用本地操作系统来完成挂起的任务。
-在当前等待的线程，被唤起后，检查中断状态，如果处于中断状态，那么需要中断当前线程。</p>
-<h3 id="countdownlatch类">CountDownLatch类</h3>
-<p><code>count down latch</code>直译为：倒计时门闩，也可以叫做闭锁。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">unlock()
+</span></span><span class="line"><span class="cl">    --&gt; release()
+</span></span><span class="line"><span class="cl">    --&gt; tryRelease()
+</span></span><span class="line"><span class="cl">    --&gt; unparkSuccessor()
+</span></span></code></pre></div><p>在<code>release</code>方法中如果<code>tryRelease</code>方法返回<code>true</code>，则判断队列头结点中的<code>waitStatus</code>，如果不等于0则执行<code>unparkSuccessor</code>方法，按顺序唤醒队列中等待的线程。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">release</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">arg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">tryRelease</span><span class="p">(</span><span class="n">arg</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Node</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">h</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">h</span><span class="p">.</span><span class="na">waitStatus</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">unparkSuccessor</span><span class="p">(</span><span class="n">h</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>tryRelease</code>方法作用是尝试释放锁，首先获取当前持有锁线程的<code>state</code>变量并使其减1。
+如果减1后的<code>state</code>值等于0，则认为该线程马上要释放锁，将当前持有锁的线程设置为<code>null</code>，将0设置为<code>state</code>的新值并返回<code>true</code>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">protected</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">tryRelease</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">releases</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getState</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">releases</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">getExclusiveOwnerThread</span><span class="p">())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalMonitorStateException</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">boolean</span><span class="w"> </span><span class="n">free</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">free</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">setExclusiveOwnerThread</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">setState</span><span class="p">(</span><span class="n">c</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">free</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>unparkSuccessor</code>方法用于唤醒等待队列中的后继节点。首先判断当前节点的等待状态如果小于0，将其设置为0。
+然后从尾部开始向前查找，直到找到一个有效的后继节点，如果找到一个有效的后继节点，唤醒其线程。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">unparkSuccessor</span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">node</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">ws</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="na">waitStatus</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ws</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">compareAndSetWaitStatus</span><span class="p">(</span><span class="n">node</span><span class="p">,</span><span class="w"> </span><span class="n">ws</span><span class="p">,</span><span class="w"> </span><span class="n">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="na">next</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="na">waitStatus</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tail</span><span class="p">;</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">node</span><span class="p">;</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="na">prev</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="na">waitStatus</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">LockSupport</span><span class="p">.</span><span class="na">unpark</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="na">thread</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="countdownlatch类">CountDownLatch类</h3>
+<p><code>count down latch</code>直译为倒计时门闩，也可以叫做闭锁。</p>
 <blockquote>
 <p>门闩，汉语词汇。拼音：mén shuān 释义：指门关上后，插在门内使门推不开的滑动插销。</p>
 </blockquote>
@@ -5656,338 +5719,112 @@ AQS中的队列，是指CLH队列（Craig， Landin， and Hagerste[三个人名
 <blockquote>
 <p>A synchronization aid that allows one or more threads to wait until a set of operations being performed in other threads completes.</p>
 </blockquote>
-<p>大意：一种同步辅助工具，允许一个或多个线程等待，直到在其他线程中执行的一组操作完成。</p>
-<p>举个例子，晚上教室关门，要同学都离开之后，再关门：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) throws InterruptedException {
-</span></span><span class="line"><span class="cl">        CountDownLatch countDownLatch = new CountDownLatch(7);
-</span></span><span class="line"><span class="cl">        for (int i = 0; i &lt; 7; i++){
-</span></span><span class="line"><span class="cl">            new Thread(() -&gt; {
-</span></span><span class="line"><span class="cl">                System.out.println(&#34;同学&#34;+Thread.currentThread().getName() + &#34;\t 离开&#34;);
-</span></span><span class="line"><span class="cl">                countDownLatch.countDown();
-</span></span><span class="line"><span class="cl">            },String.valueOf(i)).start();
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        countDownLatch.await();
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;关门...&#34;);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>再比如，跑步比赛，裁判的发令枪一响，参赛者就开始跑步：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) throws InterruptedException {
-</span></span><span class="line"><span class="cl">        CountDownLatch countDownLatch = new CountDownLatch(1);
-</span></span><span class="line"><span class="cl">        for (int i = 0; i &lt; 5; i++) {
-</span></span><span class="line"><span class="cl">            new Thread(() -&gt; {
-</span></span><span class="line"><span class="cl">                try {
-</span></span><span class="line"><span class="cl">                    //准备完毕……运动员都阻塞在这，等待号令
-</span></span><span class="line"><span class="cl">                    countDownLatch.await();
-</span></span><span class="line"><span class="cl">                    String parter = &#34;【&#34; + Thread.currentThread().getName() + &#34;】&#34;;
-</span></span><span class="line"><span class="cl">                    System.out.println(parter + &#34;开始执行……&#34;);
-</span></span><span class="line"><span class="cl">                } catch (InterruptedException e) {
-</span></span><span class="line"><span class="cl">                    e.printStackTrace();
-</span></span><span class="line"><span class="cl">                }
-</span></span><span class="line"><span class="cl">            }).start();
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        Thread.sleep(2000);// 裁判准备发令
-</span></span><span class="line"><span class="cl">        countDownLatch.countDown();// 发令枪：执行发令
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p><code>CountDownLatch</code>是通过一个计数器来实现的，计数器的初始值为线程的数量；
-可以通过<code>CountDownLatch</code>的构造函数，可以指定，不能小于0：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public CountDownLatch(int count) {
-</span></span><span class="line"><span class="cl">        if (count &lt; 0) throw new IllegalArgumentException(&#34;count &lt; 0&#34;);
-</span></span><span class="line"><span class="cl">        this.sync = new Sync(count);
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>每次调用<code>countDown()</code>方法可以让计数器减1，底层是<a href="/iblog/posts/java/rookie-multi-thread/#AQS">AQS</a>框架，这里就不写了。
-调用了<code>await()</code>进行阻塞等待的线程，当计数器减到0后，再执行<code>await()</code>之后的代码。</p>
-<h3 id="cyclicbarrier">CyclicBarrier</h3>
-<p><code>Cyclic Barrier</code>直译为：循环屏障，是Java中关于线程的计数器，也可以叫它栅栏。</p>
-<p>它与<code>CountDownLatch</code>的作用是相反的，<code>CountDownLatch</code>是定义一个次数，然后减，直到减到0，在去执行一些任务；
-而<code>CyclicBarrier</code>是定义一个上限次数，然后从零开始加，直到加到定义的上限次数，在去执行一些任务。</p>
-<blockquote>
-<p>CyclicBarrier与CountDownLatch作用是相反的，CountDownLatch的计数器只能使用一次，而CyclicBarrier的计数器可以使用reset()方法重置，可以使用多次，所以CyclicBarrier能够处理更为复杂的场景。</p>
-</blockquote>
+<p>文档大意：一种同步辅助工具，允许一个或多个线程等待，直到在其他线程中执行的一组操作完成。</p>
+<p><code>CountDownLatch</code>是Java中的一个同步工具类，用于使一个或多个线程等待其他线程完成一组操作。<code>CountDownLatch</code>通过一个计数器实现，该计数器的初始值由构造方法指定，底层还是AQS。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="nf">CountDownLatch</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">count</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">&#34;count &lt; 0&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">sync</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Sync</span><span class="p">(</span><span class="n">count</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>每调用一次<code>countDown()</code>方法，计数器减一，当计数器到达零时，所有因调用<code>await()</code>方法而等待的线程都将被唤醒。
+举个例子，晚上教室关门，要等同学都离开之后，再关门：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MainTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">InterruptedException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">CountDownLatch</span><span class="w"> </span><span class="n">countDownLatch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CountDownLatch</span><span class="p">(</span><span class="n">7</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">7</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;同学&#34;</span><span class="o">+</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;\t 离开&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">countDownLatch</span><span class="p">.</span><span class="na">countDown</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">},</span><span class="n">String</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">i</span><span class="p">)).</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">countDownLatch</span><span class="p">.</span><span class="na">await</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;关门...&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="cyclicbarrier类">CyclicBarrier类</h3>
+<p><code>Cyclic Barrier</code>直译为循环屏障，是Java中关于线程的计数器，也可以叫它栅栏。</p>
 <p><code>CyclicBarrier</code>JDK文档注释：</p>
 <blockquote>
 <p>A synchronization aid that allows a set of threads to all wait for each other to reach a common barrier point.  CyclicBarriers are useful in programs involving a fixed sized party of threads that must occasionally wait for each other. The barrier is called <em>cyclic</em> because it can be re-used after the waiting threads are released.</p>
 </blockquote>
-<p>大意：一种同步辅助工具，允许一组线程相互等待到达一个共同的障碍点。<code>cyclicbarrier</code>在包含固定大小的线程组的程序中非常有用，这些线程必须偶尔相互等待。
-这个屏障被称为<code>cyclic·</code>，因为它可以在等待的线程被释放后被重用。</p>
-<p>它要做的事情是，让一组线程达到一个屏障（同步点）时被阻塞，直到最后一个线程达到屏障时，所有被屏障拦截的线程才会继续干活线程进入屏障通过<code>CyclicBarrier.await()</code>方法。</p>
-<p>简单说就是让一组线程相互等待，当达到一个共同点时，所有之前等待的线程再继续执行，且 <code>CyclicBarrier</code> 功能可重复使用。</p>
+<p>文档大意：一种同步辅助工具，允许一组线程相互等待到达一个共同的障碍点。<code>cyclicbarrier</code>在包含固定大小的线程组的程序中非常有用，这些线程必须偶尔相互等待。
+这个屏障被称为<code>cyclic</code>，因为它可以在等待的线程被释放后被重用。</p>
+<p>它与<code>CountDownLatch</code>的作用是相反的，<code>CountDownLatch</code>是定义一个次数，然后减直到减到0，再去执行一些任务。
+而<code>CyclicBarrier</code>是定义一个上限次数，从零开始加，直到加到定义的上限次数，再去执行一些任务。
+<code>CountDownLatch</code>的计数器只能使用一次，而<code>CyclicBarrier</code>的计数器可以使用<code>reset()</code>方法重置，可以使用多次，所以<code>CyclicBarrier</code>能够处理更为复杂的场景。
+例如，凑齐七颗龙珠召唤神龙：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MainTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">CyclicBarrier</span><span class="w"> </span><span class="n">cyclicBarrier</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CyclicBarrier</span><span class="p">(</span><span class="n">7</span><span class="p">,()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;凑齐七颗龙珠，召唤神龙！&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">7</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;拿到&#34;</span><span class="o">+</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;星龙珠&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">cyclicBarrier</span><span class="p">.</span><span class="na">await</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">InterruptedException</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">BrokenBarrierException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">},</span><span class="n">String</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">i</span><span class="p">)).</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>CountDownLatch</code>要做的事情是，让一组线程达到一个屏障时被阻塞，直到最后一个线程达到屏障时，所有被屏障拦截的线程才会继续干活，线程进入屏障通过<code>CyclicBarrier.await()</code>方法。</p>
 <p><img alt="CyclicBarrier" src="/iblog/posts/annex/images/essays/CyclicBarrier.gif"></p>
-<p>例如，凑齐七颗龙珠召唤神龙：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        CyclicBarrier cyclicBarrier = new CyclicBarrier(7,() -&gt; {
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;凑齐七颗龙珠，召唤神龙！&#34;);
-</span></span><span class="line"><span class="cl">        });
-</span></span><span class="line"><span class="cl">        for (int i = 1; i &lt;= 7;i++){
-</span></span><span class="line"><span class="cl">            new Thread(() -&gt; {
-</span></span><span class="line"><span class="cl">                System.out.println(&#34;拿到&#34;+Thread.currentThread().getName() + &#34;星龙珠&#34;);
-</span></span><span class="line"><span class="cl">                try {
-</span></span><span class="line"><span class="cl">                    cyclicBarrier.await();
-</span></span><span class="line"><span class="cl">                } catch (InterruptedException | BrokenBarrierException e) {
-</span></span><span class="line"><span class="cl">                    e.printStackTrace();
-</span></span><span class="line"><span class="cl">                }
-</span></span><span class="line"><span class="cl">            },String.valueOf(i)).start();
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p><code>CyclicBarrier</code>原理简单说明：</p>
-<p><code>CyclicBarrier</code> 是基于 <a href="/iblog/posts/java/rookie-multi-thread/#ReentrantLock原理">ReentrantLock</a> 实现的，其底层也是基于 <a href="/iblog/posts/java/rookie-multi-thread/#AQS">AQS</a> 的。</p>
-<p>在 <code>CyclicBarrier</code> 类的内部有一个计数器 <code>count</code>，当 <code>count</code> 不为 0 时，每个线程在到达屏障点会先调用 <code>await</code> 方法将自己阻塞，此时计数器会减 1，直到计数器减为 0 的时候，所有因调用 <code>await</code> 方法而被阻塞的线程就会被唤醒继续执行。
-当 <code>count</code> 计数器变成 0 之后，就会进入下一轮阻塞，此时 <code>parties</code>(<code>parties</code> 是在 <code>new CyclicBarrier(parties)</code> 时设置的值)会将它的值赋值给 <code>count</code> 从而实现复用。</p>
-<p><code>CyclicBarrier</code>内部使用了<code>ReentrantLock</code>和<code>Condition</code>两个类。它有两个构造函数：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public CyclicBarrier(int parties) {
-</span></span><span class="line"><span class="cl">    this(parties, null);
-</span></span><span class="line"><span class="cl">}
-</span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl">public CyclicBarrier(int parties, Runnable barrierAction) {
-</span></span><span class="line"><span class="cl">    if (parties &lt;= 0) throw new IllegalArgumentException();
-</span></span><span class="line"><span class="cl">    this.parties = parties;
-</span></span><span class="line"><span class="cl">    this.count = parties;
-</span></span><span class="line"><span class="cl">    this.barrierCommand = barrierAction;
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>调用<code>await</code>方法的线程告诉<code>CyclicBarrier</code>已经到达同步点，然后当前线程被阻塞。
-直到达到定义上限个数的线程都到达了屏障；</p>
-<p>参与线程调用了<code>await</code>方法，<code>CyclicBarrier</code>同样提供带超时时间的<code>await</code>和不带超时时间的<code>await</code>方法：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public int await() throws InterruptedException, BrokenBarrierException {
-</span></span><span class="line"><span class="cl">    try {
-</span></span><span class="line"><span class="cl">        // 不超时等待
-</span></span><span class="line"><span class="cl">        return dowait(false, 0L);
-</span></span><span class="line"><span class="cl">    } catch (TimeoutException toe) {
-</span></span><span class="line"><span class="cl">        throw new Error(toe); // cannot happen
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">public int await(long timeout, TimeUnit unit)
-</span></span><span class="line"><span class="cl">    throws InterruptedException,
-</span></span><span class="line"><span class="cl">            BrokenBarrierException,
-</span></span><span class="line"><span class="cl">            TimeoutException {
-</span></span><span class="line"><span class="cl">    return dowait(true, unit.toNanos(timeout));
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>这两个方法最终都会调用<code>dowait(boolean, long)</code>方法，它也是<code>CyclicBarrier</code>的核心方法：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">private int dowait(boolean timed, long nanos)
-</span></span><span class="line"><span class="cl">    throws InterruptedException, BrokenBarrierException,
-</span></span><span class="line"><span class="cl">            TimeoutException {
-</span></span><span class="line"><span class="cl">    // 获取独占锁
-</span></span><span class="line"><span class="cl">    final ReentrantLock lock = this.lock;
-</span></span><span class="line"><span class="cl">    lock.lock();
-</span></span><span class="line"><span class="cl">    try {
-</span></span><span class="line"><span class="cl">        // 当前代
-</span></span><span class="line"><span class="cl">        final Generation g = generation;
-</span></span><span class="line"><span class="cl">        // 如果这代损坏了，抛出异常
-</span></span><span class="line"><span class="cl">        if (g.broken)
-</span></span><span class="line"><span class="cl">            throw new BrokenBarrierException();
-</span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl">        // 如果线程中断了，抛出异常
-</span></span><span class="line"><span class="cl">        if (Thread.interrupted()) {
-</span></span><span class="line"><span class="cl">            // 将损坏状态设置为true
-</span></span><span class="line"><span class="cl">            // 并通知其他阻塞在此栅栏上的线程
-</span></span><span class="line"><span class="cl">            breakBarrier();
-</span></span><span class="line"><span class="cl">            throw new InterruptedException();
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl">        // 获取下标
-</span></span><span class="line"><span class="cl">        int index = --count;
-</span></span><span class="line"><span class="cl">        // 如果是 0，说明最后一个线程调用了该方法
-</span></span><span class="line"><span class="cl">        if (index == 0) {  // tripped
-</span></span><span class="line"><span class="cl">            boolean ranAction = false;
-</span></span><span class="line"><span class="cl">            try {
-</span></span><span class="line"><span class="cl">                final Runnable command = barrierCommand;
-</span></span><span class="line"><span class="cl">                // 执行栅栏任务
-</span></span><span class="line"><span class="cl">                if (command != null)
-</span></span><span class="line"><span class="cl">                    command.run();
-</span></span><span class="line"><span class="cl">                ranAction = true;
-</span></span><span class="line"><span class="cl">                // 更新一代，将count重置，将generation重置
-</span></span><span class="line"><span class="cl">                // 唤醒之前等待的线程
-</span></span><span class="line"><span class="cl">                nextGeneration();
-</span></span><span class="line"><span class="cl">                return 0;
-</span></span><span class="line"><span class="cl">            } finally {
-</span></span><span class="line"><span class="cl">                // 如果执行栅栏任务的时候失败了，就将损坏状态设置为true
-</span></span><span class="line"><span class="cl">                if (!ranAction)
-</span></span><span class="line"><span class="cl">                    breakBarrier();
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl">        // loop until tripped, broken, interrupted, or timed out
-</span></span><span class="line"><span class="cl">        for (;;) {
-</span></span><span class="line"><span class="cl">            try {
-</span></span><span class="line"><span class="cl">                 // 如果没有时间限制，则直接等待，直到被唤醒
-</span></span><span class="line"><span class="cl">                if (!timed)
-</span></span><span class="line"><span class="cl">                    trip.await();
-</span></span><span class="line"><span class="cl">                // 如果有时间限制，则等待指定时间
-</span></span><span class="line"><span class="cl">                else if (nanos &gt; 0L)
-</span></span><span class="line"><span class="cl">                    nanos = trip.awaitNanos(nanos);
-</span></span><span class="line"><span class="cl">            } catch (InterruptedException ie) {
-</span></span><span class="line"><span class="cl">                // 当前代没有损坏
-</span></span><span class="line"><span class="cl">                if (g == generation &amp;&amp; ! g.broken) {
-</span></span><span class="line"><span class="cl">                    // 让栅栏失效
-</span></span><span class="line"><span class="cl">                    breakBarrier();
-</span></span><span class="line"><span class="cl">                    throw ie;
-</span></span><span class="line"><span class="cl">                } else {
-</span></span><span class="line"><span class="cl">                    // 上面条件不满足，说明这个线程不是这代的
-</span></span><span class="line"><span class="cl">                    // 就不会影响当前这代栅栏的执行，所以，就打个中断标记
-</span></span><span class="line"><span class="cl">                    Thread.currentThread().interrupt();
-</span></span><span class="line"><span class="cl">                }
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl">            // 当有任何一个线程中断了，就会调用breakBarrier方法
-</span></span><span class="line"><span class="cl">            // 就会唤醒其他的线程，其他线程醒来后，也要抛出异常
-</span></span><span class="line"><span class="cl">            if (g.broken)
-</span></span><span class="line"><span class="cl">                throw new BrokenBarrierException();
-</span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl">            // g != generation表示正常换代了，返回当前线程所在栅栏的下标
-</span></span><span class="line"><span class="cl">            // 如果 g == generation，说明还没有换代，那为什么会醒了？
-</span></span><span class="line"><span class="cl">            // 因为一个线程可以使用多个栅栏，当别的栅栏唤醒了这个线程，就会走到这里，所以需要判断是否是当前代。
-</span></span><span class="line"><span class="cl">            // 正是因为这个原因，才需要generation来保证正确。
-</span></span><span class="line"><span class="cl">            if (g != generation)
-</span></span><span class="line"><span class="cl">                return index;
-</span></span><span class="line"><span class="cl">            
-</span></span><span class="line"><span class="cl">            // 如果有时间限制，且时间小于等于0，销毁栅栏并抛出异常
-</span></span><span class="line"><span class="cl">            if (timed &amp;&amp; nanos &lt;= 0L) {
-</span></span><span class="line"><span class="cl">                breakBarrier();
-</span></span><span class="line"><span class="cl">                throw new TimeoutException();
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    } finally {
-</span></span><span class="line"><span class="cl">        // 释放独占锁
-</span></span><span class="line"><span class="cl">        lock.unlock();
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p><code>dowait</code>方法作用，如果该线程不是最后一个调用<code>await</code>方法的线程，则它会一直处于等待状态，除非发生以下情况：</p>
-<ul>
-<li>最后一个线程到达，即<code>index == 0</code>;</li>
-<li>某个参与线程等待超时;</li>
-<li>某个参与线程被中断;</li>
-<li>调用了<code>CyclicBarrier的reset()</code>方法。该方法会将屏障重置为初始状态;</li>
-</ul>
-<h3 id="semaphore">Semaphore</h3>
-<p><code>Semaphore</code>译为信号量，有时被称为信号灯。可以用来控制同时访问特定资源的线程数量，通过协调各个线程，以保证合理的使用资源。</p>
-<blockquote>
-<p>信号量主要用于两个目的，一个是用于多个共享资源的互斥使用，另一个用于并发线程数量的控制。</p>
-</blockquote>
+<p><code>CyclicBarrier</code>是基于<code>ReentrantLock</code>实现的，其底层也是基于AQS。
+<code>CyclicBarrier</code>通过一个内部的计数器和一个锁来实现线程间的协调。当所有线程都调用<code>await</code>方法时，计数器递减，当计数器为零时，所有等待的线程将被唤醒，并重置计数器，以便下一次使用。</p>
+<h3 id="semaphore类">Semaphore类</h3>
+<p><code>Semaphore</code>译为信号量，有时被称为信号灯。可以用来控制同时访问特定资源的线程数量，通过协调各个线程，保证合理的使用资源。
+信号量主要用于两个目的，一个是用于多个共享资源的互斥使用，另一个用于并发线程数量的控制。</p>
 <p><code>Semaphore</code>JDK文档注释：</p>
 <blockquote>
 <p>A counting semaphore.  Conceptually, a semaphore maintains a set of permits.  Each {@link #acquire} blocks if necessary until a permit is available, and then takes it.  Each {@link #release} adds a permit, potentially releasing a blocking acquirer.</p>
 </blockquote>
-<p>大意：计数信号量。从概念上讲，信号量维护一组许可。如果需要，每个<code>{@link #acquire}</code>块，直到有一个许可可用，然后获取它。
-每个<code>{@link #release}</code>添加一个许可，可能释放一个阻塞的获取者。
-但是，没有实际的permit对象被使用;<code>{@code Semaphore}</code>只保留可用数量的计数，并相应地执行操作。</p>
-<p>简单理解，使用<code>acquire</code>方法获取一个令牌(许可)，进入堵塞状态，使用<code>release</code>方法则释放一个令牌(许可)唤醒一个堵塞的线程。</p>
-<p>举个例子，抢车位，九辆车抢三个车位，车位满了之后只有等里面的车离开停车场外面的车才可以进入:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        
-</span></span><span class="line"><span class="cl">        Semaphore semaphore = new Semaphore(3);
-</span></span><span class="line"><span class="cl">        
-</span></span><span class="line"><span class="cl">        for (int i = 1; i &lt;= 9; i++) {
-</span></span><span class="line"><span class="cl">            new Thread(() -&gt; {
-</span></span><span class="line"><span class="cl">                try {
-</span></span><span class="line"><span class="cl">                    semaphore.acquire();
-</span></span><span class="line"><span class="cl">                    System.out.println(&#34;第&#34; + Thread.currentThread().getName() + &#34;辆车，抢到车位&#34;);
-</span></span><span class="line"><span class="cl">                    Thread.sleep(2000);
-</span></span><span class="line"><span class="cl">                    System.out.println(&#34;停车结束.&#34;);
-</span></span><span class="line"><span class="cl">                } catch (InterruptedException e) {
-</span></span><span class="line"><span class="cl">                    e.printStackTrace();
-</span></span><span class="line"><span class="cl">                }finally {
-</span></span><span class="line"><span class="cl">                    semaphore.release();
-</span></span><span class="line"><span class="cl">                }
-</span></span><span class="line"><span class="cl">            }, String.valueOf(i)).start();
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p><code>Semaphore</code>有两个构造方法，可以通过其中一个构造方法来指定锁的类型，是公平锁还是非公平锁：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    // 设置令牌（许可）数量
-</span></span><span class="line"><span class="cl">    public Semaphore(int permits) {
-</span></span><span class="line"><span class="cl">        sync = new NonfairSync(permits);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // 可以设置锁的类型，是否是公平锁
-</span></span><span class="line"><span class="cl">    public Semaphore(int permits, boolean fair) {
-</span></span><span class="line"><span class="cl">        sync = fair ? new FairSync(permits) : new NonfairSync(permits);
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p><code>Semaphore</code>的底层也用到了<a href="/iblog/posts/java/rookie-multi-thread/#AQS">AQS</a>。</p>
-<p><code>Semaphore</code> 是用来保护一个或者多个共享资源的访问，<code>Semaphore</code> 内部维护了一个计数器，其值为可以访问的共享资源的个数。
-一个线程要访问共享资源，先获得信号量，如果信号量的计数器值大于1，意味着有共享资源可以访问，则使其计数器值减去1，再访问共享资源。</p>
-<p>如果计数器值为0，线程进入休眠。当某个线程使用完共享资源后，释放信号量，并将信号量内部的计数器加1，之前进入休眠的线程将被唤醒并再次试图获得信号量。</p>
-<p>当调用<code>semaphore.acquire()</code>方法时:</p>
+<p>文档大意：<code>Semaphore</code>是一个计数信号量。从概念上讲，信号量维护一组许可。如果需要，每个<code>acquire</code>方法调用会阻塞，直到有一个许可可用，然后获取许可。
+每个<code>release</code>方法调用会添加一个许可，可能会释放一个阻塞的线程。实际上，<code>Semaphore</code>并没有维护实际的许可对象，只是维护一个可用许可的计数，并根据计数执行相应的操作。</p>
+<p>举个例子，九辆车抢三个车位，车位满了之后只有等里面的车离开停车场外面的车才可以进入。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MainTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Semaphore</span><span class="w"> </span><span class="n">semaphore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Semaphore</span><span class="p">(</span><span class="n">3</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">9</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">semaphore</span><span class="p">.</span><span class="na">acquire</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;第&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;辆车，抢到车位&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="n">2000</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;停车结束.&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">InterruptedException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">semaphore</span><span class="p">.</span><span class="na">release</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">},</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">i</span><span class="p">)).</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>Semaphore</code>通过一个计数器和一个队列来管理许可和等待线程。它依赖于AQS来实现同步逻辑。
+<code>Semaphore</code>是用来保护一个或者多个共享资源的访问，<code>Semaphore</code>内部维护了一个计数器，其值为可以访问的共享资源的个数。
+一个线程要访问共享资源，先获得信号量，如果信号量的计数器值大于1，意味着有共享资源可以访问，则使其计数器值减去1，再访问共享资源。
+如果计数器值为0，线程进入休眠。当某个线程使用完共享资源后，释放信号量，并将信号量内部的计数器加1，之前进入休眠的线程将被唤醒并再次试图获得信号量。</p>
+<p><code>Semaphore</code>的核心方法为：</p>
 <ul>
-<li>当前线程会尝试去同步队列获取一个令牌，获取令牌的过程也就是使用原子操作去修改同步队列的<code>state</code> ，获取一个令牌则修改为<code>state=state-1</code>;</li>
-<li>当计算出来的<code>state&lt;0</code>，则代表令牌数量不足，此时会创建一个<code>Node</code>节点加入阻塞队列，挂起当前线程;</li>
-<li>当计算出来的<code>state&gt;=0</code>，则代表获取令牌成功;</li>
+<li><code>acquire()</code>：获取一个许可，如果没有可用的许可，当前线程将被阻塞，直到有许可可用。
+当调用<code>semaphore.acquire()</code>方法时，当前线程会尝试去同步队列获取一个令牌，获取令牌的过程也就是使用原子操作去修改同步队列的<code>state</code>，获取一个令牌则修改为<code>state=state-1</code>。
+当计算出来的<code>state&lt;0</code>，则代表令牌数量不足，此时会创建一个<code>Node</code>节点加入阻塞队列，挂起当前线程。当计算出来的<code>state&gt;=0</code>，则代表获取令牌成功。</li>
+<li><code>release()</code>：释放一个许可，将其返回到<code>Semaphore</code>。
+当调用<code>semaphore.release()</code>方法时，线程会尝试释放一个令牌，释放令牌的过程也就是把同步队列的<code>state</code>修改为<code>state=state+1</code>的过程。
+释放令牌成功之后，同时会唤醒同步队列中的一个线程。被唤醒的节点会重新尝试去修改<code>state=state-1</code>的操作，如果<code>state&gt;=0</code>则获取令牌成功，否则重新进入阻塞队列，挂起线程。</li>
 </ul>
-<p>当调用<code>semaphore.release()</code>方法时:</p>
-<ul>
-<li>线程会尝试释放一个令牌，释放令牌的过程也就是把同步队列的<code>state</code>修改为<code>state=state+1</code>的过程;</li>
-<li>释放令牌成功之后，同时会唤醒同步队列中的一个线程;</li>
-<li>被唤醒的节点会重新尝试去修改<code>state=state-1</code>的操作，如果<code>state&gt;=0</code>则获取令牌成功，否则重新进入阻塞队列，挂起线程;</li>
-</ul>
-<h2 id="synchronized与reentrantlock">synchronized与ReentrantLock</h2>
-<p>Java 提供了两种锁机制来控制多个线程对共享资源的互斥访问，第一个是 JVM 实现的 <code>synchronized</code>，而另一个是 JDK 实现的 <code>ReentrantLock</code>。</p>
-<table>
-<thead>
-<tr>
-<th>比较</th>
-<th>synchronized</th>
-<th>ReentrantLock</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>锁的实现</td>
-<td>JVM 实现，监视器模式</td>
-<td>JDK实现，依赖AQS</td>
-</tr>
-<tr>
-<td>性能</td>
-<td>新版本 Java 对 synchronized 进行锁的升级</td>
-<td>synchronized 与 ReentrantLock 大致相同</td>
-</tr>
-<tr>
-<td>等待可中断</td>
-<td>不可中断</td>
-<td>可中断</td>
-</tr>
-<tr>
-<td>公平锁</td>
-<td>非公平锁</td>
-<td>默认非公平锁，也可以是公平锁</td>
-</tr>
-<tr>
-<td>锁绑定多个条件</td>
-<td>不能绑定</td>
-<td>可以同时绑定多个 Condition 对象</td>
-</tr>
-<tr>
-<td>可重入</td>
-<td>可重入锁</td>
-<td>可重入锁</td>
-</tr>
-<tr>
-<td>释放锁</td>
-<td>自动释放锁</td>
-<td>调用 unlock() 释放锁</td>
-</tr>
-<tr>
-<td>等待唤醒</td>
-<td>搭配wait()、notify或notifyAll()使用</td>
-<td>搭配await()/singal()使用</td>
-</tr>
-</tbody>
-</table>
-<p><code>synchronized</code> 与 <code>ReentrantLock</code>最直观的区别就是，在使用<code>ReentrantLock</code>的时候需要调用<code>unlock</code>方法释放锁，所以为了保证一定释放，通常都是和 <code>try~finally</code> 配合使用的。</p>
-<p>除非需要使用 <code>ReentrantLock</code> 的高级功能，否则优先使用 <code>synchronized</code>。
-这是因为 <code>synchronized</code> 是 JVM 实现的一种锁机制，JVM 原生地支持它，而 <code>ReentrantLock</code> 不是所有的 JDK 版本都支持。
-并且使用 <code>synchronized</code> 不用担心没有释放锁而导致死锁问题，因为 JVM 会确保锁的释放。</p>
 <h2 id="threadlocal">ThreadLocal</h2>
 <p><code>ThreadLocal</code>文档注释：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">This</span> <span class="k">class</span> <span class="n">provides</span> <span class="n">thread</span><span class="o">-</span><span class="n">local</span> <span class="n">variables</span><span class="o">.</span>  <span class="n">These</span> <span class="n">variables</span> <span class="n">differ</span> <span class="n">from</span>
 </span></span><span class="line"><span class="cl">  <span class="n">their</span> <span class="n">normal</span> <span class="n">counterparts</span> <span class="ow">in</span> <span class="n">that</span> <span class="n">each</span> <span class="n">thread</span> <span class="n">that</span> <span class="n">accesses</span> <span class="n">one</span> <span class="p">(</span><span class="n">via</span> <span class="n">its</span>
 </span></span><span class="line"><span class="cl">  <span class="p">{</span><span class="err">@</span><span class="n">code</span> <span class="n">get</span><span class="p">}</span> <span class="ow">or</span> <span class="p">{</span><span class="err">@</span><span class="n">code</span> <span class="n">set</span><span class="p">}</span> <span class="n">method</span><span class="p">)</span> <span class="n">has</span> <span class="n">its</span> <span class="n">own</span><span class="p">,</span> <span class="n">independently</span> <span class="n">initialized</span>
 </span></span><span class="line"><span class="cl">  <span class="n">copy</span> <span class="n">of</span> <span class="n">the</span> <span class="n">variable</span><span class="o">.</span> 
-</span></span></code></pre></div><p>大意：这个类提供线程局部变量。这些变量与普通变量的不同之处在于，每个访问它们的线程(通过其get方法或set方法)都有自己的独立初始化的变量副本。</p>
+</span></span></code></pre></div><p>文档大意：这个类提供线程局部变量。这些变量与普通变量的不同之处在于，每个访问它们的线程(通过其get方法或set方法)都有自己的独立初始化的变量副本。</p>
 <p>如文档注释所说，<code>ThraedLocal</code>为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立地改变自己的副本，而不会影响其它线程所对应的副本。</p>
 <p>从线程的角度看，目标变量就象是线程的本地变量，这也是类名中“Local”所要表达的意思。
 说白了<code>ThreadLocal</code>就是存放线程的局部变量的。</p>
