@@ -1722,8 +1722,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8">
-                    使用
+                <a class="nav-link text-left" href="#lock%e6%8e%a5%e5%8f%a3">
+                    Lock接口
                 </a>
             </li>
             
@@ -1748,12 +1748,10 @@
             
         <ul class="nav">
             
-        <ul class="nav">
-            
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#lock">
-                    Lock
+                <a class="nav-link text-left" href="#readwritelock%e6%8e%a5%e5%8f%a3">
+                    ReadWriteLock接口
                 </a>
             </li>
             
@@ -1764,40 +1762,6 @@
         
         </ul>
         
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#readwritelock">
-                    ReadWriteLock
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
         
         
         
@@ -1814,8 +1778,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#locksupport">
-                    LockSupport
+                <a class="nav-link text-left" href="#locksupport%e7%b1%bb">
+                    LockSupport类
                 </a>
             </li>
             
@@ -1870,8 +1834,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#reentrantlock%e5%8e%9f%e7%90%86">
-                    ReentrantLock原理
+                <a class="nav-link text-left" href="#reentrantlock%e7%b1%bb">
+                    ReentrantLock类
                 </a>
             </li>
             
@@ -1896,10 +1860,74 @@
             
         <ul class="nav">
             
+        <ul class="nav">
+            
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#countdownlatch">
-                    CountDownLatch
+                <a class="nav-link text-left" href="#%e5%8a%a0%e9%94%81%e5%8e%9f%e7%90%86">
+                    加锁原理
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e8%a7%a3%e9%94%81%e5%8e%9f%e7%90%86">
+                    解锁原理
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#countdownlatch%e7%b1%bb">
+                    CountDownLatch类
                 </a>
             </li>
             
@@ -2030,7 +2058,7 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8-1">
+                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8">
                     使用
                 </a>
             </li>
@@ -5051,438 +5079,520 @@ CAS操作通过CPU提供的原子指令<code>cmpxchg</code>来比较和交换变
 例如，当一个代码块被<code>synchronized</code>修饰了，一个线程获取了对应的锁，并执行该代码块时，其他线程只能一直等待，等待获取锁的线程释放锁。
 如果这个线程因为某些原因被堵塞了，没有释放锁，那么其他线程只能一直等待下去，导致效率很低。
 因此就需要有一种机制可以不让等待的线程一直无期限地等待下去，比如只等待一定的时间或者能够响应中断，通过<code>Lock</code>就可以办到。</p>
-<p><code>lock</code>与<code>synchronized</code>最大的区别就是<code>lock</code>能够手动控制锁，而<code>synchronized</code>是JVM控制的，所以<code>lock</code>更加灵活。<code>lock</code>锁的粒度要比<code>synchronized</code>更细。
-在实际使用中，自然是能够替代<code>synchronized</code>关键字的。</p>
-<h3 id="使用">使用</h3>
-<p>在实际使用过程中，<code>lock</code>也是比较简单的。
-<code>Lock</code>和<code>ReadWriteLock</code>是两大锁的根接口，<code>Lock</code>代表实现类是<code>ReentrantLock</code>（可重入锁），<code>ReadWriteLock</code>（读写锁）的代表实现类是<code>ReentrantReadWriteLock</code>。</p>
+<p><code>java.util.concurrent</code>包中的锁在<code>locks</code>包下：</p>
 <p><img alt="juc.locks" src="/iblog/posts/annex/images/essays/juc.locks.png"></p>
-<h4 id="lock">Lock</h4>
-<p><strong>lock()</strong></p>
-<p><code>lock()</code>方法是平常使用得最多的一个方法，就是用来获取锁。如果锁已被其他线程获取，则进行等待。
-如果采用<code>Lock</code>，必须主动去释放锁，并且在发生异常时，不会自动释放锁。
-因此，一般来说，使用<code>Lock</code>必须在<code>try…catch…</code>块中进行，并且将释放锁的操作放在<code>finally</code>块中进行，以保证锁一定被被释放，防止死锁的发生。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  Lock l = ...;
-</span></span><span class="line"><span class="cl">  l.lock();
-</span></span><span class="line"><span class="cl">  try {
-</span></span><span class="line"><span class="cl">    // access the resource protected by this lock
-</span></span><span class="line"><span class="cl">  } finally {
-</span></span><span class="line"><span class="cl">    l.unlock();
-</span></span><span class="line"><span class="cl">  }
-</span></span></code></pre></div><p><strong>trylock()</strong></p>
-<p>尝试获取锁，如果锁可用则返回true，不可用则返回false。也就是说，这个方法无论如何都会立即返回，在拿不到锁时不会一直在那等待。</p>
-<blockquote>
-<p><code>tryLock(long time, TimeUnit unit)</code>方法和<code>tryLock()</code>方法是类似的，只不过区别在于这个方法在拿不到锁时会等待一定的时间，在时间期限之内如果还拿不到锁，就返回false，同时可以响应中断。
-如果一开始拿到锁或者在等待期间内拿到了锁，则返回true。</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  Lock lock = ...;
-</span></span><span class="line"><span class="cl">  if (lock.tryLock()) {
-</span></span><span class="line"><span class="cl">    try {
-</span></span><span class="line"><span class="cl">      // manipulate protected state
-</span></span><span class="line"><span class="cl">    } finally {
-</span></span><span class="line"><span class="cl">      lock.unlock();
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">  } else {
-</span></span><span class="line"><span class="cl">    // perform alternative actions
-</span></span><span class="line"><span class="cl">  }
-</span></span></code></pre></div><p><strong>lockInterruptibly()</strong></p>
-<p>当通过这个方法去获取锁时，如果线程正在等待获取锁，则这个线程能够响应中断，即中断线程的等待状态。
-例如，当两个线程同时通过<code>lock.lockInterruptibly()</code>想获取某个锁时，假若此时线程A获取到了锁，而线程B只有在等待，那么对线程B调用<code>threadB.interrupt()</code>能够中断线程B的等待过程。</p>
-<p>注意，当一个线程获取了锁之后，是不会被<code>interrupt()</code>方法中断的。因为<code>interrupt()</code>方法只能中断阻塞过程中的线程而不能中断正在运行过程中的线程。因此，当通过 <code>lockInterruptibly()</code> 方法获取某个锁时，如果不能获取到，那么只有进行等待的情况下，才可以响应中断的。
-与 <code>synchronized</code> 相比，当一个线程处于等待某个锁的状态，是无法被中断的，只有一直等待下去。</p>
-<p>由于<code>lockInterruptibly()</code>的声明中抛出了异常，所以<code>lock.lockInterruptibly()</code>必须放在try块中或者在调用<code>lockInterruptibly()</code>的方法外声明抛出 <code>InterruptedException</code></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public void method() throws InterruptedException {
-</span></span><span class="line"><span class="cl">    lock.lockInterruptibly();
-</span></span><span class="line"><span class="cl">    try {  
-</span></span><span class="line"><span class="cl">     //.....
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">    finally {
-</span></span><span class="line"><span class="cl">        lock.unlock();
-</span></span><span class="line"><span class="cl">    }  
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p><strong>newCondition</strong></p>
-<p><code>Lock</code>接口提供了方法<code>Condition newCondition();</code>，<code>Condition</code>也是一个接口，可以理解为<code>synchronized</code>锁的监视器的概念；
-对于<code>synchronized</code>是借助于锁与监视器，从而进行线程的同步与通信协作;而<code>Lock</code>接口也提供了<code>synchronized</code>的语意，对于监视器的概念，则借助于<code>Condition</code>。</p>
-<p>在<code>lock</code>中可以定义多个<code>Condition</code>，也就是一个锁，可以对应多个监视器，可以更加细粒度的进行同步协作的处理。</p>
-<h4 id="readwritelock">ReadWriteLock</h4>
+<p><code>Lock</code>和<code>ReadWriteLock</code>是两大锁的根接口，<code>Lock</code>代表实现类是<code>ReentrantLock</code>，<code>ReadWriteLock</code>的代表实现类是<code>ReentrantReadWriteLock</code>。</p>
+<p>除了锁之外，<code>java.util.concurrent</code>包还提供了一些其他的工具类和框架，如<code>Semaphore</code>、<code>CountDownLatch</code>、<code>CyclicBarrier</code>等。</p>
+<h3 id="lock接口">Lock接口</h3>
+<p><code>Lock</code>接口在Java的<code>java.util.concurrent.locks</code>包中定义，用于实现更灵活的线程同步机制。与传统的 <code>synchronized</code> 关键字相比，<code>Lock</code>接口提供了更多的操作和更细粒度的控制。
+在实际使用中，自然是能够替代<code>synchronized</code>关键字的。</p>
+<p><code>Lock</code>接口中的方法：</p>
+<ul>
+<li><code>lock()</code>：<code>lock()</code>方法是平常使用得最多的一个方法，就是用来获取锁。如果锁已经被另一个线程持有，则当前线程将会被阻塞，直到锁被释放。
+如果使用<code>lock</code>方法必须主动去释放锁，并且在发生异常时，不会自动释放锁。因此使用<code>Lock</code>必须在<code>try-catch</code>块中进行，并且将释放锁的操作放在<code>finally</code>块中进行，以保证锁一定被被释放，防止死锁的发生。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">increment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">lock</span><span class="p">.</span><span class="na">lock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">counter</span><span class="o">++</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">counter</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">lock</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li><code>lockInterruptibly()</code>：获取锁，但与<code>lock()</code>方法不同，它允许线程在等待获取锁的过程中被中断。
+例如，当两个线程同时通过<code>lock.lockInterruptibly()</code>想获取某个锁时，如果此时线程A获取到了锁，而线程B在等待，那么对线程B调用<code>threadB.interrupt()</code>能够中断线程B的等待过程。
+当一个线程获取了锁之后，是不会被<code>interrupt()</code>方法中断的。因为<code>interrupt()</code>方法只能中断阻塞过程中的线程而不能中断正在运行过程中的线程。与 <code>synchronized</code> 相比，当一个线程处于等待某个锁的状态，是无法被中断的，只有一直等待下去。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">LockInterruptiblyExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Lock</span><span class="w"> </span><span class="n">lock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ReentrantLock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">increment</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">InterruptedException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">lock</span><span class="p">.</span><span class="na">lockInterruptibly</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">counter</span><span class="o">++</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">counter</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">lock</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">LockInterruptiblyExample</span><span class="w"> </span><span class="n">example</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LockInterruptiblyExample</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Runnable</span><span class="w"> </span><span class="n">task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">example</span><span class="p">.</span><span class="na">increment</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">InterruptedException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34; was interrupted.&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Thread</span><span class="w"> </span><span class="n">thread1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(</span><span class="n">task</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Thread</span><span class="w"> </span><span class="n">thread2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(</span><span class="n">task</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">thread1</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">thread2</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">thread2</span><span class="p">.</span><span class="na">interrupt</span><span class="p">();</span><span class="w"> </span><span class="c1">// Interrupt the second thread</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li><code>trylock()</code>：该方法的作用是尝试获取锁，如果锁可用则返回<code>true</code>，不可用则返回<code>false</code>。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TryLockExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Lock</span><span class="w"> </span><span class="n">lock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ReentrantLock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">increment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lock</span><span class="p">.</span><span class="na">tryLock</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">counter</span><span class="o">++</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">counter</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">lock</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34; could not acquire the lock.&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">TryLockExample</span><span class="w"> </span><span class="n">example</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TryLockExample</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Runnable</span><span class="w"> </span><span class="n">task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">example</span><span class="p">::</span><span class="n">increment</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Thread</span><span class="w"> </span><span class="n">thread1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(</span><span class="n">task</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Thread</span><span class="w"> </span><span class="n">thread2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(</span><span class="n">task</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">thread1</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">thread2</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li><code>newCondition</code>：<code>Lock</code>接口提供了方法<code>Condition newCondition();</code>，返回的<code>Condition</code>类型也是一个接口，<code>Condition</code>提供了更细粒度的线程通信控制，用于实现复杂的线程间协作。
+类似于<code>Object</code>类中的<code>wait()</code>、<code>notify()</code>和<code>notifyAll()</code>方法。
+<ul>
+<li><code>await()</code>：当前线程等待，直到被通知或被中断。</li>
+<li><code>signal()</code>：唤醒一个等待线程。如果所有线程都在等待，则任意选择一个线程唤醒。</li>
+<li><code>signalAll()</code>：唤醒所有等待线程。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ConditionExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Lock</span><span class="w"> </span><span class="n">lock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ReentrantLock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Condition</span><span class="w"> </span><span class="n">condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lock</span><span class="p">.</span><span class="na">newCondition</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">increment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">lock</span><span class="p">.</span><span class="na">lock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">counter</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">              </span><span class="n">condition</span><span class="p">.</span><span class="na">await</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="n">counter</span><span class="o">++</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">counter</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="n">condition</span><span class="p">.</span><span class="na">signal</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">InterruptedException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">interrupt</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="n">lock</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">reset</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">lock</span><span class="p">.</span><span class="na">lock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="n">counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="n">condition</span><span class="p">.</span><span class="na">signal</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="n">lock</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">ConditionExample</span><span class="w"> </span><span class="n">example</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ConditionExample</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">Runnable</span><span class="w"> </span><span class="n">incrementTask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">example</span><span class="p">::</span><span class="n">increment</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">Runnable</span><span class="w"> </span><span class="n">resetTask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">example</span><span class="p">::</span><span class="n">reset</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">Thread</span><span class="w"> </span><span class="n">thread1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(</span><span class="n">incrementTask</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">Thread</span><span class="w"> </span><span class="n">thread2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(</span><span class="n">resetTask</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">thread1</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">thread2</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+</ul>
+<h3 id="readwritelock接口">ReadWriteLock接口</h3>
+<p><code>ReadWriteLock</code>接口提供了一种用于在某些情况下可以显著提升并发性能的锁定机制。
+它允许多个读线程同时访问共享资源，但对写线程使用排他锁，这样读操作不会互相阻塞，而写操作会阻塞所有其他操作。</p>
 <p>该接口有两个方法：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">//返回用于读取操作的锁    
-</span></span><span class="line"><span class="cl">Lock readLock()   
-</span></span><span class="line"><span class="cl">//返回用于写入操作的锁  
-</span></span><span class="line"><span class="cl">Lock writeLock() 
-</span></span></code></pre></div><p><code>ReadWriteLock</code>管理一组锁，一个是只读的锁，一个是写锁。<a href="/iblog/posts/java/rookie-multi-thread/#共享锁与独占锁">共享锁与独占锁</a>的实现是读写锁。
-Java并发库中<code>ReetrantReadWriteLock</code>实现了<code>ReadWriteLock</code>接口并添加了可重入的特性。</p>
-<p>对于<code>ReetrantReadWriteLock</code>其读锁是共享锁而写锁是独占锁，读锁的共享可保证并发读是非常高效的；
-需要注意的是，<strong>读写、写读和写写的过程是互斥的，只有读读不是互斥的</strong>。</p>
-<p>读写锁使用示例</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        MyCache myCache = new MyCache();
-</span></span><span class="line"><span class="cl">        for (int i = 0; i &lt; 10; i++) {
-</span></span><span class="line"><span class="cl">            int finalI = i;
-</span></span><span class="line"><span class="cl">            new Thread(() -&gt; {
-</span></span><span class="line"><span class="cl">                myCache.put(finalI + &#34;&#34;, finalI + &#34;&#34;);
-</span></span><span class="line"><span class="cl">            }, String.valueOf(i)).start();
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;---------------&#34;);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        for (int i = 0; i &lt; 10; i++) {
-</span></span><span class="line"><span class="cl">            int finalI = i;
-</span></span><span class="line"><span class="cl">            new Thread(() -&gt; {
-</span></span><span class="line"><span class="cl">                myCache.get(finalI + &#34;&#34;);
-</span></span><span class="line"><span class="cl">            }, String.valueOf(i)).start();
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">class MyCache {
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    private volatile Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    private ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // 写操作
-</span></span><span class="line"><span class="cl">    public void put(String key, Object value) {
-</span></span><span class="line"><span class="cl">        rwLock.writeLock().lock();
-</span></span><span class="line"><span class="cl">        try {
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;开始 写入 ...&#34; + key);
-</span></span><span class="line"><span class="cl">            map.put(key, value);
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;写入完成 ...&#34;);
-</span></span><span class="line"><span class="cl">        } catch (Exception e) {
-</span></span><span class="line"><span class="cl">            e.printStackTrace();
-</span></span><span class="line"><span class="cl">        } finally {
-</span></span><span class="line"><span class="cl">            rwLock.writeLock().unlock();
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // 读操作
-</span></span><span class="line"><span class="cl">    public Object get(String key) {
-</span></span><span class="line"><span class="cl">        Object obj = null;
-</span></span><span class="line"><span class="cl">        rwLock.readLock().lock();
-</span></span><span class="line"><span class="cl">        try {
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;开始读取 ...&#34; + key);
-</span></span><span class="line"><span class="cl">            obj = map.get(key);
-</span></span><span class="line"><span class="cl">            System.out.println(&#34;读取完成 ...&#34; + obj);
-</span></span><span class="line"><span class="cl">        } catch (Exception e) {
-</span></span><span class="line"><span class="cl">            e.printStackTrace();
-</span></span><span class="line"><span class="cl">        } finally {
-</span></span><span class="line"><span class="cl">            rwLock.readLock().unlock();
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        return obj;
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><h3 id="locksupport">LockSupport</h3>
-<p><code>LockSupport</code>是<code>java.util.concurrent.locks</code>包下的一个工具类。
-<code>LockSupport</code>类使用了一种名为<code>Permit</code>(许可）的概念来做到阻塞和唤醒线程的功能，每个线程都有一个许可(permit)，<code>permit</code>只有两个值1和零，默认是零。</p>
-<p>官网解释:<code>LockSupport</code>是用来创建锁和其他同步类的基本线程阻塞原语;</p>
-<p>其中有两个重要的方法，通过<code>park()</code>和<code>unpark()</code>方法来实现阻塞和唤醒线程的操作；可以理解为<code>wait()</code>和<code>notify</code>的加强版。</p>
-<p>传统等待唤醒机制：</p>
-<ol>
-<li>使用<code>Object</code>中的<code>wait()</code>方法让线程等待，使用<code>Object</code>中的<code>notify</code>方法唤醒线程</li>
-<li>使用JUC包中<code>Condition</code>的<code>await()</code>方法让线程等待，使用<code>signal()</code>方法唤醒线程</li>
-</ol>
-<p>传统等待唤醒机制的弊端：</p>
 <ul>
-<li><code>wait</code>和<code>notify</code>/<code>await()</code>和<code>signal()</code>方法必须要在同步块或同步方法里且成对出现使用，如果没有在<code>synchronized</code>代码块使用则抛出<code>java.lang.IllegalMonitorStateException</code>;</li>
-<li>必须先<code>wait</code>/<code>await()</code>后<code>notify</code>/<code>signal()</code>，如果先<code>notify</code>后<code>wait</code>会出现另一个线程一直处于等待状态；</li>
+<li><code>readLock()</code>：返回用于读取操作的锁。</li>
+<li><code>writeLock()</code>：返回用于写入操作的锁。</li>
 </ul>
-<p><code>LockSupport</code>对比传统等待唤醒机制，能够解决上面的弊端：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MainTest {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        Thread t1=new Thread(()-&gt;{
-</span></span><span class="line"><span class="cl">//            try { TimeUnit.SECONDS.sleep(3);  } catch (InterruptedException e) {e.printStackTrace();}
-</span></span><span class="line"><span class="cl">            System.out.println(Thread.currentThread().getName()+&#34;\t&#34;+&#34;coming....&#34;);
-</span></span><span class="line"><span class="cl">            LockSupport.park();
-</span></span><span class="line"><span class="cl">            /*
-</span></span><span class="line"><span class="cl">            如果这里有两个LockSupport.park(),因为permit的值为1,上一行已经使用了permit
-</span></span><span class="line"><span class="cl">            所以下一行被注释的打开会导致程序处于一直等待的状态
-</span></span><span class="line"><span class="cl">            * */
-</span></span><span class="line"><span class="cl">            //LockSupport.park();
-</span></span><span class="line"><span class="cl">            System.out.println(Thread.currentThread().getName()+&#34;\t&#34;+&#34;被B唤醒了&#34;);
-</span></span><span class="line"><span class="cl">        },&#34;A&#34;);
-</span></span><span class="line"><span class="cl">        t1.start();
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        Thread t2=new Thread(()-&gt;{
-</span></span><span class="line"><span class="cl">            System.out.println(Thread.currentThread().getName()+&#34;\t&#34;+&#34;唤醒A线程&#34;);
-</span></span><span class="line"><span class="cl">            //有两个LockSupport.unpark(t1),由于permit的值最大为1,所以只能给park一个通行证
-</span></span><span class="line"><span class="cl">            LockSupport.unpark(t1);
-</span></span><span class="line"><span class="cl">            //LockSupport.unpark(t1);
-</span></span><span class="line"><span class="cl">        },&#34;B&#34;);
-</span></span><span class="line"><span class="cl">        t2.start();
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p><code>LockSupport</code>原理是调用的<code>Unsafe</code>中的<code>native</code>代码。以<code>unpark、park</code>为例：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static void unpark(Thread thread) {
-</span></span><span class="line"><span class="cl">        if (thread != null)
-</span></span><span class="line"><span class="cl">            UNSAFE.unpark(thread);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    public static void park(Object blocker) {
-</span></span><span class="line"><span class="cl">        Thread t = Thread.currentThread();
-</span></span><span class="line"><span class="cl">        setBlocker(t, blocker);
-</span></span><span class="line"><span class="cl">        UNSAFE.park(false, 0L);
-</span></span><span class="line"><span class="cl">        setBlocker(t, null);
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>理解：</p>
+<p><code>ReadWriteLock</code>管理一组锁，一个是只读的锁，一个是写锁。Java并发库中<code>ReetrantReadWriteLock</code>实现了<code>ReadWriteLock</code>接口并添加了可重入的特性。
+对于<code>ReetrantReadWriteLock</code>其读锁是共享锁而写锁是独占锁，读锁的共享可保证并发读是非常高效的。需要注意的是，读写、写读、写写的过程是互斥的，只有读读不是互斥的。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ReadWriteLockExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">ReadWriteLock</span><span class="w"> </span><span class="n">readWriteLock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ReentrantReadWriteLock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Lock</span><span class="w"> </span><span class="n">readLock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">readWriteLock</span><span class="p">.</span><span class="na">readLock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Lock</span><span class="w"> </span><span class="n">writeLock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">readWriteLock</span><span class="p">.</span><span class="na">writeLock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 读操作</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">readValue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">readLock</span><span class="p">.</span><span class="na">lock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34; Reading: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">value</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">readLock</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 写操作</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">writeValue</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">writeLock</span><span class="p">.</span><span class="na">lock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34; Writing: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">value</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">writeLock</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ReadWriteLockExample</span><span class="w"> </span><span class="n">example</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ReadWriteLockExample</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Runnable</span><span class="w"> </span><span class="n">readTask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">5</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">example</span><span class="p">.</span><span class="na">readValue</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="n">100</span><span class="p">);</span><span class="w"> </span><span class="c1">// 模拟读取时间</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">InterruptedException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">interrupt</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Runnable</span><span class="w"> </span><span class="n">writeTask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">5</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">example</span><span class="p">.</span><span class="na">writeValue</span><span class="p">(</span><span class="n">i</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="n">150</span><span class="p">);</span><span class="w"> </span><span class="c1">// 模拟写入时间</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">InterruptedException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">interrupt</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Thread</span><span class="w"> </span><span class="n">thread1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(</span><span class="n">readTask</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Thread</span><span class="w"> </span><span class="n">thread2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(</span><span class="n">readTask</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Thread</span><span class="w"> </span><span class="n">thread3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(</span><span class="n">writeTask</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">thread1</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">thread2</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">thread3</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="locksupport类">LockSupport类</h3>
+<p><code>LockSupport</code>是<code>java.util.concurrent.locks</code>包下的一个工具类。它提供了最基本的线程阻塞和解除阻塞的功能，通常用来构建更高级的同步机制。
+其中有两个重要的方法，通过<code>park()</code>和<code>unpark()</code>方法来实现阻塞和唤醒线程的操作，可以理解为<code>wait()</code>和<code>notify()</code>的加强版。</p>
 <ul>
-<li>线程堵塞需要消耗凭证，这个凭证最多只有一个；</li>
-<li>当调用<code>park</code>方法时，如果有凭证则会直接消耗这张凭证然后退出；如果没有凭证就必须堵塞等待凭证可用；</li>
-<li><code>unpark</code>方法则相反，调用该方法会增加一个凭证，连续调用两次<code>unpark()</code>和调用一次一样，只会增加一个凭证；</li>
+<li><code>park()</code>：阻塞当前线程，直到线程被其他线程中断或调用<code>unpark()</code>方法唤醒。</li>
+<li><code>unpark()</code>：唤醒指定线程。如果该线程尚未阻塞，则下一次调用<code>park()</code>方法时不会阻塞。</li>
 </ul>
-<p><strong>为什么可以先唤醒线程后阻塞线程?</strong></p>
-<p>因为<code>unpark</code>获得了一个凭证，之后再调用<code>park</code>方法，就可以名正言顺的凭证消费，所以不会阻塞。</p>
-<p><strong>为什么唤醒两次后阻塞两次，但最终结果还会阻塞线程?</strong></p>
-<p>因为凭证的数量最多为1，连续调用两次<code>unpark</code>和调用一次<code>unpark</code>效果一样，只会增加一个凭证;
-而调用两次park却需要消费两个凭证，证不够，不能放行。</p>
-<h3 id="aqs">AQS</h3>
-<p>AQS是指<code>java.util.concurrent.locks</code>包下的一个抽象类<code>AbstractQueuedSynchronizer</code>译为：抽象的队列同步器。</p>
-<p>在JUC包下，能够看到有许多类都继承了AQS，例如，<code>ReentrantLock 、CountDownLatch 、 ReentrantReadWriteLock 、 Semaphore </code>；
-所以AQS是JUC内容中重要的基础。</p>
+<p>传统等待唤醒机制是使用<code>Object</code>中的<code>wait()</code>方法让线程等待，使用<code>Object</code>中的<code>notify()</code>方法唤醒线程。
+或者使用JUC包中<code>Condition</code>的<code>await()</code>方法让线程等待，使用<code>signal()</code>方法唤醒线程。</p>
+<p><code>wait()</code>和<code>notify()</code>/<code>await()</code>和<code>signal()</code>方法必须要在同步块或同步方法里且成对出现使用，如果没有在<code>synchronized</code>代码块使用则抛出<code>java.lang.IllegalMonitorStateException</code>。
+必须先<code>wait()</code>/<code>await()</code>后<code>notify()</code>/<code>signal()</code>，如果先<code>notify()</code>后<code>wait()</code>会出现另一个线程一直处于等待状态。</p>
+<p><code>LockSupport</code>对比传统等待唤醒机制，能够解决传统等待唤醒问题。
+<code>LockSupport</code>使用的是许可机制，而<code>wait/notify</code>使用的是监视器机制。每个线程最多只有一个许可，调用<code>park()</code>会消耗一个许可，如果有许可则会直接消耗这张许可然后退出，如果没有许可就堵塞等待许可可用。
+调用<code>unpark()</code>则会增加一个许可，连续调用多次<code>unpark()</code>和调用一次一样，只会增加一个许可。而且<code>LockSupport</code>的<code>park()</code>和<code>unpark()</code>是可中断的，且无需在同步块中使用。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">LockSupportProducerConsumer</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">resource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Thread</span><span class="w"> </span><span class="n">consumer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Consumer waiting for resource&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">resource</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">LockSupport</span><span class="p">.</span><span class="na">park</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Consumer consumed resource&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Thread</span><span class="w"> </span><span class="n">producer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="n">2000</span><span class="p">);</span><span class="w"> </span><span class="c1">// Simulate some work with sleep</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">InterruptedException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">interrupt</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">resource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Producer produced resource&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">LockSupport</span><span class="p">.</span><span class="na">unpark</span><span class="p">(</span><span class="n">consumer</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">consumer</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">producer</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>LockSupport</code>类使用了一种名为<code>Permit</code>的概念来做到阻塞和唤醒线程的功能，每个线程都有一个<code>Permit</code>，<code>Permit</code>只有两个值1和0，默认是0。
+官网解释<code>LockSupport</code>是用来创建锁和同步其他类的基本线程的阻塞原语。<code>LockSupport</code>最终调用的<code>Unsafe</code>中的<code>native</code>方法。以<code>unpark、park</code>为例：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">unpark</span><span class="p">(</span><span class="n">Thread</span><span class="w"> </span><span class="n">thread</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">thread</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">UNSAFE</span><span class="p">.</span><span class="na">unpark</span><span class="p">(</span><span class="n">thread</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">park</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">blocker</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Thread</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">setBlocker</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">blocker</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">UNSAFE</span><span class="p">.</span><span class="na">park</span><span class="p">(</span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="n">0L</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">setBlocker</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="aqs">AQS</h3>
+<p>AQS是指<code>java.util.concurrent.locks</code>包下的一个抽象类<code>AbstractQueuedSynchronizer</code>译为，抽象的队列<strong>同步器</strong>。</p>
+<blockquote>
+<p>同步器是在多线程编程中用于管理线程间协作和同步的机制。同步器通常用于协调线程的执行顺序、控制共享资源的访问以及管理线程的状态。常见的同步器包括：CountDownLatch、CyclicBarrier、Semaphore等。</p>
+</blockquote>
+<p>在JUC包下，能够看到有许多类都继承了AQS，如<code>ReentrantLock</code>、<code>CountDownLatch</code>、<code>ReentrantReadWriteLock</code>、<code>Semaphore</code>。</p>
 <p><img alt="JUC.locks包UML" src="/iblog/posts/annex/images/essays/JUC.locks%E5%8C%85UML.png"></p>
-<blockquote>
-<p>同步、同步器？
-同步，面向锁的使用者，定义了程序员和锁交互的使用层API；
-同步器，面向锁的实现者，统一规范，实现锁 自定义等待唤醒机制等等；</p>
-</blockquote>
-<p>AQS是用来构建锁或者其它同步器组件的重量级基础框架及整个JUC体系的基石，通过内置的<code>CLH(FIFO)</code>队列的变种来完成资源获取线程的排队工作；
-将每条将要去抢占资源的线程封装成一个<code>Node</code>节点来实现锁的分配，有一个<code>int</code>类变量表示持有锁的状态，通过CAS完成对<code>status</code>值的修改。</p>
+<p>AQS是用来构建锁或其它同步器组件的重要基础框架，以及是整个JUC体系的基石，它用于实现依赖先进先出队列的阻塞锁和相关的同步器。
+AQS提供了一个框架，用于创建在等待队列中具有独占或共享模式的同步器。</p>
 <p><img alt="AQS" src="/iblog/posts/annex/images/essays/AQS.png"></p>
-<p>在多线程并发环境下，使用lock加锁，当处在加锁与解锁之间的代码，只能有一个线程来执行；这时候其他线程不能够获取锁，如果不处理线程就会造成了堵塞；
-在AQS框架中，会将暂时获取不到锁的线程加入到队列里，这个队列就是AQS的抽象表现。它会将这些线程封装成队列的结点，通过CAS、自旋以及<code>LockSuport.park()</code>的方式，维护<code>state</code>变量的状态，使并发达到同步的效果。</p>
-<p>AQS中的队列，是指CLH队列（Craig， Landin， and Hagerste[三个人名组成]）锁队列的变体，是一个双向队列。
-队列中的元素即<code>Node</code>结点，每个<code>Node</code>中包含：头结点、尾结点、等待状态、存放的线程等；<code>Node</code>遵循从尾部入队，从头部出队的规则，即先进先出原则。</p>
-<blockquote>
-<p>详细可查看 java.util.concurrent.locks; 包下 AbstractQueuedSynchronizer 类。</p>
-</blockquote>
 <p>AQS可以理解为一个框架，因为它定义了一些JUC包下常用&quot;锁&quot;的标准。
-AQS简单来说，包含一个<code>status</code>和一个队列；<code>status</code>保存线程持有锁的状态，用于判断该线程获没获取到锁，没获取到锁就去队列中排队。
-队列是由<code>Node</code>结点构成，每个<code>Node</code>结点里面主要包含一个<code>waitStatus</code>和保存的线程。</p>
+AQS简单来说，包含一个<code>status</code>和一个队列。<code>status</code>保存线程持有锁的状态，用于判断该线程获没获取到锁，没获取到锁就去队列中排队。
+AQS中的队列，是指CLH队列（Craig， Landin， and Hagerste[三个人名组成]）锁队列的变体，是一个双向队列。
+队列中的元素即<code>Node</code>结点，每个<code>Node</code>中包含：头结点、尾结点、等待状态、存放的线程等。<code>Node</code>遵循从尾部入队，从头部出队的规则，即先进先出原则。</p>
 <p><img alt="AQS简单理解" src="/iblog/posts/annex/images/essays/AQS%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3.png"></p>
-<h3 id="reentrantlock原理">ReentrantLock原理</h3>
-<p><code>ReentrantLock</code>译为，可重入锁，它的原理用到了AQS。</p>
-<blockquote>
-<p>AQS里面有个变量叫State，它的值有3种状态：没占用是0，占用了是1，大于1是可重入锁
-如果A、B两个线程进来了以后，请问这个总共有多少个Node节点？答案是3个，其中队列的第一个是傀儡节点(哨兵节点)</p>
-</blockquote>
-<p><code>ReentrantLock</code>原理说简单一点，就是加锁解锁的过程。</p>
-<p>在多线程并发环境下，某个线程持有锁，将<code>state</code>由0设置为1，如果在有其他线程再次进入，线程则会经过一系列判断，然后构建Node结点，最终形成双向链表结构。
-最后在执行<code>LockSupport.park()</code>方法，将等待的线程挂起，如果当前持有锁的线程释放了锁，则将<code>state</code>变量设置为0，调用<code>LockSpoort.unpark()</code>方法指定唤醒等待队列中的某个线程。</p>
-<p><code>ReentrantLock</code>使用</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class AQSDemo {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        ReentrantLock lock = new ReentrantLock();
-</span></span><span class="line"><span class="cl">        new Thread(() -&gt; {
-</span></span><span class="line"><span class="cl">                lock.lock();
-</span></span><span class="line"><span class="cl">                try{
-</span></span><span class="line"><span class="cl">                    System.out.println(&#34;-----A thread come in&#34;);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">                    try { TimeUnit.MINUTES.sleep(20); }catch (Exception e) {e.printStackTrace();}
-</span></span><span class="line"><span class="cl">                }finally {
-</span></span><span class="line"><span class="cl">                    lock.unlock();
-</span></span><span class="line"><span class="cl">                }
-</span></span><span class="line"><span class="cl">        },&#34;A&#34;).start();
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        new Thread(() -&gt; {
-</span></span><span class="line"><span class="cl">            lock.lock();
-</span></span><span class="line"><span class="cl">            try{
-</span></span><span class="line"><span class="cl">                System.out.println(&#34;-----B thread come in&#34;);
-</span></span><span class="line"><span class="cl">            }finally {
-</span></span><span class="line"><span class="cl">                lock.unlock();
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        },&#34;B&#34;).start();
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        new Thread(() -&gt; {
-</span></span><span class="line"><span class="cl">            lock.lock();
-</span></span><span class="line"><span class="cl">            try{
-</span></span><span class="line"><span class="cl">                System.out.println(&#34;-----C thread come in&#34;);
-</span></span><span class="line"><span class="cl">            }finally {
-</span></span><span class="line"><span class="cl">                lock.unlock();
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        },&#34;C&#34;).start();
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p><strong>ReentrantLock加锁</strong></p>
-<p><code>ReentrantLock</code>原理用到了AQS，而AQS包括一个线程队列和一个state变量；所以<code>ReentrantLock</code>加锁过程，可以简单理解为<code>state</code>变量的变化。
-如果在多线程并发的环境下，还要有其他线程被保存到AQS的队列中。加锁过程，如图所示：</p>
+<p>在多线程并发环境下，使用<code>lock</code>加锁，当处在加锁与解锁之间的代码，只能有一个线程来执行。这时候其他线程不能够获取锁，如果不处理线程就会造成了堵塞。
+在AQS框架中，会将暂时获取不到锁的线程加入到队列里，这个队列就是AQS的抽象表现。它会将这些线程封装成队列的结点，通过CAS、自旋以及<code>LockSupport.park()</code>的方式，维护<code>state</code>变量的状态，使并发达到同步的效果。</p>
+<h3 id="reentrantlock类">ReentrantLock类</h3>
+<p><code>ReentrantLock</code>译为可重入锁，是一种锁的实现类，它提供了比<code>synchronized</code>关键字更广泛的锁定操作选项，提供了公平锁和非公平锁两种模式。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ReentrantLockExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">ReentrantLock</span><span class="w"> </span><span class="n">lock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ReentrantLock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">increment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">lock</span><span class="p">.</span><span class="na">lock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">counter</span><span class="o">++</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34; incremented counter to &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">counter</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">lock</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ReentrantLockExample</span><span class="w"> </span><span class="n">example</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ReentrantLockExample</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Runnable</span><span class="w"> </span><span class="n">task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">5</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">example</span><span class="p">.</span><span class="na">increment</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="n">100</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">InterruptedException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">interrupt</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Thread</span><span class="w"> </span><span class="n">thread1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(</span><span class="n">task</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Thread</span><span class="w"> </span><span class="n">thread2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(</span><span class="n">task</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">thread1</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">thread2</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h4 id="加锁原理">加锁原理</h4>
+<p><code>ReentrantLock</code>原理用到了AQS，而AQS包括一个线程队列和一个<code>state</code>变量，<code>state</code>，它的值有3种状态：没占用是0，占用了是1，大于1是可重入锁。
+所以<code>ReentrantLock</code>加锁过程，可以简单理解为<code>state</code>变量的变化。</p>
+<p>在多线程并发环境下，某个线程持有锁，将<code>state</code>由0设置为1，如果有其他线程再次进入，线程则会经过一系列判断，然后构建<code>Node</code>结点，最终形成双向链表结构。
+最后执行<code>LockSupport.park()</code>方法，将等待的线程挂起，如果当前持有锁的线程释放了锁，则将<code>state</code>变量设置为0，调用<code>LockSpoort.unpark()</code>方法指定唤醒等待队列中的某个线程。</p>
 <p><img alt="reentrantLock加锁" src="/iblog/posts/annex/images/essays/reentrantLock%E5%8A%A0%E9%94%81.png"></p>
-<p><code>ReentrantLock</code>加锁，有两种形式，默认是<a href="/iblog/posts/java/rookie-multi-thread/#公平锁与非公平锁">非公平锁</a>，但可以通过构造方法来指定为<a href="/iblog/posts/java/rookie-multi-thread/#公平锁与非公平锁">公平锁</a>。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        ReentrantLock reentrantLock = new ReentrantLock(true);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">    //⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * Creates an instance of {@code ReentrantLock} with the
-</span></span><span class="line"><span class="cl">     * given fairness policy.
-</span></span><span class="line"><span class="cl">     *
-</span></span><span class="line"><span class="cl">     * @param fair {@code true} if this lock should use a fair ordering policy
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    public ReentrantLock(boolean fair) {
-</span></span><span class="line"><span class="cl">        sync = fair ? new FairSync() : new NonfairSync();
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>无论是公平锁还是非公平锁，由于用到了AQS框架，所以底层实现的逻辑大致是差不多的，<code>ReentrantLock</code>加锁方法调用栈：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">lock() --&gt; acquire() --&gt; tryAcquire() --&gt; addWaiter() --&gt; acquireQueued() --&gt; selfInterrupt()
-</span></span></code></pre></div><p>虽然大致逻辑差不多，但是区别总是有的，总的来说非公平锁比非公平锁在代码里面多了几行判断；</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// ===========重写 lock 方法对比===========
-</span></span><span class="line"><span class="cl">    // 公平锁
-</span></span><span class="line"><span class="cl">    final void lock() {
-</span></span><span class="line"><span class="cl">        acquire(1);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // 非公平锁
-</span></span><span class="line"><span class="cl">    final void lock() {
-</span></span><span class="line"><span class="cl">        if (compareAndSetState(0, 1))
-</span></span><span class="line"><span class="cl">            setExclusiveOwnerThread(Thread.currentThread());
-</span></span><span class="line"><span class="cl">        else
-</span></span><span class="line"><span class="cl">            acquire(1);
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// ===========重写 tryAcquire 方法对比===========
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // 公平锁
-</span></span><span class="line"><span class="cl">    protected final boolean tryAcquire(int acquires) {
-</span></span><span class="line"><span class="cl">        final Thread current = Thread.currentThread();
-</span></span><span class="line"><span class="cl">        int c = getState();
-</span></span><span class="line"><span class="cl">        if (c == 0) {
-</span></span><span class="line"><span class="cl">            if (!hasQueuedPredecessors() &amp;&amp;
-</span></span><span class="line"><span class="cl">                compareAndSetState(0, acquires)) {
-</span></span><span class="line"><span class="cl">                setExclusiveOwnerThread(current);
-</span></span><span class="line"><span class="cl">                return true;
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        else if (current == getExclusiveOwnerThread()) {
-</span></span><span class="line"><span class="cl">            int nextc = c + acquires;
-</span></span><span class="line"><span class="cl">            if (nextc &lt; 0)
-</span></span><span class="line"><span class="cl">                throw new Error(&#34;Maximum lock count exceeded&#34;);
-</span></span><span class="line"><span class="cl">            setState(nextc);
-</span></span><span class="line"><span class="cl">            return true;
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        return false;
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // 非公平锁
-</span></span><span class="line"><span class="cl">    protected final boolean tryAcquire(int acquires) {
-</span></span><span class="line"><span class="cl">        return nonfairTryAcquire(acquires);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    final boolean nonfairTryAcquire(int acquires) {
-</span></span><span class="line"><span class="cl">        final Thread current = Thread.currentThread();
-</span></span><span class="line"><span class="cl">        int c = getState();
-</span></span><span class="line"><span class="cl">        if (c == 0) {
-</span></span><span class="line"><span class="cl">            if (compareAndSetState(0, acquires)) {
-</span></span><span class="line"><span class="cl">                setExclusiveOwnerThread(current);
-</span></span><span class="line"><span class="cl">                return true;
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        else if (current == getExclusiveOwnerThread()) {
-</span></span><span class="line"><span class="cl">            int nextc = c + acquires;
-</span></span><span class="line"><span class="cl">            if (nextc &lt; 0) // overflow
-</span></span><span class="line"><span class="cl">                throw new Error(&#34;Maximum lock count exceeded&#34;);
-</span></span><span class="line"><span class="cl">            setState(nextc);
-</span></span><span class="line"><span class="cl">            return true;
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        return false;
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>在重写的<code>tryAcquire</code>方法里，公平锁在获取同步状态时多了一个限制条件:<code>hasQueuedPredecessors()</code> ;</p>
-<p>该方法作用：保证等待队列中的线程按照从头到尾的顺序排队获取锁。
-举个例子，目前队列中有两个线程A、B，线程A，在线程B的前面；在当前线程释放锁的时候，线程B获取到了锁，该方法会判断当前头结点的下一个结点中存放的线程跟当前线程相不相同；</p>
-<p>在这里头结点的下一个结点存放的线程是傀儡结点线程为<code>null</code>，而当前线程是线程B，所以返回<code>true</code>，回到上一个方法<code>true</code>取反就是<code>false</code>，则获取锁失败。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    public final boolean hasQueuedPredecessors() {
-</span></span><span class="line"><span class="cl">        // The correctness of this depends on head being initialized
-</span></span><span class="line"><span class="cl">        // before tail and on head.next being accurate if the current
-</span></span><span class="line"><span class="cl">        // thread is first in queue.
-</span></span><span class="line"><span class="cl">        Node t = tail; // Read fields in reverse initialization order
-</span></span><span class="line"><span class="cl">        Node h = head;
-</span></span><span class="line"><span class="cl">        Node s;
-</span></span><span class="line"><span class="cl">        return h != t &amp;&amp;
-</span></span><span class="line"><span class="cl">            ((s = h.next) == null || s.thread != Thread.currentThread());
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>在执行完<code>tryAcquire</code>方法之后就会执行<code>addWaiter</code>方法。</p>
-<p><code>addWaiter</code>方法作用；当第一次将等待的线程添加到队列时，先会调用enq方法；如果不是第一次调用，即尾结点不为空，队列中已经有了其他线程结点，则会直接将当前线程的前结点指向尾结点，即队列中最后一个线程结点;
-然后用CAS将前一个结点的下一个结点指向当前结点，最后返回添加到队列中的结点。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    private Node addWaiter(Node mode) {
-</span></span><span class="line"><span class="cl">        Node node = new Node(Thread.currentThread(), mode);
-</span></span><span class="line"><span class="cl">        // Try the fast path of enq; backup to full enq on failure
-</span></span><span class="line"><span class="cl">        Node pred = tail;
-</span></span><span class="line"><span class="cl">        if (pred != null) {
-</span></span><span class="line"><span class="cl">            node.prev = pred;
-</span></span><span class="line"><span class="cl">            if (compareAndSetTail(pred, node)) {
-</span></span><span class="line"><span class="cl">                pred.next = node;
-</span></span><span class="line"><span class="cl">                return node;
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        enq(node);
-</span></span><span class="line"><span class="cl">        return node;
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>enq方法作用是，将等待获取锁的线程封装成Node结点，并将Node结点串联起来，形成双向链表结构；简而言之就是将线程添加到等待队列中去。</p>
-<p>该方法运用自旋机制，如果添加的结点为第一个结点，则会在第一个实际结点之前，先生成一个“傀儡结点”；
-头结点指向指向傀儡结点，傀儡结点的后结点则指向添加的第一个结点；添加的第一个结点的前结点指向傀儡结点，尾结点指向实际结点。然后将处理好的实际结点返回。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    private Node enq(final Node node) {
-</span></span><span class="line"><span class="cl">        for (;;) {
-</span></span><span class="line"><span class="cl">            Node t = tail;
-</span></span><span class="line"><span class="cl">            if (t == null) { // Must initialize
-</span></span><span class="line"><span class="cl">                if (compareAndSetHead(new Node()))
-</span></span><span class="line"><span class="cl">                    tail = head;
-</span></span><span class="line"><span class="cl">            } else {
-</span></span><span class="line"><span class="cl">                node.prev = t;
-</span></span><span class="line"><span class="cl">                if (compareAndSetTail(t, node)) {
-</span></span><span class="line"><span class="cl">                    t.next = node;
-</span></span><span class="line"><span class="cl">                    return t;
-</span></span><span class="line"><span class="cl">                }
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>之后在执行<code>acquireQueued</code>方法。该方法用到了自旋机制；首先先判断当前结点是否为头结点，如果是头结点，就让头结点中的线程尝试获取锁，之后执行异常结点的操作。
-如果不是头结点，就会尝试让当前线程挂起，直到持有锁的线程释放锁，唤醒等待的线程，之后再去尝试获取锁。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    final boolean acquireQueued(final Node node, int arg) {
-</span></span><span class="line"><span class="cl">        boolean failed = true;
-</span></span><span class="line"><span class="cl">        try {
-</span></span><span class="line"><span class="cl">            boolean interrupted = false;
-</span></span><span class="line"><span class="cl">            for (;;) {
-</span></span><span class="line"><span class="cl">                final Node p = node.predecessor();
-</span></span><span class="line"><span class="cl">                if (p == head &amp;&amp; tryAcquire(arg)) {
-</span></span><span class="line"><span class="cl">                    setHead(node);
-</span></span><span class="line"><span class="cl">                    p.next = null; // help GC
-</span></span><span class="line"><span class="cl">                    failed = false;
-</span></span><span class="line"><span class="cl">                    return interrupted;
-</span></span><span class="line"><span class="cl">                }
-</span></span><span class="line"><span class="cl">                if (shouldParkAfterFailedAcquire(p, node) &amp;&amp;
-</span></span><span class="line"><span class="cl">                    parkAndCheckInterrupt())
-</span></span><span class="line"><span class="cl">                    interrupted = true;
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        } finally {
-</span></span><span class="line"><span class="cl">            if (failed)
-</span></span><span class="line"><span class="cl">                cancelAcquire(node);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>如果不是头结点，则会执行<code>shouldParkAfterFailedAcquire</code>方法：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    private static boolean shouldParkAfterFailedAcquire(Node pred, Node node) {
-</span></span><span class="line"><span class="cl">        int ws = pred.waitStatus;
-</span></span><span class="line"><span class="cl">        if (ws == Node.SIGNAL)
-</span></span><span class="line"><span class="cl">            return true;
-</span></span><span class="line"><span class="cl">        if (ws &gt; 0) {
-</span></span><span class="line"><span class="cl">            do {
-</span></span><span class="line"><span class="cl">                node.prev = pred = pred.prev;
-</span></span><span class="line"><span class="cl">            } while (pred.waitStatus &gt; 0);
-</span></span><span class="line"><span class="cl">            pred.next = node;
-</span></span><span class="line"><span class="cl">        } else {
-</span></span><span class="line"><span class="cl">            compareAndSetWaitStatus(pred, ws, Node.SIGNAL);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        return false;
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>执行该方法，首先判断上一个结点的<code>waitStatus</code>；
-如果该队列只有一个结点，则上一个结点为头结点，此时头结点的<code>waitStatus=0</code>，经过该方法会将上一个结点的<code>waitStatus</code>通过CAS，设置为-1；
-因为最外部是一个自旋机制，会一直循环，当第二次进入该方法，则会直接返回true。返回true，则意味着当前线程将进入堵塞状态，会执行<code>parkAndCheckInterrupt()</code>方法。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    private final boolean parkAndCheckInterrupt() {
-</span></span><span class="line"><span class="cl">        LockSupport.park(this);
-</span></span><span class="line"><span class="cl">        return Thread.interrupted();
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><p>调用<code>LockSupport.park()</code>方法让线程挂起，直到持有锁的线程将它们唤醒。</p>
-<p><strong>ReentrantLock解锁</strong>
-<img alt="reentrantLock解锁" src="/iblog/posts/annex/images/essays/reentrantLock%E8%A7%A3%E9%94%81.png"></p>
+<p><code>ReentrantLock</code>加锁有两种形式，默认是非公平锁，但可以通过构造方法来指定为公平锁。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">ReentrantLock</span><span class="w"> </span><span class="n">reentrantLock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ReentrantLock</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">//⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * Creates an instance of {@code ReentrantLock} with the
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * given fairness policy.
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @param fair {@code true} if this lock should use a fair ordering policy
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="nf">ReentrantLock</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">fair</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">sync</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fair</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FairSync</span><span class="p">()</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">NonfairSync</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>无论是公平锁还是非公平锁，由于用到了AQS框架，所以底层实现的逻辑大致是差不多的，<code>ReentrantLock</code>加锁核心方法调用栈：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">lock()
+</span></span><span class="line"><span class="cl">    --&gt; acquire()
+</span></span><span class="line"><span class="cl">    --&gt; tryAcquire()
+</span></span><span class="line"><span class="cl">    --&gt; addWaiter()
+</span></span><span class="line"><span class="cl">    --&gt; acquireQueued()
+</span></span><span class="line"><span class="cl">    --&gt; selfInterrupt()
+</span></span></code></pre></div><p>公平锁还是非公平锁虽然大致逻辑差不多，但是区别总是有的，总的来说非公平锁比非公平锁在代码里面多了几行判断。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// ===========重写 lock 方法对比===========</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 公平锁</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">lock</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">acquire</span><span class="p">(</span><span class="n">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 非公平锁</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">lock</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">compareAndSetState</span><span class="p">(</span><span class="n">0</span><span class="p">,</span><span class="w"> </span><span class="n">1</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">setExclusiveOwnerThread</span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">else</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">acquire</span><span class="p">(</span><span class="n">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">acquire</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">arg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">tryAcquire</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">acquireQueued</span><span class="p">(</span><span class="n">addWaiter</span><span class="p">(</span><span class="n">Node</span><span class="p">.</span><span class="na">EXCLUSIVE</span><span class="p">),</span><span class="w"> </span><span class="n">arg</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">selfInterrupt</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// ===========重写 tryAcquire 方法对比===========</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 公平锁</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">protected</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">tryAcquire</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">acquires</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">Thread</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getState</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">hasQueuedPredecessors</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">compareAndSetState</span><span class="p">(</span><span class="n">0</span><span class="p">,</span><span class="w"> </span><span class="n">acquires</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">setExclusiveOwnerThread</span><span class="p">(</span><span class="n">current</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">current</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">getExclusiveOwnerThread</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">nextc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">acquires</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nextc</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Error</span><span class="p">(</span><span class="s">&#34;Maximum lock count exceeded&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">setState</span><span class="p">(</span><span class="n">nextc</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 非公平锁</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">protected</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">tryAcquire</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">acquires</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">nonfairTryAcquire</span><span class="p">(</span><span class="n">acquires</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">final</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">nonfairTryAcquire</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">acquires</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">Thread</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getState</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">compareAndSetState</span><span class="p">(</span><span class="n">0</span><span class="p">,</span><span class="w"> </span><span class="n">acquires</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">setExclusiveOwnerThread</span><span class="p">(</span><span class="n">current</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">current</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">getExclusiveOwnerThread</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">nextc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">acquires</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nextc</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w"> </span><span class="c1">// overflow</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Error</span><span class="p">(</span><span class="s">&#34;Maximum lock count exceeded&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">setState</span><span class="p">(</span><span class="n">nextc</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>在重写的<code>tryAcquire</code>方法里，公平锁在获取同步状态时多了一个限制条件即<code>hasQueuedPredecessors()</code>方法。该方法作用是保证等待队列中的线程按照从头到尾的顺序排队获取锁。
+举个例子，目前队列中有两个线程A、B，线程A，在线程B的前面。在当前线程释放锁的时候，线程B获取到了锁，该方法会判断当前头结点的下一个结点中存放的线程跟当前线程是否相同。
+在这个例子中头结点的下一个结点存放的线程是傀儡结点线程为<code>null</code>，而当前线程是线程B，所以返回<code>true</code>，回到上一个方法<code>true</code>取反就是<code>false</code>所以获取锁失败。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">hasQueuedPredecessors</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// The correctness of this depends on head being initialized</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// before tail and on head.next being accurate if the current</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// thread is first in queue.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tail</span><span class="p">;</span><span class="w"> </span><span class="c1">// Read fields in reverse initialization order</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">s</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">((</span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="p">.</span><span class="na">next</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="na">thread</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>在执行完<code>tryAcquire</code>方法之后就会执行<code>addWaiter</code>方法。
+<code>addWaiter</code>方法作用为，当第一次将等待的线程添加到队列时，先会调用<code>enq</code>方法。
+如果不是第一次调用，即尾结点不为空，队列中已经有了其他线程结点，则会直接将当前线程的前结点指向尾结点，即队列中最后一个线程结点。
+然后用CAS将前一个结点的下一个结点指向当前结点，形成链表结构，最后返回添加到队列中的结点。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="nf">addWaiter</span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">mode</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">(),</span><span class="w"> </span><span class="n">mode</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Try the fast path of enq; backup to full enq on failure</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">pred</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tail</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pred</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">node</span><span class="p">.</span><span class="na">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pred</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">compareAndSetTail</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span><span class="w"> </span><span class="n">node</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">pred</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">node</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">enq</span><span class="p">(</span><span class="n">node</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">node</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>enq</code>方法作用是将等待获取锁的线程封装成<code>Node</code>结点，并将<code>Node</code>结点串联起来，形成双向链表结构，简而言之就是将线程添加到等待队列中去。                                                                <br>
+该方法运用自旋机制，如果添加的结点为第一个结点，则会在第一个实际结点之前，生成一个“傀儡结点”。添加的第一个结点的前结点指向傀儡结点，尾结点指向实际结点。傀儡结点的后结点则指向添加的第一个结点。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="nf">enq</span><span class="p">(</span><span class="kd">final</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="n">node</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(;;)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Node</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tail</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Must initialize</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">compareAndSetHead</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">()))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">tail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">node</span><span class="p">.</span><span class="na">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">compareAndSetTail</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">node</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">t</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">t</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>之后执行<code>acquireQueued</code>方法，该方法用到了自旋机制。首先判断当前结点是否为头结点，如果是头结点，就让头结点中的线程尝试获取锁。
+如果不是头结点，执行<code>shouldParkAfterFailedAcquire</code>方法尝试让当前线程挂起，直到持有锁的线程释放锁，唤醒等待的线程之后再去尝试获取锁。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">final</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">acquireQueued</span><span class="p">(</span><span class="kd">final</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="n">node</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">arg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">boolean</span><span class="w"> </span><span class="n">failed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">boolean</span><span class="w"> </span><span class="n">interrupted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(;;)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kd">final</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="na">predecessor</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">tryAcquire</span><span class="p">(</span><span class="n">arg</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">setHead</span><span class="p">(</span><span class="n">node</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">p</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w"> </span><span class="c1">// help GC</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">failed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">interrupted</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">shouldParkAfterFailedAcquire</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">node</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">parkAndCheckInterrupt</span><span class="p">())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">interrupted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">failed</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">cancelAcquire</span><span class="p">(</span><span class="n">node</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>shouldParkAfterFailedAcquire</code>方法，该方法首先判断上一个结点的<code>waitStatus</code>。
+如果该队列只有一个结点，则上一个结点为头结点，此时头结点的<code>waitStatus=0</code>，经过该方法会将上一个结点的<code>waitStatus</code>通过CAS，设置为-1。
+因为最外部是一个自旋机制，会一直循环，所以当第二次进入该方法，则会直接返回<code>true</code>。返回<code>true</code>意味着当前线程将进入堵塞状态，会执行<code>parkAndCheckInterrupt()</code>方法。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">shouldParkAfterFailedAcquire</span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">pred</span><span class="p">,</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="n">node</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">ws</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pred</span><span class="p">.</span><span class="na">waitStatus</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ws</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">Node</span><span class="p">.</span><span class="na">SIGNAL</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ws</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">do</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">node</span><span class="p">.</span><span class="na">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pred</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pred</span><span class="p">.</span><span class="na">prev</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">pred</span><span class="p">.</span><span class="na">waitStatus</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">pred</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">compareAndSetWaitStatus</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span><span class="w"> </span><span class="n">ws</span><span class="p">,</span><span class="w"> </span><span class="n">Node</span><span class="p">.</span><span class="na">SIGNAL</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>parkAndCheckInterrupt</code>方法，底层是调用<code>LockSupport.park()</code>方法让线程挂起，直到持有锁的线程将它们唤醒。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">parkAndCheckInterrupt</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">LockSupport</span><span class="p">.</span><span class="na">park</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Thread</span><span class="p">.</span><span class="na">interrupted</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>ReentrantLock</code>其加锁核心方法为<code>acquire</code>方法。最终执行完毕，下面的<code>if</code>表达式返回<code>true</code>，则执行<code>selfInterrupt</code>方法中断线程。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">acquire</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">arg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">tryAcquire</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">acquireQueued</span><span class="p">(</span><span class="n">addWaiter</span><span class="p">(</span><span class="n">Node</span><span class="p">.</span><span class="na">EXCLUSIVE</span><span class="p">),</span><span class="w"> </span><span class="n">arg</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">selfInterrupt</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h4 id="解锁原理">解锁原理</h4>
+<p><img alt="reentrantLock解锁" src="/iblog/posts/annex/images/essays/reentrantLock%E8%A7%A3%E9%94%81.png"></p>
 <p><code>ReentrantLock</code>释放锁调用栈：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">unlock() --&gt; release() --&gt; tryRelease() --&gt; unparkSuccessor()
 </span></span></code></pre></div><p><code>release</code>方法，如果<code>tryRelease</code>方法返回true，则判队列中的头结点中的<code>waitStatus</code>，如果不等于0则，执行<code>unparkSuccessor</code>方法，按唤醒队列中等待的线程。</p>
@@ -5537,7 +5647,7 @@ AQS简单来说，包含一个<code>status</code>和一个队列；<code>status<
 如果当前节点之前的节点的等待状态小于1，说明当前节点之前的线程处于等待状态(挂起)，那么当前节点的线程也应处于等待状态(挂起)。
 挂起的工作是由 <code>LockSupport</code> 类支持的，<code>LockSupport</code> 通过JNI调用本地操作系统来完成挂起的任务。
 在当前等待的线程，被唤起后，检查中断状态，如果处于中断状态，那么需要中断当前线程。</p>
-<h3 id="countdownlatch">CountDownLatch</h3>
+<h3 id="countdownlatch类">CountDownLatch类</h3>
 <p><code>count down latch</code>直译为：倒计时门闩，也可以叫做闭锁。</p>
 <blockquote>
 <p>门闩，汉语词汇。拼音：mén shuān 释义：指门关上后，插在门内使门推不开的滑动插销。</p>
@@ -5881,7 +5991,7 @@ AQS简单来说，包含一个<code>status</code>和一个队列；<code>status<
 <p>如文档注释所说，<code>ThraedLocal</code>为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立地改变自己的副本，而不会影响其它线程所对应的副本。</p>
 <p>从线程的角度看，目标变量就象是线程的本地变量，这也是类名中“Local”所要表达的意思。
 说白了<code>ThreadLocal</code>就是存放线程的局部变量的。</p>
-<h3 id="使用-1">使用</h3>
+<h3 id="使用">使用</h3>
 <p>在JDK5.0中，<code>ThreadLocal</code>已经支持泛型，该类的类名已经变为<code>ThreadLocal&lt;T&gt;</code>。API方法也相应进行了调整，新版本的API方法分别是<code>void set(T value)、T get()</code>以及<code>T initialValue()</code>。</p>
 <blockquote>
 <p>关于Object和T的区别：Object是个基类，是个真实存在的类；T是个占位符，表示某个具体的类，仅在编译器有效，最终会被擦除用Object代替。</p>

@@ -2655,337 +2655,388 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
 如果这个线程因为某些原因被堵塞了，没有释放锁，那么其他线程只能一直等待下去，导致效率很低。
 因此就需要有一种机制可以不让等待的线程一直无期限地等待下去，比如只等待一定的时间或者能够响应中断，通过`Lock`就可以办到。
 
-`lock`与`synchronized`最大的区别就是`lock`能够手动控制锁，而`synchronized`是JVM控制的，所以`lock`更加灵活。`lock`锁的粒度要比`synchronized`更细。
-在实际使用中，自然是能够替代`synchronized`关键字的。
-
-### 使用
-[//]: # (写到了这里)
-在实际使用过程中，`lock`也是比较简单的。
-`Lock`和`ReadWriteLock`是两大锁的根接口，`Lock`代表实现类是`ReentrantLock`（可重入锁），`ReadWriteLock`（读写锁）的代表实现类是`ReentrantReadWriteLock`。
+`java.util.concurrent`包中的锁在`locks`包下：
 
 ![juc.locks](/iblog/posts/annex/images/essays/juc.locks.png)
 
-#### Lock
-**lock()**
+`Lock`和`ReadWriteLock`是两大锁的根接口，`Lock`代表实现类是`ReentrantLock`，`ReadWriteLock`的代表实现类是`ReentrantReadWriteLock`。
 
-`lock()`方法是平常使用得最多的一个方法，就是用来获取锁。如果锁已被其他线程获取，则进行等待。
-如果采用`Lock`，必须主动去释放锁，并且在发生异常时，不会自动释放锁。
-因此，一般来说，使用`Lock`必须在`try…catch…`块中进行，并且将释放锁的操作放在`finally`块中进行，以保证锁一定被被释放，防止死锁的发生。
-```
-  Lock l = ...;
-  l.lock();
-  try {
-    // access the resource protected by this lock
-  } finally {
-    l.unlock();
-  }
-```
+除了锁之外，`java.util.concurrent`包还提供了一些其他的工具类和框架，如`Semaphore`、`CountDownLatch`、`CyclicBarrier`等。
 
-**trylock()**
+### Lock接口
+`Lock`接口在Java的`java.util.concurrent.locks`包中定义，用于实现更灵活的线程同步机制。与传统的 `synchronized` 关键字相比，`Lock`接口提供了更多的操作和更细粒度的控制。
+在实际使用中，自然是能够替代`synchronized`关键字的。
 
-尝试获取锁，如果锁可用则返回true，不可用则返回false。也就是说，这个方法无论如何都会立即返回，在拿不到锁时不会一直在那等待。
-
-> `tryLock(long time, TimeUnit unit)`方法和`tryLock()`方法是类似的，只不过区别在于这个方法在拿不到锁时会等待一定的时间，在时间期限之内如果还拿不到锁，就返回false，同时可以响应中断。
-如果一开始拿到锁或者在等待期间内拿到了锁，则返回true。
-```
-  Lock lock = ...;
-  if (lock.tryLock()) {
-    try {
-      // manipulate protected state
-    } finally {
-      lock.unlock();
-    }
-  } else {
-    // perform alternative actions
-  }
-```
-
-**lockInterruptibly()**
-
-当通过这个方法去获取锁时，如果线程正在等待获取锁，则这个线程能够响应中断，即中断线程的等待状态。
-例如，当两个线程同时通过`lock.lockInterruptibly()`想获取某个锁时，假若此时线程A获取到了锁，而线程B只有在等待，那么对线程B调用`threadB.interrupt()`能够中断线程B的等待过程。
-
-注意，当一个线程获取了锁之后，是不会被`interrupt()`方法中断的。因为`interrupt()`方法只能中断阻塞过程中的线程而不能中断正在运行过程中的线程。因此，当通过 `lockInterruptibly()` 方法获取某个锁时，如果不能获取到，那么只有进行等待的情况下，才可以响应中断的。
-与 `synchronized` 相比，当一个线程处于等待某个锁的状态，是无法被中断的，只有一直等待下去。
-
-由于`lockInterruptibly()`的声明中抛出了异常，所以`lock.lockInterruptibly()`必须放在try块中或者在调用`lockInterruptibly()`的方法外声明抛出 `InterruptedException`
-```
-public void method() throws InterruptedException {
-    lock.lockInterruptibly();
-    try {  
-     //.....
-    }
-    finally {
-        lock.unlock();
-    }  
-}
-```
-**newCondition**
-
-`Lock`接口提供了方法`Condition newCondition();`，`Condition`也是一个接口，可以理解为`synchronized`锁的监视器的概念；
-对于`synchronized`是借助于锁与监视器，从而进行线程的同步与通信协作;而`Lock`接口也提供了`synchronized`的语意，对于监视器的概念，则借助于`Condition`。
-
-在`lock`中可以定义多个`Condition`，也就是一个锁，可以对应多个监视器，可以更加细粒度的进行同步协作的处理。
-
-#### ReadWriteLock
-该接口有两个方法：
-```
-//返回用于读取操作的锁    
-Lock readLock()   
-//返回用于写入操作的锁  
-Lock writeLock() 
-```
-
-`ReadWriteLock`管理一组锁，一个是只读的锁，一个是写锁。[共享锁与独占锁](#共享锁与独占锁)的实现是读写锁。
-Java并发库中`ReetrantReadWriteLock`实现了`ReadWriteLock`接口并添加了可重入的特性。
-
-对于`ReetrantReadWriteLock`其读锁是共享锁而写锁是独占锁，读锁的共享可保证并发读是非常高效的；
-需要注意的是，**读写、写读和写写的过程是互斥的，只有读读不是互斥的**。
-
-读写锁使用示例
-```
-public class MainTest {
-
-    public static void main(String[] args) {
-        MyCache myCache = new MyCache();
-        for (int i = 0; i < 10; i++) {
-            int finalI = i;
-            new Thread(() -> {
-                myCache.put(finalI + "", finalI + "");
-            }, String.valueOf(i)).start();
-        }
-
-        System.out.println("---------------");
-
-        for (int i = 0; i < 10; i++) {
-            int finalI = i;
-            new Thread(() -> {
-                myCache.get(finalI + "");
-            }, String.valueOf(i)).start();
-        }
-    }
-}
-
-class MyCache {
-
-    private volatile Map<String, Object> map = new HashMap<>();
-
-    private ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();
-
-    // 写操作
-    public void put(String key, Object value) {
-        rwLock.writeLock().lock();
+`Lock`接口中的方法：
+- `lock()`：`lock()`方法是平常使用得最多的一个方法，就是用来获取锁。如果锁已经被另一个线程持有，则当前线程将会被阻塞，直到锁被释放。
+如果使用`lock`方法必须主动去释放锁，并且在发生异常时，不会自动释放锁。因此使用`Lock`必须在`try-catch`块中进行，并且将释放锁的操作放在`finally`块中进行，以保证锁一定被被释放，防止死锁的发生。
+    ```java
+    public void increment() {
+        lock.lock();
         try {
-            System.out.println("开始 写入 ..." + key);
-            map.put(key, value);
-            System.out.println("写入完成 ...");
-        } catch (Exception e) {
-            e.printStackTrace();
+            counter++;
+            System.out.println(Thread.currentThread().getName() + ": " + counter);
         } finally {
-            rwLock.writeLock().unlock();
+            lock.unlock();
         }
-
     }
+    ```
+- `lockInterruptibly()`：获取锁，但与`lock()`方法不同，它允许线程在等待获取锁的过程中被中断。
+例如，当两个线程同时通过`lock.lockInterruptibly()`想获取某个锁时，如果此时线程A获取到了锁，而线程B在等待，那么对线程B调用`threadB.interrupt()`能够中断线程B的等待过程。
+当一个线程获取了锁之后，是不会被`interrupt()`方法中断的。因为`interrupt()`方法只能中断阻塞过程中的线程而不能中断正在运行过程中的线程。与 `synchronized` 相比，当一个线程处于等待某个锁的状态，是无法被中断的，只有一直等待下去。
+    ```java
+    public class LockInterruptiblyExample {
+        private final Lock lock = new ReentrantLock();
+        private int counter = 0;
+    
+        public void increment() throws InterruptedException {
+            lock.lockInterruptibly();
+            try {
+                counter++;
+                System.out.println(Thread.currentThread().getName() + ": " + counter);
+            } finally {
+                lock.unlock();
+            }
+        }
+    
+        public static void main(String[] args) {
+            LockInterruptiblyExample example = new LockInterruptiblyExample();
+    
+            Runnable task = () -> {
+                try {
+                    example.increment();
+                } catch (InterruptedException e) {
+                    System.out.println(Thread.currentThread().getName() + " was interrupted.");
+                }
+            };
+    
+            Thread thread1 = new Thread(task);
+            Thread thread2 = new Thread(task);
+    
+            thread1.start();
+            thread2.start();
+            thread2.interrupt(); // Interrupt the second thread
+        }
+    }
+    ```
+- `trylock()`：该方法的作用是尝试获取锁，如果锁可用则返回`true`，不可用则返回`false`。
+    ```java
+    public class TryLockExample {
+        private final Lock lock = new ReentrantLock();
+        private int counter = 0;
+    
+        public void increment() {
+            if (lock.tryLock()) {
+                try {
+                    counter++;
+                    System.out.println(Thread.currentThread().getName() + ": " + counter);
+                } finally {
+                    lock.unlock();
+                }
+            } else {
+                System.out.println(Thread.currentThread().getName() + " could not acquire the lock.");
+            }
+        }
+    
+        public static void main(String[] args) {
+            TryLockExample example = new TryLockExample();
+    
+            Runnable task = example::increment;
+    
+            Thread thread1 = new Thread(task);
+            Thread thread2 = new Thread(task);
+    
+            thread1.start();
+            thread2.start();
+        }
+    }
+    ```
+- `newCondition`：`Lock`接口提供了方法`Condition newCondition();`，返回的`Condition`类型也是一个接口，`Condition`提供了更细粒度的线程通信控制，用于实现复杂的线程间协作。
+类似于`Object`类中的`wait()`、`notify()`和`notifyAll()`方法。
+    - `await()`：当前线程等待，直到被通知或被中断。
+    - `signal()`：唤醒一个等待线程。如果所有线程都在等待，则任意选择一个线程唤醒。
+    - `signalAll()`：唤醒所有等待线程。
+    ```java
+    public class ConditionExample {
+      private final Lock lock = new ReentrantLock();
+      private final Condition condition = lock.newCondition();
+      private int counter = 0;
+    
+      public void increment() {
+          lock.lock();
+          try {
+              while (counter == 0) {
+                  condition.await();
+              }
+              counter++;
+              System.out.println(Thread.currentThread().getName() + ": " + counter);
+              condition.signal();
+          } catch (InterruptedException e) {
+              Thread.currentThread().interrupt();
+          } finally {
+              lock.unlock();
+          }
+      }
+    
+      public void reset() {
+          lock.lock();
+          try {
+              counter = 0;
+              condition.signal();
+          } finally {
+              lock.unlock();
+          }
+      }
+    
+      public static void main(String[] args) {
+          ConditionExample example = new ConditionExample();
+    
+          Runnable incrementTask = example::increment;
+          Runnable resetTask = example::reset;
+    
+          Thread thread1 = new Thread(incrementTask);
+          Thread thread2 = new Thread(resetTask);
+    
+          thread1.start();
+          thread2.start();
+      }
+    }
+    ```
+
+### ReadWriteLock接口
+`ReadWriteLock`接口提供了一种用于在某些情况下可以显著提升并发性能的锁定机制。
+它允许多个读线程同时访问共享资源，但对写线程使用排他锁，这样读操作不会互相阻塞，而写操作会阻塞所有其他操作。
+
+该接口有两个方法：
+- `readLock()`：返回用于读取操作的锁。
+- `writeLock()`：返回用于写入操作的锁。
+
+`ReadWriteLock`管理一组锁，一个是只读的锁，一个是写锁。Java并发库中`ReetrantReadWriteLock`实现了`ReadWriteLock`接口并添加了可重入的特性。
+对于`ReetrantReadWriteLock`其读锁是共享锁而写锁是独占锁，读锁的共享可保证并发读是非常高效的。需要注意的是，读写、写读、写写的过程是互斥的，只有读读不是互斥的。
+```java
+public class ReadWriteLockExample {
+    private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+    private final Lock readLock = readWriteLock.readLock();
+    private final Lock writeLock = readWriteLock.writeLock();
+    private int value = 0;
 
     // 读操作
-    public Object get(String key) {
-        Object obj = null;
-        rwLock.readLock().lock();
+    public int readValue() {
+        readLock.lock();
         try {
-            System.out.println("开始读取 ..." + key);
-            obj = map.get(key);
-            System.out.println("读取完成 ..." + obj);
-        } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(Thread.currentThread().getName() + " Reading: " + value);
+            return value;
         } finally {
-            rwLock.readLock().unlock();
+            readLock.unlock();
         }
-        return obj;
     }
 
-}
-```
+    // 写操作
+    public void writeValue(int value) {
+        writeLock.lock();
+        try {
+            this.value = value;
+            System.out.println(Thread.currentThread().getName() + " Writing: " + value);
+        } finally {
+            writeLock.unlock();
+        }
+    }
 
-### LockSupport
-`LockSupport`是`java.util.concurrent.locks`包下的一个工具类。
-`LockSupport`类使用了一种名为`Permit`(许可）的概念来做到阻塞和唤醒线程的功能，每个线程都有一个许可(permit)，`permit`只有两个值1和零，默认是零。
-
-官网解释:`LockSupport`是用来创建锁和其他同步类的基本线程阻塞原语;
-
-其中有两个重要的方法，通过`park()`和`unpark()`方法来实现阻塞和唤醒线程的操作；可以理解为`wait()`和`notify`的加强版。
-
-传统等待唤醒机制：
-1. 使用`Object`中的`wait()`方法让线程等待，使用`Object`中的`notify`方法唤醒线程
-2. 使用JUC包中`Condition`的`await()`方法让线程等待，使用`signal()`方法唤醒线程
-
-传统等待唤醒机制的弊端：
-- `wait`和`notify`/`await()`和`signal()`方法必须要在同步块或同步方法里且成对出现使用，如果没有在`synchronized`代码块使用则抛出`java.lang.IllegalMonitorStateException`;
-- 必须先`wait`/`await()`后`notify`/`signal()`，如果先`notify`后`wait`会出现另一个线程一直处于等待状态；
-
-`LockSupport`对比传统等待唤醒机制，能够解决上面的弊端：
-```
-public class MainTest {
     public static void main(String[] args) {
+        ReadWriteLockExample example = new ReadWriteLockExample();
 
-        Thread t1=new Thread(()->{
-//            try { TimeUnit.SECONDS.sleep(3);  } catch (InterruptedException e) {e.printStackTrace();}
-            System.out.println(Thread.currentThread().getName()+"\t"+"coming....");
-            LockSupport.park();
-            /*
-            如果这里有两个LockSupport.park(),因为permit的值为1,上一行已经使用了permit
-            所以下一行被注释的打开会导致程序处于一直等待的状态
-            * */
-            //LockSupport.park();
-            System.out.println(Thread.currentThread().getName()+"\t"+"被B唤醒了");
-        },"A");
-        t1.start();
+        Runnable readTask = () -> {
+            for (int i = 0; i < 5; i++) {
+                example.readValue();
+                try {
+                    Thread.sleep(100); // 模拟读取时间
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        };
 
-        Thread t2=new Thread(()->{
-            System.out.println(Thread.currentThread().getName()+"\t"+"唤醒A线程");
-            //有两个LockSupport.unpark(t1),由于permit的值最大为1,所以只能给park一个通行证
-            LockSupport.unpark(t1);
-            //LockSupport.unpark(t1);
-        },"B");
-        t2.start();
+        Runnable writeTask = () -> {
+            for (int i = 0; i < 5; i++) {
+                example.writeValue(i);
+                try {
+                    Thread.sleep(150); // 模拟写入时间
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        };
+
+        Thread thread1 = new Thread(readTask);
+        Thread thread2 = new Thread(readTask);
+        Thread thread3 = new Thread(writeTask);
+
+        thread1.start();
+        thread2.start();
+        thread3.start();
     }
 }
 ```
 
-`LockSupport`原理是调用的`Unsafe`中的`native`代码。以`unpark、park`为例：
-```
-    public static void unpark(Thread thread) {
-        if (thread != null)
-            UNSAFE.unpark(thread);
+### LockSupport类
+`LockSupport`是`java.util.concurrent.locks`包下的一个工具类。它提供了最基本的线程阻塞和解除阻塞的功能，通常用来构建更高级的同步机制。
+其中有两个重要的方法，通过`park()`和`unpark()`方法来实现阻塞和唤醒线程的操作，可以理解为`wait()`和`notify()`的加强版。
+- `park()`：阻塞当前线程，直到线程被其他线程中断或调用`unpark()`方法唤醒。
+- `unpark()`：唤醒指定线程。如果该线程尚未阻塞，则下一次调用`park()`方法时不会阻塞。
+
+传统等待唤醒机制是使用`Object`中的`wait()`方法让线程等待，使用`Object`中的`notify()`方法唤醒线程。
+或者使用JUC包中`Condition`的`await()`方法让线程等待，使用`signal()`方法唤醒线程。
+
+`wait()`和`notify()`/`await()`和`signal()`方法必须要在同步块或同步方法里且成对出现使用，如果没有在`synchronized`代码块使用则抛出`java.lang.IllegalMonitorStateException`。
+必须先`wait()`/`await()`后`notify()`/`signal()`，如果先`notify()`后`wait()`会出现另一个线程一直处于等待状态。
+
+`LockSupport`对比传统等待唤醒机制，能够解决传统等待唤醒问题。
+`LockSupport`使用的是许可机制，而`wait/notify`使用的是监视器机制。每个线程最多只有一个许可，调用`park()`会消耗一个许可，如果有许可则会直接消耗这张许可然后退出，如果没有许可就堵塞等待许可可用。
+调用`unpark()`则会增加一个许可，连续调用多次`unpark()`和调用一次一样，只会增加一个许可。而且`LockSupport`的`park()`和`unpark()`是可中断的，且无需在同步块中使用。
+```java
+public class LockSupportProducerConsumer {
+    private static Object resource = null;
+
+    public static void main(String[] args) {
+        Thread consumer = new Thread(() -> {
+            System.out.println("Consumer waiting for resource");
+            while (resource == null) {
+                LockSupport.park();
+            }
+            System.out.println("Consumer consumed resource");
+        });
+
+        Thread producer = new Thread(() -> {
+            try {
+                Thread.sleep(2000); // Simulate some work with sleep
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+            resource = new Object();
+            System.out.println("Producer produced resource");
+            LockSupport.unpark(consumer);
+        });
+
+        consumer.start();
+        producer.start();
     }
-
-    public static void park(Object blocker) {
-        Thread t = Thread.currentThread();
-        setBlocker(t, blocker);
-        UNSAFE.park(false, 0L);
-        setBlocker(t, null);
-    }
+}
 ```
-理解：
-- 线程堵塞需要消耗凭证，这个凭证最多只有一个；
-- 当调用`park`方法时，如果有凭证则会直接消耗这张凭证然后退出；如果没有凭证就必须堵塞等待凭证可用；
-- `unpark`方法则相反，调用该方法会增加一个凭证，连续调用两次`unpark()`和调用一次一样，只会增加一个凭证；
+`LockSupport`类使用了一种名为`Permit`的概念来做到阻塞和唤醒线程的功能，每个线程都有一个`Permit`，`Permit`只有两个值1和0，默认是0。
+官网解释`LockSupport`是用来创建锁和同步其他类的基本线程的阻塞原语。`LockSupport`最终调用的`Unsafe`中的`native`方法。以`unpark、park`为例：
+```java
+public static void unpark(Thread thread) {
+    if (thread != null)
+        UNSAFE.unpark(thread);
+}
 
-**为什么可以先唤醒线程后阻塞线程?**
-
-因为`unpark`获得了一个凭证，之后再调用`park`方法，就可以名正言顺的凭证消费，所以不会阻塞。
-
-**为什么唤醒两次后阻塞两次，但最终结果还会阻塞线程?**
-
-因为凭证的数量最多为1，连续调用两次`unpark`和调用一次`unpark`效果一样，只会增加一个凭证;
-而调用两次park却需要消费两个凭证，证不够，不能放行。
+public static void park(Object blocker) {
+    Thread t = Thread.currentThread();
+    setBlocker(t, blocker);
+    UNSAFE.park(false, 0L);
+    setBlocker(t, null);
+}
+```
 
 ### AQS
-AQS是指`java.util.concurrent.locks`包下的一个抽象类`AbstractQueuedSynchronizer`译为：抽象的队列同步器。
+AQS是指`java.util.concurrent.locks`包下的一个抽象类`AbstractQueuedSynchronizer`译为，抽象的队列**同步器**。
+> 同步器是在多线程编程中用于管理线程间协作和同步的机制。同步器通常用于协调线程的执行顺序、控制共享资源的访问以及管理线程的状态。常见的同步器包括：CountDownLatch、CyclicBarrier、Semaphore等。
 
-在JUC包下，能够看到有许多类都继承了AQS，例如，`ReentrantLock 、CountDownLatch 、 ReentrantReadWriteLock 、 Semaphore `；
-所以AQS是JUC内容中重要的基础。
+在JUC包下，能够看到有许多类都继承了AQS，如`ReentrantLock`、`CountDownLatch`、`ReentrantReadWriteLock`、`Semaphore`。
 
 ![JUC.locks包UML](/iblog/posts/annex/images/essays/JUC.locks包UML.png)
 
-> 同步、同步器？
-> 同步，面向锁的使用者，定义了程序员和锁交互的使用层API；
-> 同步器，面向锁的实现者，统一规范，实现锁 自定义等待唤醒机制等等；
-
-AQS是用来构建锁或者其它同步器组件的重量级基础框架及整个JUC体系的基石，通过内置的`CLH(FIFO)`队列的变种来完成资源获取线程的排队工作；
-将每条将要去抢占资源的线程封装成一个`Node`节点来实现锁的分配，有一个`int`类变量表示持有锁的状态，通过CAS完成对`status`值的修改。
+AQS是用来构建锁或其它同步器组件的重要基础框架，以及是整个JUC体系的基石，它用于实现依赖先进先出队列的阻塞锁和相关的同步器。
+AQS提供了一个框架，用于创建在等待队列中具有独占或共享模式的同步器。
 
 ![AQS](/iblog/posts/annex/images/essays/AQS.png)
 
-在多线程并发环境下，使用lock加锁，当处在加锁与解锁之间的代码，只能有一个线程来执行；这时候其他线程不能够获取锁，如果不处理线程就会造成了堵塞；
-在AQS框架中，会将暂时获取不到锁的线程加入到队列里，这个队列就是AQS的抽象表现。它会将这些线程封装成队列的结点，通过CAS、自旋以及`LockSuport.park()`的方式，维护`state`变量的状态，使并发达到同步的效果。
-
-AQS中的队列，是指CLH队列（Craig， Landin， and Hagerste[三个人名组成]）锁队列的变体，是一个双向队列。
-队列中的元素即`Node`结点，每个`Node`中包含：头结点、尾结点、等待状态、存放的线程等；`Node`遵循从尾部入队，从头部出队的规则，即先进先出原则。
-> 详细可查看 java.util.concurrent.locks; 包下 AbstractQueuedSynchronizer 类。
-
 AQS可以理解为一个框架，因为它定义了一些JUC包下常用"锁"的标准。
-AQS简单来说，包含一个`status`和一个队列；`status`保存线程持有锁的状态，用于判断该线程获没获取到锁，没获取到锁就去队列中排队。
-队列是由`Node`结点构成，每个`Node`结点里面主要包含一个`waitStatus`和保存的线程。
+AQS简单来说，包含一个`status`和一个队列。`status`保存线程持有锁的状态，用于判断该线程获没获取到锁，没获取到锁就去队列中排队。
+AQS中的队列，是指CLH队列（Craig， Landin， and Hagerste[三个人名组成]）锁队列的变体，是一个双向队列。
+队列中的元素即`Node`结点，每个`Node`中包含：头结点、尾结点、等待状态、存放的线程等。`Node`遵循从尾部入队，从头部出队的规则，即先进先出原则。
 
 ![AQS简单理解](/iblog/posts/annex/images/essays/AQS简单理解.png)
 
-### ReentrantLock原理
-`ReentrantLock`译为，可重入锁，它的原理用到了AQS。
+在多线程并发环境下，使用`lock`加锁，当处在加锁与解锁之间的代码，只能有一个线程来执行。这时候其他线程不能够获取锁，如果不处理线程就会造成了堵塞。
+在AQS框架中，会将暂时获取不到锁的线程加入到队列里，这个队列就是AQS的抽象表现。它会将这些线程封装成队列的结点，通过CAS、自旋以及`LockSupport.park()`的方式，维护`state`变量的状态，使并发达到同步的效果。
 
-> AQS里面有个变量叫State，它的值有3种状态：没占用是0，占用了是1，大于1是可重入锁
-> 如果A、B两个线程进来了以后，请问这个总共有多少个Node节点？答案是3个，其中队列的第一个是傀儡节点(哨兵节点)
+### ReentrantLock类
+`ReentrantLock`译为可重入锁，是一种锁的实现类，它提供了比`synchronized`关键字更广泛的锁定操作选项，提供了公平锁和非公平锁两种模式。
+```java
+public class ReentrantLockExample {
+    private final ReentrantLock lock = new ReentrantLock();
+    private int counter = 0;
 
-`ReentrantLock`原理说简单一点，就是加锁解锁的过程。
+    public void increment() {
+        lock.lock();
+        try {
+            counter++;
+            System.out.println(Thread.currentThread().getName() + " incremented counter to " + counter);
+        } finally {
+            lock.unlock();
+        }
+    }
 
-在多线程并发环境下，某个线程持有锁，将`state`由0设置为1，如果在有其他线程再次进入，线程则会经过一系列判断，然后构建Node结点，最终形成双向链表结构。
-最后在执行`LockSupport.park()`方法，将等待的线程挂起，如果当前持有锁的线程释放了锁，则将`state`变量设置为0，调用`LockSpoort.unpark()`方法指定唤醒等待队列中的某个线程。
-
-`ReentrantLock`使用
-```
-public class AQSDemo {
     public static void main(String[] args) {
-        ReentrantLock lock = new ReentrantLock();
-        new Thread(() -> {
-                lock.lock();
-                try{
-                    System.out.println("-----A thread come in");
+        ReentrantLockExample example = new ReentrantLockExample();
 
-                    try { TimeUnit.MINUTES.sleep(20); }catch (Exception e) {e.printStackTrace();}
-                }finally {
-                    lock.unlock();
+        Runnable task = () -> {
+            for (int i = 0; i < 5; i++) {
+                example.increment();
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
                 }
-        },"A").start();
-
-        new Thread(() -> {
-            lock.lock();
-            try{
-                System.out.println("-----B thread come in");
-            }finally {
-                lock.unlock();
             }
-        },"B").start();
+        };
 
-        new Thread(() -> {
-            lock.lock();
-            try{
-                System.out.println("-----C thread come in");
-            }finally {
-                lock.unlock();
-            }
-        },"C").start();
+        Thread thread1 = new Thread(task);
+        Thread thread2 = new Thread(task);
+
+        thread1.start();
+        thread2.start();
     }
 }
 ```
-**ReentrantLock加锁**
 
-`ReentrantLock`原理用到了AQS，而AQS包括一个线程队列和一个state变量；所以`ReentrantLock`加锁过程，可以简单理解为`state`变量的变化。
-如果在多线程并发的环境下，还要有其他线程被保存到AQS的队列中。加锁过程，如图所示：
+#### 加锁原理
+`ReentrantLock`原理用到了AQS，而AQS包括一个线程队列和一个`state`变量，`state`，它的值有3种状态：没占用是0，占用了是1，大于1是可重入锁。
+所以`ReentrantLock`加锁过程，可以简单理解为`state`变量的变化。
+
+在多线程并发环境下，某个线程持有锁，将`state`由0设置为1，如果有其他线程再次进入，线程则会经过一系列判断，然后构建`Node`结点，最终形成双向链表结构。
+最后执行`LockSupport.park()`方法，将等待的线程挂起，如果当前持有锁的线程释放了锁，则将`state`变量设置为0，调用`LockSpoort.unpark()`方法指定唤醒等待队列中的某个线程。
 
 ![reentrantLock加锁](/iblog/posts/annex/images/essays/reentrantLock加锁.png)
 
-`ReentrantLock`加锁，有两种形式，默认是[非公平锁](#公平锁与非公平锁)，但可以通过构造方法来指定为[公平锁](#公平锁与非公平锁)。
+`ReentrantLock`加锁有两种形式，默认是非公平锁，但可以通过构造方法来指定为公平锁。
+```java
+public static void main(String[] args) {
+    ReentrantLock reentrantLock = new ReentrantLock(true);
+}
+//⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇
+/**
+ * Creates an instance of {@code ReentrantLock} with the
+ * given fairness policy.
+ *
+ * @param fair {@code true} if this lock should use a fair ordering policy
+ */
+public ReentrantLock(boolean fair) {
+    sync = fair ? new FairSync() : new NonfairSync();
+}
 ```
-    public static void main(String[] args) {
-        ReentrantLock reentrantLock = new ReentrantLock(true);
-    }
-    //⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇
-    /**
-     * Creates an instance of {@code ReentrantLock} with the
-     * given fairness policy.
-     *
-     * @param fair {@code true} if this lock should use a fair ordering policy
-     */
-    public ReentrantLock(boolean fair) {
-        sync = fair ? new FairSync() : new NonfairSync();
-    }
+无论是公平锁还是非公平锁，由于用到了AQS框架，所以底层实现的逻辑大致是差不多的，`ReentrantLock`加锁核心方法调用栈：
+```text
+lock()
+    --> acquire()
+    --> tryAcquire()
+    --> addWaiter()
+    --> acquireQueued()
+    --> selfInterrupt()
 ```
-无论是公平锁还是非公平锁，由于用到了AQS框架，所以底层实现的逻辑大致是差不多的，`ReentrantLock`加锁方法调用栈：
-```
-lock() --> acquire() --> tryAcquire() --> addWaiter() --> acquireQueued() --> selfInterrupt()
-```
-
-虽然大致逻辑差不多，但是区别总是有的，总的来说非公平锁比非公平锁在代码里面多了几行判断；
-```
+公平锁还是非公平锁虽然大致逻辑差不多，但是区别总是有的，总的来说非公平锁比非公平锁在代码里面多了几行判断。
+```java
 // ===========重写 lock 方法对比===========
     // 公平锁
     final void lock() {
@@ -3000,170 +3051,176 @@ lock() --> acquire() --> tryAcquire() --> addWaiter() --> acquireQueued() --> se
             acquire(1);
     }
 ```
-
+```java
+public final void acquire(int arg) {
+    if (!tryAcquire(arg) &&
+            acquireQueued(addWaiter(Node.EXCLUSIVE), arg))
+        selfInterrupt();
+}
 ```
+```java
 // ===========重写 tryAcquire 方法对比===========
-
-    // 公平锁
-    protected final boolean tryAcquire(int acquires) {
-        final Thread current = Thread.currentThread();
-        int c = getState();
-        if (c == 0) {
-            if (!hasQueuedPredecessors() &&
-                compareAndSetState(0, acquires)) {
-                setExclusiveOwnerThread(current);
-                return true;
-            }
-        }
-        else if (current == getExclusiveOwnerThread()) {
-            int nextc = c + acquires;
-            if (nextc < 0)
-                throw new Error("Maximum lock count exceeded");
-            setState(nextc);
+// 公平锁
+protected final boolean tryAcquire(int acquires) {
+    final Thread current = Thread.currentThread();
+    int c = getState();
+    if (c == 0) {
+        if (!hasQueuedPredecessors() &&
+            compareAndSetState(0, acquires)) {
+            setExclusiveOwnerThread(current);
             return true;
         }
-        return false;
     }
-
-    // 非公平锁
-    protected final boolean tryAcquire(int acquires) {
-        return nonfairTryAcquire(acquires);
+    else if (current == getExclusiveOwnerThread()) {
+        int nextc = c + acquires;
+        if (nextc < 0)
+            throw new Error("Maximum lock count exceeded");
+        setState(nextc);
+        return true;
     }
+    return false;
+}
 
-    final boolean nonfairTryAcquire(int acquires) {
-        final Thread current = Thread.currentThread();
-        int c = getState();
-        if (c == 0) {
-            if (compareAndSetState(0, acquires)) {
-                setExclusiveOwnerThread(current);
-                return true;
-            }
-        }
-        else if (current == getExclusiveOwnerThread()) {
-            int nextc = c + acquires;
-            if (nextc < 0) // overflow
-                throw new Error("Maximum lock count exceeded");
-            setState(nextc);
+// 非公平锁
+protected final boolean tryAcquire(int acquires) {
+    return nonfairTryAcquire(acquires);
+}
+
+final boolean nonfairTryAcquire(int acquires) {
+    final Thread current = Thread.currentThread();
+    int c = getState();
+    if (c == 0) {
+        if (compareAndSetState(0, acquires)) {
+            setExclusiveOwnerThread(current);
             return true;
         }
-        return false;
     }
-```
-在重写的`tryAcquire`方法里，公平锁在获取同步状态时多了一个限制条件:`hasQueuedPredecessors()` ;
-
-该方法作用：保证等待队列中的线程按照从头到尾的顺序排队获取锁。
-举个例子，目前队列中有两个线程A、B，线程A，在线程B的前面；在当前线程释放锁的时候，线程B获取到了锁，该方法会判断当前头结点的下一个结点中存放的线程跟当前线程相不相同；
-
-在这里头结点的下一个结点存放的线程是傀儡结点线程为`null`，而当前线程是线程B，所以返回`true`，回到上一个方法`true`取反就是`false`，则获取锁失败。
-```
-    public final boolean hasQueuedPredecessors() {
-        // The correctness of this depends on head being initialized
-        // before tail and on head.next being accurate if the current
-        // thread is first in queue.
-        Node t = tail; // Read fields in reverse initialization order
-        Node h = head;
-        Node s;
-        return h != t &&
-            ((s = h.next) == null || s.thread != Thread.currentThread());
+    else if (current == getExclusiveOwnerThread()) {
+        int nextc = c + acquires;
+        if (nextc < 0) // overflow
+            throw new Error("Maximum lock count exceeded");
+        setState(nextc);
+        return true;
     }
+    return false;
+}
+```
+在重写的`tryAcquire`方法里，公平锁在获取同步状态时多了一个限制条件即`hasQueuedPredecessors()`方法。该方法作用是保证等待队列中的线程按照从头到尾的顺序排队获取锁。
+举个例子，目前队列中有两个线程A、B，线程A，在线程B的前面。在当前线程释放锁的时候，线程B获取到了锁，该方法会判断当前头结点的下一个结点中存放的线程跟当前线程是否相同。
+在这个例子中头结点的下一个结点存放的线程是傀儡结点线程为`null`，而当前线程是线程B，所以返回`true`，回到上一个方法`true`取反就是`false`所以获取锁失败。
+```java
+public final boolean hasQueuedPredecessors() {
+    // The correctness of this depends on head being initialized
+    // before tail and on head.next being accurate if the current
+    // thread is first in queue.
+    Node t = tail; // Read fields in reverse initialization order
+    Node h = head;
+    Node s;
+    return h != t &&
+        ((s = h.next) == null || s.thread != Thread.currentThread());
+}
 ```
 在执行完`tryAcquire`方法之后就会执行`addWaiter`方法。
-
-`addWaiter`方法作用；当第一次将等待的线程添加到队列时，先会调用enq方法；如果不是第一次调用，即尾结点不为空，队列中已经有了其他线程结点，则会直接将当前线程的前结点指向尾结点，即队列中最后一个线程结点;
-然后用CAS将前一个结点的下一个结点指向当前结点，最后返回添加到队列中的结点。
-```
-    private Node addWaiter(Node mode) {
-        Node node = new Node(Thread.currentThread(), mode);
-        // Try the fast path of enq; backup to full enq on failure
-        Node pred = tail;
-        if (pred != null) {
-            node.prev = pred;
-            if (compareAndSetTail(pred, node)) {
-                pred.next = node;
-                return node;
-            }
-        }
-        enq(node);
-        return node;
-    }
-```
-enq方法作用是，将等待获取锁的线程封装成Node结点，并将Node结点串联起来，形成双向链表结构；简而言之就是将线程添加到等待队列中去。                                                                   
-
-该方法运用自旋机制，如果添加的结点为第一个结点，则会在第一个实际结点之前，先生成一个“傀儡结点”；
-头结点指向指向傀儡结点，傀儡结点的后结点则指向添加的第一个结点；添加的第一个结点的前结点指向傀儡结点，尾结点指向实际结点。然后将处理好的实际结点返回。
-```
-    private Node enq(final Node node) {
-        for (;;) {
-            Node t = tail;
-            if (t == null) { // Must initialize
-                if (compareAndSetHead(new Node()))
-                    tail = head;
-            } else {
-                node.prev = t;
-                if (compareAndSetTail(t, node)) {
-                    t.next = node;
-                    return t;
-                }
-            }
-        }
-    }
-```
-
-之后在执行`acquireQueued`方法。该方法用到了自旋机制；首先先判断当前结点是否为头结点，如果是头结点，就让头结点中的线程尝试获取锁，之后执行异常结点的操作。
-如果不是头结点，就会尝试让当前线程挂起，直到持有锁的线程释放锁，唤醒等待的线程，之后再去尝试获取锁。
-```
-    final boolean acquireQueued(final Node node, int arg) {
-        boolean failed = true;
-        try {
-            boolean interrupted = false;
-            for (;;) {
-                final Node p = node.predecessor();
-                if (p == head && tryAcquire(arg)) {
-                    setHead(node);
-                    p.next = null; // help GC
-                    failed = false;
-                    return interrupted;
-                }
-                if (shouldParkAfterFailedAcquire(p, node) &&
-                    parkAndCheckInterrupt())
-                    interrupted = true;
-            }
-        } finally {
-            if (failed)
-                cancelAcquire(node);
-        }
-    }
-```
-如果不是头结点，则会执行`shouldParkAfterFailedAcquire`方法：
-```
-    private static boolean shouldParkAfterFailedAcquire(Node pred, Node node) {
-        int ws = pred.waitStatus;
-        if (ws == Node.SIGNAL)
-            return true;
-        if (ws > 0) {
-            do {
-                node.prev = pred = pred.prev;
-            } while (pred.waitStatus > 0);
+`addWaiter`方法作用为，当第一次将等待的线程添加到队列时，先会调用`enq`方法。
+如果不是第一次调用，即尾结点不为空，队列中已经有了其他线程结点，则会直接将当前线程的前结点指向尾结点，即队列中最后一个线程结点。
+然后用CAS将前一个结点的下一个结点指向当前结点，形成链表结构，最后返回添加到队列中的结点。
+```java
+private Node addWaiter(Node mode) {
+    Node node = new Node(Thread.currentThread(), mode);
+    // Try the fast path of enq; backup to full enq on failure
+    Node pred = tail;
+    if (pred != null) {
+        node.prev = pred;
+        if (compareAndSetTail(pred, node)) {
             pred.next = node;
-        } else {
-            compareAndSetWaitStatus(pred, ws, Node.SIGNAL);
+            return node;
         }
-        return false;
     }
+    enq(node);
+    return node;
+}
 ```
-执行该方法，首先判断上一个结点的`waitStatus`；
-如果该队列只有一个结点，则上一个结点为头结点，此时头结点的`waitStatus=0`，经过该方法会将上一个结点的`waitStatus`通过CAS，设置为-1；
-因为最外部是一个自旋机制，会一直循环，当第二次进入该方法，则会直接返回true。返回true，则意味着当前线程将进入堵塞状态，会执行`parkAndCheckInterrupt()`方法。
-
-```
-    private final boolean parkAndCheckInterrupt() {
-        LockSupport.park(this);
-        return Thread.interrupted();
+`enq`方法作用是将等待获取锁的线程封装成`Node`结点，并将`Node`结点串联起来，形成双向链表结构，简而言之就是将线程添加到等待队列中去。                                                                   
+该方法运用自旋机制，如果添加的结点为第一个结点，则会在第一个实际结点之前，生成一个“傀儡结点”。添加的第一个结点的前结点指向傀儡结点，尾结点指向实际结点。傀儡结点的后结点则指向添加的第一个结点。
+```java
+private Node enq(final Node node) {
+    for (;;) {
+        Node t = tail;
+        if (t == null) { // Must initialize
+            if (compareAndSetHead(new Node()))
+                tail = head;
+        } else {
+            node.prev = t;
+            if (compareAndSetTail(t, node)) {
+                t.next = node;
+                return t;
+            }
+        }
     }
+}
 ```
-调用`LockSupport.park()`方法让线程挂起，直到持有锁的线程将它们唤醒。
+之后执行`acquireQueued`方法，该方法用到了自旋机制。首先判断当前结点是否为头结点，如果是头结点，就让头结点中的线程尝试获取锁。
+如果不是头结点，执行`shouldParkAfterFailedAcquire`方法尝试让当前线程挂起，直到持有锁的线程释放锁，唤醒等待的线程之后再去尝试获取锁。
+```java
+final boolean acquireQueued(final Node node, int arg) {
+    boolean failed = true;
+    try {
+        boolean interrupted = false;
+        for (;;) {
+            final Node p = node.predecessor();
+            if (p == head && tryAcquire(arg)) {
+                setHead(node);
+                p.next = null; // help GC
+                failed = false;
+                return interrupted;
+            }
+            if (shouldParkAfterFailedAcquire(p, node) &&
+                parkAndCheckInterrupt())
+                interrupted = true;
+        }
+    } finally {
+        if (failed)
+            cancelAcquire(node);
+    }
+}
+```
+`shouldParkAfterFailedAcquire`方法，该方法首先判断上一个结点的`waitStatus`。
+如果该队列只有一个结点，则上一个结点为头结点，此时头结点的`waitStatus=0`，经过该方法会将上一个结点的`waitStatus`通过CAS，设置为-1。
+因为最外部是一个自旋机制，会一直循环，所以当第二次进入该方法，则会直接返回`true`。返回`true`意味着当前线程将进入堵塞状态，会执行`parkAndCheckInterrupt()`方法。
+```java
+private static boolean shouldParkAfterFailedAcquire(Node pred, Node node) {
+    int ws = pred.waitStatus;
+    if (ws == Node.SIGNAL)
+        return true;
+    if (ws > 0) {
+        do {
+            node.prev = pred = pred.prev;
+        } while (pred.waitStatus > 0);
+        pred.next = node;
+    } else {
+        compareAndSetWaitStatus(pred, ws, Node.SIGNAL);
+    }
+    return false;
+}
+```
+`parkAndCheckInterrupt`方法，底层是调用`LockSupport.park()`方法让线程挂起，直到持有锁的线程将它们唤醒。
+```java
+private final boolean parkAndCheckInterrupt() {
+    LockSupport.park(this);
+    return Thread.interrupted();
+}
+```
+`ReentrantLock`其加锁核心方法为`acquire`方法。最终执行完毕，下面的`if`表达式返回`true`，则执行`selfInterrupt`方法中断线程。
+```java
+public final void acquire(int arg) {
+    if (!tryAcquire(arg) &&
+            acquireQueued(addWaiter(Node.EXCLUSIVE), arg))
+        selfInterrupt();
+}
+```
 
-**ReentrantLock解锁**
+#### 解锁原理
+[//]: # (写到了这里)
 ![reentrantLock解锁](/iblog/posts/annex/images/essays/reentrantLock解锁.png)
 
 `ReentrantLock`释放锁调用栈：
@@ -3237,8 +3294,7 @@ private void unparkSuccessor(Node node) {
 挂起的工作是由 `LockSupport` 类支持的，`LockSupport` 通过JNI调用本地操作系统来完成挂起的任务。
 在当前等待的线程，被唤起后，检查中断状态，如果处于中断状态，那么需要中断当前线程。
 
-
-### CountDownLatch
+### CountDownLatch类
 `count down latch`直译为：倒计时门闩，也可以叫做闭锁。
 > 门闩，汉语词汇。拼音：mén shuān 释义：指门关上后，插在门内使门推不开的滑动插销。
 
