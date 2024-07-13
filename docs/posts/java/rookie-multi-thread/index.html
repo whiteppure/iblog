@@ -5761,7 +5761,7 @@ AQS中的队列，是指CLH队列（Craig， Landin， and Hagerste[三个人名
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p><code>CountDownLatch</code>要做的事情是，让一组线程达到一个屏障时被阻塞，直到最后一个线程达到屏障时，所有被屏障拦截的线程才会继续干活，线程进入屏障通过<code>CyclicBarrier.await()</code>方法。</p>
+</span></span></span></code></pre></div><p><code>CyclicBarrier</code>要做的事情是，让一组线程达到一个屏障时被阻塞，直到最后一个线程达到屏障时，所有被屏障拦截的线程才会继续干活，线程进入屏障通过<code>CyclicBarrier.await()</code>方法。</p>
 <p><img alt="CyclicBarrier" src="/iblog/posts/annex/images/essays/CyclicBarrier.gif"></p>
 <p><code>CyclicBarrier</code>是基于<code>ReentrantLock</code>实现的，其底层也是基于AQS。
 <code>CyclicBarrier</code>通过一个内部的计数器和一个锁来实现线程间的协调。当所有线程都调用<code>await</code>方法时，计数器递减，当计数器为零时，所有等待的线程将被唤醒，并重置计数器，以便下一次使用。</p>

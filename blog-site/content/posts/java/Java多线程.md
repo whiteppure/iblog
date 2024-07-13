@@ -3414,7 +3414,7 @@ public class MainTest {
     }
 }
 ```
-`CountDownLatch`要做的事情是，让一组线程达到一个屏障时被阻塞，直到最后一个线程达到屏障时，所有被屏障拦截的线程才会继续干活，线程进入屏障通过`CyclicBarrier.await()`方法。
+`CyclicBarrier`要做的事情是，让一组线程达到一个屏障时被阻塞，直到最后一个线程达到屏障时，所有被屏障拦截的线程才会继续干活，线程进入屏障通过`CyclicBarrier.await()`方法。
 
 ![CyclicBarrier](/iblog/posts/annex/images/essays/CyclicBarrier.gif)
 
