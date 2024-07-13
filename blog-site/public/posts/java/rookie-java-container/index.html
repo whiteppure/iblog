@@ -1186,9 +1186,9 @@ Java中提供的数组是用来存储固定大小的同类型元素，所以Java
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><h3 id="arraylist扩容">ArrayList扩容</h3>
-<p>因为<code>ArrayLis</code>t底层使用数组保存数据的，而数组一旦被创建就不能改变大小，但是<code>ArrayList</code>的长度是可以改变的，所以可以通过<code>ArrayList</code>类中的<code>add</code>方法找到数组扩容方法。
+<p>因为<code>ArrayList</code>底层使用数组保存数据的，而数组一旦被创建就不能改变大小，但是<code>ArrayList</code>的长度是可以改变的，所以可以通过<code>ArrayList</code>类中的<code>add</code>方法找到数组扩容方法。
 <code>add</code>方法调用栈：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">add 
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">add 
 </span></span><span class="line"><span class="cl">    -&gt; ensureCapacityInternal()
 </span></span><span class="line"><span class="cl">    -&gt; calculateCapacity()
 </span></span><span class="line"><span class="cl">    -&gt; ensureExplicitCapacity()
@@ -1268,18 +1268,18 @@ Java中提供的数组是用来存储固定大小的同类型元素，所以Java
 </span></span></span></code></pre></div><p>因此，在多线程环境中使用<code>ArrayList</code>时，需要手动同步操作，或者使用线程安全的集合类。保证<code>ArrayList</code>线程安全有以下几种方法：</p>
 <ol>
 <li>可以使用 <code>Vector</code> 来代替 <code>ArrayList</code>。<code>Vector</code>是线程安全的<code>ArrayList</code>，但是由于底层是加了<code>synchronized</code>，性能略差不推荐使用；
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">List</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Vector</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">list</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">().</span><span class="na">toString</span><span class="p">());</span><span class="w">
-</span></span></span></code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">List list = new Vector();
+</span></span><span class="line"><span class="cl">list.add(UUID.randomUUID().toString());
+</span></span></code></pre></div></li>
 <li>使用<code>Collections.synchronizedArrayList()</code> 来创建 <code>ArrayList</code>。使用<code>Collections</code>工具类来创建<code>ArrayList</code>的思路是，在<code>ArrayList</code>的外边套了一个<code>synchronized</code>外壳，来保证<code>ArrayList</code>线程安全；
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">List</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Collections</span><span class="p">.</span><span class="na">synchronizedArrayList</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">list</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">().</span><span class="na">toString</span><span class="p">());</span><span class="w">
-</span></span></span></code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">List list = Collections.synchronizedArrayList();
+</span></span><span class="line"><span class="cl">list.add(UUID.randomUUID().toString());
+</span></span></code></pre></div></li>
 <li>使用<code>CopyOnWriteArrayList()</code>来保证 <code>ArrayList</code> 线程安全。<code>CopyWriteArrayList</code>字面意思就是在写的时候复制，主要思想就是读写分离的思想。
 <code>CopyWriteArrayList</code>之所以线程安全的原因是在源码里面使用<code>ReentrantLock</code>，所以保证了某个线程在写的时候不会被打断；
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">CopyOnWriteArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CopyOnWriteArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">list</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">().</span><span class="na">toString</span><span class="p">());</span><span class="w">
-</span></span></span></code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">CopyOnWriteArrayList&lt;String&gt; list = new CopyOnWriteArrayList&lt;&gt;();
+</span></span><span class="line"><span class="cl">list.add(UUID.randomUUID().toString());
+</span></span></code></pre></div></li>
 </ol>
 <h3 id="arraylist安全删除">ArrayList安全删除</h3>
 <p>在<code>ArrayList</code>中删除元素时，&ldquo;安全删除&rdquo; 指的是在删除元素过程中避免出现异常或错误，并确保集合的结构和元素的状态保持一致。
@@ -1300,8 +1300,7 @@ Java中提供的数组是用来存储固定大小的同类型元素，所以Java
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>在前面讲过<code>add</code>方法，会操作<code>modCount</code>变量的值，在查看源码的时候，发现调用<code>remove</code>方法时，也会操作<code>modCount</code>变量的值。
-当调用<code>remove</code>方法时执行了<code>modCount++</code>，此时<code>modCount</code>变成了<code>N+1</code>。
-然后接着遍历调用<code>next</code>方法，调用<code>checkForComodification</code>比较<code>expectedModCount</code>和<code>modCount</code>的大小，此时<code>modCount != expectedModCount</code>，便抛出异常。</p>
+当调用<code>remove</code>方法时执行了<code>modCount++</code>，此时<code>modCount</code>变成了<code>N+1</code>。然后接着遍历调用<code>next</code>方法，调用<code>checkForComodification</code>比较<code>expectedModCount</code>和<code>modCount</code>的大小，此时<code>modCount != expectedModCount</code>，便抛出异常。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">final</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkForComodification</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">modCount</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">expectedModCount</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ConcurrentModificationException</span><span class="p">();</span><span class="w">
@@ -1356,7 +1355,7 @@ Java中提供的数组是用来存储固定大小的同类型元素，所以Java
 如果该位置上不存在任何元素，则直接将新元素添加到<code>HashSet</code>中，并返回<code>true</code>。</p>
 <p>简单来说，<code>HashSet</code>利用对象的哈希码和<code>equals</code>方法来确保集合中不存储重复的元素。
 当添加新元素时，先计算其哈希码确定存储位置，如果位置上已存在相同哈希码且通过<code>equals</code>方法比较相等的元素，则不添加，否则添加新元素到集合中。</p>
-<p>尝试阅读<code>HashSet</code>的具体实现源码，<code>HashSet</code>添加方法的实现源码如下：</p>
+<p><code>HashSet</code>添加方法的实现源码如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// hashmap 中 put() 返回 null 时，表示操作成功</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="n">E</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">e</span><span class="p">,</span><span class="w"> </span><span class="n">PRESENT</span><span class="p">)</span><span class="o">==</span><span class="kc">null</span><span class="p">;</span><span class="w">
@@ -1442,7 +1441,7 @@ Java中提供的数组是用来存储固定大小的同类型元素，所以Java
 因此，如果向<code>HashSet</code>中添加一个已经存在的元素，新添加的集合元素不会覆盖已有元素，从而保证了元素的不重复。
 如果不是重复元素，<code>put</code>方法最终会返回<code>null</code>，传递到<code>HashSet</code>的<code>add</code>方法就是添加成功。</p>
 <h3 id="equals与hashcode">equals与hashCode</h3>
-<p>因为<code>HashSet</code>，底层用到了<code>equals</code>和<code>hashCode</code>方法，如果对象中的<code>equals</code>和<code>hashCode</code>方法没有正确地重写，可能会导致<code>HashSet</code>在判断元素相等性时出现问题，从而允许添加相同的元素。</p>
+<p>因为<code>HashSet</code>底层用到了<code>equals</code>和<code>hashCode</code>方法，如果对象中的<code>equals</code>和<code>hashCode</code>方法没有正确地重写，可能会导致<code>HashSet</code>在判断元素相等性时出现问题，从而允许添加相同的元素。</p>
 <p><code>equals()</code>地址比较是通过对象的哈希值来比较的。<code>hash</code>值是由<code>hashCode</code>方法产生的，<code>hashCode</code>属于<code>Object</code>类的本地方法，默认使用<code>==</code>比较两个对象，如果<code>equals()</code>相等<code>，hashcode</code>一定相等，如果<code>hashcode</code>相等，<code>equals</code>不一定相等。
 所以在覆盖<code>equals</code>方法时应当总是覆盖<code>hashCode</code>方法，保证等价的两个对象散列值也相等。</p>
 <p>下面的代码中，新建了两个等价的对象，并将它们添加到<code>HashSet</code>中。我们希望将这两个对象当成一样的，只在集合中添加一个对象，但是因为<code>EqualExample</code>没有实现<code>hashCode</code>方法，因此这两个对象的散列值是不同的，最终导致集合添加了两个等价的对象。</p>
@@ -1475,8 +1474,8 @@ Java中提供的数组是用来存储固定大小的同类型元素，所以Java
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>参照<code>ArrayList</code>解决方案，得到<code>HashSet</code>两种解决方案：</p>
 <ul>
-<li><code>Collections.synchronizedSet</code>集合工具类解决；</li>
-<li>使用 <code>CopyOnWriteArraySet</code>保证集合线程安全；</li>
+<li>使用<code>Collections.synchronizedSet</code>集合工具类解决；</li>
+<li>使用<code>CopyOnWriteArraySet</code>保证集合线程安全；</li>
 </ul>
 <p>由于性能因素，一般情况使用 <code>CopyOnWriteArraySet</code>场景较多，代码演示：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MainTest</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -1504,24 +1503,24 @@ Java中提供的数组是用来存储固定大小的同类型元素，所以Java
 <p>常见实现：</p>
 <ul>
 <li><code>LinkedList</code>：<code>LinkedList</code>类实现了<code>Queue</code>接口，同时也实现了<code>Deque</code>接口（双端队列）。它可以作为队列、双端队列或堆栈使用；
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Queue</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">queue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LinkedList</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">queue</span><span class="p">.</span><span class="na">offer</span><span class="p">(</span><span class="s">&#34;A&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">queue</span><span class="p">.</span><span class="na">offer</span><span class="p">(</span><span class="s">&#34;B&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">queue</span><span class="p">.</span><span class="na">poll</span><span class="p">();</span><span class="w"> </span><span class="c1">// 返回 &#34;A&#34; 并移除</span><span class="w">
-</span></span></span></code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">Queue&lt;String&gt; queue = new LinkedList&lt;&gt;();
+</span></span><span class="line"><span class="cl">queue.offer(&#34;A&#34;);
+</span></span><span class="line"><span class="cl">queue.offer(&#34;B&#34;);
+</span></span><span class="line"><span class="cl">queue.poll(); // 返回 &#34;A&#34; 并移除
+</span></span></code></pre></div></li>
 <li><code>PriorityQueue</code>：<code>PriorityQueue</code>是一个基于优先级堆实现的队列，元素根据其自然顺序进行排序；
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">PriorityQueue</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PriorityQueue</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">pq</span><span class="p">.</span><span class="na">offer</span><span class="p">(</span><span class="n">2</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">pq</span><span class="p">.</span><span class="na">offer</span><span class="p">(</span><span class="n">1</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">pq</span><span class="p">.</span><span class="na">offer</span><span class="p">(</span><span class="n">3</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">pq</span><span class="p">.</span><span class="na">poll</span><span class="p">();</span><span class="w"> </span><span class="c1">// 返回 1 并移除</span><span class="w">
-</span></span></span></code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">PriorityQueue&lt;Integer&gt; pq = new PriorityQueue&lt;&gt;();
+</span></span><span class="line"><span class="cl">pq.offer(2);
+</span></span><span class="line"><span class="cl">pq.offer(1);
+</span></span><span class="line"><span class="cl">pq.offer(3);
+</span></span><span class="line"><span class="cl">pq.poll(); // 返回 1 并移除
+</span></span></code></pre></div></li>
 <li><code>ArrayDeque</code>：<code>ArrayDeque</code>类实现了<code>Deque</code>接口，是一个可调整大小的数组实现的双端队列，通常比<code>LinkedList</code>更快；
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Deque</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">deque</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">deque</span><span class="p">.</span><span class="na">offer</span><span class="p">(</span><span class="s">&#34;A&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">deque</span><span class="p">.</span><span class="na">offerFirst</span><span class="p">(</span><span class="s">&#34;B&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">deque</span><span class="p">.</span><span class="na">pollLast</span><span class="p">();</span><span class="w"> </span><span class="c1">// 返回 &#34;A&#34; 并移除</span><span class="w">
-</span></span></span></code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">Deque&lt;String&gt; deque = new ArrayDeque&lt;&gt;();
+</span></span><span class="line"><span class="cl">deque.offer(&#34;A&#34;);
+</span></span><span class="line"><span class="cl">deque.offerFirst(&#34;B&#34;);
+</span></span><span class="line"><span class="cl">deque.pollLast(); // 返回 &#34;A&#34; 并移除
+</span></span></code></pre></div></li>
 </ul>
 <p>队列的实现通常不允许插入<code>null</code>元素，尽管一些实现，如<code>LinkedList</code>，不禁止插入<code>null</code>元素。
 即使在允许的实现中，<code>null</code>也不应插入队列中，因为<code>poll</code>方法也使用<code>null</code>作为特殊返回值，用来表示队列不包含任何元素。这会导致难以区分队列中的<code>null</code>元素和队列为空的情况。</p>
@@ -1535,7 +1534,7 @@ Java中提供的数组是用来存储固定大小的同类型元素，所以Java
 <code>HashMap</code>实现了<code>Map</code>接口，根据键的<code>HashCode</code>值存储数据，具有很快的访问速度，最多允许一条记录的键为<code>null</code>，不支持线程同步。<code>HashMap</code>是无序的，即不会记录插入的顺序。</p>
 <p>相关操作：</p>
 <ul>
-<li>存贮：通过<code>key</code>的<code>hashcode</code>方法找到在<code>hashMap</code>存贮的位置，如果该位置有元素则通过<code>equals</code>方法进行比较，如果<code>equals</code>返回值为<code>true</code>，则覆盖<code>value</code>；
+<li>存储：通过<code>key</code>的<code>hashcode</code>方法找到在<code>hashMap</code>存储的位置，如果该位置有元素则通过<code>equals</code>方法进行比较，如果<code>equals</code>返回值为<code>true</code>，则覆盖<code>value</code>；
 如果<code>equals</code>返回值为<code>false</code>则在该数组元素的头部追加该元素，形成一个链表结构；</li>
 <li>读取：通过<code>key</code>的<code>hashcode</code>方法获取元素存在该数组的位置，然后通过<code>equals</code>拿到该值；</li>
 </ul>

@@ -324,9 +324,9 @@ public class ArrayListCopy {
 ```
 
 ### ArrayList扩容
-因为`ArrayLis`t底层使用数组保存数据的，而数组一旦被创建就不能改变大小，但是`ArrayList`的长度是可以改变的，所以可以通过`ArrayList`类中的`add`方法找到数组扩容方法。
+因为`ArrayList`底层使用数组保存数据的，而数组一旦被创建就不能改变大小，但是`ArrayList`的长度是可以改变的，所以可以通过`ArrayList`类中的`add`方法找到数组扩容方法。
 `add`方法调用栈：
-```
+```text
 add 
     -> ensureCapacityInternal()
     -> calculateCapacity()
@@ -427,21 +427,22 @@ public void add(int index, E element) {
 
 因此，在多线程环境中使用`ArrayList`时，需要手动同步操作，或者使用线程安全的集合类。保证`ArrayList`线程安全有以下几种方法：
 1. 可以使用 `Vector` 来代替 `ArrayList`。`Vector`是线程安全的`ArrayList`，但是由于底层是加了`synchronized`，性能略差不推荐使用；
-    ```java
+    ```text
     List list = new Vector();
     list.add(UUID.randomUUID().toString());
     ```
 2. 使用`Collections.synchronizedArrayList()` 来创建 `ArrayList`。使用`Collections`工具类来创建`ArrayList`的思路是，在`ArrayList`的外边套了一个`synchronized`外壳，来保证`ArrayList`线程安全；
-    ```java
+    ```text
     List list = Collections.synchronizedArrayList();
     list.add(UUID.randomUUID().toString());
     ```
 3. 使用`CopyOnWriteArrayList()`来保证 `ArrayList` 线程安全。`CopyWriteArrayList`字面意思就是在写的时候复制，主要思想就是读写分离的思想。
 `CopyWriteArrayList`之所以线程安全的原因是在源码里面使用`ReentrantLock`，所以保证了某个线程在写的时候不会被打断；
-    ```java
+    ```text
     CopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();
     list.add(UUID.randomUUID().toString());
     ```
+
 ### ArrayList安全删除
 在`ArrayList`中删除元素时，"安全删除" 指的是在删除元素过程中避免出现异常或错误，并确保集合的结构和元素的状态保持一致。
 在使用增强型`for-each`循环遍历`ArrayList`时，如果尝试删除元素，会抛出`ConcurrentModificationException`。
@@ -464,8 +465,7 @@ public class ArrayListError {
 ```
 
 在前面讲过`add`方法，会操作`modCount`变量的值，在查看源码的时候，发现调用`remove`方法时，也会操作`modCount`变量的值。
-当调用`remove`方法时执行了`modCount++`，此时`modCount`变成了`N+1`。
-然后接着遍历调用`next`方法，调用`checkForComodification`比较`expectedModCount`和`modCount`的大小，此时`modCount != expectedModCount`，便抛出异常。
+当调用`remove`方法时执行了`modCount++`，此时`modCount`变成了`N+1`。然后接着遍历调用`next`方法，调用`checkForComodification`比较`expectedModCount`和`modCount`的大小，此时`modCount != expectedModCount`，便抛出异常。
 ```java
 final void checkForComodification() {
     if (modCount != expectedModCount)
@@ -529,7 +529,7 @@ public class HashSetExample {
 简单来说，`HashSet`利用对象的哈希码和`equals`方法来确保集合中不存储重复的元素。
 当添加新元素时，先计算其哈希码确定存储位置，如果位置上已存在相同哈希码且通过`equals`方法比较相等的元素，则不添加，否则添加新元素到集合中。
 
-尝试阅读`HashSet`的具体实现源码，`HashSet`添加方法的实现源码如下：
+`HashSet`添加方法的实现源码如下：
 ```java
 // hashmap 中 put() 返回 null 时，表示操作成功
 public boolean add(E e) {
@@ -618,7 +618,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 如果不是重复元素，`put`方法最终会返回`null`，传递到`HashSet`的`add`方法就是添加成功。
 
 ### equals与hashCode
-因为`HashSet`，底层用到了`equals`和`hashCode`方法，如果对象中的`equals`和`hashCode`方法没有正确地重写，可能会导致`HashSet`在判断元素相等性时出现问题，从而允许添加相同的元素。
+因为`HashSet`底层用到了`equals`和`hashCode`方法，如果对象中的`equals`和`hashCode`方法没有正确地重写，可能会导致`HashSet`在判断元素相等性时出现问题，从而允许添加相同的元素。
 
 `equals()`地址比较是通过对象的哈希值来比较的。`hash`值是由`hashCode`方法产生的，`hashCode`属于`Object`类的本地方法，默认使用`==`比较两个对象，如果`equals()`相等`，hashcode`一定相等，如果`hashcode`相等，`equals`不一定相等。
 所以在覆盖`equals`方法时应当总是覆盖`hashCode`方法，保证等价的两个对象散列值也相等。
@@ -658,8 +658,8 @@ public class MainTest {
 ```
 
 参照`ArrayList`解决方案，得到`HashSet`两种解决方案：
-- `Collections.synchronizedSet`集合工具类解决；
-- 使用 `CopyOnWriteArraySet`保证集合线程安全；
+- 使用`Collections.synchronizedSet`集合工具类解决；
+- 使用`CopyOnWriteArraySet`保证集合线程安全；
 
 由于性能因素，一般情况使用 `CopyOnWriteArraySet`场景较多，代码演示：
 ```java
@@ -692,14 +692,14 @@ public CopyOnWriteArraySet() {
 
 常见实现：
 - `LinkedList`：`LinkedList`类实现了`Queue`接口，同时也实现了`Deque`接口（双端队列）。它可以作为队列、双端队列或堆栈使用；
-   ```java
+   ```text
    Queue<String> queue = new LinkedList<>();
    queue.offer("A");
    queue.offer("B");
    queue.poll(); // 返回 "A" 并移除
    ```
 - `PriorityQueue`：`PriorityQueue`是一个基于优先级堆实现的队列，元素根据其自然顺序进行排序；
-   ```java
+   ```text
    PriorityQueue<Integer> pq = new PriorityQueue<>();
    pq.offer(2);
    pq.offer(1);
@@ -707,7 +707,7 @@ public CopyOnWriteArraySet() {
    pq.poll(); // 返回 1 并移除
    ```
 - `ArrayDeque`：`ArrayDeque`类实现了`Deque`接口，是一个可调整大小的数组实现的双端队列，通常比`LinkedList`更快；
-   ```java
+   ```text
    Deque<String> deque = new ArrayDeque<>();
    deque.offer("A");
    deque.offerFirst("B");
@@ -726,7 +726,7 @@ public CopyOnWriteArraySet() {
 `HashMap`实现了`Map`接口，根据键的`HashCode`值存储数据，具有很快的访问速度，最多允许一条记录的键为`null`，不支持线程同步。`HashMap`是无序的，即不会记录插入的顺序。
 
 相关操作：
-- 存贮：通过`key`的`hashcode`方法找到在`hashMap`存贮的位置，如果该位置有元素则通过`equals`方法进行比较，如果`equals`返回值为`true`，则覆盖`value`；
+- 存储：通过`key`的`hashcode`方法找到在`hashMap`存储的位置，如果该位置有元素则通过`equals`方法进行比较，如果`equals`返回值为`true`，则覆盖`value`；
 如果`equals`返回值为`false`则在该数组元素的头部追加该元素，形成一个链表结构；
 - 读取：通过`key`的`hashcode`方法获取元素存在该数组的位置，然后通过`equals`拿到该值；
 
