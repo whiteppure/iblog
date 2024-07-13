@@ -382,8 +382,8 @@ List<String> list = new ArrayList(1000000);
 所以在实际开发中，`ArrayList`适用于需要快速随机访问和较少插入删除操作的场景，而`LinkedList`适用于频繁插入删除操作和需要实现队列或双端队列的场景。
 
 ### 线程安全
-众所周知，`ArrayList`是线程不安全的，因为它不保证在多线程环境下的同步操作，这意味着多个线程同时访问和修改同一个`ArrayList`对象时可能会导致数据不一致或抛出异常。
-为避免偶然，多试几次这个代码，很大情况会出现`ConcurrentModificationException`，即同步修改异常。
+众所周知，`ArrayList`是线程不安全的，因为它不保证在多线程环境下的同步操作，当多个线程同时访问和修改同一个`ArrayList`对象时可能会导致数据不一致或抛出异常。
+多线程下抛出`ConcurrentModificationException`异常。
 ```java
 public class MainTest {
     // 如果没有报错，需要多试几次
@@ -398,8 +398,8 @@ public class MainTest {
     }
 }
 ```
-出现该异常的原因是`fail-fast`机制。在查看源码的时候，发现调用`remove`方法时，会执行`checkForComodification`方法。
-若`modCount` 不等于`expectedModCount`，则抛出`ConcurrentModificationException`异常。
+出现该异常的原因是集合中的`fail-fast`机制。在查看源码的时候，发现调用`remove`方法时，会执行`checkForComodification`方法。
+若`modCount`不等于`expectedModCount`，则抛出`ConcurrentModificationException`异常。
 ```java
 final void checkForComodification() {
     if (modCount != expectedModCount)
@@ -408,7 +408,7 @@ final void checkForComodification() {
 ```
 那为什么会抛出`ConcurrentModificationException`异常呢？
 在调用`add`方法时，会修改`modCount++`。一个线程调用`add`方法，一个线程调用`next`遍历方法，都共同读取`modCount`变量的值。
-因为是多线程操作，就很容易出现`modCount != expectedModCount`，所以便抛出异常。
+因为是多线程操作，`expectedModCount`、`modCount`变量为公共的，所以很容易出现`modCount != expectedModCount`，所以便抛出异常。
 ```java
 // 添加元素到指定的位置
 public void add(int index, E element) {
@@ -443,6 +443,50 @@ public void add(int index, E element) {
     list.add(UUID.randomUUID().toString());
     ```
 
+其中比较推荐的解决方案是使用`CopyOnWriteArrayList`。
+`CopyWriteArrayList`字面意思就是在写的时候复制，思想就是读写分离的思想。它的基本原理是每次修改操作都会创建该列表的一个新副本，因此读操作不需要加锁，可以并发执行。
+以下是`CopyOnWriteArrayList`的`add()`方法源码：
+```java
+    /** The array, accessed only via getArray/setArray. */
+    private transient volatile Object[] array;
+
+    /** The lock protecting all mutators */
+    final transient ReentrantLock lock = new ReentrantLock();
+
+     /**
+     * Gets the array.  Non-private so as to also be accessible
+     * from CopyOnWriteArraySet class.
+     */
+    final Object[] getArray() {
+        return array;
+    }
+
+    /**
+     * Appends the specified element to the end of this list.
+     *
+     * @param e element to be appended to this list
+     * @return {@code true}
+     */
+    public boolean add(E e) {
+        final ReentrantLock lock = this.lock;
+        lock.lock();
+        try {
+            Object[] elements = getArray();
+            int len = elements.length;
+            Object[] newElements = Arrays.copyOf(elements, len + 1);
+            newElements[len] = e;
+            setArray(newElements);
+            return true;
+        } finally {
+            lock.unlock();
+        }
+    }
+```
+`CopyWriteArrayList`之所以线程安全的原因是在源码里面使用`ReentrantLock`保证了某个线程在写的时候不会被打断。
+可以看到源码开始先是复制了一份数组，同一时刻只有一个线程写，其余的线程会读。在复制的数组上边进行写操作，写好以后在返回`true`。
+这样就把读写进行了分离，写好以后因为`array`加了`volatile`修饰，所以该数组是对于其他的线程是可见的，就会读取到最新的值。
+由于每次写操作都会创建一个数组的新副本，所以写操作的开销较大。但是读取操作非常高效且不需要加锁，因此适用于读操作远多于写操作的场景，例如缓存、白名单等。
+
 ### ArrayList安全删除
 在`ArrayList`中删除元素时，"安全删除" 指的是在删除元素过程中避免出现异常或错误，并确保集合的结构和元素的状态保持一致。
 在使用增强型`for-each`循环遍历`ArrayList`时，如果尝试删除元素，会抛出`ConcurrentModificationException`。
@@ -465,7 +509,7 @@ public class ArrayListError {
 ```
 
 在前面讲过`add`方法，会操作`modCount`变量的值，在查看源码的时候，发现调用`remove`方法时，也会操作`modCount`变量的值。
-当调用`remove`方法时执行了`modCount++`，此时`modCount`变成了`N+1`。然后接着遍历调用`next`方法，调用`checkForComodification`比较`expectedModCount`和`modCount`的大小，此时`modCount != expectedModCount`，便抛出异常。
+当调用`remove`方法时执行了`modCount++`，此时`modCount`变成了`N+1`。然后接着再循环中遍历调用`next`方法，调用`checkForComodification`比较`expectedModCount`和`modCount`的大小，此时`modCount != expectedModCount`，便抛出异常。
 ```java
 final void checkForComodification() {
     if (modCount != expectedModCount)
@@ -486,6 +530,21 @@ public E remove(int index) {
     elementData[--size] = null; // Let gc do its work
 
     return oldValue;
+}
+```
+安全删除的关键在于，确保在遍历和删除操作中不会同时对集合的结构造成不一致性，从而导致程序运行时出现异常或者结果不符合预期。
+
+最经典的解决方案是使用`Iterator`遍历集合，在遍历过程中删除元素。在使用迭代器遍历`ArrayList`时，迭代器会维护一个`expectedModCount`，它记录了迭代开始时的`modCount`。
+每次调用迭代器的`next`方法时，都会检查当前的`modCount`是否与`expectedModCount`相等，如果不相等就抛出`ConcurrentModificationException`异常。使用迭代器的`remove()`方法能够确保在删除元素时，同步更新，从而避免异常。
+```text
+ArrayList<String> list = new ArrayList<>();
+// 添加元素到列表中
+Iterator<String> iterator = list.iterator();
+while (iterator.hasNext()) {
+    String element = iterator.next();
+    if (/* 满足删除条件 */) {
+        iterator.remove(); // 使用迭代器的 remove 方法安全删除元素
+    }
 }
 ```
 
@@ -614,8 +673,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 }
 ```
 从上述源码可以看出，当将一个键值对放入`HashMap`时，首先根据`key`的`hashCode()`返回值决定该`Entry`的存储位置。如果有两个`key`的`hash`值相同，则会判断这两个元素`key`的`equals()`是否相同，如果相同就返回`true`，说明是重复键值对，那么`HashSet`中`add`方法的返回值会是`false`，表示`HashSet`添加元素失败。
-因此，如果向`HashSet`中添加一个已经存在的元素，新添加的集合元素不会覆盖已有元素，从而保证了元素的不重复。
-如果不是重复元素，`put`方法最终会返回`null`，传递到`HashSet`的`add`方法就是添加成功。
+因此，如果向`HashSet`中添加一个已经存在的元素，新添加的集合元素不会覆盖已有元素，从而保证了元素的不重复。如果不是重复元素，`put`方法最终会返回`null`，传递到`HashSet`的`add`方法就是添加成功。
 
 ### equals与hashCode
 因为`HashSet`底层用到了`equals`和`hashCode`方法，如果对象中的`equals`和`hashCode`方法没有正确地重写，可能会导致`HashSet`在判断元素相等性时出现问题，从而允许添加相同的元素。
@@ -642,7 +700,7 @@ public class MainTest {
 所以在覆盖`equals`方法时应当总是覆盖`hashCode`方法，保证等价的两个对象散列值也相等。
 
 ### 线程安全
-`HashSet`和`ArrayList`类似，也是线程不安全的集合类，也会报`ConcurrentModificationException` 异常。代码演示线程不安全示例：
+`HashSet`和`ArrayList`类似，也是线程不安全的集合类，也会出现`ConcurrentModificationException`异常。代码演示线程不安全示例：
 ```java
 public class MainTest {
     public static void main(String[] args) {
@@ -657,25 +715,8 @@ public class MainTest {
 }
 ```
 
-参照`ArrayList`解决方案，得到`HashSet`两种解决方案：
-- 使用`Collections.synchronizedSet`集合工具类解决；
-- 使用`CopyOnWriteArraySet`保证集合线程安全；
-
-由于性能因素，一般情况使用 `CopyOnWriteArraySet`场景较多，代码演示：
-```java
-public class MainTest {
-    public static void main(String[] args) {
-        CopyOnWriteArraySet<String> set = new CopyOnWriteArraySet<>();
-        for(int i=0; i< 10; i++) {
-            new Thread(() -> {
-                set.add(UUID.randomUUID().toString());
-                System.out.println(set);
-            },String.valueOf(i)).start();
-        }
-    }
-}
-```
-`CopyOnWriteArraySet`底层调用的是`CopyOnWriteArrayList`：
+`HashSet`线程不安全的解决方案通常是使用`CopyOnWriteArraySet`。这种集合在读操作远多于写操作的场景中非常有用，因为它通过每次修改创建集合的副本来实现线程安全。
+`CopyOnWriteArraySet`是Java中一种线程安全的`Set`实现，内部使用了`CopyOnWriteArrayList`来存储元素。
 ```java
 private final CopyOnWriteArrayList<E> al;
 /**
@@ -683,6 +724,37 @@ private final CopyOnWriteArrayList<E> al;
  */
 public CopyOnWriteArraySet() {
     al = new CopyOnWriteArrayList<E>();
+}
+```
+因为底层用`CopyOnWriteArrayList`存储，所以写操作开销大，每次修改都会创建数组副本，适用场景有限。不适用于写操作频繁的场景，否则会导致高昂的内存和时间开销。
+与`CopyOnWriteArrayList`不同的是，`CopyOnWriteArraySet`不允许包含重复元素。如果尝试添加一个已经存在的元素，集合将保持不变，所以该集合在线程不安全的情况下可替代`HashSet`。
+```java
+public class CopyOnWriteArraySetExample {
+   public static void main(String[] args) {
+      // 创建一个 CopyOnWriteArraySet
+      Set<String> cowSet = new CopyOnWriteArraySet<>();
+
+      // 添加元素
+      cowSet.add("Apple");
+      cowSet.add("Banana");
+      cowSet.add("Apple"); // 不允许重复元素
+
+      // 读取元素
+      System.out.println("Set: " + cowSet);
+
+      // 迭代元素
+      for (String fruit : cowSet) {
+         System.out.println(fruit);
+      }
+
+      // 添加新元素
+      cowSet.add("Grapes");
+      System.out.println("After adding Grapes: " + cowSet);
+
+      // 删除元素
+      cowSet.remove("Banana");
+      System.out.println("After removing Banana: " + cowSet);
+   }
 }
 ```
 
@@ -919,7 +991,7 @@ JDK会默认帮我们计算一个相对合理的值当做初始容量，所谓�
 > 负载因子，表示HashMap满的程度，默认值为0.75f，也就是说默认情况下，当HashMap中元素个数达到了容量的3/4的时候就会进行自动扩容；
 
 设置多少合适，可以参考JDK8中`putAll`方法中的实现：
-```java
+```text
 (int) ((float) expectedSize / 0.75F + 1.0F);
 ```
 通过`expectedSize/0.75F+1.0F`计算，将初始化容量设置为7带入，得到`7/0.75+1=10`，10经过JDK处理之后，会被设置成16，这就大大的减少了扩容的几率。
@@ -949,7 +1021,7 @@ static int capacity(int expectedSize) {
 扩容数组的方式只能再去开辟一个新的数组，并把之前的元素转移到新数组上。
 
 `HashMap`的容量是有上限的，必须小于`1<<30`，即`1073741824`。如果容量超出了这个数，则不再增长，且阈值会被设置为`Integer.MAX_VALUE`：
-```java
+```text
 // Java8
 if (oldCap >= MAXIMUM_CAPACITY) {
     threshold = Integer.MAX_VALUE;
@@ -1165,7 +1237,7 @@ Java1.8的`HashMap`扩容原理与1.7类似，但有一些重要改进。
 ```
 
 ### 线程安全
-`HashMap`也是线程不安全的集合类，在多线程环境下使用同样会出现`ConcurrentModificationException`。
+`HashMap`是线程不安全的集合类。因为`HashMap`中的方法大多没有同步，这意味着如果一个线程在遍历`HashMap`的同时，另一个线程修改了`HashMap`，例如添加或删除元素，可能会导致`ConcurrentModificationException`。
 ```java
 public class MainTest {
     public static void main(String[] args) {
@@ -1179,7 +1251,30 @@ public class MainTest {
     }
 }
 ```
-更严重的是，当多个线程中的 `HashMap` 同时扩容时，再使用`put`方法添加元素，如果`hash`值相同，可能出现同时在同一数组下用链表表示，造成闭环，导致在`get`时会出现死循环，CPU飙升到100%。
+更严重的是，当多个线程中的`HashMap`同时扩容时，再使用`put`方法添加元素，如果`hash`值相同，可能出现同时在同一数组下用链表表示，造成闭环，导致在`get`时会出现死循环，CPU飙升到100%。
 
 在大多数并发场景中，推荐使用`ConcurrentHashMap`，因为它设计用于高并发环境，并且在大多数情况下性能优于使用同步包装或手动同步的`HashMap`。
-`ConcurrentHashMap`原理简单理解为，`HashMap` + 分段锁。因为`HashMap`在JDK1.7与JDK1.8结构上做了调整，所以`ConcurrentHashMap`在JDK1.7与JDK1.8结构上也有所不同。
+`ConcurrentHashMap`是Java中的一种线程安全的哈希表实现，用来替代传统的`HashMap`，来解决在多线程环境中并发修改带来的问题。
+与`Hashtable`不同，`ConcurrentHashMap`不对整个表进行全局加锁。相反它只对具体操作涉及的部分进行加锁，减少了线程之间的竞争。
+```java
+public class ConcurrentHashMapExample {
+    public static void main(String[] args) {
+        ConcurrentHashMap<Integer, String> map = new ConcurrentHashMap<>();
+
+        // 添加元素
+        map.put(1, "One");
+        map.put(2, "Two");
+
+        // 读取元素
+        System.out.println("Value for key 1: " + map.get(1));
+
+        // 删除元素
+        map.remove(2);
+
+        // 迭代元素
+        for (Integer key : map.keySet()) {
+            System.out.println("Key: " + key + ", Value: " + map.get(key));
+        }
+    }
+}
+```
