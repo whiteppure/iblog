@@ -2132,8 +2132,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%b8%b8%e7%94%a8%e7%ba%bf%e7%a8%8b%e5%ae%89%e5%85%a8%e9%9b%86%e5%90%88">
-                    常用线程安全集合
+                <a class="nav-link text-left" href="#%e5%b8%b8%e7%94%a8%e7%ba%bf%e7%a8%8b%e5%ae%89%e5%85%a8%e7%9a%84%e9%9b%86%e5%90%88">
+                    常用线程安全的集合
                 </a>
             </li>
             
@@ -2881,11 +2881,9 @@
 <blockquote>
 <p>摘自<a href="https://developer.aliyun.com/topic/download?spm=a2c6h.15028928.J_5293118740.2&id=805">《阿里巴巴开发手册》</a>
 【强制】线程资源必须通过线程池提供，不允许在应用中自行显式创建线程。
-说明：线程池的好处是减少在创建和销毁线程上所消耗的时间以及系统资源的开销，解决资源不足的问题。 如果不使用线程池，有可能造成系统创建大量同类线程而导致消耗完内存或者“过度切换”的问题。
-【强制】线程池不允许使用 <code>Executors</code> 去创建，而是通过 <code>ThreadPoolExecutor</code> 的方式，这样的处理方式让写的同学更加明确线程池的运行规则，规避资源耗尽的风险。</p>
-</blockquote>
-<blockquote>
-<p>说明：<code>Executors</code> 返回的线程池对象的弊端如下：
+说明：线程池的好处是减少在创建和销毁线程上所消耗的时间以及系统资源的开销，解决资源不足的问题。 如果不使用线程池，有可能造成系统创建大量同类线程而导致消耗完内存或者“过度切换”的问题。<br>
+【强制】线程池不允许使用 <code>Executors</code> 去创建，而是通过 <code>ThreadPoolExecutor</code> 的方式，这样的处理方式让写的同学更加明确线程池的运行规则，规避资源耗尽的风险。
+说明：<code>Executors</code> 返回的线程池对象的弊端如下：
 1） <code>FixedThreadPool</code> 和 <code>SingleThreadPool</code>： 允许的请求队列长度为 <code>Integer.MAX_VALUE</code>，可能会堆积大量的请求，从而导致OOM。
 2） <code>CachedThreadPool</code>： 允许的创建线程数量为 <code>Integer.MAX_VALUE</code>，可能会创建大量的线程，从而导致 OOM。</p>
 </blockquote>
@@ -4647,7 +4645,7 @@ Java的线程是映射到操作系统原生线程之上的，如果要阻塞或�
 实际上，锁降级确实是会发生的，当JVM进入<strong>安全点</strong>的时候，会检查是否有闲置的`Monitor，然后试图进行降级。
 也就是说，仅仅是发生在STW的时候，只有垃圾回收线程能够观测到它，在我们正常使用的过程中是不会发生锁降级的，只有在GC的时候才会降级。</p>
 <blockquote>
-<p>程序执行时并非在所有地方都能停顿下来开始GC，只有在特定的位置才能停顿下来开始GC，这些位置称为安全点。</p>
+<p>安全点：程序执行时并非在所有地方都能停顿下来开始GC，只有在特定的位置才能停顿下来开始GC，这些位置称为安全点。</p>
 </blockquote>
 <h3 id="synchronized与可见性">synchronized与可见性</h3>
 <p>可见性是指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值。</p>
@@ -6011,7 +6009,7 @@ AQS中的队列，是指CLH队列（Craig， Landin， and Hagerste[三个人名
 </span></span><span class="line"><span class="cl">    threadLocal.remove();
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>除此之外，应尽量避免将<code>ThreadLocal</code>对象声明为静态变量，特别是在应用服务器或类似环境中，因为它们的生命周期通常较长，会增加内存泄漏的风险。</p>
-<h2 id="常用线程安全集合">常用线程安全集合</h2>
+<h2 id="常用线程安全的集合">常用线程安全的集合</h2>
 <p>在多线程环境中，数据的一致性和线程的安全性是至关重要的。传统的集合类，如<code>ArrayList</code>、<code>HashMap</code>和<code>HashSet</code>，在并发访问时并不安全，可能会导致数据不一致和其他并发问题。
 为了在并发编程中高效且安全地操作数据，Java提供了一系列线程安全的集合类来替代这些传统集合</p>
 <table>
