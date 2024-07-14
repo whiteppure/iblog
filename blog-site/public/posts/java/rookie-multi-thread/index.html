@@ -2132,8 +2132,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%b8%b8%e7%94%a8%e7%ba%bf%e7%a8%8b%e5%ae%89%e5%85%a8%e9%9b%86%e5%90%88">
-                    常用线程安全集合
+                <a class="nav-link text-left" href="#%e5%b8%b8%e7%94%a8%e7%ba%bf%e7%a8%8b%e5%ae%89%e5%85%a8%e7%9a%84%e9%9b%86%e5%90%88">
+                    常用线程安全的集合
                 </a>
             </li>
             
@@ -2881,11 +2881,9 @@
 <blockquote>
 <p>摘自<a href="https://developer.aliyun.com/topic/download?spm=a2c6h.15028928.J_5293118740.2&id=805">《阿里巴巴开发手册》</a>
 【强制】线程资源必须通过线程池提供，不允许在应用中自行显式创建线程。
-说明：线程池的好处是减少在创建和销毁线程上所消耗的时间以及系统资源的开销，解决资源不足的问题。 如果不使用线程池，有可能造成系统创建大量同类线程而导致消耗完内存或者“过度切换”的问题。
-【强制】线程池不允许使用 <code>Executors</code> 去创建，而是通过 <code>ThreadPoolExecutor</code> 的方式，这样的处理方式让写的同学更加明确线程池的运行规则，规避资源耗尽的风险。</p>
-</blockquote>
-<blockquote>
-<p>说明：<code>Executors</code> 返回的线程池对象的弊端如下：
+说明：线程池的好处是减少在创建和销毁线程上所消耗的时间以及系统资源的开销，解决资源不足的问题。 如果不使用线程池，有可能造成系统创建大量同类线程而导致消耗完内存或者“过度切换”的问题。<br>
+【强制】线程池不允许使用 <code>Executors</code> 去创建，而是通过 <code>ThreadPoolExecutor</code> 的方式，这样的处理方式让写的同学更加明确线程池的运行规则，规避资源耗尽的风险。
+说明：<code>Executors</code> 返回的线程池对象的弊端如下：
 1） <code>FixedThreadPool</code> 和 <code>SingleThreadPool</code>： 允许的请求队列长度为 <code>Integer.MAX_VALUE</code>，可能会堆积大量的请求，从而导致OOM。
 2） <code>CachedThreadPool</code>： 允许的创建线程数量为 <code>Integer.MAX_VALUE</code>，可能会创建大量的线程，从而导致 OOM。</p>
 </blockquote>
@@ -4056,12 +4054,6 @@ Java 内存模型通过以下方式限制处理器和编译器的优化：</p>
 <p>如果<code>thread2</code>观察到<code>flag</code>的值为<code>true</code>，则说明 Happens-Before 原则保证了在此之前的操作结果对于其他线程是可见的。但是只要不改变程序的最终执行结果和Happens-Before关系，Java内存模型允许编译器和处理器进行指令重排序。
 <code>thread1</code>可能会将<code>flag</code>设置 <code>true</code>之后才设置 <code>x</code> 的值为<code>1</code>。这种情况下，<code>thread2</code>在检查<code>flag</code>之后，可能会观察到 <code>x = 1</code>。
 这种情况仍然满足Happens-Before关系，尽管发生了重排序。</p>
-<p>在多线程编程中，因为线程之间的执行是并发的、无序的，因此我们需要一些规则来保证程序的正确性和可预测性。
-JMM中定义了&quot;Happens-Before&quot;这样一套规则，帮助我们确保在多线程环境中：</p>
-<ul>
-<li>顺序一致性： 程序在不同线程中的操作按照程序员编写的顺序执行，而不是被编译器或处理器随意重排序。</li>
-<li>内存可见性： 通过一些操作的&quot;Happens-Before&quot;关系，确保一个线程对共享变量的修改能够被其他线程及时看到。</li>
-</ul>
 <p>&ldquo;Happens-Before&quot;原则在Java内存模型中包含8条具体的规则：</p>
 <ol>
 <li>程序顺序规则。在一个线程内，按照程序代码的顺序执行，前面的操作总是先于后面的操作。
@@ -4653,7 +4645,7 @@ Java的线程是映射到操作系统原生线程之上的，如果要阻塞或�
 实际上，锁降级确实是会发生的，当JVM进入<strong>安全点</strong>的时候，会检查是否有闲置的`Monitor，然后试图进行降级。
 也就是说，仅仅是发生在STW的时候，只有垃圾回收线程能够观测到它，在我们正常使用的过程中是不会发生锁降级的，只有在GC的时候才会降级。</p>
 <blockquote>
-<p>程序执行时并非在所有地方都能停顿下来开始GC，只有在特定的位置才能停顿下来开始GC，这些位置称为安全点。</p>
+<p>安全点：程序执行时并非在所有地方都能停顿下来开始GC，只有在特定的位置才能停顿下来开始GC，这些位置称为安全点。</p>
 </blockquote>
 <h3 id="synchronized与可见性">synchronized与可见性</h3>
 <p>可见性是指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值。</p>
@@ -5769,7 +5761,7 @@ AQS中的队列，是指CLH队列（Craig， Landin， and Hagerste[三个人名
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p><code>CountDownLatch</code>要做的事情是，让一组线程达到一个屏障时被阻塞，直到最后一个线程达到屏障时，所有被屏障拦截的线程才会继续干活，线程进入屏障通过<code>CyclicBarrier.await()</code>方法。</p>
+</span></span></span></code></pre></div><p><code>CyclicBarrier</code>要做的事情是，让一组线程达到一个屏障时被阻塞，直到最后一个线程达到屏障时，所有被屏障拦截的线程才会继续干活，线程进入屏障通过<code>CyclicBarrier.await()</code>方法。</p>
 <p><img alt="CyclicBarrier" src="/iblog/posts/annex/images/essays/CyclicBarrier.gif"></p>
 <p><code>CyclicBarrier</code>是基于<code>ReentrantLock</code>实现的，其底层也是基于AQS。
 <code>CyclicBarrier</code>通过一个内部的计数器和一个锁来实现线程间的协调。当所有线程都调用<code>await</code>方法时，计数器递减，当计数器为零时，所有等待的线程将被唤醒，并重置计数器，以便下一次使用。</p>
@@ -6017,7 +6009,7 @@ AQS中的队列，是指CLH队列（Craig， Landin， and Hagerste[三个人名
 </span></span><span class="line"><span class="cl">    threadLocal.remove();
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>除此之外，应尽量避免将<code>ThreadLocal</code>对象声明为静态变量，特别是在应用服务器或类似环境中，因为它们的生命周期通常较长，会增加内存泄漏的风险。</p>
-<h2 id="常用线程安全集合">常用线程安全集合</h2>
+<h2 id="常用线程安全的集合">常用线程安全的集合</h2>
 <p>在多线程环境中，数据的一致性和线程的安全性是至关重要的。传统的集合类，如<code>ArrayList</code>、<code>HashMap</code>和<code>HashSet</code>，在并发访问时并不安全，可能会导致数据不一致和其他并发问题。
 为了在并发编程中高效且安全地操作数据，Java提供了一系列线程安全的集合类来替代这些传统集合</p>
 <table>

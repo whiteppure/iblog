@@ -1362,7 +1362,7 @@ Java 会自动将较小的基本数据类型转换为较大的基本数据类型
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p><code>int</code>的自动装箱是通过<code>Integer.valueOf()</code>方法来实现的，<code>Integer</code>的自动拆箱都是通过 <code>integer.intValue</code>来实现的。</p>
 <p>其实自动装箱和自动拆箱是Java中的语法糖，用于简化基本数据类型和其对应包装类型之间的转换操作。
-当将基本数据类型赋值给对应的包装类型时，编译器会调用包装类型的<code>valueOf()</code>方法来创建一个包装对象，并将基本数据类型的值传递给这个方法；
+当将基本数据类型赋值给对应的包装类型时，编译器会调用包装类型的<code>valueOf()</code>方法来创建一个包装对象，并将基本数据类型的值传递给这个方法。
 当需要使用包装类型对象中的值进行基本数据类型的操作时，编译器会自动调用包装类型对象的<code>xxxValue()</code>方法，将包装对象转换为对应的基本数据类型值。</p>
 <p>自动装箱和拆箱虽然方便，但是在使用的时候也需要注意一些问题：</p>
 <ul>
@@ -2019,30 +2019,30 @@ Java中的字符串常量池有以下几种方式来存储字符串：</p>
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">str3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">str1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">str2</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">str3</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">//</span> <span class="o">...</span>
-</span></span><span class="line"><span class="cl">  <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="n">java</span><span class="o">.</span><span class="n">lang</span><span class="o">.</span><span class="n">String</span><span class="p">[]);</span>
-</span></span><span class="line"><span class="cl">    <span class="n">descriptor</span><span class="p">:</span> <span class="p">([</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="ne">String</span><span class="p">;)</span><span class="n">V</span>
-</span></span><span class="line"><span class="cl">    <span class="n">flags</span><span class="p">:</span> <span class="n">ACC_PUBLIC</span><span class="p">,</span> <span class="n">ACC_STATIC</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Code</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">      <span class="n">stack</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">locals</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">args_size</span><span class="o">=</span><span class="mi">1</span>
-</span></span><span class="line"><span class="cl">         <span class="mi">0</span><span class="p">:</span> <span class="n">ldc</span>           <span class="c1">#2                  // String 123</span>
-</span></span><span class="line"><span class="cl">         <span class="mi">2</span><span class="p">:</span> <span class="n">astore_1</span>
-</span></span><span class="line"><span class="cl">         <span class="mi">3</span><span class="p">:</span> <span class="n">ldc</span>           <span class="c1">#3                  // String 456</span>
-</span></span><span class="line"><span class="cl">         <span class="mi">5</span><span class="p">:</span> <span class="n">astore_2</span>
-</span></span><span class="line"><span class="cl">         <span class="mi">6</span><span class="p">:</span> <span class="n">new</span>           <span class="c1">#4                  // class java/lang/StringBuilder</span>
-</span></span><span class="line"><span class="cl">         <span class="mi">9</span><span class="p">:</span> <span class="n">dup</span>
-</span></span><span class="line"><span class="cl">        <span class="mi">10</span><span class="p">:</span> <span class="n">invokespecial</span> <span class="c1">#5                  // Method java/lang/StringBuilder.&#34;&lt;init&gt;&#34;:()V</span>
-</span></span><span class="line"><span class="cl">        <span class="mi">13</span><span class="p">:</span> <span class="n">aload_1</span>
-</span></span><span class="line"><span class="cl">        <span class="mi">14</span><span class="p">:</span> <span class="n">invokevirtual</span> <span class="c1">#6                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;</span>
-</span></span><span class="line"><span class="cl">        <span class="mi">17</span><span class="p">:</span> <span class="n">aload_2</span>
-</span></span><span class="line"><span class="cl">        <span class="mi">18</span><span class="p">:</span> <span class="n">invokevirtual</span> <span class="c1">#6                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;</span>
-</span></span><span class="line"><span class="cl">        <span class="mi">21</span><span class="p">:</span> <span class="n">invokevirtual</span> <span class="c1">#7                  // Method java/lang/StringBuilder.toString:()Ljava/lang/String;</span>
-</span></span><span class="line"><span class="cl">        <span class="mi">24</span><span class="p">:</span> <span class="n">astore_3</span>
-</span></span><span class="line"><span class="cl">        <span class="mi">25</span><span class="p">:</span> <span class="n">getstatic</span>     <span class="c1">#8                  // Field java/lang/System.out:Ljava/io/PrintStream;</span>
-</span></span><span class="line"><span class="cl">        <span class="mi">28</span><span class="p">:</span> <span class="n">aload_3</span>
-</span></span><span class="line"><span class="cl">        <span class="mi">29</span><span class="p">:</span> <span class="n">invokevirtual</span> <span class="c1">#9                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V</span>
-</span></span><span class="line"><span class="cl">        <span class="mi">32</span><span class="p">:</span> <span class="k">return</span>
-</span></span><span class="line"><span class="cl">      <span class="o">//</span> <span class="o">...</span>
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">// ...
+</span></span><span class="line"><span class="cl">  public static void main(java.lang.String[]);
+</span></span><span class="line"><span class="cl">    descriptor: ([Ljava/lang/String;)V
+</span></span><span class="line"><span class="cl">    flags: ACC_PUBLIC, ACC_STATIC
+</span></span><span class="line"><span class="cl">    Code:
+</span></span><span class="line"><span class="cl">      stack=2, locals=4, args_size=1
+</span></span><span class="line"><span class="cl">         0: ldc           #2                  // String 123
+</span></span><span class="line"><span class="cl">         2: astore_1
+</span></span><span class="line"><span class="cl">         3: ldc           #3                  // String 456
+</span></span><span class="line"><span class="cl">         5: astore_2
+</span></span><span class="line"><span class="cl">         6: new           #4                  // class java/lang/StringBuilder
+</span></span><span class="line"><span class="cl">         9: dup
+</span></span><span class="line"><span class="cl">        10: invokespecial #5                  // Method java/lang/StringBuilder.&#34;&lt;init&gt;&#34;:()V
+</span></span><span class="line"><span class="cl">        13: aload_1
+</span></span><span class="line"><span class="cl">        14: invokevirtual #6                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+</span></span><span class="line"><span class="cl">        17: aload_2
+</span></span><span class="line"><span class="cl">        18: invokevirtual #6                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+</span></span><span class="line"><span class="cl">        21: invokevirtual #7                  // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+</span></span><span class="line"><span class="cl">        24: astore_3
+</span></span><span class="line"><span class="cl">        25: getstatic     #8                  // Field java/lang/System.out:Ljava/io/PrintStream;
+</span></span><span class="line"><span class="cl">        28: aload_3
+</span></span><span class="line"><span class="cl">        29: invokevirtual #9                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+</span></span><span class="line"><span class="cl">        32: return
+</span></span><span class="line"><span class="cl">      // ...
 </span></span></code></pre></div><p>可以看到在字符串拼接过程中，是将<code>String</code>转成了<code>StringBuilder</code>后，使用<code>append</code>方法进行拼接字符串处理的，最后在去调用<code>StringBuilder</code>的<code>toString</code>方法进行返回。
 在JDK5之后，使用的是<code>StringBuilder</code>，在JDK5之前使用的是<code>StringBuffer</code>。</p>
 <p>知道了“+”底层之后，如果在循环中，使用“+”拼接字符串，会创建大量的<code>StringBuilder</code>对象，造成内存的浪费。

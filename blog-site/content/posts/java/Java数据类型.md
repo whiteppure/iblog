@@ -175,7 +175,7 @@ public static  void main(String[]args){
 `int`的自动装箱是通过`Integer.valueOf()`方法来实现的，`Integer`的自动拆箱都是通过 `integer.intValue`来实现的。
 
 其实自动装箱和自动拆箱是Java中的语法糖，用于简化基本数据类型和其对应包装类型之间的转换操作。
-当将基本数据类型赋值给对应的包装类型时，编译器会调用包装类型的`valueOf()`方法来创建一个包装对象，并将基本数据类型的值传递给这个方法；
+当将基本数据类型赋值给对应的包装类型时，编译器会调用包装类型的`valueOf()`方法来创建一个包装对象，并将基本数据类型的值传递给这个方法。
 当需要使用包装类型对象中的值进行基本数据类型的操作时，编译器会自动调用包装类型对象的`xxxValue()`方法，将包装对象转换为对应的基本数据类型值。
 
 自动装箱和拆箱虽然方便，但是在使用的时候也需要注意一些问题：
@@ -959,7 +959,7 @@ public static void main(String[] args) {
     System.out.println(str3);
 }
 ```
-```
+```text
 // ...
   public static void main(java.lang.String[]);
     descriptor: ([Ljava/lang/String;)V
