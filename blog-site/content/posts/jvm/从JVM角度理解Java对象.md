@@ -6,19 +6,114 @@ tags: ["Java", "JVM"]
 slug: "java-object"
 ---
 
-## 对象实例化
+## 对象的创建方式
+常见的有五种创建对象方式：
+1. 使用`new`关键字创建；使用`new`关键字创建对象是最常见的方式，直接调用类的构造方法，优点是语法简单直观，执行效率高，适用于大多数对象创建场景，缺点是需要知道类的具体类型，无法在运行时动态决定要创建的对象类型。
+    ```java
+    public class MyClass {
+        public static void main(String[] args) {
+            Object obj = new Object();
+        }
+    }
+    ```
+2. 使用反射方式创建；使用反射方式创建对象可以通过`Class.newInstance()`或`Constructor.newInstance()`方法实现，优点是可以在运行时动态创建对象，适用于框架和库需要动态加载类的场景，缺点是性能较低且需要处理反射相关异常。
+    ```text
+    public class MyClass {
+        public MyClass() {
+            // 初始化代码
+        }
+    }
+    
+    try {
+        MyClass obj3 = MyClass.class.newInstance(); // JDK 9 以后被标记为过时
+    } catch (InstantiationException | IllegalAccessException e) {
+        e.printStackTrace();
+    }
+    ```
+3. 使用`clone()`方法；使用`clone()`方法创建对象不调用构造方法，适用于需要创建对象副本的场景，优点是不依赖构造方法，缺点是需要类实现`Cloneable`接口并重写`clone`方法，且深拷贝较为复杂。
+    ```text
+    public class MyClass implements Cloneable {
+        private String message;
+    
+        public MyClass(String message) {
+            this.message = message;
+        }
+    
+        @Override
+        protected Object clone() throws CloneNotSupportedException {
+            return super.clone();
+        }
+    }
+    
+    try {
+        MyClass original = new MyClass("Hello, Clone!");
+        MyClass clone = (MyClass) original.clone();
+    } catch (CloneNotSupportedException e) {
+        e.printStackTrace();
+    }
+    ```
+4. 使用序列化，准确来说是反序列化；使用序列化创建对象通过将对象序列化后再反序列化实现，适用于需要对象持久化或网络传输的场景，优点是可以保存对象状态，缺点是性能较低且需要实现`Serializable`接口。
+    ```java
+    public class MyClass implements Serializable {
+        private static final long serialVersionUID = 6377402142849822126L;
+        private String message;
+    
+        public MyClass(String message) {
+            this.message = message;
+        }
+    
+        public String getMessage() {
+            return message;
+        }
+    
+        public static void main(String[] args) {
+            MyClass original = new MyClass("Hello, Serialization!");
+    
+            try {
+                // 序列化
+                FileOutputStream fileOut = new FileOutputStream("myclass.ser");
+                ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                out.writeObject(original);
+                out.close();
+                fileOut.close();
+    
+                // 反序列化
+                FileInputStream fileIn = new FileInputStream("myclass.ser");
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                MyClass deserialized = (MyClass) in.readObject();
+                in.close();
+                fileIn.close();
+    
+                System.out.println(deserialized.getMessage());
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    ```
+5. 使用第三方库，如`Objenesis`；使用第三方库如`Objenesis`创建对象不依赖构造方法，适用于一些需要绕过构造方法进行对象创建的特殊场景，优点是灵活性高，缺点是依赖外部库且可能影响代码可读性。
+    ```text
+    public class MyClass {
+        private String message;
+    
+        public MyClass() {
+            this.message = "Hello, Objenesis!";
+        }
+    
+        public String getMessage() {
+            return message;
+        }
+    }
+    
+    Objenesis objenesis = new ObjenesisStd();
+    ObjectInstantiator<MyClass> instantiator = objenesis.getInstantiatorOf(MyClass.class);
+    MyClass obj5 = instantiator.newInstance();
+    ```
+
+## 对象的创建步骤
 ![对象创建步骤](/iblog/posts/annex/images/essays/对象创建步骤.png)
 
-### 对象的创建方式
-1. 使用new关键字创建：最常见的方式、单例类中调用`getInstance`的静态类方法，`XXXFactory`的静态方法；
-2. 使用反射方式创建：
-    - 使用`Class`的`newInstance`方法：在JDK9里面被标记为过时的方法，因为只能调用空参构造器；
-    - 使用`Constructor`的`newInstance(XXX)`：反射的方式，可以调用空参的，或者带参的构造器；
-    - 使用`clone()`：不调用任何的构造器，要求当前的类需要实现`Cloneable`接口中的`clone`接口；
-    - 使用序列化：序列化一般用于`Socket`的网络传输；
-3. 使用第三方库，如`Objenesis`；
-
-### 对象的创建步骤
+以下面代码为例，创建对象字节码指令如下：
 ```java
 public class MainTest {
     public static void main(String[] args) {
@@ -28,15 +123,17 @@ public class MainTest {
 ```
 ![创建对象字节码指令](/iblog/posts/annex/images/essays/创建对象字节码指令.png)
 
-创建对象步骤：
-1. 加载类元信息；
-2. 为对象分配内存；
-3. 处理并发问题；
-4. 属性的默认初始化（零值初始化）；
-5. 设置对象头信息；
-6. 属性的显示初始化、代码块中初始化、构造器中初始化；
+1. 首先是通过`new`指令在堆上为对象分配内存。
+2. 紧接着调用构造方法，`dup`指令复制对象引用，并将其压入操作数栈。`invokespecial`指令调用`java.lang.Object`的构造方法`<init>`，用于初始化对象。
+3. 然后返回对象引用，`astore_1`指令将新创建的对象引用存储在局部变量表索引为1的位置，即`obj`变量。
+4. 最后使用`return`指令将方法返回。
 
-### 对象的创建过程
+上述四个步骤描述的其实不太准确，一般情况下创建对象时，首先要将进行类加载的过程，将类的字节码加载到JVM中，然后再进行之后的步骤。
+除此之外，使用`new`关键字为对象在堆内存中分配一块内存空间，在分配内存后，JVM会根据变量的类型自动将对象的实例变量初始化为默认值。
+如果是在多线程的环境中，需要确保对象的创建和初始化过程是线程安全的。一般使用`synchronized`关键字，使用`monitorenter`和`monitorexit`指令形成同步块，
+在对象分配内存后，JVM会在对象头部分设置对象的元数据信息，如哈希码、GC年龄、锁状态等。然后执行对象的显式初始化，包括声明时的初始化表达式、执行对象中的初始化代码块，最后执行对象的构造方法，构造方法用于完成对象的最终初始化，可以初始化对象的实例变量。
+
+## 对象的创建过程
 1. 判断对象对应的类是否加载、链接、初始化。虚拟机遇到一条`new`指令，首先去检查这个指令的参数能否在 `Metaspace` 的常量池中定位到一个类的符号引用，并且检查这个符号引用代表的类是否已经被加载，解析和初始化。（即判断类元信息是否存在）。
 如果没有，那么在双亲委派模式下，使用当前类加载器以 `ClassLoader + 包名 + 类名` 为`key`进行查找对应的 `.class `文件，如果没有找到文件，则抛出 `ClassNotFoundException` 异常，如果找到，则进行类加载，并生成对应的Class对象。
 2. 为对象分配内存。首先计算对象占用空间的大小，接着在堆中划分一块内存给新对象。如果实例成员变量是引用类型，仅分配引用变量空间即可，即4个字节大小。如果内存规整，则发生指针碰撞；如果内存不规整，虚拟表需要维护一个列表，即空闲列表分配。
@@ -53,8 +150,7 @@ public class MainTest {
    - 代码块中的初始化；
    - 构造器初始化；
 5. 设置对象的对象头。将对象的所属类（即类的元数据信息）、对象的 `HashCode` 和对象的GC信息、锁信息等数据存储在对象的对象头中。这个过程的具体设置方式取决于JVM实现。
-6. 执行`init`方法进行初始化。初始化成员变量，执行实例化代码块，调用类的构造方法，并把堆内对象的首地址赋值给引用变量。
-因此一般来说（由字节码中跟随 `invokespecial` 指令所决定），new指令之后会接着执行方法，把对象按照程序员的意愿进行初始化，这样一个真正可用的对象才算完成创建出来。
+6. 执行`init`方法进行初始化。初始化成员变量，执行实例化代码块，调用类的构造方法，并把堆内对象的首地址赋值给引用变量。因此一般来说（由字节码中跟随 `invokespecial` 指令所决定），new指令之后会接着执行方法，把对象按照程序员的意愿进行初始化，这样一个真正可用的对象才算完成创建出来。
 
 ## 对象组成
 ![Java对象的布局](/iblog/posts/annex/images/essays/Java对象的布局.png)
@@ -99,15 +195,15 @@ Space losses: 0 bytes internal + 4 bytes external = 4 bytes total
 >object header 
 Common structure at the beginning of every GC-managed heap object.
  (Every oop points to an object header.) Includes fundamental information about the heap object's layout， type, GC state, synchronization state, and identity hash code.
- Consists of two words. In arrays it is immediately followed by a length field. 
-Note that both Java objects and VM-internal objects have a common object header format.
+ Consists of two words. In arrays it is immediately followed by a length field. Note that both Java objects and VM-internal objects have a common object header format.
 
 大意：每个GC管理堆对象开始处的公共结构。(每个oop都指向一个对象头)包括关于堆对象布局、类型、GC状态、同步状态和标识散列代码的基本信息。
-**由两个词组成**，在数组中，它后面紧跟着一个长度字段。其中上面的**两个词**指的是：
+**由两个词组成**，在数组中，它后面紧跟着一个长度字段。
+
+其中上面的**两个词**指的是，`mark word`、`klass pointer`。
 >mark word
 The first word of every object header. Usually a set of bitfields including synchronization state and identity hash code.
- May also be a pointer (with characteristic low bit encoding) to synchronization related information. 
-During GC, may contain GC state bits.
+May also be a pointer (with characteristic low bit encoding) to synchronization related information.During GC, may contain GC state bits.
 
 大意：每个对象头文件的第一个字。通常是一组位域，包括同步状态和身份散列码。也可以是一个用于同步相关信息的指针(具有特征的低位编码)。在GC期间，可能包含GC状态位。
 
@@ -117,11 +213,10 @@ For Java objects, the "klass" contains a C++ style "vtable".
 
 大意：每个对象头文件的第二个字。指向另一个对象(元对象)，它描述了原始对象的布局和行为。对于Java对象，“klass”包含一个c++风格的“vtable”。
 
-简单来说，对象头包含了包括两部分，分别是标志词(mark word)和类型指针(klass pointer)。如果是数组，还需要记录数组的长度。
-类型指针，是对象指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例。
+简单来说，对象头包含了包括两部分，分别是标志词(`mark word`)和类型指针(`klass pointer`)。如果是数组，还需要记录数组的长度。类型指针，是对象指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例。
 
 引用上面在64位虚拟机下的测试结果，对象头中的这些二进制数字代表什么呢？
-```
+```text
  OFFSET  SIZE   TYPE DESCRIPTION                               VALUE
       0     4        (object header)                           01 00 00 00 (00000001 00000000 00000000 00000000) (1)
       4     4        (object header)                           00 00 00 00 (00000000 00000000 00000000 00000000) (0)
@@ -129,29 +224,28 @@ For Java objects, the "klass" contains a C++ style "vtable".
 ```
 
 在`openjdk8-master`中`markOop.hpp`，有对`mark word`的描述：
+```text
+32 bits:
+--------
+           hash:25 ------------>| age:4    biased_lock:1 lock:2 (normal object)
+           JavaThread*:23 epoch:2 age:4    biased_lock:1 lock:2 (biased object)
+           size:32 ------------------------------------------>| (CMS free block)
+           PromotedObject*:29 ---------->| promo_bits:3 ----->| (CMS promoted object)
+
+64 bits:
+--------
+unused:25 hash:31 -->| unused:1   age:4    biased_lock:1 lock:2 (normal object)
+JavaThread*:54 epoch:2 unused:1   age:4    biased_lock:1 lock:2 (biased object)
+PromotedObject*:61 --------------------->| promo_bits:3 ----->| (CMS promoted object)
+size:64 ----------------------------------------------------->| (CMS free block)
 ```
-//  32 bits:
-//  --------
-//             hash:25 ------------>| age:4    biased_lock:1 lock:2 (normal object)
-//             JavaThread*:23 epoch:2 age:4    biased_lock:1 lock:2 (biased object)
-//             size:32 ------------------------------------------>| (CMS free block)
-//             PromotedObject*:29 ---------->| promo_bits:3 ----->| (CMS promoted object)
-//
-//  64 bits:
-//  --------
-//  unused:25 hash:31 -->| unused:1   age:4    biased_lock:1 lock:2 (normal object)
-//  JavaThread*:54 epoch:2 unused:1   age:4    biased_lock:1 lock:2 (biased object)
-//  PromotedObject*:61 --------------------->| promo_bits:3 ----->| (CMS promoted object)
-//  size:64 ----------------------------------------------------->| (CMS free block)
-```
-- 在32位虚拟机下，正常的对象对象头的`mark word`，从前到后的顺序，25个位表示hash值，4位表示GC分代的年龄，1位偏向锁的信息，2位锁的状态；
+- 在32位虚拟机下，正常的对象对象头的`mark word`，从前到后的顺序，25个位表示`hash`值，4位表示GC分代的年龄，1位偏向锁的信息，2位锁的状态；
 - 在64位虚拟机下，正常的对象对象头的`mark word`，从前到后的顺序，25个未使用，31个位表示hash值，未使用1位，4位表示GC分代的年龄，1位偏向锁的信息，2位锁的状态；
 
-64位虚拟机下对象头共12个字节(96bit)，`mark word`占8字节(64位)，所以`klass pointer`占4字节(32位)。
-但有些资料上显示，`mark word`占8字节(64位)，`klass pointer`也占8字节(64位)；
+64位虚拟机下对象头共12个字节(96位)，`mark word`占8字节(64位)，所以`klass pointer`占4字节(32位)。但有些资料上显示，`mark word`占8字节(64位)，`klass pointer`也占8字节(64位)。
 其实这种说法也正确，因为虚拟机默认开启了指针压缩，所以默认情况下`klass pointer`占4字节(32位)。
 
-那么`mark word`64位中存放什么呢？ 从上面可以看出，标志词（`mark word`）主要存放:
+从上面可以看出，`mark word`主要存放：
 ```
 哈希值
 GC分代年龄
@@ -159,7 +253,6 @@ GC分代年龄
 分代年龄
 线程ID
 ```
-
 详细的说，`markword`中存储的内容：
 - `lock`：锁标志位;区分锁状态，11时表示对象待GC回收状态， 只有最后2位锁标识(11)有效。
 - `biased_lock`：是否偏向锁；由于正常锁和偏向锁的锁标识都是 01，没办法区分，这里引入一位的偏向锁标识位。
@@ -168,14 +261,14 @@ GC分代年龄
 - `JavaThread`：偏向锁的线程ID，偏向模式的时候，当某个线程持有对象的时候，对象这里就会被置为该线程的ID。 在后面的操作中，就无需再进行尝试获取锁的动作。
 - `epoch`：时间戳，代表偏向锁的有效性；偏向锁在CAS锁操作过程中，偏向性标识，表示对象更偏向哪个锁。
 - `ptr_to_lock_record`：轻量级锁状态下，指向栈中锁记录的指针。当锁获取是无竞争的时，JVM使用原子操作而不是OS互斥。这种技术称为轻量级锁定。在轻量级锁定的情况下，JVM通过CAS操作在对象的标题字中设置指向锁记录的指针。
-- `ptr_to_heavyweight_monitor`：重量级锁状态下，指向对象监视器`Monitor`的指针。如果两个不同的线程同时在同一个对象上竞争，则必须将轻量级锁定升级到Monitor以管理等待的线程。在重量级锁定的情况下，JVM在对象的`ptr_to_heavyweight_monitor`设置指向`Monitor`的指针。
+- `ptr_to_heavyweight_monitor`：重量级锁状态下，指向对象监视器`Monitor`的指针。如果两个不同的线程同时在同一个对象上竞争，则必须将轻量级锁定升级到`Monitor`以管理等待的线程。在重量级锁定的情况下，JVM在对象的`ptr_to_heavyweight_monitor`设置指向`Monitor`的指针。
 
-当然`mark word`会根据对象的不同状态存放的也不相同。对象的状态划分为5种：
-- 无状态：对象刚被new出来
-- 偏向锁状态: 一个线程持有对象
-- 轻量级锁状态
-- 重量级锁状态
-- 被垃圾回收器标记的状态
+当然`mark word`会根据对象不同状态，存放的也不相同。对象的状态划分为5种：
+- 无状态：对象刚被new出来；
+- 偏向锁状态: 一个线程持有对象；
+- 轻量级锁状态；
+- 重量级锁状态；
+- 被垃圾回收器标记的状态；
 
 |   对象状态   | 对象头-markword |
 | :----------: | ------------------------------------------------------------ |
@@ -185,27 +278,24 @@ GC分代年龄
 | 重量级锁状态 | Ptr_to_heavyweight_monitor:62（指向重量级锁的指针）｜lock：2 |
 | 被GC标记状态 | lock：2                                                      |
 
-对象的状态是5种，但是在`markword`中表示对象状态的`lock`却是2bit，2bit最多能表示4种状态，那么对象的5种状态是怎么表示的？
+对象的状态是5种，但是在`markword`中表示对象状态的`lock`却是2bit，`2bit`排列组合为，`00`、`11`、`01`、`10`，最多四种，那么对象的5种状态是怎么表示的？ 对象锁的状态是联合用`biased_lock: 1` 和 `lock: 2` 表示的：
+- `biased_lock` ：0， `lock`： 01，表示无锁状态；
+- `biased_lock` ：1， `lock`： 01，表示偏向锁状态；
+- `lock`： 00，表示轻量级锁状态；
+- `lock`： 10，表示重量级锁状态；
+- `lock`： 11，表示被垃圾回收器标记的状态；
 
-`2bit`排列组合为，`00`、`11`、`01`、`10`，最多四种，对象锁的状态是联合用`biased_lock: 1` 和 `lock: 2` 表示的：
-- `biased_lock` ：0， `lock`： 01，表示无锁状态
-- `biased_lock` ：1， `lock`： 01，表示偏向锁状态
-- `lock`： 00，表示轻量级锁状态
-- `lock`： 10，表示重量级锁状态
-- `lock`： 11，表示被垃圾回收器标记的状态
-
-`mark word`在对象的不同状态下会有不同的表现形式，主要有三种状态，无锁状态、加锁状态、GC标记状态。
-
-那么可以理解为Java当中的取锁，其实可以理解是给对象上锁，也就是改变对象头中`markword>lock`的状态，如果上锁成功则进入同步代码块。
-但是Java当中的锁有分为很多种，从上面可以看出大体分为偏向锁、轻量锁、重量锁三种锁状态.
+`markword`在对象的不同状态下会有不同的表现形式，主要有三种状态，无锁状态、加锁状态、GC标记状态。
+那么可以理解为Java当中的获取锁，其实可以理解是给对象上锁，也就是改变对象头中`markword-lock`的状态，如果上锁成功则进入同步代码块。
+Java中的锁机制分为多种类型，主要包括偏向锁、轻量级锁和重量级锁。每种锁状态对应着不同的`markword-lock`状态。
 
 ### 实例数据
-实例数据为独立于方法之外的变量，在类里定义的变量无 `static` 修饰，包括从父类继承下来的变量和本身拥有的字段。
+实例数据为独立于方法之外的变量，在类里定义的变量无`static`修饰，包括从父类继承下来的变量和本身拥有的字段。
 
 它的一些规则：
 - 相同宽度的字段总是被分配到一起（比如都是8个字节的，会放到一起）；
 - 父类中定义的变量会出现在子类之前；
-- 如果JVM参数`CompactFields`设置为true，子类的窄变量可能插入到父类的间隙；
+- 如果JVM参数`CompactFields`设置为`true`，子类的窄变量可能插入到父类的间隙；
 
 ### 对齐填充数据
 不是必须的，也没有特别的含义，仅仅起到占位符的作用。
@@ -221,7 +311,7 @@ hotspot使用的是直接访问，因为句柄访问开辟了句柄池，所以�
 ### 句柄访问
 句柄访问是在栈的局部变量表中，记录的对象的引用，然后在堆空间中开辟了一块空间，也就是句柄池，指向的是方法区中的对象类型数据。
 
-优点：`reference` 中存储稳定句柄地址，对象被移动（垃圾收集时移动对象很普遍）时只会改变句柄中实例数据指针即可，`reference` 本身不需要被修改。
+`reference`中存储稳定句柄地址，对象被移动（垃圾收集时移动对象很普遍）时只会改变句柄中实例数据指针即可，`reference` 本身不需要被修改。
 
 ![句柄访问](/iblog/posts/annex/images/essays/句柄访问.png)
 

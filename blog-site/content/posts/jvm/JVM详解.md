@@ -707,7 +707,7 @@ public class MainTest {
                     }
                 }
             }
-        }， "t1");
+        }, "t1");
         thread.setDaemon(true);
         thread.start();
 

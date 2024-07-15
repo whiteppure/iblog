@@ -9,7 +9,6 @@ slug: "jvm-about"
 ## 内存溢出
 内存溢出(Out Of Memory，简称OOM)是指应用系统中存在无法回收的内存或使用的内存过多，最终使得程序运行要用到的内存大于能提供的最大内存。
 官方文档中对内存溢出的解释是，没有空闲内存，并且垃圾收集器也无法提供更多内存。
-
 由于GC一直在发展，所有一般情况下，除非应用程序占用的内存增长速度非常快，造成垃圾回收已经跟不上内存消耗的速度，否则不太容易出现OOM的情况。
 
 引起内存溢出的原因：
@@ -25,7 +24,7 @@ OOM异常信息变化：
 
 ## 内存泄漏
 严格来说，只有对象不会再被程序用到了，但是GC又不能回收他们的情况，才叫内存泄漏。
-但实际情况很多时候一些不太好的实践（或疏忽）会导致对象的生命周期变得很长，甚至导致00M，也可以叫做宽泛意义上的“内存泄漏”。
+但实际情况很多时候一些不太好的实践会导致对象的生命周期变得很长，甚至导致00M，也可以叫做宽泛意义上的“内存泄漏”。
 
 Java使用可达性分析算法来标记垃圾，最上面的数据不可达，就是需要被回收的。
 后期有一些对象不用了，按道理应该断开引用，但是存在一些链没有断开，从而导致没有办法被回收，从而造成内存泄漏。
@@ -59,33 +58,31 @@ STW事件和采用哪款GC无关，因为所有的GC都有这个事件。任何�
 
 调用GC方法意味着Java虚拟机要努力回收未使用的对象，以便使它们当前占用的内存能够快速重用。当控制从方法调用中返回时，Java虚拟机已经尽了最大努力从所有丢弃的对象中回收空间。
 调用`System.gc()`有效地等同于调用:`Runtime.getRuntime().gc()`
+```java
+/**
+ * Runs the garbage collector.
+ * <p>
+ * Calling the <code>gc</code> method suggests that the Java Virtual
+ * Machine expend effort toward recycling unused objects in order to
+ * make the memory they currently occupy available for quick reuse.
+ * When control returns from the method call, the Java Virtual
+ * Machine has made a best effort to reclaim space from all discarded
+ * objects.
+ * <p>
+ * The call <code>System.gc()</code> is effectively equivalent to the
+ * call:
+ * <blockquote><pre>
+ * Runtime.getRuntime().gc()
+ * </pre></blockquote>
+ *
+ * @see     java.lang.Runtime#gc()
+ */
+public static void gc() {
+    Runtime.getRuntime().gc();
+}
 ```
-    /**
-     * Runs the garbage collector.
-     * <p>
-     * Calling the <code>gc</code> method suggests that the Java Virtual
-     * Machine expend effort toward recycling unused objects in order to
-     * make the memory they currently occupy available for quick reuse.
-     * When control returns from the method call, the Java Virtual
-     * Machine has made a best effort to reclaim space from all discarded
-     * objects.
-     * <p>
-     * The call <code>System.gc()</code> is effectively equivalent to the
-     * call:
-     * <blockquote><pre>
-     * Runtime.getRuntime().gc()
-     * </pre></blockquote>
-     *
-     * @see     java.lang.Runtime#gc()
-     */
-    public static void gc() {
-        Runtime.getRuntime().gc();
-    }
-```
-调用`System.gc();`无法保证对垃圾收集器的调用，一般情况下，垃圾回收应该是自动进行的，无须手动触发。
-
-代码演示是否触发GC
-```
+调用`System.gc();`无法保证对垃圾收集器的调用，一般情况下，垃圾回收应该是自动进行的，无须手动触发。代码演示是否触发GC：
+```java
 // 在线程不忙的情况下，GC几乎都会执行都会调用finalize()方法 多试几次(15~30)
 public class MainTest {
     public static void main(String[] args) {
@@ -150,19 +147,16 @@ public class MainTest {
 - 弱引用（WeakReference）：被弱引用关联的对象只能生存到下一次垃圾收集之前。当垃圾收集器工作时，无论内存空间是否足够，都会回收掉被弱引用关联的对象。
 - 虚引用（PhantomReference）：一个对象是否有虚引用的存在，完全不会对其生存时间构成影响，也无法通过虚引用来获得一个对象的实例。为一个对象设置虚引用关联的唯一目的就是能在这个对象被收集器回收时收到一个系统通知。
 
-这4种引用强度依次逐渐减弱。除强引用外，其他3种引用均可以在`java.lang.ref`包中找到它们的身影。
-强引用为JVM内部实现，其他三类引用类型全部继承自`Reference`父类。
+这4种引用强度依次逐渐减弱。除强引用外，其他3种引用均可以在`java.lang.ref`包中找到它们的身影。强引用为JVM内部实现，其他三类引用类型全部继承自`Reference`父类。
 
 ![强软弱虚](/iblog/posts/annex/images/essays/强软弱虚.jpg)
 
-上述引用垃圾回收的前提条件是：对象都是可触及的(可达性分析结果为可达)，如果对象不可触及就直接被垃圾回收器回收了。
+上述引用垃圾回收的前提条件是，对象都是可触及的(可达性分析结果为可达)，如果对象不可触及就直接被垃圾回收器回收了。
 
 ### 强引用
 在Java程序中，最常见的引用类型是强引用，普通系统99%以上都是强引用，也就是我们最常见的普通对象引用，也是默认的引用类型。
 当在Java语言中使用new操作符创建一个新的对象，并将其赋值给一个变量的时候，这个变量就成为指向该对象的一个强引用。
-
-强引用测试
-```
+```java
 // 强引用测试
 public class MainTest {
     public static void main(String[] args) {
@@ -185,15 +179,12 @@ public class MainTest {
 ### 软引用
 软引用是一种比强引用生命周期稍弱的一种引用类型。在JVM内存充足的情况下，软引用并不会被垃圾回收器回收，只有在JVM内存不足的情况下，才会被垃圾回收器回收。
 
-软引用是用来描述一些还有用，但非必需的对象。
-只被软引用关联着的对象，在系统将要发生内存溢出异常前，会把这些对象列进回收范围之中进行**第二次回收**，如果这次回收还没有足够的内存，才会抛出内存溢出异常。
+软引用是用来描述一些还有用，但非必需的对象。只被软引用关联着的对象，在系统将要发生内存溢出异常前，会把这些对象列进回收范围之中进行**第二次回收**，如果这次回收还没有足够的内存，才会抛出内存溢出异常。
 > 这里的第一次回收是指不可达的对象
 
 所以软引用一般用来实现一些内存敏感的缓存，只要内存空间足够，对象就会保持不被回收掉。
 比如：高速缓存就有用到软引用。如果还有空闲内存，就可以暂时保留缓存，当内存不足时清理掉，这样就保证了使用缓存的同时，不会耗尽内存。
-
-软引用测试
-```
+```java
 /**
  * 软引用测试
  * 
@@ -249,9 +240,7 @@ class User {
 
 软引用、弱引用都非常适合来保存那些可有可无的缓存数据。如果这么做，当系统内存不足时，这些缓存数据会被回收，不会导致内存溢出。
 而当内存资源充足时，这些缓存数据又可以存在相当长的时间，从而起到加速系统的作用。
-
-弱引用测试
-```
+```java
 /**
  * 弱引用测试
  */
@@ -289,9 +278,7 @@ class User {
 为一个对象设置虚引用关联的唯一目的在于跟踪垃圾回收过程。比如：能在这个对象被收集器回收时收到一个系统通知。
 **虚引用必须和引用队列一起使用。** 虚引用在创建时必须提供一个引用队列作为参数。当垃圾回收器准备回收一个对象时，如果发现它还有虚引用，就会在回收对象后，将这个虚引用加入引用队列，以通知应用程序对象的回收情况。
 由于虚引用可以跟踪对象的回收时间，因此，也可以将一些资源释放操作放置在虚引用中执行和记录。
-
-虚引用测试
-```
+```java
 /**
  * 虚引用测试
  */

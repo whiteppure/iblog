@@ -12,7 +12,7 @@
 	
     
     
-    <meta name="description" content="对象实例化 对象的创建方式 使用new关键字创建：最常见的方式、单例类中调用getInstance的静态类方法，XXXFactory的静态方法； 使用反射方式创建： 使" />
+    <meta name="description" content="对象的创建方式 常见的有五种创建对象方式： 使用new关键字创建；使用new关键字创建对象是最常见的方式，直接调用类的构造方法，优点是语法简单直观，执行效率高，适用" />
     
 
     
@@ -72,32 +72,6 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%af%b9%e8%b1%a1%e5%ae%9e%e4%be%8b%e5%8c%96">
-                    对象实例化
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
                 <a class="nav-link text-left" href="#%e5%af%b9%e8%b1%a1%e7%9a%84%e5%88%9b%e5%bb%ba%e6%96%b9%e5%bc%8f">
                     对象的创建方式
                 </a>
@@ -108,7 +82,6 @@
         
         </ul>
         
-        </ul>
         
         
         
@@ -117,9 +90,6 @@
         
         
         
-        
-        <ul class="nav">
-            
         <ul class="nav">
             
         <ul class="nav">
@@ -136,7 +106,6 @@
         
         </ul>
         
-        </ul>
         
         
         
@@ -145,9 +114,6 @@
         
         
         
-        
-        <ul class="nav">
-            
         <ul class="nav">
             
         <ul class="nav">
@@ -160,8 +126,6 @@
             </li>
             
             
-        </ul>
-        
         </ul>
         
         </ul>
@@ -513,38 +477,126 @@
                         </span>
                         
                     </div>
-                    <div class="post_content markdown"><h2 id="对象实例化">对象实例化</h2>
-<p><img alt="对象创建步骤" src="/iblog/posts/annex/images/essays/%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%E6%AD%A5%E9%AA%A4.png"></p>
-<h3 id="对象的创建方式">对象的创建方式</h3>
+                    <div class="post_content markdown"><h2 id="对象的创建方式">对象的创建方式</h2>
+<p>常见的有五种创建对象方式：</p>
 <ol>
-<li>使用new关键字创建：最常见的方式、单例类中调用<code>getInstance</code>的静态类方法，<code>XXXFactory</code>的静态方法；</li>
-<li>使用反射方式创建：
-<ul>
-<li>使用<code>Class</code>的<code>newInstance</code>方法：在JDK9里面被标记为过时的方法，因为只能调用空参构造器；</li>
-<li>使用<code>Constructor</code>的<code>newInstance(XXX)</code>：反射的方式，可以调用空参的，或者带参的构造器；</li>
-<li>使用<code>clone()</code>：不调用任何的构造器，要求当前的类需要实现<code>Cloneable</code>接口中的<code>clone</code>接口；</li>
-<li>使用序列化：序列化一般用于<code>Socket</code>的网络传输；</li>
-</ul>
-</li>
-<li>使用第三方库，如<code>Objenesis</code>；</li>
+<li>使用<code>new</code>关键字创建；使用<code>new</code>关键字创建对象是最常见的方式，直接调用类的构造方法，优点是语法简单直观，执行效率高，适用于大多数对象创建场景，缺点是需要知道类的具体类型，无法在运行时动态决定要创建的对象类型。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyClass</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Object</span><span class="w"> </span><span class="n">obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>使用反射方式创建；使用反射方式创建对象可以通过<code>Class.newInstance()</code>或<code>Constructor.newInstance()</code>方法实现，优点是可以在运行时动态创建对象，适用于框架和库需要动态加载类的场景，缺点是性能较低且需要处理反射相关异常。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">public class MyClass {
+</span></span><span class="line"><span class="cl">    public MyClass() {
+</span></span><span class="line"><span class="cl">        // 初始化代码
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">try {
+</span></span><span class="line"><span class="cl">    MyClass obj3 = MyClass.class.newInstance(); // JDK 9 以后被标记为过时
+</span></span><span class="line"><span class="cl">} catch (InstantiationException | IllegalAccessException e) {
+</span></span><span class="line"><span class="cl">    e.printStackTrace();
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div></li>
+<li>使用<code>clone()</code>方法；使用<code>clone()</code>方法创建对象不调用构造方法，适用于需要创建对象副本的场景，优点是不依赖构造方法，缺点是需要类实现<code>Cloneable</code>接口并重写<code>clone</code>方法，且深拷贝较为复杂。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">public class MyClass implements Cloneable {
+</span></span><span class="line"><span class="cl">    private String message;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public MyClass(String message) {
+</span></span><span class="line"><span class="cl">        this.message = message;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    protected Object clone() throws CloneNotSupportedException {
+</span></span><span class="line"><span class="cl">        return super.clone();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">try {
+</span></span><span class="line"><span class="cl">    MyClass original = new MyClass(&#34;Hello, Clone!&#34;);
+</span></span><span class="line"><span class="cl">    MyClass clone = (MyClass) original.clone();
+</span></span><span class="line"><span class="cl">} catch (CloneNotSupportedException e) {
+</span></span><span class="line"><span class="cl">    e.printStackTrace();
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div></li>
+<li>使用序列化，准确来说是反序列化；使用序列化创建对象通过将对象序列化后再反序列化实现，适用于需要对象持久化或网络传输的场景，优点是可以保存对象状态，缺点是性能较低且需要实现<code>Serializable</code>接口。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyClass</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Serializable</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">serialVersionUID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">6377402142849822126L</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">MyClass</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getMessage</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">message</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">MyClass</span><span class="w"> </span><span class="n">original</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MyClass</span><span class="p">(</span><span class="s">&#34;Hello, Serialization!&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 序列化</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">FileOutputStream</span><span class="w"> </span><span class="n">fileOut</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FileOutputStream</span><span class="p">(</span><span class="s">&#34;myclass.ser&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">ObjectOutputStream</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ObjectOutputStream</span><span class="p">(</span><span class="n">fileOut</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">out</span><span class="p">.</span><span class="na">writeObject</span><span class="p">(</span><span class="n">original</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">out</span><span class="p">.</span><span class="na">close</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">fileOut</span><span class="p">.</span><span class="na">close</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 反序列化</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">FileInputStream</span><span class="w"> </span><span class="n">fileIn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FileInputStream</span><span class="p">(</span><span class="s">&#34;myclass.ser&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">ObjectInputStream</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ObjectInputStream</span><span class="p">(</span><span class="n">fileIn</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">MyClass</span><span class="w"> </span><span class="n">deserialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">MyClass</span><span class="p">)</span><span class="w"> </span><span class="n">in</span><span class="p">.</span><span class="na">readObject</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">in</span><span class="p">.</span><span class="na">close</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">fileIn</span><span class="p">.</span><span class="na">close</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">deserialized</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">ClassNotFoundException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>使用第三方库，如<code>Objenesis</code>；使用第三方库如<code>Objenesis</code>创建对象不依赖构造方法，适用于一些需要绕过构造方法进行对象创建的特殊场景，优点是灵活性高，缺点是依赖外部库且可能影响代码可读性。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">public class MyClass {
+</span></span><span class="line"><span class="cl">    private String message;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public MyClass() {
+</span></span><span class="line"><span class="cl">        this.message = &#34;Hello, Objenesis!&#34;;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public String getMessage() {
+</span></span><span class="line"><span class="cl">        return message;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Objenesis objenesis = new ObjenesisStd();
+</span></span><span class="line"><span class="cl">ObjectInstantiator&lt;MyClass&gt; instantiator = objenesis.getInstantiatorOf(MyClass.class);
+</span></span><span class="line"><span class="cl">MyClass obj5 = instantiator.newInstance();
+</span></span></code></pre></div></li>
 </ol>
-<h3 id="对象的创建步骤">对象的创建步骤</h3>
+<h2 id="对象的创建步骤">对象的创建步骤</h2>
+<p><img alt="对象创建步骤" src="/iblog/posts/annex/images/essays/%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%E6%AD%A5%E9%AA%A4.png"></p>
+<p>以下面代码为例，创建对象字节码指令如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MainTest</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Object</span><span class="w"> </span><span class="n">obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p><img alt="创建对象字节码指令" src="/iblog/posts/annex/images/essays/%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4.png"></p>
-<p>创建对象步骤：</p>
 <ol>
-<li>加载类元信息；</li>
-<li>为对象分配内存；</li>
-<li>处理并发问题；</li>
-<li>属性的默认初始化（零值初始化）；</li>
-<li>设置对象头信息；</li>
-<li>属性的显示初始化、代码块中初始化、构造器中初始化；</li>
+<li>首先是通过<code>new</code>指令在堆上为对象分配内存。</li>
+<li>紧接着调用构造方法，<code>dup</code>指令复制对象引用，并将其压入操作数栈。<code>invokespecial</code>指令调用<code>java.lang.Object</code>的构造方法<code>&lt;init&gt;</code>，用于初始化对象。</li>
+<li>然后返回对象引用，<code>astore_1</code>指令将新创建的对象引用存储在局部变量表索引为1的位置，即<code>obj</code>变量。</li>
+<li>最后使用<code>return</code>指令将方法返回。</li>
 </ol>
-<h3 id="对象的创建过程">对象的创建过程</h3>
+<p>上述四个步骤描述的其实不太准确，一般情况下创建对象时，首先要将进行类加载的过程，将类的字节码加载到JVM中，然后再进行之后的步骤。
+除此之外，使用<code>new</code>关键字为对象在堆内存中分配一块内存空间，在分配内存后，JVM会根据变量的类型自动将对象的实例变量初始化为默认值。
+如果是在多线程的环境中，需要确保对象的创建和初始化过程是线程安全的。一般使用<code>synchronized</code>关键字，使用<code>monitorenter</code>和<code>monitorexit</code>指令形成同步块，
+在对象分配内存后，JVM会在对象头部分设置对象的元数据信息，如哈希码、GC年龄、锁状态等。然后执行对象的显式初始化，包括声明时的初始化表达式、执行对象中的初始化代码块，最后执行对象的构造方法，构造方法用于完成对象的最终初始化，可以初始化对象的实例变量。</p>
+<h2 id="对象的创建过程">对象的创建过程</h2>
 <ol>
 <li>判断对象对应的类是否加载、链接、初始化。虚拟机遇到一条<code>new</code>指令，首先去检查这个指令的参数能否在 <code>Metaspace</code> 的常量池中定位到一个类的符号引用，并且检查这个符号引用代表的类是否已经被加载，解析和初始化。（即判断类元信息是否存在）。
 如果没有，那么在双亲委派模式下，使用当前类加载器以 <code>ClassLoader + 包名 + 类名</code> 为<code>key</code>进行查找对应的 <code>.class </code>文件，如果没有找到文件，则抛出 <code>ClassNotFoundException</code> 异常，如果找到，则进行类加载，并生成对应的Class对象。</li>
@@ -571,8 +623,7 @@
 </ul>
 </li>
 <li>设置对象的对象头。将对象的所属类（即类的元数据信息）、对象的 <code>HashCode</code> 和对象的GC信息、锁信息等数据存储在对象的对象头中。这个过程的具体设置方式取决于JVM实现。</li>
-<li>执行<code>init</code>方法进行初始化。初始化成员变量，执行实例化代码块，调用类的构造方法，并把堆内对象的首地址赋值给引用变量。
-因此一般来说（由字节码中跟随 <code>invokespecial</code> 指令所决定），new指令之后会接着执行方法，把对象按照程序员的意愿进行初始化，这样一个真正可用的对象才算完成创建出来。</li>
+<li>执行<code>init</code>方法进行初始化。初始化成员变量，执行实例化代码块，调用类的构造方法，并把堆内对象的首地址赋值给引用变量。因此一般来说（由字节码中跟随 <code>invokespecial</code> 指令所决定），new指令之后会接着执行方法，把对象按照程序员的意愿进行初始化，这样一个真正可用的对象才算完成创建出来。</li>
 </ol>
 <h2 id="对象组成">对象组成</h2>
 <p><img alt="Java对象的布局" src="/iblog/posts/annex/images/essays/Java%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B8%83%E5%B1%80.png"></p>
@@ -611,16 +662,15 @@
 <p>object header
 Common structure at the beginning of every GC-managed heap object.
 (Every oop points to an object header.) Includes fundamental information about the heap object&rsquo;s layout， type, GC state, synchronization state, and identity hash code.
-Consists of two words. In arrays it is immediately followed by a length field.
-Note that both Java objects and VM-internal objects have a common object header format.</p>
+Consists of two words. In arrays it is immediately followed by a length field. Note that both Java objects and VM-internal objects have a common object header format.</p>
 </blockquote>
 <p>大意：每个GC管理堆对象开始处的公共结构。(每个oop都指向一个对象头)包括关于堆对象布局、类型、GC状态、同步状态和标识散列代码的基本信息。
-<strong>由两个词组成</strong>，在数组中，它后面紧跟着一个长度字段。其中上面的<strong>两个词</strong>指的是：</p>
+<strong>由两个词组成</strong>，在数组中，它后面紧跟着一个长度字段。</p>
+<p>其中上面的<strong>两个词</strong>指的是，<code>mark word</code>、<code>klass pointer</code>。</p>
 <blockquote>
 <p>mark word
 The first word of every object header. Usually a set of bitfields including synchronization state and identity hash code.
-May also be a pointer (with characteristic low bit encoding) to synchronization related information.
-During GC, may contain GC state bits.</p>
+May also be a pointer (with characteristic low bit encoding) to synchronization related information.During GC, may contain GC state bits.</p>
 </blockquote>
 <p>大意：每个对象头文件的第一个字。通常是一组位域，包括同步状态和身份散列码。也可以是一个用于同步相关信息的指针(具有特征的低位编码)。在GC期间，可能包含GC状态位。</p>
 <blockquote>
@@ -629,35 +679,33 @@ The second word of every object header. Points to another object (a metaobject) 
 For Java objects, the &ldquo;klass&rdquo; contains a C++ style &ldquo;vtable&rdquo;.</p>
 </blockquote>
 <p>大意：每个对象头文件的第二个字。指向另一个对象(元对象)，它描述了原始对象的布局和行为。对于Java对象，“klass”包含一个c++风格的“vtable”。</p>
-<p>简单来说，对象头包含了包括两部分，分别是标志词(mark word)和类型指针(klass pointer)。如果是数组，还需要记录数组的长度。
-类型指针，是对象指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例。</p>
+<p>简单来说，对象头包含了包括两部分，分别是标志词(<code>mark word</code>)和类型指针(<code>klass pointer</code>)。如果是数组，还需要记录数组的长度。类型指针，是对象指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例。</p>
 <p>引用上面在64位虚拟机下的测试结果，对象头中的这些二进制数字代表什么呢？</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> OFFSET  SIZE   TYPE DESCRIPTION                               VALUE
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"> OFFSET  SIZE   TYPE DESCRIPTION                               VALUE
 </span></span><span class="line"><span class="cl">      0     4        (object header)                           01 00 00 00 (00000001 00000000 00000000 00000000) (1)
 </span></span><span class="line"><span class="cl">      4     4        (object header)                           00 00 00 00 (00000000 00000000 00000000 00000000) (0)
 </span></span><span class="line"><span class="cl">      8     4        (object header)                           a1 2c 01 20 (10100001 00101100 00000001 00100000) (536947873)
 </span></span></code></pre></div><p>在<code>openjdk8-master</code>中<code>markOop.hpp</code>，有对<code>mark word</code>的描述：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">//  32 bits:
-</span></span><span class="line"><span class="cl">//  --------
-</span></span><span class="line"><span class="cl">//             hash:25 ------------&gt;| age:4    biased_lock:1 lock:2 (normal object)
-</span></span><span class="line"><span class="cl">//             JavaThread*:23 epoch:2 age:4    biased_lock:1 lock:2 (biased object)
-</span></span><span class="line"><span class="cl">//             size:32 ------------------------------------------&gt;| (CMS free block)
-</span></span><span class="line"><span class="cl">//             PromotedObject*:29 ----------&gt;| promo_bits:3 -----&gt;| (CMS promoted object)
-</span></span><span class="line"><span class="cl">//
-</span></span><span class="line"><span class="cl">//  64 bits:
-</span></span><span class="line"><span class="cl">//  --------
-</span></span><span class="line"><span class="cl">//  unused:25 hash:31 --&gt;| unused:1   age:4    biased_lock:1 lock:2 (normal object)
-</span></span><span class="line"><span class="cl">//  JavaThread*:54 epoch:2 unused:1   age:4    biased_lock:1 lock:2 (biased object)
-</span></span><span class="line"><span class="cl">//  PromotedObject*:61 ---------------------&gt;| promo_bits:3 -----&gt;| (CMS promoted object)
-</span></span><span class="line"><span class="cl">//  size:64 -----------------------------------------------------&gt;| (CMS free block)
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">32 bits:
+</span></span><span class="line"><span class="cl">--------
+</span></span><span class="line"><span class="cl">           hash:25 ------------&gt;| age:4    biased_lock:1 lock:2 (normal object)
+</span></span><span class="line"><span class="cl">           JavaThread*:23 epoch:2 age:4    biased_lock:1 lock:2 (biased object)
+</span></span><span class="line"><span class="cl">           size:32 ------------------------------------------&gt;| (CMS free block)
+</span></span><span class="line"><span class="cl">           PromotedObject*:29 ----------&gt;| promo_bits:3 -----&gt;| (CMS promoted object)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">64 bits:
+</span></span><span class="line"><span class="cl">--------
+</span></span><span class="line"><span class="cl">unused:25 hash:31 --&gt;| unused:1   age:4    biased_lock:1 lock:2 (normal object)
+</span></span><span class="line"><span class="cl">JavaThread*:54 epoch:2 unused:1   age:4    biased_lock:1 lock:2 (biased object)
+</span></span><span class="line"><span class="cl">PromotedObject*:61 ---------------------&gt;| promo_bits:3 -----&gt;| (CMS promoted object)
+</span></span><span class="line"><span class="cl">size:64 -----------------------------------------------------&gt;| (CMS free block)
 </span></span></code></pre></div><ul>
-<li>在32位虚拟机下，正常的对象对象头的<code>mark word</code>，从前到后的顺序，25个位表示hash值，4位表示GC分代的年龄，1位偏向锁的信息，2位锁的状态；</li>
+<li>在32位虚拟机下，正常的对象对象头的<code>mark word</code>，从前到后的顺序，25个位表示<code>hash</code>值，4位表示GC分代的年龄，1位偏向锁的信息，2位锁的状态；</li>
 <li>在64位虚拟机下，正常的对象对象头的<code>mark word</code>，从前到后的顺序，25个未使用，31个位表示hash值，未使用1位，4位表示GC分代的年龄，1位偏向锁的信息，2位锁的状态；</li>
 </ul>
-<p>64位虚拟机下对象头共12个字节(96bit)，<code>mark word</code>占8字节(64位)，所以<code>klass pointer</code>占4字节(32位)。
-但有些资料上显示，<code>mark word</code>占8字节(64位)，<code>klass pointer</code>也占8字节(64位)；
+<p>64位虚拟机下对象头共12个字节(96位)，<code>mark word</code>占8字节(64位)，所以<code>klass pointer</code>占4字节(32位)。但有些资料上显示，<code>mark word</code>占8字节(64位)，<code>klass pointer</code>也占8字节(64位)。
 其实这种说法也正确，因为虚拟机默认开启了指针压缩，所以默认情况下<code>klass pointer</code>占4字节(32位)。</p>
-<p>那么<code>mark word</code>64位中存放什么呢？ 从上面可以看出，标志词（<code>mark word</code>）主要存放:</p>
+<p>从上面可以看出，<code>mark word</code>主要存放：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">哈希值
 </span></span><span class="line"><span class="cl">GC分代年龄
 </span></span><span class="line"><span class="cl">锁标志位
@@ -672,15 +720,15 @@ For Java objects, the &ldquo;klass&rdquo; contains a C++ style &ldquo;vtable&rdq
 <li><code>JavaThread</code>：偏向锁的线程ID，偏向模式的时候，当某个线程持有对象的时候，对象这里就会被置为该线程的ID。 在后面的操作中，就无需再进行尝试获取锁的动作。</li>
 <li><code>epoch</code>：时间戳，代表偏向锁的有效性；偏向锁在CAS锁操作过程中，偏向性标识，表示对象更偏向哪个锁。</li>
 <li><code>ptr_to_lock_record</code>：轻量级锁状态下，指向栈中锁记录的指针。当锁获取是无竞争的时，JVM使用原子操作而不是OS互斥。这种技术称为轻量级锁定。在轻量级锁定的情况下，JVM通过CAS操作在对象的标题字中设置指向锁记录的指针。</li>
-<li><code>ptr_to_heavyweight_monitor</code>：重量级锁状态下，指向对象监视器<code>Monitor</code>的指针。如果两个不同的线程同时在同一个对象上竞争，则必须将轻量级锁定升级到Monitor以管理等待的线程。在重量级锁定的情况下，JVM在对象的<code>ptr_to_heavyweight_monitor</code>设置指向<code>Monitor</code>的指针。</li>
+<li><code>ptr_to_heavyweight_monitor</code>：重量级锁状态下，指向对象监视器<code>Monitor</code>的指针。如果两个不同的线程同时在同一个对象上竞争，则必须将轻量级锁定升级到<code>Monitor</code>以管理等待的线程。在重量级锁定的情况下，JVM在对象的<code>ptr_to_heavyweight_monitor</code>设置指向<code>Monitor</code>的指针。</li>
 </ul>
-<p>当然<code>mark word</code>会根据对象的不同状态存放的也不相同。对象的状态划分为5种：</p>
+<p>当然<code>mark word</code>会根据对象不同状态，存放的也不相同。对象的状态划分为5种：</p>
 <ul>
-<li>无状态：对象刚被new出来</li>
-<li>偏向锁状态: 一个线程持有对象</li>
-<li>轻量级锁状态</li>
-<li>重量级锁状态</li>
-<li>被垃圾回收器标记的状态</li>
+<li>无状态：对象刚被new出来；</li>
+<li>偏向锁状态: 一个线程持有对象；</li>
+<li>轻量级锁状态；</li>
+<li>重量级锁状态；</li>
+<li>被垃圾回收器标记的状态；</li>
 </ul>
 <table>
 <thead>
@@ -712,25 +760,24 @@ For Java objects, the &ldquo;klass&rdquo; contains a C++ style &ldquo;vtable&rdq
 </tr>
 </tbody>
 </table>
-<p>对象的状态是5种，但是在<code>markword</code>中表示对象状态的<code>lock</code>却是2bit，2bit最多能表示4种状态，那么对象的5种状态是怎么表示的？</p>
-<p><code>2bit</code>排列组合为，<code>00</code>、<code>11</code>、<code>01</code>、<code>10</code>，最多四种，对象锁的状态是联合用<code>biased_lock: 1</code> 和 <code>lock: 2</code> 表示的：</p>
+<p>对象的状态是5种，但是在<code>markword</code>中表示对象状态的<code>lock</code>却是2bit，<code>2bit</code>排列组合为，<code>00</code>、<code>11</code>、<code>01</code>、<code>10</code>，最多四种，那么对象的5种状态是怎么表示的？ 对象锁的状态是联合用<code>biased_lock: 1</code> 和 <code>lock: 2</code> 表示的：</p>
 <ul>
-<li><code>biased_lock</code> ：0， <code>lock</code>： 01，表示无锁状态</li>
-<li><code>biased_lock</code> ：1， <code>lock</code>： 01，表示偏向锁状态</li>
-<li><code>lock</code>： 00，表示轻量级锁状态</li>
-<li><code>lock</code>： 10，表示重量级锁状态</li>
-<li><code>lock</code>： 11，表示被垃圾回收器标记的状态</li>
+<li><code>biased_lock</code> ：0， <code>lock</code>： 01，表示无锁状态；</li>
+<li><code>biased_lock</code> ：1， <code>lock</code>： 01，表示偏向锁状态；</li>
+<li><code>lock</code>： 00，表示轻量级锁状态；</li>
+<li><code>lock</code>： 10，表示重量级锁状态；</li>
+<li><code>lock</code>： 11，表示被垃圾回收器标记的状态；</li>
 </ul>
-<p><code>mark word</code>在对象的不同状态下会有不同的表现形式，主要有三种状态，无锁状态、加锁状态、GC标记状态。</p>
-<p>那么可以理解为Java当中的取锁，其实可以理解是给对象上锁，也就是改变对象头中<code>markword&gt;lock</code>的状态，如果上锁成功则进入同步代码块。
-但是Java当中的锁有分为很多种，从上面可以看出大体分为偏向锁、轻量锁、重量锁三种锁状态.</p>
+<p><code>markword</code>在对象的不同状态下会有不同的表现形式，主要有三种状态，无锁状态、加锁状态、GC标记状态。
+那么可以理解为Java当中的获取锁，其实可以理解是给对象上锁，也就是改变对象头中<code>markword-lock</code>的状态，如果上锁成功则进入同步代码块。
+Java中的锁机制分为多种类型，主要包括偏向锁、轻量级锁和重量级锁。每种锁状态对应着不同的<code>markword-lock</code>状态。</p>
 <h3 id="实例数据">实例数据</h3>
-<p>实例数据为独立于方法之外的变量，在类里定义的变量无 <code>static</code> 修饰，包括从父类继承下来的变量和本身拥有的字段。</p>
+<p>实例数据为独立于方法之外的变量，在类里定义的变量无<code>static</code>修饰，包括从父类继承下来的变量和本身拥有的字段。</p>
 <p>它的一些规则：</p>
 <ul>
 <li>相同宽度的字段总是被分配到一起（比如都是8个字节的，会放到一起）；</li>
 <li>父类中定义的变量会出现在子类之前；</li>
-<li>如果JVM参数<code>CompactFields</code>设置为true，子类的窄变量可能插入到父类的间隙；</li>
+<li>如果JVM参数<code>CompactFields</code>设置为<code>true</code>，子类的窄变量可能插入到父类的间隙；</li>
 </ul>
 <h3 id="对齐填充数据">对齐填充数据</h3>
 <p>不是必须的，也没有特别的含义，仅仅起到占位符的作用。
@@ -741,7 +788,7 @@ For Java objects, the &ldquo;klass&rdquo; contains a C++ style &ldquo;vtable&rdq
 <p>hotspot使用的是直接访问，因为句柄访问开辟了句柄池，所以直接访问相较于句柄访问效率稍高一点。</p>
 <h3 id="句柄访问">句柄访问</h3>
 <p>句柄访问是在栈的局部变量表中，记录的对象的引用，然后在堆空间中开辟了一块空间，也就是句柄池，指向的是方法区中的对象类型数据。</p>
-<p>优点：<code>reference</code> 中存储稳定句柄地址，对象被移动（垃圾收集时移动对象很普遍）时只会改变句柄中实例数据指针即可，<code>reference</code> 本身不需要被修改。</p>
+<p><code>reference</code>中存储稳定句柄地址，对象被移动（垃圾收集时移动对象很普遍）时只会改变句柄中实例数据指针即可，<code>reference</code> 本身不需要被修改。</p>
 <p><img alt="句柄访问" src="/iblog/posts/annex/images/essays/%E5%8F%A5%E6%9F%84%E8%AE%BF%E9%97%AE.png"></p>
 <h3 id="直接访问">直接访问</h3>
 <p>直接指针是局部变量表中的引用，直接指向堆中的实例，在对象实例中有类型指针，指向的是方法区中的对象类型数据。</p>

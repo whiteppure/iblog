@@ -6619,9 +6619,9 @@
 </ul>
 <h4 id="简述java中的泛型是如何实现的">简述Java中的泛型是如何实现的</h4>
 <p>Java中的泛型通过一种称为类型擦除的机制实现。声明了泛型的<code>.java</code>源代码，在编译生成<code>.class</code>文件之后，泛型相关的信息就消失了。
-可以认为，源代码中泛型相关的信息，就是提供给编译器用的，泛型信息对Java编译器可以见，而对Java虚拟机不可见。</p>
+可以认为源代码中泛型相关的信息，就是提供给编译器用的，泛型信息对Java编译器可以见，而对Java虚拟机不可见。</p>
 <p>关于如何实现泛型，Java官方文档中有对应的解释，<a href="https://docs.oracle.com/javase/tutorial/java/generics/erasure.html">原文</a>如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Generics were introduced to the Java language to provide tighter type checks at compile time and to support generic programming. To implement generics, the Java compiler applies type erasure to:
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">Generics were introduced to the Java language to provide tighter type checks at compile time and to support generic programming. To implement generics, the Java compiler applies type erasure to:
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">- Replace all type parameters in generic types with their bounds or Object if the type parameters are unbounded. The produced bytecode, therefore, contains only ordinary classes, interfaces, and methods.
 </span></span><span class="line"><span class="cl">- Insert type casts if necessary to preserve type safety.

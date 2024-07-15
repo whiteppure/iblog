@@ -30,11 +30,11 @@
       <description>ArrayList ArrayList线程不安全示例: public static void main(String[] args) { ArrayList&amp;lt;String&amp;gt; arrayList = new ArrayList&amp;lt;&amp;gt;(); for(int i=0; i&amp;lt; 3; i++) { new Thread(() -&amp;gt; { arrayList.add(UUID.randomUUID().toString()); System.out.println(arrayList); },String.valueOf(i)).start(); } } // ConcurrentModificationException 同步修改异常 Exception in thread &amp;#34;8&amp;#34; java.util.ConcurrentModificationException [null, 2041b613-8068-4ddd-9d01-305f5680d377] [null, 2041b613-8068-4ddd-9d01-305f5680d377, b3e0296d-e263-4632-a023-4267cdec5e25] [null, 2041b613-8068-4ddd-9d01-305f5680d377] 原因分析: 当某个线程正在执行 ad</description>
     </item>
     <item>
-      <title>CAS原理</title>
-      <link>https://whiteppure.github.io/iblog/posts/essays/cas-principle/</link>
+      <title>CAS详解</title>
+      <link>https://whiteppure.github.io/iblog/posts/essays/cas-detail/</link>
       <pubDate>Sat, 04 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>https://whiteppure.github.io/iblog/posts/essays/cas-principle/</guid>
-      <description>CAS CAS全称为Compare and Swap被译为比较并交换。是一种无锁算法。在不使用锁（没有线程被阻塞）的情况下实现多线程之间的变量同步。 java.util.concurrent.atomic 并发包下的所有原子类都是</description>
+      <guid>https://whiteppure.github.io/iblog/posts/essays/cas-detail/</guid>
+      <description>CAS CAS全称为Compare and Swap被译为比较并交换，是一种无锁算法。用于实现并发编程中的原子操作。CAS操作检查某个变量是否与预期的值相同，如果相同则将其更</description>
     </item>
   </channel>
 </rss>
