@@ -12,7 +12,7 @@
 	
     
     
-    <meta name="description" content="创建测试 /** * &amp;lt;p&amp;gt; * Hello Controller * &amp;lt;/p&amp;gt; */ @RestController @RequestMapping public class HelloController { @GetMapping public String hello() { return &amp;#34;Hello,From Docker&amp;#34;; } } application.yml文件。 server: port: 8080 servlet: context-path: /demo Dockerfile 首先创建一个名字叫Dockerfile的文件，路径任" />
+    <meta name="description" content="Linux上安装Docker 2017年的3月1号之后，Docker的版本命名开始发生变化，同时将CE版本和EE版本进行分开。 Docker社区版（CE）：为了开发" />
     
 
     
@@ -60,6 +60,30 @@
     <div class="page-header"><strong></strong></div>
     <div id="page-scrollspy" class="toc-nav">
 
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#linux%e4%b8%8a%e5%ae%89%e8%a3%85docker">
+                    Linux上安装Docker
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
         
         
         
@@ -261,7 +285,38 @@
                         </span>
                         
                     </div>
-                    <div class="post_content markdown"><h2 id="创建测试">创建测试</h2>
+                    <div class="post_content markdown"><h2 id="linux上安装docker">Linux上安装Docker</h2>
+<p>2017年的3月1号之后，<code>Docker</code>的版本命名开始发生变化，同时将CE版本和EE版本进行分开。</p>
+<ul>
+<li>Docker社区版（CE）：为了开发人员或小团队创建基于容器的应用,与团队成员分享和自动化的开发管道。<code>docker-ce</code>提供了简单的安装和快速的安装，以便可以立即开始开发。<code>docker-ce</code>集成和优化，基础设施。（免费）</li>
+<li>Docker企业版（EE）：专为企业的发展和IT团队建立谁。<code>docker-ee</code>为企业提供最安全的容器平台，以应用为中心的平台。（付费）</li>
+</ul>
+<p>以下是<code>CentOS</code>或<code>RHEL</code>上使用<code>yum</code>来安装<code>Docker</code>示例。</p>
+<ol>
+<li><code>Docker</code>依赖于系统的一些必要的工具，所以先安装依赖。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">yum install -y yum-utils device-mapper-persistent-data lvm2
+</span></span></code></pre></div></li>
+<li>通过使用<code>yum-config-manager</code>来设置<code>Docker</code>的稳定仓库。(在阿里云镜像站上面可以找到<code>docker-ce</code>的软件源，使用国内的源速度比较快)。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+</span></span></code></pre></div></li>
+<li>安装<code>docker-ce</code>，社区版，免费。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">yum clean allyum makecache fastyum -y install docker-ce
+</span></span></code></pre></div></li>
+<li>启动服务。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> <span class="c1">#service 命令的用法</span>
+</span></span><span class="line"><span class="cl">$ sudo service docker start
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#systemctl 命令的用法</span>
+</span></span><span class="line"><span class="cl">$ sudo systemctl start docker
+</span></span></code></pre></div></li>
+<li>查看安装版。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker version
+</span></span></code></pre></div></li>
+<li><code>Docker</code>需要用户具有<code>sudo</code>权限，为了避免每次命令都输入<code>sudo</code>，可以把用户加入<code>Docker</code>用户组。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo usermod -aG docker <span class="nv">$USER</span>
+</span></span></code></pre></div></li>
+</ol>
+<h2 id="创建测试">创建测试</h2>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
 </span></span></span><span class="line"><span class="cl"><span class="cm"> * &lt;p&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cm"> * Hello Controller
@@ -281,7 +336,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">servlet</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">context-path</span><span class="p">:</span><span class="w"> </span><span class="l">/demo</span><span class="w">
 </span></span></span></code></pre></div><h2 id="dockerfile">Dockerfile</h2>
-<p>首先创建一个名字叫<code>Dockerfile</code>的文件，路径任意。
+<p>创建一个名字叫<code>Dockerfile</code>的文件，路径任意。
 <img alt="DockerFile" src="/iblog/posts/annex/images/application/dockerFile.jpg"></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># 基础镜像
 </span></span><span class="line"><span class="cl">FROM openjdk:8-jdk-alpine
@@ -305,46 +360,45 @@
 </span></span><span class="line"><span class="cl">ENTRYPOINT [&#34;java&#34;,&#34;-Djava.security.egd=file:/dev/urandom&#34;,&#34;-jar&#34;,&#34;/app.jar&#34;]
 </span></span></code></pre></div><h2 id="pom文件">pom文件</h2>
 <p>在<code>pom</code>文件加入<code>Docker</code>插件。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;properties&gt;
-</span></span><span class="line"><span class="cl">    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
-</span></span><span class="line"><span class="cl">    &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;
-</span></span><span class="line"><span class="cl">    &lt;java.version&gt;1.8&lt;/java.version&gt;
-</span></span><span class="line"><span class="cl">    &lt;dockerfile-version&gt;1.4.9&lt;/dockerfile-version&gt;
-</span></span><span class="line"><span class="cl">&lt;/properties&gt;
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;properties&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span class="nt">&lt;/project.build.sourceEncoding&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;project.reporting.outputEncoding&gt;</span>UTF-8<span class="nt">&lt;/project.reporting.outputEncoding&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;java.version&gt;</span>1.8<span class="nt">&lt;/java.version&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;dockerfile-version&gt;</span>1.4.9<span class="nt">&lt;/dockerfile-version&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/properties&gt;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">&lt;build&gt;
-</span></span><span class="line"><span class="cl">    &lt;finalName&gt;demo-docker&lt;/finalName&gt;
-</span></span><span class="line"><span class="cl">    &lt;plugins&gt;
-</span></span><span class="line"><span class="cl">        &lt;plugin&gt;
-</span></span><span class="line"><span class="cl">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-</span></span><span class="line"><span class="cl">            &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
-</span></span><span class="line"><span class="cl">        &lt;/plugin&gt;
-</span></span><span class="line"><span class="cl">        &lt;plugin&gt;
-</span></span><span class="line"><span class="cl">            &lt;groupId&gt;com.spotify&lt;/groupId&gt;
-</span></span><span class="line"><span class="cl">            &lt;artifactId&gt;dockerfile-maven-plugin&lt;/artifactId&gt;
-</span></span><span class="line"><span class="cl">            &lt;version&gt;${dockerfile-version}&lt;/version&gt;
-</span></span><span class="line"><span class="cl">            &lt;configuration&gt;
-</span></span><span class="line"><span class="cl">                &lt;repository&gt;${project.build.finalName}&lt;/repository&gt;
-</span></span><span class="line"><span class="cl">                &lt;tag&gt;${project.version}&lt;/tag&gt;
-</span></span><span class="line"><span class="cl">                &lt;buildArgs&gt;
-</span></span><span class="line"><span class="cl">                    &lt;JAR_FILE&gt;target/${project.build.finalName}.jar&lt;/JAR_FILE&gt;
-</span></span><span class="line"><span class="cl">                &lt;/buildArgs&gt;
-</span></span><span class="line"><span class="cl">            &lt;/configuration&gt;
-</span></span><span class="line"><span class="cl">        &lt;/plugin&gt;
-</span></span><span class="line"><span class="cl">    &lt;/plugins&gt;
-</span></span><span class="line"><span class="cl">&lt;/build&gt;
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;build&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;finalName&gt;</span>demo-docker<span class="nt">&lt;/finalName&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;plugins&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;plugin&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;/plugin&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;plugin&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;groupId&gt;</span>com.spotify<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;artifactId&gt;</span>dockerfile-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;version&gt;</span>${dockerfile-version}<span class="nt">&lt;/version&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;configuration&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;repository&gt;</span>${project.build.finalName}<span class="nt">&lt;/repository&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;tag&gt;</span>${project.version}<span class="nt">&lt;/tag&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;buildArgs&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;JAR_FILE&gt;</span>target/${project.build.finalName}.jar<span class="nt">&lt;/JAR_FILE&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;/buildArgs&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;/configuration&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;/plugin&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/plugins&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/build&gt;</span>
 </span></span></code></pre></div><p>使用<code>maven</code>打包
 <img alt="docker打包" src="/iblog/posts/annex/images/application/docker%E6%89%93%E5%8C%85.jpg"></p>
 <h2 id="docker镜像测试">Docker镜像测试</h2>
 <ol>
-<li>前往 <code>Dockerfile</code> 目录，打开并命令行执行。</li>
-</ol>
+<li>前往 <code>Dockerfile</code> 目录，打开并命令行执行。
 <blockquote>
 <p>执行<code>docker build</code>命令，<code>docker</code>就会根据<code>Dockerfile</code>里你定义好的命令进行构建新的镜像。
-<code>-t</code>代表要构建的镜像的 <code>tag</code> ，<code>.</code>代表当前目录，也就是 <code>Dockerfile</code>所在的目录。
-<code>shell docker build -t demo-docker . </code></p>
+<code>-t</code>代表要构建的镜像的 <code>tag</code> ，<code>.</code>代表当前目录，也就是 <code>Dockerfile</code>所在的目录。</p>
 </blockquote>
-<ol start="2">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker build -t demo-docker .
+</span></span></code></pre></div></li>
 <li>查看<code>Docker</code>镜像列表。
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker images
 </span></span></code></pre></div></li>

@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>SpringBoot整合elasticsearch ｜ 脚踏实地</title>
+	<title>SpringBoot整合Elasticsearch ｜ 脚踏实地</title>
 	
     
     
-    <meta name="description" content="安装elasticsearch 要注意导入依赖的版本和安装elasticsearch的版本与springboot的兼容问题 用 docker 安装 elasticsearch 本例用elasticsearc" />
+    <meta name="description" content="Docker安装和运行Elasticsearch 拉取Elasticsearch Docker镜像。从Docker Hub拉取Elasticsearch的官方镜像。 docker" />
     
 
     
@@ -72,40 +72,12 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%ae%89%e8%a3%85elasticsearch">
-                    安装elasticsearch
+                <a class="nav-link text-left" href="#docker%e5%ae%89%e8%a3%85%e5%92%8c%e8%bf%90%e8%a1%8celasticsearch">
+                    Docker安装和运行Elasticsearch
                 </a>
             </li>
             
             
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e7%94%a8-docker-%e5%ae%89%e8%a3%85-elasticsearch">
-                    用 docker 安装 elasticsearch
-                </a>
-            </li>
-            
-            
-        </ul>
-        
         </ul>
         
         </ul>
@@ -124,8 +96,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#springboot%e9%9b%86%e6%88%90elasticsearch">
-                    Springboot集成elasticsearch
+                <a class="nav-link text-left" href="#%e5%bc%95%e5%85%a5pom%e4%be%9d%e8%b5%96">
+                    引入pom依赖
                 </a>
             </li>
             
@@ -142,16 +114,14 @@
         
         
         
-        <ul class="nav">
-            
         <ul class="nav">
             
         <ul class="nav">
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%af%bc%e5%85%a5pom%e4%be%9d%e8%b5%96">
-                    导入pom依赖
+                <a class="nav-link text-left" href="#applicationyml%e9%85%8d%e7%bd%ae">
+                    application.yml配置
                 </a>
             </li>
             
@@ -160,7 +130,6 @@
         
         </ul>
         
-        </ul>
         
         
         
@@ -169,17 +138,14 @@
         
         
         
-        
-        <ul class="nav">
-            
         <ul class="nav">
             
         <ul class="nav">
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%88%9b%e5%bb%ba%e6%b5%8b%e8%af%95%e6%8e%a5%e5%8f%a3">
-                    创建测试接口
+                <a class="nav-link text-left" href="#esconsts">
+                    ESConsts
                 </a>
             </li>
             
@@ -188,7 +154,6 @@
         
         </ul>
         
-        </ul>
         
         
         
@@ -197,23 +162,66 @@
         
         
         
-        
-        <ul class="nav">
-            
         <ul class="nav">
             
         <ul class="nav">
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%88%9b%e5%bb%ba%e6%b5%8b%e8%af%95%e7%b1%bb">
-                    创建测试类
+                <a class="nav-link text-left" href="#person">
+                    Person
                 </a>
             </li>
             
             
         </ul>
         
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#personrepository">
+                    PersonRepository
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#elasticsearchapplicationtest">
+                    ElasticsearchApplicationTest
+                </a>
+            </li>
+            
+            
         </ul>
         
         </ul>
@@ -317,7 +325,7 @@
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
-                        <h2 id="post_single_title">SpringBoot整合elasticsearch</h2>
+                        <h2 id="post_single_title">SpringBoot整合Elasticsearch</h2>
                         <span id="post_page_title_date" class="date">2020.02.09</span>
                         
                         <span id="busuanzi_container_page_pv" class="m-l-10">
@@ -325,320 +333,282 @@
                         </span>
                         
                     </div>
-                    <div class="post_content markdown"><h2 id="安装elasticsearch">安装elasticsearch</h2>
-<p>要注意导入依赖的版本和安装<code>elasticsearch</code>的版本与<code>springboot</code>的兼容问题</p>
-<p><img alt="springbootelasticsearch.jpg" src="/iblog/posts/annex/images/application/Springboot%E5%AF%B9%E5%BA%94elasticseach%E7%89%88%E6%9C%AC.jpg"></p>
-<h3 id="用-docker-安装-elasticsearch">用 docker 安装 elasticsearch</h3>
-<p>本例用<code>elasticsearch-6.5.3</code>和<code>springboot-2.1.0.RELEASE</code>版本</p>
+                    <div class="post_content markdown"><h2 id="docker安装和运行elasticsearch">Docker安装和运行Elasticsearch</h2>
 <ol>
-<li>下载镜像：</li>
+<li>拉取<code>Elasticsearch Docker</code>镜像。从<code>Docker Hub</code>拉取<code>Elasticsearch</code>的官方镜像。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker pull elasticsearch:7.17.0
+</span></span></code></pre></div></li>
+<li>运行<code>Elasticsearch</code>容器。使用<code>docker run</code>命令启动<code>Elasticsearch</code>容器。为了方便配置和数据持久化，可以指定一些环境变量和挂载数据卷。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker run -d --name elasticsearch --network elastic -p 9200:9200 -p 9300:9300 -e <span class="s2">&#34;discovery.type=single-node&#34;</span> -e <span class="s2">&#34;ES_JAVA_OPTS=-Xms512m -Xmx512m&#34;</span> -v esdata:/usr/share/elasticsearch/data elasticsearch:7.17.0
+</span></span></code></pre></div></li>
+<li>验证<code>Elasticsearch</code>运行状态。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker logs -f elasticsearch
+</span></span></code></pre></div>如果一切正常，可以通过浏览器访问 http://localhost:9200，或使用 curl 命令进行验证。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">curl -X GET <span class="s2">&#34;localhost:9200/&#34;</span>
+</span></span></code></pre></div></li>
 </ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker pull elasticsearch:6.5.3
-</span></span></code></pre></div><ol start="2">
-<li>运行容器：</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker run -d -p 9200:9200 -p 9300:9300 --name elasticsearch-6.5.3 elasticsearch:6.5.3
-</span></span></code></pre></div><ol start="3">
-<li>进入容器：</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker exec -it elasticsearch-6.5.3 /bin/bash
-</span></span></code></pre></div><ol start="4">
-<li><a href="https://elasticstack.blog.csdn.net/article/details/100516428">安装 IK 分词器</a>：</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">elasticsearch</span><span class="o">-</span><span class="n">plugin</span> <span class="n">install</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">medcl</span><span class="o">/</span><span class="n">elasticsearch</span><span class="o">-</span><span class="n">analysis</span><span class="o">-</span><span class="n">ik</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">v6</span><span class="o">.</span><span class="mf">5.3</span><span class="o">/</span><span class="n">elasticsearch</span><span class="o">-</span><span class="n">analysis</span><span class="o">-</span><span class="n">ik</span><span class="o">-</span><span class="mf">6.5</span><span class="o">.</span><span class="mf">3.</span><span class="n">zip</span>
-</span></span></code></pre></div><ol start="5">
-<li>修改 es 配置文件：<code>vi ./config/elasticsearch.yml</code></li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cluster.name: &#34;docker-cluster&#34;
-</span></span><span class="line"><span class="cl">network.host: 0.0.0.0
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># minimum_master_nodes need to be explicitly set when bound on a public IP
-</span></span><span class="line"><span class="cl"># set to 1 to allow single node clusters
-</span></span><span class="line"><span class="cl"># Details: https://github.com/elastic/elasticsearch/pull/17288
-</span></span><span class="line"><span class="cl">discovery.zen.minimum_master_nodes: 1
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># just for elasticsearch-head plugin
-</span></span><span class="line"><span class="cl">http.cors.enabled: true
-</span></span><span class="line"><span class="cl">http.cors.allow-origin: &#34;*&#34;
-</span></span></code></pre></div><ol start="6">
-<li>退出容器：</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">exit
-</span></span></code></pre></div><ol start="7">
-<li>停止容器：</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker stop elasticsearch-6.5.3
-</span></span></code></pre></div><ol start="8">
-<li>启动容器：</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker start elasticsearch-6.5.3
-</span></span></code></pre></div><h2 id="springboot集成elasticsearch">Springboot集成elasticsearch</h2>
-<h3 id="导入pom依赖">导入pom依赖</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;dependency&gt;
-</span></span><span class="line"><span class="cl">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-</span></span><span class="line"><span class="cl">    &lt;artifactId&gt;spring-boot-starter-data-elasticsearch&lt;/artifactId&gt;
-</span></span><span class="line"><span class="cl">&lt;/dependency&gt;
-</span></span></code></pre></div><h3 id="创建测试接口">创建测试接口</h3>
-<p>EsConsts 常量池</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public interface EsConsts {
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 索引名称
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    String INDEX_NAME = &#34;person&#34;;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 类型名称
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    String TYPE_NAME = &#34;person&#34;;
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>创建Javabean</p>
+<h2 id="引入pom依赖">引入pom依赖</h2>
+<p>要注意导入依赖的版本和安装<code>Elasticsearch</code>的版本与<code>springboot</code>的兼容问题。</p>
+<p><img alt="springbootelasticsearch.jpg" src="/iblog/posts/annex/images/application/Springboot%E5%AF%B9%E5%BA%94elasticseach%E7%89%88%E6%9C%AC.jpg"></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-elasticsearch<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><h2 id="applicationyml配置">application.yml配置</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">data</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">elasticsearch</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">cluster-name</span><span class="p">:</span><span class="w"> </span><span class="l">docker-cluster</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">cluster-nodes</span><span class="p">:</span><span class="w"> </span><span class="l">localhost:9300</span><span class="w">
+</span></span></span></code></pre></div><h2 id="esconsts">ESConsts</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">ESConsts</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 索引名称
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">INDEX_NAME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;person&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 类型名称
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">TYPE_NAME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;person&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="person">Person</h2>
 <blockquote>
-<p>@Document 注解主要声明索引名、类型名、分片数量和备份数量</p>
-<p>@Field 注解主要声明字段对应ES的类型</p>
+<p>@Document 注解主要声明索引名、类型名、分片数量和备份数量
+@Field 注解主要声明字段对应ES的类型</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/** 注意(坑点): ES 6以后不允许一个索引下有多个类型,只允许一个索引下有一个类型
-</span></span><span class="line"><span class="cl"> *  @Document:
-</span></span><span class="line"><span class="cl"> * 
-</span></span><span class="line"><span class="cl"> * String indexName(); //索引库的名称，个人建议以项目的名称命名
-</span></span><span class="line"><span class="cl"> *
-</span></span><span class="line"><span class="cl"> * String type() default &#34;&#34;; //类型，建议以实体的名称命名
-</span></span><span class="line"><span class="cl"> *
-</span></span><span class="line"><span class="cl"> * short shards() default 5; //默认分区数
-</span></span><span class="line"><span class="cl"> *
-</span></span><span class="line"><span class="cl"> * short replicas() default 1; //每个分区默认的备份数
-</span></span><span class="line"><span class="cl"> *
-</span></span><span class="line"><span class="cl"> * String refreshInterval() default &#34;1s&#34;; //刷新间隔
-</span></span><span class="line"><span class="cl"> *
-</span></span><span class="line"><span class="cl"> * String indexStoreType() default &#34;fs&#34;; //索引文件存储类型
-</span></span><span class="line"><span class="cl"> */
-</span></span><span class="line"><span class="cl">@Document(indexName = EsConsts.INDEX_NAME, type = EsConsts.TYPE_NAME, shards = 1, replicas = 0)
-</span></span><span class="line"><span class="cl">@Data
-</span></span><span class="line"><span class="cl">@NoArgsConstructor
-</span></span><span class="line"><span class="cl">@AllArgsConstructor
-</span></span><span class="line"><span class="cl">public class Person {
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 主键
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    @Id
-</span></span><span class="line"><span class="cl">    private Long id;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 名字
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    @Field(type = FieldType.Keyword)
-</span></span><span class="line"><span class="cl">    private String name;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 国家
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    @Field(type = FieldType.Keyword)
-</span></span><span class="line"><span class="cl">    private String country;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 年龄
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    @Field(type = FieldType.Integer)
-</span></span><span class="line"><span class="cl">    private Integer age;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 生日
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    @Field(type = FieldType.Date)
-</span></span><span class="line"><span class="cl">    private Date birthday;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 介绍
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    @Field(type = FieldType.Text, analyzer = &#34;ik_smart&#34;)
-</span></span><span class="line"><span class="cl">    private String remark;
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>PersonRepository</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="n">interface</span> <span class="n">PersonRepository</span> <span class="k">extends</span> <span class="n">ElasticsearchRepository</span><span class="o">&lt;</span><span class="n">Person</span><span class="p">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">根据年龄区间查询</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="nb">min</span> <span class="err">最小值</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="nb">max</span> <span class="err">最大值</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span> <span class="err">满足条件的用户列表</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="n">List</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">findByAgeBetween</span><span class="p">(</span><span class="n">Integer</span> <span class="nb">min</span><span class="p">,</span> <span class="n">Integer</span> <span class="nb">max</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>application.yml配置</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">spring:
-</span></span><span class="line"><span class="cl">  data:
-</span></span><span class="line"><span class="cl">    elasticsearch:
-</span></span><span class="line"><span class="cl">      cluster-name: docker-cluster
-</span></span><span class="line"><span class="cl">      cluster-nodes: localhost:9300
-</span></span></code></pre></div><h3 id="创建测试类">创建测试类</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@RunWith(SpringRunner.class)
-</span></span><span class="line"><span class="cl">@SpringBootTest
-</span></span><span class="line"><span class="cl">public class SpringBootDemoElasticsearchApplicationTests {
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    @Test
-</span></span><span class="line"><span class="cl">    public void contextLoads() {
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="err">@</span><span class="n">Slf4j</span>
-</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">PersonRepositoryTest</span> <span class="k">extends</span> <span class="n">SpringBootDemoElasticsearchApplicationTests</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Autowired</span>
-</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="n">PersonRepository</span> <span class="n">repo</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">测试新增</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Test</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">save</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Person</span><span class="p">(</span><span class="mi">1</span><span class="n">L</span><span class="p">,</span> <span class="s2">&#34;刘备&#34;</span><span class="p">,</span> <span class="s2">&#34;蜀国&#34;</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="n">DateUtil</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&#34;1990-01-02 03:04:05&#34;</span><span class="p">),</span> <span class="s2">&#34;刘备（161年－223年6月10日），即汉昭烈帝（221年－223年在位），又称先主，字玄德，东汉末年幽州涿郡涿县（今河北省涿州市）人，西汉中山靖王刘胜之后，三国时期蜀汉开国皇帝、政治家。</span><span class="se">\n</span><span class="s2">刘备少年时拜卢植为师；早年颠沛流离，备尝艰辛，投靠过多个诸侯，曾参与镇压黄巾起义。先后率军救援北海相孔融、徐州牧陶谦等。陶谦病亡后，将徐州让与刘备。赤壁之战时，刘备与孙权联盟击败曹操，趁势夺取荆州。而后进取益州。于章武元年（221年）在成都称帝，国号汉，史称蜀或蜀汉。《三国志》评刘备的机权干略不及曹操，但其弘毅宽厚，知人待士，百折不挠，终成帝业。刘备也称自己做事“每与操反，事乃成尔”。</span><span class="se">\n</span><span class="s2">章武三年（223年），刘备病逝于白帝城，终年六十三岁，谥号昭烈皇帝，庙号烈祖，葬惠陵。后世有众多文艺作品以其为主角，在成都武侯祠有昭烈庙为纪念。&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Person</span> <span class="n">save</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">person</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;【save】= {}&#34;</span><span class="p">,</span> <span class="n">save</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">测试批量新增</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Test</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">saveList</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">List</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">personList</span> <span class="o">=</span> <span class="n">Lists</span><span class="o">.</span><span class="n">newArrayList</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="n">personList</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new</span> <span class="n">Person</span><span class="p">(</span><span class="mi">2</span><span class="n">L</span><span class="p">,</span> <span class="s2">&#34;曹操&#34;</span><span class="p">,</span> <span class="s2">&#34;魏国&#34;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">DateUtil</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&#34;1988-01-02 03:04:05&#34;</span><span class="p">),</span> <span class="s2">&#34;曹操（155年－220年3月15日），字孟德，一名吉利，小字阿瞒，沛国谯县（今安徽亳州）人。东汉末年杰出的政治家、军事家、文学家、书法家，三国中曹魏政权的奠基人。</span><span class="se">\n</span><span class="s2">曹操曾担任东汉丞相，后加封魏王，奠定了曹魏立国的基础。去世后谥号为武王。其子曹丕称帝后，追尊为武皇帝，庙号太祖。</span><span class="se">\n</span><span class="s2">东汉末年，天下大乱，曹操以汉天子的名义征讨四方，对内消灭二袁、吕布、刘表、马超、韩遂等割据势力，对外降服南匈奴、乌桓、鲜卑等，统一了中国北方，并实行一系列政策恢复经济生产和社会秩序，扩大屯田、兴修水利、奖励农桑、重视手工业、安置流亡人口、实行“租调制”，从而使中原社会渐趋稳定、经济出现转机。黄河流域在曹操统治下，政治渐见清明，经济逐步恢复，阶级压迫稍有减轻，社会风气有所好转。曹操在汉朝的名义下所采取的一些措施具有积极作用。</span><span class="se">\n</span><span class="s2">曹操军事上精通兵法，重贤爱才，为此不惜一切代价将看中的潜能分子收于麾下；生活上善诗歌，抒发自己的政治抱负，并反映汉末人民的苦难生活，气魄雄伟，慷慨悲凉；散文亦清峻整洁，开启并繁荣了建安文学，给后人留下了宝贵的精神财富，鲁迅评价其为“改造文章的祖师”。同时曹操也擅长书法，唐朝张怀瓘在《书断》将曹操的章草评为“妙品”。&#34;</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">        <span class="n">personList</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new</span> <span class="n">Person</span><span class="p">(</span><span class="mi">3</span><span class="n">L</span><span class="p">,</span> <span class="s2">&#34;孙权&#34;</span><span class="p">,</span> <span class="s2">&#34;吴国&#34;</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="n">DateUtil</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&#34;1989-01-02 03:04:05&#34;</span><span class="p">),</span> <span class="s2">&#34;孙权（182年－252年5月21日），字仲谋，吴郡富春（今浙江杭州富阳区）人。三国时代孙吴的建立者（229年－252年在位）。</span><span class="se">\n</span><span class="s2">孙权的父亲孙坚和兄长孙策，在东汉末年群雄割据中打下了江东基业。建安五年（200年），孙策遇刺身亡，孙权继之掌事，成为一方诸侯。建安十三年（208年），与刘备建立孙刘联盟，并于赤壁之战中击败曹操，奠定三国鼎立的基础。建安二十四年（219年），孙权派吕蒙成功袭取刘备的荆州，使领土面积大大增加。</span><span class="se">\n</span><span class="s2">黄武元年（222年），孙权被魏文帝曹丕册封为吴王，建立吴国。同年，在夷陵之战中大败刘备。黄龙元年（229年），在武昌正式称帝，国号吴，不久后迁都建业。孙权称帝后，设置农官，实行屯田，设置郡县，并继续剿抚山越，促进了江南经济的发展。在此基础上，他又多次派人出海。黄龙二年（230年），孙权派卫温、诸葛直抵达夷州。</span><span class="se">\n</span><span class="s2">孙权晚年在继承人问题上反复无常，引致群下党争，朝局不稳。太元元年（252年）病逝，享年七十一岁，在位二十四年，谥号大皇帝，庙号太祖，葬于蒋陵。</span><span class="se">\n</span><span class="s2">孙权亦善书，唐代张怀瓘在《书估》中将其书法列为第三等。&#34;</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">        <span class="n">personList</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new</span> <span class="n">Person</span><span class="p">(</span><span class="mi">4</span><span class="n">L</span><span class="p">,</span> <span class="s2">&#34;诸葛亮&#34;</span><span class="p">,</span> <span class="s2">&#34;蜀国&#34;</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="n">DateUtil</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&#34;1992-01-02 03:04:05&#34;</span><span class="p">),</span> <span class="s2">&#34;诸葛亮（181年-234年10月8日），字孔明，号卧龙，徐州琅琊阳都（今山东临沂市沂南县）人，三国时期蜀国丞相，杰出的政治家、军事家、外交家、文学家、书法家、发明家。</span><span class="se">\n</span><span class="s2">早年随叔父诸葛玄到荆州，诸葛玄死后，诸葛亮就在襄阳隆中隐居。后刘备三顾茅庐请出诸葛亮，联孙抗曹，于赤壁之战大败曹军。形成三国鼎足之势，又夺占荆州。建安十六年（211年），攻取益州。继又击败曹军，夺得汉中。蜀章武元年（221年），刘备在成都建立蜀汉政权，诸葛亮被任命为丞相，主持朝政。蜀后主刘禅继位，诸葛亮被封为武乡侯，领益州牧。勤勉谨慎，大小政事必亲自处理，赏罚严明；与东吴联盟，改善和西南各族的关系；实行屯田政策，加强战备。前后六次北伐中原，多以粮尽无功。终因积劳成疾，于蜀建兴十二年（234年）病逝于五丈原（今陕西宝鸡岐山境内），享年54岁。刘禅追封其为忠武侯，后世常以武侯尊称诸葛亮。东晋政权因其军事才能特追封他为武兴王。</span><span class="se">\n</span><span class="s2">诸葛亮散文代表作有《出师表》《诫子书》等。曾发明木牛流马、孔明灯等，并改造连弩，叫做诸葛连弩，可一弩十矢俱发。诸葛亮一生“鞠躬尽瘁、死而后已”，是中国传统文化中忠臣与智者的代表人物。&#34;</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Iterable</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">people</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">saveAll</span><span class="p">(</span><span class="n">personList</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;【people】= {}&#34;</span><span class="p">,</span> <span class="n">people</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">测试更新</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Test</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">update</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">repo</span><span class="o">.</span><span class="n">findById</span><span class="p">(</span><span class="mi">1</span><span class="n">L</span><span class="p">)</span><span class="o">.</span><span class="n">ifPresent</span><span class="p">(</span><span class="n">person</span> <span class="o">-&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">person</span><span class="o">.</span><span class="n">setRemark</span><span class="p">(</span><span class="n">person</span><span class="o">.</span><span class="n">getRemark</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">更新更新更新更新更新&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="n">Person</span> <span class="n">save</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">person</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;【save】= {}&#34;</span><span class="p">,</span> <span class="n">save</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="p">});</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">测试删除</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Test</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">delete</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">主键删除</span>
-</span></span><span class="line"><span class="cl">        <span class="n">repo</span><span class="o">.</span><span class="n">deleteById</span><span class="p">(</span><span class="mi">1</span><span class="n">L</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">对象删除</span>
-</span></span><span class="line"><span class="cl">        <span class="n">repo</span><span class="o">.</span><span class="n">findById</span><span class="p">(</span><span class="mi">2</span><span class="n">L</span><span class="p">)</span><span class="o">.</span><span class="n">ifPresent</span><span class="p">(</span><span class="n">person</span> <span class="o">-&gt;</span> <span class="n">repo</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">person</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">批量删除</span>
-</span></span><span class="line"><span class="cl">        <span class="n">repo</span><span class="o">.</span><span class="n">deleteAll</span><span class="p">(</span><span class="n">repo</span><span class="o">.</span><span class="n">findAll</span><span class="p">());</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">测试普通查询，按生日倒序</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Test</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">select</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">repo</span><span class="o">.</span><span class="n">findAll</span><span class="p">(</span><span class="n">Sort</span><span class="o">.</span><span class="n">by</span><span class="p">(</span><span class="n">Sort</span><span class="o">.</span><span class="n">Direction</span><span class="o">.</span><span class="n">DESC</span><span class="p">,</span> <span class="s2">&#34;birthday&#34;</span><span class="p">))</span><span class="o">.</span>
-</span></span><span class="line"><span class="cl">            <span class="n">forEach</span><span class="p">(</span><span class="n">person</span> <span class="o">-&gt;</span> <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;{} 生日: {}&#34;</span><span class="p">,</span> <span class="n">person</span><span class="o">.</span><span class="n">getName</span><span class="p">(),</span> <span class="n">DateUtil</span><span class="o">.</span><span class="n">formatDateTime</span><span class="p">(</span><span class="n">person</span><span class="o">.</span><span class="n">getBirthday</span><span class="p">())));</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">自定义查询，根据年龄范围查询</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Test</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">customSelectRangeOfAge</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">repo</span><span class="o">.</span><span class="n">findByAgeBetween</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">)</span><span class="o">.</span><span class="n">forEach</span><span class="p">(</span><span class="n">person</span> <span class="o">-&gt;</span> <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;{} 年龄: {}&#34;</span><span class="p">,</span> <span class="n">person</span><span class="o">.</span><span class="n">getName</span><span class="p">(),</span> <span class="n">person</span><span class="o">.</span><span class="n">getAge</span><span class="p">()));</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">高级查询</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Test</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">advanceSelect</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="n">QueryBuilders</span> <span class="err">提供了很多静态方法，可以实现大部分查询条件的封装</span>
-</span></span><span class="line"><span class="cl">        <span class="n">MatchQueryBuilder</span> <span class="n">queryBuilder</span> <span class="o">=</span> <span class="n">QueryBuilders</span><span class="o">.</span><span class="n">matchQuery</span><span class="p">(</span><span class="s2">&#34;name&#34;</span><span class="p">,</span> <span class="s2">&#34;孙权&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;【queryBuilder】= {}&#34;</span><span class="p">,</span> <span class="n">queryBuilder</span><span class="o">.</span><span class="n">toString</span><span class="p">());</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">repo</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">queryBuilder</span><span class="p">)</span><span class="o">.</span><span class="n">forEach</span><span class="p">(</span><span class="n">person</span> <span class="o">-&gt;</span> <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;【person】= {}&#34;</span><span class="p">,</span> <span class="n">person</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">自定义高级查询</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Test</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">customAdvanceSelect</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">构造查询条件</span>
-</span></span><span class="line"><span class="cl">        <span class="n">NativeSearchQueryBuilder</span> <span class="n">queryBuilder</span> <span class="o">=</span> <span class="n">new</span> <span class="n">NativeSearchQueryBuilder</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">添加基本的分词条件</span>
-</span></span><span class="line"><span class="cl">        <span class="n">queryBuilder</span><span class="o">.</span><span class="n">withQuery</span><span class="p">(</span><span class="n">QueryBuilders</span><span class="o">.</span><span class="n">matchQuery</span><span class="p">(</span><span class="s2">&#34;remark&#34;</span><span class="p">,</span> <span class="s2">&#34;东汉&#34;</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">排序条件</span>
-</span></span><span class="line"><span class="cl">        <span class="n">queryBuilder</span><span class="o">.</span><span class="n">withSort</span><span class="p">(</span><span class="n">SortBuilders</span><span class="o">.</span><span class="n">fieldSort</span><span class="p">(</span><span class="s2">&#34;age&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="n">SortOrder</span><span class="o">.</span><span class="n">DESC</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">分页条件</span>
-</span></span><span class="line"><span class="cl">        <span class="n">queryBuilder</span><span class="o">.</span><span class="n">withPageable</span><span class="p">(</span><span class="n">PageRequest</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Page</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">people</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">queryBuilder</span><span class="o">.</span><span class="n">build</span><span class="p">());</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;【people】总条数 = {}&#34;</span><span class="p">,</span> <span class="n">people</span><span class="o">.</span><span class="n">getTotalElements</span><span class="p">());</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;【people】总页数 = {}&#34;</span><span class="p">,</span> <span class="n">people</span><span class="o">.</span><span class="n">getTotalPages</span><span class="p">());</span>
-</span></span><span class="line"><span class="cl">        <span class="n">people</span><span class="o">.</span><span class="n">forEach</span><span class="p">(</span><span class="n">person</span> <span class="o">-&gt;</span> <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;【person】= {}，年龄 = {}&#34;</span><span class="p">,</span> <span class="n">person</span><span class="o">.</span><span class="n">getName</span><span class="p">(),</span> <span class="n">person</span><span class="o">.</span><span class="n">getAge</span><span class="p">()));</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">测试聚合，测试平均年龄</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Test</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">agg</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">构造查询条件</span>
-</span></span><span class="line"><span class="cl">        <span class="n">NativeSearchQueryBuilder</span> <span class="n">queryBuilder</span> <span class="o">=</span> <span class="n">new</span> <span class="n">NativeSearchQueryBuilder</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">不查询任何结果</span>
-</span></span><span class="line"><span class="cl">        <span class="n">queryBuilder</span><span class="o">.</span><span class="n">withSourceFilter</span><span class="p">(</span><span class="n">new</span> <span class="n">FetchSourceFilter</span><span class="p">(</span><span class="n">new</span> <span class="ne">String</span><span class="p">[]{</span><span class="s2">&#34;&#34;</span><span class="p">},</span> <span class="n">null</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">平均年龄</span>
-</span></span><span class="line"><span class="cl">        <span class="n">queryBuilder</span><span class="o">.</span><span class="n">addAggregation</span><span class="p">(</span><span class="n">AggregationBuilders</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="s2">&#34;avg&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s2">&#34;age&#34;</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;【queryBuilder】= {}&#34;</span><span class="p">,</span> <span class="n">JSONUtil</span><span class="o">.</span><span class="n">toJsonStr</span><span class="p">(</span><span class="n">queryBuilder</span><span class="o">.</span><span class="n">build</span><span class="p">()));</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">AggregatedPage</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">people</span> <span class="o">=</span> <span class="p">(</span><span class="n">AggregatedPage</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="p">)</span> <span class="n">repo</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">queryBuilder</span><span class="o">.</span><span class="n">build</span><span class="p">());</span>
-</span></span><span class="line"><span class="cl">        <span class="n">double</span> <span class="n">avgAge</span> <span class="o">=</span> <span class="p">((</span><span class="n">InternalAvg</span><span class="p">)</span> <span class="n">people</span><span class="o">.</span><span class="n">getAggregation</span><span class="p">(</span><span class="s2">&#34;avg&#34;</span><span class="p">))</span><span class="o">.</span><span class="n">getValue</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;【avgAge】= {}&#34;</span><span class="p">,</span> <span class="n">avgAge</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">测试高级聚合查询，每个国家的人有几个，每个国家的平均年龄是多少</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Test</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">advanceAgg</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">构造查询条件</span>
-</span></span><span class="line"><span class="cl">        <span class="n">NativeSearchQueryBuilder</span> <span class="n">queryBuilder</span> <span class="o">=</span> <span class="n">new</span> <span class="n">NativeSearchQueryBuilder</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="err">不查询任何结果</span>
-</span></span><span class="line"><span class="cl">        <span class="n">queryBuilder</span><span class="o">.</span><span class="n">withSourceFilter</span><span class="p">(</span><span class="n">new</span> <span class="n">FetchSourceFilter</span><span class="p">(</span><span class="n">new</span> <span class="ne">String</span><span class="p">[]{</span><span class="s2">&#34;&#34;</span><span class="p">},</span> <span class="n">null</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="mf">1.</span> <span class="err">添加一个新的聚合，聚合类型为</span><span class="n">terms</span><span class="err">，聚合名称为</span><span class="n">country</span><span class="err">，聚合字段为</span><span class="n">age</span>
-</span></span><span class="line"><span class="cl">        <span class="n">queryBuilder</span><span class="o">.</span><span class="n">addAggregation</span><span class="p">(</span><span class="n">AggregationBuilders</span><span class="o">.</span><span class="n">terms</span><span class="p">(</span><span class="s2">&#34;country&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s2">&#34;country&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="o">//</span> <span class="mf">2.</span> <span class="err">在国家聚合桶内进行嵌套聚合，求平均年龄</span>
-</span></span><span class="line"><span class="cl">            <span class="o">.</span><span class="n">subAggregation</span><span class="p">(</span><span class="n">AggregationBuilders</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="s2">&#34;avg&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s2">&#34;age&#34;</span><span class="p">)));</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;【queryBuilder】= {}&#34;</span><span class="p">,</span> <span class="n">JSONUtil</span><span class="o">.</span><span class="n">toJsonStr</span><span class="p">(</span><span class="n">queryBuilder</span><span class="o">.</span><span class="n">build</span><span class="p">()));</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="mf">3.</span> <span class="err">查询</span>
-</span></span><span class="line"><span class="cl">        <span class="n">AggregatedPage</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">people</span> <span class="o">=</span> <span class="p">(</span><span class="n">AggregatedPage</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="p">)</span> <span class="n">repo</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">queryBuilder</span><span class="o">.</span><span class="n">build</span><span class="p">());</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="mf">4.</span> <span class="err">解析</span>
-</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="mf">4.1</span><span class="o">.</span> <span class="err">从结果中取出名为</span> <span class="n">country</span> <span class="err">的那个聚合，因为是利用</span><span class="n">String类型字段来进行的term聚合</span><span class="err">，所以结果要强转为</span><span class="n">StringTerm类型</span>
-</span></span><span class="line"><span class="cl">        <span class="n">StringTerms</span> <span class="n">country</span> <span class="o">=</span> <span class="p">(</span><span class="n">StringTerms</span><span class="p">)</span> <span class="n">people</span><span class="o">.</span><span class="n">getAggregation</span><span class="p">(</span><span class="s2">&#34;country&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="o">//</span> <span class="mf">4.2</span><span class="o">.</span> <span class="err">获取桶</span>
-</span></span><span class="line"><span class="cl">        <span class="n">List</span><span class="o">&lt;</span><span class="n">StringTerms</span><span class="o">.</span><span class="n">Bucket</span><span class="o">&gt;</span> <span class="n">buckets</span> <span class="o">=</span> <span class="n">country</span><span class="o">.</span><span class="n">getBuckets</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="n">StringTerms</span><span class="o">.</span><span class="n">Bucket</span> <span class="n">bucket</span> <span class="p">:</span> <span class="n">buckets</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="o">//</span> <span class="mf">4.3</span><span class="o">.</span> <span class="err">获取桶中的</span><span class="n">key</span><span class="err">，即国家名称</span>  <span class="mf">4.4</span><span class="o">.</span> <span class="err">获取桶中的文档数量</span>
-</span></span><span class="line"><span class="cl">            <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;{} 总共有 {} 人&#34;</span><span class="p">,</span> <span class="n">bucket</span><span class="o">.</span><span class="n">getKeyAsString</span><span class="p">(),</span> <span class="n">bucket</span><span class="o">.</span><span class="n">getDocCount</span><span class="p">());</span>
-</span></span><span class="line"><span class="cl">            <span class="o">//</span> <span class="mf">4.5</span><span class="o">.</span> <span class="err">获取子聚合结果：</span>
-</span></span><span class="line"><span class="cl">            <span class="n">InternalAvg</span> <span class="n">avg</span> <span class="o">=</span> <span class="p">(</span><span class="n">InternalAvg</span><span class="p">)</span> <span class="n">bucket</span><span class="o">.</span><span class="n">getAggregations</span><span class="p">()</span><span class="o">.</span><span class="n">asMap</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;avg&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="nb">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;平均年龄：{}&#34;</span><span class="p">,</span> <span class="n">avg</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/** 注意(坑点): ES 6以后不允许一个索引下有多个类型,只允许一个索引下有一个类型
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *  @Document:
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * String indexName(); //索引库的名称，个人建议以项目的名称命名
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * String type() default &#34;&#34;; //类型，建议以实体的名称命名
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * short shards() default 5; //默认分区数
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * short replicas() default 1; //每个分区默认的备份数
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * String refreshInterval() default &#34;1s&#34;; //刷新间隔
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * String indexStoreType() default &#34;fs&#34;; //索引文件存储类型
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Document</span><span class="p">(</span><span class="n">indexName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EsConsts</span><span class="p">.</span><span class="na">INDEX_NAME</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EsConsts</span><span class="p">.</span><span class="na">TYPE_NAME</span><span class="p">,</span><span class="w"> </span><span class="n">shards</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">replicas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@NoArgsConstructor</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@AllArgsConstructor</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Person</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 主键
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Id</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 名字
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Field</span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FieldType</span><span class="p">.</span><span class="na">Keyword</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 国家
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Field</span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FieldType</span><span class="p">.</span><span class="na">Keyword</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">country</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 年龄
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Field</span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FieldType</span><span class="p">.</span><span class="na">Integer</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">age</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 生日
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Field</span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FieldType</span><span class="p">.</span><span class="na">Date</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Date</span><span class="w"> </span><span class="n">birthday</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 介绍
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Field</span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FieldType</span><span class="p">.</span><span class="na">Text</span><span class="p">,</span><span class="w"> </span><span class="n">analyzer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;ik_smart&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">remark</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="personrepository">PersonRepository</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">PersonRepository</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">ElasticsearchRepository</span><span class="o">&lt;</span><span class="n">Person</span><span class="p">,</span><span class="w"> </span><span class="n">Long</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 根据年龄区间查询
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param min 最小值
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param max 最大值
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return 满足条件的用户列表
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">findByAgeBetween</span><span class="p">(</span><span class="n">Integer</span><span class="w"> </span><span class="n">min</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">max</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="elasticsearchapplicationtest">ElasticsearchApplicationTest</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Slf4j</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@RunWith</span><span class="p">(</span><span class="n">SpringRunner</span><span class="p">.</span><span class="na">class</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@SpringBootTest</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ElasticsearchApplicationTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Autowired</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">PersonRepository</span><span class="w"> </span><span class="n">repo</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 测试新增
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">save</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Person</span><span class="w"> </span><span class="n">person</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Person</span><span class="p">(</span><span class="n">1L</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;刘备&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;蜀国&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">18</span><span class="p">,</span><span class="w"> </span><span class="n">DateUtil</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">&#34;1990-01-02 03:04:05&#34;</span><span class="p">),</span><span class="w"> </span><span class="s">&#34;刘备（161年－223年6月10日），即汉昭烈帝（221年－223年在位），又称先主，字玄德，东汉末年幽州涿郡涿县（今河北省涿州市）人，西汉中山靖王刘胜之后，三国时期蜀汉开国皇帝、政治家。\n刘备少年时拜卢植为师；早年颠沛流离，备尝艰辛，投靠过多个诸侯，曾参与镇压黄巾起义。先后率军救援北海相孔融、徐州牧陶谦等。陶谦病亡后，将徐州让与刘备。赤壁之战时，刘备与孙权联盟击败曹操，趁势夺取荆州。而后进取益州。于章武元年（221年）在成都称帝，国号汉，史称蜀或蜀汉。《三国志》评刘备的机权干略不及曹操，但其弘毅宽厚，知人待士，百折不挠，终成帝业。刘备也称自己做事“每与操反，事乃成尔”。\n章武三年（223年），刘备病逝于白帝城，终年六十三岁，谥号昭烈皇帝，庙号烈祖，葬惠陵。后世有众多文艺作品以其为主角，在成都武侯祠有昭烈庙为纪念。&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Person</span><span class="w"> </span><span class="n">save</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">repo</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">person</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&#34;【save】= {}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">save</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 测试批量新增
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">saveList</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="w"> </span><span class="n">personList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Lists</span><span class="p">.</span><span class="na">newArrayList</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">personList</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Person</span><span class="p">(</span><span class="n">2L</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;曹操&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;魏国&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">20</span><span class="p">,</span><span class="w"> </span><span class="n">DateUtil</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">&#34;1988-01-02 03:04:05&#34;</span><span class="p">),</span><span class="w"> </span><span class="s">&#34;曹操（155年－220年3月15日），字孟德，一名吉利，小字阿瞒，沛国谯县（今安徽亳州）人。东汉末年杰出的政治家、军事家、文学家、书法家，三国中曹魏政权的奠基人。\n曹操曾担任东汉丞相，后加封魏王，奠定了曹魏立国的基础。去世后谥号为武王。其子曹丕称帝后，追尊为武皇帝，庙号太祖。\n东汉末年，天下大乱，曹操以汉天子的名义征讨四方，对内消灭二袁、吕布、刘表、马超、韩遂等割据势力，对外降服南匈奴、乌桓、鲜卑等，统一了中国北方，并实行一系列政策恢复经济生产和社会秩序，扩大屯田、兴修水利、奖励农桑、重视手工业、安置流亡人口、实行“租调制”，从而使中原社会渐趋稳定、经济出现转机。黄河流域在曹操统治下，政治渐见清明，经济逐步恢复，阶级压迫稍有减轻，社会风气有所好转。曹操在汉朝的名义下所采取的一些措施具有积极作用。\n曹操军事上精通兵法，重贤爱才，为此不惜一切代价将看中的潜能分子收于麾下；生活上善诗歌，抒发自己的政治抱负，并反映汉末人民的苦难生活，气魄雄伟，慷慨悲凉；散文亦清峻整洁，开启并繁荣了建安文学，给后人留下了宝贵的精神财富，鲁迅评价其为“改造文章的祖师”。同时曹操也擅长书法，唐朝张怀瓘在《书断》将曹操的章草评为“妙品”。&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">personList</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Person</span><span class="p">(</span><span class="n">3L</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;孙权&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;吴国&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">19</span><span class="p">,</span><span class="w"> </span><span class="n">DateUtil</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">&#34;1989-01-02 03:04:05&#34;</span><span class="p">),</span><span class="w"> </span><span class="s">&#34;孙权（182年－252年5月21日），字仲谋，吴郡富春（今浙江杭州富阳区）人。三国时代孙吴的建立者（229年－252年在位）。\n孙权的父亲孙坚和兄长孙策，在东汉末年群雄割据中打下了江东基业。建安五年（200年），孙策遇刺身亡，孙权继之掌事，成为一方诸侯。建安十三年（208年），与刘备建立孙刘联盟，并于赤壁之战中击败曹操，奠定三国鼎立的基础。建安二十四年（219年），孙权派吕蒙成功袭取刘备的荆州，使领土面积大大增加。\n黄武元年（222年），孙权被魏文帝曹丕册封为吴王，建立吴国。同年，在夷陵之战中大败刘备。黄龙元年（229年），在武昌正式称帝，国号吴，不久后迁都建业。孙权称帝后，设置农官，实行屯田，设置郡县，并继续剿抚山越，促进了江南经济的发展。在此基础上，他又多次派人出海。黄龙二年（230年），孙权派卫温、诸葛直抵达夷州。\n孙权晚年在继承人问题上反复无常，引致群下党争，朝局不稳。太元元年（252年）病逝，享年七十一岁，在位二十四年，谥号大皇帝，庙号太祖，葬于蒋陵。\n孙权亦善书，唐代张怀瓘在《书估》中将其书法列为第三等。&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">personList</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Person</span><span class="p">(</span><span class="n">4L</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;诸葛亮&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;蜀国&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">16</span><span class="p">,</span><span class="w"> </span><span class="n">DateUtil</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">&#34;1992-01-02 03:04:05&#34;</span><span class="p">),</span><span class="w"> </span><span class="s">&#34;诸葛亮（181年-234年10月8日），字孔明，号卧龙，徐州琅琊阳都（今山东临沂市沂南县）人，三国时期蜀国丞相，杰出的政治家、军事家、外交家、文学家、书法家、发明家。\n早年随叔父诸葛玄到荆州，诸葛玄死后，诸葛亮就在襄阳隆中隐居。后刘备三顾茅庐请出诸葛亮，联孙抗曹，于赤壁之战大败曹军。形成三国鼎足之势，又夺占荆州。建安十六年（211年），攻取益州。继又击败曹军，夺得汉中。蜀章武元年（221年），刘备在成都建立蜀汉政权，诸葛亮被任命为丞相，主持朝政。蜀后主刘禅继位，诸葛亮被封为武乡侯，领益州牧。勤勉谨慎，大小政事必亲自处理，赏罚严明；与东吴联盟，改善和西南各族的关系；实行屯田政策，加强战备。前后六次北伐中原，多以粮尽无功。终因积劳成疾，于蜀建兴十二年（234年）病逝于五丈原（今陕西宝鸡岐山境内），享年54岁。刘禅追封其为忠武侯，后世常以武侯尊称诸葛亮。东晋政权因其军事才能特追封他为武兴王。\n诸葛亮散文代表作有《出师表》《诫子书》等。曾发明木牛流马、孔明灯等，并改造连弩，叫做诸葛连弩，可一弩十矢俱发。诸葛亮一生“鞠躬尽瘁、死而后已”，是中国传统文化中忠臣与智者的代表人物。&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Iterable</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="w"> </span><span class="n">people</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">repo</span><span class="p">.</span><span class="na">saveAll</span><span class="p">(</span><span class="n">personList</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&#34;【people】= {}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">people</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 测试更新
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">update</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">repo</span><span class="p">.</span><span class="na">findById</span><span class="p">(</span><span class="n">1L</span><span class="p">).</span><span class="na">ifPresent</span><span class="p">(</span><span class="n">person</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">person</span><span class="p">.</span><span class="na">setRemark</span><span class="p">(</span><span class="n">person</span><span class="p">.</span><span class="na">getRemark</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;\n更新更新更新更新更新&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Person</span><span class="w"> </span><span class="n">save</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">repo</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">person</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&#34;【save】= {}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">save</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 测试删除
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">delete</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 主键删除</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">repo</span><span class="p">.</span><span class="na">deleteById</span><span class="p">(</span><span class="n">1L</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 对象删除</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">repo</span><span class="p">.</span><span class="na">findById</span><span class="p">(</span><span class="n">2L</span><span class="p">).</span><span class="na">ifPresent</span><span class="p">(</span><span class="n">person</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">repo</span><span class="p">.</span><span class="na">delete</span><span class="p">(</span><span class="n">person</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 批量删除</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">repo</span><span class="p">.</span><span class="na">deleteAll</span><span class="p">(</span><span class="n">repo</span><span class="p">.</span><span class="na">findAll</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 测试普通查询，按生日倒序
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">select</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">repo</span><span class="p">.</span><span class="na">findAll</span><span class="p">(</span><span class="n">Sort</span><span class="p">.</span><span class="na">by</span><span class="p">(</span><span class="n">Sort</span><span class="p">.</span><span class="na">Direction</span><span class="p">.</span><span class="na">DESC</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;birthday&#34;</span><span class="p">)).</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">forEach</span><span class="p">(</span><span class="n">person</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&#34;{} 生日: {}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">person</span><span class="p">.</span><span class="na">getName</span><span class="p">(),</span><span class="w"> </span><span class="n">DateUtil</span><span class="p">.</span><span class="na">formatDateTime</span><span class="p">(</span><span class="n">person</span><span class="p">.</span><span class="na">getBirthday</span><span class="p">())));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 自定义查询，根据年龄范围查询
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">customSelectRangeOfAge</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">repo</span><span class="p">.</span><span class="na">findByAgeBetween</span><span class="p">(</span><span class="n">18</span><span class="p">,</span><span class="w"> </span><span class="n">19</span><span class="p">).</span><span class="na">forEach</span><span class="p">(</span><span class="n">person</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&#34;{} 年龄: {}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">person</span><span class="p">.</span><span class="na">getName</span><span class="p">(),</span><span class="w"> </span><span class="n">person</span><span class="p">.</span><span class="na">getAge</span><span class="p">()));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 高级查询
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">advanceSelect</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// QueryBuilders 提供了很多静态方法，可以实现大部分查询条件的封装</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">MatchQueryBuilder</span><span class="w"> </span><span class="n">queryBuilder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QueryBuilders</span><span class="p">.</span><span class="na">matchQuery</span><span class="p">(</span><span class="s">&#34;name&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;孙权&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&#34;【queryBuilder】= {}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">queryBuilder</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">repo</span><span class="p">.</span><span class="na">search</span><span class="p">(</span><span class="n">queryBuilder</span><span class="p">).</span><span class="na">forEach</span><span class="p">(</span><span class="n">person</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&#34;【person】= {}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">person</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 自定义高级查询
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">customAdvanceSelect</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 构造查询条件</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">NativeSearchQueryBuilder</span><span class="w"> </span><span class="n">queryBuilder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">NativeSearchQueryBuilder</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 添加基本的分词条件</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">queryBuilder</span><span class="p">.</span><span class="na">withQuery</span><span class="p">(</span><span class="n">QueryBuilders</span><span class="p">.</span><span class="na">matchQuery</span><span class="p">(</span><span class="s">&#34;remark&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;东汉&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 排序条件</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">queryBuilder</span><span class="p">.</span><span class="na">withSort</span><span class="p">(</span><span class="n">SortBuilders</span><span class="p">.</span><span class="na">fieldSort</span><span class="p">(</span><span class="s">&#34;age&#34;</span><span class="p">).</span><span class="na">order</span><span class="p">(</span><span class="n">SortOrder</span><span class="p">.</span><span class="na">DESC</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 分页条件</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">queryBuilder</span><span class="p">.</span><span class="na">withPageable</span><span class="p">(</span><span class="n">PageRequest</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">0</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Page</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="w"> </span><span class="n">people</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">repo</span><span class="p">.</span><span class="na">search</span><span class="p">(</span><span class="n">queryBuilder</span><span class="p">.</span><span class="na">build</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&#34;【people】总条数 = {}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">people</span><span class="p">.</span><span class="na">getTotalElements</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&#34;【people】总页数 = {}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">people</span><span class="p">.</span><span class="na">getTotalPages</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">people</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">person</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&#34;【person】= {}，年龄 = {}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">person</span><span class="p">.</span><span class="na">getName</span><span class="p">(),</span><span class="w"> </span><span class="n">person</span><span class="p">.</span><span class="na">getAge</span><span class="p">()));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 测试聚合，测试平均年龄
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">agg</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 构造查询条件</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">NativeSearchQueryBuilder</span><span class="w"> </span><span class="n">queryBuilder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">NativeSearchQueryBuilder</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 不查询任何结果</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">queryBuilder</span><span class="p">.</span><span class="na">withSourceFilter</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">FetchSourceFilter</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="o">[]</span><span class="p">{</span><span class="s">&#34;&#34;</span><span class="p">},</span><span class="w"> </span><span class="kc">null</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 平均年龄</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">queryBuilder</span><span class="p">.</span><span class="na">addAggregation</span><span class="p">(</span><span class="n">AggregationBuilders</span><span class="p">.</span><span class="na">avg</span><span class="p">(</span><span class="s">&#34;avg&#34;</span><span class="p">).</span><span class="na">field</span><span class="p">(</span><span class="s">&#34;age&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&#34;【queryBuilder】= {}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">JSONUtil</span><span class="p">.</span><span class="na">toJsonStr</span><span class="p">(</span><span class="n">queryBuilder</span><span class="p">.</span><span class="na">build</span><span class="p">()));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">AggregatedPage</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="w"> </span><span class="n">people</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">AggregatedPage</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="n">repo</span><span class="p">.</span><span class="na">search</span><span class="p">(</span><span class="n">queryBuilder</span><span class="p">.</span><span class="na">build</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">avgAge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">InternalAvg</span><span class="p">)</span><span class="w"> </span><span class="n">people</span><span class="p">.</span><span class="na">getAggregation</span><span class="p">(</span><span class="s">&#34;avg&#34;</span><span class="p">)).</span><span class="na">getValue</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&#34;【avgAge】= {}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">avgAge</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 测试高级聚合查询，每个国家的人有几个，每个国家的平均年龄是多少
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">advanceAgg</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 构造查询条件</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">NativeSearchQueryBuilder</span><span class="w"> </span><span class="n">queryBuilder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">NativeSearchQueryBuilder</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 不查询任何结果</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">queryBuilder</span><span class="p">.</span><span class="na">withSourceFilter</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">FetchSourceFilter</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="o">[]</span><span class="p">{</span><span class="s">&#34;&#34;</span><span class="p">},</span><span class="w"> </span><span class="kc">null</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 1. 添加一个新的聚合，聚合类型为terms，聚合名称为country，聚合字段为age</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">queryBuilder</span><span class="p">.</span><span class="na">addAggregation</span><span class="p">(</span><span class="n">AggregationBuilders</span><span class="p">.</span><span class="na">terms</span><span class="p">(</span><span class="s">&#34;country&#34;</span><span class="p">).</span><span class="na">field</span><span class="p">(</span><span class="s">&#34;country&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="c1">// 2. 在国家聚合桶内进行嵌套聚合，求平均年龄</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">.</span><span class="na">subAggregation</span><span class="p">(</span><span class="n">AggregationBuilders</span><span class="p">.</span><span class="na">avg</span><span class="p">(</span><span class="s">&#34;avg&#34;</span><span class="p">).</span><span class="na">field</span><span class="p">(</span><span class="s">&#34;age&#34;</span><span class="p">)));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&#34;【queryBuilder】= {}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">JSONUtil</span><span class="p">.</span><span class="na">toJsonStr</span><span class="p">(</span><span class="n">queryBuilder</span><span class="p">.</span><span class="na">build</span><span class="p">()));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 3. 查询</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">AggregatedPage</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="w"> </span><span class="n">people</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">AggregatedPage</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="n">repo</span><span class="p">.</span><span class="na">search</span><span class="p">(</span><span class="n">queryBuilder</span><span class="p">.</span><span class="na">build</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 4. 解析</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 4.1. 从结果中取出名为 country 的那个聚合，因为是利用String类型字段来进行的term聚合，所以结果要强转为StringTerm类型</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">StringTerms</span><span class="w"> </span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">StringTerms</span><span class="p">)</span><span class="w"> </span><span class="n">people</span><span class="p">.</span><span class="na">getAggregation</span><span class="p">(</span><span class="s">&#34;country&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 4.2. 获取桶</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">StringTerms</span><span class="p">.</span><span class="na">Bucket</span><span class="o">&gt;</span><span class="w"> </span><span class="n">buckets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">country</span><span class="p">.</span><span class="na">getBuckets</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">StringTerms</span><span class="p">.</span><span class="na">Bucket</span><span class="w"> </span><span class="n">bucket</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">buckets</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 4.3. 获取桶中的key，即国家名称  4.4. 获取桶中的文档数量</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&#34;{} 总共有 {} 人&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">bucket</span><span class="p">.</span><span class="na">getKeyAsString</span><span class="p">(),</span><span class="w"> </span><span class="n">bucket</span><span class="p">.</span><span class="na">getDocCount</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 4.5. 获取子聚合结果：</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">InternalAvg</span><span class="w"> </span><span class="n">avg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">InternalAvg</span><span class="p">)</span><span class="w"> </span><span class="n">bucket</span><span class="p">.</span><span class="na">getAggregations</span><span class="p">().</span><span class="na">asMap</span><span class="p">().</span><span class="na">get</span><span class="p">(</span><span class="s">&#34;avg&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&#34;平均年龄：{}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">avg</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">
                             

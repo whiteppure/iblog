@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>SpringBoot整合redis ｜ 脚踏实地</title>
+	<title>SpringBoot整合Redis ｜ 脚踏实地</title>
 	
     
     
-    <meta name="description" content="Redis介绍 redis是开源的一个高性能的 key-value 数据库。 主要特点 Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用 Redi" />
+    <meta name="description" content="Docker安装和运行Redis 首先从Docker Hub拉取Redis的官方镜像。 docker pull redis:latest 使用docker run命令启动Redis容器。 docker run -d --name redis -p 6379:6379 redis:latest 验证Red" />
     
 
     
@@ -72,88 +72,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#redis%e4%bb%8b%e7%bb%8d">
-                    Redis介绍
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e4%b8%bb%e8%a6%81%e7%89%b9%e7%82%b9">
-                    主要特点
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#redis%e4%bc%98%e7%82%b9">
-                    Redis优点
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%af%bc%e5%85%a5%e4%be%9d%e8%b5%96">
-                    导入依赖
+                <a class="nav-link text-left" href="#docker%e5%ae%89%e8%a3%85%e5%92%8c%e8%bf%90%e8%a1%8credis">
+                    Docker安装和运行Redis
                 </a>
             </li>
             
@@ -176,8 +96,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e9%85%8d%e7%bd%aeredis">
-                    配置redis
+                <a class="nav-link text-left" href="#%e5%af%bc%e5%85%a5pom%e4%be%9d%e8%b5%96">
+                    导入pom依赖
                 </a>
             </li>
             
@@ -194,16 +114,14 @@
         
         
         
-        <ul class="nav">
-            
         <ul class="nav">
             
         <ul class="nav">
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#redisconfigclass">
-                    RedisConfig.class
+                <a class="nav-link text-left" href="#redisconfig">
+                    RedisConfig
                 </a>
             </li>
             
@@ -212,7 +130,6 @@
         
         </ul>
         
-        </ul>
         
         
         
@@ -221,9 +138,6 @@
         
         
         
-        
-        <ul class="nav">
-            
         <ul class="nav">
             
         <ul class="nav">
@@ -240,36 +154,6 @@
         
         </ul>
         
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#applicationyml-%e9%85%8d%e7%bd%ae">
-                    application.yml 配置
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
         
         
         
@@ -284,8 +168,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e7%bc%93%e5%ad%98%e6%b3%a8%e8%a7%a3%e4%bb%8b%e7%bb%8d">
-                    缓存注解介绍
+                <a class="nav-link text-left" href="#applicationyml%e9%85%8d%e7%bd%ae">
+                    application.yml配置
                 </a>
             </li>
             
@@ -306,12 +190,10 @@
             
         <ul class="nav">
             
-        <ul class="nav">
-            
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#cacheable">
-                    @Cacheable
+                <a class="nav-link text-left" href="#redisapplicationtest">
+                    RedisApplicationTest
                 </a>
             </li>
             
@@ -320,120 +202,6 @@
         
         </ul>
         
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#cacheput">
-                    @CachePut
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#cacheevict">
-                    @CacheEvict
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#cacheconfig">
-                    @CacheConfig
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%a4%8d%e5%90%88%e6%b3%a8%e8%a7%a3">
-                    复合注解
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
         
         
         
@@ -448,8 +216,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e6%b5%8b%e8%af%95">
-                    测试
+                <a class="nav-link text-left" href="#%e7%bc%93%e5%ad%98%e6%b3%a8%e8%a7%a3">
+                    缓存注解
                 </a>
             </li>
             
@@ -557,7 +325,7 @@
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
-                        <h2 id="post_single_title">SpringBoot整合redis</h2>
+                        <h2 id="post_single_title">SpringBoot整合Redis</h2>
                         <span id="post_page_title_date" class="date">2020.03.01</span>
                         
                         <span id="busuanzi_container_page_pv" class="m-l-10">
@@ -565,183 +333,307 @@
                         </span>
                         
                     </div>
-                    <div class="post_content markdown"><h2 id="redis介绍">Redis介绍</h2>
-<p>redis是开源的一个高性能的 key-value 数据库。</p>
-<h3 id="主要特点">主要特点</h3>
-<ul>
-<li>Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用</li>
-<li>Redis支持数据的备份，即master-slave模式的数据备份</li>
-<li>Redis 可以存储键与5种不同数据结构类型之间的映射
-<ul>
-<li><strong>String</strong> 可以是字符串、整数或者浮点数 对整个字符串或者字符串的其中一部分执行操作；对象和浮点数执行自增(increment)或者自减(decrement)</li>
-<li><strong>List</strong> 一个链表，链表上的每个节点都包含了一个字符串 从链表的两端推入或者弹出元素；根据偏移量对链表进行修剪(trim)；读取单个或者多个元素；根据值来查找或者移除元素</li>
-<li><strong>Set</strong> 包含字符串的无序收集器(unorderedcollection)，并且被包含的每个字符串都是独一无二的、各不相同 添加、获取、移除单个元素；检查一个元素是否存在于某个集合中；计算交集、并集、差集；从集合里卖弄随机获取元素</li>
-<li><strong>Hash</strong> 包含键值对的无序散列表 添加、获取、移除单个键值对；获取所有键值对</li>
-<li><strong>Zset</strong> 字符串成员(member)与浮点数分值(score)之间的有序映射，元素的排列顺序由分值的大小决定 添加、获取、删除单个元素；根据分值范围(range)或者成员来获取元素</li>
-</ul>
-</li>
-</ul>
-<p><strong>注意: Java bean 要序列化</strong></p>
-<h3 id="redis优点">Redis优点</h3>
-<ul>
-<li>性能极高 – Redis能读的速度是110000次/s,写的速度是81000次/s 。</li>
-<li>丰富的数据类型 – Redis支持二进制案例的 Strings, Lists, Hashes, Sets 及 Ordered Sets 数据类型操作。</li>
-<li>原子 – Redis的所有操作都是原子性的，意思就是要么成功执行要么失败完全不执行。单个操作是原子性的。多个操作也支持事务，即原子性，通过MULTI和EXEC指令包起来。</li>
-<li>丰富的特性 – Redis还支持 publish/subscribe, 通知, key 过期等等特性。</li>
-</ul>
-<p>参考<a href="https://www.runoob.com/redis/redis-intro.html">菜鸟教程</a></p>
-<h2 id="导入依赖">导入依赖</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;dependency&gt;
-</span></span><span class="line"><span class="cl">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-</span></span><span class="line"><span class="cl">    &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
-</span></span><span class="line"><span class="cl">    &lt;version&gt;2.1.3.RELEASE&lt;/version&gt;
-</span></span><span class="line"><span class="cl">&lt;/dependency&gt;
-</span></span></code></pre></div><h2 id="配置redis">配置redis</h2>
-<h3 id="redisconfigclass">RedisConfig.class</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Configuration
-</span></span><span class="line"><span class="cl">public class RedisConfig {
+                    <div class="post_content markdown"><h2 id="docker安装和运行redis">Docker安装和运行Redis</h2>
+<ol>
+<li>首先从<code>Docker Hub</code>拉取<code>Redis</code>的官方镜像。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker pull redis:latest
+</span></span></code></pre></div></li>
+<li>使用<code>docker run</code>命令启动<code>Redis</code>容器。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker run -d --name redis -p 6379:6379 redis:latest
+</span></span></code></pre></div></li>
+<li>验证<code>Redis</code>运行状态。通过以下命令查看<code>Redis</code>容器的日志，确保其成功启动。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker logs redis
+</span></span></code></pre></div>也可以使用<code>redis-cli</code>客户端连接<code>Redis</code>，进行简单测试：
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker <span class="nb">exec</span> -it redis redis-cli
+</span></span></code></pre></div></li>
+<li>持久化<code>Redis</code>数据。为了在容器重启后保留数据，可以将<code>Redis</code>数据目录挂载到宿主机。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker run -d --name redis -p 6379:6379 -v /path/to/your/data:/data redis:latest redis-server --appendonly yes
+</span></span></code></pre></div></li>
+</ol>
+<h2 id="导入pom依赖">导入pom依赖</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">   <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">   <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-cache<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/dependency&gt;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    //用于解决注解操作redis 序列话的问题
-</span></span><span class="line"><span class="cl">    @Bean(name = &#34;myCacheManager&#34;)
-</span></span><span class="line"><span class="cl">    public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);
-</span></span><span class="line"><span class="cl">        RedisSerializer&lt;Object&gt; jsonSerializer = new GenericJackson2JsonRedisSerializer();
-</span></span><span class="line"><span class="cl">        RedisSerializationContext.SerializationPair&lt;Object&gt; pair = RedisSerializationContext.SerializationPair
-</span></span><span class="line"><span class="cl">                .fromSerializer(jsonSerializer);
-</span></span><span class="line"><span class="cl">        RedisCacheConfiguration defaultCacheConfig= RedisCacheConfiguration.defaultCacheConfig()
-</span></span><span class="line"><span class="cl">                .serializeValuesWith(pair);
-</span></span><span class="line"><span class="cl">        defaultCacheConfig.entryTtl(Duration.ofMinutes(30));
-</span></span><span class="line"><span class="cl">        return new RedisCacheManager(redisCacheWriter, defaultCacheConfig);
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl"> * 解决用redisTemplate操作的序列化的问题
-</span></span><span class="line"><span class="cl"> *
-</span></span><span class="line"><span class="cl"> * @param factory RedisConnectionFactory
-</span></span><span class="line"><span class="cl"> * @return redisTemplate
-</span></span><span class="line"><span class="cl"> */
-</span></span><span class="line"><span class="cl">    @Bean
-</span></span><span class="line"><span class="cl">    @ConditionalOnMissingBean(name = &#34;redisTemplate&#34;)
-</span></span><span class="line"><span class="cl">    public RedisTemplate&lt;String,Object&gt; redisTemplate(RedisConnectionFactory factory){
-</span></span><span class="line"><span class="cl">        // 配置redisTemplate
-</span></span><span class="line"><span class="cl">        RedisTemplate&lt;String, Object&gt; redisTemplate = new RedisTemplate&lt;&gt;();
-</span></span><span class="line"><span class="cl">        redisTemplate.setConnectionFactory(factory);
-</span></span><span class="line"><span class="cl">        // key序列化
-</span></span><span class="line"><span class="cl">        redisTemplate.setKeySerializer(STRING_SERIALIZER);
-</span></span><span class="line"><span class="cl">        // value序列化
-</span></span><span class="line"><span class="cl">        redisTemplate.setValueSerializer(JACKSON__SERIALIZER);
-</span></span><span class="line"><span class="cl">        // Hash key序列化
-</span></span><span class="line"><span class="cl">        redisTemplate.setHashKeySerializer(STRING_SERIALIZER);
-</span></span><span class="line"><span class="cl">        // Hash value序列化
-</span></span><span class="line"><span class="cl">        redisTemplate.setHashValueSerializer(JACKSON__SERIALIZER);
-</span></span><span class="line"><span class="cl">        redisTemplate.afterPropertiesSet();
-</span></span><span class="line"><span class="cl">        return redisTemplate;
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><h3 id="启动类配置">启动类配置</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@EnableCaching  //允许注解操作缓存
-</span></span><span class="line"><span class="cl">@SpringBootApplication
-</span></span><span class="line"><span class="cl">public class RedisExampleApplication {
-</span></span><span class="line"><span class="cl">   public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">      SpringApplication.run(RedisExampleApplication.class, args);
-</span></span><span class="line"><span class="cl">   }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><h3 id="applicationyml-配置">application.yml 配置</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#redis 缓存配置
-</span></span><span class="line"><span class="cl">redis:
-</span></span><span class="line"><span class="cl">  database: 0
-</span></span><span class="line"><span class="cl">  host: @ip
-</span></span><span class="line"><span class="cl">  port: 6379
-</span></span><span class="line"><span class="cl">  timeout: 8000
-</span></span><span class="line"><span class="cl">  #如果没有可不写
-</span></span><span class="line"><span class="cl">  password:
-</span></span><span class="line"><span class="cl">  jedis:
-</span></span><span class="line"><span class="cl">    pool:
-</span></span><span class="line"><span class="cl">      #连接池最大连接数量
-</span></span><span class="line"><span class="cl">      max-active: 10
-</span></span><span class="line"><span class="cl">      #连接池最大堵塞时间
-</span></span><span class="line"><span class="cl">      max-wait: -1
-</span></span><span class="line"><span class="cl">      #连接池最小空闲连接
-</span></span><span class="line"><span class="cl">      min-idle: 0
-</span></span><span class="line"><span class="cl">      #连接池最大空闲连接
-</span></span><span class="line"><span class="cl">      max-idle: 8
-</span></span></code></pre></div><h2 id="缓存注解介绍">缓存注解介绍</h2>
-<h3 id="cacheable">@Cacheable</h3>
-<p><code>@Cacheable</code>作用将方法的运行结果进行缓存,以后要相同的数据,直接从缓存中获取.
-cacheNames 和 key 都必须填，如果不填 key ，默认的 key 是当前的方法名，更新缓存时会因为方法名不同而更新失败.</p>
-<p>属性</p>
-<ul>
-<li>value:   指定缓存名称 可指定多个(数组)</li>
-<li>key:  缓存数据使用的key默认为方法参数支持 spEL</li>
-<li>keyGenerator:  key的生成器</li>
-<li>CacheManager:  指定缓存管理器,或获取解析器,两者二选一</li>
-<li>condition:  指定条件缓存</li>
-<li>unless:  否定缓存. 当unless条件为true时,返回值就不会被缓存,可获取到结果判断</li>
-<li>sync:  是否异步, 不支持unless</li>
-</ul>
-<p>key 也可以动态设置为方法的参数(支持EL)</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Cacheable(cacheNames = &#34;xxx&#34;, key = &#34;#openid&#34;)
-</span></span><span class="line"><span class="cl">public Response detail(@RequestParam(&#34;openid&#34;) String openid){
-</span></span><span class="line"><span class="cl">      //to do sthing
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Cacheable(cacheNames = &#34;xxx&#34;, key = &#34;xxx&#34;,keyGenerator = &#34;xxx&#34;, CacheManager = &#34;xxx&#34;, condition = &#34;xxx&#34;, unless = &#34;xxx&#34;, sync = &#34;xxx&#34;)
-</span></span></code></pre></div><h3 id="cacheput">@CachePut</h3>
-<p>既调用方法又更新缓存修改了数据库某个数据.
-更新缓存,先调用目标方法将目标方法缓存起来,更新时要注意,要和查询时的key相同,否则缓存不会更新,属性和 @Cacheable 相同</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@CachePut(cacheNames = &#34;xxx&#34;, key = &#34;xxx&#34;,keyGenerator = &#34;xxx&#34;, CacheManager = &#34;xxx&#34;, condition = &#34;xxx&#34;, unless = &#34;xxx&#34;, sync = &#34;xxx&#34;)
-</span></span></code></pre></div><h3 id="cacheevict">@CacheEvict</h3>
-<p>该注解作用是删除缓存，需要指定 key</p>
-<ul>
-<li>allEntries:是否删除所有字段的缓存</li>
-<li>beforeInvocation:是否在方法之前执行</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@CacheEvict(cacheNames = &#34;xxx&#34;, key = &#34;xxx&#34;, allEntries = &#34;xxx&#34;, beforeInvocation=&#34;xxx&#34;)
-</span></span></code></pre></div><h3 id="cacheconfig">@CacheConfig</h3>
-<p><code>@CacheConfig </code>可指定公共key的生成策略</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// 公共的cacheNames (value) 可以统一写在类上面 这样就不用每缓存一个就起名字了
-</span></span><span class="line"><span class="cl">// 公共的CacheManager
-</span></span><span class="line"><span class="cl">@CacheConfig(cacheNames = &#34;xxx&#34;)
-</span></span><span class="line"><span class="cl">public class RedisExampleController {
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">    @Caching(cacheable = {@Cacheable}, put = {@CachePut})
-</span></span><span class="line"><span class="cl">    public Response&lt;Map&lt;String, Object&gt;&gt; test(){
-</span></span><span class="line"><span class="cl">          //to do
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><h3 id="复合注解">复合注解</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// 查询数据时 先去更新数据 在放到缓存中
-</span></span><span class="line"><span class="cl">@Caching(cacheable = {@Cacheable}, put = {@CachePut})
-</span></span><span class="line"><span class="cl">@Caching(cacheable = {@Cacheable}, put = {@CachePut}, evict = {@CacheEvict})
-</span></span></code></pre></div><h2 id="测试">测试</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Autowired
-</span></span><span class="line"><span class="cl">private RedisTemplate redisTemplate;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"> @Test 
-</span></span><span class="line"><span class="cl">public void demo(){
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    //常见redis类型数据操作 set zset 未列出
-</span></span><span class="line"><span class="cl">        
-</span></span><span class="line"><span class="cl">    //string 类型数据
-</span></span><span class="line"><span class="cl">    redisTemplate.opsForValue().set(&#34;test&#34;,&#34;123&#34;);
-</span></span><span class="line"><span class="cl">    redisTemplate.opsForValue().get(&#34;test&#34;) // 输出结果为123
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">   //list 数据类型
-</span></span><span class="line"><span class="cl">   redisTemplate.opsForList().rightPushAll(&#34;list&#34;,new String[]{&#34;1&#34;,&#34;2&#34;,&#34;3&#34;});//从右边插入元素
-</span></span><span class="line"><span class="cl">   redisTemplate.opsForList().range(&#34;list&#34;,0,-1);//获取所有元素
-</span></span><span class="line"><span class="cl">   redisTemplate.opsForList().index(&#34;listRight&#34;,1);//获取下标为2的元素
-</span></span><span class="line"><span class="cl">   redisTemplate.opsForList().rightPush(&#34;listRiht&#34;,&#34;1&#34;);//从右边插入 也可从左边插
-</span></span><span class="line"><span class="cl">   redisTemplate.opsForList().leftPop(&#34;list&#34;);//从左边弹出元素 元素弹出将不存在
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   //hash
-</span></span><span class="line"><span class="cl">   redisTemplate.opsForHash().hasKey(&#34;redisHash&#34;,&#34;111&#34;);//判断该hash key 是否存在
-</span></span><span class="line"><span class="cl">   redisTemplate.opsForHash().put(&#34;redisHash&#34;,&#34;name&#34;,&#34;111&#34;);//存放 hash 数据
-</span></span><span class="line"><span class="cl">   redisTemplate.opsForHash().keys(&#34;redisHash&#34;);//获取该key对应的hash值
-</span></span><span class="line"><span class="cl">   redisTemplate.opsForHash().get(&#34;redisHash&#34;,&#34;age&#34;);//给定key 获取 hash 值
-</span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div></div>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-redis<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><h2 id="redisconfig">RedisConfig</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Configuration</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">RedisConfig</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">//用于解决注解操作redis 序列话的问题</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Bean</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;myCacheManager&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">CacheManager</span><span class="w"> </span><span class="nf">cacheManager</span><span class="p">(</span><span class="n">RedisConnectionFactory</span><span class="w"> </span><span class="n">redisConnectionFactory</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">RedisCacheWriter</span><span class="w"> </span><span class="n">redisCacheWriter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RedisCacheWriter</span><span class="p">.</span><span class="na">nonLockingRedisCacheWriter</span><span class="p">(</span><span class="n">redisConnectionFactory</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">RedisSerializer</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">jsonSerializer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GenericJackson2JsonRedisSerializer</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">RedisSerializationContext</span><span class="p">.</span><span class="na">SerializationPair</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pair</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RedisSerializationContext</span><span class="p">.</span><span class="na">SerializationPair</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">.</span><span class="na">fromSerializer</span><span class="p">(</span><span class="n">jsonSerializer</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">RedisCacheConfiguration</span><span class="w"> </span><span class="n">defaultCacheConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RedisCacheConfiguration</span><span class="p">.</span><span class="na">defaultCacheConfig</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">.</span><span class="na">serializeValuesWith</span><span class="p">(</span><span class="n">pair</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">defaultCacheConfig</span><span class="p">.</span><span class="na">entryTtl</span><span class="p">(</span><span class="n">Duration</span><span class="p">.</span><span class="na">ofMinutes</span><span class="p">(</span><span class="n">30</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RedisCacheManager</span><span class="p">(</span><span class="n">redisCacheWriter</span><span class="p">,</span><span class="w"> </span><span class="n">defaultCacheConfig</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * 解决用redisTemplate操作的序列化的问题
+</span></span></span><span class="line"><span class="cl"><span class="cm">    *
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * @param factory RedisConnectionFactory
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * @return redisTemplate
+</span></span></span><span class="line"><span class="cl"><span class="cm">    */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Bean</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@ConditionalOnMissingBean</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;redisTemplate&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">RedisTemplate</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">redisTemplate</span><span class="p">(</span><span class="n">RedisConnectionFactory</span><span class="w"> </span><span class="n">factory</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 配置redisTemplate</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">RedisTemplate</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">redisTemplate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RedisTemplate</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">redisTemplate</span><span class="p">.</span><span class="na">setConnectionFactory</span><span class="p">(</span><span class="n">factory</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// key序列化</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">redisTemplate</span><span class="p">.</span><span class="na">setKeySerializer</span><span class="p">(</span><span class="n">STRING_SERIALIZER</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// value序列化</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">redisTemplate</span><span class="p">.</span><span class="na">setValueSerializer</span><span class="p">(</span><span class="n">JACKSON__SERIALIZER</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Hash key序列化</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">redisTemplate</span><span class="p">.</span><span class="na">setHashKeySerializer</span><span class="p">(</span><span class="n">STRING_SERIALIZER</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Hash value序列化</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">redisTemplate</span><span class="p">.</span><span class="na">setHashValueSerializer</span><span class="p">(</span><span class="n">JACKSON__SERIALIZER</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">redisTemplate</span><span class="p">.</span><span class="na">afterPropertiesSet</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">redisTemplate</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="启动类配置">启动类配置</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@EnableCaching</span><span class="w">  </span><span class="c1">//允许注解操作缓存</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@SpringBootApplication</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">RedisExampleApplication</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">RedisExampleApplication</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="applicationyml配置">application.yml配置</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c">#redis 缓存配置</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">redis</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">database</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span>@<span class="l">ip</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">6379</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="m">8000</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c">#如果没有可不写</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">jedis</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">pool</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c">#连接池最大连接数量</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">max-active</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c">#连接池最大堵塞时间</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">max-wait</span><span class="p">:</span><span class="w"> </span>-<span class="m">1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c">#连接池最小空闲连接</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">min-idle</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c">#连接池最大空闲连接</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">max-idle</span><span class="p">:</span><span class="w"> </span><span class="m">8</span><span class="w">
+</span></span></span></code></pre></div><h2 id="redisapplicationtest">RedisApplicationTest</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@RunWith</span><span class="p">(</span><span class="n">SpringRunner</span><span class="p">.</span><span class="na">class</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@SpringBootTest</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">RedisApplicationTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Autowired</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">RedisTemplate</span><span class="w"> </span><span class="n">redisTemplate</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">demo</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">//常见redis类型数据操作 set zset 未列出</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">//string 类型数据</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">redisTemplate</span><span class="p">.</span><span class="na">opsForValue</span><span class="p">().</span><span class="na">set</span><span class="p">(</span><span class="s">&#34;test&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;123&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">redisTemplate</span><span class="p">.</span><span class="na">opsForValue</span><span class="p">().</span><span class="na">get</span><span class="p">(</span><span class="s">&#34;test&#34;</span><span class="p">);</span><span class="w"> </span><span class="c1">// 输出结果为123</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">//list 数据类型</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">redisTemplate</span><span class="p">.</span><span class="na">opsForList</span><span class="p">().</span><span class="na">rightPushAll</span><span class="p">(</span><span class="s">&#34;list&#34;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="o">[]</span><span class="p">{</span><span class="s">&#34;1&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;2&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;3&#34;</span><span class="p">});</span><span class="c1">//从右边插入元素</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">redisTemplate</span><span class="p">.</span><span class="na">opsForList</span><span class="p">().</span><span class="na">range</span><span class="p">(</span><span class="s">&#34;list&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">1</span><span class="p">);</span><span class="c1">//获取所有元素</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">redisTemplate</span><span class="p">.</span><span class="na">opsForList</span><span class="p">().</span><span class="na">index</span><span class="p">(</span><span class="s">&#34;listRight&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">1</span><span class="p">);</span><span class="c1">//获取下标为2的元素</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">redisTemplate</span><span class="p">.</span><span class="na">opsForList</span><span class="p">().</span><span class="na">rightPush</span><span class="p">(</span><span class="s">&#34;listRiht&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;1&#34;</span><span class="p">);</span><span class="c1">//从右边插入 也可从左边插</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">redisTemplate</span><span class="p">.</span><span class="na">opsForList</span><span class="p">().</span><span class="na">leftPop</span><span class="p">(</span><span class="s">&#34;list&#34;</span><span class="p">);</span><span class="c1">//从左边弹出元素 元素弹出将不存在</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">//hash</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">redisTemplate</span><span class="p">.</span><span class="na">opsForHash</span><span class="p">().</span><span class="na">hasKey</span><span class="p">(</span><span class="s">&#34;redisHash&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;111&#34;</span><span class="p">);</span><span class="c1">//判断该hash key 是否存在</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">redisTemplate</span><span class="p">.</span><span class="na">opsForHash</span><span class="p">().</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;redisHash&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;name&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;111&#34;</span><span class="p">);</span><span class="c1">//存放 hash 数据</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">redisTemplate</span><span class="p">.</span><span class="na">opsForHash</span><span class="p">().</span><span class="na">keys</span><span class="p">(</span><span class="s">&#34;redisHash&#34;</span><span class="p">);</span><span class="c1">//获取该key对应的hash值</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">redisTemplate</span><span class="p">.</span><span class="na">opsForHash</span><span class="p">().</span><span class="na">get</span><span class="p">(</span><span class="s">&#34;redisHash&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;age&#34;</span><span class="p">);</span><span class="c1">//给定key 获取 hash 值</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="缓存注解">缓存注解</h2>
+<p>除了使用<code>RedisTemplate</code>的方式，还可以使用注解的方式操作缓存，注解的方式操作缓存，可以减少代码量，提高开发效率。
+需要在SpringBoot主类或配置类上启用缓存支持。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@SpringBootApplication</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@EnableCaching</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">RedisCacheApplication</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">RedisCacheApplication</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 构造函数、getter 和 setter 方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">User</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="nf">getId</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setId</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getName</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setName</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>@Cacheable</code>注解用于缓存方法的返回结果。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Cacheable</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;users&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;#id&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">getUserById</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 模拟从数据库获取用户信息</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">findUserById</span><span class="p">(</span><span class="n">id</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">findUserById</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 模拟数据库查询</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Fetching user from database...&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;User&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">id</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>还可以条件缓存，通过<code>condition</code>属性，只有满足条件的结果才会被缓存。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nd">@Cacheable</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;users&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;#id&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;#id &gt; 10&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">getUserById</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Fetching user from database...&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">findUserById</span><span class="p">(</span><span class="n">id</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">findUserById</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c1">// 模拟数据库查询</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;User&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">id</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>@CachePut</code>注解用于更新缓存，确保方法执行，并将结果缓存。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@CachePut</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;users&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;#user.id&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">updateUser</span><span class="p">(</span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Updating user in database...&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">saveUser</span><span class="p">(</span><span class="n">user</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">saveUser</span><span class="p">(</span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 模拟数据库保存</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">user</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>@CacheEvict</code>注解用于删除缓存。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@CacheEvict</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;users&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;#id&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">deleteUserById</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Deleting user from database...&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">removeUser</span><span class="p">(</span><span class="n">id</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">removeUser</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 模拟数据库删除</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>@CacheConfig</code>注解用于类级别的缓存配置。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@CacheConfig</span><span class="p">(</span><span class="n">cacheNames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;users&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>完整的示例代码，包括基本用法、更新缓存、删除缓存、条件缓存和缓存配置。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@CacheConfig</span><span class="p">(</span><span class="n">cacheNames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;users&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Cacheable</span><span class="p">(</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;#id&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;#id &gt; 10&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">getUserById</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Fetching user from database...&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">findUserById</span><span class="p">(</span><span class="n">id</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@CachePut</span><span class="p">(</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;#user.id&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">updateUser</span><span class="p">(</span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Updating user in database...&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">saveUser</span><span class="p">(</span><span class="n">user</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@CacheEvict</span><span class="p">(</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;#id&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">deleteUserById</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Deleting user from database...&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">removeUser</span><span class="p">(</span><span class="n">id</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">findUserById</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 模拟数据库查询</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;User&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">id</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">saveUser</span><span class="p">(</span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 模拟数据库保存</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">user</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">removeUser</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 模拟数据库删除</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>编写一个简单的测试类来验证缓存是否生效。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Component</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CacheTestRunner</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">CommandLineRunner</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Autowired</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">UserService</span><span class="w"> </span><span class="n">userService</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="n">String</span><span class="p">...</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;First call...&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">User</span><span class="w"> </span><span class="n">user1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userService</span><span class="p">.</span><span class="na">getUserById</span><span class="p">(</span><span class="n">15L</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">user1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Second call...&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">User</span><span class="w"> </span><span class="n">user2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userService</span><span class="p">.</span><span class="na">getUserById</span><span class="p">(</span><span class="n">15L</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">user2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Updating user...&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">User</span><span class="w"> </span><span class="n">updatedUser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userService</span><span class="p">.</span><span class="na">updateUser</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="n">15L</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Updated User&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">updatedUser</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Third call...&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">User</span><span class="w"> </span><span class="n">user3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userService</span><span class="p">.</span><span class="na">getUserById</span><span class="p">(</span><span class="n">15L</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">user3</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Deleting user...&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">userService</span><span class="p">.</span><span class="na">deleteUserById</span><span class="p">(</span><span class="n">15L</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Fourth call...&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">User</span><span class="w"> </span><span class="n">user4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userService</span><span class="p">.</span><span class="na">getUserById</span><span class="p">(</span><span class="n">15L</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">user4</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">
                             

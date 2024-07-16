@@ -12,7 +12,7 @@
 	
     
     
-    <meta name="description" content="Spring MVC Spring Web MVC是建立在Servlet API上的原始Web框架，从一开始就包含在Spring框架中。正式名称 &amp;ldquo;Spring Web MVC &amp;ldquo;来自其源模块的名称（spring-" />
+    <meta name="description" content="SpringMVC SpringWebMVC是建立在Servlet API上的原始Web框架，从一开始就包含在Spring框架中。正式名称 &amp;ldquo;Spring Web MVC &amp;ldquo;来自其源模块的名称（s" />
     
 
     
@@ -72,8 +72,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#spring-mvc">
-                    Spring MVC
+                <a class="nav-link text-left" href="#springmvc">
+                    SpringMVC
                 </a>
             </li>
             
@@ -180,8 +180,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#spring-webflux">
-                    Spring WebFlux
+                <a class="nav-link text-left" href="#springwebflux">
+                    SpringWebFlux
                 </a>
             </li>
             
@@ -377,21 +377,27 @@
                         </span>
                         
                     </div>
-                    <div class="post_content markdown"><h2 id="spring-mvc">Spring MVC</h2>
-<p>Spring Web MVC是建立在Servlet API上的原始Web框架，从一开始就包含在Spring框架中。正式名称 &ldquo;Spring Web MVC &ldquo;来自其源模块的名称（spring-webmvc），但它更常被称为 &ldquo;Spring MVC&rdquo;。</p>
-<p>SpringMVC是基于Spring的，是Spring中的一个模块，专门用来做web开发使用的。</p>
+                    <div class="post_content markdown"><h2 id="springmvc">SpringMVC</h2>
+<p>SpringWebMVC是建立在Servlet API上的原始Web框架，从一开始就包含在Spring框架中。正式名称 &ldquo;Spring Web MVC &ldquo;来自其源模块的名称（spring-webmvc），但它更常被称为 &ldquo;Spring MVC&rdquo;。</p>
+<p>SpringMVC是基于Spring的，是Spring中的一个模块，专门用来做Web开发使用的。</p>
 <ul>
-<li>Model 封装了数据与进行数据进行处理的代码，是实际经行数据处理的地方，也是与数据库交互的地方</li>
-<li>View 负责将应用显示给用户和显示模型的状态，一般来说，它生成客户端浏览器可以解释的 HTML 输出;</li>
-<li>Controller 负责视图和模型之间的交互，并将其传递给视图进行渲染;</li>
+<li><code>Model</code>：封装了数据与进行数据进行处理的代码，是实际经行数据处理的地方，也是与数据库交互的地方；</li>
+<li><code>View</code>：负责将应用显示给用户和显示模型的状态，一般来说，它生成客户端浏览器可以解释的HTML输出；</li>
+<li><code>Controller</code>：负责视图和模型之间的交互，并将其传递给视图进行渲染；</li>
 </ul>
-<p>SpringMVC也是一个容器，使用IoC核心技术，管理界面层中的控制器对象。SpringMVC的底层就是servlet，以servlet为核心，接收请求、处理请求，显示处理结果给用户。在此之前这个功能是由Servlet来实现的，现在使用SpringMVC来代替Servlet行驶控制器的角色和功能。 其核心Servlet是：DispatcherServlet。</p>
+<p>在没有使用SpringMVC之前都是使用<code>Servlet</code>在做Web开发，但是使用<code>Servlet</code>开发在接收请求参数，数据共享，页面跳转等操作相对比较复杂。
+<code>Servlet</code>是Java进行web开发的标准，既然SpringMVC是对Servlet的封装，那么很显然SpringMVC底层就是<code>Servlet</code>，SpringMVC就是对<code>Servlet</code>进行深层次的封装。其核心<code>Servlet</code>是<code>DispatcherServlet</code>。</p>
 <p>更多详情查看<a href="https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc">官方资料</a>这里不在赘述。</p>
 <h3 id="mvc架构">MVC架构</h3>
 <p><img alt="MVC架构图" src="/iblog/posts/annex/images/essays/SpringMVC%E4%B8%8ESpringWebFlux-02.jpg"></p>
-<p>MVC模式是一种将应用程序分为三个主要部分的架构模式，分别是模型（Model）、视图（View）和控制器（Controller）。模型负责处理数据，视图负责展示数据，控制器负责协调模型和视图之间的交互。</p>
-<p>在没有使用SpringMVC之前都是使用Servlet在做Web开发。但是使用Servlet开发在接收请求参数，数据共享，页面跳转等操作相对比较复杂。servlet是java进行web开发的标准，既然springMVC是对servlet的封装，那么很显然SpringMVC底层就是Servlet，SpringMVC就是对Servlet进行深层次的封装。</p>
-<p>SpringMVC 是一种基于 Spring 框架的 MVC 设计模型，它是 Spring 框架的一个子项目。SpringMVC 的核心思想是将 MVC 设计模式应用于 Spring 框架，实现了请求-响应模式，将业务逻辑、数据、显示分离，提高了部分代码的复用性，降低了各个模块间的耦合性。</p>
+<p>MVC模式是一种将应用程序分为三个主要部分的架构模式，主要用于分离应用程序的内部表示和用户交互。它由以下三个部分组成：</p>
+<ul>
+<li><code>Model</code>（模型）：处理与应用程序的数据和业务逻辑相关的部分。</li>
+<li><code>View</code>（视图）：处理数据展示的部分，通常是用户界面。</li>
+<li><code>Controller</code>（控制器）：处理用户输入并更新模型和视图的部分。</li>
+</ul>
+<p>SpringMVC是一种基于Spring框架的MVC设计模型，它是Spring框架的一个子项目。
+SpringMVC的核心思想是将MVC设计模式应用于Spring框架，实现了请求-响应模式，将业务逻辑、数据、显示分离，提高了部分代码的复用性，降低了各个模块间的耦合性。</p>
 <h3 id="请求处理流程">请求处理流程</h3>
 <p><img alt="SpringMVC原理图" src="/iblog/posts/annex/images/essays/SpringMVC%E4%B8%8ESpringWebFlux-01.jpg"></p>
 <p>流程描述:</p>
@@ -409,81 +415,267 @@
 <li><code>DispatcherServlet</code> 响应用户;</li>
 </ul>
 <h3 id="语法代码示例">语法代码示例</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">    <span class="nt">&lt;dependency&gt;</span>
-</span></span><span class="line"><span class="cl">        <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-</span></span><span class="line"><span class="cl">        <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/dependency&gt;</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Controller</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&#34;/hello&#34;</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HelloController</span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> 
-</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">GET</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">printHello</span><span class="p">(</span><span class="n">ModelMap</span><span class="w"> </span><span class="n">model</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">model</span><span class="p">.</span><span class="na">addAttribute</span><span class="p">(</span><span class="s">&#34;message&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Hello Spring MVC Framework!&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;hello&#34;</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="p">}</span><span class="w">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><p>Model模型代表应用程序的核心数据和业务逻辑。它直接管理数据、逻辑和规则，通常与数据库交互。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 构造函数、getter 和 setter 方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">User</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="nf">getId</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setId</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getName</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setName</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="spring-webflux">Spring WebFlux</h2>
-<p>与Spring Web MVC并行，Spring Framework 5.0引入了一个响应式Web框架，其名称为 &ldquo;Spring WebFlux&rdquo;。与Spring MVC不同，它不需要Servlet API，完全异步和非阻塞，又被叫做响应式WebClient。</p>
-<p>Spring WebFlux 模块将默认的 web 服务器改为 Netty，所以具有Netty的特点，是完全非阻塞式的。通过少量的容器线程就可以支撑大量的并发访问，有一种池化思想在里面，所以 Spring WebFlux 可以有效提升系统的吞吐量和伸缩性但是并不能使接口的响应时间缩短。</p>
-<p>Spring WebFlux 是一个异步非阻塞式的 Web 框架，所以，它特别适合应用在 IO 密集型的服务中，比如微服务网关这样的应用中。</p>
-<ul>
-<li>比如一个日志监控系统，我们的前端页面将不再需要通过“命令式”的轮询的方式不断向服务器请求数据然后进行更新，而是在建立好通道之后，数据流从系统源源不断流向页面，从而展现实时的指标变化曲线；</li>
-<li>再比如一个社交平台，朋友的动态、点赞和留言不是手动刷出来的，而是当后台数据变化的时候自动体现到界面上的。</li>
-</ul>
-<p>更多信息请查看<a href="https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html">官方资料</a>这里不在赘述。</p>
+</span></span></span></code></pre></div><p>视图是用户界面的部分，用于展示模型的数据。它从模型中获取数据，并将其渲染给用户。在<code>SpringBoot</code>中，视图通常是HTML页面或模板。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span> <span class="na">xmlns:th</span><span class="o">=</span><span class="s">&#34;http://www.thymeleaf.org&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>User List<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Users<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">table</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>ID<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Name<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">tr</span> <span class="na">th:each</span><span class="o">=</span><span class="s">&#34;user : ${users}&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">td</span> <span class="na">th:text</span><span class="o">=</span><span class="s">&#34;${user.id}&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">td</span> <span class="na">th:text</span><span class="o">=</span><span class="s">&#34;${user.name}&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>控制器处理用户输入，并与模型和视图交互。它负责接收请求、调用模型以获取数据，并将数据传递给视图进行渲染。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Controller</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserController</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Autowired</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">UserService</span><span class="w"> </span><span class="n">userService</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&#34;/users&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getAllUsers</span><span class="p">(</span><span class="n">Model</span><span class="w"> </span><span class="n">model</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userService</span><span class="p">.</span><span class="na">getAllUsers</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">model</span><span class="p">.</span><span class="na">addAttribute</span><span class="p">(</span><span class="s">&#34;users&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">users</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;user-list&#34;</span><span class="p">;</span><span class="w">  </span><span class="c1">// 返回视图名称</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&#34;/user/{id}&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getUserById</span><span class="p">(</span><span class="nd">@PathVariable</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">Model</span><span class="w"> </span><span class="n">model</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userService</span><span class="p">.</span><span class="na">getUserById</span><span class="p">(</span><span class="n">id</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">model</span><span class="p">.</span><span class="na">addAttribute</span><span class="p">(</span><span class="s">&#34;user&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">user</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;user-detail&#34;</span><span class="p">;</span><span class="w">  </span><span class="c1">// 返回视图名称</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@PostMapping</span><span class="p">(</span><span class="s">&#34;/user&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">createUser</span><span class="p">(</span><span class="nd">@RequestParam</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">Model</span><span class="w"> </span><span class="n">model</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userService</span><span class="p">.</span><span class="na">createUser</span><span class="p">(</span><span class="n">name</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">model</span><span class="p">.</span><span class="na">addAttribute</span><span class="p">(</span><span class="s">&#34;user&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">user</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;redirect:/users&#34;</span><span class="p">;</span><span class="w">  </span><span class="c1">// 重定向到用户列表</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">AtomicLong</span><span class="w"> </span><span class="n">counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AtomicLong</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getAllUsers</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">users</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">getUserById</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">filter</span><span class="p">(</span><span class="n">user</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">user</span><span class="p">.</span><span class="na">getId</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="n">id</span><span class="p">)).</span><span class="na">findFirst</span><span class="p">().</span><span class="na">orElse</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">createUser</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="n">counter</span><span class="p">.</span><span class="na">incrementAndGet</span><span class="p">(),</span><span class="w"> </span><span class="n">name</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">users</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">user</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">user</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="springwebflux">SpringWebFlux</h2>
+<p>Spring Framework 5.0引入了一个响应式Web框架，其名称为 &ldquo;SpringWebFlux&rdquo;。与Spring MVC不同，它不需要Servlet API，完全异步和非阻塞，又被叫做响应式WebClient。</p>
+<p>SpringWebFlux模块将默认的Web服务器改为Netty，所以具有Netty的特点，是完全非阻塞式的。
+通过少量的容器线程就可以支撑大量的并发访问，有一种池化思想在里面，所以SpringWebFlux可以有效提升系统的吞吐量和伸缩性但是并不能使接口的响应时间缩短。</p>
+<p>SpringWebFlux是一个异步非阻塞式的 Web 框架，所以它特别适合应用在IO密集型的服务中，比如微服务网关这样的应用中。
+比如一个日志监控系统，我们的前端页面将不再需要通过“命令式”的轮询的方式不断向服务器请求数据然后进行更新，而是在建立好通道之后，数据流从系统源源不断流向页面，从而展现实时的指标变化曲线。
+再比如一个社交平台，朋友的动态、点赞和留言不是手动刷出来的，而是当后台数据变化的时候自动体现到界面上的。</p>
+<p>更多信息请查看<a href="https://docs.spring.io/spring-framework/reference/web/webflux.html">官方资料</a>这里不在赘述。</p>
 <h3 id="请求处理流程-1">请求处理流程</h3>
-<p>Spring WebFlux 底层实现依赖 reactor 和 netty。Spring 做的就是通过抽象和封装，把 reactor 的能力通过 Controller 来使用。</p>
-<p><img alt="SpringMVC原理图" src="/iblog/posts/annex/images/essays/SpringMVC%E4%B8%8ESpringWebFlux-03.jpg"></p>
-<p>请求执行的流程大致和SpringMVC差不多，SpringMVC核心控制器是DispatcherServlet，SpringWebFlux核心处理器是DispatcherHandler：</p>
+<p>SpringWebFlux因为将默认的Web服务器改为Netty，所以底层实现依赖Reactor模式。Spring做的就是通过抽象和封装，把Reactor的能力通过Controller来使用。</p>
+<p><img alt="SpringMVC与SpringWebFlux" src="/iblog/posts/annex/images/essays/SpringMVC%E4%B8%8ESpringWebFlux-03.jpg"></p>
+<p>请求执行的流程大致和SpringMVC差不多，SpringMVC核心控制器是<code>DispatcherServlet</code>，SpringWebFlux核心处理器是<code>DispatcherHandler</code>：</p>
 <ul>
-<li>先是通过RequestMapping，拿到HandlerMethod处理器；</li>
-<li>在通过HandlerMethod寻找合适的HandlerAdapter；</li>
-<li>拿到合适的适配器对象之后，根据不同规则的Handler执行不同的Handler，这里就包含Controller</li>
-<li>Handler的执行结果返回HandlerResult对象，触发handlerResult方法，针对不同的返回类找到不同的HandlerResultHandler如视图渲染ViewResolutionResultHandler、ServerResponseResultHandler、ResponseBodyResultHandler、ResponseEntityResultHandler不同容器有不同的实现，如Reactor，Jetty，Tomcat等；</li>
+<li>先是通过<code>RequestMapping</code>，拿到<code>HandlerMethod</code>处理器；</li>
+<li>在通过<code>HandlerMethod</code>寻找合适的<code>HandlerAdapter</code>；</li>
+<li>拿到合适的适配器对象之后，根据不同规则的<code>Handler</code>执行不同的<code>Handler</code>，这里就包含<code>Controller</code>；</li>
+<li><code>Handler</code>的执行结果返回<code>HandlerResult</code>对象，触发<code>handlerResult</code>方法，针对不同的返回类找到不同的<code>HandlerResultHandler</code>，如视图渲染<code>ViewResolutionResultHandler</code>、<code>ServerResponseResultHandler</code>、<code>ResponseBodyResultHandler</code>、<code>ResponseEntityResultHandler</code>不同容器有不同的实现，如Reactor，Jetty，Tomcat等；</li>
 </ul>
 <h3 id="语法代码示例-1">语法代码示例</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">    <span class="nt">&lt;dependency&gt;</span>
-</span></span><span class="line"><span class="cl">        <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-</span></span><span class="line"><span class="cl">        <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-webflux<span class="nt">&lt;/artifactId&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/dependency&gt;</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@RestController</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&#34;/webflux&#34;</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HelloController</span><span class="w"> </span><span class="p">{</span><span class="w">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-webflux<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&#34;/hello&#34;</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Mono</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">hello</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Mono</span><span class="p">.</span><span class="na">just</span><span class="p">(</span><span class="s">&#34;Hello Spring Webflux&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 构造函数、getter 和 setter 方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">User</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&#34;/posts&#34;</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Flux</span><span class="o">&lt;</span><span class="n">Post</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">posts</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">WebClient</span><span class="w"> </span><span class="n">webClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WebClient</span><span class="p">.</span><span class="na">create</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Flux</span><span class="o">&lt;</span><span class="n">Post</span><span class="o">&gt;</span><span class="w"> </span><span class="n">postFlux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">webClient</span><span class="p">.</span><span class="na">get</span><span class="p">().</span><span class="na">uri</span><span class="p">(</span><span class="s">&#34;http://jsonplaceholder.typicode.com/posts&#34;</span><span class="p">).</span><span class="na">retrieve</span><span class="p">().</span><span class="na">bodyToFlux</span><span class="p">(</span><span class="n">Post</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">postFlux</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getId</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setId</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getName</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setName</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>在 WebFlux 中 Mono 和 Flux 均能充当响应式编程中发布者的角色:</p>
+</span></span></span></code></pre></div><p>在WebFlux中<code>Mono</code>和<code>Flux</code>均能充当响应式编程中发布者的角色：</p>
 <ul>
-<li>Mono：返回 0 或 1 个元素，即单个对象;</li>
-<li>Flux：返回 N 个元素，即 List 列表对象;</li>
+<li><code>Mono</code>：表示单个结果的发布者，返回0或1个元素，即单个对象。</li>
+<li><code>Flux</code>：表示多个结果的发布者，返回N个元素，即List列表对象。</li>
 </ul>
-<h2 id="两者使用对比及建议">两者使用对比及建议</h2>
-<p><img alt="SpringMVC原理图" src="/iblog/posts/annex/images/essays/SpringMVC%E4%B8%8ESpringWebFlux-04.jpg"></p>
-<p>Spring WebFlux 并不是 Spring MVC 的替代方案，两者可以混合使用。都可以使用 Spring MVC 注解，如 @Controller、@RequestMapping等。均可以使用 Tomcat, Jetty, Undertow Servlet 容器。</p>
-<p>Spring WebFlux相比较Spring MVC最大的优势在于它是异步非堵塞的框架，可以让我们在不扩充硬件资源的前提下，提升系统的吞吐量和伸缩性；但是由于是异步非堵塞的框架，对于开发人员来说调试起来不太友好。
-而 Spring MVC 是同步阻塞的，如果你目前在 Spring MVC 框架中大量使用异步方案，那么，WebFlux 才是你想要的，否则，使用 Spring MVC 才是你的首选。</p>
-<p>官方建议：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@RestController</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserController</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&#34;/users/{id}&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Mono</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getUserById</span><span class="p">(</span><span class="nd">@PathVariable</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Mono</span><span class="p">.</span><span class="na">just</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;User&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">id</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&#34;/users&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Flux</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getAllUsers</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Flux</span><span class="p">.</span><span class="na">just</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="s">&#34;1&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;User1&#34;</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="s">&#34;2&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;User2&#34;</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="s">&#34;3&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;User3&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>除了传统的基于注解的控制器，SpringWebFlux还支持基于函数式编程的路由配置。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Configuration</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">RouterConfig</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Bean</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">RouterFunction</span><span class="o">&lt;</span><span class="n">ServerResponse</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">route</span><span class="p">(</span><span class="n">UserHandler</span><span class="w"> </span><span class="n">handler</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">route</span><span class="p">(</span><span class="n">GET</span><span class="p">(</span><span class="s">&#34;/users/{id}&#34;</span><span class="p">),</span><span class="w"> </span><span class="n">handler</span><span class="p">::</span><span class="n">getUserById</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">.</span><span class="na">andRoute</span><span class="p">(</span><span class="n">GET</span><span class="p">(</span><span class="s">&#34;/users&#34;</span><span class="p">),</span><span class="w"> </span><span class="n">handler</span><span class="p">::</span><span class="n">getAllUsers</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Component</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserHandler</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Mono</span><span class="o">&lt;</span><span class="n">ServerResponse</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getUserById</span><span class="p">(</span><span class="n">ServerRequest</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">pathVariable</span><span class="p">(</span><span class="s">&#34;id&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ok</span><span class="p">().</span><span class="na">body</span><span class="p">(</span><span class="n">Mono</span><span class="p">.</span><span class="na">just</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;User&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">id</span><span class="p">)),</span><span class="w"> </span><span class="n">User</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Mono</span><span class="o">&lt;</span><span class="n">ServerResponse</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getAllUsers</span><span class="p">(</span><span class="n">ServerRequest</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ok</span><span class="p">().</span><span class="na">body</span><span class="p">(</span><span class="n">Flux</span><span class="p">.</span><span class="na">just</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="s">&#34;1&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;User1&#34;</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="s">&#34;2&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;User2&#34;</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="s">&#34;3&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;User3&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">),</span><span class="w"> </span><span class="n">User</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="两者使用对比及建议">两者使用对比及建议</h2>
+<p><img alt="SpringMVC与SpringWebFlux" src="/iblog/posts/annex/images/essays/SpringMVC%E4%B8%8ESpringWebFlux-04.jpg"></p>
+<p>SpringWebFlux并不是SpringMVC的替代方案，两者可以混合使用，都可以使用SpringMVC注解，如<code>@Controller</code>、<code>@RequestMapping</code>等。均可以使用Tomcat、Jetty、Undertow Servlet 容器。</p>
+<p>SpringWebFlux相比较SpringMVC最大的优势在于它是异步非堵塞的框架，可以让我们在不扩充硬件资源的前提下，提升系统的吞吐量和伸缩性。但是由于是异步非堵塞的框架，对于开发人员来说调试起来不太友好。
+而SpringMVC是同步阻塞的，如果你目前在SpringMVC框架中大量使用异步方案，那么WebFlux可能才是你想要的，否则使用SpringMVC才是你的首选。</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Spring MVC</th>
+<th>Spring WebFlux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>处理模型</td>
+<td>基于 Servlet API，阻塞式处理模型</td>
+<td>基于 Reactor，非阻塞式处理模型</td>
+</tr>
+<tr>
+<td>线程模型</td>
+<td>每个请求占用一个线程，阻塞等待 I/O 操作</td>
+<td>非阻塞式，少量线程处理大量并发请求</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>传统的 Web 应用开发，I/O 操作不频繁</td>
+<td>高并发和高性能需求，I/O 操作频繁</td>
+</tr>
+<tr>
+<td>异步处理</td>
+<td>支持异步处理，但是仍然是阻塞式</td>
+<td>原生支持异步和非阻塞处理</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>相对于 WebFlux 略低，特别是在高并发场景下</td>
+<td>高并发场景下性能优秀，更好的资源利用</td>
+</tr>
+<tr>
+<td>调试和开发</td>
+<td>易于调试和开发，传统的开发模式</td>
+<td>需要熟悉反应式编程模型，对异步处理有一定了解</td>
+</tr>
+<tr>
+<td>学习曲线</td>
+<td>较低，广泛的文档和社区支持</td>
+<td>较高，需要理解反应式编程概念和 Reactor 框架</td>
+</tr>
+<tr>
+<td>生态系统</td>
+<td>成熟，大量第三方库和插件支持</td>
+<td>日渐发展，部分功能和库的支持可能较少</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://docs.spring.io/spring-framework/reference/web/webflux/new-framework.html#webflux-framework-choice">官方建议</a>：</p>
 <ul>
-<li>如果已经有了一个运行良好的 SpringMVC 应用程序，则无需更改。命令式编程是编写、理解和调试代码的最简单方法，我们可以选择最多的库，因为从历史上看，大多数都是阻塞的。</li>
+<li>如果已经有了一个运行良好的SpringMVC 应用程序，则无需更改。命令式编程是编写、理解和调试代码的最简单方法，我们可以选择最多的库，因为从历史上看，大多数都是阻塞的。</li>
 <li>如果是个新应用且决定使用 非阻塞 Web 技术栈，那么 WebFlux 是个不错的选择。</li>
-<li>对于使用 Java8 Lambda 或者 Kotlin 且 要求不那么复杂的小型应用程序或微服务来说，WebFlux 也是一个不错的选择</li>
-<li>在微服务架构中，可以混合使用 SpringMVC 和 Spring WebFlux，两个都支持基于注解的编程模型</li>
-<li>评估应用程序的一种简单方法是检查其依赖关系。如果要使用阻塞持久性 API（JPA、JDBC）或网络 API，那么 Spring MVC 至少是常见架构的最佳选择</li>
-<li>如果有一个调用远程服务的 Spring MVC 应用程序，请尝试响应式WebClient</li>
-<li>对于一个大型团队，向非阻塞、函数式和声明式编程转变的学习曲线是陡峭的。在没有全局开关的情况下，想启动 WebFlux，可以先使用 reactive WebClient。此外，从小处着手并衡量收益。我们预计，对于广泛的应用，这种转变是不必要的。</li>
+<li>对于使用 Java8 Lambda 或者 Kotlin 且 要求不那么复杂的小型应用程序或微服务来说，WebFlux 也是一个不错的选择。</li>
+<li>在微服务架构中，可以混合使用 SpringMVC 和 Spring WebFlux，两个都支持基于注解的编程模型。</li>
+<li>评估应用程序的一种简单方法是检查其依赖关系。如果要使用阻塞持久性 API（JPA、JDBC）或网络 API，那么 Spring MVC 至少是常见架构的最佳选择。</li>
+<li>如果有一个调用远程服务的 Spring MVC 应用程序，请尝试响应式WebClient。</li>
+<li>对于一个大型团队，向非阻塞、函数式和声明式编程转变的学习曲线是陡峭的。在没有全局开关的情况下，想启动 WebFlux，可以先使用 reactive WebClient。</li>
 </ul>
 <p>当我们引入一门新技术到原有的项目中，我们需要评估究竟为我们带来多少益处，同时还要评估为了这些益处所要付出的学习和改造成本，然后衡量收益，如果收益大值得则值得尝试。不能为了装逼而装逼，为了技术而技术。</p>
 </div>
@@ -497,7 +689,7 @@
                                         
                                         <a href="http://localhost:1313/iblog/tags/java/">Java</a>
                                     
-                                        <a href="http://localhost:1313/iblog/tags/spring/">spring</a>
+                                        <a href="http://localhost:1313/iblog/tags/springboot/">springboot</a>
                                     
                                     
                                 </span>

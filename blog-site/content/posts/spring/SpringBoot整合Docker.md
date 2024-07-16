@@ -7,6 +7,41 @@ slug: "springboot-docker"
 ---
 
 
+## Linux上安装Docker
+2017年的3月1号之后，`Docker`的版本命名开始发生变化，同时将CE版本和EE版本进行分开。
+- Docker社区版（CE）：为了开发人员或小团队创建基于容器的应用,与团队成员分享和自动化的开发管道。`docker-ce`提供了简单的安装和快速的安装，以便可以立即开始开发。`docker-ce`集成和优化，基础设施。（免费）
+- Docker企业版（EE）：专为企业的发展和IT团队建立谁。`docker-ee`为企业提供最安全的容器平台，以应用为中心的平台。（付费）
+
+以下是`CentOS`或`RHEL`上使用`yum`来安装`Docker`示例。
+1. `Docker`依赖于系统的一些必要的工具，所以先安装依赖。
+    ```shell
+    yum install -y yum-utils device-mapper-persistent-data lvm2
+    ```
+2. 通过使用`yum-config-manager`来设置`Docker`的稳定仓库。(在阿里云镜像站上面可以找到`docker-ce`的软件源，使用国内的源速度比较快)。
+    ```shell
+    yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+    ```
+3. 安装`docker-ce`，社区版，免费。
+    ```shell
+    yum clean allyum makecache fastyum -y install docker-ce
+    ```
+4. 启动服务。
+    ```shell
+     #service 命令的用法
+    $ sudo service docker start
+    
+    #systemctl 命令的用法
+    $ sudo systemctl start docker
+    ```
+5. 查看安装版。
+    ```shell
+    docker version
+    ```
+7. `Docker`需要用户具有`sudo`权限，为了避免每次命令都输入`sudo`，可以把用户加入`Docker`用户组。
+    ```shell
+    sudo usermod -aG docker $USER
+    ```
+
 ## 创建测试
 ```java
 /**
@@ -33,7 +68,7 @@ server:
 ```
 
 ## Dockerfile
-首先创建一个名字叫`Dockerfile`的文件，路径任意。
+创建一个名字叫`Dockerfile`的文件，路径任意。
 ![DockerFile](/iblog/posts/annex/images/application/dockerFile.jpg)
 ```text
 # 基础镜像
@@ -60,7 +95,7 @@ ENTRYPOINT ["java","-Djava.security.egd=file:/dev/urandom","-jar","/app.jar"]
 
 ## pom文件
 在`pom`文件加入`Docker`插件。
-```pom
+```xml
 <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -95,8 +130,8 @@ ENTRYPOINT ["java","-Djava.security.egd=file:/dev/urandom","-jar","/app.jar"]
 
 ## Docker镜像测试
 1. 前往 `Dockerfile` 目录，打开并命令行执行。
->执行`docker build`命令，`docker`就会根据`Dockerfile`里你定义好的命令进行构建新的镜像。
-`-t`代表要构建的镜像的 `tag` ，`.`代表当前目录，也就是 `Dockerfile`所在的目录。
+    >执行`docker build`命令，`docker`就会根据`Dockerfile`里你定义好的命令进行构建新的镜像。
+    `-t`代表要构建的镜像的 `tag` ，`.`代表当前目录，也就是 `Dockerfile`所在的目录。
     ```shell
     docker build -t demo-docker .
     ```

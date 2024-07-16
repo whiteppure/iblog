@@ -262,7 +262,7 @@
 
 <div class="post animated fadeInDown">
     <div class="post_title">
-        <h2><a href='/iblog/posts/interview/interview-resume-20201124/'>Java20201124简历</a></h2>
+        <h2><a href='/iblog/posts/emp/interview-resume-20201124/'>Java20201124简历</a></h2>
     </div>
     
     <div class="list">
@@ -298,7 +298,7 @@
     
     <div class="list">
         <div class="post_content markdown">
-            <p>创建测试 /** * &lt;p&gt; * Hello Controller * &lt;/p&gt; */ @RestController @RequestMapping public class HelloController { @GetMapping public String hello() { return &#34;Hello,From Docker&#34;; } } application.yml文件。 server: port: 8080 servlet: context-path: /demo Dockerfile 首先创建一个名字叫Dockerfile的文件，路径任......</p>
+            <p>Linux上安装Docker 2017年的3月1号之后，Docker的版本命名开始发生变化，同时将CE版本和EE版本进行分开。 Docker社区版（CE）：为了开发......</p>
         </div>
     </div>
     
@@ -328,12 +328,12 @@
 
 <div class="post animated fadeInDown">
     <div class="post_title">
-        <h2><a href='/iblog/posts/spring/springboot-kafka/'>SpringBoot整合kafka</a></h2>
+        <h2><a href='/iblog/posts/spring/springboot-kafka/'>SpringBoot整合Kafka</a></h2>
     </div>
     
     <div class="list">
         <div class="post_content markdown">
-            <p>kafka介绍 kafka官网: http://kafka.apache.org kafka中文官网: https://kafka.apachecn.org Kafka是一种分布式的，基于发布/订阅的消息系统。主要特点如下： 以时间复杂度为O(1)的方式提供消息持久......</p>
+            <p>Docker安装和运行Kafka 获取Kafka Docker镜像。使用wurstmeister/kafka镜像，它包含了Kafka和Zookeeper。 docker pull wurstmeister/kafka 创建......</p>
         </div>
     </div>
     
@@ -429,12 +429,12 @@
 
 <div class="post animated fadeInDown">
     <div class="post_title">
-        <h2><a href='/iblog/posts/essays/java-lock/'>Java中常用到的锁</a></h2>
+        <h2><a href='/iblog/posts/essays/java-locks/'>Java中的锁都有什么</a></h2>
     </div>
     
     <div class="list">
         <div class="post_content markdown">
-            <p>公平锁 指多个线程按照申请锁的顺序来获取锁类似排队打饭 先来后到 优点: 所有的线程都能得到资源，不会饿死在队列中。 缺点: 吞吐量会下降很多，队列里面除了第一个线程，其他......</p>
+            <p>锁 在Java中根据锁的特性来划分可以分为很多，锁的主要作用是确保多线程环境下的数据安全，从而保证程序的正确执行。 在Java中具体&quot;锁&quot;的实现......</p>
         </div>
     </div>
     
@@ -462,12 +462,12 @@
 
 <div class="post animated fadeInDown">
     <div class="post_title">
-        <h2><a href='/iblog/posts/essays/java-thread-collection/'>Java中集合的线程不安全问题</a></h2>
+        <h2><a href='/iblog/posts/essays/java-thread-collection/'>Java中常用线程安全的集合</a></h2>
     </div>
     
     <div class="list">
         <div class="post_content markdown">
-            <p>ArrayList ArrayList线程不安全示例: public static void main(String[] args) { ArrayList&lt;String&gt; arrayList = new ArrayList&lt;&gt;(); for(int i=0; i&lt; 3; i++) { new Thread(() -&gt; { arrayList.add(UUID.randomUUID().toString()); System.out.println(arrayList); },String.valueOf(i)).start(); } } // ConcurrentModificationException 同步修改异常 Exception in thread &#34;8&#34; java.util.ConcurrentModificationException [null, 2041b613-8068-4ddd-9d01-305f5680d377] [null, 2041b613-8068-4ddd-9d01-305f5680d377, b3e0296d-e263-4632-a023-4267cdec5e25] [null, 2041b613-8068-4ddd-9d01-305f5680d377] 原因分析: 当某个线程正在执行 ad......</p>
+            <p>Java中常用线程安全的集合 在多线程环境中，数据的一致性和线程的安全性是至关重要的。传统的集合类，如ArrayList、HashMap和HashSet，在并发访......</p>
         </div>
     </div>
     
@@ -528,12 +528,12 @@
 
 <div class="post animated fadeInDown">
     <div class="post_title">
-        <h2><a href='/iblog/posts/spring/springboot-redis/'>SpringBoot整合redis</a></h2>
+        <h2><a href='/iblog/posts/spring/springboot-redis/'>SpringBoot整合Redis</a></h2>
     </div>
     
     <div class="list">
         <div class="post_content markdown">
-            <p>Redis介绍 redis是开源的一个高性能的 key-value 数据库。 主要特点 Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用 Redi......</p>
+            <p>Docker安装和运行Redis 首先从Docker Hub拉取Redis的官方镜像。 docker pull redis:latest 使用docker run命令启动Redis容器。 docker run -d --name redis -p 6379:6379 redis:latest 验证Red......</p>
         </div>
     </div>
     
@@ -563,12 +563,12 @@
 
 <div class="post animated fadeInDown">
     <div class="post_title">
-        <h2><a href='/iblog/posts/spring/springboot-elasticsearch/'>SpringBoot整合elasticsearch</a></h2>
+        <h2><a href='/iblog/posts/spring/springboot-elasticsearch/'>SpringBoot整合Elasticsearch</a></h2>
     </div>
     
     <div class="list">
         <div class="post_content markdown">
-            <p>安装elasticsearch 要注意导入依赖的版本和安装elasticsearch的版本与springboot的兼容问题 用 docker 安装 elasticsearch 本例用elasticsearc......</p>
+            <p>Docker安装和运行Elasticsearch 拉取Elasticsearch Docker镜像。从Docker Hub拉取Elasticsearch的官方镜像。 docker......</p>
         </div>
     </div>
     

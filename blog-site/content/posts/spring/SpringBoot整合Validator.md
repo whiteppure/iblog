@@ -1,17 +1,15 @@
 ---
-title: "Validator参数校验"
+title: "SpringBoot整合Validator"
 date: 2023-07-01
 draft: false
-tags: ["应用","springboot"]
+tags: ["springboot","spring"]
 slug: "springboot-validator"
 ---
 
 
 ## 常见参数校验
-在日常的接口开发中,为了防止非法参数对业务造成影响,经常需要对接口的参数做校验,最简单就是用if条件语句来判断,但是随着参数越来越多,业务越来越复杂,判断参数代码语句显得尤为冗长.
-
-或者有些程序会将if封装起来,例如spring中的assert类,进行判断,但归根结底还是靠代码对接口参数一个一个校验,这样太繁琐了,而且如果参数太多代码可读性比较差.
-
+在日常的接口开发中，为了防止非法参数对业务造成影响，经常需要对接口的参数做校验。最简单就是用`if`条件语句来判断，但是随着参数越来越多，业务越来越复杂，判断参数代码语句显得尤为冗长。
+或者有些程序会将`if`封装起来，例如Spring中的`Assert`类。但归根结底还是靠代码对接口参数一个一个校验，这样太繁琐了，而且如果参数太多代码可读性比较差。
 ```java
 @Slf4j
 @RequestMapping("/Chapter1")
@@ -40,21 +38,24 @@ public class ValidatedCaseController1 {
 ```
 
 ## Validator框架入门
-包括引入依赖,创建controller,创建校验实体,错误异常处理.
+Validator就是为了解决参数校验的一种框架。Validator框架是Java中用于验证对象的框架，通常用于确保数据的合法性和完整性。
+Validator框架通常与注解一起使用，例如`@NotNull`、`@Min`、`@Max`等，用于标记字段或方法参数，并定义验证规则。
+完整代码示例参见[gitee](https://gitee.com/gitee_pikaqiu/easy-archetype/tree/master/easy-demo/src/main/java/com/whitepure/demo/validated)。
+
+Validator框架入门，包括引入依赖、创建controller、创建校验实体、错误异常处理。
 
 ### pom依赖
-从springboot-2.3开始,校验包被独立成了一个starter组件,所以需要引入validation和web,而springboot-2.3之前的版本只需要引入 web 依赖就可以了.
-
+从SpringBoot2.3开始，校验包被独立成了一个starter组件，所以需要引入`validation`和`web`，而`springboot-2.3`之前的版本只需要引入`web`依赖就可以了.
 ```xml
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-validation</artifactId>
-    </dependency>
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-validation</artifactId>
+</dependency>
 ```
 
 ### UserEntity1
@@ -170,7 +171,7 @@ public class ValidatedExceptionAdvice {
 ```
 
 ## Validator框架进阶
-包括自定义校验注解,validated分组校验,对象嵌套校验,表单格式校验.
+Validator框架进阶，包括自定义校验注解、Validator分组校验，对象嵌套校验，表单格式校验。
 
 ### UserEntity2
 ```java
@@ -475,8 +476,3 @@ public class ValidatedExceptionAdvice {
 
 }
 ```
-
-
-
-
-

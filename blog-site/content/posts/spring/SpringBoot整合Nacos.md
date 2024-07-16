@@ -1,20 +1,16 @@
 ---
-title: "SpringBoot整合nacos"
+title: "SpringBoot整合Nacos"
 date: 2023-09-04
 draft: false
 tags: ["springboot", "nacos","spring"]
 slug: "springboot-nacos"
 ---
 
-## nacos
+## Nacos安装启动
+一键傻瓜试安装即可，[官网](http://nacos.io/zh-cn/docs/v2/quickstart/quick-start.html)写的很清楚这里不在赘述。
+这里以Window环境安装为例。
 
-### nacos下载
-[下载地址](https://github.com/alibaba/nacos/releases) 
-
-一键傻瓜试安装即可,官网写的很清楚这里不在赘述 [http://nacos.io/zh-cn/docs/v2/quickstart/quick-start.html](http://nacos.io/zh-cn/docs/v2/quickstart/quick-start.html)
-
-### nacos启动
-将模式改为单机模式
+启动`Nacos`将模式改为单机模式。
 
 ![SpringBoot整合nacos](/iblog/posts/annex/images/spring/SpringBoot整合nacos-001.png)
 
@@ -22,10 +18,10 @@ slug: "springboot-nacos"
 
 ![SpringBoot整合nacos](/iblog/posts/annex/images/spring/SpringBoot整合nacos-002.png)
 
-### nacos相关配置
+## Nacos相关配置
 ![SpringBoot整合nacos](/iblog/posts/annex/images/spring/SpringBoot整合nacos-004.png)
 
-#### demo-dev.yaml
+### demo-dev.yaml
 ```yaml
 server:
   port: 8001
@@ -33,7 +29,8 @@ server:
 config:
   info: "config info for dev from nacos config center"
 ```
-#### demo-test.yaml
+
+### demo-test.yaml
 ```yaml
 server:
   port: 3333
@@ -41,7 +38,8 @@ server:
 config:
   info: "config info for test from nacos config center"
 ```
-#### user.yaml
+
+### user.yaml
 ```yaml
 user:
   name: zs1112222
@@ -52,10 +50,10 @@ user:
 ![SpringBoot整合nacos](/iblog/posts/annex/images/spring/SpringBoot整合nacos-003.png)
 
 
-## 代码
-整合nacos配置中心,注册中心,完整项目地址 [gitee地址](https://gitee.com/gitee_pikaqiu/springboot-naocos-demo)
+## 整合Nacos代码
+整合Nacos配置中心，注册中心，完整项目地址 [gitee地址](https://gitee.com/gitee_pikaqiu/springboot-naocos-demo)。
 
-### pom.xml
+### 引入pom.xml依赖
 ```xml
 <parent>
     <groupId>org.springframework.boot</groupId>
@@ -89,6 +87,42 @@ user:
     </dependency>
 </dependencies>
 ```
+
+### bootstrap.yml
+```yaml
+spring:
+  profiles:
+    # 指定环境 切换环境
+    active: dev
+  application:
+    name: demo
+  cloud:
+    # nacos server dataId
+    # ${spring.application.name)}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+    nacos:
+      # Nacos服务注册中心
+      discovery:
+        serverAddr: @serverAddr@
+        group: DEMO_GROUP
+        namespace: 25af15f3-ae79-41c3-847d-960adb953185
+        username: @username@
+        password: @password@
+      # Nacos作为配置中心
+      config:
+        server-addr: @serverAddr@
+        file-extension: yaml
+        group: DEMO_GROUP
+        namespace: 25af15f3-ae79-41c3-847d-960adb953185
+        username: @username@
+        password: @password@
+        # 加载多配置
+        extension-configs:
+          - data-id: user.yaml
+            group: DEMO_GROUP
+            refresh: true
+
+```
+
 ### UserConfig
 ```java
 @Data
@@ -104,6 +138,7 @@ public class UserConfig {
 
 }
 ```
+
 ### BeanAutoRefreshConfigExample
 ```java
 @RestController
@@ -149,52 +184,14 @@ public class DemoApplication {
 }
 ```
 
-### bootstrap.yml
-```yaml
-spring:
-  profiles:
-    # 指定环境 切换环境
-    active: dev
-  application:
-    name: demo
-  cloud:
-    # nacos server dataId
-    # ${spring.application.name)}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
-    nacos:
-      # Nacos服务注册中心
-      discovery:
-        serverAddr: @serverAddr@
-        group: DEMO_GROUP
-        namespace: 25af15f3-ae79-41c3-847d-960adb953185
-        username: @username@
-        password: @password@
-      # Nacos作为配置中心
-      config:
-        server-addr: @serverAddr@
-        file-extension: yaml
-        group: DEMO_GROUP
-        namespace: 25af15f3-ae79-41c3-847d-960adb953185
-        username: @username@
-        password: @password@
-        # 加载多配置
-        extension-configs:
-          - data-id: user.yaml
-            group: DEMO_GROUP
-            refresh: true
-
-```
-
 ### 测试结果
 ![SpringBoot整合nacos](/iblog/posts/annex/images/spring/SpringBoot整合nacos-005.png)
 
 ![SpringBoot整合nacos](/iblog/posts/annex/images/spring/SpringBoot整合nacos-006.png)
 
-
-### 补充.刷新静态配置
-有时候一些老项目或者一些写法会遇到静态的配置,这时候可以利用Java的反射特性来刷新静态变量.
-
-大致原理为: 监听nacos配置改动,通过nacos改动确定改动的配置,进而缩小更新范围,通过反射更新变量.
-
+### 补充-刷新静态配置
+有时候一些老项目或者一些写法会遇到静态的配置，这时候可以利用Java的反射特性来刷新静态变量。
+大致原理为，通过监听`Nacos`配置改动确定改动的配置，进而缩小更新范围，通过反射更新变量。
 ```xml
 <!-- https://mvnrepository.com/artifact/com.purgeteam/dynamic-config-spring-boot-starter -->
 <dependency>
@@ -208,7 +205,7 @@ spring:
 </dependency>
 ```
 
-@NacosRefreshStaticField
+#### NacosRefreshStaticField
 ```java
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
@@ -220,7 +217,7 @@ public @interface NacosRefreshStaticField {
 }
 ```
 
-NacosListener
+#### NacosListener
 ```java
 @Slf4j
 @Component
@@ -286,7 +283,7 @@ public class NacosListener implements ApplicationListener<ActionConfigEvent> {
 }
 ```
 
-CommonWebConfig
+#### CommonWebConfig
 ```java
 @Data
 @Component
@@ -299,7 +296,7 @@ public class CommonWebConfig {
 }
 ```
 
-使用
+#### ExampleComponent
 ```java
 @Component
 @NacosRefreshStaticField(configPrefix="common")
@@ -307,4 +304,3 @@ public class ExampleComponent {
     public static String apiUrl = SpringUtil.getBean(CommonWebConfig.class).getApiUrl();
 }
 ```
-

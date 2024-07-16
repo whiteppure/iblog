@@ -16,18 +16,18 @@
       <description>线程状态及转换 线程状态共包含6种，6中状态又可以互相的转换。 新建状态(New): 创建了线程后尚未启动； 可运行状态(Runnable): 可能正在运行，也可能正在等</description>
     </item>
     <item>
-      <title>Java中常用到的锁</title>
-      <link>https://whiteppure.github.io/iblog/posts/essays/java-lock/</link>
+      <title>Java中的锁都有什么</title>
+      <link>https://whiteppure.github.io/iblog/posts/essays/java-locks/</link>
       <pubDate>Tue, 07 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>https://whiteppure.github.io/iblog/posts/essays/java-lock/</guid>
-      <description>公平锁 指多个线程按照申请锁的顺序来获取锁类似排队打饭 先来后到 优点: 所有的线程都能得到资源，不会饿死在队列中。 缺点: 吞吐量会下降很多，队列里面除了第一个线程，其他</description>
+      <guid>https://whiteppure.github.io/iblog/posts/essays/java-locks/</guid>
+      <description>锁 在Java中根据锁的特性来划分可以分为很多，锁的主要作用是确保多线程环境下的数据安全，从而保证程序的正确执行。 在Java中具体&amp;quot;锁&amp;quot;的实现</description>
     </item>
     <item>
-      <title>Java中集合的线程不安全问题</title>
+      <title>Java中常用线程安全的集合</title>
       <link>https://whiteppure.github.io/iblog/posts/essays/java-thread-collection/</link>
       <pubDate>Sun, 05 Apr 2020 00:00:00 +0000</pubDate>
       <guid>https://whiteppure.github.io/iblog/posts/essays/java-thread-collection/</guid>
-      <description>ArrayList ArrayList线程不安全示例: public static void main(String[] args) { ArrayList&amp;lt;String&amp;gt; arrayList = new ArrayList&amp;lt;&amp;gt;(); for(int i=0; i&amp;lt; 3; i++) { new Thread(() -&amp;gt; { arrayList.add(UUID.randomUUID().toString()); System.out.println(arrayList); },String.valueOf(i)).start(); } } // ConcurrentModificationException 同步修改异常 Exception in thread &amp;#34;8&amp;#34; java.util.ConcurrentModificationException [null, 2041b613-8068-4ddd-9d01-305f5680d377] [null, 2041b613-8068-4ddd-9d01-305f5680d377, b3e0296d-e263-4632-a023-4267cdec5e25] [null, 2041b613-8068-4ddd-9d01-305f5680d377] 原因分析: 当某个线程正在执行 ad</description>
+      <description>Java中常用线程安全的集合 在多线程环境中，数据的一致性和线程的安全性是至关重要的。传统的集合类，如ArrayList、HashMap和HashSet，在并发访</description>
     </item>
     <item>
       <title>CAS详解</title>

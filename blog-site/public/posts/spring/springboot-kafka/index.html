@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>SpringBoot整合kafka ｜ 脚踏实地</title>
+	<title>SpringBoot整合Kafka ｜ 脚踏实地</title>
 	
     
     
-    <meta name="description" content="kafka介绍 kafka官网: http://kafka.apache.org kafka中文官网: https://kafka.apachecn.org Kafka是一种分布式的，基于发布/订阅的消息系统。主要特点如下： 以时间复杂度为O(1)的方式提供消息持久" />
+    <meta name="description" content="Docker安装和运行Kafka 获取Kafka Docker镜像。使用wurstmeister/kafka镜像，它包含了Kafka和Zookeeper。 docker pull wurstmeister/kafka 创建" />
     
 
     
@@ -72,8 +72,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#kafka%e4%bb%8b%e7%bb%8d">
-                    kafka介绍
+                <a class="nav-link text-left" href="#docker%e5%ae%89%e8%a3%85%e5%92%8c%e8%bf%90%e8%a1%8ckafka">
+                    Docker安装和运行Kafka
                 </a>
             </li>
             
@@ -90,112 +90,6 @@
         
         
         
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#windows%e5%b9%b3%e5%8f%b0kafka%e7%8e%af%e5%a2%83%e6%90%ad%e5%bb%ba">
-                    Windows平台kafka环境搭建
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#macos%e5%b9%b3%e5%8f%b0kafka%e7%8e%af%e5%a2%83%e6%90%ad%e5%bb%ba">
-                    MacOS平台kafka环境搭建
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%ae%89%e8%a3%85kafka">
-                    安装kafka
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%90%af%e5%8a%a8kafka">
-                    启动kafka
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
         <ul class="nav">
             
         <ul class="nav">
@@ -212,7 +106,6 @@
         
         </ul>
         
-        </ul>
         
         
         
@@ -221,33 +114,6 @@
         
         
         
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#springboot%e6%95%b4%e5%90%88kafka">
-                    Springboot整合kafka
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
         <ul class="nav">
             
         <ul class="nav">
@@ -264,7 +130,6 @@
         
         </ul>
         
-        </ul>
         
         
         
@@ -273,17 +138,14 @@
         
         
         
-        
-        <ul class="nav">
-            
         <ul class="nav">
             
         <ul class="nav">
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e9%85%8d%e7%bd%aeapplicationyml">
-                    配置application.yml
+                <a class="nav-link text-left" href="#applicationyml%e9%85%8d%e7%bd%ae">
+                    application.yml配置
                 </a>
             </li>
             
@@ -292,7 +154,6 @@
         
         </ul>
         
-        </ul>
         
         
         
@@ -301,17 +162,14 @@
         
         
         
-        
-        <ul class="nav">
-            
         <ul class="nav">
             
         <ul class="nav">
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%88%9b%e5%bb%bakafka%e9%85%8d%e7%bd%ae%e7%b1%bb">
-                    创建kafka配置类
+                <a class="nav-link text-left" href="#kafkaconsts">
+                    KafkaConsts
                 </a>
             </li>
             
@@ -320,7 +178,6 @@
         
         </ul>
         
-        </ul>
         
         
         
@@ -329,17 +186,14 @@
         
         
         
-        
-        <ul class="nav">
-            
         <ul class="nav">
             
         <ul class="nav">
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%88%9b%e5%bb%ba%e6%b6%88%e6%81%af%e5%a4%84%e7%90%86%e5%99%a8">
-                    创建消息处理器
+                <a class="nav-link text-left" href="#kafkaconfig">
+                    KafkaConfig
                 </a>
             </li>
             
@@ -348,7 +202,6 @@
         
         </ul>
         
-        </ul>
         
         
         
@@ -357,23 +210,42 @@
         
         
         
-        
-        <ul class="nav">
-            
         <ul class="nav">
             
         <ul class="nav">
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%88%9b%e5%bb%ba%e6%b5%8b%e8%af%95%e7%b1%bb">
-                    创建测试类
+                <a class="nav-link text-left" href="#messagehandler">
+                    MessageHandler
                 </a>
             </li>
             
             
         </ul>
         
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#kafkaapplicationtest">
+                    KafkaApplicationTest
+                </a>
+            </li>
+            
+            
         </ul>
         
         </ul>
@@ -477,7 +349,7 @@
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
-                        <h2 id="post_single_title">SpringBoot整合kafka</h2>
+                        <h2 id="post_single_title">SpringBoot整合Kafka</h2>
                         <span id="post_page_title_date" class="date">2020.08.20</span>
                         
                         <span id="busuanzi_container_page_pv" class="m-l-10">
@@ -485,186 +357,159 @@
                         </span>
                         
                     </div>
-                    <div class="post_content markdown"><h2 id="kafka介绍">kafka介绍</h2>
-<ul>
-<li>kafka官网: <a href="http://kafka.apache.org">http://kafka.apache.org</a></li>
-<li>kafka中文官网: <a href="https://kafka.apachecn.org">https://kafka.apachecn.org</a></li>
-</ul>
-<p>Kafka是一种分布式的，基于发布/订阅的消息系统。主要特点如下：</p>
-<ul>
-<li>以时间复杂度为O(1)的方式提供消息持久化能力，并保证即使对TB级以上数据也能保证常数时间的访问性能</li>
-<li>高吞吐率。即使在非常廉价的商用机器上也能做到单机支持每秒100K条消息的传输</li>
-<li>支持Kafka Server间的消息分区，及分布式消息消费，同时保证每个partition内的消息顺序传输</li>
-<li>同时支持离线数据处理和实时数据处理</li>
-</ul>
-<h2 id="windows平台kafka环境搭建">Windows平台kafka环境搭建</h2>
-<ul>
-<li><a href="https://kafka.apachecn.org">https://kafka.apachecn.org</a></li>
-<li><a href="https://blog.csdn.net/u010054969/article/details/70241478">https://blog.csdn.net/u010054969/article/details/70241478</a></li>
-</ul>
-<h2 id="macos平台kafka环境搭建">MacOS平台kafka环境搭建</h2>
-<h3 id="安装kafka">安装kafka</h3>
-<p>kafka依赖Java和zookeeper，安装前请先安装Java和zookeeper。</p>
-<p>安装zookeeper</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">brew install zookeeper
-</span></span></code></pre></div><p>安装kafka</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">brew install kafka
-</span></span></code></pre></div><h3 id="启动kafka">启动kafka</h3>
-<p>假定你是按照上边的方法安装的kafka,接下来启动kafka</p>
-<p>因为kafka依赖zk，所以首先要启动zookeeper</p>
-<ul>
-<li>cd到该路径：<code>cd /usr/local/Cellar/zookeeper/xxx/bin</code> xxx是zookeeper的版本</li>
-<li>执行启动命令 <code>zkServer start</code>，停止命令为 <code>zkServer stop</code></li>
-</ul>
-<p><strong>启动之前必须修改kafka的配置文件，否则后面的启动会失败</strong></p>
-<ul>
-<li>执行该命令 <code>vim /usr/local/etc/kafka/server.properties</code></li>
-<li>增加<code>listeners=PLAINTEXT://localhost:9092</code> 其中有一行，默认被注释掉了，打开修改即可</li>
-</ul>
-<p>最后启动kafka</p>
-<ul>
-<li>cd到该路径：<code>cd /usr/local/Cellar/kafka/xxx/bin</code> xxx是kafka的版本</li>
-<li>执行该命令启动kafka <code>kafka-server-start /usr/local/etc/kafka/server.properties &amp;</code></li>
-</ul>
-<p>到此为止kafka启动完成</p>
-<h3 id="kafka消息测试">Kafka消息测试</h3>
-<ul>
-<li>创建test主题 <code>kafka-topics --create --zookeeper localhost:2181</code><br><code> --replication-factor 1 --partitions 1 --topic test</code></li>
-<li>查看主题是否创建成功 <code>kafka-topics --list --zookeeper localhost:2181</code> 该命令会列出所有的主题</li>
-<li>在kafka/bin目录，topic为test的主题 <code>kafka-console-producer --topic test --broker-list localhost:9092</code></li>
-<li>打开新的终端，在kafka/bin目录，topic为test的主题 <code>kafka-console-consumer --bootstrap-server localhost:9092 -topic test </code></li>
-</ul>
-<p>在生产者终端输入信息，在消费者终端就能看的见</p>
-<div style="width: 50%;display: inline-block">
-    <img src="/iblog/posts/annex/images/application/kafka生产者.jpg" alt="生产者">
-</div>
-<div style="width: 45%;display: inline-block">
-    <img src="/iblog/posts/annex/images/application/kafka消费者.jpg" alt="消费者">
-</div>
-<h2 id="springboot整合kafka">Springboot整合kafka</h2>
-<h3 id="引入pom依赖">引入pom依赖</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    &lt;dependency&gt;
-</span></span><span class="line"><span class="cl">        &lt;groupId&gt;org.springframework.kafka&lt;/groupId&gt;
-</span></span><span class="line"><span class="cl">        &lt;artifactId&gt;spring-kafka&lt;/artifactId&gt;
-</span></span><span class="line"><span class="cl">    &lt;/dependency&gt;
-</span></span></code></pre></div><h3 id="配置applicationyml">配置application.yml</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">server:
-</span></span><span class="line"><span class="cl">  port: 8080
-</span></span><span class="line"><span class="cl">  servlet:
-</span></span><span class="line"><span class="cl">    context-path: /demo
-</span></span><span class="line"><span class="cl">spring:
-</span></span><span class="line"><span class="cl">  kafka:
-</span></span><span class="line"><span class="cl">    bootstrap-servers: localhost:9092
-</span></span><span class="line"><span class="cl">    producer:
-</span></span><span class="line"><span class="cl">      retries: 0
-</span></span><span class="line"><span class="cl">      batch-size: 16384
-</span></span><span class="line"><span class="cl">      buffer-memory: 33554432
-</span></span><span class="line"><span class="cl">      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-</span></span><span class="line"><span class="cl">      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-</span></span><span class="line"><span class="cl">    consumer:
-</span></span><span class="line"><span class="cl">      group-id: spring-boot-demo
-</span></span><span class="line"><span class="cl">      # 手动提交
-</span></span><span class="line"><span class="cl">      enable-auto-commit: false
-</span></span><span class="line"><span class="cl">      auto-offset-reset: latest
-</span></span><span class="line"><span class="cl">      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-</span></span><span class="line"><span class="cl">      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-</span></span><span class="line"><span class="cl">      properties:
-</span></span><span class="line"><span class="cl">        session.timeout.ms: 60000
-</span></span><span class="line"><span class="cl">    listener:
-</span></span><span class="line"><span class="cl">      log-container-config: false
-</span></span><span class="line"><span class="cl">      concurrency: 5
-</span></span><span class="line"><span class="cl">      # 手动提交
-</span></span><span class="line"><span class="cl">      ack-mode: manual_immediate
-</span></span></code></pre></div><h3 id="创建kafka配置类">创建kafka配置类</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public interface KafkaConsts {
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 默认分区大小
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    Integer DEFAULT_PARTITION_NUM = 3;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * Topic 名称
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    String TOPIC_TEST = &#34;test&#34;;
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Configuration
-</span></span><span class="line"><span class="cl">@EnableConfigurationProperties({KafkaProperties.class})
-</span></span><span class="line"><span class="cl">@EnableKafka
-</span></span><span class="line"><span class="cl">@AllArgsConstructor
-</span></span><span class="line"><span class="cl">public class KafkaConfig {
-</span></span><span class="line"><span class="cl">    private final KafkaProperties kafkaProperties;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    @Bean
-</span></span><span class="line"><span class="cl">    public KafkaTemplate&lt;String, String&gt; kafkaTemplate() {
-</span></span><span class="line"><span class="cl">        return new KafkaTemplate&lt;&gt;(producerFactory());
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    @Bean
-</span></span><span class="line"><span class="cl">    public ProducerFactory&lt;String, String&gt; producerFactory() {
-</span></span><span class="line"><span class="cl">        return new DefaultKafkaProducerFactory&lt;&gt;(kafkaProperties.buildProducerProperties());
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    @Bean
-</span></span><span class="line"><span class="cl">    public ConcurrentKafkaListenerContainerFactory&lt;String, String&gt; kafkaListenerContainerFactory() {
-</span></span><span class="line"><span class="cl">        ConcurrentKafkaListenerContainerFactory&lt;String, String&gt; factory = new ConcurrentKafkaListenerContainerFactory&lt;&gt;();
-</span></span><span class="line"><span class="cl">        factory.setConsumerFactory(consumerFactory());
-</span></span><span class="line"><span class="cl">        factory.setConcurrency(KafkaConsts.DEFAULT_PARTITION_NUM);
-</span></span><span class="line"><span class="cl">        factory.setBatchListener(true);
-</span></span><span class="line"><span class="cl">        factory.getContainerProperties().setPollTimeout(3000);
-</span></span><span class="line"><span class="cl">        return factory;
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    @Bean
-</span></span><span class="line"><span class="cl">    public ConsumerFactory&lt;String, String&gt; consumerFactory() {
-</span></span><span class="line"><span class="cl">        return new DefaultKafkaConsumerFactory&lt;&gt;(kafkaProperties.buildConsumerProperties());
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    @Bean(&#34;ackContainerFactory&#34;)
-</span></span><span class="line"><span class="cl">    public ConcurrentKafkaListenerContainerFactory&lt;String, String&gt; ackContainerFactory() {
-</span></span><span class="line"><span class="cl">        ConcurrentKafkaListenerContainerFactory&lt;String, String&gt; factory = new ConcurrentKafkaListenerContainerFactory&lt;&gt;();
-</span></span><span class="line"><span class="cl">        factory.setConsumerFactory(consumerFactory());
-</span></span><span class="line"><span class="cl">        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
-</span></span><span class="line"><span class="cl">        factory.setConcurrency(KafkaConsts.DEFAULT_PARTITION_NUM);
-</span></span><span class="line"><span class="cl">        return factory;
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><h3 id="创建消息处理器">创建消息处理器</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Component
-</span></span><span class="line"><span class="cl">@Slf4j
-</span></span><span class="line"><span class="cl">public class MessageHandler {
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    @KafkaListener(topics = KafkaConsts.TOPIC_TEST, containerFactory = &#34;ackContainerFactory&#34;)
-</span></span><span class="line"><span class="cl">    public void handleMessage(ConsumerRecord record, Acknowledgment acknowledgment) {
-</span></span><span class="line"><span class="cl">        try {
-</span></span><span class="line"><span class="cl">            String message = (String) record.value();
-</span></span><span class="line"><span class="cl">            log.info(&#34;收到消息: {}&#34;, message);
-</span></span><span class="line"><span class="cl">        } catch (Exception e) {
-</span></span><span class="line"><span class="cl">            log.error(e.getMessage(), e);
-</span></span><span class="line"><span class="cl">        } finally {
-</span></span><span class="line"><span class="cl">            // 手动提交 offset
-</span></span><span class="line"><span class="cl">            acknowledgment.acknowledge();
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><h3 id="创建测试类">创建测试类</h3>
-<p>测试之前请确保kafka已启动</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@RunWith(SpringRunner.class)
-</span></span><span class="line"><span class="cl">@SpringBootTest
-</span></span><span class="line"><span class="cl">public class SpringBootDemoMqKafkaApplicationTests {
-</span></span><span class="line"><span class="cl">    @Autowired
-</span></span><span class="line"><span class="cl">    private KafkaTemplate&lt;String, String&gt; kafkaTemplate;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 测试发送消息
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    @Test
-</span></span><span class="line"><span class="cl">    public void testSend() {
-</span></span><span class="line"><span class="cl">        kafkaTemplate.send(KafkaConsts.TOPIC_TEST, &#34;hello,kafka...&#34;);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div></div>
+                    <div class="post_content markdown"><h2 id="docker安装和运行kafka">Docker安装和运行Kafka</h2>
+<ol>
+<li>获取<code>Kafka Docker</code>镜像。使用<code>wurstmeister/kafka</code>镜像，它包含了<code>Kafka</code>和<code>Zookeeper</code>。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker pull wurstmeister/kafka
+</span></span></code></pre></div></li>
+<li>创建<code>Docker</code>网络。为了让<code>Kafka</code>和<code>Zookeeper</code>容器能够互相通信，我们需要创建一个<code>Docker</code>网络。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker network create kafka-net
+</span></span></code></pre></div></li>
+<li>启动<code>Zookeeper</code>。<code>Kafka</code>依赖于<code>Zookeeper</code>，所以需要先启动<code>Zookeeper</code>容器。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker run -d --name zookeeper --network kafka-net -e <span class="nv">ALLOW_ANONYMOUS_LOGIN</span><span class="o">=</span>yes zookeeper:3.4
+</span></span></code></pre></div></li>
+<li>启动<code>Kafka</code>容器，并将其连接到<code>Zookeeper</code>。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker run -d --name kafka --network kafka-net -e <span class="nv">KAFKA_ZOOKEEPER_CONNECT</span><span class="o">=</span>zookeeper:2181 -e <span class="nv">KAFKA_ADVERTISED_LISTENERS</span><span class="o">=</span>PLAINTEXT://localhost:9092 -e <span class="nv">KAFKA_BROKER_ID</span><span class="o">=</span><span class="m">1</span> wurstmeister/kafka
+</span></span></code></pre></div></li>
+</ol>
+<h2 id="kafka消息测试">Kafka消息测试</h2>
+<ol>
+<li>首先创建一个新主题。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker <span class="nb">exec</span> -it kafka bash
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建一个名为 test 的主题。</span>
+</span></span><span class="line"><span class="cl">kafka-topics.sh --create --topic <span class="nb">test</span> --bootstrap-server localhost:9092 --partitions <span class="m">1</span> --replication-factor <span class="m">1</span>
+</span></span></code></pre></div></li>
+<li>使用<code>kafka-console-producer</code>发送消息到<code>test</code>主题。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">kafka-console-producer.sh --broker-list localhost:9092 --topic <span class="nb">test</span>
+</span></span></code></pre></div></li>
+<li>使用<code>kafka-console-consumer</code>从<code>test</code>主题消费消息。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic <span class="nb">test</span> --from-beginning
+</span></span></code></pre></div></li>
+</ol>
+<h2 id="引入pom依赖">引入pom依赖</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;groupId&gt;</span>org.springframework.kafka<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;artifactId&gt;</span>spring-kafka<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><h2 id="applicationyml配置">application.yml配置</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">server</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">8080</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">servlet</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">context-path</span><span class="p">:</span><span class="w"> </span><span class="l">/demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">kafka</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">bootstrap-servers</span><span class="p">:</span><span class="w"> </span><span class="l">localhost:9092</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">producer</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">batch-size</span><span class="p">:</span><span class="w"> </span><span class="m">16384</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">buffer-memory</span><span class="p">:</span><span class="w"> </span><span class="m">33554432</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">key-serializer</span><span class="p">:</span><span class="w"> </span><span class="l">org.apache.kafka.common.serialization.StringSerializer</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">value-serializer</span><span class="p">:</span><span class="w"> </span><span class="l">org.apache.kafka.common.serialization.StringSerializer</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">consumer</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">group-id</span><span class="p">:</span><span class="w"> </span><span class="l">spring-boot-demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c"># 手动提交</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">enable-auto-commit</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">auto-offset-reset</span><span class="p">:</span><span class="w"> </span><span class="l">latest</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">key-deserializer</span><span class="p">:</span><span class="w"> </span><span class="l">org.apache.kafka.common.serialization.StringDeserializer</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">value-deserializer</span><span class="p">:</span><span class="w"> </span><span class="l">org.apache.kafka.common.serialization.StringDeserializer</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">properties</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">session.timeout.ms</span><span class="p">:</span><span class="w"> </span><span class="m">60000</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">listener</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">log-container-config</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">concurrency</span><span class="p">:</span><span class="w"> </span><span class="m">5</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c"># 手动提交</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">ack-mode</span><span class="p">:</span><span class="w"> </span><span class="l">manual_immediate</span><span class="w">
+</span></span></span></code></pre></div><h2 id="kafkaconsts">KafkaConsts</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">KafkaConsts</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 默认分区大小
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Integer</span><span class="w"> </span><span class="n">DEFAULT_PARTITION_NUM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">3</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * Topic 名称
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">TOPIC_TEST</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;test&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="kafkaconfig">KafkaConfig</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Configuration</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@EnableConfigurationProperties</span><span class="p">({</span><span class="n">KafkaProperties</span><span class="p">.</span><span class="na">class</span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@EnableKafka</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@AllArgsConstructor</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">KafkaConfig</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">KafkaProperties</span><span class="w"> </span><span class="n">kafkaProperties</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Bean</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">KafkaTemplate</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">kafkaTemplate</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">KafkaTemplate</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">producerFactory</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Bean</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">ProducerFactory</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">producerFactory</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DefaultKafkaProducerFactory</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">kafkaProperties</span><span class="p">.</span><span class="na">buildProducerProperties</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Bean</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">ConcurrentKafkaListenerContainerFactory</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">kafkaListenerContainerFactory</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ConcurrentKafkaListenerContainerFactory</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">factory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ConcurrentKafkaListenerContainerFactory</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">factory</span><span class="p">.</span><span class="na">setConsumerFactory</span><span class="p">(</span><span class="n">consumerFactory</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">factory</span><span class="p">.</span><span class="na">setConcurrency</span><span class="p">(</span><span class="n">KafkaConsts</span><span class="p">.</span><span class="na">DEFAULT_PARTITION_NUM</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">factory</span><span class="p">.</span><span class="na">setBatchListener</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">factory</span><span class="p">.</span><span class="na">getContainerProperties</span><span class="p">().</span><span class="na">setPollTimeout</span><span class="p">(</span><span class="n">3000</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">factory</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Bean</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">ConsumerFactory</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">consumerFactory</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DefaultKafkaConsumerFactory</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">kafkaProperties</span><span class="p">.</span><span class="na">buildConsumerProperties</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Bean</span><span class="p">(</span><span class="s">&#34;ackContainerFactory&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">ConcurrentKafkaListenerContainerFactory</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">ackContainerFactory</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ConcurrentKafkaListenerContainerFactory</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">factory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ConcurrentKafkaListenerContainerFactory</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">factory</span><span class="p">.</span><span class="na">setConsumerFactory</span><span class="p">(</span><span class="n">consumerFactory</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">factory</span><span class="p">.</span><span class="na">getContainerProperties</span><span class="p">().</span><span class="na">setAckMode</span><span class="p">(</span><span class="n">ContainerProperties</span><span class="p">.</span><span class="na">AckMode</span><span class="p">.</span><span class="na">MANUAL_IMMEDIATE</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">factory</span><span class="p">.</span><span class="na">setConcurrency</span><span class="p">(</span><span class="n">KafkaConsts</span><span class="p">.</span><span class="na">DEFAULT_PARTITION_NUM</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">factory</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="messagehandler">MessageHandler</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Component</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Slf4j</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MessageHandler</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@KafkaListener</span><span class="p">(</span><span class="n">topics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">KafkaConsts</span><span class="p">.</span><span class="na">TOPIC_TEST</span><span class="p">,</span><span class="w"> </span><span class="n">containerFactory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;ackContainerFactory&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">handleMessage</span><span class="p">(</span><span class="n">ConsumerRecord</span><span class="w"> </span><span class="n">record</span><span class="p">,</span><span class="w"> </span><span class="n">Acknowledgment</span><span class="w"> </span><span class="n">acknowledgment</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="p">)</span><span class="w"> </span><span class="n">record</span><span class="p">.</span><span class="na">value</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&#34;收到消息: {}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">log</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">(),</span><span class="w"> </span><span class="n">e</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 手动提交 offset</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">acknowledgment</span><span class="p">.</span><span class="na">acknowledge</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="kafkaapplicationtest">KafkaApplicationTest</h2>
+<p>测试之前请确保<code>Kafka</code>已启动。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@RunWith</span><span class="p">(</span><span class="n">SpringRunner</span><span class="p">.</span><span class="na">class</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@SpringBootTest</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">KafkaApplicationTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Autowired</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">KafkaTemplate</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">kafkaTemplate</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 测试发送消息
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testSend</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">kafkaTemplate</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">KafkaConsts</span><span class="p">.</span><span class="na">TOPIC_TEST</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;hello,kafka...&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">
                             

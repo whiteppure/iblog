@@ -1,86 +1,56 @@
 ---
-title: "SpringBoot整合kafka"
+title: "SpringBoot整合Kafka"
 date: 2020-08-20
 draft: false
 tags: ["springboot", "MQ","spring"]
 slug: "springboot-kafka"
 ---
-## kafka介绍
-- kafka官网: [http://kafka.apache.org](http://kafka.apache.org)
-- kafka中文官网: [https://kafka.apachecn.org](https://kafka.apachecn.org)
-
-Kafka是一种分布式的，基于发布/订阅的消息系统。主要特点如下：
-- 以时间复杂度为O(1)的方式提供消息持久化能力，并保证即使对TB级以上数据也能保证常数时间的访问性能
-- 高吞吐率。即使在非常廉价的商用机器上也能做到单机支持每秒100K条消息的传输
-- 支持Kafka Server间的消息分区，及分布式消息消费，同时保证每个partition内的消息顺序传输
-- 同时支持离线数据处理和实时数据处理
 
 
-## Windows平台kafka环境搭建
-- https://kafka.apachecn.org
-- https://blog.csdn.net/u010054969/article/details/70241478
+## Docker安装和运行Kafka
+1. 获取`Kafka Docker`镜像。使用`wurstmeister/kafka`镜像，它包含了`Kafka`和`Zookeeper`。
+    ```shell
+    docker pull wurstmeister/kafka
+    ```
+2. 创建`Docker`网络。为了让`Kafka`和`Zookeeper`容器能够互相通信，我们需要创建一个`Docker`网络。
+    ```shell
+    docker network create kafka-net
+    ```
+3. 启动`Zookeeper`。`Kafka`依赖于`Zookeeper`，所以需要先启动`Zookeeper`容器。
+    ```shell
+    docker run -d --name zookeeper --network kafka-net -e ALLOW_ANONYMOUS_LOGIN=yes zookeeper:3.4
+    ```
+4. 启动`Kafka`容器，并将其连接到`Zookeeper`。
+    ```shell
+    docker run -d --name kafka --network kafka-net -e KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 -e KAFKA_BROKER_ID=1 wurstmeister/kafka
+    ```
 
-## MacOS平台kafka环境搭建
+## Kafka消息测试
+1. 首先创建一个新主题。
+    ```shell
+    docker exec -it kafka bash
+    # 创建一个名为 test 的主题。
+    kafka-topics.sh --create --topic test --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+    ```
+2. 使用`kafka-console-producer`发送消息到`test`主题。
+    ```shell
+    kafka-console-producer.sh --broker-list localhost:9092 --topic test
+    ```
+3. 使用`kafka-console-consumer`从`test`主题消费消息。
+    ```shell
+    kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
+    ```
 
-### 安装kafka
-
-kafka依赖Java和zookeeper，安装前请先安装Java和zookeeper。
-
-安装zookeeper
+## 引入pom依赖
+```xml
+<dependency>
+    <groupId>org.springframework.kafka</groupId>
+    <artifactId>spring-kafka</artifactId>
+</dependency>
 ```
-brew install zookeeper
-```
 
-安装kafka
-```
-brew install kafka
-```
-
-### 启动kafka
-
-假定你是按照上边的方法安装的kafka,接下来启动kafka
-
-因为kafka依赖zk，所以首先要启动zookeeper
-- cd到该路径：`cd /usr/local/Cellar/zookeeper/xxx/bin` xxx是zookeeper的版本
-- 执行启动命令 `zkServer start`，停止命令为 `zkServer stop`
-
-
-**启动之前必须修改kafka的配置文件，否则后面的启动会失败**
-- 执行该命令 ``vim /usr/local/etc/kafka/server.properties``
-- 增加``listeners=PLAINTEXT://localhost:9092`` 其中有一行，默认被注释掉了，打开修改即可
-
-最后启动kafka
-- cd到该路径：`cd /usr/local/Cellar/kafka/xxx/bin` xxx是kafka的版本
-- 执行该命令启动kafka ``kafka-server-start /usr/local/etc/kafka/server.properties &``
-
-到此为止kafka启动完成
-
-### Kafka消息测试
-
-- 创建test主题 `kafka-topics --create --zookeeper localhost:2181`<br>` --replication-factor 1 --partitions 1 --topic test`
-- 查看主题是否创建成功 ``kafka-topics --list --zookeeper localhost:2181`` 该命令会列出所有的主题
-- 在kafka/bin目录，topic为test的主题 ``kafka-console-producer --topic test --broker-list localhost:9092``
-- 打开新的终端，在kafka/bin目录，topic为test的主题 ``kafka-console-consumer --bootstrap-server localhost:9092 -topic test ``
-
-在生产者终端输入信息，在消费者终端就能看的见
-<div style="width: 50%;display: inline-block">
-    <img src="/iblog/posts/annex/images/application/kafka生产者.jpg" alt="生产者">
-</div>
-<div style="width: 45%;display: inline-block">
-    <img src="/iblog/posts/annex/images/application/kafka消费者.jpg" alt="消费者">
-</div>
-
-## Springboot整合kafka
-
-### 引入pom依赖
-```
-    <dependency>
-        <groupId>org.springframework.kafka</groupId>
-        <artifactId>spring-kafka</artifactId>
-    </dependency>
-```
-### 配置application.yml
-```
+## application.yml配置
+```yaml
 server:
   port: 8080
   servlet:
@@ -110,8 +80,8 @@ spring:
       ack-mode: manual_immediate
 ```
 
-### 创建kafka配置类
-```
+## KafkaConsts
+```java
 public interface KafkaConsts {
     /**
      * 默认分区大小
@@ -125,7 +95,8 @@ public interface KafkaConsts {
 }
 ```
 
-```
+## KafkaConfig
+```java
 @Configuration
 @EnableConfigurationProperties({KafkaProperties.class})
 @EnableKafka
@@ -169,8 +140,9 @@ public class KafkaConfig {
 
 }
 ```
-### 创建消息处理器
-```
+
+## MessageHandler
+```java
 @Component
 @Slf4j
 public class MessageHandler {
@@ -190,12 +162,12 @@ public class MessageHandler {
 }
 ```
 
-### 创建测试类
-测试之前请确保kafka已启动
-```
+## KafkaApplicationTest
+测试之前请确保`Kafka`已启动。
+```java
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SpringBootDemoMqKafkaApplicationTests {
+public class KafkaApplicationTest {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 

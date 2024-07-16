@@ -1,83 +1,54 @@
 ---
-title: "SpringBoot整合elasticsearch"
+title: "SpringBoot整合Elasticsearch"
 date: 2020-02-09
 draft: false
 tags: ["springboot", "elasticsearch","spring"]
 slug: "springboot-elasticsearch"
 ---
-## 安装elasticsearch
-要注意导入依赖的版本和安装`elasticsearch`的版本与`springboot`的兼容问题
+
+
+## Docker安装和运行Elasticsearch
+1. 拉取`Elasticsearch Docker`镜像。从`Docker Hub`拉取`Elasticsearch`的官方镜像。
+    ```shell
+    docker pull elasticsearch:7.17.0
+    ```
+2. 运行`Elasticsearch`容器。使用`docker run`命令启动`Elasticsearch`容器。为了方便配置和数据持久化，可以指定一些环境变量和挂载数据卷。
+    ```shell
+    docker run -d --name elasticsearch --network elastic -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -e "ES_JAVA_OPTS=-Xms512m -Xmx512m" -v esdata:/usr/share/elasticsearch/data elasticsearch:7.17.0
+    ```
+3. 验证`Elasticsearch`运行状态。
+    ```shell
+    docker logs -f elasticsearch
+    ```
+    如果一切正常，可以通过浏览器访问 http://localhost:9200，或使用 curl 命令进行验证。
+    ```shell
+    curl -X GET "localhost:9200/"
+    ```
+
+## 引入pom依赖
+要注意导入依赖的版本和安装`Elasticsearch`的版本与`springboot`的兼容问题。
 
 ![springbootelasticsearch.jpg](/iblog/posts/annex/images/application/Springboot对应elasticseach版本.jpg)
 
-### 用 docker 安装 elasticsearch
-
-本例用`elasticsearch-6.5.3`和`springboot-2.1.0.RELEASE`版本
-
-1. 下载镜像：
-```
-docker pull elasticsearch:6.5.3
-```
-
-2. 运行容器：
-```
-docker run -d -p 9200:9200 -p 9300:9300 --name elasticsearch-6.5.3 elasticsearch:6.5.3
-```
-3. 进入容器：
-```
-docker exec -it elasticsearch-6.5.3 /bin/bash
-```
-
-4. [安装 IK 分词器](https://elasticstack.blog.csdn.net/article/details/100516428)：
-```
-/bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v6.5.3/elasticsearch-analysis-ik-6.5.3.zip
-```
-
-5. 修改 es 配置文件：`vi ./config/elasticsearch.yml`
-```
-cluster.name: "docker-cluster"
-network.host: 0.0.0.0
-
-# minimum_master_nodes need to be explicitly set when bound on a public IP
-# set to 1 to allow single node clusters
-# Details: https://github.com/elastic/elasticsearch/pull/17288
-discovery.zen.minimum_master_nodes: 1
-
-# just for elasticsearch-head plugin
-http.cors.enabled: true
-http.cors.allow-origin: "*"
-```
-
-6. 退出容器：
-```
-exit
-```
-
-7. 停止容器：
-```
-docker stop elasticsearch-6.5.3
-```
-
-8. 启动容器：
-```
-docker start elasticsearch-6.5.3
-```
-
-
-## Springboot集成elasticsearch
-
-### 导入pom依赖
-```
+```xml
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
 </dependency>
 ```
 
-### 创建测试接口
-EsConsts 常量池
+## application.yml配置
+```yaml
+spring:
+  data:
+    elasticsearch:
+      cluster-name: docker-cluster
+      cluster-nodes: localhost:9300
 ```
-public interface EsConsts {
+
+## ESConsts
+```java
+public interface ESConsts {
     /**
      * 索引名称
      */
@@ -89,12 +60,12 @@ public interface EsConsts {
     String TYPE_NAME = "person";
 }
 ```
-创建Javabean
-> @Document 注解主要声明索引名、类型名、分片数量和备份数量
->  
-> @Field 注解主要声明字段对应ES的类型
 
-```
+## Person
+> @Document 注解主要声明索引名、类型名、分片数量和备份数量
+@Field 注解主要声明字段对应ES的类型
+
+```java
 /** 注意(坑点): ES 6以后不允许一个索引下有多个类型,只允许一个索引下有一个类型
  *  @Document:
  * 
@@ -152,8 +123,9 @@ public class Person {
     private String remark;
 }
 ```
-PersonRepository
-```
+
+## PersonRepository
+```java
 public interface PersonRepository extends ElasticsearchRepository<Person, Long> {
 
     /**
@@ -166,33 +138,17 @@ public interface PersonRepository extends ElasticsearchRepository<Person, Long> 
     List<Person> findByAgeBetween(Integer min, Integer max);
 }
 ```
-application.yml配置
-```
-spring:
-  data:
-    elasticsearch:
-      cluster-name: docker-cluster
-      cluster-nodes: localhost:9300
-```
 
-### 创建测试类
-```
+## ElasticsearchApplicationTest
+```java
+@Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SpringBootDemoElasticsearchApplicationTests {
+public class ElasticsearchApplicationTest {
 
-    @Test
-    public void contextLoads() {
-    }
-
-}
-```
-
-```
-@Slf4j
-public class PersonRepositoryTest extends SpringBootDemoElasticsearchApplicationTests {
     @Autowired
     private PersonRepository repo;
+
 
     /**
      * 测试新增
@@ -250,7 +206,7 @@ public class PersonRepositoryTest extends SpringBootDemoElasticsearchApplication
     @Test
     public void select() {
         repo.findAll(Sort.by(Sort.Direction.DESC, "birthday")).
-            forEach(person -> log.info("{} 生日: {}", person.getName(), DateUtil.formatDateTime(person.getBirthday())));
+                forEach(person -> log.info("{} 生日: {}", person.getName(), DateUtil.formatDateTime(person.getBirthday())));
     }
 
     /**
@@ -324,8 +280,8 @@ public class PersonRepositoryTest extends SpringBootDemoElasticsearchApplication
 
         // 1. 添加一个新的聚合，聚合类型为terms，聚合名称为country，聚合字段为age
         queryBuilder.addAggregation(AggregationBuilders.terms("country").field("country")
-            // 2. 在国家聚合桶内进行嵌套聚合，求平均年龄
-            .subAggregation(AggregationBuilders.avg("avg").field("age")));
+                // 2. 在国家聚合桶内进行嵌套聚合，求平均年龄
+                .subAggregation(AggregationBuilders.avg("avg").field("age")));
 
         log.info("【queryBuilder】= {}", JSONUtil.toJsonStr(queryBuilder.build()));
 
@@ -348,5 +304,6 @@ public class PersonRepositoryTest extends SpringBootDemoElasticsearchApplication
 
 }
 ```
+
 
 
