@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>Docker介绍 ｜ 脚踏实地</title>
+	<title>Docker入门 ｜ 脚踏实地</title>
 	
     
     
-    <meta name="description" content="docker是什么 Docker 属于 Linux 容器的一种封装，提供简单易用的容器使用接口。它是目前流行的 Linux 容器解决方案。 Docker 将应用程序与该程序的依赖，打包在一个文件里面。运行这个文件" />
+    <meta name="description" content="概述 Docker属于Linux容器的一种封装，提供简单易用的容器使用接口。它是目前流行的Linux容器解决方案。Docker将应用程序与该程序的依赖，打包在一个" />
     
 
     
@@ -72,8 +72,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#docker%e6%98%af%e4%bb%80%e4%b9%88">
-                    docker是什么
+                <a class="nav-link text-left" href="#%e6%a6%82%e8%bf%b0">
+                    概述
                 </a>
             </li>
             
@@ -96,8 +96,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#docker%e7%94%a8%e9%80%94">
-                    docker用途
+                <a class="nav-link text-left" href="#linux%e4%b8%8a%e5%ae%89%e8%a3%85">
+                    Linux上安装
                 </a>
             </li>
             
@@ -120,8 +120,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%ae%89%e8%a3%85">
-                    安装
+                <a class="nav-link text-left" href="#%e5%b7%a5%e4%bd%9c%e5%8e%9f%e7%90%86">
+                    工作原理
                 </a>
             </li>
             
@@ -144,84 +144,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#docker%e6%9e%b6%e6%9e%84">
-                    docker架构
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#docker%e5%9f%ba%e6%9c%ac%e6%93%8d%e4%bd%9c">
-                    docker基本操作
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#docker%e5%b8%b8%e7%94%a8%e5%91%bd%e4%bb%a4">
-                    docker常用命令
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e7%9b%b8%e5%85%b3%e9%93%be%e6%8e%a5">
-                    相关链接
+                <a class="nav-link text-left" href="#%e5%b8%b8%e7%94%a8%e5%91%bd%e4%bb%a4">
+                    常用命令
                 </a>
             </li>
             
@@ -329,7 +253,7 @@
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
-                        <h2 id="post_single_title">Docker介绍</h2>
+                        <h2 id="post_single_title">Docker入门</h2>
                         <span id="post_page_title_date" class="date">2020.04.07</span>
                         
                         <span id="busuanzi_container_page_pv" class="m-l-10">
@@ -337,43 +261,88 @@
                         </span>
                         
                     </div>
-                    <div class="post_content markdown"><h2 id="docker是什么">docker是什么</h2>
-<p>Docker 属于 Linux 容器的一种封装，提供简单易用的容器使用接口。它是目前流行的 Linux 容器解决方案。
-Docker 将应用程序与该程序的依赖，打包在一个文件里面。运行这个文件，就会生成一个虚拟容器。程序在这个虚拟容器里运行，就好像在真实的物理机上运行一样。有了 Docker，就不用担心环境问题。
-总体来说，Docker 的接口相当简单，用户可以方便地创建和使用容器，把自己的应用放入容器。
+                    <div class="post_content markdown"><h2 id="概述">概述</h2>
+<p><code>Docker</code>属于<code>Linux</code>容器的一种封装，提供简单易用的容器使用接口。它是目前流行的<code>Linux</code>容器解决方案。<code>Docker</code>将应用程序与该程序的依赖，打包在一个文件里面。运行这个文件，就会生成一个虚拟容器。
+程序在这个虚拟容器里运行，就好像在真实的物理机上运行一样。有了 <code>Docker</code>，就不用担心环境问题。总体来说<code>Docker</code> 的接口相当简单，用户可以方便地创建和使用容器，把自己的应用放入容器。
 容器还可以进行版本管理、复制、分享、修改，就像管理普通的代码一样。</p>
-<h2 id="docker用途">docker用途</h2>
-<p>提供一次性的环境。比如，本地测试他人的软件、持续集成的时候提供单元测试和构建的环境。
-提供弹性的云服务。因为 Docker 容器可以随开随关，很适合动态扩容和缩容。
-组建微服务架构。通过多个容器，一台机器可以跑多个服务，因此在本机就可以模拟出微服务架构。</p>
-<h2 id="安装">安装</h2>
-<p>以linux上安装为例</p>
-<p>1.安装依赖,docker依赖于系统的一些必要的工具</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">yum install -y yum-utils device-mapper-persistent-data lvm2
-</span></span></code></pre></div><p>2.添加软件源, 阿里云镜像(在阿里云镜像站上面可以找到docker-ce的软件源，使用国内的源速度比较快)</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
-</span></span></code></pre></div><p><a href="https://blog.csdn.net/zhuzz1030/article/details/80097553">3.安装docker-ce(社区版,免费)</a></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">yum clean allyum makecache fastyum -y install docker-ce
-</span></span></code></pre></div><p>4.启动服务</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> #service 命令的用法
+<p><code>Docker</code>可以提供一次性的环境。比如，本地测试他人的软件、持续集成的时候提供单元测试和构建的环境。
+还可以提供弹性的云服务，因为<code>Docker</code>容器可以随开随关，很适合动态扩容和缩容。
+<code>Docker</code>最常见的就是通过多个容器，组建微服务架构，一台机器可以跑多个服务，因此在本机就可以模拟出微服务架构。</p>
+<h2 id="linux上安装">Linux上安装</h2>
+<p>2017年的3月1号之后，<code>Docker</code>的版本命名开始发生变化，同时将CE版本和EE版本进行分开。</p>
+<ul>
+<li>Docker社区版（CE）：为了开发人员或小团队创建基于容器的应用,与团队成员分享和自动化的开发管道。<code>docker-ce</code>提供了简单的安装和快速的安装，以便可以立即开始开发。<code>docker-ce</code>集成和优化，基础设施。（免费）</li>
+<li>Docker企业版（EE）：专为企业的发展和IT团队建立谁。<code>docker-ee</code>为企业提供最安全的容器平台，以应用为中心的平台。（付费）</li>
+</ul>
+<p>以下是<code>CentOS</code>或<code>RHEL</code>上使用<code>yum</code>来安装<code>Docker</code>示例。</p>
+<ol>
+<li><code>Docker</code>依赖于系统的一些必要的工具，所以先安装依赖。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">yum install -y yum-utils device-mapper-persistent-data lvm2
+</span></span></code></pre></div></li>
+<li>通过使用<code>yum-config-manager</code>来设置<code>Docker</code>的稳定仓库。(在阿里云镜像站上面可以找到<code>docker-ce</code>的软件源，使用国内的源速度比较快)。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+</span></span></code></pre></div></li>
+<li>安装<code>docker-ce</code>，社区版，免费。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">yum clean allyum makecache fastyum -y install docker-ce
+</span></span></code></pre></div></li>
+<li>启动服务。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> <span class="c1">#service 命令的用法</span>
 </span></span><span class="line"><span class="cl">$ sudo service docker start
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">#systemctl 命令的用法
+</span></span><span class="line"><span class="cl"><span class="c1">#systemctl 命令的用法</span>
 </span></span><span class="line"><span class="cl">$ sudo systemctl start docker
-</span></span></code></pre></div><p>5.查看安装版</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker version
-</span></span></code></pre></div><p>6.测试,检查 docker 是否正确安装并运行 hello-world 镜像</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker run hello-world
-</span></span></code></pre></div><p>7.Docker 需要用户具有 sudo 权限，为了避免每次命令都输入sudo，可以把用户加入 Docker 用户组</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo usermod -aG docker $USER
-</span></span></code></pre></div><h2 id="docker架构">docker架构</h2>
-<p>docker架构分为三部分客户端,宿主机,注册中心</p>
+</span></span></code></pre></div></li>
+<li>查看安装版。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker version
+</span></span></code></pre></div></li>
+<li><code>Docker</code>需要用户具有<code>sudo</code>权限，为了避免每次命令都输入<code>sudo</code>，可以把用户加入<code>Docker</code>用户组。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo usermod -aG docker <span class="nv">$USER</span>
+</span></span></code></pre></div></li>
+</ol>
+<h2 id="工作原理">工作原理</h2>
 <p><img alt="docker架构" src="/iblog/posts/annex/images/application/docker%E6%9E%B6%E6%9E%84.png"></p>
-<p>例如：输入 <code>docker run mysql:5.6</code>命令,docker程序会从docker_host去找对应的镜像,
-如果mysql不存在则会去从register下载,下载完成后docker会自动给该镜像分配一个contains,mysql就会运行起来</p>
-<h2 id="docker基本操作">docker基本操作</h2>
-<p>以安装运行<code>nginx</code>为例</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// docker run 包括下载镜像(pull),创建容器(create),运行容器(start) 可用dock -h查看帮助
+<p><code>Docker</code>架构分为三部分，客户端、宿主机、注册中心。</p>
+<ol>
+<li><code>Docker</code>客户端是用户与<code>Docker</code>交互的接口。用户通过客户端输入命令（如 <code>docker run</code>），这些命令会发送到<code>Docker</code>守护进程来执行。</li>
+<li>宿主机运行<code>Docker</code>守护进程，管理容器的生命周期。宿主机负责从注册中心拉取镜像、创建和管理容器，以及处理与容器相关的所有任务。</li>
+<li><code>Docker</code>注册中心用于存储和分发<code>Docker</code>镜像。常见的公共注册中心是<code>Docker Hub</code>，但用户也可以设置私有的注册中心。注册中心存储镜像，供宿主机下载。</li>
+</ol>
+<p>例如，当输入<code>docker run mysql:5.6</code>命令，告诉<code>Docker</code>要运行一个MySQL 5.6版本的容器。
+<code>Docker</code>客户端将用户的命令发送给宿主机上的<code>Docker</code>守护进程。<code>Docker</code>守护进程首先会在本地检查是否存在<code>mysql:5.6</code>镜像。
+如果本地没有找到<code>mysql:5.6</code>镜像，守护进程会向注册中心请求下载这个镜像。如果本地已经有这个镜像，则跳过下载步骤。
+如果需要从注册中心下载镜像，守护进程会连接到<code>Docker</code>注册中心，并拉取<code>mysql:5.6</code>镜像。
+下载完成后，<code>Docker</code>守护进程会根据<code>mysql:5.6</code>镜像创建一个新的容器。最后<code>Docker</code>守护进程为容器分配资源，并启动容器。MySQL服务会在这个容器内运行起来。</p>
+<h2 id="常用命令">常用命令</h2>
+<ul>
+<li>查看当前运行的镜像。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker ps
+</span></span></code></pre></div><ul>
+<li>查看所有镜像。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker ps -a
+</span></span></code></pre></div><ul>
+<li>停止容器。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker stop 容器名称
+</span></span></code></pre></div><ul>
+<li>删除镜像。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker rmi 镜像名称
+</span></span></code></pre></div><ul>
+<li>下载镜像，若不指定版本为最新版本。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker pull 镜像:版本
+</span></span></code></pre></div><ul>
+<li>查看当前本地仓库的镜像。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker images
+</span></span></code></pre></div><ul>
+<li>查看远程仓库镜像。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker search 镜像名
+</span></span></code></pre></div><p>以安装运行<code>nginx</code>为例。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">// docker run 包括下载镜像<span class="o">(</span>pull<span class="o">)</span>,创建容器<span class="o">(</span>create<span class="o">)</span>,运行容器<span class="o">(</span>start<span class="o">)</span> 可用dock -h查看帮助
 </span></span><span class="line"><span class="cl">// --rm 表明这是一个临时的容器,关闭的话会自动删除
 </span></span><span class="line"><span class="cl">// --name 容器名称
 </span></span><span class="line"><span class="cl">// -p 外部服务器端口映射docker容器端口
@@ -383,40 +352,8 @@ Docker 将应用程序与该程序的依赖，打包在一个文件里面。运�
 </span></span><span class="line"><span class="cl">docker logs myNginx
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">// 进入容器
-</span></span><span class="line"><span class="cl">docker exec -it myNginx bash
-</span></span></code></pre></div><h3 id="docker常用命令">docker常用命令</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// 查看当前运行的镜像
-</span></span><span class="line"><span class="cl">docker ps
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">//查看所有镜像
-</span></span><span class="line"><span class="cl">docker ps -a
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">//停止容器
-</span></span><span class="line"><span class="cl">docker stop 容器名称
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">// 删除镜像
-</span></span><span class="line"><span class="cl">docker rmi 镜像名称
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">//下载镜像 若不指定版本为最新版本
-</span></span><span class="line"><span class="cl">docker pull 镜像:版本
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">//查看当前本地仓库的镜像
-</span></span><span class="line"><span class="cl">docker images
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">//查看远程仓库镜像
-</span></span><span class="line"><span class="cl">docker search 镜像名
-</span></span></code></pre></div><h2 id="相关链接">相关链接</h2>
-<ul>
-<li>入门参考:https://baijiahao.baidu.com/s?id=1626633654476933953&amp;wfr=spider&amp;for=pc</li>
-<li>安装docker菜鸟教程: <a href="https://www.runoob.com/docker/centos-docker.install.html">https://www.runoob.com/docker/centos-docker.install.html</a></li>
-<li>docker官网: <a href="https://www.docker.com">https://www.docker.com</a></li>
-<li>docker文档: <a href="https://docs.docker.com/install/linux/docker-ce/centos">https://docs.docker.com/install/linux/docker-ce/centos</a></li>
-<li>阮一峰博客: <a href="http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html">http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html</a></li>
-<li>参考博客: <a href="https://cyc2018.github.io/CS-Notes/#/notes/Docker">https://cyc2018.github.io/CS-Notes/#/notes/Docker</a></li>
-<li>docker中文: <a href="https://www.docker.org.cn/page/resources.html">https://www.docker.org.cn/page/resources.html</a></li>
-<li>docker教程: <a href="https://www.w3cschool.cn/docker/centos-docker-install.html">https://www.w3cschool.cn/docker/centos-docker-install.html</a></li>
-</ul>
-</div>
+</span></span><span class="line"><span class="cl">docker <span class="nb">exec</span> -it myNginx bash
+</span></span></code></pre></div></div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">
                             
@@ -427,7 +364,7 @@ Docker 将应用程序与该程序的依赖，打包在一个文件里面。运�
                                         
                                         <a href="https://whiteppure.github.io/iblog/tags/%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/">使用介绍</a>
                                     
-                                        <a href="https://whiteppure.github.io/iblog/tags/docker/">docker</a>
+                                        <a href="https://whiteppure.github.io/iblog/tags/docker/">Docker</a>
                                     
                                     
                                 </span>
