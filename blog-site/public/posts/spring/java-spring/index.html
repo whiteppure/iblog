@@ -12,7 +12,7 @@
 	
     
     
-    <meta name="description" content="概览 Spring是一个轻量级的Java开源框架，为了解决企业应用开发的复杂性而创建的。Spring的核心是控制反转（IOC）和面向切面（AOP）。 简单来说，Sp" />
+    <meta name="description" content="概览 Spring是一个轻量级的Java开源框架，是为了解决企业应用开发的复杂性而创建的。Spring的核心是控制反转（IOC）和面向切面（AOP）。 简单来说，S" />
     
 
     
@@ -1066,12 +1066,12 @@
                         
                     </div>
                     <div class="post_content markdown"><h2 id="概览">概览</h2>
-<p>Spring是一个轻量级的Java开源框架，为了解决企业应用开发的复杂性而创建的。Spring的核心是控制反转（IOC）和面向切面（AOP）。</p>
-<p>简单来说，Spring是一个分层的JavaSE/EE 一站式轻量级开源框架，在每一层都提供支持。</p>
+<p>Spring是一个轻量级的Java开源框架，是为了解决企业应用开发的复杂性而创建的。Spring的核心是控制反转（IOC）和面向切面（AOP）。
+简单来说，Spring是一个分层的JavaSE/EE 一站式轻量级开源框架，在每一层都提供支持。</p>
 <ul>
-<li>表示层：spring mvc</li>
-<li>业务层：spring</li>
-<li>持久层：jdbctemplate、spring data</li>
+<li>表示层：<code>SpringMVC</code>；</li>
+<li>业务层：<code>Spring</code>；</li>
+<li>持久层：<code>JDBCTemplate</code>、<code>SpringData</code>；</li>
 </ul>
 <p><img alt="Spring详解-001" src="/iblog/posts/annex/images/spring/Spring%E8%AF%A6%E8%A7%A3-001.png"></p>
 <h2 id="对spring的理解">对Spring的理解</h2>
@@ -1080,95 +1080,182 @@
 <li>IOC叫控制反转，在没用IOC之前都要手动new创建对象，使用IOC之后由容器进行对象的创建，并且由容器来管理对象，减去了开发上的成本，提高了工作效率。</li>
 <li>AOP叫面向切面编程，在实际项目开发中需要嵌入一些与业务不想关的代码的时候就可以使用AOP。比如，权限日志的增加。</li>
 </ul>
-<p>Spring虽然把它当成框架来使用，但其本质是一个容器，即IOC容器，里面最核心是如何<a href="/iblog/posts/spring/java-spring/#Bean的创建流程">创建对象和管理对象</a>,里面包含了Bean的生命周期和Spring的一些扩展点，包含对AOP的应用。
+<p>Spring虽然把它当成框架来使用，但其本质是一个容器，即IOC容器。里面最核心是如何创建对象和管理对象，包含了Bean的生命周期和Spring的一些扩展点，也包含对AOP的应用。
 除此之外，Spring真正的强大之处在于其生态，它包含了Spring Framework、Spring Boot、Spring Cloud等一些列框架，极大提高了开发效率。</p>
 <h2 id="spring启动流程">Spring启动流程</h2>
 <p><img alt="Spring详解-004" src="/iblog/posts/annex/images/spring/Spring%E8%AF%A6%E8%A7%A3-004.png"></p>
-<p>核心方法<code>AbstractApplicationContext#refresh()</code></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public void refresh() throws BeansException, IllegalStateException {
-</span></span><span class="line"><span class="cl">  synchronized (this.startupShutdownMonitor) {
-</span></span><span class="line"><span class="cl">      // Prepare this context for refreshing.
-</span></span><span class="line"><span class="cl">      prepareRefresh();
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">      // Tell the subclass to refresh the internal bean factory.
-</span></span><span class="line"><span class="cl">      ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">      // Prepare the bean factory for use in this context.
-</span></span><span class="line"><span class="cl">      prepareBeanFactory(beanFactory);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">      try {
-</span></span><span class="line"><span class="cl">          // Allows post-processing of the bean factory in context subclasses.
-</span></span><span class="line"><span class="cl">          postProcessBeanFactory(beanFactory);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">          // Invoke factory processors registered as beans in the context.
-</span></span><span class="line"><span class="cl">          invokeBeanFactoryPostProcessors(beanFactory);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">          // Register bean processors that intercept bean creation.
-</span></span><span class="line"><span class="cl">          registerBeanPostProcessors(beanFactory);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">          // Initialize message source for this context.
-</span></span><span class="line"><span class="cl">          initMessageSource();
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">          // Initialize event multicaster for this context.
-</span></span><span class="line"><span class="cl">          initApplicationEventMulticaster();
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">          // Initialize other special beans in specific context subclasses.
-</span></span><span class="line"><span class="cl">          onRefresh();
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">          // Check for listener beans and register them.
-</span></span><span class="line"><span class="cl">          registerListeners();
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">          // Instantiate all remaining (non-lazy-init) singletons.
-</span></span><span class="line"><span class="cl">          finishBeanFactoryInitialization(beanFactory);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">          // Last step: publish corresponding event.
-</span></span><span class="line"><span class="cl">          finishRefresh();
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">      catch (BeansException ex) {
-</span></span><span class="line"><span class="cl">         // ... 
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">      finally {
-</span></span><span class="line"><span class="cl">         // ...
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">  }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><ol>
-<li>prepareRefresh 准备刷新容器，此方法做一些刷新容器的准备工作：
+<p>Spring启动流程的主要步骤及对应的代码如下：</p>
+<ol>
+<li>启动入口，从main方法调用<code>SpringApplication.run</code>。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyApplication</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">MyApplication</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>初始化，创建<code>SpringApplication</code>实例，并设置初始化器和监听器。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">ConfigurableApplicationContext</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">primarySource</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">...</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SpringApplication</span><span class="p">(</span><span class="n">primarySource</span><span class="p">).</span><span class="na">run</span><span class="p">(</span><span class="n">args</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="nf">SpringApplication</span><span class="p">(</span><span class="n">Object</span><span class="p">...</span><span class="w"> </span><span class="n">sources</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">initialize</span><span class="p">(</span><span class="n">sources</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">initialize</span><span class="p">(</span><span class="n">Object</span><span class="o">[]</span><span class="w"> </span><span class="n">sources</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">sources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LinkedHashSet</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">Arrays</span><span class="p">.</span><span class="na">asList</span><span class="p">(</span><span class="n">sources</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">initializers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getSpringFactoriesInstances</span><span class="p">(</span><span class="n">ApplicationContextInitializer</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">listeners</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getSpringFactoriesInstances</span><span class="p">(</span><span class="n">ApplicationListener</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>配置环境，准备Spring环境，如读取配置文件、系统属性等。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="n">ConfigurableEnvironment</span><span class="w"> </span><span class="nf">prepareEnvironment</span><span class="p">(</span><span class="n">SpringApplicationRunListeners</span><span class="w"> </span><span class="n">listeners</span><span class="p">,</span><span class="w"> </span><span class="n">ApplicationArguments</span><span class="w"> </span><span class="n">applicationArguments</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 创建并配置环境</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">ConfigurableEnvironment</span><span class="w"> </span><span class="n">environment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getOrCreateEnvironment</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">configureEnvironment</span><span class="p">(</span><span class="n">environment</span><span class="p">,</span><span class="w"> </span><span class="n">applicationArguments</span><span class="p">.</span><span class="na">getSourceArgs</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">listeners</span><span class="p">.</span><span class="na">environmentPrepared</span><span class="p">(</span><span class="n">environment</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">environment</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>创建上下文，根据应用类型创建合适的应用上下文。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">protected</span><span class="w"> </span><span class="n">ConfigurableApplicationContext</span><span class="w"> </span><span class="nf">createApplicationContext</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">contextClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">applicationContextClass</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">contextClass</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">contextClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Class</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">webApplicationType</span><span class="p">.</span><span class="na">getApplicationContextClassName</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ClassNotFoundException</span><span class="w"> </span><span class="n">ex</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalStateException</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="s">&#34;Unable to create a default ApplicationContext, &#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;please specify an ApplicationContextClass&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">ex</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">ConfigurableApplicationContext</span><span class="p">)</span><span class="w"> </span><span class="n">BeanUtils</span><span class="p">.</span><span class="na">instantiateClass</span><span class="p">(</span><span class="n">contextClass</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>刷新上下文，初始化所有单例Bean，启动Spring生命周期。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">refresh</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">BeansException</span><span class="p">,</span><span class="w"> </span><span class="n">IllegalStateException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">synchronized</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">startupShutdownMonitor</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">prepareRefresh</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ConfigurableListableBeanFactory</span><span class="w"> </span><span class="n">beanFactory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">obtainFreshBeanFactory</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">prepareBeanFactory</span><span class="p">(</span><span class="n">beanFactory</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">postProcessBeanFactory</span><span class="p">(</span><span class="n">beanFactory</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">invokeBeanFactoryPostProcessors</span><span class="p">(</span><span class="n">beanFactory</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">registerBeanPostProcessors</span><span class="p">(</span><span class="n">beanFactory</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">initMessageSource</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">initApplicationEventMulticaster</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">onRefresh</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">registerListeners</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">finishBeanFactoryInitialization</span><span class="p">(</span><span class="n">beanFactory</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">finishRefresh</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>通知监听器启动完成，执行<code>ApplicationRunner</code>和<code>CommandLineRunner</code>。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">callRunners</span><span class="p">(</span><span class="n">ApplicationContext</span><span class="w"> </span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">ApplicationArguments</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">runners</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">runners</span><span class="p">.</span><span class="na">addAll</span><span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="na">getBeansOfType</span><span class="p">(</span><span class="n">ApplicationRunner</span><span class="p">.</span><span class="na">class</span><span class="p">).</span><span class="na">values</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">runners</span><span class="p">.</span><span class="na">addAll</span><span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="na">getBeansOfType</span><span class="p">(</span><span class="n">CommandLineRunner</span><span class="p">.</span><span class="na">class</span><span class="p">).</span><span class="na">values</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">AnnotationAwareOrderComparator</span><span class="p">.</span><span class="na">sort</span><span class="p">(</span><span class="n">runners</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">runner</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LinkedHashSet</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">runners</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">runner</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">ApplicationRunner</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">callRunner</span><span class="p">((</span><span class="n">ApplicationRunner</span><span class="p">)</span><span class="w"> </span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">runner</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">CommandLineRunner</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">callRunner</span><span class="p">((</span><span class="n">CommandLineRunner</span><span class="p">)</span><span class="w"> </span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+</ol>
+<p>其中核心方法为<code>refresh()</code>刷新上下文方法。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">refresh</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">BeansException</span><span class="p">,</span><span class="w"> </span><span class="n">IllegalStateException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">synchronized</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">startupShutdownMonitor</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 1. 准备刷新上下文</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">prepareRefresh</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 2. 获取BeanFactory并进行初始化</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ConfigurableListableBeanFactory</span><span class="w"> </span><span class="n">beanFactory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">obtainFreshBeanFactory</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 3. 为BeanFactory配置上下文相关信息</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">prepareBeanFactory</span><span class="p">(</span><span class="n">beanFactory</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 4. 子类覆盖方法，做进一步的BeanFactory初始化</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">postProcessBeanFactory</span><span class="p">(</span><span class="n">beanFactory</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 5. 调用BeanFactoryPostProcessors</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">invokeBeanFactoryPostProcessors</span><span class="p">(</span><span class="n">beanFactory</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 6. 注册BeanPostProcessors</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">registerBeanPostProcessors</span><span class="p">(</span><span class="n">beanFactory</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 7. 初始化消息源（用于国际化）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">initMessageSource</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 8. 初始化事件广播器</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">initApplicationEventMulticaster</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 9. 子类覆盖方法，在上下文刷新的时候进行进一步的处理</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">onRefresh</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 10. 注册监听器以便监听事件</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">registerListeners</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 11. 初始化所有单例Bean</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">finishBeanFactoryInitialization</span><span class="p">(</span><span class="n">beanFactory</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 12. 完成刷新过程，通知生命周期处理器</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">finishRefresh</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">BeansException</span><span class="w"> </span><span class="n">ex</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 如果在刷新过程中出现异常，则销毁已创建的单例Beans以避免资源泄漏</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">destroyBeans</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">cancelRefresh</span><span class="p">(</span><span class="n">ex</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="n">ex</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 重置标志位</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">resetCommonCaches</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><ol>
+<li><code>prepareRefresh</code>准备刷新容器，此方法做一些刷新容器的准备工作：
 <ul>
-<li>设置开启时间和对应标志位</li>
-<li>获取环境对象</li>
-<li>设置监听器和一些时间的集合对象</li>
+<li>设置开启时间和对应标志位。</li>
+<li>获取环境对象。</li>
+<li>设置监听器和一些时间的集合对象。</li>
 </ul>
 </li>
-<li>obtainFreshBeanFactory 创建容器对象：DefaultListableBeanFactory；加载xml配置文件属性值到工厂中，最重要的是BeanDefinition</li>
-<li>prepareBeanFactory 完成bean工厂的某些初始化操作
+<li><code>obtainFreshBeanFactory</code>创建容器对象：<code>DefaultListableBeanFactory</code>；加载xml配置文件属性值到工厂中，最重要的是<code>BeanDefinition</code>。</li>
+<li><code>prepareBeanFactory</code>完成Bean工厂的某些初始化操作：
 <ul>
-<li>设置BeanDefinition的类加载器</li>
-<li>设置spring容器默认的类型转换器</li>
-<li>设置spring解析el表达式的解析器</li>
-<li>添加一个Bean的后置处理器ApplicationContextAwareProcessor</li>
-<li>将bean工厂的一些类，比如ApplicationContext直接注册到单例池中</li>
-<li>去除一些在byType或者byName的时候需要过滤掉的一些bean（spring在依赖注入的时候会先在这些默认注册的bean中进行byType找，如果找到了，就加入到列表中，简单来说就是比如你在bean中依赖注入了ApplicationContext context,那么spring会把默认注册的这些bean中找到然后进行注册）</li>
-<li>将系统的环境信息、spring容器的启动环境信息、操作系统的环境信息直接注册成一个单例的bean</li>
+<li>设置<code>BeanDefinition</code>的类加载器。</li>
+<li>设置Spring容器默认的类型转换器。</li>
+<li>设置Spring解析EL表达式的解析器。</li>
+<li>添加一个Bean的后置处理器<code>ApplicationContextAwareProcessor</code>。</li>
+<li>将Bean工厂的一些类，比如<code>ApplicationContext</code>直接注册到单例池中。</li>
+<li>去除一些在<code>byType</code>或者<code>byName</code>的时候需要过滤掉的一些Bean（Spring在依赖注入的时候会先在这些默认注册的Bean中进行byType找，如果找到了，就加入到列表中，简单来说就是比如你在Bean中依赖注入了<code>ApplicationContext</code>，那么Spring会把默认注册的这些Bean中找到然后进行注册）。</li>
+<li>将系统的环境信息、Spring容器的启动环境信息、操作系统的环境信息直接注册成一个单例的Bean。</li>
 </ul>
 </li>
-<li>postProcessBeanFactory 这里是一个空壳方法，spring目前还没有对他进行实现;这个方法是留给子类进行实现的，后续可以添加一些用户自定义的或者默认的一些特殊的后置处理器工程到beanFactory中去</li>
-<li>invokeBeanFactoryPostProcessors 调用后置处理器；将系统中所有符合条件的普通类都扫描成了一个BeanDefinition 并且放入到了beanDefinitionMap中，包括业务的bean，ban的后置处理器、bean工厂的后置处理器等等
+<li><code>postProcessBeanFactory</code> 这里是一个空壳方法，Spring目前还没有对他进行实现;这个方法是留给子类进行实现的，后续可以添加一些用户自定义的或者默认的一些特殊的后置处理器工程到<code>beanFactory</code>中去。</li>
+<li><code>invokeBeanFactoryPostProcessors</code> 调用后置处理器；将系统中所有符合条件的普通类都扫描成了一个<code>BeanDefinition</code>并且放入到了<code>beanDefinitionMap</code>中，包括业务的Bean，Bean的后置处理器、Bean工厂的后置处理器等。
 <ul>
-<li>将标记为容器单例类扫描成BeanDefinition放入BeanDefinition Map</li>
-<li>处理@Import注解</li>
-<li>如果我们的配置类是@Configuration的，那么会生成这个配置类的CGLIB代理类，如果没有加@Configuration，则就是一个普通Bean</li>
+<li>将标记为容器单例类扫描成<code>BeanDefinition</code>放入<code>BeanDefinitionMap</code>。</li>
+<li>处理<code>@Import</code>注解。</li>
+<li>如果我们的配置类是<code>@Configuration</code>的，那么会生成这个配置类的CGLIB代理类，如果没有加<code>@Configuration</code>，则就是一个普通Bean。</li>
 </ul>
 </li>
-<li>registerBeanPostProcessors 从beanDefinitionMap中取出bean的后置处理器然后放入到后置处理器的缓存列表中</li>
-<li>initMessageSource 初始化国际化资源信息</li>
-<li>initApplicationEventMulticaster 事件注册器初始化</li>
-<li>onRefresh 空壳方法，留给子类实现</li>
-<li>registerListeners 将容器中和BeanDefinitionMap中的监听器添加到事件监听器中</li>
-<li>finishBeanFactoryInitialization 创建单例池，将容器中非懒加载的Bean，单例bean创建对象放入单例池中，包括容器的依赖注入</li>
-<li>finishRefresh 容器启动过后，发布事件</li>
+<li><code>registerBeanPostProcessors</code>从<code>beanDefinitionMap</code>中取出Bean的后置处理器然后放入到后置处理器的缓存列表中。</li>
+<li><code>initMessageSource</code>初始化国际化资源信息。</li>
+<li><code>initApplicationEventMulticaster</code>事件注册器初始化。</li>
+<li><code>onRefresh</code>空壳方法，留给子类实现。</li>
+<li><code>registerListeners</code>将容器中和<code>BeanDefinitionMap</code>中的监听器添加到事件监听器中。</li>
+<li><code>finishBeanFactoryInitialization</code>创建单例池，将容器中非懒加载的Bean，单例Bean创建对象放入单例池中，包括容器的依赖注入。</li>
+<li><code>finishRefresh</code>容器启动过后，发布事件。</li>
 </ol>
 <h2 id="spring循环依赖与三级缓存">Spring循环依赖与三级缓存</h2>
 <p><img alt="Spring详解-003" src="/iblog/posts/annex/images/spring/Spring%E8%AF%A6%E8%A7%A3-003.png"></p>

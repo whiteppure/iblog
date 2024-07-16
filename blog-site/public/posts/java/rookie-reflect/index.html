@@ -192,6 +192,30 @@
             
             
             <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%8f%8d%e5%b0%84%e5%8e%9f%e7%90%86">
+                    反射原理
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
                 <a class="nav-link text-left" href="#%e5%8f%8d%e5%b0%84%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af">
                     反射应用场景
                 </a>
@@ -424,13 +448,13 @@
                     <div class="post_content markdown"><h2 id="概述">概述</h2>
 <p>在Java程序运行状态中，对于任意一个实体类，都能够知道这个类的所有属性和方法，对于任意一个对象，都能够调用它的任意方法和属性。这种动态获取信息以及动态调用对象方法的功能，称为Java语言的反射机制。</p>
 <p>反射是Java语言的一个特性，它允许程序在运行时来进行自我检查并且对内部的成员进行操作。通过反射，我们可以在运行时获得程序或程序集中每一个类型的成员和成员的信息。
-程序中一般的对象的类型都是在编译期就确定下来的，而Java反射机制可以动态地创建对象并调用其属性，这样的对象的类型在编译期是未知的。</p>
-<p>反射的核心是JVM在运行时动态加载类或调用方法、访问属性，它不需要事先知道运行对象是谁。</p>
+程序中一般的对象的类型都是在编译期就确定下来的，而Java反射机制可以动态地创建对象并调用其属性，这样的对象的类型在编译期是未知的。
+反射的核心是JVM在运行时动态加载类或调用方法、访问属性，它不需要事先知道运行对象是谁。本质是JVM得到<code>class</code>对象之后，再通过<code>class</code>对象进行反编译，从而获取对象的各种信息。</p>
 <h2 id="反射入口">反射入口</h2>
 <p>在操作反射前我们要先了解一些Class类。Java的<code>Class</code>类是java反射机制的基础，通过<code>Class</code>类我们可以获得关于一个类的相关信息。
 虚拟机为每种类型管理一个独一无二的<code>Class</code>对象，也就是说每个类都有一个<code>Class</code>对象。运行程序时，Java虚拟机首先检查是否所要加载的类对应的<code>Class</code>对象是否已经加载。
 如果没有加载，JVM就会根据类名查找<code>.class</code>文件，并将其<code>Class</code>对象载入。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w">  </span><span class="nf">Class</span><span class="p">(</span><span class="n">ClassLoader</span><span class="w"> </span><span class="n">loader</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> 
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w">  </span><span class="nf">Class</span><span class="p">(</span><span class="n">ClassLoader</span><span class="w"> </span><span class="n">loader</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">classLoader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">loader</span><span class="p">;</span><span class="w"> 
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p><code>Class</code>类的构造器是私有的，只有JVM可以创建<code>Class</code>的对象。因此不可以像普通类一样<code>new</code>一个<code>Class</code>对象，但是却可以通过已有的类得到一个<code>Class</code>对象。
@@ -589,7 +613,18 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">myMethod</span><span class="p">.</span><span class="na">invoke</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="反射应用场景">反射应用场景</h2>
+</span></span></span></code></pre></div><h2 id="反射原理">反射原理</h2>
+<p>反射的核心是<code>java.lang.reflect</code>包，该包中包含了用于反射操作的类和接口，如<code>Class</code>、<code>Field</code>、<code>Method</code>、<code>Constructor</code>等。反射主要依赖于<code>Class</code>对象来进行操作。
+Java反射的本质是JVM得到<code>class</code>对象之后，再通过<code>class</code>对象进行&quot;反编译&quot;，从而获取对象的各种信息。描述反射为“反编译”可能不太准确，因为反射并不是将字节码重新转换为源代码。实际上，反射是在运行时通过Class对象来查询和操作已加载的类的结构信息。</p>
+<p>反射基本原理大致可分为以下几个步骤：</p>
+<ol>
+<li>JVM的类加载机制负责将类的字节码从不同的源，如<code>.class</code>文件、<code>JAR</code>包等，加载到内存中，并将其转化为可以在JVM上运行的Class对象。反射依赖于JVM的类加载机制来获取类的结构信息并进行操作。</li>
+<li>当使用反射时，首先需要获取类的Class对象。每个类在 JVM 中加载后，都会有一个对应的Class对象。这个对象包含了类的所有信息，包括类的结构（字段、方法、构造函数）、注解、泛型信息等。
+反射的第一步是获取这个Class对象，可以通过类名、对象实例的<code>getClass()</code>方法或者类的字面常量<code>.class</code>来获取。</li>
+<li>通过Class对象，可以使用反射API来访问类的字段、方法和构造函数。实际上，反射是在运行时通过Class对象来查询和操作已加载的类的结构信息。</li>
+<li>在具体实现上，Java反射依赖于<code>java.lang.reflect</code>包中的一系列类和接口。这些类和接口提供了访问和操作类结构的方法，例如<code>Field</code>、<code>Method</code>、<code>Constructor</code>等。</li>
+</ol>
+<h2 id="反射应用场景">反射应用场景</h2>
 <p>反射在Java编程中有广泛的应用场景。它主要用于动态加载类、运行时获取和操作类的信息，以及实现灵活的编程逻辑。
 通过反射，可以实现诸如依赖注入框架，如<code>Spring</code>、ORM框架，如<code>Hibernate</code>、动态代理、自定义注解处理器、插件化系统等功能。
 这些特性使得Java程序能够在运行时动态适应不同的需求和环境，提高了代码的灵活性和可维护性。</p>

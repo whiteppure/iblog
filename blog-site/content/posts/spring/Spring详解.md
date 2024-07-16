@@ -7,12 +7,11 @@ slug: "java-spring"
 ---
 
 ## 概览
-Spring是一个轻量级的Java开源框架，为了解决企业应用开发的复杂性而创建的。Spring的核心是控制反转（IOC）和面向切面（AOP）。
-
+Spring是一个轻量级的Java开源框架，是为了解决企业应用开发的复杂性而创建的。Spring的核心是控制反转（IOC）和面向切面（AOP）。
 简单来说，Spring是一个分层的JavaSE/EE 一站式轻量级开源框架，在每一层都提供支持。
-- 表示层：spring mvc
-- 业务层：spring
-- 持久层：jdbctemplate、spring data
+- 表示层：`SpringMVC`；
+- 业务层：`Spring`；
+- 持久层：`JDBCTemplate`、`SpringData`；
 
 ![Spring详解-001](/iblog/posts/annex/images/spring/Spring详解-001.png)
 
@@ -21,92 +20,184 @@ Spring是一个轻量级的框架，简化我们的开发，里面重点包含�
 - IOC叫控制反转，在没用IOC之前都要手动new创建对象，使用IOC之后由容器进行对象的创建，并且由容器来管理对象，减去了开发上的成本，提高了工作效率。
 - AOP叫面向切面编程，在实际项目开发中需要嵌入一些与业务不想关的代码的时候就可以使用AOP。比如，权限日志的增加。
 
-Spring虽然把它当成框架来使用，但其本质是一个容器，即IOC容器，里面最核心是如何[创建对象和管理对象](#Bean的创建流程),里面包含了Bean的生命周期和Spring的一些扩展点，包含对AOP的应用。
+Spring虽然把它当成框架来使用，但其本质是一个容器，即IOC容器。里面最核心是如何创建对象和管理对象，包含了Bean的生命周期和Spring的一些扩展点，也包含对AOP的应用。
 除此之外，Spring真正的强大之处在于其生态，它包含了Spring Framework、Spring Boot、Spring Cloud等一些列框架，极大提高了开发效率。
 
 ## Spring启动流程
 ![Spring详解-004](/iblog/posts/annex/images/spring/Spring详解-004.png)
 
+Spring启动流程的主要步骤及对应的代码如下：
+1. 启动入口，从main方法调用`SpringApplication.run`。
+    ```java
+    public class MyApplication {
+        public static void main(String[] args) {
+            SpringApplication.run(MyApplication.class, args);
+        }
+    }
+    ```
+2. 初始化，创建`SpringApplication`实例，并设置初始化器和监听器。
+    ```java
+    public static ConfigurableApplicationContext run(Class<?> primarySource, String... args) {
+        return new SpringApplication(primarySource).run(args);
+    }
+    
+    public SpringApplication(Object... sources) {
+        initialize(sources);
+    }
+    
+    private void initialize(Object[] sources) {
+        this.sources = new LinkedHashSet<>(Arrays.asList(sources));
+        this.initializers = getSpringFactoriesInstances(ApplicationContextInitializer.class);
+        this.listeners = getSpringFactoriesInstances(ApplicationListener.class);
+    }
+    ```
+3. 配置环境，准备Spring环境，如读取配置文件、系统属性等。
+    ```java
+    public ConfigurableEnvironment prepareEnvironment(SpringApplicationRunListeners listeners, ApplicationArguments applicationArguments) {
+        // 创建并配置环境
+        ConfigurableEnvironment environment = getOrCreateEnvironment();
+        configureEnvironment(environment, applicationArguments.getSourceArgs());
+        listeners.environmentPrepared(environment);
+        return environment;
+    }
+    ```
+4. 创建上下文，根据应用类型创建合适的应用上下文。
+    ```java
+    protected ConfigurableApplicationContext createApplicationContext() {
+        Class<?> contextClass = this.applicationContextClass;
+        if (contextClass == null) {
+            try {
+                contextClass = Class.forName(this.webApplicationType.getApplicationContextClassName());
+            }
+            catch (ClassNotFoundException ex) {
+                throw new IllegalStateException(
+                        "Unable to create a default ApplicationContext, "
+                                + "please specify an ApplicationContextClass",
+                        ex);
+            }
+        }
+        return (ConfigurableApplicationContext) BeanUtils.instantiateClass(contextClass);
+    }
+    ```
+4. 刷新上下文，初始化所有单例Bean，启动Spring生命周期。
+    ```java
+    public void refresh() throws BeansException, IllegalStateException {
+        synchronized (this.startupShutdownMonitor) {
+            prepareRefresh();
+            ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
+            prepareBeanFactory(beanFactory);
+            postProcessBeanFactory(beanFactory);
+            invokeBeanFactoryPostProcessors(beanFactory);
+            registerBeanPostProcessors(beanFactory);
+            initMessageSource();
+            initApplicationEventMulticaster();
+            onRefresh();
+            registerListeners();
+            finishBeanFactoryInitialization(beanFactory);
+            finishRefresh();
+        }
+    }
+    ```
+5. 通知监听器启动完成，执行`ApplicationRunner`和`CommandLineRunner`。
+    ```java
+    private void callRunners(ApplicationContext context, ApplicationArguments args) {
+        List<Object> runners = new ArrayList<>();
+        runners.addAll(context.getBeansOfType(ApplicationRunner.class).values());
+        runners.addAll(context.getBeansOfType(CommandLineRunner.class).values());
+        AnnotationAwareOrderComparator.sort(runners);
+        for (Object runner : new LinkedHashSet<>(runners)) {
+            if (runner instanceof ApplicationRunner) {
+                callRunner((ApplicationRunner) runner, args);
+            }
+            if (runner instanceof CommandLineRunner) {
+                callRunner((CommandLineRunner) runner, args);
+            }
+        }
+    }
+    ```
 
-核心方法`AbstractApplicationContext#refresh()`
-```
+其中核心方法为`refresh()`刷新上下文方法。
+```java
 public void refresh() throws BeansException, IllegalStateException {
-  synchronized (this.startupShutdownMonitor) {
-      // Prepare this context for refreshing.
-      prepareRefresh();
+    synchronized (this.startupShutdownMonitor) {
+        // 1. 准备刷新上下文
+        prepareRefresh();
 
-      // Tell the subclass to refresh the internal bean factory.
-      ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
+        // 2. 获取BeanFactory并进行初始化
+        ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
-      // Prepare the bean factory for use in this context.
-      prepareBeanFactory(beanFactory);
+        // 3. 为BeanFactory配置上下文相关信息
+        prepareBeanFactory(beanFactory);
 
-      try {
-          // Allows post-processing of the bean factory in context subclasses.
-          postProcessBeanFactory(beanFactory);
+        try {
+            // 4. 子类覆盖方法，做进一步的BeanFactory初始化
+            postProcessBeanFactory(beanFactory);
 
-          // Invoke factory processors registered as beans in the context.
-          invokeBeanFactoryPostProcessors(beanFactory);
+            // 5. 调用BeanFactoryPostProcessors
+            invokeBeanFactoryPostProcessors(beanFactory);
 
-          // Register bean processors that intercept bean creation.
-          registerBeanPostProcessors(beanFactory);
+            // 6. 注册BeanPostProcessors
+            registerBeanPostProcessors(beanFactory);
 
-          // Initialize message source for this context.
-          initMessageSource();
+            // 7. 初始化消息源（用于国际化）
+            initMessageSource();
 
-          // Initialize event multicaster for this context.
-          initApplicationEventMulticaster();
+            // 8. 初始化事件广播器
+            initApplicationEventMulticaster();
 
-          // Initialize other special beans in specific context subclasses.
-          onRefresh();
+            // 9. 子类覆盖方法，在上下文刷新的时候进行进一步的处理
+            onRefresh();
 
-          // Check for listener beans and register them.
-          registerListeners();
+            // 10. 注册监听器以便监听事件
+            registerListeners();
 
-          // Instantiate all remaining (non-lazy-init) singletons.
-          finishBeanFactoryInitialization(beanFactory);
+            // 11. 初始化所有单例Bean
+            finishBeanFactoryInitialization(beanFactory);
 
-          // Last step: publish corresponding event.
-          finishRefresh();
-      }
-
-      catch (BeansException ex) {
-         // ... 
-      }
-
-      finally {
-         // ...
-      }
-  }
+            // 12. 完成刷新过程，通知生命周期处理器
+            finishRefresh();
+        }
+        catch (BeansException ex) {
+            // 如果在刷新过程中出现异常，则销毁已创建的单例Beans以避免资源泄漏
+            destroyBeans();
+            cancelRefresh(ex);
+            throw ex;
+        }
+        finally {
+            // 重置标志位
+            resetCommonCaches();
+        }
+    }
 }
 ```
-1. prepareRefresh 准备刷新容器，此方法做一些刷新容器的准备工作：
-   - 设置开启时间和对应标志位
-   - 获取环境对象
-   - 设置监听器和一些时间的集合对象
-2. obtainFreshBeanFactory 创建容器对象：DefaultListableBeanFactory；加载xml配置文件属性值到工厂中，最重要的是BeanDefinition
-3. prepareBeanFactory 完成bean工厂的某些初始化操作
-   - 设置BeanDefinition的类加载器
-   - 设置spring容器默认的类型转换器
-   - 设置spring解析el表达式的解析器
-   - 添加一个Bean的后置处理器ApplicationContextAwareProcessor
-   - 将bean工厂的一些类，比如ApplicationContext直接注册到单例池中
-   - 去除一些在byType或者byName的时候需要过滤掉的一些bean（spring在依赖注入的时候会先在这些默认注册的bean中进行byType找，如果找到了，就加入到列表中，简单来说就是比如你在bean中依赖注入了ApplicationContext context,那么spring会把默认注册的这些bean中找到然后进行注册）
-   - 将系统的环境信息、spring容器的启动环境信息、操作系统的环境信息直接注册成一个单例的bean
-4. postProcessBeanFactory 这里是一个空壳方法，spring目前还没有对他进行实现;这个方法是留给子类进行实现的，后续可以添加一些用户自定义的或者默认的一些特殊的后置处理器工程到beanFactory中去
-5. invokeBeanFactoryPostProcessors 调用后置处理器；将系统中所有符合条件的普通类都扫描成了一个BeanDefinition 并且放入到了beanDefinitionMap中，包括业务的bean，ban的后置处理器、bean工厂的后置处理器等等
-   - 将标记为容器单例类扫描成BeanDefinition放入BeanDefinition Map
-   - 处理@Import注解
-   - 如果我们的配置类是@Configuration的，那么会生成这个配置类的CGLIB代理类，如果没有加@Configuration，则就是一个普通Bean
-6. registerBeanPostProcessors 从beanDefinitionMap中取出bean的后置处理器然后放入到后置处理器的缓存列表中
-7. initMessageSource 初始化国际化资源信息
-8. initApplicationEventMulticaster 事件注册器初始化
-9. onRefresh 空壳方法，留给子类实现
-10. registerListeners 将容器中和BeanDefinitionMap中的监听器添加到事件监听器中
-11. finishBeanFactoryInitialization 创建单例池，将容器中非懒加载的Bean，单例bean创建对象放入单例池中，包括容器的依赖注入
-12. finishRefresh 容器启动过后，发布事件
+1. `prepareRefresh`准备刷新容器，此方法做一些刷新容器的准备工作：
+   - 设置开启时间和对应标志位。
+   - 获取环境对象。
+   - 设置监听器和一些时间的集合对象。
+2. `obtainFreshBeanFactory`创建容器对象：`DefaultListableBeanFactory`；加载xml配置文件属性值到工厂中，最重要的是`BeanDefinition`。
+3. `prepareBeanFactory`完成Bean工厂的某些初始化操作：
+   - 设置`BeanDefinition`的类加载器。
+   - 设置Spring容器默认的类型转换器。
+   - 设置Spring解析EL表达式的解析器。
+   - 添加一个Bean的后置处理器`ApplicationContextAwareProcessor`。
+   - 将Bean工厂的一些类，比如`ApplicationContext`直接注册到单例池中。
+   - 去除一些在`byType`或者`byName`的时候需要过滤掉的一些Bean（Spring在依赖注入的时候会先在这些默认注册的Bean中进行byType找，如果找到了，就加入到列表中，简单来说就是比如你在Bean中依赖注入了`ApplicationContext`，那么Spring会把默认注册的这些Bean中找到然后进行注册）。
+   - 将系统的环境信息、Spring容器的启动环境信息、操作系统的环境信息直接注册成一个单例的Bean。
+4. `postProcessBeanFactory` 这里是一个空壳方法，Spring目前还没有对他进行实现;这个方法是留给子类进行实现的，后续可以添加一些用户自定义的或者默认的一些特殊的后置处理器工程到`beanFactory`中去。
+5. `invokeBeanFactoryPostProcessors` 调用后置处理器；将系统中所有符合条件的普通类都扫描成了一个`BeanDefinition`并且放入到了`beanDefinitionMap`中，包括业务的Bean，Bean的后置处理器、Bean工厂的后置处理器等。
+   - 将标记为容器单例类扫描成`BeanDefinition`放入`BeanDefinitionMap`。
+   - 处理`@Import`注解。
+   - 如果我们的配置类是`@Configuration`的，那么会生成这个配置类的CGLIB代理类，如果没有加`@Configuration`，则就是一个普通Bean。
+6. `registerBeanPostProcessors`从`beanDefinitionMap`中取出Bean的后置处理器然后放入到后置处理器的缓存列表中。
+7. `initMessageSource`初始化国际化资源信息。
+8. `initApplicationEventMulticaster`事件注册器初始化。
+9. `onRefresh`空壳方法，留给子类实现。
+10. `registerListeners`将容器中和`BeanDefinitionMap`中的监听器添加到事件监听器中。
+11. `finishBeanFactoryInitialization`创建单例池，将容器中非懒加载的Bean，单例Bean创建对象放入单例池中，包括容器的依赖注入。
+12. `finishRefresh`容器启动过后，发布事件。
 
 ## Spring循环依赖与三级缓存
+[//]: # (写到了这里)
 ![Spring详解-003](/iblog/posts/annex/images/spring/Spring详解-003.png)
 
 Spring循环依赖调用流程：
