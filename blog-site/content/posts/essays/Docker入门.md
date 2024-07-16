@@ -8,7 +8,7 @@ slug: "docker-start"
 
 ## 概述
 `Docker`属于`Linux`容器的一种封装，提供简单易用的容器使用接口。它是目前流行的`Linux`容器解决方案。`Docker`将应用程序与该程序的依赖，打包在一个文件里面。运行这个文件，就会生成一个虚拟容器。
-程序在这个虚拟容器里运行，就好像在真实的物理机上运行一样。有了 `Docker`，就不用担心环境问题。总体来说`Docker` 的接口相当简单，用户可以方便地创建和使用容器，把自己的应用放入容器。
+程序在这个虚拟容器里运行，就好像在真实的物理机上运行一样。有了 `Docker`，就不用担心环境问题。总体来说`Docker`的接口相当简单，用户可以方便地创建和使用容器，把自己的应用放入容器。
 容器还可以进行版本管理、复制、分享、修改，就像管理普通的代码一样。
 
 `Docker`可以提供一次性的环境。比如，本地测试他人的软件、持续集成的时候提供单元测试和构建的环境。
@@ -49,6 +49,38 @@ slug: "docker-start"
     ```shell
     sudo usermod -aG docker $USER
     ```
+
+## 配置镜像
+由于网速原因，可以配置一下国内的镜像加速器：
+- 中科大镜像: [https://docker.mirrors.ustc.edu.cn](https://docker.mirrors.ustc.edu.cn)
+- 网易: [https://hub-mirror.c.163.com](https://hub-mirror.c.163.com)
+- 阿里云: [https://<你的ID>.mirror.aliyuncs.com](https://<你的ID>.mirror.aliyuncs.com)
+- 七牛云加速器: [https://reg-mirror.qiniu.com](https://reg-mirror.qiniu.com)
+
+以阿里云获取镜像地址为例， [https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors](https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors)登陆后，左侧菜单选中镜像加速器就可以看到你的专属地址了。
+![获取阿里云docker地址](/iblog/posts/annex/images/application/获取阿里云docker地址.jpg)
+配置`Docker`镜像地址，添加以下内容：
+![docker配置](/iblog/posts/annex/images/application/docker配置.jpg)
+
+也可以创建或编辑`/etc/docker/daemon.json`文件，并添加以下内容：
+```text
+{
+  "debug": true,
+  "experimental": false,
+  "registry-mirrors": [
+    "https://docker.mirrors.ustc.edu.cn"
+  ]
+}
+```
+配置文件修改后，需要重启`Docker`服务使其生效：
+```text
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+在终端执行`docker info`命令。
+![docker信息](/iblog/posts/annex/images/application/docker信息.jpg)
+
+出现上图所示，`Docker`镜像加速器配置成功。
 
 ## 工作原理
 ![docker架构](/iblog/posts/annex/images/application/docker架构.png)

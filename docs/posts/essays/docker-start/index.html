@@ -120,6 +120,30 @@
             
             
             <li class="nav-item">
+                <a class="nav-link text-left" href="#%e9%85%8d%e7%bd%ae%e9%95%9c%e5%83%8f">
+                    配置镜像
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
                 <a class="nav-link text-left" href="#%e5%b7%a5%e4%bd%9c%e5%8e%9f%e7%90%86">
                     工作原理
                 </a>
@@ -263,7 +287,7 @@
                     </div>
                     <div class="post_content markdown"><h2 id="概述">概述</h2>
 <p><code>Docker</code>属于<code>Linux</code>容器的一种封装，提供简单易用的容器使用接口。它是目前流行的<code>Linux</code>容器解决方案。<code>Docker</code>将应用程序与该程序的依赖，打包在一个文件里面。运行这个文件，就会生成一个虚拟容器。
-程序在这个虚拟容器里运行，就好像在真实的物理机上运行一样。有了 <code>Docker</code>，就不用担心环境问题。总体来说<code>Docker</code> 的接口相当简单，用户可以方便地创建和使用容器，把自己的应用放入容器。
+程序在这个虚拟容器里运行，就好像在真实的物理机上运行一样。有了 <code>Docker</code>，就不用担心环境问题。总体来说<code>Docker</code>的接口相当简单，用户可以方便地创建和使用容器，把自己的应用放入容器。
 容器还可以进行版本管理、复制、分享、修改，就像管理普通的代码一样。</p>
 <p><code>Docker</code>可以提供一次性的环境。比如，本地测试他人的软件、持续集成的时候提供单元测试和构建的环境。
 还可以提供弹性的云服务，因为<code>Docker</code>容器可以随开随关，很适合动态扩容和缩容。
@@ -299,6 +323,32 @@
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo usermod -aG docker <span class="nv">$USER</span>
 </span></span></code></pre></div></li>
 </ol>
+<h2 id="配置镜像">配置镜像</h2>
+<p>由于网速原因，可以配置一下国内的镜像加速器：</p>
+<ul>
+<li>中科大镜像: <a href="https://docker.mirrors.ustc.edu.cn">https://docker.mirrors.ustc.edu.cn</a></li>
+<li>网易: <a href="https://hub-mirror.c.163.com">https://hub-mirror.c.163.com</a></li>
+<li>阿里云: <a href="https://<%E4%BD%A0%E7%9A%84ID>.mirror.aliyuncs.com">https://&lt;你的ID&gt;.mirror.aliyuncs.com</a></li>
+<li>七牛云加速器: <a href="https://reg-mirror.qiniu.com">https://reg-mirror.qiniu.com</a></li>
+</ul>
+<p>以阿里云获取镜像地址为例， <a href="https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors">https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors</a>登陆后，左侧菜单选中镜像加速器就可以看到你的专属地址了。
+<img alt="获取阿里云docker地址" src="/iblog/posts/annex/images/application/%E8%8E%B7%E5%8F%96%E9%98%BF%E9%87%8C%E4%BA%91docker%E5%9C%B0%E5%9D%80.jpg">
+配置<code>Docker</code>镜像地址，添加以下内容：
+<img alt="docker配置" src="/iblog/posts/annex/images/application/docker%E9%85%8D%E7%BD%AE.jpg"></p>
+<p>也可以创建或编辑<code>/etc/docker/daemon.json</code>文件，并添加以下内容：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">  &#34;debug&#34;: true,
+</span></span><span class="line"><span class="cl">  &#34;experimental&#34;: false,
+</span></span><span class="line"><span class="cl">  &#34;registry-mirrors&#34;: [
+</span></span><span class="line"><span class="cl">    &#34;https://docker.mirrors.ustc.edu.cn&#34;
+</span></span><span class="line"><span class="cl">  ]
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>配置文件修改后，需要重启<code>Docker</code>服务使其生效：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">sudo systemctl daemon-reload
+</span></span><span class="line"><span class="cl">sudo systemctl restart docker
+</span></span></code></pre></div><p>在终端执行<code>docker info</code>命令。
+<img alt="docker信息" src="/iblog/posts/annex/images/application/docker%E4%BF%A1%E6%81%AF.jpg"></p>
+<p>出现上图所示，<code>Docker</code>镜像加速器配置成功。</p>
 <h2 id="工作原理">工作原理</h2>
 <p><img alt="docker架构" src="/iblog/posts/annex/images/application/docker%E6%9E%B6%E6%9E%84.png"></p>
 <p><code>Docker</code>架构分为三部分，客户端、宿主机、注册中心。</p>
