@@ -769,16 +769,16 @@ Java语言规范明确规定了枚举类型的创建和管理方式，禁止反�
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="nd">@interface</span><span class="w"> </span><span class="n">Autowired</span><span class="p">{}</span><span class="w">
 </span></span></span></code></pre></div><p><code>@Autowired</code>注解调用栈：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">AbstractApplicationContext.refresh(容器初始化)
-</span></span><span class="line"><span class="cl">---&gt; registerBeanPostProcessors (注册AutowiredAnnotationBeanPostProcessor) 
-</span></span><span class="line"><span class="cl">---&gt; finishBeanFactoryInitialization
-</span></span><span class="line"><span class="cl">---&gt; AbstractAutowireCapableBeanFactory.doCreateBean
-</span></span><span class="line"><span class="cl">---&gt; AbstractAutowireCapableBeanFactory.applyMergedBeanDefinitionPostProcessors
-</span></span><span class="line"><span class="cl">---&gt; MergedBeanDefinitionPostProcessor.postProcessMergedBeanDefinition
-</span></span><span class="line"><span class="cl">---&gt; AutowiredAnnotationBeanPostProcessor.findAutowiringMetadata
+</span></span><span class="line"><span class="cl">    ---&gt; registerBeanPostProcessors (注册AutowiredAnnotationBeanPostProcessor) 
+</span></span><span class="line"><span class="cl">    ---&gt; finishBeanFactoryInitialization
+</span></span><span class="line"><span class="cl">    ---&gt; AbstractAutowireCapableBeanFactory.doCreateBean
+</span></span><span class="line"><span class="cl">    ---&gt; AbstractAutowireCapableBeanFactory.applyMergedBeanDefinitionPostProcessors
+</span></span><span class="line"><span class="cl">    ---&gt; MergedBeanDefinitionPostProcessor.postProcessMergedBeanDefinition
+</span></span><span class="line"><span class="cl">    ---&gt; AutowiredAnnotationBeanPostProcessor.findAutowiringMetadata
 </span></span></code></pre></div><p>核心调用：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">postProcessMergedBeanDefinition
-</span></span><span class="line"><span class="cl">---&gt;findAutowiringMetadata
-</span></span><span class="line"><span class="cl">---&gt;buildAutowiringMetadata
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">postProcessMergedBeanDefinition
+</span></span><span class="line"><span class="cl">    ---&gt;findAutowiringMetadata
+</span></span><span class="line"><span class="cl">    ---&gt;buildAutowiringMetadata
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Override</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">postProcessMergedBeanDefinition</span><span class="p">(</span><span class="n">RootBeanDefinition</span><span class="w"> </span><span class="n">beanDefinition</span><span class="p">,</span><span class="w"> </span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">beanType</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">beanName</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 调用 findAutowiringMetadata</span><span class="w">

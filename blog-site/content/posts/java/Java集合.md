@@ -15,7 +15,7 @@ Java中的集合主要包括`Collection`和`Map`两种，`Collection`存储着�
 如果你看过`ArrayList`类源码，就知道`ArrayList`底层是通过数组来存储元素的，所以如果严格来说，数组也算集合的一种。
 Java中提供的数组是用来存储固定大小的同类型元素，所以Java数组就是同类数据元素的集合。
 在Java中，数组是一种非常常用的数据结构，用于存储同一类型的一组元素。
-```java
+```text
 // 定义一个整数数组
 int[] intArray;
 
@@ -28,7 +28,7 @@ int[] anotherArray = {1, 2, 3, 4, 5}; // 定义并同时赋值
 
 数组是引用数据类型，如果使用了没有开辟空间的数组，则一定会出现`NullPointerException`异常信息。
 所以数组本质上也是Java对象，能够向下或者向上转型，能使用`instanceof`关键字。
-```java
+```text
 int[] intArray; // 声明数组但未初始化
 System.out.println(intArray[0]); // 这将导致 NullPointerException
 
@@ -45,7 +45,7 @@ int[] array = (int[]) obj; // 向下转型
 ### 变长参数
 在Java中，变长参数在方法定义中处理方式与数组相同。
 变长参数允许你传递任意数量的参数到一个方法中，编译时会将其处理为一个数组。例如：
-```java
+```text
 public void methodName(int... values) {
     for (int value : values) {
         System.out.println(value);
@@ -74,7 +74,7 @@ int array2[] = { 1,2,3,4,5 };
 ### 遍历数组
 在Java中，遍历数组有多种不同的方式，每种方式适合不同的情况和需求。以下是几种常见的遍历数组的方式：
 1. 使用普通for循环；
-    ```java
+    ```text
     int[] array = {1, 2, 3, 4, 5};
     
     for (int i = 0; i < array.length; i++) {
@@ -82,7 +82,7 @@ int array2[] = { 1,2,3,4,5 };
     }
     ```
 2. 使用增强for循环；
-    ````java
+    ````text
     int[] array = {1, 2, 3, 4, 5};
     
     for (int num : array) {
@@ -90,7 +90,7 @@ int array2[] = { 1,2,3,4,5 };
     }
     ````
 3. 使用Java 8的`Stream API`；
-    ```java
+    ```text
     int[] array = {1, 2, 3, 4, 5};
     
     Arrays.stream(array).forEach(num -> System.out.println(num));
@@ -876,7 +876,7 @@ final void treeifyBin(Node<K,V>[] tab, int hash) {
 这种方法在大量冲突的情况下提供了更高效的查找和插入性能。具体插入步骤：
 1. 计算键的哈希值确定存储位置；
 2. 如果存储位置为空，则直接插入新键值对；
-3. 如果存储位置已有节点，当链表长度超过阈值（默认为 8），将链表转换为红黑树，否则，继续用链表存储；
+3. 如果存储位置已有节点，当链表长度超过阈值（默认为 8），将链表转换为红黑树，否则继续用链表存储；
 4. 如果当前结点为红黑树结点，则根据节点的哈希值和键值比较，找到合适的插入位置；插入后，根据红黑树的性质进行调整，保持平衡；
 5. 当桶中元素数量减少到一定阈值以下时（默认是 6），会将红黑树转换回链表，以减少内存开销；
 

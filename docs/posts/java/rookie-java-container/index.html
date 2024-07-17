@@ -912,40 +912,40 @@
 <p>如果你看过<code>ArrayList</code>类源码，就知道<code>ArrayList</code>底层是通过数组来存储元素的，所以如果严格来说，数组也算集合的一种。
 Java中提供的数组是用来存储固定大小的同类型元素，所以Java数组就是同类数据元素的集合。
 在Java中，数组是一种非常常用的数据结构，用于存储同一类型的一组元素。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 定义一个整数数组</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">intArray</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 初始化数组并赋值</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">intArray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">5</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="c1">// 数组长度为5，每个元素默认值为0</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 定义并初始化数组</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">anotherArray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="n">3</span><span class="p">,</span><span class="w"> </span><span class="n">4</span><span class="p">,</span><span class="w"> </span><span class="n">5</span><span class="p">};</span><span class="w"> </span><span class="c1">// 定义并同时赋值</span><span class="w">
-</span></span></span></code></pre></div><p>数组是引用数据类型，如果使用了没有开辟空间的数组，则一定会出现<code>NullPointerException</code>异常信息。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">// 定义一个整数数组
+</span></span><span class="line"><span class="cl">int[] intArray;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 初始化数组并赋值
+</span></span><span class="line"><span class="cl">intArray = new int[5]; // 数组长度为5，每个元素默认值为0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 定义并初始化数组
+</span></span><span class="line"><span class="cl">int[] anotherArray = {1, 2, 3, 4, 5}; // 定义并同时赋值
+</span></span></code></pre></div><p>数组是引用数据类型，如果使用了没有开辟空间的数组，则一定会出现<code>NullPointerException</code>异常信息。
 所以数组本质上也是Java对象，能够向下或者向上转型，能使用<code>instanceof</code>关键字。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">intArray</span><span class="p">;</span><span class="w"> </span><span class="c1">// 声明数组但未初始化</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">intArray</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="p">);</span><span class="w"> </span><span class="c1">// 这将导致 NullPointerException</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Object</span><span class="w"> </span><span class="n">obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">5</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="c1">// 向上转型</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">obj</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="p">)</span><span class="w"> </span><span class="n">obj</span><span class="p">;</span><span class="w"> </span><span class="c1">// 向下转型</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Successfully casted obj to int[]&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>数组由于其连续的内存分配和高效的下标访问，具有高访问效率，但其固定大小、插入删除低效、单一类型限制和高内存要求使其在实际应用中不如集合灵活，
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">int[] intArray; // 声明数组但未初始化
+</span></span><span class="line"><span class="cl">System.out.println(intArray[0]); // 这将导致 NullPointerException
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Object obj = new int[5]; // 向上转型
+</span></span><span class="line"><span class="cl">if (obj instanceof int[]) {
+</span></span><span class="line"><span class="cl">int[] array = (int[]) obj; // 向下转型
+</span></span><span class="line"><span class="cl">    System.out.println(&#34;Successfully casted obj to int[]&#34;);
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>数组由于其连续的内存分配和高效的下标访问，具有高访问效率，但其固定大小、插入删除低效、单一类型限制和高内存要求使其在实际应用中不如集合灵活，
 所以我们应该优选集合，而不是数组。只有在已证明性能成为问题的时候，并且确定切换到数组对性能提高有帮助时，才应该将项目重构为使用数组。</p>
 <h3 id="变长参数">变长参数</h3>
 <p>在Java中，变长参数在方法定义中处理方式与数组相同。
 变长参数允许你传递任意数量的参数到一个方法中，编译时会将其处理为一个数组。例如：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">methodName</span><span class="p">(</span><span class="kt">int</span><span class="p">...</span><span class="w"> </span><span class="n">values</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">values</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">value</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 在这个方法中，可以传递任意数量的整数</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">methodName</span><span class="p">(</span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="n">3</span><span class="p">);</span><span class="w"> </span><span class="c1">// 传递三个参数</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">methodName</span><span class="p">(</span><span class="n">4</span><span class="p">,</span><span class="w"> </span><span class="n">5</span><span class="p">);</span><span class="w"> </span><span class="c1">// 传递两个参数</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">methodName</span><span class="p">();</span><span class="w"> </span><span class="c1">// 传递零个参数</span><span class="w">
-</span></span></span></code></pre></div><p>一个方法只能有一个变长参数，即使是不同类型也不行。并且变长参数必须是方法参数列表中的最后一个参数。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">public void methodName(int... values) {
+</span></span><span class="line"><span class="cl">    for (int value : values) {
+</span></span><span class="line"><span class="cl">        System.out.println(value);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">// 在这个方法中，可以传递任意数量的整数
+</span></span><span class="line"><span class="cl">methodName(1, 2, 3); // 传递三个参数
+</span></span><span class="line"><span class="cl">methodName(4, 5); // 传递两个参数
+</span></span><span class="line"><span class="cl">methodName(); // 传递零个参数
+</span></span></code></pre></div><p>一个方法只能有一个变长参数，即使是不同类型也不行。并且变长参数必须是方法参数列表中的最后一个参数。</p>
 <h3 id="定义数组">定义数组</h3>
 <p>由于数组没有提供任何的封装，所有对元素的操作，都是通过自定义的方法实现的，对数组元素的操作比较麻烦，好在Java自带了一些API供开发者调用。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">array1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">1</span><span class="p">,</span><span class="n">2</span><span class="p">,</span><span class="n">3</span><span class="p">,</span><span class="n">4</span><span class="p">,</span><span class="n">5</span><span class="w"> </span><span class="p">};</span><span class="w"> 
@@ -958,24 +958,24 @@ Java中提供的数组是用来存储固定大小的同类型元素，所以Java
 <p>在Java中，遍历数组有多种不同的方式，每种方式适合不同的情况和需求。以下是几种常见的遍历数组的方式：</p>
 <ol>
 <li>使用普通for循环；
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="n">3</span><span class="p">,</span><span class="w"> </span><span class="n">4</span><span class="p">,</span><span class="w"> </span><span class="n">5</span><span class="p">};</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">array</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">int[] array = {1, 2, 3, 4, 5};
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">for (int i = 0; i &lt; array.length; i++) {
+</span></span><span class="line"><span class="cl">    System.out.println(array[i]);
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div></li>
 <li>使用增强for循环；
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="n">3</span><span class="p">,</span><span class="w"> </span><span class="n">4</span><span class="p">,</span><span class="w"> </span><span class="n">5</span><span class="p">};</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">array</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">num</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">int[] array = {1, 2, 3, 4, 5};
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">for (int num : array) {
+</span></span><span class="line"><span class="cl">    System.out.println(num);
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div></li>
 <li>使用Java 8的<code>Stream API</code>；
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="n">3</span><span class="p">,</span><span class="w"> </span><span class="n">4</span><span class="p">,</span><span class="w"> </span><span class="n">5</span><span class="p">};</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Arrays</span><span class="p">.</span><span class="na">stream</span><span class="p">(</span><span class="n">array</span><span class="p">).</span><span class="na">forEach</span><span class="p">(</span><span class="n">num</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">num</span><span class="p">));</span><span class="w">
-</span></span></span></code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">int[] array = {1, 2, 3, 4, 5};
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Arrays.stream(array).forEach(num -&gt; System.out.println(num));
+</span></span></code></pre></div></li>
 </ol>
 <h3 id="数组去重">数组去重</h3>
 <ol>
@@ -1672,7 +1672,7 @@ And when they become too small (due to removal or resizing) they are converted b
 <ol>
 <li>计算键的哈希值确定存储位置；</li>
 <li>如果存储位置为空，则直接插入新键值对；</li>
-<li>如果存储位置已有节点，当链表长度超过阈值（默认为 8），将链表转换为红黑树，否则，继续用链表存储；</li>
+<li>如果存储位置已有节点，当链表长度超过阈值（默认为 8），将链表转换为红黑树，否则继续用链表存储；</li>
 <li>如果当前结点为红黑树结点，则根据节点的哈希值和键值比较，找到合适的插入位置；插入后，根据红黑树的性质进行调整，保持平衡；</li>
 <li>当桶中元素数量减少到一定阈值以下时（默认是 6），会将红黑树转换回链表，以减少内存开销；</li>
 </ol>

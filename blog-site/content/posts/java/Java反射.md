@@ -367,18 +367,18 @@ public @interface Autowired{}
 `@Autowired`注解调用栈：
 ```text
 AbstractApplicationContext.refresh(容器初始化)
----> registerBeanPostProcessors (注册AutowiredAnnotationBeanPostProcessor) 
----> finishBeanFactoryInitialization
----> AbstractAutowireCapableBeanFactory.doCreateBean
----> AbstractAutowireCapableBeanFactory.applyMergedBeanDefinitionPostProcessors
----> MergedBeanDefinitionPostProcessor.postProcessMergedBeanDefinition
----> AutowiredAnnotationBeanPostProcessor.findAutowiringMetadata
+    ---> registerBeanPostProcessors (注册AutowiredAnnotationBeanPostProcessor) 
+    ---> finishBeanFactoryInitialization
+    ---> AbstractAutowireCapableBeanFactory.doCreateBean
+    ---> AbstractAutowireCapableBeanFactory.applyMergedBeanDefinitionPostProcessors
+    ---> MergedBeanDefinitionPostProcessor.postProcessMergedBeanDefinition
+    ---> AutowiredAnnotationBeanPostProcessor.findAutowiringMetadata
 ```
 核心调用：
-```
+```text
 postProcessMergedBeanDefinition
---->findAutowiringMetadata
---->buildAutowiringMetadata
+    --->findAutowiringMetadata
+    --->buildAutowiringMetadata
 ```
 ```java
 @Override
