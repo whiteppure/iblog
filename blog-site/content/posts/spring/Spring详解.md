@@ -6,22 +6,22 @@ tags: ["Java", "spring", "详解"]
 slug: "java-spring"
 ---
 
+
+
 ## 概览
 Spring是一个轻量级的Java开源框架，是为了解决企业应用开发的复杂性而创建的。Spring的核心是控制反转（IOC）和面向切面（AOP）。
-简单来说，Spring是一个分层的JavaSE/EE 一站式轻量级开源框架，在每一层都提供支持。
-- 表示层：`SpringMVC`；
-- 业务层：`Spring`；
-- 持久层：`JDBCTemplate`、`SpringData`；
+- IOC叫控制反转，在没用IOC之前都要手动`new`创建对象，使用IOC之后由容器进行对象的创建，并且由容器来管理对象，减去了开发上的成本，提高了工作效率。
+- AOP叫面向切面编程，在实际项目开发中需要嵌入一些与业务不想关的代码的时候就可以使用AOP。比如，权限日志的增加。
 
 ![Spring详解-001](/iblog/posts/annex/images/spring/Spring详解-001.png)
 
-## 对Spring的理解
-Spring是一个轻量级的框架，简化我们的开发，里面重点包含两个模块分别是IOC和AOP。
-- IOC叫控制反转，在没用IOC之前都要手动new创建对象，使用IOC之后由容器进行对象的创建，并且由容器来管理对象，减去了开发上的成本，提高了工作效率。
-- AOP叫面向切面编程，在实际项目开发中需要嵌入一些与业务不想关的代码的时候就可以使用AOP。比如，权限日志的增加。
-
 Spring虽然把它当成框架来使用，但其本质是一个容器，即IOC容器。里面最核心是如何创建对象和管理对象，包含了Bean的生命周期和Spring的一些扩展点，也包含对AOP的应用。
-除此之外，Spring真正的强大之处在于其生态，它包含了Spring Framework、Spring Boot、Spring Cloud等一些列框架，极大提高了开发效率。
+除此之外，Spring真正的强大之处在于其生态，它包含了`Spring Framework`、`SpringBoot`、`SpringCloud`等一些列框架，极大提高了开发效率。
+
+`Spring Framework`、`SpringBoot`和`SpringCloud`是Java生态系统中常见的三个框架：
+- `Spring Framework`：是整个系列的基础。它提供了核心的IOC容器功能，负责对象的创建和管理，同时支持AOP的应用。`Spring Framework`的模块化设计使得它可以用于各种应用场景，从传统的Web应用到大规模的企业系统都能够灵活应对。
+- `SpringBoot`构建在`SpringFramework`之上，是为了简化Spring应用的开发和部署。通过自动配置和起步依赖，`SpringBoot`大大减少了开发者的配置工作，使得快速搭建生产就绪的应用成为可能。`SpringBoot`提供了集成容器和简化的部署方式，使得开发者可以更专注于业务逻辑的开发，而不是繁琐的环境配置。
+- `SpringCloud`则进一步扩展了`SpringBoot`，专注于解决分布式系统开发中的复杂性。它提供了诸如服务发现、配置中心、负载均衡、断路器、网关等微服务模式的实现。`SpringCloud`的出现使得开发者能够更轻松地构建和管理分布式系统，提高了系统的弹性和可伸缩性。
 
 ## Spring启动流程
 ![Spring详解-004](/iblog/posts/annex/images/spring/Spring详解-004.png)
@@ -1252,11 +1252,6 @@ public @interface EnableAspectJAutoProxy {}
 ```java
 class AspectJAutoProxyRegistrar implements ImportBeanDefinitionRegistrar {
 
-	/**
-	 * Register, escalate, and configure the AspectJ auto proxy creator based on the value
-	 * of the @{@link EnableAspectJAutoProxy#proxyTargetClass()} attribute on the importing
-	 * {@code @Configuration} class.
-	 */
 	@Override
 	public void registerBeanDefinitions(
 			AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
@@ -1843,7 +1838,7 @@ public class Main {
 ```
 CGLIB动态代理使用字节码生成技术，可以代理没有实现接口的类。它通过继承的方式创建代理类，因此不能代理`final`类。
 ```xml
-<!--在pom.xml中添加以下依赖->
+<!--在pom.xml中添加以下依赖-->
 <dependency>
     <groupId>cglib</groupId>
     <artifactId>cglib</artifactId>
@@ -2180,174 +2175,3 @@ protected Object invokeWithinTransaction(Method method, @Nullable Class<?> targe
 
 简而言之，当一个方法使用了`@Transactional`注解，在程序运行时，JVM为该Bean创建一个代理对象，并且在调用目标方法的时候进行使用`TransactionInterceptor`拦截，代理对象负责在调用目标方法之前开启事务，然后执行方法的逻辑。
 方法执行成功，则提交事务，如果执行方法中出现异常，则回滚事务。同时Spring利用`ThreadLocal`会将事务资源（如数据库连接）与当前线程绑定，以确保在同一事务中共享资源，这些资源在事务提交或回滚时会被清理。
-
-## SpringBoot
-> `SpringBoot`是由`Pivotal`团队提供的全新框架，其设计目的是用来简化新`Spring`应用的初始搭建以及开发过程。
-该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。`SpringBoot` 提供了一种新的编程范式，可以更加快速便捷地开发 `Spring` 项目，在开发过程当中可以专注于应用程序本身的功能开发，而无需在 `Spring` 配置上花太大的工夫。
-
-`SpringBoot` 基于 `Sring4` 进行设计，继承了原有 `Spring` 框架的优秀基因。`SpringBoot` 准确的说并不是一个框架，而是一些类库的集合。`maven` 或者 `gradle` 项目导入相应依赖即可使用 `SpringBoot`，而无需自行管理这些类库的版本。
-
-特点：
-- 独立运行的 `Spring` 项目：
-  `SpringBoot` 可以以 jar 包的形式独立运行，运行一个 `SpringBoot` 项目只需通过 `java–jar xx.jar` 来运行。
-- 内嵌 `Servlet` 容器：
-  `SpringBoot` 可选择内嵌 `Tomcat`、`Jetty` 或者 `Undertow`，这样我们无须以 `war` 包形式部署项目。
-- 提供 `starter` 简化 `Maven` 配置：
-  `Spring` 提供了一系列的 `starter` pom 来简化 `Maven` 的依赖加载，例如，当你使用了`spring-boot-starter-web` 时，会自动加入依赖包。
-- 自动配置 `Spring`：
-  `SpringBoot` 会根据在类路径中的 jar 包、类，为 jar 包里的类自动配置 Bean，这样会极大地减少我们要使用的配置。当然，`SpringBoot` 只是考虑了大多数的开发场景，并不是所有的场景，若在实际开发中我们需要自动配置 `Bean`，而 `SpringBoot` 没有提供支持，则可以自定义自动配置。
-- 准生产的应用监控：
-  `SpringBoot` 提供基于 `http、ssh、telnet` 对运行时的项目进行监控。
-- 无代码生成和 xml 配置：
-  `SpringBoot` 的神奇的不是借助于代码生成来实现的，而是通过条件注解来实现的，这是 `Spring 4.x` 提供的新特性。`Spring 4.x` 提倡使用 Java 配置和注解配置组合，而 `SpringBoot` 不需要任何 xml 配置即可实现 `Spring` 的所有配置。
-
-### @SpringBootApplication
-`@SpringBootApplication`这个注解通常标注在启动类上：
-```
-@SpringBootApplication
-public class SpringBootExampleApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(SpringBootExampleApplication.class, args);
-    }
-}
-```
-`@SpringBootApplication`是一个复合注解，即由其他注解构成。核心注解是`@SpringBootConfiguration`和`@EnableAutoConfiguration`
-```
-@Target({ElementType.TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Inherited
-@SpringBootConfiguration
-@EnableAutoConfiguration
-@ComponentScan(
-    excludeFilters = {@Filter(
-    type = FilterType.CUSTOM,
-    classes = {TypeExcludeFilter.class}
-), @Filter(
-    type = FilterType.CUSTOM,
-    classes = {AutoConfigurationExcludeFilter.class}
-)}
-)
-public @interface SpringBootApplication{
-}
-```
-### @SpringBootConfiguration
-`@SpringBootConfiguration`核心注解是`@Configuration`代表自己是一个`Spring`的配置类
-```
-@Target({ElementType.TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Configuration
-public @interface SpringBootConfiguration {
-}
-```
-`@Configuration`底层实现就是一个`Component`
-> 指示带注释的类是一个“组件”。
-在使用基于注释的配置和类路径扫描时，这些类被视为自动检测的候选类。
-```
-/**
- * Indicates that an annotated class is a "component".
- * Such classes are considered as candidates for auto-detection
- * when using annotation-based configuration and classpath scanning.
- *
- */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Indexed
-public @interface Component 
-```
-
-### @EnableAutoConfiguration
-核心注解是`@AutoConfigurationPackage`和`@Import({AutoConfigurationImportSelector.class})`
-```
-@Target({ElementType.TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Inherited
-@AutoConfigurationPackage
-@Import({AutoConfigurationImportSelector.class})
-public @interface EnableAutoConfiguration {
-}
-```
-`@AutoConfigurationPackage`注解核心是引入了一个`@Import(AutoConfigurationPackages.Registrar.class)`配置类,该类实现了`ImportBeanDefinitionRegistrar`接口
-```
-	/**
-	 * {@link ImportBeanDefinitionRegistrar} to store the base package from the importing
-	 * configuration.
-	 */
-	static class Registrar implements ImportBeanDefinitionRegistrar, DeterminableImports {
-		@Override
-		public void registerBeanDefinitions(AnnotationMetadata metadata, BeanDefinitionRegistry registry) {
-			register(registry, new PackageImports(metadata).getPackageNames().toArray(new String[0]));
-		}
-		@Override
-		public Set<Object> determineImports(AnnotationMetadata metadata) {
-			return Collections.singleton(new PackageImports(metadata));
-		}
-
-	}
-```
-
-这里可以打断点自己看一下
-
-`@AutoConfigurationPackage` 这个注解本身的含义就是将主配置类（`@SpringBootApplication`标注的类）所在的包下面所有的组件都扫描到 `spring` 容器中。
-
-`AutoConfigurationImportSelector`核心代码如下
-```
-	/**
-	 * Return the auto-configuration class names that should be considered. By default
-	 * this method will load candidates using {@link SpringFactoriesLoader} with
-	 * {@link #getSpringFactoriesLoaderFactoryClass()}.
-	 * @param metadata the source metadata
-	 * @param attributes the {@link #getAttributes(AnnotationMetadata) annotation
-	 * attributes}
-	 * @return a list of candidate configurations
-	 */
-	protected List<String> getCandidateConfigurations(AnnotationMetadata metadata, AnnotationAttributes attributes) {
-		List<String> configurations = SpringFactoriesLoader.loadFactoryNames(getSpringFactoriesLoaderFactoryClass(),
-				getBeanClassLoader());
-		Assert.notEmpty(configurations, "No auto configuration classes found in META-INF/spring.factories. If you "
-				+ "are using a custom packaging, make sure that file is correct.");
-		return configurations;
-	}
-
-	/**
-	 * Return the class used by {@link SpringFactoriesLoader} to load configuration
-	 * candidates.
-	 * @return the factory class
-	 */
-	protected Class<?> getSpringFactoriesLoaderFactoryClass() {
-		return EnableAutoConfiguration.class;
-	}
-	protected ClassLoader getBeanClassLoader() {
-		return this.beanClassLoader;
-	}
-```
-`getSpringFactoriesLoaderFactoryClass`方法返回`EnableAutoConfiguration.class`目的就是为了将启动类所需的所有资源导入。
-
-在`getCandidateConfigurations`中有如下代码
-```
-Assert.notEmpty(configurations, "No auto configuration classes found in META-INF/spring.factories. If you are using a custom packaging, make sure that file is correct.");
-```
-
-大意：在`META-INF/spring.factories`中没有发现自动配置类。如果您使用的是自定义打包，请确保该文件是正确的。
-![找到spring.factories](/iblog/posts/annex/images/essays/找到spring.factories.png)
-
-`spring.factories`包含了很多类，但不是全部都加载的，在某些类里面，是有一个条件`@ConditionalOnXXX`注解，只有当这个注解上的条件满足才会加载。
-
-例如：`SpringApplicationAdminJmxAutoConfiguration`
-```
-@Configuration(proxyBeanMethods = false)
-@AutoConfigureAfter(JmxAutoConfiguration.class)
-@ConditionalOnProperty(prefix = "spring.application.admin", value = "enabled", havingValue = "true",
-		matchIfMissing = false)
-public class SpringApplicationAdminJmxAutoConfiguration 
-```
-
-### 总结
-![@SpringbootApplication原理](/iblog/posts/annex/images/essays/@SpringbootApplication原理.png)
-
-当 `Springboot` 启动的时候，会执行`AutoConfigurationImportSelector`这个类中的`getCandidateConfigurations`方法，这个方法会帮我们加载`META-INF/spring.factories`文件里面的当`@ConditionXXX`注解条件满足的类。
-
-## SpringCloud
