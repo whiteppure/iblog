@@ -197,7 +197,7 @@ public void refresh() throws BeansException, IllegalStateException {
 12. `finishRefresh`容器启动过后，发布事件。
 
 ## Spring循环依赖与三级缓存
-循环依赖是指两个或多个Bean相互依赖，导致Spring无法在不部分实例化这些Bean的情况下完成它们的创建。
+Spring循环依赖是指两个或多个Bean相互依赖，导致Spring无法在不部分实例化这些Bean的情况下完成它们的创建。
 在Spring框架中，为了解决循环依赖问题，Spring使用了三级缓存机制。
 
 ![Spring详解-003](/iblog/posts/annex/images/spring/Spring详解-003.png)
@@ -231,6 +231,12 @@ public void refresh() throws BeansException, IllegalStateException {
 检查一级、二级和三级缓存中是否有BeanB，如果没有，开始创建BeanB。又因为BeanB依赖BeanA，此时三级缓存中有BeanA，从三级缓存中获取BeanA，然后将BeanA提前暴露到二级缓存。
 继续初始化BeanB，完成后将BeanB放入一级缓存，并从三级缓存中移除。接着从二级缓存中获取提前暴露的BeanA，完成依赖注入。将完全初始化好的BeanA放入一级缓存，并从二级缓存中移除。
 
+在Spring Boot 2.6.0之前，Spring可以通过其三级缓存机制自动解决循环依赖的问题。但从2.6.0开始，如果存在循环依赖问题，Spring会抛出异常。
+在Spring Boot 2.6.0及之后的版本中，默认情况下，Spring不再自动解决循环依赖。如果在应用中遇到循环依赖问题，可以通过以下方法解决：
+- 重新设计Bean的依赖关系：这是最推荐的方式。通过重新设计Bean的依赖关系，消除循环依赖，从根本上解决问题。
+- 使用`@Lazy`注解：将其中一个Bean的依赖注入设置为懒加载，延迟依赖注入，从而打破循环依赖。
+- 设置`allow-circular-references`属性：如果确实需要循环依赖，可以在配置文件中设置`allow-circular-references`属性为`true`，允许Spring处理循环依赖。
+
 ## IOC
 Spring的核心之一是IOC，IOC全称为`Inversion of Control`，中文译为控制反转，是面向对象编程中的一种设计原则，可以用来减低计算机代码之间的耦合度。
 IOC的一个重点是在系统运行中，动态的向某个对象提供它所需要的其他对象。这一点是通过DI（`Dependency Injection`，依赖注入）来实现的。
@@ -247,7 +253,7 @@ IOC容器的工作流程：
 
 通过Spring的IOC容器，开发者可以更加专注于业务逻辑，而无需关心对象的创建和管理，从而提高了代码的可维护性和可扩展性。
 
-###  IOC容器的工作原理
+###  IOC工作原理
 IOC容器是Spring框架的核心，它负责管理应用程序中对象的生命周期和依赖关系。
 1. 想要管理Bean，首先需要将Bean加载进来。IOC容器首先需要加载应用程序的配置元数据，这些配置可以通过XML文件、Java注解或者Java配置类等方式定义。
 加载完配置之后，容器会使用相应的解析器（如Dom4j解析XML配置文件），将配置信息转换为容器可以理解的数据结构，通常是`BeanDefinition`对象。`BeanDefinition`包含了类的名称、依赖关系、初始化方法、销毁方法等元数据信息。
@@ -327,7 +333,7 @@ Spring中的Bean可以根据其作用域的不同可分为，单例Bean、原型
     - 初始化后处理：调用所有注册的`BeanPostProcessor`的`postProcessAfterInitialization`方法，可以在初始化之后对Bean进行修改。
 3. 使用：当Bean初始化之后，Bean处于就绪状态，可以被应用程序中的其他组件使用。
 4. 销毁：
-    - 销毁前处理：在销毁之前，Spring容器会依次调用注册的所有`BeanPostProcessor`的`postProcessBeforeDestruction`方法。如果Bean类中有用@PreDestroy注解标记的方法，Spring容器会在销毁之前调用该方法。
+    - 销毁前处理：在销毁之前，Spring容器会依次调用注册的所有`BeanPostProcessor`的`postProcessBeforeDestruction`方法。如果Bean类中有用`@PreDestroy`注解标记的方法，Spring容器会在销毁之前调用该方法。
     - 销毁：如果在Bean的定义中通过配置`destroy-method`属性指定了销毁方法，Spring容器会调用这个方法来执行特定的清理操作。
 
 单例Bean和多实例Bean的生命周期主要区别在于实例化和销毁的管理方式，单例Bean在容器启动时创建一个实例，并由容器负责管理其生命周期的完整过程。
@@ -831,7 +837,7 @@ private InjectionMetadata buildAutowiringMetadata(final Class<?> clazz) {
 Spring框架利用反射遍历目标类及其超类的所有字段和方法，查找并收集所有使用了`@Autowired`注解的元素。对于每个字段和方法，首先通过反射获取注解信息，如果字段或方法被`@Autowired`注解修饰且符合条件（如非静态），则将其封装成对应的注入元素（`AutowiredFieldElement`或`AutowiredMethodElement`）并添加到当前元素列表中。
 最后，这些注入元素会被封装到`InjectionMetadata`对象中，并用于实际的依赖注入过程，从而实现Spring的自动注入功能。
 
-#### @Resource、@Inject
+#### @Resource
 `@Resource`注解来自`JSR-250`，JDK自带，主要用于通过名称注入依赖。它的行为类似于`@Autowired`，但它更倾向于按名称进行注入。
 默认情况下，`@Resource`注解按名称进行注入。如果找不到同名的Bean，再按类型进行匹配。它不支持`@Primary`，如果存在多个同类型的Bean且未指定`name`属性，会抛出异常。
 ```java
@@ -845,6 +851,7 @@ public class UserService {
 假设我们有一个旧项目，其中大量使用了JDK标准的`@Resource`注解进行依赖注入，而我们现在想要将项目迁移到Spring，同时保持现有的依赖注入逻辑不变。
 在这种情况下，我们可以继续使用`@Resource`注解进行依赖注入。
 
+#### @Inject
 `@Inject`注解来自`JSR-330`，需要导入`javax.inject`包。它的行为与`@Autowired`类似，但没有任何属性。
 ```xml
 <dependency>
@@ -1068,114 +1075,165 @@ Spring的另一个核心是AOP，AOP全称`Aspect-Oriented Programming`译为面
 
 实现AOP的技术，主要分为两类，一是采用动态代理技术，利用截取消息的方式，对该消息进行装饰，以取代原有对象行为的执行；
 二是采用静态织入的方式，引入特定的语法创建“切面”，从而使得编译器可以在编译期间织入有关“切面”的代码，属于静态代理。
-
-AOP的工作原理主要基于对程序执行过程中特定点的拦截和增强。动态代理刚好就可以实现这个功能，AOP用的就是动态代理。在`Spring`中主要使用了两种动态代理：
-- JDK 动态代理技术
-- CGLib 动态代理技术
-
-JDK的动态代理时基于Java 的反射机制来实现的，是Java 原生的一种代理方式。他的实现原理就是让代理类和被代理类实现同一接口，代理类持有目标对象来达到方法拦截的作用。
-通过接口的方式有两个弊端一个就是必须保证被代理类有接口，另一个就是如果相对被代理类的方法进行代理拦截，那么就要保证这些方法都要在接口中声明。接口继承的是`java.lang.reflect.InvocationHandler`。
-
-CGLib 动态代理使用的 ASM 这个非常强大的 Java 字节码生成框架来生成`class` ，基于继承的实现动态代理，可以直接通过 super 关键字来调用被代理类的方法.子类可以调用父类的方法,不要求有接口。
+AOP的工作原理主要基于对程序执行过程中特定点的拦截和增强。动态代理刚好就可以实现这个功能，AOP用的就是动态代理。
 
 ### 使用AOP
 使用AOP大致可以分为三步：
-1. 将业务逻辑组件和切面类都加入到容器中，并用`@Aspect`注解标注切面类。
+1. 将业务逻辑组件和切面类都加入到容器中，并用`Component`、`@Aspect`注解标注切面类。
+   ```java
+   @Aspect
+   @Component
+   public class LoggingAspect {}
+   ```
 2. 在切面类的通知方法上，要注意切面表达式的写法，标注通知注解，告诉`Spring`何时何地的运行：
-   - `@Before`:前置通知，在目标方法运行之前执行；
-   - `@After`: 后置通知，在目标方法运行之后执行，无论方法是否出现异常都会执行；
-   - `@Around`: 环绕通知，通过`joinPoint.proceed()`方法手动控制目标方法的执行；
-   - `@AfterThrowing`: 异常通知，在目标方法出现异常之后执行；
-   - `@AfterReturning`: 返回通知，在目标方法返回之后执行；
+   - `@Before`：前置通知，在目标方法运行之前执行；
+   - `@After`：后置通知，在目标方法运行之后执行，无论方法是否出现异常都会执行；
+   - `@Around`：环绕通知，通过`joinPoint.proceed()`方法手动控制目标方法的执行；
+   - `@AfterThrowing`：异常通知，在目标方法出现异常之后执行；
+   - `@AfterReturning`：返回通知，在目标方法返回之后执行；
+   ```java
+   @Aspect
+   @Component
+   public class LoggingAspect {
+   
+       @Before("execution(* com.example.service.*.*(..))")
+       public void logBefore() {
+           System.out.println("Executing method in service layer...");
+       }
+   
+       @After("execution(* com.example.service.*.*(..))")
+       public void logAfter() {
+           System.out.println("Method execution completed.");
+       }
+   
+       @Around("execution(* com.example.service.*.*(..))")
+       public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
+           System.out.println("Before method execution.");
+           Object result = joinPoint.proceed();
+           System.out.println("After method execution.");
+           return result;
+       }
+   
+       @AfterThrowing(pointcut = "execution(* com.example.service.*.*(..))", throwing = "error")
+       public void logAfterThrowing(Throwable error) {
+           System.out.println("Exception occurred: " + error);
+       }
+   
+       @AfterReturning(pointcut = "execution(* com.example.service.*.*(..))", returning = "result")
+       public void logAfterReturning(Object result) {
+           System.out.println("Method returned value: " + result);
+       }
+   }
+   ```
 3. 使用`@EnableAspectJAutoProxy`开启基于注解的AOP模式。
+   ```java
+   @SpringBootApplication
+   @EnableAspectJAutoProxy
+   public class SpringAopApplication {
+      public static void main(String[] args) {
+         SpringApplication.run(SpringAopApplication.class, args);
+      }
+   }
+   ```
 
-
+#### execution表达式
+`execution`表达式用于定义切入点，作用是什么时候触发切面。`execution`表达式语法：
+```text
+execution(modifiers-pattern ret-type-pattern declaring-type-pattern name-pattern(param-pattern) throws-pattern)
 ```
-public class MainTest {
-    public static void main(String[] args) {
-        // 获取Spring IOC容器
-        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(DemoConfiguration.class);
+- `modifiers-pattern`（可选）：方法修饰符模式，如`public`、`protected`。
+- `ret-type-pattern`：返回类型模式，可以是具体类型，如`String`，也可以是通配符（`*`表示任意返回类型）。
+- `declaring-type-pattern`（可选）：声明类型模式，即方法所属的类或接口，可以是具体类名，如`com.example.MyClass`或通配符，如`com.example.*`。
+- `name-pattern`：方法名模式，可以是具体方法名（如`myMethod`），也可以是通配符（如`*`表示任意方法名）。
+- `param-pattern`：参数模式，可以是具体参数类型，如`(String, int)`，也可以是通配符，如`(..)`表示任意参数类型和数量。
+- `throws-pattern`（可选）：异常模式，可以是具体异常类型，如`throws IOException`。
 
-        DemoEntity demoEntity = annotationConfigApplicationContext.getBean(DemoEntity.class);
-        demoEntity.myAspectTest("123");
+`execution`表达式举例：
+- 匹配任意方法。
+   ```java
+   @Before("execution(* *(..))")
+   public void logBeforeAllMethods() {
+       System.out.println("Executing any method...");
+   }
+   ```
+- 匹配特定类的所有方法。
+   ```java
+   @Before("execution(* com.example.MyClass.*(..))")
+   public void logBeforeMyClassMethods() {
+       System.out.println("Executing method in MyClass...");
+   }
+   ```
+- 匹配特定包中的所有方法。
+   ```java
+   @Before("execution(* com.example..*.*(..))")
+   public void logBeforePackageMethods() {
+       System.out.println("Executing method in com.example package...");
+   }
+   ```
+- 匹配特定返回类型的方法。
+   ```java
+   @Before("execution(String *(..))")
+   public void logBeforeStringMethods() {
+       System.out.println("Executing method with String return type...");
+   }
+   ```
+- 匹配特定方法名。
+   ```java
+   @Before("execution(* myMethod(..))")
+   public void logBeforeMyMethod() {
+       System.out.println("Executing myMethod...");
+   }
+   ```
+- 匹配特定参数类型的方法。
+   ```java
+   @Before("execution(* *(String, int))")
+   public void logBeforeStringIntMethods() {
+       System.out.println("Executing method with String and int parameters...");
+   }
+   ```
+- 匹配没有参数的方法。
+   ```java
+   @Before("execution(* *())")
+   public void logBeforeNoArgMethods() {
+       System.out.println("Executing no-arg method...");
+   }
+   ```
+- 匹配带有特定修饰符的方法。
+   ```java
+   @Before("execution(public * *(..))")
+   public void logBeforePublicMethods() {
+       System.out.println("Executing public method...");
+   }
+   ```
 
-        annotationConfigApplicationContext.close();
-    }
+#### 切面执行顺序
+在Spring AOP中，注意切面执行顺序非常重要，因为不同切面可能会对同一个方法执行不同的逻辑，这些逻辑的执行顺序可能会影响应用程序的行为和结果。
+
+举一个例子，一个简单的银行转账操作，其中涉及日志记录、事务管理和安全检查三个切面。如果不考虑AOP的顺序，就是按照Spring加载顺序来，可能会导致事务管理在安全检查、日志记录的前面，这样可能会造成一些不安全的操作会被执行。
+但是我们期望的是先执行安全检查，再执行事务管理，最后再执行日志记录。
+```java
+@Order(1)  // 优先级最高
+public class SecurityAspect {
+   @Before("execution(* com.example.service.BankService.transfer(..))")
+   public void checkSecurity() {
+      System.out.println("Security: Performing security check...");
+   }
 }
 
-@EnableAspectJAutoProxy
-@Configuration
-class DemoConfiguration{
-
-    @Bean
-    public DemoEntity getDemoEntity(){
-        return new DemoEntity();
-    }
-
-    @Bean
-    public DemoAspect gerDemoAspect(){
-        return new DemoAspect();
-    }
-
+@Order(2)  // 优先级中等
+public class TransactionAspect {
+   @Before("execution(* com.example.service.BankService.transfer(..))")
+   public void startTransaction() {
+      System.out.println("Transaction: Starting transaction...");
+   }
 }
 
-@Aspect
-class DemoAspect {
-
-    @Pointcut("execution(* com.lilian.ticket.image.exchange.DemoEntity.myAspectTest(..))")
-    public void pointer() {}
-
-    @Before("pointer()")
-    public void beforeTest(JoinPoint joinPoint) {
-        System.out.println("调用了AOP，前置通知");
-        Object[] args = joinPoint.getArgs();
-        System.out.println("前置通知:目标方法参数：[" + args[0] + "]");
-    }
-
-    @After("pointer()")
-    public void afterTest(JoinPoint joinPoint){
-        System.out.println("调用了AOP，后置通知");
-        Object[] args = joinPoint.getArgs();
-        System.out.println("后置通知:目标方法参数：[" + args[0] + "]");
-    }
-
-    @Around("pointer()")
-    public Object aroundTest(ProceedingJoinPoint joinPoint) {
-        System.out.println("===调用了AOP，环绕通知===");
-        System.out.println("环绕通知目标方法执行前");
-        Object[] args = joinPoint.getArgs();
-        System.out.println("环绕通知:目标方法参数：[" + args[0] + "]");
-        Object proceed = null;
-        try {
-             proceed = joinPoint.proceed();
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
-        System.out.println("环绕通知目标方法执行后\n");
-        return proceed;
-    }
-
-    @AfterThrowing(pointcut="pointer()", throwing="ex")
-    public void afterThrowingTest(JoinPoint joinPoint, Exception ex) {
-        System.out.println("异常通知==>["+ex.getMessage()+"]\n");
-    }
-
-    @AfterReturning("pointer()")
-    public void afterReturnTest(JoinPoint joinPoint){
-        Object[] args = joinPoint.getArgs();
-        System.out.println("有返回值的后置通知:目标方法参数：[" + args[0] + "]");
-    }
-
-}
-
-class DemoEntity {
-
-    public String myAspectTest(String name) {
-        System.out.println("调用了 myAspectTest 方法;\t name=[" + name + "]");
-        // 当name传入null时，模拟异常
-        name.split("123");
-        return name;
-    }
+@Order(3)  // 优先级最低 
+public class LoggingAspect {
+   @Before("execution(* com.example.service.BankService.transfer(..))")
+   public void logBefore() {
+      System.out.println("Logging: Starting method execution...");
+   }
 }
 ```
 
@@ -1225,6 +1283,20 @@ class AspectJAutoProxyRegistrar implements ImportBeanDefinitionRegistrar {
 AopConfigUtils.registerAspectJAnnotationAutoProxyCreatorIfNecessary(registry);
 ```
 该方法是给容器中注册了一个`AnnotationAwareAspectJAutoProxyCreator`组件。
+```java
+public static void registerAspectJAnnotationAutoProxyCreatorIfNecessary(
+            ParserContext parserContext, Element sourceElement) {
+        //注册或者升级AutoProxyCreator定义beanName为
+        // org.Springframework.aop.config.internalAutoProxyCreator的BeanDefinition
+        BeanDefinition beanDefinition = AopConfigUtils.registerAspectJAnnotationAutoProxyCreatorIfNecessary(
+                parserContext.getRegistry(), parserContext.extractSource(sourceElement));
+        //对于proxy-target-class以及expose-proxy属性的处理
+        useClassProxyingIfNecessary(parserContext.getRegistry(), sourceElement);
+        //注册组件并通知，便于监听器进一步处理，其中BeanDefinition的className
+        // 为AnnotationAwareAspectJAutoProxyCreator
+        registerComponentIfNecessary(beanDefinition, parserContext);
+}
+```
 
 ![AOP核心组件1](/iblog/posts/annex/images/essays/AOP核心组件.png)
 
@@ -1484,7 +1556,6 @@ protected Object applyBeanPostProcessorsBeforeInstantiation(Class<?> beanClass, 
 ```
 关键代码为`ibp.postProcessBeforeInstantiation(beanClass, beanName)`，这里就是调用`AnnotationAwareAspectJAutoProxyCreator`组件的`postProcessBeforeInstantiation`方法。
 `AnnotationAwareAspectJAutoProxyCreator`组件实现了`SmartInstantiationAwareBeanPostProcessor`接口，所以`bp instanceof InstantiationAwareBeanPostProcessor`这行代码为`true`。
-AOP相关的后置处理器就是在这被调用的。上面的`resolveBeforeInstantiation`方法是`createBean`方法的调用栈，所以从层次结构上来看`AnnotationAwareAspectJAutoProxyCreator`组件的调用是在创建Bean实例之前，尝试用后置处理器返回对象的。
 ```text
 AnnotationAwareAspectJAutoProxyCreator
     extends AspectJAwareAdvisorAutoProxyCreator
@@ -1499,12 +1570,405 @@ SmartInstantiationAwareBeanPostProcessor
         extends BeanPostProcessor
 ```
 
+#### postProcessAfterInitialization
+AOP相关的后置处理器就是在`postProcessBeforeInstantiation`方法被调用的。上面的`resolveBeforeInstantiation`方法是`createBean`方法的调用栈，所以从层次结构上来看`AnnotationAwareAspectJAutoProxyCreator`组件的调用是在创建Bean实例之前，尝试用后置处理器返回对象的。
+一直往父类寻找，在其父类`AbstractAutoProxyCreator`实现了该方法。
+```java
+@Override
+    public Object postProcessAfterInitialization(@Nullable Object bean, String beanName) {
+        if (bean != null) {
+            //根据给定的bean的class和name构建出key，格式：beanClassName_beanName
+            Object cacheKey = getCacheKey(bean.getClass(), beanName);
+            if (this.earlyProxyReferences.remove(cacheKey) != bean) {
+                //一个非常核心的方法：wrapIfNecessary(),如果它适合被代理，则需要封装指定的bean。
+                return wrapIfNecessary(bean, beanName, cacheKey);
+            }
+        }
+        return bean;
+}
+```
+其有一个非常核心的方法`wrapIfNecessary()`，这个方法就是代理创建的雏形。创建代理主要包含了两个步骤：获取增强方法或者增强器、根据获取的增强进行代理。
+```java
+/**
+* Wrap the given bean if necessary, i.e. if it is eligible for being proxied.
+* @param bean the raw bean instance
+* @param beanName the name of the bean
+* @param cacheKey the cache key for metadata access
+* @return a proxy wrapping the bean, or the raw bean instance as-is
+*/
+protected Object wrapIfNecessary(Object bean, String beanName, Object cacheKey) {
+  //如果已经处理过
+  if (StringUtils.hasLength(beanName) && this.targetSourcedBeans.contains(beanName)) {
+      return bean;
+  }
+  //这个bean无需增强
+  if (Boolean.FALSE.equals(this.advisedBeans.get(cacheKey))) {
+      return bean;
+  }
+  //判断给定的bean是否是一个基础设施类，基础设施类不应代理，或者配置了指定bean不需要代理。
+  //所谓InfrastructureClass就是指Advice/PointCut/Advisor等接口的实现类。
+  if (isInfrastructureClass(bean.getClass()) || shouldSkip(bean.getClass(), beanName)) {
+      this.advisedBeans.put(cacheKey, Boolean.FALSE);
+      return bean;
+  }
+
+  // 如果存在增强方法则创建代理
+  //获取这个bean的advice
+  Object[] specificInterceptors = getAdvicesAndAdvisorsForBean(bean.getClass(), beanName, null);
+  //如果获取到了增强则需要针对增强创建代理
+  if (specificInterceptors != DO_NOT_PROXY) {
+      this.advisedBeans.put(cacheKey, Boolean.TRUE);
+      //创建代理
+      Object proxy = createProxy(
+              bean.getClass(), beanName, specificInterceptors, new SingletonTargetSource(bean));
+      this.proxyTypes.put(cacheKey, proxy.getClass());
+      return proxy;
+  }
+
+  this.advisedBeans.put(cacheKey, Boolean.FALSE);
+  return bean;
+}
+```
+`wrapIfNecessary`方法中调用了`getAdvicesAndAdvisorsForBean`方法，该方法作用为获取增强方法或者增强器。调用栈为：
+```text
+AbstractAdvisorAutoProxyCreator.getAdvicesAndAdvisorsForBean
+   -->AbstractAdvisorAutoProxyCreator.findEligibleAdvisors
+   -->AbstractAdvisorAutoProxyCreator.findCandidateAdvisors
+   -->BeanFactoryAdvisorRetrievalHelper.findAdvisorBeans
+```
+BeanFactoryAdvisorRetrievalHelper这个类是一个Spring AOP内部工具类，用来从Bean容器中获取所有Spring的Advisor Bean。
+该工具内部使用了缓存机制，虽然公开的查找方法可能会被调用多次，但并不是每次都会真正查找，而是会利用缓存。
+```java
+public List<Advisor> findAdvisorBeans() {
+     //cachedAdvisorBeanNames是advisor名称的缓存
+     String[] advisorNames = this.cachedAdvisorBeanNames;
+     //如果cachedAdvisorBeanNames为空，则到容器中查找，并设置缓存，后续直接使用缓存即可
+     if (advisorNames == null) {
+         // Do not initialize FactoryBeans here: We need to leave all regular beans
+         // uninitialized to let the auto-proxy creator apply to them!
+         //从容器中查找Advisor类型的bean的名称
+         advisorNames = BeanFactoryUtils.beanNamesForTypeIncludingAncestors(
+                 this.beanFactory, Advisor.class, true, false);
+         this.cachedAdvisorBeanNames = advisorNames;
+     }
+     if (advisorNames.length == 0) {
+         return new ArrayList<>();
+     }
+   
+     List<Advisor> advisors = new ArrayList<>();
+     //遍历advisorNames
+     for (String name : advisorNames) {
+         if (isEligibleBean(name)) {
+             //忽略郑州创建中的advisor bean
+             if (this.beanFactory.isCurrentlyInCreation(name)) {
+                 if (logger.isTraceEnabled()) {
+                     logger.trace("Skipping currently created advisor '" + name + "'");
+                 }
+             }
+             else {
+                 try {
+                     //调用getBean方法从容器中获取名称为name的bean，并将bean添加到advisors中
+                     advisors.add(this.beanFactory.getBean(name, Advisor.class));
+                 }
+                 catch (BeanCreationException ex) {
+                     Throwable rootCause = ex.getMostSpecificCause();
+                     if (rootCause instanceof BeanCurrentlyInCreationException) {
+                         BeanCreationException bce = (BeanCreationException) rootCause;
+                         String bceBeanName = bce.getBeanName();
+                         if (bceBeanName != null && this.beanFactory.isCurrentlyInCreation(bceBeanName)) {
+                             if (logger.isTraceEnabled()) {
+                                 logger.trace("Skipping advisor '" + name +
+                                         "' with dependency on currently created bean: " + ex.getMessage());
+                             }
+                             // Ignore: indicates a reference back to the bean we're trying to advise.
+                             // We want to find advisors other than the currently created bean itself.
+                             continue;
+                         }
+                     }
+                     throw ex;
+                 }
+             }
+         }
+     }
+     return advisors;
+}
+```
+`wrapIfNecessary`方法中第二行关键的代码就是创建代理，调用了下面这行代码。
+```text
+Object proxy = createProxy(bean.getClass(), beanName, specificInterceptors, new SingletonTargetSource(bean));
+```
+```java
+protected Object createProxy(Class<?> beanClass, @Nullable String beanName,
+         @Nullable Object[] specificInterceptors, TargetSource targetSource) {
+
+     if (this.beanFactory instanceof ConfigurableListableBeanFactory) {
+         AutoProxyUtils.exposeTargetClass((ConfigurableListableBeanFactory) this.beanFactory, beanName, beanClass);
+     }
+
+     ProxyFactory proxyFactory = new ProxyFactory();
+     //步骤1：获取当前类的属性。
+     proxyFactory.copyFrom(this);
+
+     //步骤2：添加代理接口。
+     if (!proxyFactory.isProxyTargetClass()) {
+         if (shouldProxyTargetClass(beanClass, beanName)) {
+             proxyFactory.setProxyTargetClass(true);
+         }
+         else {
+             evaluateProxyInterfaces(beanClass, proxyFactory);
+         }
+     }
+
+     //步骤3：拦截器封装转化为增强器
+     Advisor[] advisors = buildAdvisors(beanName, specificInterceptors);
+     //步骤4：将Advisor加入到ProxyFactory中。
+     proxyFactory.addAdvisors(advisors);
+     //步骤5：设置要代理的类。
+     proxyFactory.setTargetSource(targetSource);
+     //步骤6：为子类提供了定制函数customizeProxyFactory
+     customizeProxyFactory(proxyFactory);
+
+     //步骤7：设置是否需要冻结代理对象。用来控制代理工厂被配置后，是否还允许修改通知。缺省值为false
+     proxyFactory.setFrozen(this.freezeProxy);
+     if (advisorsPreFiltered()) {
+         proxyFactory.setPreFiltered(true);
+     }
+
+     //步骤8：进行代理操作。
+     return proxyFactory.getProxy(getProxyClassLoader());
+}
+```
+其中的关键代码是`proxyFactory.getProxy(getProxyClassLoader())`，作用是代理类的创建和处理。
+```java
+public Object getProxy() {
+    // 调用了ProxyCreatorSupport的createAopProxy()方法创建一个AopProxy对象
+   // 然后调用AopProxy对象的getProxy方法
+   return createAopProxy().getProxy();
+}
+```
+```java
+protected final synchronized AopProxy createAopProxy() {
+  if (!this.active) {
+      activate();
+  }
+  // 实际就是使用DefaultAopProxyFactory来创建一个代理对象
+  // 可以看到在调用createAopProxy方法时，传入的参数是this
+  // 这是因为ProxyCreatorSupport本身就保存了创建整个代理对象所需要的配置信息
+  return getAopProxyFactory().createAopProxy(this);
+}
+```
+`createAopProxy`通过AOP相关的配置信息来决定到底是使用CGLib代理还是JDK代理。
+```java
+public AopProxy createAopProxy(AdvisedSupport config) throws AopConfigException {
+  // 如果开启了优化，或者ProxyTargetClass设置为true
+  // 或者没有提供代理类需要实现的接口，那么使用cglib代理
+  // 在前面分析参数的时候已经说过了
+  // 默认情况下Optimize都为false,也不建议设置为true,因为会进行一些侵入性的优化
+  // 除非你对cglib的优化非常了解，否则不建议开启
+  if (config.isOptimize() || config.isProxyTargetClass() || hasNoUserSuppliedProxyInterfaces(config)) {
+      Class<?> targetClass = config.getTargetClass();
+      if (targetClass == null) {
+          throw new AopConfigException("TargetSource cannot determine target class: " +
+                  "Either an interface or a target is required for proxy creation.");
+      }
+      // 需要注意的是，如果需要代理的类本身就是一个接口
+      // 或者需要被代理的类本身就是一个通过jdk动态代理生成的类
+      // 那么不管如何设置都会使用jdk动态代理
+      if (targetClass.isInterface() || Proxy.isProxyClass(targetClass)) {
+          return new JdkDynamicAopProxy(config);
+      }
+      return new ObjenesisCglibAopProxy(config);
+  }
+  // 否则都是jdk代理
+  else {
+      return new JdkDynamicAopProxy(config);
+  }
+}
+```
+AOP原理用的就是动态代理，而且在`Spring`中主要使用了两种动态代理：
+- JDK动态代理技术：JDK的动态代理时基于Java的反射机制来实现的，是Java 原生的一种代理方式。他的实现原理就是让代理类和被代理类实现同一接口，代理类持有目标对象来达到方法拦截的作用。
+通过接口的方式有两个弊端一个就是必须保证被代理类有接口，另一个就是如果相对被代理类的方法进行代理拦截，那么就要保证这些方法都要在接口中声明。接口继承的是`java.lang.reflect.InvocationHandler`。
+- CGLib动态代理技术：CGLib动态代理使用的ASM这个非常强大的Java字节码生成框架来生成`class`，基于继承的实现动态代理，可以直接通过`super`关键字来调用被代理类的方法，子类可以调用父类的方法，不要求有接口。
+
+#### 动态代理
+代理是一种常见的设计模式，通过为其他对象提供一种代理以控制对这个对象的访问。代理对象在客户端和目标对象之间起到中介的作用，可以在不修改目标对象的情况下，扩展其功能。
+代理模式包含三个主要角色：代理接口、目标对象、代理对象。代理模式分为静态代理和动态代理两种类型。
+静态代理在编译时由程序员手动创建或通过工具生成代理类，增加了代码量。动态代理在运行时动态生成代理类，包括JDK动态代理和CGLIB动态代理。
+
+Spring默认采取的动态代理机制实现AOP，简单来说就是在程序运行期间动态的将某段代码切入到指定方法指定位置进行运行的编程方式。
+JDK动态代理使用`java.lang.reflect.Proxy`类和`java.lang.reflect.InvocationHandler`接口来实现，它只能代理实现了接口的类。
+```java
+public interface Service {
+    void perform();
+}
+
+public class RealService implements Service {
+   @Override
+   public void perform() {
+      System.out.println("Executing perform method in RealService");
+   }
+}
+```
+```java
+public class ServiceInvocationHandler implements InvocationHandler {
+    private final Object target;
+
+    public ServiceInvocationHandler(Object target) {
+        this.target = target;
+    }
+
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        System.out.println("Before method call");
+        Object result = method.invoke(target, args);
+        System.out.println("After method call");
+        return result;
+    }
+}
+```
+```java
+public class Main {
+    public static void main(String[] args) {
+        Service realService = new RealService();
+        ServiceInvocationHandler handler = new ServiceInvocationHandler(realService);
+
+        Service proxyService = (Service) Proxy.newProxyInstance(
+                realService.getClass().getClassLoader(),
+                realService.getClass().getInterfaces(),
+                handler
+        );
+        proxyService.perform();
+    }
+}
+```
+CGLIB动态代理使用字节码生成技术，可以代理没有实现接口的类。它通过继承的方式创建代理类，因此不能代理`final`类。
+```xml
+<!--在pom.xml中添加以下依赖->
+<dependency>
+    <groupId>cglib</groupId>
+    <artifactId>cglib</artifactId>
+    <version>3.3.0</version>
+</dependency>
+```
+```java
+public class RealService {
+    public void perform() {
+        System.out.println("Executing perform method in RealService");
+    }
+}
+
+public class ServiceMethodInterceptor implements MethodInterceptor {
+   @Override
+   public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
+      System.out.println("Before method call");
+      Object result = proxy.invokeSuper(obj, args);
+      System.out.println("After method call");
+      return result;
+   }
+}
+```
+```java
+public class Main {
+    public static void main(String[] args) {
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(RealService.class);
+        enhancer.setCallback(new ServiceMethodInterceptor());
+
+        RealService proxyService = (RealService) enhancer.create();
+        proxyService.perform();
+    }
+}
+```
+
 ## Spring事务
-Spring 为事务管理提供了丰富的功能支持，Spring 事务管理分为编码式和声明式的两种方式。
-编程式事务指的是通过编码方式实现事务；声明式事务基于 AOP，即使用`@Transactional`注解，将具体业务逻辑与事务处理解耦。声明式事务管理使业务代码逻辑不受污染, 因此在实际使用中声明式事务用的比较多。
+事务是一组操作，被视为一个不可分割的工作单元，要么全部完成，要么全部失败回滚，来确保数据的一致性和完整性。
+Spring事务管理允许我们在应用程序中声明式地或编程式地管理事务，它提供了一个事务管理抽象层，使得事务的使用和配置更加简单和灵活。
+Spring事务管理不直接管理数据库事务，而是通过委托给底层的数据库事务管理器，如`JDBC`或`Hibernate`的事务管理器，来实现对数据库事务的控制。
+
+### Spring事务的使用
+Spring事务管理分为编码式和声明式的两种方式。编程式事务指的是通过编码方式实现事务，声明式事务基于AOP，即使用`@Transactional`注解，将具体业务逻辑与事务处理解耦。
+声明式事务管理使业务代码逻辑不受污染，因此在实际使用中声明式事务用的比较多。
+
+通过简单的配置或注解，Spring允许开发者将事务管理从业务代码中分离出来，提高了代码的可读性和可维护性。
+使用`@Transactional`注解，简单配置即可管理事务。例如在`Service`层的方法上标注`@Transactional`注解，Spring将自动处理事务边界。
+```java
+@Service
+public class UserService {
+
+    @Transactional
+    public void createUser(User user) {
+        // 业务逻辑代码
+    }
+}
+
+@Configuration
+@EnableTransactionManagement
+public class AppConfig {
+   // 其他配置
+}
+```
+使用`TransactionTemplate`或`PlatformTransactionManager`手动管理事务，虽然不常用，但在某些情况下，可以用于需要更细粒度控制的场景。
+```java
+@Service
+public class UserService {
+
+    private final TransactionTemplate transactionTemplate;
+
+    @Autowired
+    public UserService(PlatformTransactionManager transactionManager) {
+        this.transactionTemplate = new TransactionTemplate(transactionManager);
+    }
+
+    public void createUser(User user) {
+        transactionTemplate.execute(status -> {
+            // 业务逻辑代码
+            return null;
+        });
+    }
+}
+```
+```java
+@Service
+public class UserService {
+
+    private final PlatformTransactionManager transactionManager;
+
+    @Autowired
+    public UserService(PlatformTransactionManager transactionManager) {
+        this.transactionManager = transactionManager;
+    }
+
+    public void createUser(User user) {
+        DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        def.setIsolationLevel(TransactionDefinition.ISOLATION_DEFAULT);
+        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+        TransactionStatus status = transactionManager.getTransaction(def);
+        try {
+            // 业务逻辑代码
+            transactionManager.commit(status);
+        } catch (Exception e) {
+            transactionManager.rollback(status);
+            throw e;
+        }
+    }
+}
+```
+
+值得注意的是，Spring利用AOP和事务拦截器来拦截被`@Transactional`注解的方法，在方法调用前开启事务，在方法调用后根据方法执行结果决定提交或回滚事务。
+所以`@Transactional`注解会有失效情况：
+1. 如果某个方法是非`public`的，那么`@Transactional`就会失效。因为事务的底层是利用`cglib`代理实现，`cglib`是基于父子类来实现的，子类是不能重载父类的`private`方法，所以无法很好利用代理，这种情况下会导致`@Transactional`失效；
+2. 使用的数据库引擎不支持事务。因为Spring的事务调用的也是数据库事务的API，如果数据库都不支持事务，那么`@Transactional`注解也就失效了；
+3. 添加了`@Transactional`注解的方法不能在同一个类中调用，否则会使事务失效。这是因为Spring AOP通过代理来管理事务，自调用不会经过代理；
+4. `@Transactional`注解属性`propagation`设置错误，若是错误的配置以下三种 `propagation`，事务将不会发生回滚：
+   - `TransactionDefinition.PROPAGATION_SUPPORTS`：如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。
+   - `TransactionDefinition.PROPAGATION_NOT_SUPPORTED`：以非事务方式运行，如果当前存在事务，则把当前事务挂起。
+   - `TransactionDefinition.PROPAGATION_NEVER`：以非事务方式运行，如果当前存在事务，则抛出异常。
+5. `@Transactional`注解属性`rollbackFor`设置错误，`rollbackFor`可以指定能够触发事务回滚的异常类型。默认情况下，Spring仅在抛出未检查异常（继承自`RuntimeException`）时回滚事务。对于受检异常（继承自 `Exception`），事务不会回滚，除非明确配置了`rollbackFor`属性；
+6. 异常被捕获了，导致`@Transactional`失效。当事务方法中抛出一个异常后，应该是需要表示当前事务需要`rollback`，如果在事务方法中手动捕获了该异常，那么事务方法则会认为当前事务应该正常提交，此时就会出现事务方法中明明有报错信息表示当前事务需要回滚，但是事务方法认为是正常，出现了前后不一致，也是因为这样就会抛出`UnexpectedRollbackException`异常；
 
 ### Spring事务的隔离级别
-事务隔离级别，即数据库中事务隔离级别，指的是一个事务对数据的修改与另一个并行的事务的隔离程度，当多个事务同时访问相同数据时，如果没有采取必要的隔离机制，就可能发生以下问题：
+事务隔离级别，即数据库中事务隔离级别，指的是一个事务对数据的修改与另一个并行的事务的隔离程度。当多个事务同时访问相同数据时，如果没有采取必要的隔离机制，就可能发生以下问题：
 
 |问题     | 描述                                                                                                                                         |
 |-----|--------------------------------------------------------------------------------------------------------------------------------------------|
@@ -1512,23 +1976,23 @@ Spring 为事务管理提供了丰富的功能支持，Spring 事务管理分为
 |幻读     | 是指当事务不是独立执行时发生的一种现象。如第一个事务对一个表中的数据进行了修改，这种修改涉及到表中的全部数据行。 同时，第二个事务也修改这个表中的数据，这种修改是向表中插入一行新数据。那么，以后就会发生操作第一个事务的用户发现表中还有没有修改的数据行，就好象 发生了幻觉一样。 |
 |不可重复读     | 在一个事务里面的操作中发现了未被操作的数据。 比方说在同一个事务中先后执行两条一模一样的select语句，期间在此次事务中没有执行过任何DDL语句，但先后得到的结果不一致，这就是不可重复读。                                            |
 
-<br>
-Spring支持的隔离级别：
+Spring事务管理框架支持标准的数据库事务隔离级别，这些隔离级别与底层数据库系统所支持的隔离级别一致。
 
 |隔离级别     | 描述                                                                                          |
 |-----|---------------------------------------------------------------------------------------------|
-|DEFAULT     | 使用数据库本身使用的隔离级别。ORACLE（读已提交） MySQL（可重复读）                                                     |
-|READ_UNCOMITTED     | 读未提交（脏读）最低的隔离级别，一切皆有可能。                                                                     |
-|READ_COMMITED     | 读已提交，ORACLE默认隔离级别，有幻读以及不可重复读风险。                                                             |
-|REPEATABLE_READ     | 可重复读，解决不可重复读的隔离级别，但还是有幻读风险。                                                                 |
-|SERLALIZABLE     | 串行化，所有事务请求串行执行，最高的事务隔离级别，不管多少事务，挨个运行完一个事务的所有子事务之后才可以执行另外一个事务里面的所有子事务，这样就解决了脏读、不可重复读和幻读的问题了。 |
+|`DEFAULT`     | 使用数据库本身使用的隔离级别。ORACLE（读已提交） MySQL（可重复读）                                                     |
+|`READ_UNCOMITTED`     | 读未提交（脏读）最低的隔离级别，一切皆有可能。                                                                     |
+|`READ_COMMITED`     | 读已提交，ORACLE默认隔离级别，有幻读以及不可重复读风险。                                                             |
+|`REPEATABLE_READ`     | 可重复读，解决不可重复读的隔离级别，但还是有幻读风险。                                                                 |
+|`SERLALIZABLE`     | 串行化，所有事务请求串行执行，最高的事务隔离级别，不管多少事务，挨个运行完一个事务的所有子事务之后才可以执行另外一个事务里面的所有子事务，这样就解决了脏读、不可重复读和幻读的问题了。 |
 
-不是事务隔离级别设置得越高越好，事务隔离级别设置得越高，意味着势必要花手段去加锁用以保证事务的正确性，那么效率就要降低，因此实际开发中往往要在效率和并发正确性之间做一个取舍，一般情况下会设置为READ_COMMITED，此时避免了脏读，并发性也还不错，之后再通过一些别的手段去解决不可重复读和幻读的问题就好了。
+不是事务隔离级别设置得越高越好，事务隔离级别设置得越高，意味着势必要花手段去加锁来保证事务的正确性，那么效率就要降低。
+因此实际开发中往往要在效率和并发正确性之间做一个取舍，一般情况下会设置为`READ_COMMITED`，此时避免了脏读，并发性也还不错，之后再通过一些别的手段去解决不可重复读和幻读的问题就好了。
 
 Spring中通过`@Transactional(isolation = Isolation.REPEATABLE_READ)`可以指定事务的隔离级别。
 Spring建议的是使用`DEFAULT`，即数据库本身的隔离级别，配置好数据库本身的隔离级别，无论在哪个框架中读写数据都不用操心了。
 
-### Spring事务的传播及场景
+### Spring事务的传播
 事务传播行为指，当一个事务方法被另一个事务方法调用时，这个事务方法应该如何进行，是应该加入现有事务，还是应该启动一个新事务。
 
 Spring定义了七种传播行为：
@@ -1593,31 +2057,129 @@ Spring定义了七种传播行为：
 但是随着事务越来越大，执行时间也会变长，就需要将这个大事务拆分成多个事务，如果确保这个事务能够拆分成多个事务，就需要指定Spring的事务传播行为。
 比如，在用户注册时候，需要记录注册日志，这时候可以将记录日志的操作单独划分为一个事务，而注册是另一个单独的事务，可以将保存日志的方法指定`Propagation.REQUIRES_NEW`从而实现。
 
-### Spring事务的原理
-在Spring框架中，事务管理的实现是通过集成数据库事务API来实现的。具体来说，Spring事务管理的核心在于使用各种 `PlatformTransactionManager` 接口的实现类，这些实现类会调用底层数据库事务API来管理事务。
+### Spring事务工作原理
+在Spring框架中，事务管理的实现是通过集成数据库事务API来实现的。具体来说，Spring事务管理的核心在于使用各种`PlatformTransactionManager`接口的实现类，这些实现类会调用底层数据库事务API来管理事务。
+```java
+public interface PlatformTransactionManager extends TransactionManager {
 
-`@Transactional`主要是利用Spring Aop实现的。 
-当一个方法使用了`@Transactional`注解，在运行时，JVM为该Bean创建一个代理对象，并且在调用目标方法的时候进行使用`TransactionInterceptor`拦截，代理对象负责在调用目标方法之前开启事务，然后执行方法的逻辑。
-方法执行成功，则提交事务，如果执行方法中出现异常，则回滚事务。
-同时Spring利用`ThreadLocal`会将事务资源（如数据库连接）与当前线程绑定，以确保在同一事务中共享资源，这些资源在事务提交或回滚时会被清理。
+    /**
+     * 打开事务
+     */
+	TransactionStatus getTransaction(@Nullable TransactionDefinition definition)
+			throws TransactionException;
 
-使用`@Transactional`注解会触发以下步骤：
-1. 创建事务代理对象；
-2. 调用目标方法时，事务代理拦截调用；
-3. 事务拦截器决定开启事务，并调用底层数据库事务API；
-4. 执行目标方法方法中的业务逻辑；
-5. 方法执行完毕后，事务拦截器决定提交或回滚事务，调用底层数据库事务API；
+	/**
+	 * 提交事务
+	 */
+	void commit(TransactionStatus status) throws TransactionException;
 
-`@Transactional`注解失效情况：
-1. 如果某个方法是非public的，那么`@Transactional`就会失效。因为事务的底层是利用`cglib`代理实现，`cglib`是基于父子类来实现的，子类是不能重载父类的private方法，所以无法很好利用代理，这种情况下会导致@Transactional失效；
-2. 使用的数据库引擎不支持事务。因为Spring的事务调用的也是数据库事务的API，如果数据库都不支持事务，那么`@Transactional`注解也就失效了；
-3. 添加了`@Transactional`注解的方法不能在同一个类中调用，否则会使事务失效。这是因为Spring AOP通过代理来管理事务，自调用不会经过代理；
-4. `@Transactional` 注解属性 `propagation` 设置错误，若是错误的配置以下三种 `propagation`，事务将不会发生回滚：
-   - `TransactionDefinition.PROPAGATION_SUPPORTS`：如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。
-   - `TransactionDefinition.PROPAGATION_NOT_SUPPORTED`：以非事务方式运行，如果当前存在事务，则把当前事务挂起。
-   - `TransactionDefinition.PROPAGATION_NEVER`：以非事务方式运行，如果当前存在事务，则抛出异常。
-5. `@Transactional`注解属性`rollbackFor`设置错误，`rollbackFor`可以指定能够触发事务回滚的异常类型。默认情况下，Spring仅在抛出未检查异常（继承自`RuntimeException`）时回滚事务。对于受检异常（继承自 `Exception`），事务不会回滚，除非明确配置了`rollbackFor`属性；
-6. 异常被捕获了，导致`@Transactional`失效。当事务方法中抛出一个异常后，应该是需要表示当前事务需要`rollback`，如果在事务方法中手动捕获了该异常，那么事务方法则会认为当前事务应该正常提交，此时就会出现事务方法中明明有报错信息表示当前事务需要回滚，但是事务方法认为是正常，出现了前后不一致，也是因为这样就会抛出`UnexpectedRollbackException`异常；
+	/**
+	 * 回滚事务
+	 */
+	void rollback(TransactionStatus status) throws TransactionException;
+}
+```
+
+以`@Transactional`注解为例，`@Transactional`主要是利用Spring AOP实现的。 
+`@EnableTransactionManagement`是开启注解式事务，这个注解就是探究Spring事务的入口。它通过`@Import`引入了另一个配置`TransactionManagentConfigurationSelector`。
+```java
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Import(TransactionManagementConfigurationSelector.class)
+public @interface EnableTransactionManagement {
+    AdviceMode mode() default AdviceMode.PROXY;
+}
+```
+`TransactionManagementConfigurationSelector`的作用是根据`EnableTransactionManagementmode.mode`的属性值，选择`AbstractTransactionManagementConfiguration`的哪个实现，默认为`PROXY`模式。
+```java
+protected String[] selectImports(AdviceMode adviceMode) {
+    switch (adviceMode) {
+        case PROXY:
+            return new String[] {AutoProxyRegistrar.class.getName(),
+                    ProxyTransactionManagementConfiguration.class.getName()};
+        case ASPECTJ:
+            return new String[] {determineTransactionAspectClass()};
+        default:
+            return null;
+    }
+}
+```
+`selectImports`方法对`Proxy`模式而言，注入的有两个Bean，一个负责注册，一份负责执行：
+- `AutoProxyRegistrar`：`负责在Spring容器中注册和启用自动代理功能。
+- `ProxyTransactionManagementConfiguration`：负责在使用代理模式时，事务管理器能够正确地与应用程序的业务逻辑集成，并通过AOP拦截器织入事务管理逻辑。
+
+在`ProxyTransactionManagementConfiguration`类中，最关键的是有一个`TransactionInterceptor`类型的Bean，这个Bean在Spring中负责管理和执行事务的核心逻辑。
+```java
+@Bean
+@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+public TransactionInterceptor transactionInterceptor(
+        TransactionAttributeSource transactionAttributeSource) {
+    TransactionInterceptor interceptor = new TransactionInterceptor();
+    interceptor.setTransactionAttributeSource(transactionAttributeSource);
+    if (this.txManager != null) {
+        interceptor.setTransactionManager(this.txManager);
+    }
+    return interceptor;
+}
+```
+其中`TransactionInterceptor`类中`invoke`方法就是实现`@Transactional`注解代理的关键。
+```java
+public Object invoke(MethodInvocation invocation) throws Throwable {
+    // Work out the target class: may be {@code null}.
+    // The TransactionAttributeSource should be passed the target class
+    // as well as the method, which may be from an interface.
+    Class<?> targetClass = (invocation.getThis() != null ? AopUtils.getTargetClass(invocation.getThis()) : null);
+
+    // Adapt to TransactionAspectSupport's invokeWithinTransaction...
+    return invokeWithinTransaction(invocation.getMethod(), targetClass, invocation::proceed);
+}
+```
+```java
+@Nullable
+protected Object invokeWithinTransaction(Method method, @Nullable Class<?> targetClass,
+        final InvocationCallback invocation) throws Throwable {
+
+
+    TransactionAttributeSource tas = getTransactionAttributeSource();
+    final TransactionAttribute txAttr = (tas != null ? tas.getTransactionAttribute(method, targetClass) : null);
+    final TransactionManager tm = determineTransactionManager(txAttr);
+
+    //省略部分代码
+
+    //获取事物管理器
+    PlatformTransactionManager ptm = asPlatformTransactionManager(tm);
+    final String joinpointIdentification = methodIdentification(method, targetClass, txAttr);
+
+    if (txAttr == null || !(ptm instanceof CallbackPreferringPlatformTransactionManager)) {
+        // 打开事务(内部就是getTransactionStatus的过程)
+        TransactionInfo txInfo = createTransactionIfNecessary(ptm, txAttr, joinpointIdentification);
+
+        Object retVal;
+        try {
+            // 执行业务逻辑 invocation.proceedWithInvocation();
+        } catch (Throwable ex) {
+            // 异常回滚
+            completeTransactionAfterThrowing(txInfo, ex);
+            throw ex;
+        } finally {
+            cleanupTransactionInfo(txInfo);
+        }
+
+        //省略部分代码
+
+        //提交事物
+        commitTransactionAfterReturning(txInfo);
+        return retVal;
+    }
+}
+```
+`invokeWithinTransaction`方法是`TransactionInterceptor`类中的核心方法，它负责在执行目标方法时管理事务的生命周期。首先该方法通过`getTransactionAttributeSource()`获取事务属性源，进而确定当前方法是否需要事务支持。
+接着根据获取的事务属性，选择合适的事务管理器，并生成一个方法标识以记录当前事务的上下文信息。在方法执行前，会检查是否需要开启新的事务，并在事务环境中执行目标方法的逻辑。
+如果方法执行过程中出现异常，事务管理器会回滚事务以保证数据一致性，否则在方法执行成功后，事务管理器将提交事务。最后无论方法执行结果如何，都会清理事务相关的信息，释放资源并恢复状态，来保证事务管理的完整性和有效性
+
+简而言之，当一个方法使用了`@Transactional`注解，在程序运行时，JVM为该Bean创建一个代理对象，并且在调用目标方法的时候进行使用`TransactionInterceptor`拦截，代理对象负责在调用目标方法之前开启事务，然后执行方法的逻辑。
+方法执行成功，则提交事务，如果执行方法中出现异常，则回滚事务。同时Spring利用`ThreadLocal`会将事务资源（如数据库连接）与当前线程绑定，以确保在同一事务中共享资源，这些资源在事务提交或回滚时会被清理。
 
 ## SpringBoot
 > `SpringBoot`是由`Pivotal`团队提供的全新框架，其设计目的是用来简化新`Spring`应用的初始搭建以及开发过程。
