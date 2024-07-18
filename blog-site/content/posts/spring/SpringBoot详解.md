@@ -1,11 +1,10 @@
 ---
 title: "SpringBoot详解"
-date: 2024-07-20
+date: 2024-07-18
 draft: false
 tags: ["Java", "spring", "详解"]
 slug: "java-springboot"
 ---
-
 
 
 ## 概览
@@ -27,6 +26,19 @@ slug: "java-springboot"
   `SpringBoot` 提供基于 `http、ssh、telnet` 对运行时的项目进行监控。
 - 无代码生成和 xml 配置：
   `SpringBoot` 的神奇的不是借助于代码生成来实现的，而是通过条件注解来实现的，这是 `Spring 4.x` 提供的新特性。`Spring 4.x` 提倡使用 Java 配置和注解配置组合，而 `SpringBoot` 不需要任何 xml 配置即可实现 `Spring` 的所有配置。
+
+## 与Spring的区别
+
+## 使用SpringBoot
+
+### SpringBoot常用注解
+
+### SpringBoot异常处理
+
+## SpringBoot自动配置
+
+## SpringBoot配置管理
+
 
 ## @SpringBootApplication原理
 `@SpringBootApplication`这个注解通常标注在启动类上：
@@ -139,4 +151,6 @@ public class SpringApplicationAdminJmxAutoConfiguration {}
 `@Configuration` 的作用是将类标记为配置类，这个配置类可以定义 `@Bean` 方法来创建和配置 Spring 容器中的 Bean。同时，`@EnableAutoConfiguration` 启用了`SpringBoot`的自动配置功能，`SpringBoot`会根据项目中的依赖，自动配置很多常用的 Spring 组件，这样就不需要手动配置它们。
 这个自动配置的过程是通过扫描 `spring.factories` 文件中的自动配置类来实现的。另外，`@ComponentScan` 让 Spring 自动扫描当前包及其子包下的所有组件，比如标注了 `@Component`、`@Service`、`@Repository` 和 `@Controller` 的类，并把它们注册到 Spring 容器中。
 因此，把应用的主类放在根包中，`SpringBoot`就会自动扫描并加载所有需要的组件和配置，让你可以专注于编写业务代码，而不用担心复杂的配置细节。`SpringBoot`通过这一系列自动化的配置和扫描机制，简化了开发和配置的工作量，让应用能够快速启动并运行。
+
+
 
