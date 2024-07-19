@@ -10,7 +10,7 @@ slug: "uploadfile-code"
 ![整合文件上传功能](/iblog/posts/annex/images/essays/整合文件上传功能-01.jpg)
 
 ## pom.xml
-fastdfs-client-java-1.27.jar：[点击下载](/iblog/posts/annex/jar/lib/fastdfs-client-java-1.27.jar)
+`fastdfs-client-java-1.27.jar` [点击下载](/iblog/posts/annex/jar/lib/fastdfs-client-java-1.27.jar)
 
 ```xml
     <dependencies>

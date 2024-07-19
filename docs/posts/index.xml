@@ -6,8 +6,15 @@
     <description>Recent content in Posts on 脚踏实地</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Thu, 18 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jul 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://whiteppure.github.io/iblog/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java枚举</title>
+      <link>https://whiteppure.github.io/iblog/posts/javabasics/rookie-enum/</link>
+      <pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://whiteppure.github.io/iblog/posts/javabasics/rookie-enum/</guid>
+      <description>概述 枚举在Java中是一种特殊的类，用来定义一组固定的常量。它在Java5中引入，提供了一种类型安全的方式来定义和使用常量集合。尽管enum看起来像是新的数据类</description>
+    </item>
     <item>
       <title>SpringBoot详解</title>
       <link>https://whiteppure.github.io/iblog/posts/spring/java-springboot/</link>
@@ -30,14 +37,14 @@
       <description>概览 语法糖是指编程语言中的一种语法结构，它们并不提供新的功能，而是为了让代码更易读、更易写而设计的。 语法糖使得某些常见的编程模式或操作变得更加简洁和直观，但在底</description>
     </item>
     <item>
-      <title>synchronized关键字</title>
+      <title>synchronized关键字详解</title>
       <link>https://whiteppure.github.io/iblog/posts/javakeyword/java-keyword-synchronized/</link>
       <pubDate>Thu, 11 Jul 2024 00:00:00 +0000</pubDate>
       <guid>https://whiteppure.github.io/iblog/posts/javakeyword/java-keyword-synchronized/</guid>
       <description>synchronized synchronized是Java提供的关键字译为同步，是Java中用于实现线程同步的一种机制。它可以确保在同一时间只有一个线程能够执行某段代码，从而避免线程</description>
     </item>
     <item>
-      <title>volatile关键字</title>
+      <title>volatile关键字详解</title>
       <link>https://whiteppure.github.io/iblog/posts/javakeyword/java-keyword-volatile/</link>
       <pubDate>Thu, 11 Jul 2024 00:00:00 +0000</pubDate>
       <guid>https://whiteppure.github.io/iblog/posts/javakeyword/java-keyword-volatile/</guid>
@@ -531,7 +538,7 @@
       <link>https://whiteppure.github.io/iblog/posts/codes/scheduled-job/</link>
       <pubDate>Sat, 09 Sep 2023 00:00:00 +0000</pubDate>
       <guid>https://whiteppure.github.io/iblog/posts/codes/scheduled-job/</guid>
-      <description>代码实现 代码结构 pom &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-security&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-quartz&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.projectlombok&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;lombok&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;cn.hutool&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hutool-all&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; 库表结构 -- ---------------------------- -- 定时任务调度表 -- ---------------------------- drop table if exists sys_job; create table sys_job ( job_id bigint(20) not null auto_increment comment &amp;#39;任务ID&amp;#39;, job_name varchar(64) default &amp;#39;&amp;#39; comment</description>
+      <description>代码结构 pom依赖 &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-security&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-quartz&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.projectlombok&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;lombok&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;cn.hutool&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hutool-all&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; 库表结构 -- ---------------------------- -- 定时任务调度表 -- ---------------------------- drop table if exists sys_job; create table sys_job ( job_id bigint(20) not null auto_increment comment &amp;#39;任务ID&amp;#39;, job_name varchar(64) default &amp;#39;&amp;#39; comment</description>
     </item>
     <item>
       <title>SpringBoot整合Nacos</title>
@@ -545,7 +552,7 @@
       <link>https://whiteppure.github.io/iblog/posts/codes/uploadfile-code/</link>
       <pubDate>Fri, 11 Aug 2023 00:00:00 +0000</pubDate>
       <guid>https://whiteppure.github.io/iblog/posts/codes/uploadfile-code/</guid>
-      <description>结构 pom.xml fastdfs-client-java-1.27.jar：点击下载 &amp;lt;dependencies&amp;gt; &amp;lt;!-- fastdfs --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.csource&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;fastdfs-client-java&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.27&amp;lt;/version&amp;gt; &amp;lt;systemPath&amp;gt;${project.basedir}/lib/fastdfs-client-java-1.27.jar&amp;lt;/systemPath&amp;gt; &amp;lt;scope&amp;gt;system&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;!--aliyun oss 依赖--&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;com.aliyun.oss&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;aliyun-sdk-oss&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-test&amp;lt;/artifactId&amp;gt; &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.projectlombok&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;lombok&amp;lt;/artifactId&amp;gt; &amp;lt;optional&amp;gt;true&amp;lt;/optional&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;cn.hutool&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hutool-all&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;5.8.11&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt;</description>
+      <description>结构 pom.xml fastdfs-client-java-1.27.jar 点击下载 &amp;lt;dependencies&amp;gt; &amp;lt;!-- fastdfs --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.csource&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;fastdfs-client-java&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.27&amp;lt;/version&amp;gt; &amp;lt;systemPath&amp;gt;${project.basedir}/lib/fastdfs-client-java-1.27.jar&amp;lt;/systemPath&amp;gt; &amp;lt;scope&amp;gt;system&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;!--aliyun oss 依赖--&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;com.aliyun.oss&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;aliyun-sdk-oss&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-test&amp;lt;/artifactId&amp;gt; &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.projectlombok&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;lombok&amp;lt;/artifactId&amp;gt; &amp;lt;optional&amp;gt;true&amp;lt;/optional&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;cn.hutool&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hutool-all&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;5.8.11&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;commons-io&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;commons-io&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;2.11.0&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; application.yml server: port: 80 公共部分 FileManagement public interface FileManagement { /** * 设置下一个be</description>
     </item>
     <item>
       <title>Java整合支付功能</title>
@@ -643,7 +650,7 @@
       <link>https://whiteppure.github.io/iblog/posts/codes/java-multi-gadget/</link>
       <pubDate>Sat, 09 Apr 2022 00:00:00 +0000</pubDate>
       <guid>https://whiteppure.github.io/iblog/posts/codes/java-multi-gadget/</guid>
-      <description>写在前面 本文中所涉及的程序均为Java开发，如果您想要直接使用这些工具需要提前配置Java环境。所涉及到的程序均提供完整代码，如果您有兴趣可以尝试运行。 使用ja</description>
+      <description>写在前面 本文中所涉及的程序均为Java开发，如果您想要直接使用这些工具需要提前配置Java环境。所涉及到的程序均提供完整代码，有兴趣可以尝试运行。 程序使用jav</description>
     </item>
     <item>
       <title>数据结构与算法详解</title>
@@ -867,7 +874,7 @@
       <link>https://whiteppure.github.io/iblog/posts/intro/nginx-start/</link>
       <pubDate>Thu, 04 Mar 2021 00:00:00 +0000</pubDate>
       <guid>https://whiteppure.github.io/iblog/posts/intro/nginx-start/</guid>
-      <description>Nginx介绍 Nginx (&amp;ldquo;engine x&amp;rdquo;)是一个高性能的HTTP和反向代理服务器，特点是占有内存少，并发能力强，事实上Nginx的并发能力确实在同类型的网页服务器中表</description>
+      <description>概述 Nginx是一个高性能的Web服务器和反向代理服务器，特点是占有内存少，并发能力强，Nginx的并发能力确实在同类型的网页服务器中表现较好。 Nginx专为性</description>
     </item>
     <item>
       <title>Java面向对象</title>
@@ -1053,30 +1060,30 @@
     </item>
     <item>
       <title></title>
-      <link>https://whiteppure.github.io/iblog/posts/javakeyword/static%E5%85%B3%E9%94%AE%E5%AD%97/</link>
+      <link>https://whiteppure.github.io/iblog/posts/javakeyword/static%E5%85%B3%E9%94%AE%E5%AD%97%E8%AF%A6%E8%A7%A3/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://whiteppure.github.io/iblog/posts/javakeyword/static%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
+      <guid>https://whiteppure.github.io/iblog/posts/javakeyword/static%E5%85%B3%E9%94%AE%E5%AD%97%E8%AF%A6%E8%A7%A3/</guid>
       <description></description>
     </item>
     <item>
       <title></title>
-      <link>https://whiteppure.github.io/iblog/posts/javakeyword/strictfp%E5%85%B3%E9%94%AE%E5%AD%97/</link>
+      <link>https://whiteppure.github.io/iblog/posts/javakeyword/strictfp%E5%85%B3%E9%94%AE%E5%AD%97%E8%AF%A6%E8%A7%A3/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://whiteppure.github.io/iblog/posts/javakeyword/strictfp%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
+      <guid>https://whiteppure.github.io/iblog/posts/javakeyword/strictfp%E5%85%B3%E9%94%AE%E5%AD%97%E8%AF%A6%E8%A7%A3/</guid>
       <description></description>
     </item>
     <item>
       <title></title>
-      <link>https://whiteppure.github.io/iblog/posts/javakeyword/this%E5%85%B3%E9%94%AE%E5%AD%97/</link>
+      <link>https://whiteppure.github.io/iblog/posts/javakeyword/this%E5%85%B3%E9%94%AE%E5%AD%97%E8%AF%A6%E8%A7%A3/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://whiteppure.github.io/iblog/posts/javakeyword/this%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
+      <guid>https://whiteppure.github.io/iblog/posts/javakeyword/this%E5%85%B3%E9%94%AE%E5%AD%97%E8%AF%A6%E8%A7%A3/</guid>
       <description></description>
     </item>
     <item>
       <title></title>
-      <link>https://whiteppure.github.io/iblog/posts/javakeyword/transient%E5%85%B3%E9%94%AE%E5%AD%97/</link>
+      <link>https://whiteppure.github.io/iblog/posts/javakeyword/transient%E5%85%B3%E9%94%AE%E5%AD%97%E8%AF%A6%E8%A7%A3/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://whiteppure.github.io/iblog/posts/javakeyword/transient%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
+      <guid>https://whiteppure.github.io/iblog/posts/javakeyword/transient%E5%85%B3%E9%94%AE%E5%AD%97%E8%AF%A6%E8%A7%A3/</guid>
       <description></description>
     </item>
   </channel>

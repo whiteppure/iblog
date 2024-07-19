@@ -7,13 +7,11 @@ slug: "scheduled-job"
 ---
 
 
-## 代码实现
-
 代码结构
 
 ![定时任务可视化管理-01](/iblog/posts/annex/images/essays/定时任务可视化管理-01.png)
 
-### pom
+## pom依赖
 ```xml
 <dependency>
     <groupId>org.springframework.boot</groupId>
@@ -40,7 +38,7 @@ slug: "scheduled-job"
     <artifactId>hutool-all</artifactId>
 </dependency>
 ```
-### 库表结构
+## 库表结构
 ```sql
 -- ----------------------------
 -- 定时任务调度表
@@ -81,7 +79,7 @@ create table sys_job_log (
 ) engine=innodb comment = '定时任务调度日志表';
 ```
 
-### JobManagerController
+## JobManagerController
 ```java
 /**
  * @author: whitepure
@@ -99,7 +97,7 @@ public class JobManagerController {
 }
 ```
 
-### SysJobController
+## SysJobController
 ```java
 @RestController
 @RequestMapping("/main")
@@ -195,7 +193,7 @@ public class SysJobController  {
 }
 ```
 
-### SysJobLogController
+## SysJobLogController
 ```java
 @RestController
 @RequestMapping("/jobLog")
@@ -241,7 +239,7 @@ public class SysJobLogController {
 }
 ```
 
-### JobExceptionHandler
+## JobExceptionHandler
 ```java
 @Slf4j
 @RestControllerAdvice("com.chenglian.scheduled")
@@ -258,7 +256,7 @@ public class JobExceptionHandler {
 }
 ```
 
-### TaskException
+## TaskException
 ```java
 public class TaskException extends Exception {
     private static final long serialVersionUID = 1L;
@@ -284,7 +282,7 @@ public class TaskException extends Exception {
 }
 ```
 
-### IErrorCode
+## IErrorCode
 ```java
 public interface IErrorCode {
     long getCode();
@@ -293,7 +291,7 @@ public interface IErrorCode {
 }
 ```
 
-### ApiErrorCode
+## ApiErrorCode
 ```java
 @Getter
 @ToString
@@ -326,7 +324,7 @@ public enum ApiErrorCode implements IErrorCode {
 }
 ```
 
-### R
+## R
 ```java
 @Data
 @EqualsAndHashCode
@@ -381,7 +379,7 @@ public class R<T> implements Serializable  {
 }
 ```
 
-### ISysJobLogService
+## ISysJobLogService
 ```java
 public interface ISysJobLogService {
     /**
@@ -430,7 +428,7 @@ public interface ISysJobLogService {
 }
 ```
 
-### ISysJobService
+## ISysJobService
 ```java
 public interface ISysJobService {
     /**
@@ -524,7 +522,7 @@ public interface ISysJobService {
 
 ```
 
-### AbstractQuartzJob
+## AbstractQuartzJob
 ```java
 public abstract class AbstractQuartzJob implements Job {
     private static final Logger log = LoggerFactory.getLogger(AbstractQuartzJob.class);
@@ -608,7 +606,7 @@ public abstract class AbstractQuartzJob implements Job {
 }
 ```
 
-### CronUtils
+## CronUtils
 ```java
 public class CronUtils {
     /**
@@ -653,7 +651,7 @@ public class CronUtils {
 }
 ```
 
-### JobInvokeUtil
+## JobInvokeUtil
 ```java
 public class JobInvokeUtil {
     /**
@@ -800,7 +798,7 @@ public class JobInvokeUtil {
 }
 ```
 
-### QuartzDisallowConcurrentExecution
+## QuartzDisallowConcurrentExecution
 ```java
 @DisallowConcurrentExecution
 public class QuartzDisallowConcurrentExecution extends AbstractQuartzJob {
@@ -811,7 +809,7 @@ public class QuartzDisallowConcurrentExecution extends AbstractQuartzJob {
 }
 ```
 
-### QuartzJobExecution
+## QuartzJobExecution
 ```java
 public class QuartzJobExecution extends AbstractQuartzJob {
     @Override
@@ -821,7 +819,7 @@ public class QuartzJobExecution extends AbstractQuartzJob {
 }
 ```
 
-### ScheduleConstants
+## ScheduleConstants
 ```java
 public class ScheduleConstants {
     public static final String TASK_CLASS_NAME = "TASK_CLASS_NAME";
@@ -927,7 +925,7 @@ public class ScheduleConstants {
 }
 ```
 
-### ScheduleUtils
+## ScheduleUtils
 ```java
 public class ScheduleUtils {
     /**

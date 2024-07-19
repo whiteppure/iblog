@@ -1,8 +1,8 @@
 ---
-title: "synchronized关键字"
+title: "synchronized关键字详解"
 date: 2024-07-11
 draft: false
-tags: ["Java", "关键字","多线程"]
+tags: ["Java", "关键字","多线程","详解"]
 slug: "java-keyword-synchronized"
 ---
 

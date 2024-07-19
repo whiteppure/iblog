@@ -7,9 +7,8 @@ slug: "java-multi-gadget"
 ---
 
 ## 写在前面
-本文中所涉及的程序均为Java开发，如果您想要直接使用这些工具需要提前配置Java环境。所涉及到的程序均提供完整代码，如果您有兴趣可以尝试运行。
-
-使用`java -jar`命令启动
+本文中所涉及的程序均为Java开发，如果您想要直接使用这些工具需要提前配置Java环境。所涉及到的程序均提供完整代码，有兴趣可以尝试运行。
+程序使用`java -jar`命令启动，如图：
 
 ![Java玩具-009](/iblog/posts/annex/images/readme/Java玩具-009.png)
 
@@ -53,7 +52,6 @@ public abstract class AbstractRandomChar {
 
 }
 ```
-
 ```java
 public class RandomLowChar extends AbstractRandomChar {
 
@@ -67,7 +65,6 @@ public class RandomLowChar extends AbstractRandomChar {
     }
 }
 ```
-
 ```java
 public class RandomNumChar extends AbstractRandomChar {
 
@@ -81,7 +78,6 @@ public class RandomNumChar extends AbstractRandomChar {
     }
 }
 ```
-
 ```java
 public class RandomSpecialChar extends AbstractRandomChar {
 
@@ -95,7 +91,6 @@ public class RandomSpecialChar extends AbstractRandomChar {
     }
 }
 ```
-
 ```java
 public class RandomUpperChar extends AbstractRandomChar {
 
@@ -109,7 +104,6 @@ public class RandomUpperChar extends AbstractRandomChar {
     }
 }
 ```
-
 ```java
 /**
  * 生成随机密码
@@ -179,7 +173,6 @@ public class GenRandomPwd {
     
 }
 ```
-
 ```java
 public class PwdFrame {
 
@@ -292,7 +285,6 @@ public class PwdFrame {
 
 }
 ```
-
 ```java
 public class AutoPwdMainStarter {
     public static void main(String[] args) {
@@ -300,12 +292,14 @@ public class AutoPwdMainStarter {
     }
 }
 ```
+
 ## 截图工具
 截图小工具，支持复制到粘贴板、一次性截取多张图片。[点击下载](/iblog/posts/annex/jar/cut-screen.jar)
 
 ![Java玩具-002](/iblog/posts/annex/images/readme/Java玩具-002.png)
 
 ![Java玩具-003](/iblog/posts/annex/images/readme/Java玩具-003.png)
+
 ### 代码
 ```java
 /**
@@ -1001,7 +995,6 @@ public class CaptureScreen extends JFrame implements ActionListener {
     
 }
 ```
-
 ```java
 /**
  * 截屏方向状态 东西南北
@@ -1040,7 +1033,6 @@ public enum States {
     }
 }
 ```
-
 ```java
 public class CutScreenMainStarter {
 
@@ -1054,9 +1046,9 @@ public class CutScreenMainStarter {
 输入文字，生成二维码。[点击下载](/iblog/posts/annex/jar/qr-code.jar)
 
 ![Java玩具-004](/iblog/posts/annex/images/readme/Java玩具-004.png)
-### 代码
-需要依赖第三方类库：[点击下载](/iblog/posts/annex/jar/lib/qrcode.jar)
 
+### 代码
+需要依赖第三方类库，[点击下载](/iblog/posts/annex/jar/lib/qrcode.jar)
 ```java
 /**
  * 创建二维码
@@ -1102,7 +1094,6 @@ public class QRCode {
 
 }
 ```
-
 ```java
 public class QRCodeFrame {
 
@@ -1158,7 +1149,6 @@ public class QRCodeFrame {
 
 }
 ```
-
 ```java
 public class QRCodeMainStarter {
     public static void main(String[] args) {
@@ -1166,8 +1156,9 @@ public class QRCodeMainStarter {
     }
 }
 ```
+
 ## 英文翻译器
-将英文翻译为中文,仅支持单词、短语翻译，程序默认加载自带的英语字典，如果您想要修改字典可在源代码中进行配置或在程序运行时指定字典路径。[点击下载](/iblog/posts/annex/jar/english-translation.jar)
+将英文翻译为中文，仅支持单词、短语翻译，程序默认加载自带的英语字典，如果您想要修改字典可在源代码中进行配置或在程序运行时指定字典路径。[点击下载](/iblog/posts/annex/jar/english-translation.jar)
 
 ![Java玩具-005](/iblog/posts/annex/images/readme/Java玩具-005.png)
 ### 代码
@@ -1238,7 +1229,6 @@ public class EnglishTranslation {
 
 }
 ```
-
 ```java
 /**
  * GUI翻译组件
@@ -1296,7 +1286,6 @@ public class TranslationFrame {
 
 }
 ```
-
 ```java
 public class TranslationMainStarter {
     public static void main(String[] args) {
@@ -1329,7 +1318,7 @@ public class TranslationMainStarter {
 }
 ```
 
-字典文件dict.txt
+字典文件`dict.txt`
 ```txt
 i=我
 me=我
@@ -1357,6 +1346,7 @@ love=爱
 china=中国
 chinese=中国人
 ```
+
 ## 提色器
 按住alt（macOS用户按住option）鼠标滑动即可获取当前位置颜色。[点击下载](/iblog/posts/annex/jar/english-translation.jar)
 
@@ -1466,7 +1456,6 @@ public class ExtracterFrame {
 
 }
 ```
-
 ```java
 public class ExtractColorMainStarter {
     public static void main(String[] args) {
@@ -1542,7 +1531,6 @@ public class ImgWatermarking {
 
 }
 ```
-
 ```java
 /**
  * @author whitepure
@@ -1696,7 +1684,6 @@ public class WatermarkingFrame {
 
 }
 ```
-
 ```java
 public class ImgWatermarkingMainStarter {
     public static void main(String[] args) {
@@ -1706,7 +1693,7 @@ public class ImgWatermarkingMainStarter {
 ```
 
 ## huffman压缩
-采用huffman算法对文件进行无损压缩，目前仅支持压缩单个文件，压缩好的文件以`.huf`后缀结尾,会与被压缩文件放在相同目录下。[点击下载](/iblog/posts/annex/jar/huffman-zip.jar)
+采用`huffman`算法对文件进行无损压缩，目前仅支持压缩单个文件，压缩好的文件以`.huf`后缀结尾，会与被压缩文件放在相同目录下。[点击下载](/iblog/posts/annex/jar/huffman-zip.jar)
 
 ![Java玩具-008](/iblog/posts/annex/images/readme/Java玩具-008.png)
 ### 代码
@@ -1965,7 +1952,6 @@ public abstract class HuffmanCode {
     }
 }
 ```
-
 ```java
 public class HuffmanUnZip extends HuffmanCode {
 
@@ -2016,7 +2002,6 @@ public class HuffmanUnZip extends HuffmanCode {
     }
 }
 ```
-
 ```java
 public class HuffmanZip extends HuffmanCode{
 
@@ -2068,7 +2053,6 @@ public class HuffmanZip extends HuffmanCode{
 
 }
 ```
-
 ```java
 public class HuffmanFrame {
 
@@ -2183,7 +2167,6 @@ public class HuffmanFrame {
 
 }
 ```
-
 ```java
 public class HuffmanMainStarter {
     public static void main(String[] args) {

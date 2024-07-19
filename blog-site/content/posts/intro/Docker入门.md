@@ -15,7 +15,7 @@ slug: "docker-start"
 还可以提供弹性的云服务，因为`Docker`容器可以随开随关，很适合动态扩容和缩容。
 `Docker`最常见的就是通过多个容器，组建微服务架构，一台机器可以跑多个服务，因此在本机就可以模拟出微服务架构。
 
-## Linux上安装
+## Linux上安装Docker
 2017年的3月1号之后，`Docker`的版本命名开始发生变化，同时将CE版本和EE版本进行分开。
 - Docker社区版（CE）：为了开发人员或小团队创建基于容器的应用,与团队成员分享和自动化的开发管道。`docker-ce`提供了简单的安装和快速的安装，以便可以立即开始开发。`docker-ce`集成和优化，基础设施。（免费）
 - Docker企业版（EE）：专为企业的发展和IT团队建立谁。`docker-ee`为企业提供最安全的容器平台，以应用为中心的平台。（付费）
@@ -58,8 +58,11 @@ slug: "docker-start"
 - 七牛云加速器: [https://reg-mirror.qiniu.com](https://reg-mirror.qiniu.com)
 
 以阿里云获取镜像地址为例， [https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors](https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors)登陆后，左侧菜单选中镜像加速器就可以看到你的专属地址了。
+
 ![获取阿里云docker地址](/iblog/posts/annex/images/application/获取阿里云docker地址.jpg)
+
 配置`Docker`镜像地址，添加以下内容：
+
 ![docker配置](/iblog/posts/annex/images/application/docker配置.jpg)
 
 也可以创建或编辑`/etc/docker/daemon.json`文件，并添加以下内容：
@@ -98,33 +101,33 @@ sudo systemctl restart docker
 
 ## 常用命令
 - 查看当前运行的镜像。
-```shell
-docker ps
-```
+   ```shell
+   docker ps
+   ```
 - 查看所有镜像。
-```shell
-docker ps -a
-```
+   ```shell
+   docker ps -a
+   ```
 - 停止容器。
-```shell
-docker stop 容器名称
-```
+   ```shell
+   docker stop 容器名称
+   ```
 - 删除镜像。
-```shell
-docker rmi 镜像名称
-```
+   ```shell
+   docker rmi 镜像名称
+   ```
 - 下载镜像，若不指定版本为最新版本。
-```shell
-docker pull 镜像:版本
-```
+   ```shell
+   docker pull 镜像:版本
+   ```
 - 查看当前本地仓库的镜像。
-```shell
-docker images
-```
+   ```shell
+   docker images
+   ```
 - 查看远程仓库镜像。
-```shell
-docker search 镜像名
-```
+   ```shell
+   docker search 镜像名
+   ```
 
 以安装运行`nginx`为例。
 ```shell

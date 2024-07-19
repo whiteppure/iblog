@@ -210,6 +210,68 @@ public static void main(String[] args) throws Exception {
 }
 ```
 
+## 泛型与枚举
+在Java中枚举不能使用泛型，因为枚举定义了一组固定的常量，这些常量在编译时确定，而泛型通常用于在运行时处理不同类型的数据。枚举类型的设计初衷是定义有限且固定的常量集，所以不适合与泛型结合。
+再者枚举类继承自`java.lang.Enum`，并且`Enum`类的设计不支持泛型参数。Java的泛型系统主要用于类和接口的参数化，而枚举类型本身没有类似的扩展能力。
+
+举个例子，你有一个盒子（枚举），里面只能放特定的玩具（固定的常量）。你在盒子里只能放这些预先定义好的玩具，这个盒子在制造时就已经决定了里面能放哪些玩具，不能在以后改变。
+而泛型就像是一个可以放各种不同玩具的魔法箱。你可以在这个箱子里放任何类型的玩具，比如小汽车、积木、布娃娃等等。这个箱子是允许在运行时根据需要决定放什么类型的玩具的。
+因为盒子（枚举）已经固定了要放的玩具，而魔法箱（泛型）是为了处理不同类型的玩具，所以它们不能直接结合使用。
+
+尽管枚举本身不能使用泛型，但可以通过其他方式间接利用泛型来处理枚举类型。可以创建一个泛型类，其中泛型类型参数是一个枚举类型。
+```java
+// 定义一个泛型类，其中 T 是一个枚举类型
+public class EnumProcessor<T extends Enum<T>> {
+    private final Class<T> enumType;
+
+    public EnumProcessor(Class<T> enumType) {
+        this.enumType = enumType;
+    }
+
+    public void printAllValues() {
+        for (T constant : enumType.getEnumConstants()) {
+            System.out.println(constant);
+        }
+    }
+}
+
+// 使用示例
+public enum Day {
+    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;
+}
+
+public class Main {
+    public static void main(String[] args) {
+        EnumProcessor<Day> dayProcessor = new EnumProcessor<>(Day.class);
+        dayProcessor.printAllValues();
+    }
+}
+```
+也可以定义一个泛型方法，其中泛型类型参数是枚举类型。这样可以在方法中使用泛型来处理不同的枚举类型。
+```java
+public class EnumUtils {
+
+    // 泛型方法，处理不同枚举类型
+    public static <E extends Enum<E>> void printEnumValues(Class<E> enumClass) {
+        for (E enumConstant : enumClass.getEnumConstants()) {
+            System.out.println(enumConstant);
+        }
+    }
+}
+
+// 使用示例
+public enum Color {
+    RED, GREEN, BLUE;
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // 打印 Color 枚举的所有常量
+        EnumUtils.printEnumValues(Color.class);
+    }
+}
+```
+
 ## 泛型类
 在类上使用泛型，从而使类能够处理多种数据类型，而无需为每种数据类型编写单独的类。泛型类在定义时指定了一个或多个类型参数，这些类型参数在类的实例化时被具体的类型所替换。
 定义泛型类时，类型参数放在类名后面的尖括号内。例如，T是一个常用的类型参数名称，但你可以使用任何有效的标识符。
