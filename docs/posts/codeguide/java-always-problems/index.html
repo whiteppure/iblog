@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="zh" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="whitepure" />
+	
+	
+	
+	<title>Java程序常见问题 ｜ 脚踏实地</title>
+	
+    
+    
+    <meta name="description" content="CPU使用过高 一般在生产环境排查程序故障，都会查看日志什么的，但是有些故障日志是看不出来的，就比如：CPU使用过高。 那应该怎么办呢？我们需要结合linux命令和" />
+    
+
+    
+    
+    <meta name="keywords" content="whitepure博客, whiteppure, whitepure, 李济芝, Java, 博客, 技术博客" />
+    
+
+	
+
+    <link rel="shortcut icon" href="https://whiteppure.github.io/iblog/images/favicon.ico" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/normalize.css" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/zozo.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/highlight.css" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/toc.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/search.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/img.css" />
+
+    
+    
+</head>
+
+<body>
+    <div class="post-password">
+        
+    </div>
+
+    
+    
+    
+
+
+
+
+
+
+
+
+
+<div id="post_content_toc" class="toc">
+    <div class="page-header"><strong></strong></div>
+    <div id="page-scrollspy" class="toc-nav">
+
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#cpu%e4%bd%bf%e7%94%a8%e8%bf%87%e9%ab%98">
+                    CPU使用过高
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%8e%92%e6%9f%a5%e8%bf%87%e7%a8%8b">
+                    排查过程
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e8%a7%a3%e5%86%b3%e6%96%b9%e6%a1%88">
+                    解决方案
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%ad%bb%e9%94%81">
+                    死锁
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%8e%92%e6%9f%a5%e8%bf%87%e7%a8%8b-1">
+                    排查过程
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e8%a7%a3%e5%86%b3%e6%96%b9%e6%a1%88-1">
+                    解决方案
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8%e8%b5%84%e6%ba%90%e6%9c%89%e5%ba%8f%e5%88%86%e9%85%8d%e6%b3%95%e9%81%bf%e5%85%8d%e6%ad%bb%e9%94%81">
+                    使用资源有序分配法避免死锁
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8%e9%93%b6%e8%a1%8c%e5%ae%b6%e7%ae%97%e6%b3%95%e9%81%bf%e5%85%8d%e6%ad%bb%e9%94%81">
+                    使用银行家算法避免死锁
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8-trylock-%e8%bf%9b%e8%a1%8c%e8%b6%85%e6%97%b6%e9%94%81%e5%ae%9a">
+                    使用 tryLock 进行超时锁定
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%86%85%e5%ad%98%e6%b3%84%e9%9c%b2">
+                    内存泄露
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%8e%92%e6%9f%a5%e8%bf%87%e7%a8%8b-2">
+                    排查过程
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e8%a7%a3%e5%86%b3%e6%96%b9%e6%a1%88-2">
+                    解决方案
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#jvm%e5%8f%82%e6%95%b0%e8%b0%83%e4%bc%98">
+                    JVM参数调优
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e7%ba%bf%e4%b8%8a%e6%8e%a5%e5%8f%a3%e6%85%a2">
+                    线上接口慢
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%ae%9a%e4%bd%8d%e9%97%ae%e9%a2%98">
+                    定位问题
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e8%a7%a3%e5%86%b3%e6%96%b9%e6%a1%88-3">
+                    解决方案
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%95%b0%e6%8d%ae%e5%ba%93%e6%85%a2sql">
+                    数据库慢sql
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e8%b0%83%e7%94%a8%e7%ac%ac%e4%b8%89%e6%96%b9%e6%8e%a5%e5%8f%a3%e6%85%a2">
+                    调用第三方接口慢
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%b8%ad%e9%97%b4%e4%bb%b6%e6%85%a2">
+                    中间件慢
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e7%a8%8b%e5%ba%8f%e9%80%bb%e8%be%91%e6%85%a2">
+                    程序逻辑慢
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%9e%b6%e6%9e%84%e4%bc%98%e5%8c%96">
+                    架构优化
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#transactional">
+                    @Transactional
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#transactional%e5%a4%b1%e6%95%88%e6%83%85%e5%86%b5">
+                    @Transactional失效情况
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#transactional%e9%81%87%e5%88%b0%e9%94%81">
+                    @Transactional遇到锁
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+
+    </div>
+
+</div>
+
+
+
+    
+
+    
+    <div class="main animate__animated animate__fadeInDown" id="main_content">
+        <div class="nav_container animated fadeInDown">
+    <div class="site_nav" id="site_nav">
+        <ul><li class="">
+                <a href="https://whiteppure.github.io/iblog/">首页</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/iblog/posts/">归档</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/iblog/tags/">标签</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/iblog/about/">关于</a>
+            </li>
+        </ul>
+    </div>
+    <div class="menu_icon">
+        <a id="menu_icon"><i class="ri-menu-line"></i></a>
+    </div>
+</div>
+        <div id="post_header" class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/">
+                    <span>脚踏实地</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">
+                
+            </p>
+
+            
+            <div class="my_socials">
+                
+                    
+                    <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                        <i class="ri-github-fill"></i>
+                    </a>
+                    
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
+                
+                <span id="sys_function" class="sys_function display_none">
+                    <a id="export_pdf"  title="导出pdf" style="border: none; background-color: #ffffff; cursor: pointer; margin-left: 10px">
+                        <svg t="1688701481347" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3517" width="16" height="16"><path d="M425.610455 85.814544H149.05897A42.303635 42.303635 0 0 0 106.6274 128.075535V896.492068c0 23.326702 18.976933 42.26099 42.43157 42.26099h682.743143a42.559504 42.559504 0 0 0 42.431569-42.559504v-384.016365a42.644793 42.644793 0 0 1 85.289587 0v384.016365A127.849091 127.849091 0 0 1 831.802113 1024H149.05897A127.635867 127.635867 0 0 1 21.337813 896.449423V128.03289A127.593222 127.593222 0 0 1 149.101614 0.524957h276.466196a42.644793 42.644793 0 0 1 0 85.289587z m564.062683 158.08425l-170.579174 170.579173a42.644793 42.644793 0 1 1-60.299738-60.299738L856.578738 256.393718H618.364922a42.644793 42.644793 0 1 1 0-85.289587h238.213816l-97.784512-97.784511A42.644793 42.644793 0 1 1 819.093964 13.019882l170.579174 170.579174a42.644793 42.644793 0 0 1 0 60.299738zM149.272194 597.552066a42.644793 42.644793 0 0 1 42.644793-42.644794h51.514911c59.190973 0 107.891327 23.284057 107.976617 97.102195 0 71.003581-49.46796 102.347504-106.185536 102.347504h-31.343923v66.781747a32.282109 32.282109 0 0 1-64.606862 0V597.552066z m92.709781 100.215264c31.429213 0 46.568114-16.46089 46.568114-45.757863 0-30.064579-17.313786-40.512554-48.359196-40.512554h-26.311837v86.270417h28.145563z m232.414124-142.860058c81.878003 0 136.036891 43.710913 136.036891 147.67892S556.231457 853.420826 477.935617 853.420826h-38.16709a42.644793 42.644793 0 0 1-42.644794-42.644793v-213.223967a42.644793 42.644793 0 0 1 42.644794-42.644794h34.542282z m-4.008611 240.729859c43.32711 0 73.988717-22.047358 73.988717-93.050939 0-71.046226-30.704251-90.705476-73.988717-90.705476h-8.699538v183.79906h8.699538zM692.481573 853.420826a32.282109 32.282109 0 0 1-32.282109-32.282108V597.552066a42.644793 42.644793 0 0 1 42.644793-42.644794h99.063855a29.680776 29.680776 0 1 1 0 59.404197h-77.144431v65.374469h61.749661a29.894 29.894 0 1 1 0 59.788h-61.749661v81.66478a32.282109 32.282109 0 0 1-32.282108 32.282108z" fill="#5f5f5f" p-id="3518"></path></svg>
+                    </a>
+                    <a id="export_pic" title="导出图片" style="border: none; background-color: #ffffff; cursor: pointer; margin-left: 10px">
+                        <svg t="1689071509720" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4564" width="16" height="16"><path d="M909.132886 0.037506h-184.960611a33.909445 33.909445 0 0 0-32.368107 33.909445 33.909445 33.909445 0 0 0 33.909445 33.395666h158.244078l-200.373995 199.346437a33.395666 33.395666 0 0 0 0 47.781491 31.854327 31.854327 0 0 0 23.633856 9.76181 33.909445 33.909445 0 0 0 24.147635-9.76181l198.832657-199.346437V272.340628a33.909445 33.909445 0 0 0 69.874009 0V88.921355A88.37007 88.37007 0 0 0 909.132886 0.037506zM216.558153 347.866211a107.37991 107.37991 0 1 0 107.37991-107.379911 107.89369 107.89369 0 0 0-107.37991 107.379911z m154.133843 0a51.377948 51.377948 0 0 1-97.618101 0 51.377948 51.377948 0 1 1 97.618101 0z" p-id="4565" fill="#424242"></path><path d="M963.079731 437.777619a34.423225 34.423225 0 0 0-33.909446 33.909445v265.110209a1811.07265 1811.07265 0 0 0-137.692899-193.181082 106.352351 106.352351 0 0 0-78.60826-36.478343 123.820854 123.820854 0 0 0-82.204716 35.964563l-3.596456 3.082677-188.557068 176.74014c-11.816928-13.358266-47.781491-51.377948-82.204716-87.856291a83.232275 83.232275 0 0 0-85.801172-21.578738 105.324792 105.324792 0 0 0-38.019681 19.52362l-141.289356 121.765736V89.948914a22.092517 22.092517 0 0 1 22.606297-22.606297h417.702713a33.395666 33.395666 0 0 0 33.395666-33.909445 33.395666 33.395666 0 0 0-33.395666-33.395666H113.802258A89.911408 89.911408 0 0 0 23.89085 89.948914v844.139678a89.911408 89.911408 0 0 0 89.911408 89.911408h793.27551a89.911408 89.911408 0 0 0 89.397629-89.911408v-462.401528a33.909445 33.909445 0 0 0-33.395666-33.909445z m-33.909446 496.310973a22.606297 22.606297 0 0 1-22.092517 22.606297H113.802258a22.606297 22.606297 0 0 1-22.606297-22.606297v-88.37007l183.933052-160.812976a43.157476 43.157476 0 0 1 15.413385-7.192912 15.927164 15.927164 0 0 1 17.982281 5.137794c37.505902 36.478343 78.60826 83.232275 82.718496 87.856291a61.653537 61.653537 0 0 0 42.643696 22.092517 62.681096 62.681096 0 0 0 51.377948-20.037399c8.220472-8.220472 134.610223-125.875971 194.208641-181.877935a57.029522 57.029522 0 0 1 34.423225-16.440943 45.212594 45.212594 0 0 1 29.79921 15.927164 2954.231982 2954.231982 0 0 1 186.501949 256.889738z" p-id="4566" fill="#424242"></path></svg>
+                    </a>
+                    <a id="export_markdown" title="导出markdown" style="border: none; background-color: #ffffff; cursor: pointer; margin-left: 10px">
+                        <svg t="1689071035200" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="13570" width="16" height="16"><path d="M178.073367 843.957262V461.158929h107.121045l107.121045 140.734874 107.125433-140.734874h107.116657v382.798333h-107.116657v-219.54307l-107.125433 140.730486-107.116657-140.730486v219.54307zM737.783131 892.148786l-131.221196-209.156132h87.479334V461.158929h87.479335v221.833725h87.483722z" p-id="13571" fill="#424242"></path><path d="M911.9958 217.142709c10.672172 10.663395 19.812851 25.144549 27.430816 43.430297 7.617965 18.285748 11.431335 35.044392 11.431336 50.28471V969.140255c0 15.235929-5.336086 28.18998-15.999481 38.853375-10.667783 10.667783-23.621834 16.003869-38.857763 16.003869H127.994904c-15.240317 0-28.18998-5.336086-38.857763-16.003869-10.663395-10.663395-15.999481-23.617446-15.999481-38.853375V54.852856c0-15.240317 5.331698-28.18998 15.999481-38.857763C99.804925 5.336086 112.758975 0 127.999292 0h512.000944c15.235929 0 31.998962 3.808982 50.28471 11.426947 18.285748 7.622353 32.762514 16.763033 43.430297 27.426428zM658.290372 77.715526v214.856442h214.856442c-3.808982-11.049559-7.99974-18.856218-12.572275-23.43314l-178.855415-178.851027c-4.572534-4.572534-12.383581-8.763292-23.43314-12.572275z m219.428976 873.143369V365.71496h-237.714724c-15.240317 0-28.18998-5.336086-38.857763-15.999481-10.663395-10.667783-15.999481-23.621834-15.999481-38.857763V73.142992H146.28504v877.715903z" p-id="13572" fill="#424242"></path></svg>
+                    </a>
+                    <a id="export_doc" title="导出文档" style="border: none; background-color: #ffffff; cursor: pointer; margin-left: 10px">
+                        <svg t="1689246982401" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6825" width="16" height="16"><path d="M270.76864 608.32h180.8a31.68 31.68 0 0 0 0-62.976H270.76864a31.68 31.68 0 0 0 0 62.976zM271.34464 458.56h457.92a33.472 33.472 0 0 0 31.552-34.752 33.28 33.28 0 0 0-31.552-34.624H271.34464a34.816 34.816 0 0 0 0 69.376zM271.34464 293.504h457.92a33.344 33.344 0 0 0 31.552-34.688 33.216 33.216 0 0 0-31.552-34.624H271.34464a33.28 33.28 0 0 0-31.616 34.624 33.28 33.28 0 0 0 31.616 34.688z" p-id="6826" fill="#424242"></path><path d="M869.87264 0H153.77664A70.4 70.4 0 0 0 84.65664 70.912V953.6A69.952 69.952 0 0 0 153.77664 1024h370.048a32 32 0 0 0 0-63.68H147.12064V64h729.6v468.672a31.296 31.296 0 1 0 62.528 0V70.912A70.4 70.4 0 0 0 869.87264 0z" p-id="6827" fill="#424242"></path><path d="M482.16064 730.624h337.664L715.82464 625.216a28.864 28.864 0 0 1-7.936-28.736 29.184 29.184 0 0 1 20.608-21.184 29.632 29.632 0 0 1 29.12 8.128l174.784 177.216-174.784 176.96a29.184 29.184 0 0 1-49.728-13.312 29.248 29.248 0 0 1 8-28.8l103.936-105.344H482.16064a29.696 29.696 0 0 1-29.504-29.76 29.632 29.632 0 0 1 29.504-29.76z" p-id="6828" fill="#424242"></path></svg>
+                    </a>
+                </span>
+                <a  id="icon_more" title="更多" >
+                    <svg t="1688715321313" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5356" width="16" height="16"><path d="M483.555556 199.111111m-85.333334 0a85.333333 85.333333 0 1 0 170.666667 0 85.333333 85.333333 0 1 0-170.666667 0Z" fill="#424242" p-id="5357"></path><path d="M483.555556 540.444444m-85.333334 0a85.333333 85.333333 0 1 0 170.666667 0 85.333333 85.333333 0 1 0-170.666667 0Z" fill="#424242" p-id="5358"></path><path d="M483.555556 881.777778m-85.333334 0a85.333333 85.333333 0 1 0 170.666667 0 85.333333 85.333333 0 1 0-170.666667 0Z" fill="#424242" p-id="5359"></path></svg>
+                </a>
+                <a  id="icon_less" class="display_none">
+                    <svg t="1688723160472" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15872" width="16" height="16"><path d="M300.105143 592.676571h423.789714a80.676571 80.676571 0 1 0 0-161.353142H300.105143a80.676571 80.676571 0 0 0 0 161.353142z" fill="#8a8a8a" p-id="15873"></path></svg>
+                </a>
+                
+            </div>
+
+            
+            <div class="post">
+                <div class="post_title post_detail_title">
+                    <span class="date" id="busuanzi_container_site_pv">访问量 <span id="busuanzi_value_site_pv"></span>次</span>
+                </div>
+                <div class="post_title post_detail_title">
+                    <span class="date" id="busuanzi_container_site_uv">访客数 <span id="busuanzi_value_site_uv"></span>人</span>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+        <div class="content">
+            <div class="post_page">
+                <div class="post animate__animated animate__fadeInDown">
+                    <div class="post_title post_detail_title">
+                        <h2 id="post_single_title">Java程序常见问题</h2>
+                        <span id="post_page_title_date" class="date">2024.05.28</span>
+                        
+                        <span id="busuanzi_container_page_pv" class="m-l-10">
+                          阅读量<span id="busuanzi_value_page_pv"></span>次
+                        </span>
+                        
+                    </div>
+                    <div class="post_content markdown"><h2 id="cpu使用过高">CPU使用过高</h2>
+<p>一般在生产环境排查程序故障，都会查看日志什么的，但是有些故障日志是看不出来的，就比如：CPU使用过高。
+那应该怎么办呢？我们需要结合linux命令和JDK相关命令来排查程序故障。</p>
+<h3 id="排查过程">排查过程</h3>
+<ol>
+<li>首先使用top命令，找出CPU占比最高的Java进程，然后进一步定位后台程序，如果发现使用过高的进程ID，记录下来方便排查。</li>
+<li>定位到具体的线程，使用<code>ps -mp 进程ID -o THREAD,tid,time</code>命令可以找到有问题的线程ID。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ps -mp 进程ID -o THREAD,tid,time 说明：
+</span></span><span class="line"><span class="cl">-m：显示所有线程；
+</span></span><span class="line"><span class="cl">-p：pid进程使用CPU的时间；
+</span></span><span class="line"><span class="cl">-o：该参数后是用户自定义参数
+</span></span></code></pre></div></li>
+<li>获取到线程ID后，需要将线程ID转化为16进制格式，如果有英文要小写格式；可以用命令<code>printf &quot;%x\n&quot; 线程ID</code>，当然也可以使用工具从10进制转16进制。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">printf &#34;%x\n&#34; 16
+</span></span></code></pre></div></li>
+<li>线程ID转成16进制后，执行最后一个命令：<code>jstack 进程ID | grep 16进制线程ID -A50</code>或者dump下来，<code>jstack pid &gt; pid.log</code>，就能看到有问题的代码。</li>
+</ol>
+<h3 id="解决方案">解决方案</h3>
+<ol>
+<li>将dump文件下载下来，上传到第三方网站，如：https://fastthread.io/ 进行分析，然后找到解决方案；</li>
+<li>确定是否新部署或有新变更： 首先需要确认是否在最近进行了新的部署或有其他相关的变更，例如代码更新、配置修改等。这些变更可能导致应用出现性能问题，特别是在高负载情况下；</li>
+<li>确定是否可重现问题：尝试重现CPU飙高的问题，可以通过模拟实际场景、使用压力测试工具或者观察日志等方式来尽量还原问题。如果能够确定问题的可重现性，将有助于后续的排查和分析；</li>
+<li>确定是否为GC造成：Java应用中频繁进行垃圾回收可能会导致CPU飙高。可以通过查看GC日志、分析堆内存使用情况以及GC时间等指标来确认是否为GC引起了性能问题；</li>
+<li>确定是否线程阻塞：线程阻塞也是常见的导致CPU飙高的原因之一。可以通过线程监控工具，如JMC、VisualVM，来检查是否存在长时间阻塞的线程，并分析造成线程阻塞的原因；</li>
+</ol>
+<h2 id="死锁">死锁</h2>
+<p>死锁是指两个或多个线程在执行过程中，由于竞争资源或者互相等待释放资源而造成的一种僵局，使得所有参与的线程无法继续执行。
+举个例子，当线程A持有锁a并尝试获取锁b，线程B持有锁b并尝试获取锁a时，就会出现死锁。简单来说，死锁问题的产生是由两个或者以上线程并行执行的时候，争夺资源而互相等待造成的。</p>
+<h3 id="排查过程-1">排查过程</h3>
+<p>死锁经常表现为程序的停顿，或者不再响应用户的请求。从操作系统上观察，对应进程的CPU占用率为零，很快会从top的输出中消失。模拟死锁代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MainTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">         </span><span class="n">String</span><span class="w"> </span><span class="n">lockA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;lockA&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">         </span><span class="n">String</span><span class="w"> </span><span class="n">lockB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;lockB&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ThreadHolderLock</span><span class="p">(</span><span class="n">lockA</span><span class="p">,</span><span class="n">lockB</span><span class="p">),</span><span class="s">&#34;线程AAA&#34;</span><span class="p">).</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ThreadHolderLock</span><span class="p">(</span><span class="n">lockB</span><span class="p">,</span><span class="n">lockA</span><span class="p">),</span><span class="s">&#34;线程BBB&#34;</span><span class="p">).</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">ThreadHolderLock</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Runnable</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">lockA</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">lockB</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">ThreadHolderLock</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">lockA</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">lockB</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">lockA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lockA</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">lockB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lockB</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">synchronized</span><span class="w"> </span><span class="p">(</span><span class="n">lockA</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;\t 持有锁 &#34;</span><span class="o">+</span><span class="w"> </span><span class="n">lockA</span><span class="o">+</span><span class="s">&#34;, 尝试获得&#34;</span><span class="o">+</span><span class="w"> </span><span class="n">lockB</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="n">1000</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">InterruptedException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kd">synchronized</span><span class="w"> </span><span class="p">(</span><span class="n">lockB</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;\t 持有锁 &#34;</span><span class="o">+</span><span class="w"> </span><span class="n">lockB</span><span class="o">+</span><span class="s">&#34;, 尝试获得&#34;</span><span class="o">+</span><span class="w"> </span><span class="n">lockA</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><ol>
+<li>使用<code>jps -l</code>命令找到程序进程；</li>
+<li>使用<code>jstack pid</code>命令打印堆栈信息；
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Found one Java-level deadlock:
+</span></span><span class="line"><span class="cl">=============================
+</span></span><span class="line"><span class="cl">&#34;线程BBB&#34;:
+</span></span><span class="line"><span class="cl">  waiting to lock monitor 0x00007feb0d80b018 (object 0x000000076af2d588, a java.lang.String),
+</span></span><span class="line"><span class="cl">  which is held by &#34;线程AAA&#34;
+</span></span><span class="line"><span class="cl">&#34;线程AAA&#34;:
+</span></span><span class="line"><span class="cl">  waiting to lock monitor 0x00007feb0d80d8a8 (object 0x000000076af2d5c0, a java.lang.String),
+</span></span><span class="line"><span class="cl">  which is held by &#34;线程BBB&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Java stack information for the threads listed above:
+</span></span><span class="line"><span class="cl">===================================================
+</span></span><span class="line"><span class="cl">&#34;线程BBB&#34;:
+</span></span><span class="line"><span class="cl">    at com.github.springcloud.service.ThreadHolderLock.run(MainTest.java:35)
+</span></span><span class="line"><span class="cl">    - waiting to lock &lt;0x000000076af2d588&gt; (a java.lang.String)
+</span></span><span class="line"><span class="cl">    - locked &lt;0x000000076af2d5c0&gt; (a java.lang.String)
+</span></span><span class="line"><span class="cl">    at java.lang.Thread.run(Thread.java:748)
+</span></span><span class="line"><span class="cl">&#34;线程AAA&#34;:
+</span></span><span class="line"><span class="cl">    at com.github.springcloud.service.ThreadHolderLock.run(MainTest.java:35)
+</span></span><span class="line"><span class="cl">    - waiting to lock &lt;0x000000076af2d5c0&gt; (a java.lang.String)
+</span></span><span class="line"><span class="cl">    - locked &lt;0x000000076af2d588&gt; (a java.lang.String)
+</span></span><span class="line"><span class="cl">    at java.lang.Thread.run(Thread.java:748)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Found 1 deadlock.
+</span></span></code></pre></div></li>
+</ol>
+<h3 id="解决方案-1">解决方案</h3>
+<h4 id="使用资源有序分配法避免死锁">使用资源有序分配法避免死锁</h4>
+<p>想要如何避免死锁，就要弄清楚死锁出现的原因，造成死锁必须达成的4个条件：</p>
+<ul>
+<li>互斥条件：一个资源每次只能被一个线程使用。例如，如果线程 A 已经持有的资源，不能再同时被线程 B 持有，如果线程 B 请求获取线程 A 已经占用的资源，那线程 B 只能等待，直到线程 A 释放了资源。</li>
+<li>请求与保持条件：一个线程因请求资源而阻塞时，对已获得的资源保持不放。例如，当线程 A 已经持有了资源 1，又想申请资源 2，而资源 2 已经被线程 C 持有了，所以线程 A 就会处于等待状态，但是线程 A 在等待资源 2 的同时并不会释放自己已经持有的资源 1。</li>
+<li>不剥夺条件：线程已获得的资源，在未使用完之前，不能强行剥夺。例如，当线程A已经持有了资源 ，在自己使用完之前不能被其他线程获取，线程 B 如果也想使用此资源，则只能在线程 A 使用完并释放后才能获取。</li>
+<li>循环等待条件：若干线程之间形成一种头尾相接的循环等待资源关系。比如，线程 A 已经持有资源 2，而想请求资源 1， 线程 B 已经获取了资源 1，而想请求资源 2，这就形成资源请求等待的环。</li>
+</ul>
+<p>避免死锁的产生就只需要破环其中一个条件就可以，最常见的并且可行的就是使用资源有序分配法，来破循环等待条件。
+资源有序分配法指的是，线程 A 和 线程 B 获取资源的顺序要一样，当线程 A 先尝试获取资源 A，然后尝试获取资源 B 的时候，线程 B 同样也是先尝试获取资源 A，然后尝试获取资源 B。也就是说，线程 A 和 线程 B 总是以相同的顺序申请自己想要的资源。
+给资源分配一个全局的唯一编号，进程必须按资源编号的顺序请求资源。这种方法可以避免循环等待，从而防止死锁。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Resource</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">Resource</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getId</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">Process</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Thread</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Resource</span><span class="o">[]</span><span class="w"> </span><span class="n">resources</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">Process</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">Resource</span><span class="o">[]</span><span class="w"> </span><span class="n">resources</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">resources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resources</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">acquireResources</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 模拟处理</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="na">random</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">1000</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">releaseResources</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">InterruptedException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">acquireResources</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">InterruptedException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Resource</span><span class="w"> </span><span class="n">resource</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">resources</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kd">synchronized</span><span class="w"> </span><span class="p">(</span><span class="n">resource</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Process &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34; acquired Resource &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">resource</span><span class="p">.</span><span class="na">getId</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">releaseResources</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Resource</span><span class="w"> </span><span class="n">resource</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">resources</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kd">synchronized</span><span class="w"> </span><span class="p">(</span><span class="n">resource</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Process &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34; released Resource &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">resource</span><span class="p">.</span><span class="na">getId</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ResourceOrderingExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Resource</span><span class="w"> </span><span class="n">resource1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Resource</span><span class="p">(</span><span class="n">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Resource</span><span class="w"> </span><span class="n">resource2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Resource</span><span class="p">(</span><span class="n">2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Resource</span><span class="w"> </span><span class="n">resource3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Resource</span><span class="p">(</span><span class="n">3</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Process</span><span class="w"> </span><span class="n">process1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Process</span><span class="p">(</span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Resource</span><span class="o">[]</span><span class="p">{</span><span class="n">resource1</span><span class="p">,</span><span class="w"> </span><span class="n">resource2</span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Process</span><span class="w"> </span><span class="n">process2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Process</span><span class="p">(</span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Resource</span><span class="o">[]</span><span class="p">{</span><span class="n">resource2</span><span class="p">,</span><span class="w"> </span><span class="n">resource3</span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Process</span><span class="w"> </span><span class="n">process3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Process</span><span class="p">(</span><span class="n">3</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Resource</span><span class="o">[]</span><span class="p">{</span><span class="n">resource3</span><span class="p">,</span><span class="w"> </span><span class="n">resource1</span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">process1</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">process2</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">process3</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h4 id="使用银行家算法避免死锁">使用银行家算法避免死锁</h4>
+<p><img alt="银行家算法" src="/iblog/posts/annex/images/essays/%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95.png"></p>
+<p>银行家算法：一个避免死锁的著名算法，是由艾兹格·迪杰斯特拉在1965年为T.H.E系统设计的一种避免死锁产生的算法。它以银行借贷系统的分配策略为基础，判断并保证系统的安全运行。</p>
+<p>在银行中，客户申请贷款的数量是有限的，每个客户在第一次申请贷款时要声明完成该项目所需的最大资金量，在满足所有贷款要求时，客户应及时归还。银行家在客户申请的贷款数量不超过自己拥有的最大值时，都应尽量满足客户的需要。通过判断借贷是否安全，然后决定借不借。
+举例，现有公司B、公司A、公司T，想要从银行分别贷款70亿、40亿、50亿，假设银行只有100亿供放贷，如果借不到企业最大需求的钱，钱将不会归还，怎么才能合理的放贷？</p>
+<table>
+<thead>
+<tr>
+<th>公司</th>
+<th>最大需求</th>
+<th>已借走</th>
+<th>最多还借</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B</td>
+<td>70</td>
+<td>20</td>
+<td>50</td>
+</tr>
+<tr>
+<td>A</td>
+<td>40</td>
+<td>10</td>
+<td>30</td>
+</tr>
+<tr>
+<td>T</td>
+<td>50</td>
+<td>30</td>
+<td>20</td>
+</tr>
+</tbody>
+</table>
+<p>此时公司B、A、T已经从银行借走60亿，银行还剩40亿。此时银行可放贷金额组合：</p>
+<ul>
+<li>借给公司B10亿、公司A10亿、公司T20亿，等待公司T还钱再将10亿借给公司A，等待公司A还钱，再将钱借给公司B；</li>
+<li>借给公司T20亿，等公司T还钱再将钱借给公司A，等待公司A还钱再将钱借给公司B；</li>
+<li>借给公司A10亿，等待公司A还钱再将钱借给公司T，公司T还钱再将钱借给公司B；</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Banker</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">available</span><span class="p">;</span><span class="w">  </span><span class="c1">// 系统可用资源</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="n">maximum</span><span class="p">;</span><span class="w">  </span><span class="c1">// 每个进程的最大资源需求</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="n">allocation</span><span class="p">;</span><span class="w"> </span><span class="c1">// 每个进程当前已分配的资源</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="n">need</span><span class="p">;</span><span class="w">      </span><span class="c1">// 每个进程剩余的资源需求</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">Banker</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">available</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="n">maximum</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">available</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">available</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">maximum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">maximum</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">numProcesses</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">maximum</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">numResources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">available</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">allocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">numProcesses</span><span class="o">][</span><span class="n">numResources</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">need</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">numProcesses</span><span class="o">][</span><span class="n">numResources</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numProcesses</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numResources</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">need</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">maximum</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="c1">// 初始时，Need等于Maximum</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 请求资源的方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">synchronized</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">requestResources</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">processId</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">isRequestValid</span><span class="p">(</span><span class="n">processId</span><span class="p">,</span><span class="w"> </span><span class="n">request</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"> </span><span class="c1">// 请求不合法，拒绝请求</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 试探性分配</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">available</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">available</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">request</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">allocation</span><span class="o">[</span><span class="n">processId</span><span class="o">][</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">request</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">need</span><span class="o">[</span><span class="n">processId</span><span class="o">][</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">request</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 安全性检查</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">boolean</span><span class="w"> </span><span class="n">safe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">isSafeState</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">safe</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 如果不安全，恢复试探性分配前的状态</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">available</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">available</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">request</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">allocation</span><span class="o">[</span><span class="n">processId</span><span class="o">][</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">request</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">need</span><span class="o">[</span><span class="n">processId</span><span class="o">][</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">request</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">safe</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">isRequestValid</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">processId</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">request</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">need</span><span class="o">[</span><span class="n">processId</span><span class="o">][</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">request</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">available</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"> </span><span class="c1">// 请求超出需求或可用资源</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">isSafeState</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">work</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">available</span><span class="p">.</span><span class="na">clone</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">boolean</span><span class="o">[]</span><span class="w"> </span><span class="n">finish</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">boolean</span><span class="o">[</span><span class="n">allocation</span><span class="p">.</span><span class="na">length</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kt">boolean</span><span class="w"> </span><span class="n">found</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">allocation</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">finish</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="kt">boolean</span><span class="w"> </span><span class="n">canProceed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">work</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">need</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">work</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="n">canProceed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="k">break</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">canProceed</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">work</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="n">work</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">allocation</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="n">finish</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="n">found</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">found</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">break</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">finish</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"> </span><span class="c1">// 存在未完成的进程，系统不安全</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w"> </span><span class="c1">// 所有进程都完成，系统安全</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>调用示例</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">BankerExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">available</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">3</span><span class="p">,</span><span class="w"> </span><span class="n">3</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="n">maximum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">{</span><span class="n">7</span><span class="p">,</span><span class="w"> </span><span class="n">5</span><span class="p">,</span><span class="w"> </span><span class="n">3</span><span class="p">},</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">{</span><span class="n">3</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">},</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">{</span><span class="n">9</span><span class="p">,</span><span class="w"> </span><span class="n">0</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">},</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">{</span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">},</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">{</span><span class="n">4</span><span class="p">,</span><span class="w"> </span><span class="n">3</span><span class="p">,</span><span class="w"> </span><span class="n">3</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Banker</span><span class="w"> </span><span class="n">banker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Banker</span><span class="p">(</span><span class="n">available</span><span class="p">,</span><span class="w"> </span><span class="n">maximum</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">request1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">0</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">boolean</span><span class="w"> </span><span class="n">granted1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">banker</span><span class="p">.</span><span class="na">requestResources</span><span class="p">(</span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">request1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Request 1 granted: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">granted1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">request2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">3</span><span class="p">,</span><span class="w"> </span><span class="n">3</span><span class="p">,</span><span class="w"> </span><span class="n">0</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">boolean</span><span class="w"> </span><span class="n">granted2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">banker</span><span class="p">.</span><span class="na">requestResources</span><span class="p">(</span><span class="n">4</span><span class="p">,</span><span class="w"> </span><span class="n">request2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Request 2 granted: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">granted2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">request3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="n">0</span><span class="p">,</span><span class="w"> </span><span class="n">0</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">boolean</span><span class="w"> </span><span class="n">granted3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">banker</span><span class="p">.</span><span class="na">requestResources</span><span class="p">(</span><span class="n">0</span><span class="p">,</span><span class="w"> </span><span class="n">request3</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Request 3 granted: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">granted3</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h4 id="使用-trylock-进行超时锁定">使用 tryLock 进行超时锁定</h4>
+<p>使用 <code>java.util.concurrent.locks.ReentrantLock</code> 的 <code>tryLock</code>方法可以尝试获取锁，并设置超时时间，避免长时间等待造成的死锁。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.concurrent.locks.Lock</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.concurrent.locks.ReentrantLock</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.concurrent.TimeUnit</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">Process</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Thread</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Lock</span><span class="w"> </span><span class="n">lock1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Lock</span><span class="w"> </span><span class="n">lock2</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">Process</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">Lock</span><span class="w"> </span><span class="n">lock1</span><span class="p">,</span><span class="w"> </span><span class="n">Lock</span><span class="w"> </span><span class="n">lock2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">lock1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lock1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">lock2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lock2</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lock1</span><span class="p">.</span><span class="na">tryLock</span><span class="p">(</span><span class="n">50</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lock2</span><span class="p">.</span><span class="na">tryLock</span><span class="p">(</span><span class="n">50</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Process &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34; acquired both locks&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                </span><span class="c1">// 模拟处理</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                </span><span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="na">random</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">1000</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                </span><span class="k">return</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                </span><span class="n">lock2</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="n">lock1</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="c1">// 等待一段时间再重试</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="na">random</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">50</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">InterruptedException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TryLockExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Lock</span><span class="w"> </span><span class="n">lock1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ReentrantLock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Lock</span><span class="w"> </span><span class="n">lock2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ReentrantLock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Process</span><span class="w"> </span><span class="n">process1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Process</span><span class="p">(</span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">lock1</span><span class="p">,</span><span class="w"> </span><span class="n">lock2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Process</span><span class="w"> </span><span class="n">process2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Process</span><span class="p">(</span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="n">lock2</span><span class="p">,</span><span class="w"> </span><span class="n">lock1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">process1</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">process2</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="内存泄露">内存泄露</h2>
+<p>Java虚拟机是使用引用计数法和可达性分析来判断对象是否可回收，本质是判断一个对象是否还被引用，如果没有引用则回收。
+内存泄露是指，程序中己动态分配的堆内存由于某种原因程序未释放或无法释放，造成系统内存的浪费，导致程序运行速度减慢甚至系统崩溃等严重后果。
+简单来说，就是应该被垃圾回收的对象没有回收掉，导致占用的内存越来越多，最终导致内存溢出。</p>
+<p>内存泄露主要原因：</p>
+<ul>
+<li>在内存中加载过大的数据，例如从数据库取出过多数据；</li>
+<li>资源未关闭造成的内存泄漏；</li>
+<li>变量不合理的作用域，使用完毕，如果没有及时的赋值为null，则会造成内存泄露；</li>
+<li>长生命周期的对象中引用短生命周期对象，很可能会出现内存泄露；</li>
+</ul>
+<p>举个例子，创建的连接不再使用时，需要调用 close 方法关闭连接，只有连接被关闭后，GC 才会回收对应的对象（Connection，Statement，ResultSet，Session）。忘记关闭这些资源会导致持续占有内存，无法被 GC 回收。
+这样就会导致内存泄露，最终导致内存溢出。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MemoryLeak</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">try</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="n">Connection</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">=</span><span class="kc">null</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="n">Class</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&#34;com.mysql.jdbc.Driver&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="n">conn</span><span class="w"> </span><span class="o">=</span><span class="n">DriverManager</span><span class="p">.</span><span class="na">getConnection</span><span class="p">(</span><span class="s">&#34;url&#34;</span><span class="p">,</span><span class="s">&#34;&#34;</span><span class="p">,</span><span class="s">&#34;&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="n">Statement</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">=</span><span class="n">conn</span><span class="p">.</span><span class="na">createStatement</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="n">ResultSet</span><span class="w"> </span><span class="n">rs</span><span class="w"> </span><span class="o">=</span><span class="n">stmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">(</span><span class="s">&#34;....&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">){</span><span class="c1">//异常日志</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 1．关闭结果集 Statement</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 2．关闭声明的对象 ResultSet</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 3．关闭连接 Connection</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="排查过程-2">排查过程</h3>
+<p>根据运维之前收集到的内存数据、GC 日志尝试判断哪里出现了问题。
+结果发现老年代的内存使用就算是发生 GC 也一直居高不下，而且随着时间推移也越来越高。</p>
+<p><img alt="内存泄漏问题-01" src="/iblog/posts/annex/images/essays/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98-01.png"></p>
+<p>使用<code>jstat -gc &lt;vmid&gt;</code> 查看GC垃圾回收统计信息，看Full GC后堆空间使用内存还持续增长，且有增长到Xmx设定值的趋势，基本可以肯定存在内存泄露。
+如果当前完全垃圾回收后内存增长到一个值之后，又能回落，总体上处于一个动态平衡，那么内存泄漏基本可以排除；也可以隔断时间抽取老年代占用内存情况，如果老年代占用情况持续上升也很有可能存在内存泄露的情况。</p>
+<h3 id="解决方案-2">解决方案</h3>
+<ol>
+<li>内存泄漏的主要表象就是内存不足，所以首先要看一下JVM启动参数中内存空间分配是否过小，如果是这种问题调整该参数即可；</li>
+<li>确定是否新部署或有新变更，首先需要确认是否在最近进行了新的部署或有其他相关的变更，例如代码更新、配置修改等。这些变更可能导致应用出现性能问题，特别是在高负载情况下；</li>
+<li>内存泄漏解决方案，最经典的就是用MAT工具分析dump文件，但如果dump文件巨大就不建议这样，可以使用其他方案，例如：重启、本地复现、<code>jmap -histo:live &lt;pid&gt;</code>在线进行分析等其他方案解决。</li>
+</ol>
+<p>使用MAT定位内存泄漏思路：</p>
+<ol>
+<li>打开MAT中histogram，找到堆内存中占用最大的对象，内存泄漏很有可能就是由大对象导致的；
+<img alt="MAT-01" src="/iblog/posts/annex/images/essays/MAT-01.png"></li>
+<li>由大对象找被哪些线程引用，查看内存占用最大的线程；
+<img alt="MAT-02" src="/iblog/posts/annex/images/essays/MAT-02.png">
+<img alt="MAT-03" src="/iblog/posts/annex/images/essays/MAT-03.png"></li>
+<li>从线程中的堆栈信息找到项目中自定义的包和对象，从而可定位到具体的代码；
+<img alt="MAT-04" src="/iblog/posts/annex/images/essays/MAT-04.png">
+<img alt="MAT-05" src="/iblog/posts/annex/images/essays/MAT-05.png"></li>
+</ol>
+<h2 id="jvm参数调优">JVM参数调优</h2>
+<p>JVM优化是到最后不得已才采用的手段，对JVM内存的系统级的调优主要的目的是减少GC的频率和Full GC的次数。
+JVM参数说明：https://www.oracle.com/java/technologies/javase/vmoptions-jsp.html</p>
+<p>理想的情况下，一个Java程序使用JVM的默认设置也可以运行得很好，所以一般来说，没有必要设置任何JVM参数。然而，由于一些性能问题，我们需要设置合理的JVM参数。</p>
+<p>可以通过<code>java -XX:+PrintFlagsInitial</code> 命令查看JVM所有参数。</p>
+<p>常用参数：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-Xms</td>
+<td>堆初始值</td>
+<td>Xmx和Xms设置为老年代存活对象的3-4倍，即FullGC之后的老年代内存占用的3-4倍</td>
+</tr>
+<tr>
+<td>-Xmx</td>
+<td>堆最大值</td>
+<td>为了防止自动扩容降低性能，建议将-Xms和-Xmx的值设置为相同值</td>
+</tr>
+<tr>
+<td>-XX:MaxHeapFreeRatio</td>
+<td>最大堆内存使用率</td>
+<td>默认70，当超过该比例会进行扩容堆，Xms=Xmx时该参数无效</td>
+</tr>
+<tr>
+<td>-XX:MinHeapFreeRatio</td>
+<td>最小堆内存使用率</td>
+<td>默认40，当低于该比例会缩减堆，Xms=Xmx时该参数无效</td>
+</tr>
+<tr>
+<td>-Xmn</td>
+<td>年轻代内存最大值</td>
+<td>年轻代设置的越大，老年代区域就会减少。一般不允许年轻代比老年代还大，因为要考虑GC时最坏情况，所有对象都晋升到老年代。建议设置为老年代存活对象的1-1.5倍，最大可以设置为-Xmx/2 。考虑性能，一般会通过参数 -XX:NewSize 设置年轻代初始大小。如果知道了年轻代初始分配的对象大小，可以节省新生代自动扩展的消耗。</td>
+</tr>
+<tr>
+<td>-XX:SurvivorRatio</td>
+<td>年轻代中两个Survivor区和Eden区大小比率</td>
+<td>例如： -XX:SurvivorRatio=10 表示伊甸园区是幸存者其中一个区大小的10倍，所以,伊甸园区占新生代大小的10/12, 幸存区From和幸存区To 每个占新生代的1/12</td>
+</tr>
+<tr>
+<td>-XX:NewRatio</td>
+<td>年轻生代和老年代的比率</td>
+<td>例如：-XX:NewRatio=3 指定老年代/新生代为3/1. 老年代占堆大小的 3/4 ，新生代占 1/4 。如果针对新生代,同时定义绝对值和相对值,绝对值将起作用，建议将年轻代的大小为整个堆的3/8左右。</td>
+</tr>
+<tr>
+<td>-XX:+HeapDumpOnOutOfMemoryError</td>
+<td>让JVM在发生内存溢出时自动的生成堆内存快照</td>
+<td>可以通过-XX:HeapDumpPath=path参数将生成的快照放到指定路径下</td>
+</tr>
+<tr>
+<td>-XX:OnOutOfMemoryError</td>
+<td>当内存溢发生时可以执行一些指令</td>
+<td>比如发个E-mail通知管理员或者执行一些清理工作，执行脚本</td>
+</tr>
+<tr>
+<td>-XX:ThreadStackSize</td>
+<td>每个线程栈最大值</td>
+<td>栈设置太大，会导致线程创建减少，栈设置小，会导致深入不够，深度的递归会导致栈溢出，建议栈深度设置在3000-5000k。</td>
+</tr>
+<tr>
+<td>-XX:MetaspaceSize</td>
+<td>初始化的元空间大小</td>
+<td>如果元空间大小达到了这个值，就会触发Full GC为了避免频繁的Full GC，建议将- XX：MetaspaceSize设置较大值。如果释放了空间之后，元空间还是不足，那么就会自动增加MetaspaceSize的大小</td>
+</tr>
+<tr>
+<td>-XX:MaxMetaspaceSize</td>
+<td>元空间最大值</td>
+<td>默认情况下，元空间最大的大小是系统内存的大小，元空间一直扩大，虚拟机可能会消耗完所有的可用系统内存。</td>
+</tr>
+</tbody>
+</table>
+<p>示例参数：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 必备
+</span></span><span class="line"><span class="cl">-XX:+PrintGCDetails 
+</span></span><span class="line"><span class="cl">-XX:+PrintGCDateStamps 
+</span></span><span class="line"><span class="cl">-XX:+PrintTenuringDistribution 
+</span></span><span class="line"><span class="cl">-XX:+PrintHeapAtGC 
+</span></span><span class="line"><span class="cl">-XX:+PrintReferenceGC 
+</span></span><span class="line"><span class="cl">-XX:+PrintGCApplicationStoppedTime
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 可选
+</span></span><span class="line"><span class="cl">-XX:+PrintSafepointStatistics 
+</span></span><span class="line"><span class="cl">-XX:PrintSafepointStatisticsCount=1
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># GC日志输出的文件路径
+</span></span><span class="line"><span class="cl">-Xloggc:/path/to/gc-%t.log
+</span></span><span class="line"><span class="cl"># 开启日志文件分割
+</span></span><span class="line"><span class="cl">-XX:+UseGCLogFileRotation 
+</span></span><span class="line"><span class="cl"># 最多分割几个文件，超过之后从头文件开始写
+</span></span><span class="line"><span class="cl">-XX:NumberOfGCLogFiles=14
+</span></span><span class="line"><span class="cl"># 每个文件上限大小，超过就触发分割
+</span></span><span class="line"><span class="cl">-XX:GCLogFileSize=100M
+</span></span></code></pre></div><p>何时调优：</p>
+<ol>
+<li>Full GC 次数频繁；</li>
+<li>GC 停顿时间过长；</li>
+<li>应用出现OutOfMemory 等内存异常；</li>
+<li>堆内存持续上涨达到设置的最大内存值；</li>
+</ol>
+<p>调优原则：</p>
+<ol>
+<li>多数导致GC问题的Java应用，都不是因为我们参数设置错误，而是代码问题；</li>
+<li>在实际使用中，分析GC情况优化代码比优化JVM参数更好；</li>
+<li>减少创建对象的数量、减少使用全局变量和大对象；</li>
+</ol>
+<p>调优思路：</p>
+<ol>
+<li>分析GC日志及dump文件，判断是否需要优化，确定瓶颈问题点。如果各项参数设置合理，系统没有超时日志出现，GC频率不高，GC耗时不高，那么没有必要进行GC优化，如果GC时间超过1-3秒，或者频繁GC，则必须优化；</li>
+<li>确定JVM调优目标。如果内存分配过大或过小，或者采用的GC收集器比较慢，则应该优先调整这些参数，并且先找1台或几台机器进行测试，然后比较优化过的机器和没有优化的机器的性能对比，并有针对性的做出最后选择；</li>
+<li>不断的分析和调整，直到找到合适的JVM参数配置；</li>
+</ol>
+<h2 id="线上接口慢">线上接口慢</h2>
+<h3 id="定位问题">定位问题</h3>
+<p>首先要定位是哪里慢，定位接口哪一个环节比较慢，性能瓶颈在哪里，可以使用应用性能监控工具(APM)定位问题。常见工具: skywalking、pinpoint、cat、zipkin。</p>
+<p>如果应用程序没有接入APM，可以在生产环境装一下arthas，利用trace接口方法和火焰图，大概能分析是那一块比较慢，定位能力稍微有点粗糙，亦可以利用程序中的告警日志定位问题。</p>
+<h3 id="解决方案-3">解决方案</h3>
+<p>如果已经定位到具体是哪里的问题了，那么就可以进行解决，如果是最新的功能引起的，那么最快的办法就是回退版本。
+以下是几种常见接口慢的情况。</p>
+<h4 id="数据库慢sql">数据库慢sql</h4>
+<p>如果是数据库sql慢，可以使用执行计划去分析一下，常见sql慢的几种情况：</p>
+<ul>
+<li>锁表；先把锁表的sqlkill一波，在分析具体原因；</li>
+<li>未加索引；添加索引，有可能会锁表，引发一系列问题，需要综合评估；</li>
+<li>索引失效；分析索引失效原因，如：索引列区分度（值大都相同）很低、索引列大量空值、对所索引列加方法转换等；</li>
+<li>小表驱动大表；在连接查询时尽量过滤数据，使用小表驱动大表，使笛卡尔积尽量小一些；</li>
+<li>sql太复杂；join超过3张表或者子查询比较多，建议拆分为多个sql，接口间相互调用；比如先从某个著接口查询某个表数据，然后关联字段作为条件从另一个表查询，进行内存拼接；</li>
+<li>返回的数据量数据太多；当超过数据库一定限制的时候返回大量数据就会很慢，可以使用分页多批次完成，针对访问量不多的接口可使用多线程批量查询；</li>
+<li>单表数据量太大；（mysql超500w较慢）如果单表数据量较大，考虑在数据库设计做文章，如：分片分库、利用es存储等；</li>
+</ul>
+<h4 id="调用第三方接口慢">调用第三方接口慢</h4>
+<ul>
+<li>设置合理的超时时间；调用第三方接口一定要设置合理的超时时间，在设置时一定要大于调用接口的平均相应时间；</li>
+<li>第三方接口大量超时；可以集成sentinel或hystrix限流熔断框架，防止第三方接口拖垮自己的接口（兜底逻辑）；</li>
+<li>事务型操作根据实际情况决定是否采用补偿机制（本地消息表）；比如新增、修改等操作要考虑对方接口是否支持幂等，防止超发；</li>
+<li>循环调用，改为单次批量调用，减少IO损耗；如：调用根据id查询单条数据的接口，可优化为批量查询接口；</li>
+<li>缓存查询结果；考虑当前查询结果是否能做缓存，如用户信息等短时间内不会变化的信息，根据业务形态来决定；</li>
+</ul>
+<h4 id="中间件慢">中间件慢</h4>
+<ul>
+<li>redis慢：是否有大key、热key，可接入hotkeys监控；针对热key可以使用本地缓存来抗，针对大key可以将其拆分，采用set结构的sismember等方法</li>
+<li>kafka：生产端慢：可以使用堵塞队列接收，批量丢消息；消费端慢：消费端慢会造成消息积压，可以扩分区、增加消费节点、增加消费线程，用数据机构接受批量写入库；</li>
+</ul>
+<h4 id="程序逻辑慢">程序逻辑慢</h4>
+<ul>
+<li>非法校验逻辑前置；避免无用数据穿透小号系统资源，减少无效调用；</li>
+<li>循环调用改为单次批量调用；在查询数据库或调用第三方接口，能批量就批量，数据在内存组装处理；</li>
+<li>同步调用改为异步调用；在接口没有相互依赖的关系的时候可以将其优化为异步查询；</li>
+<li>非核心逻辑剥离；将接口的大事务拆分为小事务，一些非核心逻辑可以异步处理，可以使用mq异步解耦；</li>
+<li>线程池合理设置参数；不要使用JDK默认参数，如果在高并发的情况下容易OOM，线程池满了以后要重写拒绝策略，考虑告警加数据持久化处理；</li>
+<li>锁合理设置；本地读写锁设计使用不合理，要控制锁的力度，尽量小一些；分布式锁合理使用防止热key；</li>
+<li>优化GC参数；考虑GC是否频繁，调整GC算法，新生代老年代比例，根据长时间观察可以设置出来；</li>
+<li>只打印必要日志；当并发量比较高的时候打印日志也会损耗性能，所以日志应加上开关能不打就不打；</li>
+</ul>
+<h4 id="架构优化">架构优化</h4>
+<ul>
+<li>高并发读逻辑走redis，尽可能不要穿透到DB；redis查询不到也不要查DB，可通过定时任务，MQ写入redis。尽量不要把风险给DB，DB如果挂了整个应用就用不了了；</li>
+<li>设计写逻辑数据，尽量异步、批量处理、分库分表提升写入性能；</li>
+<li>接口接入限流熔断兜底；</li>
+<li>接入监控告警；error日志告警、接口慢查询或者不可用或限流熔断告警、DB告警、中间件告警、应用系统告警等；</li>
+<li>接口需要加动态配置开关；能够快速切断流量或降级某些非核心服务调用；</li>
+<li>设计程序自愈能力；比如如果数据有问题，用配置好的程序逻辑自动去修复；</li>
+</ul>
+<h2 id="transactional">@Transactional</h2>
+<p><code>@Transactional</code>是开发过程中使用比较频繁的注解，但是使用不当也会导致事务失效甚至导致一些其他问题，下面是使用<code>@Transactional</code>遇到的几种问题。</p>
+<h3 id="transactional失效情况">@Transactional失效情况</h3>
+<ol>
+<li>如果某个方法是非public的，那么<code>@Transactional</code>就会失效。因为事务的底层是利用<code>cglib</code>代理实现，<code>cglib</code>是基于父子类来实现的，子类是不能重载父类的private方法，所以无法很好利用代理，这种情况下会导致@Transactional失效；</li>
+<li>使用的数据库引擎不支持事务。因为Spring的事务调用的也是数据库事务的API，如果数据库都不支持事务，那么<code>@Transactional</code>注解也就失效了；</li>
+<li>添加了<code>@Transactional</code>注解的方法不能在同一个类中调用，否则会使事务失效。这是因为Spring AOP通过代理来管理事务，自调用不会经过代理；</li>
+<li><code>@Transactional</code> 注解属性 <code>propagation</code> 设置错误，若是错误的配置以下三种 <code>propagation</code>，事务将不会发生回滚：
+<ul>
+<li><code>TransactionDefinition.PROPAGATION_SUPPORTS</code>：如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。</li>
+<li><code>TransactionDefinition.PROPAGATION_NOT_SUPPORTED</code>：以非事务方式运行，如果当前存在事务，则把当前事务挂起。</li>
+<li><code>TransactionDefinition.PROPAGATION_NEVER</code>：以非事务方式运行，如果当前存在事务，则抛出异常。</li>
+</ul>
+</li>
+<li><code>@Transactional</code>注解属性<code>rollbackFor</code>设置错误，<code>rollbackFor</code>可以指定能够触发事务回滚的异常类型。默认情况下，Spring仅在抛出未检查异常（继承自<code>RuntimeException</code>）时回滚事务。对于受检异常（继承自 <code>Exception</code>），事务不会回滚，除非明确配置了<code>rollbackFor</code>属性；</li>
+<li>异常被捕获了，导致<code>@Transactional</code>失效。当事务方法中抛出一个异常后，应该是需要表示当前事务需要<code>rollback</code>，如果在事务方法中手动捕获了该异常，那么事务方法则会认为当前事务应该正常提交，此时就会出现事务方法中明明有报错信息表示当前事务需要回滚，但是事务方法认为是正常，出现了前后不一致，也是因为这样就会抛出<code>UnexpectedRollbackException</code>异常；</li>
+</ol>
+<p>我们在使用<code>@Transactional</code>时，要避免出现上述情况，以确保 <code>@Transactional</code> 注解正确生效，从而实现事务管理的可靠性和一致性。</p>
+<h3 id="transactional遇到锁">@Transactional遇到锁</h3>
+<p>看到这么一段代码，原来当Transactional碰到锁，有个大坑，觉得很有意思，于是便记录下来。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ServiceOne</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 设置一把可重入的公平锁</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Lock</span><span class="w"> </span><span class="n">lock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ReentrantLock</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Transactional</span><span class="p">(</span><span class="n">rollbackFor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Exception</span><span class="p">.</span><span class="na">class</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Result</span><span class="w">  </span><span class="nf">func</span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="n">seckillId</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">lock</span><span class="p">.</span><span class="na">lock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 执行数据库操作——查询商品库存数量</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 如果 库存数量 满足要求 执行数据库操作——减少库存数量——模拟卖出货物操作</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">lock</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>func</code>方法是原子操作，所以使用事务，为了解决并发访问的问题，用<code>lock</code>把整个代码包裹了起来，这么使用锁和事务，是会发生超卖问题的。</p>
+<p>在使用MySQL数据库的可重复读隔离机制，如果是高并发的情况下，假设真的就有多个线程同时调用<code>func</code>方法。
+要保证一定不能出现超卖的情况，那么就需要事务的开启与提交能完整的包裹在<code>lock</code>与<code>unlock</code>之间。</p>
+<p>为什么要保证事务的开启与提交，完整的包裹在<code>lock</code>与<code>unlock</code>之间呢？</p>
+<p>举个例子，假设现在库存就只有一个了，这个时候 A，B 两个线程来请求下单。A 请求先拿到锁，然后查询出库存为一，可以下单，走了下单流程，把库存减为 0 了。
+但是由于 A 先执行了 <code>unlock</code> 操作，而未提交事务，先释放了锁。B 线程看到后马上就冲过来拿到了锁，并执行了查询库存的操作。
+这个时候 A 线程还没来得及提交事务，所以 B 读取到的库存还是 1，如果程序没有做好控制，也走了下单流程，此时就造成了超卖。</p>
+<p>那怎么保证事务的开启与提交，完整的包裹在<code>lock</code>与<code>unlock</code>之间呢？</p>
+<p>先来了解一下事务的启动和结束时机，这里直接说结论。
+事务的启动时机，在执行到它们之后的第一个操作数据库表的语句，事务才算是真正启动。在上述示例代码中第一个SQL是在加锁之后执行的，所以先加锁再开启事务。
+事务的提交是在目标方法执行之后。具体代码可以参考：<code>TransactionAspectSupport.invokeWithTransaction</code>方法，从其中可以看出，<code>invocation.proceedWithInvocation</code> 是在<code>commitTransactionAfterReturning</code>前面的。</p>
+<p>所以怎样保证呢？对于声明式事务，解决办法是把锁加在方法外面。如果一定需要加在里面，也可以使用编程式事务。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">func</span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="n">seckillId</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">DefaultTransactionDefinition</span><span class="w"> </span><span class="n">definition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DefaultTransactionDefinition</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">definition</span><span class="p">.</span><span class="na">setIsolationLevel</span><span class="p">(</span><span class="n">TransactionDefinition</span><span class="p">.</span><span class="na">ISOLATION_REPEATABLE_READ</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">TransactionStatus</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">transactionManager</span><span class="p">.</span><span class="na">getTransaction</span><span class="p">(</span><span class="n">definition</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">lock</span><span class="p">.</span><span class="na">lock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="c1">// 执行数据库操作——查询商品库存数量</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="c1">// 如果 库存数量 满足要求 执行数据库操作——减少库存数量——模拟卖出货物操作</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">transactionManager</span><span class="p">.</span><span class="na">commit</span><span class="p">(</span><span class="n">status</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">transactionManager</span><span class="p">.</span><span class="na">rollback</span><span class="p">(</span><span class="n">status</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">lock</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ServiceOne</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 设置一把可重入的公平锁</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Lock</span><span class="w"> </span><span class="n">lock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ReentrantLock</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Autowired</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">ServiceTwo</span><span class="w"> </span><span class="n">serviceTwo</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Result</span><span class="w">  </span><span class="nf">func</span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="n">seckillId</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">lock</span><span class="p">.</span><span class="na">lock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">serviceTwo</span><span class="p">.</span><span class="na">sellProduct</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">lock</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ServiceTwo</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="nd">@Transactional</span><span class="p">(</span><span class="n">rollbackFor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Exception</span><span class="p">.</span><span class="na">class</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">sellProduct</span><span class="p">(){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c1">// 执行数据库操作——查询商品库存数量</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c1">// 如果 库存数量 满足要求 执行数据库操作——减少库存数量——模拟卖出货物操作</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></div>
+                    <div id="post_footer" class="post_footer">
+                        <div class="meta">
+                            
+                            <div id="post_footer_info" class="info">
+                                <span class="field tags">
+                                    <i class="ri-stack-line"></i>
+                                    
+                                        
+                                        <a href="https://whiteppure.github.io/iblog/tags/%E5%85%B6%E4%BB%96/">其他</a>
+                                    
+                                        <a href="https://whiteppure.github.io/iblog/tags/java/">Java</a>
+                                    
+                                    
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+<div id="doc_comments" class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/iblog/css/comments.css" />
+
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+        
+        emojiCDN: '//i0.hdslb.com/bfs/emote/',
+        
+        emojiMaps: {
+            "tv_doge": "6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png",
+            "tv_亲亲": "a8111ad55953ef5e3be3327ef94eb4a39d535d06.png",
+            "tv_偷笑": "bb690d4107620f1c15cff29509db529a73aee261.png",
+            "tv_再见": "180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png",
+            "tv_冷漠": "b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png",
+            "tv_发怒": "34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png",
+            "tv_发财": "34db290afd2963723c6eb3c4560667db7253a21a.png",
+            "tv_可爱": "9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png",
+            "tv_吐血": "09dd16a7aa59b77baa1155d47484409624470c77.png",
+            "tv_呆": "fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png",
+            "tv_呕吐": "9f996894a39e282ccf5e66856af49483f81870f3.png",
+            "tv_困": "241ee304e44c0af029adceb294399391e4737ef2.png",
+            "tv_坏笑": "1f0b87f731a671079842116e0991c91c2c88645a.png",
+            "tv_大佬": "093c1e2c490161aca397afc45573c877cdead616.png",
+            "tv_大哭": "23269aeb35f99daee28dda129676f6e9ea87934f.png",
+            "tv_委屈": "d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png",
+            "tv_害羞": "a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png",
+            "tv_尴尬": "7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png",
+            "tv_微笑": "70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png",
+            "tv_思考": "90cf159733e558137ed20aa04d09964436f618a1.png",
+            "tv_惊吓": "0d15c7e2ee58e935adc6a7193ee042388adc22af.png",
+            "tv_打脸": "56ab10b624063e966bfcb76ea5dc4794d87dfd47.png",
+            "tv_抓狂": "fe31c08edad661d63762b04e17b8d5ae3c71a757.png",
+            "tv_抠鼻": "c666f55e88d471e51bbd9fab9bb308110824a6eb.png",
+            "tv_斜眼笑": "911f987aa8bc1bee12d52aafe62bc41ef4474e6c.png",
+            "tv_无奈": "ea8ed89ee9878f2fece2dda0ea8a5dbfe21b5751.png",
+            "tv_晕": "5443c22b4d07fb1907ccc610c8e6db254f2461b7.png",
+            "tv_流汗": "cead1c351ab8d79e9f369605beb90148db0fbed3.png",
+            "tv_流泪": "7e71cde7858f0cd50d74b0264aa26db612a8a167.png",
+            "tv_流鼻血": "c32d39db2737f89b904ca32700d140a9241b0767.png",
+            "tv_点赞": "f85c354995bd99e28fc76c869bfe42ba6438eff4.png",
+            "tv_生气": "26702dcafdab5e8225b43ffd23c94ac1ff932654.png",
+            "tv_生病": "8b0ec90e6b86771092a498c54f09fc94621c1900.png",
+            "tv_疑问": "0793d949b18d7be716078349c202c15ff166f314.png",
+            "tv_白眼": "c1d59f439e379ee50eef488bcb5e5378e5044ea4.png",
+            "tv_皱眉": "72ccad6679fea0d14cce648b4d818e09b8ffea2d.png",
+            "tv_目瞪口呆": "0b8cb81a68de5d5365212c99375e7ace3e7891b7.png",
+            "tv_睡着": "8b196675b53af58264f383c50ad0945048290b33.png",
+            "tv_笑哭": "1abc628f6d4f4caf9d0e7800878f4697abbc8273.png",
+            "tv_腼腆": "89712c0d4af73e67f89e35cbc518420380a7f6f4.png",
+            "tv_色": "61822c7e9aae5da76475e7892534545336b23a6f.png",
+            "tv_调侃": "4bc022533ef31544ca0d72c12c808cf4a1cce3e3.png",
+            "tv_调皮": "b9c41de8e82dd7a8515ae5e3cb63e898bf245186.png",
+            "tv_鄙视": "6e72339f346a692a495b123174b49e4e8e781303.png",
+            "tv_闭嘴": "c9e990da7f6e93975e25fd8b70e2e290aa4086ef.png",
+            "tv_难过": "87f46748d3f142ebc6586ff58860d0e2fc8263ba.png",
+            "tv_馋": "fc7e829b845c43c623c8b490ee3602b7f0e76a31.png",
+            "tv_鬼脸": "0ffbbddf8a94d124ca2f54b360bbc04feb6bbfea.png",
+            "tv_黑人问号": "45821a01f51bc867da9edbaa2e070410819a95b2.png",
+            "tv_鼓掌": "1d21793f96ef4e6f48b23e53e3b9e42da833a0f6.png"
+        }
+    })
+</script>
+
+                
+            </div>
+        </div>
+    </div>
+    
+<a id="search-btn" style="display: inline-block;" href="javascript:void(0);">
+    <span class="ri-search-line"></span>
+</a>
+<div id="fastSearch">
+    <input id="searchInput" tabindex="0" autocomplete="off">
+    <ul id="searchResults"></ul>
+</div>
+<div class="side_nav">
+    
+    <a id="top_to_back" href="#" class="top_to_back">
+        <svg t="1688614744062" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2152" width="16" height="16"><path d="M966.4 323.2c-9.6-9.6-25.6-9.6-35.2 0l-416 416-425.6-416c-9.6-9.6-25.6-9.6-35.2 0-9.6 9.6-9.6 25.6 0 35.2l441.6 432c9.6 9.6 25.6 9.6 35.2 0l435.2-432C976 345.6 976 332.8 966.4 323.2z" p-id="2153" fill="#424242"></path></svg>    </a>
+    
+    <div>
+        <a id="content_display" class="content_display">
+            <svg t="1688606941910" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="57753" width="18" height="18"><path d="M192 448c10.9 0 21.8-4.2 30.2-12.5L497 160.8c5.4-5.4 11.8-6.2 15.1-6.2 3.3 0 9.6 0.8 15.1 6.2l274.7 274.7c16.7 16.7 43.7 16.7 60.3 0 16.7-16.7 16.7-43.7 0-60.3L587.4 100.4c-41.6-41.6-109.3-41.6-150.9 0L161.8 375.2c-16.7 16.7-16.7 43.7 0 60.3 8.4 8.3 19.3 12.5 30.2 12.5zM801.8 588.5L527.1 863.2c-5.4 5.4-11.8 6.2-15.1 6.2-3.3 0-9.7-0.8-15.1-6.2L222.2 588.5c-16.7-16.7-43.7-16.7-60.3 0-16.7 16.7-16.7 43.7 0 60.3l274.8 274.8c20.8 20.8 48.1 31.2 75.4 31.2 27.3 0 54.6-10.4 75.4-31.2l274.7-274.8c16.7-16.7 16.7-43.7 0-60.3-16.7-16.7-43.7-16.7-60.4 0z" fill="#424242" p-id="57754"></path></svg>
+        </a>
+        <a id="content_hidden" class="content_hidden">
+            <svg t="1688603143752" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15592" width="18" height="18"><path d="M479.004101 645.938677L165.25229 958.480465a37.510709 37.510709 0 0 0 0 54.059551 36.47863 36.47863 0 0 0 53.063061 0l293.679668-292.576411 293.715256 292.576411a36.443042 36.443042 0 0 0 53.063061 0 37.510709 37.510709 0 0 0 0-54.059551l-313.751811-312.541788c-21.210989-22.349834-36.514219-24.698702-66.017424 0z m66.053013-267.877709l312.577377-312.541789a37.510709 37.510709 0 0 0 0-54.059551 36.443042 36.443042 0 0 0-53.063061 0l-292.505234 292.576411L219.560963 11.459628a36.47863 36.47863 0 0 0-53.063061 0 37.510709 37.510709 0 0 0 0 54.059551l312.577377 312.541789a46.58588 46.58588 0 0 0 65.981835-0.035589z" p-id="15593" fill="#424242"></path></svg>
+        </a>
+    </div>
+    
+    <a id="back_to_top" href="#" class="back_to_top">
+        <svg t="1688628374733" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3166" width="16" height="16"><path d="M966.4 668.8l-435.2-432c-9.6-9.6-25.6-9.6-35.2 0l-441.6 432c-9.6 9.6-9.6 25.6 0 35.2 9.6 9.6 25.6 9.6 35.2 0l425.6-416 416 416c9.6 9.6 25.6 9.6 35.2 0S976 678.4 966.4 668.8z" p-id="3167" fill="#424242"></path></svg>
+    </a>
+</div>
+    <footer class="footer">
+    <div id="footer_powered_by" class="powered_by">
+        <a href="https://varkai.com">Designed by VarKai,</a>
+        <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+    </div>
+
+    <div id="footer_slogan" class="footer_slogan">
+        <span>from 2021</span>
+    </div>
+</footer>
+    <script src="https://whiteppure.github.io/iblog/js/jquery-3.5.1.min.js"></script>
+<link href="https://whiteppure.github.io/iblog/css/fancybox.min.css" rel="stylesheet">
+<script src="https://whiteppure.github.io/iblog/js/fancybox.min.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/darkmode.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/zozo.js"></script>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/html2canvas.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/utils.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/html2md.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/htmlexport.js"></script>
+
+<script src="https://whiteppure.github.io/iblog/js/fastsearch.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/fuse.js"></script>
+
+
+<script>
+    new Darkmode({
+        right: '32px', 
+        bottom: 'unset', 
+        
+        time: '0.15s', 
+        mixColor: '#f7f7f7', 
+        backgroundColor: '#f7f7f7', 
+        buttonColorDark: '#212121', 
+        buttonColorLight: '#f7f7f7', 
+        saveInCookies: false, 
+        autoMatchOsTheme: true 
+    }).showWidget();
+
+    function addDarkmodeWidget(){
+        const hours = new Date().getHours();
+        if (hours >= 19 || hours <= 5){
+            new Darkmode({
+                right: '32px', 
+                bottom: 'unset', 
+                
+                time: '0.3s', 
+                mixColor: '#f7f7f7', 
+                backgroundColor: '#f7f7f7', 
+                buttonColorDark: '#212121', 
+                buttonColorLight: '#f7f7f7', 
+                saveInCookies: false, 
+                autoMatchOsTheme: true 
+            }).toggle();
+        }
+    }
+    
+    
+</script>
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

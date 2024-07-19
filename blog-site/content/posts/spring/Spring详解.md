@@ -1631,7 +1631,7 @@ AbstractAdvisorAutoProxyCreator.getAdvicesAndAdvisorsForBean
    -->AbstractAdvisorAutoProxyCreator.findCandidateAdvisors
    -->BeanFactoryAdvisorRetrievalHelper.findAdvisorBeans
 ```
-BeanFactoryAdvisorRetrievalHelper这个类是一个Spring AOP内部工具类，用来从Bean容器中获取所有Spring的Advisor Bean。
+`BeanFactoryAdvisorRetrievalHelper`这个类是一个Spring AOP内部工具类，用来从Bean容器中获取所有Spring的Advisor Bean。
 该工具内部使用了缓存机制，虽然公开的查找方法可能会被调用多次，但并不是每次都会真正查找，而是会利用缓存。
 ```java
 public List<Advisor> findAdvisorBeans() {
@@ -2171,7 +2171,7 @@ protected Object invokeWithinTransaction(Method method, @Nullable Class<?> targe
 ```
 `invokeWithinTransaction`方法是`TransactionInterceptor`类中的核心方法，它负责在执行目标方法时管理事务的生命周期。首先该方法通过`getTransactionAttributeSource()`获取事务属性源，进而确定当前方法是否需要事务支持。
 接着根据获取的事务属性，选择合适的事务管理器，并生成一个方法标识以记录当前事务的上下文信息。在方法执行前，会检查是否需要开启新的事务，并在事务环境中执行目标方法的逻辑。
-如果方法执行过程中出现异常，事务管理器会回滚事务以保证数据一致性，否则在方法执行成功后，事务管理器将提交事务。最后无论方法执行结果如何，都会清理事务相关的信息，释放资源并恢复状态，来保证事务管理的完整性和有效性
+如果方法执行过程中出现异常，事务管理器会回滚事务以保证数据一致性，否则在方法执行成功后，事务管理器将提交事务。最后无论方法执行结果如何，都会清理事务相关的信息，释放资源并恢复状态，来保证事务管理的完整性和有效性。
 
 简而言之，当一个方法使用了`@Transactional`注解，在程序运行时，JVM为该Bean创建一个代理对象，并且在调用目标方法的时候进行使用`TransactionInterceptor`拦截，代理对象负责在调用目标方法之前开启事务，然后执行方法的逻辑。
 方法执行成功，则提交事务，如果执行方法中出现异常，则回滚事务。同时Spring利用`ThreadLocal`会将事务资源（如数据库连接）与当前线程绑定，以确保在同一事务中共享资源，这些资源在事务提交或回滚时会被清理。
