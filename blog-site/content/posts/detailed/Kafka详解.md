@@ -2,8 +2,8 @@
 title: "Kafka详解"
 date: 2021-10-19
 draft: false
-tags: ["MQ","详解"]
-slug: "java-mq"
+tags: ["分布式","详解","Kafka"]
+slug: "java-kafka"
 ---
 
 ## 概览

@@ -2,7 +2,7 @@
 title: "SpringBoot详解"
 date: 2024-07-18
 draft: false
-tags: ["Java", "spring", "详解"]
+tags: ["Spring","SpringBoot", "详解"]
 slug: "java-springboot"
 ---
 

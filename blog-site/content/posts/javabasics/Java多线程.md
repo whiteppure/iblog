@@ -2,7 +2,7 @@
 title: "Java多线程"
 date: 2021-05-05
 draft: false
-tags: ["Java", "Java基础"]
+tags: ["Java", "Java基础","多线程"]
 slug: "rookie-multi-thread"
 ---
 

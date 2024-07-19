@@ -68,8 +68,6 @@
         
         <ul class="nav">
             
-        <ul class="nav">
-            
             
             <li class="nav-item">
                 <a class="nav-link text-left" href="#jvm%e6%95%b4%e4%bd%93%e7%bb%93%e6%9e%84">
@@ -78,8 +76,6 @@
             </li>
             
             
-        </ul>
-        
         </ul>
         
         
@@ -1553,7 +1549,7 @@
                         </span>
                         
                     </div>
-                    <div class="post_content markdown"><h2 id="jvm整体结构">JVM整体结构</h2>
+                    <div class="post_content markdown"><h1 id="jvm整体结构">JVM整体结构</h1>
 <p>Java虚拟机有很多，HotSpot VM是目前市面上高性能虚拟机的代表作之一。HotSpot 的技术优势就在于热点代码探测技术（名字就从这来的）和准确式内存管理技术。</p>
 <p>热点代码探测，指的是，通过执行计数器找出最具有编译价值的代码，然后通知即时编译器以方法为单位进行编译，解释器就可以不再逐行的将字节码翻译成机器码，而是将一整个方法的所有字节码翻译成机器码再执行。</p>
 <p>JVM 大致可以划分为三个区域，分别是类加载子系统（<code>Class Loader</code>）、运行时数据区（<code>Runtime Data Areas</code>）和执行引擎（<code>Excution Engine</code>）。下图为 HotSport 虚拟机结构图</p>
@@ -2416,6 +2412,7 @@ M.L.Minsky在该论文中描述的算法被人们称为复制算法，它将可�
 <li>读屏障（<code>Load Barrier</code>）：一种在程序运行时插入到对象访问操作中的特殊检查，用于确保对象访问的正确性。</li>
 </ul>
 <p>这两种技术可以让所有线程在并发的条件下，就指针的状态达成一致。因此，<code>ZGC</code> 可以并发的复制对象，这大大的降低了 GC 的停顿时间。</p>
+<p>���</p>
 </div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">

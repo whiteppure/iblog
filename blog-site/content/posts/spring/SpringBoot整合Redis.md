@@ -2,7 +2,7 @@
 title: "SpringBoot整合Redis"
 date: 2020-03-01
 draft: false
-tags: ["springboot", "redis","spring"]
+tags: ["SpringBoot", "Redis","Spring"]
 slug: "springboot-redis"
 ---
 

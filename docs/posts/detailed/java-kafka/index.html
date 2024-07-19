@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="zh" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="whitepure" />
+	
+	
+	
+	<title>Kafka详解 ｜ 脚踏实地</title>
+	
+    
+    
+    <meta name="description" content="概览 MQ 即 messagequeue 消息队列，是分布式系统的重要组件，主要解决异步消息，应用解耦，消峰等问题。从而实现高可用，高性能，可伸缩和最终一致性的架构。使用较多的MQ有：acti" />
+    
+
+    
+    
+    <meta name="keywords" content="whitepure博客, whiteppure, whitepure, 李济芝, Java, 博客, 技术博客" />
+    
+
+	
+
+    <link rel="shortcut icon" href="https://whiteppure.github.io/iblog/images/favicon.ico" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/normalize.css" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/zozo.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/highlight.css" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/toc.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/search.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/img.css" />
+
+    
+    
+</head>
+
+<body>
+    <div class="post-password">
+        
+    </div>
+
+    
+    
+    
+
+
+
+
+
+
+
+
+
+<div id="post_content_toc" class="toc">
+    <div class="page-header"><strong></strong></div>
+    <div id="page-scrollspy" class="toc-nav">
+
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%a6%82%e8%a7%88">
+                    概览
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#mq%e4%bc%98%e7%82%b9">
+                    MQ优点
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#mq%e7%bc%ba%e7%82%b9">
+                    MQ缺点
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%b8%b8%e8%a7%81mq%e5%af%b9%e6%af%94">
+                    常见MQ对比
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#jms%e6%b6%88%e6%81%af%e6%a8%a1%e5%9e%8b">
+                    JMS消息模型
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e7%82%b9%e5%af%b9%e7%82%b9%e6%a8%a1%e5%bc%8f">
+                    点对点模式
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%8f%91%e5%b8%83%e8%ae%a2%e9%98%85%e6%a8%a1%e5%bc%8f">
+                    发布订阅模式
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#kafka">
+                    kafka
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%9f%ba%e7%a1%80%e6%9e%b6%e6%9e%84">
+                    基础架构
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%8f%91%e5%b8%83%e8%ae%a2%e9%98%85%e5%b7%a5%e4%bd%9c%e6%b5%81%e7%a8%8b">
+                    发布订阅工作流程
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e7%94%9f%e4%ba%a7%e8%80%85">
+                    生产者
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e7%94%9f%e4%ba%a7%e8%80%85%e6%96%87%e4%bb%b6%e5%ad%98%e5%82%a8">
+                    生产者文件存储
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e7%94%9f%e4%ba%a7%e8%80%85%e5%88%86%e5%8c%ba%e7%ad%96%e7%95%a5">
+                    生产者分区策略
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e7%94%9f%e4%ba%a7%e8%80%85%e6%95%b0%e6%8d%ae%e5%8f%af%e9%9d%a0%e6%80%a7%e4%bf%9d%e8%af%81">
+                    生产者数据可靠性保证
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e7%94%9f%e4%ba%a7%e8%80%85%e6%95%b0%e6%8d%ae%e4%b8%80%e8%87%b4%e6%80%a7%e4%bf%9d%e8%af%81">
+                    生产者数据一致性保证
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e7%94%9f%e4%ba%a7%e8%80%85ack%e6%9c%ba%e5%88%b6">
+                    生产者ack机制
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#exactlyonce">
+                    ExactlyOnce
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e7%94%9f%e4%ba%a7%e8%80%85%e5%8f%91%e9%80%81%e6%b6%88%e6%81%af%e6%b5%81%e7%a8%8b">
+                    生产者发送消息流程
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%b6%88%e8%b4%b9%e8%80%85">
+                    消费者
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%b6%88%e8%b4%b9%e8%80%85%e5%88%86%e5%8c%ba%e5%88%86%e9%85%8d%e7%ad%96%e7%95%a5">
+                    消费者分区分配策略
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%b6%88%e8%b4%b9%e8%80%85%e6%b6%88%e8%b4%b9%e6%95%b0%e6%8d%ae%e9%97%ae%e9%a2%98">
+                    消费者消费数据问题
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#kafka%e4%ba%8b%e5%8a%a1">
+                    kafka事务
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%b6%88%e6%81%af%e7%a7%af%e5%8e%8b">
+                    消息积压
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+
+    </div>
+
+</div>
+
+
+
+    
+
+    
+    <div class="main animate__animated animate__fadeInDown" id="main_content">
+        <div class="nav_container animated fadeInDown">
+    <div class="site_nav" id="site_nav">
+        <ul><li class="">
+                <a href="https://whiteppure.github.io/iblog/">首页</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/iblog/posts/">归档</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/iblog/tags/">标签</a>
+            </li><li class="">
+                <a href="https://whiteppure.github.io/iblog/about/">关于</a>
+            </li>
+        </ul>
+    </div>
+    <div class="menu_icon">
+        <a id="menu_icon"><i class="ri-menu-line"></i></a>
+    </div>
+</div>
+        <div id="post_header" class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://whiteppure.github.io/iblog/">
+                    <span>脚踏实地</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">
+                
+            </p>
+
+            
+            <div class="my_socials">
+                
+                    
+                    <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                        <i class="ri-github-fill"></i>
+                    </a>
+                    
+                
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
+                
+                <span id="sys_function" class="sys_function display_none">
+                    <a id="export_pdf"  title="导出pdf" style="border: none; background-color: #ffffff; cursor: pointer; margin-left: 10px">
+                        <svg t="1688701481347" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3517" width="16" height="16"><path d="M425.610455 85.814544H149.05897A42.303635 42.303635 0 0 0 106.6274 128.075535V896.492068c0 23.326702 18.976933 42.26099 42.43157 42.26099h682.743143a42.559504 42.559504 0 0 0 42.431569-42.559504v-384.016365a42.644793 42.644793 0 0 1 85.289587 0v384.016365A127.849091 127.849091 0 0 1 831.802113 1024H149.05897A127.635867 127.635867 0 0 1 21.337813 896.449423V128.03289A127.593222 127.593222 0 0 1 149.101614 0.524957h276.466196a42.644793 42.644793 0 0 1 0 85.289587z m564.062683 158.08425l-170.579174 170.579173a42.644793 42.644793 0 1 1-60.299738-60.299738L856.578738 256.393718H618.364922a42.644793 42.644793 0 1 1 0-85.289587h238.213816l-97.784512-97.784511A42.644793 42.644793 0 1 1 819.093964 13.019882l170.579174 170.579174a42.644793 42.644793 0 0 1 0 60.299738zM149.272194 597.552066a42.644793 42.644793 0 0 1 42.644793-42.644794h51.514911c59.190973 0 107.891327 23.284057 107.976617 97.102195 0 71.003581-49.46796 102.347504-106.185536 102.347504h-31.343923v66.781747a32.282109 32.282109 0 0 1-64.606862 0V597.552066z m92.709781 100.215264c31.429213 0 46.568114-16.46089 46.568114-45.757863 0-30.064579-17.313786-40.512554-48.359196-40.512554h-26.311837v86.270417h28.145563z m232.414124-142.860058c81.878003 0 136.036891 43.710913 136.036891 147.67892S556.231457 853.420826 477.935617 853.420826h-38.16709a42.644793 42.644793 0 0 1-42.644794-42.644793v-213.223967a42.644793 42.644793 0 0 1 42.644794-42.644794h34.542282z m-4.008611 240.729859c43.32711 0 73.988717-22.047358 73.988717-93.050939 0-71.046226-30.704251-90.705476-73.988717-90.705476h-8.699538v183.79906h8.699538zM692.481573 853.420826a32.282109 32.282109 0 0 1-32.282109-32.282108V597.552066a42.644793 42.644793 0 0 1 42.644793-42.644794h99.063855a29.680776 29.680776 0 1 1 0 59.404197h-77.144431v65.374469h61.749661a29.894 29.894 0 1 1 0 59.788h-61.749661v81.66478a32.282109 32.282109 0 0 1-32.282108 32.282108z" fill="#5f5f5f" p-id="3518"></path></svg>
+                    </a>
+                    <a id="export_pic" title="导出图片" style="border: none; background-color: #ffffff; cursor: pointer; margin-left: 10px">
+                        <svg t="1689071509720" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4564" width="16" height="16"><path d="M909.132886 0.037506h-184.960611a33.909445 33.909445 0 0 0-32.368107 33.909445 33.909445 33.909445 0 0 0 33.909445 33.395666h158.244078l-200.373995 199.346437a33.395666 33.395666 0 0 0 0 47.781491 31.854327 31.854327 0 0 0 23.633856 9.76181 33.909445 33.909445 0 0 0 24.147635-9.76181l198.832657-199.346437V272.340628a33.909445 33.909445 0 0 0 69.874009 0V88.921355A88.37007 88.37007 0 0 0 909.132886 0.037506zM216.558153 347.866211a107.37991 107.37991 0 1 0 107.37991-107.379911 107.89369 107.89369 0 0 0-107.37991 107.379911z m154.133843 0a51.377948 51.377948 0 0 1-97.618101 0 51.377948 51.377948 0 1 1 97.618101 0z" p-id="4565" fill="#424242"></path><path d="M963.079731 437.777619a34.423225 34.423225 0 0 0-33.909446 33.909445v265.110209a1811.07265 1811.07265 0 0 0-137.692899-193.181082 106.352351 106.352351 0 0 0-78.60826-36.478343 123.820854 123.820854 0 0 0-82.204716 35.964563l-3.596456 3.082677-188.557068 176.74014c-11.816928-13.358266-47.781491-51.377948-82.204716-87.856291a83.232275 83.232275 0 0 0-85.801172-21.578738 105.324792 105.324792 0 0 0-38.019681 19.52362l-141.289356 121.765736V89.948914a22.092517 22.092517 0 0 1 22.606297-22.606297h417.702713a33.395666 33.395666 0 0 0 33.395666-33.909445 33.395666 33.395666 0 0 0-33.395666-33.395666H113.802258A89.911408 89.911408 0 0 0 23.89085 89.948914v844.139678a89.911408 89.911408 0 0 0 89.911408 89.911408h793.27551a89.911408 89.911408 0 0 0 89.397629-89.911408v-462.401528a33.909445 33.909445 0 0 0-33.395666-33.909445z m-33.909446 496.310973a22.606297 22.606297 0 0 1-22.092517 22.606297H113.802258a22.606297 22.606297 0 0 1-22.606297-22.606297v-88.37007l183.933052-160.812976a43.157476 43.157476 0 0 1 15.413385-7.192912 15.927164 15.927164 0 0 1 17.982281 5.137794c37.505902 36.478343 78.60826 83.232275 82.718496 87.856291a61.653537 61.653537 0 0 0 42.643696 22.092517 62.681096 62.681096 0 0 0 51.377948-20.037399c8.220472-8.220472 134.610223-125.875971 194.208641-181.877935a57.029522 57.029522 0 0 1 34.423225-16.440943 45.212594 45.212594 0 0 1 29.79921 15.927164 2954.231982 2954.231982 0 0 1 186.501949 256.889738z" p-id="4566" fill="#424242"></path></svg>
+                    </a>
+                    <a id="export_markdown" title="导出markdown" style="border: none; background-color: #ffffff; cursor: pointer; margin-left: 10px">
+                        <svg t="1689071035200" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="13570" width="16" height="16"><path d="M178.073367 843.957262V461.158929h107.121045l107.121045 140.734874 107.125433-140.734874h107.116657v382.798333h-107.116657v-219.54307l-107.125433 140.730486-107.116657-140.730486v219.54307zM737.783131 892.148786l-131.221196-209.156132h87.479334V461.158929h87.479335v221.833725h87.483722z" p-id="13571" fill="#424242"></path><path d="M911.9958 217.142709c10.672172 10.663395 19.812851 25.144549 27.430816 43.430297 7.617965 18.285748 11.431335 35.044392 11.431336 50.28471V969.140255c0 15.235929-5.336086 28.18998-15.999481 38.853375-10.667783 10.667783-23.621834 16.003869-38.857763 16.003869H127.994904c-15.240317 0-28.18998-5.336086-38.857763-16.003869-10.663395-10.663395-15.999481-23.617446-15.999481-38.853375V54.852856c0-15.240317 5.331698-28.18998 15.999481-38.857763C99.804925 5.336086 112.758975 0 127.999292 0h512.000944c15.235929 0 31.998962 3.808982 50.28471 11.426947 18.285748 7.622353 32.762514 16.763033 43.430297 27.426428zM658.290372 77.715526v214.856442h214.856442c-3.808982-11.049559-7.99974-18.856218-12.572275-23.43314l-178.855415-178.851027c-4.572534-4.572534-12.383581-8.763292-23.43314-12.572275z m219.428976 873.143369V365.71496h-237.714724c-15.240317 0-28.18998-5.336086-38.857763-15.999481-10.663395-10.667783-15.999481-23.621834-15.999481-38.857763V73.142992H146.28504v877.715903z" p-id="13572" fill="#424242"></path></svg>
+                    </a>
+                    <a id="export_doc" title="导出文档" style="border: none; background-color: #ffffff; cursor: pointer; margin-left: 10px">
+                        <svg t="1689246982401" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6825" width="16" height="16"><path d="M270.76864 608.32h180.8a31.68 31.68 0 0 0 0-62.976H270.76864a31.68 31.68 0 0 0 0 62.976zM271.34464 458.56h457.92a33.472 33.472 0 0 0 31.552-34.752 33.28 33.28 0 0 0-31.552-34.624H271.34464a34.816 34.816 0 0 0 0 69.376zM271.34464 293.504h457.92a33.344 33.344 0 0 0 31.552-34.688 33.216 33.216 0 0 0-31.552-34.624H271.34464a33.28 33.28 0 0 0-31.616 34.624 33.28 33.28 0 0 0 31.616 34.688z" p-id="6826" fill="#424242"></path><path d="M869.87264 0H153.77664A70.4 70.4 0 0 0 84.65664 70.912V953.6A69.952 69.952 0 0 0 153.77664 1024h370.048a32 32 0 0 0 0-63.68H147.12064V64h729.6v468.672a31.296 31.296 0 1 0 62.528 0V70.912A70.4 70.4 0 0 0 869.87264 0z" p-id="6827" fill="#424242"></path><path d="M482.16064 730.624h337.664L715.82464 625.216a28.864 28.864 0 0 1-7.936-28.736 29.184 29.184 0 0 1 20.608-21.184 29.632 29.632 0 0 1 29.12 8.128l174.784 177.216-174.784 176.96a29.184 29.184 0 0 1-49.728-13.312 29.248 29.248 0 0 1 8-28.8l103.936-105.344H482.16064a29.696 29.696 0 0 1-29.504-29.76 29.632 29.632 0 0 1 29.504-29.76z" p-id="6828" fill="#424242"></path></svg>
+                    </a>
+                </span>
+                <a  id="icon_more" title="更多" >
+                    <svg t="1688715321313" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5356" width="16" height="16"><path d="M483.555556 199.111111m-85.333334 0a85.333333 85.333333 0 1 0 170.666667 0 85.333333 85.333333 0 1 0-170.666667 0Z" fill="#424242" p-id="5357"></path><path d="M483.555556 540.444444m-85.333334 0a85.333333 85.333333 0 1 0 170.666667 0 85.333333 85.333333 0 1 0-170.666667 0Z" fill="#424242" p-id="5358"></path><path d="M483.555556 881.777778m-85.333334 0a85.333333 85.333333 0 1 0 170.666667 0 85.333333 85.333333 0 1 0-170.666667 0Z" fill="#424242" p-id="5359"></path></svg>
+                </a>
+                <a  id="icon_less" class="display_none">
+                    <svg t="1688723160472" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15872" width="16" height="16"><path d="M300.105143 592.676571h423.789714a80.676571 80.676571 0 1 0 0-161.353142H300.105143a80.676571 80.676571 0 0 0 0 161.353142z" fill="#8a8a8a" p-id="15873"></path></svg>
+                </a>
+                
+            </div>
+
+            
+            <div class="post">
+                <div class="post_title post_detail_title">
+                    <span class="date" id="busuanzi_container_site_pv">访问量 <span id="busuanzi_value_site_pv"></span>次</span>
+                </div>
+                <div class="post_title post_detail_title">
+                    <span class="date" id="busuanzi_container_site_uv">访客数 <span id="busuanzi_value_site_uv"></span>人</span>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+        <div class="content">
+            <div class="post_page">
+                <div class="post animate__animated animate__fadeInDown">
+                    <div class="post_title post_detail_title">
+                        <h2 id="post_single_title">Kafka详解</h2>
+                        <span id="post_page_title_date" class="date">2021.10.19</span>
+                        
+                        <span id="busuanzi_container_page_pv" class="m-l-10">
+                          阅读量<span id="busuanzi_value_page_pv"></span>次
+                        </span>
+                        
+                    </div>
+                    <div class="post_content markdown"><h2 id="概览">概览</h2>
+<p>MQ 即 messagequeue 消息队列，是分布式系统的重要组件，主要解决异步消息，应用解耦，消峰等问题。从而实现高可用，高性能，可伸缩和最终一致性的架构。使用较多的MQ有：activeMQ，rabbitMQ，kafka，metaMQ。</p>
+<h2 id="mq优点">MQ优点</h2>
+<ul>
+<li><strong>异步消息处理</strong>：可以将一些非核心流程，如日志，短信，邮件等，通过MQ的方式异步去处理。这样做的好处是缩短主流程的响应时间，提升用户体验；</li>
+<li><strong>应用解耦合</strong>：商品服务和订单服务之间。用户下单后，订单服务会通知商品服务。不使用MQ的情况是订单服务调用商品服务的接口，这样订单服务和商品服务之间是耦合的；使用MQ，订单服务完成持久化处理，将消息写入MQ消息队列中，返回用户订单下单成功，商品服务来订阅这个下单的消息，采用拉或推的方式获得下单信息，商品服务根据商品下单信息进行商品库存信息修改，这样当下单时商品服务不可用时，也不影响正常下单，这就完成了订单服务和商品服务之间的解耦；</li>
+<li><strong>流量消峰</strong>：秒杀活动流量过大，导致流量暴增，最终可能导致应用挂掉。一般会在应用前端加入消息队列来控制活动人数，假如消息队列超过最大数量，应该直接抛弃用户请求或者跳转到错误页面。秒杀业务根据消息队列中的请求信息在做后续的业务处理。比如在抢购时，可能一下子过来了10万个请求，但MQ只接受前100个用户的请求，超过100个不接收了。这样就成功限制了用户请求；</li>
+</ul>
+<h2 id="mq缺点">MQ缺点</h2>
+<ul>
+<li>系统可用性降低: 系统引入的外部依赖越多，越容易挂掉;</li>
+<li>系统复杂度提高: 加个 MQ 进来，你怎么保证消息没有重复消费？怎么处理消息丢失的情况？怎么保证消息传递的顺序性？头大头大，问题一大堆，痛苦不已;</li>
+<li>一致性问题: A 系统处理完了直接返回成功了，人都以为你这个请求就成功了；但是问题是，要是 BCD 三个系统那里，BD 两个系统写库成功了，结果 C 系统写库失败了，你这数据就不一致了;</li>
+</ul>
+<h2 id="常见mq对比">常见MQ对比</h2>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>ActiveMQ</th>
+<th>RabbitMQ</th>
+<th>RocketMQ</th>
+<th>Kafka</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单机吞吐量</td>
+<td>万级，比 RocketMQ、Kafka 低一个数量级</td>
+<td>同 ActiveMQ</td>
+<td>10 万级，支撑高吞吐</td>
+<td>10 万级，高吞吐，一般配合大数据类的系统来进行实时数据计算、日志采集等场景</td>
+</tr>
+<tr>
+<td>topic 数量对吞吐量的影响</td>
+<td></td>
+<td></td>
+<td>topic 可以达到几百/几千的级别，吞吐量会有较小幅度的下降，这是 RocketMQ 的一大优势，在同等机器下，可以支撑大量的 topic</td>
+<td>topic 从几十到几百个时候，吞吐量会大幅度下降，在同等机器下，Kafka 尽量保证 topic 数量不要过多，如果要支撑大规模的 topic，需要增加更多的机器资源</td>
+</tr>
+<tr>
+<td>时效性</td>
+<td>ms 级</td>
+<td>微秒级，这是 RabbitMQ 的一大特点，延迟最低</td>
+<td>ms 级</td>
+<td>延迟在 ms 级以内</td>
+</tr>
+<tr>
+<td>可用性</td>
+<td>高，基于主从架构实现高可用</td>
+<td>同 ActiveMQ</td>
+<td>非常高，分布式架构</td>
+<td>非常高，分布式，一个数据多个副本，少数机器宕机，不会丢失数据，不会导致不可用</td>
+</tr>
+<tr>
+<td>消息可靠性</td>
+<td>有较低的概率丢失数据</td>
+<td>基本不丢</td>
+<td>经过参数优化配置，可以做到 0 丢失</td>
+<td>同 RocketMQ</td>
+</tr>
+<tr>
+<td>功能支持</td>
+<td>MQ 领域的功能极其完备</td>
+<td>基于 erlang 开发，并发能力很强，性能极好，延时很低</td>
+<td>MQ 功能较为完善，还是分布式的，扩展性好</td>
+<td>功能较为简单，主要支持简单的 MQ 功能，在大数据领域的实时计算以及日志采集被大规模使用</td>
+</tr>
+</tbody>
+</table>
+<p>一般的业务系统要引入 MQ，最早大家都用 ActiveMQ，但是现在确实大家用的不多了，没经过大规模吞吐量场景的验证，社区也不是很活跃，所以大家还是算了吧，我个人不推荐用这个了。</p>
+<p>后来大家开始用 RabbitMQ，但是确实 erlang 语言阻止了大量的 Java 工程师去深入研究和掌控它，对公司而言，几乎处于不可控的状态，但是确实人家是开源的，比较稳定的支持，活跃度也高。</p>
+<p>不过现在确实越来越多的公司会去用 RocketMQ，确实很不错，毕竟是阿里出品，但社区可能有突然黄掉的风险,目前 RocketMQ 已捐给 Apache，但 GitHub 上的活跃度其实不算高,对自己公司技术实力有绝对自信的，推荐用 RocketMQ，否则回去老老实实用 RabbitMQ 吧，人家有活跃的开源社区，绝对不会黄。</p>
+<p>所以中小型公司，技术实力较为一般，技术挑战不是特别高，用 RabbitMQ 是不错的选择；大型公司，基础架构研发实力较强，用 RocketMQ 是很好的选择。</p>
+<p>如果是大数据领域的实时计算、日志采集等场景，用 Kafka 是业内标准的，绝对没问题，社区活跃度很高，绝对不会黄，何况几乎是全世界这个领域的事实性规范。</p>
+<h2 id="jms消息模型">JMS消息模型</h2>
+<p>JMS即JavaMessageService，Java消息服务应用程序接口，是一个Java平台中关于面向消息中间件的API，用于在两个应用程序之间，或分布式系统中发送消息，进行异步通信。</p>
+<p>JMS是基于JVM的消息代理规范，ActiveMQ、HornetMQ等是JMS的实现。</p>
+<p>Java消息服务是一个与具体平台无关的API，绝大多数MOM提供商都对JMS提供支持。我们可以简单的理解：两个应用程序之间需要进行通信，我们使用一个JMS服务，进行中间的转发，通过JMS的使用，我们可以解除两个程序之间的耦合。</p>
+<h3 id="点对点模式">点对点模式</h3>
+<p>消息发送者发送消息，消息代理将其放入消息队列中，消息接受者从队列中获取消息，消息读取后被移除消息队列。每个消息都被发送到一个特定的队列，接收者从队列中获取消息。队列保留着消息，直到它们被消费或超时。</p>
+<p><img alt="MQ详解-001" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-001.png"></p>
+<p>虽然可能有多个客户端在队列中侦听消息，但只有一个可以读取到消息，之后消息将不存在，其他消费者将无法读取。也就是说消息队列只有唯一一个发送者和<em>接受者</em>，但是并不能说只有一个<em>接收者</em>。</p>
+<p>特点：</p>
+<ul>
+<li>每个消息只有一个消费者，即消息一旦被消费，消息就不在消息队列中；</li>
+<li>发送者和接收者之间在时间上没有依赖性，也就是说当发送者发送了消息之后，不管接收者有没有正在运行，它不会影响到消息被发送到队列；</li>
+<li>接收者在成功接收消息之后需向队列应答成功；</li>
+</ul>
+<h3 id="发布订阅模式">发布订阅模式</h3>
+<p>发布者将消息发送到主题Topic中，多个订阅者订阅这个主题，订阅者不断的去轮询监听消息队列中的消息，那么就会在消息到达的同时接收消息。</p>
+<p><img alt="MQ详解-002" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-002.png"></p>
+<p>特点：</p>
+<ul>
+<li>每个消息可以有多个消费者，消费完消息之后消息不会清除；</li>
+<li>发布者和订阅者之间有时间上的依赖性：针对某个主题(Topic)的订阅者，它必须创建一个订阅之后，才能消费发布者的消息，而且为了消费消息，订阅者必须保持运行的状态。当然，为了缓和这种严格的时间相关性，JMS允许订阅者创建一个可持久化的订阅。这样即使订阅者没有运行，它也能接收到发布者的消息；</li>
+</ul>
+<h2 id="kafka">kafka</h2>
+<p>kafka是一个分布式的基于发布/订阅模式的消息队列，主要应用于大数据实时处理领域。</p>
+<h3 id="基础架构">基础架构</h3>
+<p><img alt="MQ详解-003" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-003.png"></p>
+<ul>
+<li>Producer：消息生产者，向kafka推送消息；</li>
+<li>Consumer：消息消费者，向kafka中broker获取消息的客户端；</li>
+<li>Topic：主题，可以理解为一个队列，生产者和消费者面向的都是一个topic；</li>
+<li>Broker：经纪人，一台kafka服务器就是一个broker。一个集群由多个broker组成。一个broker可以容纳多个topic；</li>
+<li>Partition：分区，为了实现扩展性，一个非常大的topic可以分布到多个服务器上，一个主题可以分为多个分区，每个分区是一个有序的队列；</li>
+<li>ConsumerGroup：消费者组，由多个消费者组成。消费者组内每个消费者负责消费不同分区的数据，一个分区只能由一个消费者组内的一个消费者消费；消费者组之间互不影响。所有的消费者都属于某个消费者组，即消费者组是逻辑上的一个订阅者；</li>
+<li>Replica：副本，为保证集群中的某个节点发生故障时，该节点上的分区数据不丢失，且kafka仍然能够继续工作，kafka提供了副本机制，一个topic的每个分区都有若干个副本，一个leader和若干个follower；</li>
+<li>Leader：每个分区多个副本的“主”，生产者发送数据的对象，以及消费者消费数据的对象都是leader。leader是针对topic的，而不是broker的，即不同的kafka服务区中会出现同一个leader；</li>
+<li>Follower：每个分区多个副本中的“从”，实时从leader中同步数据，保持和leader数据的同步。leader发生故障时，某个Follower会成为新的leader；</li>
+<li>Controller：Kafka 集群中有一个broker会被选举为Controller，负责管理集群broker的上下线，所有topic的分区副本分配和leader选举等工作，Controller的管理工作都是依赖于Zookeeper的；</li>
+</ul>
+<p>消费者组的作用为了提高消费能力，即提高并发。</p>
+<p>解耦合是消息队列作用之一，当消费者宕机后，再次启动的时候会继续消费消息，而不是从头消费消息。因为这个特性所以消费者会保存一些消费的进度信息，被称为offset，保存的位置在kafka0.9之前保存在zookpeer当中，在此之后保存在kafka本地。即最终kafka会将消息保存在本地磁盘中，默认保留168个小时，即7天。</p>
+<p>kafka中消息是以topic进行分类的，producer生产消息，consumer消费消息，都是面向topic的。topic是逻辑上的概念，而partition是物理上的概念，每个partition对应于一个log文件，该log文件中存储的就是producer生产的数据。</p>
+<p>Producer生产的数据会被不断追加到该log文件末端，且每条数据都有自己的offset。consumer组中的每个consumer，都会实时记录自己消费到了哪个offset，以便出错恢复时，从上次的位置继续消费。</p>
+<h3 id="发布订阅工作流程">发布订阅工作流程</h3>
+<p><img alt="MQ详解-004" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-004.png"></p>
+<ol>
+<li>生产者定期向主题发送消息；</li>
+<li>kafka代理将所有消息存储在为特定主题配置的分区中。它确保消息在分区之间平均共享。如果生产者发送了两个消息，并且有两个分区，kafka将在第一个分区中存储一个消息，在第二个分区中存储第二个消息；</li>
+<li>消费者订阅主题后，kafka将向消费者提供该主题的当前偏移量，并将偏移量保存在Zookeeper集合中；</li>
+<li>消费者将定期向kafka请求新消息,一旦kafka从生产者那里收到消息，它将把这些消息转发给消费者，消费者将收到消息并进行处理；</li>
+<li>消息处理后，消费者将向kafka代理发送确认；</li>
+<li>一旦kafka收到确认，它将偏移量更改为新值并在Zookeeper中对其进行更新。由于在Zookeeper中保留了偏移量，因此即使在服务器出现故障时，使用者也可以正确读取下一条消息；</li>
+<li>4、5、6步骤流程将重复进行，直到消费者停止请求为止；</li>
+</ol>
+<p>消费者可以选择随时倒退或跳至所需的主题偏移量并阅读所有后续消息。</p>
+<h3 id="生产者">生产者</h3>
+<h4 id="生产者文件存储">生产者文件存储</h4>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://www.jianshu.com/p/3e54a5a39683">https://www.jianshu.com/p/3e54a5a39683</a></li>
+</ul>
+<p><img alt="MQ详解-005" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-005.png"></p>
+<p>由于生产者生产的消息会不断追加到log文件末尾，为防止log文件过大导致数据定位效率低下，kafka采取了分片和索引机制，将每个partition分为多个segment。
+每个segment对应两个文件：“.index”文件和“.log”文件。这些文件位于一个文件夹下，该文件夹的命名规则为：topic名称+分区序号。例如，first这个topic有三个分区，则其对应的文件夹为 first-0,first-1,first-2。其中，每个segment中的日志数据文件大小均相等。</p>
+<blockquote>
+<p>该日志数据文件的大小可以通过在kafka Broker的config/server.properties配置文件的中的“log.segment.bytes”进行设置，默认为1G大小（1073741824字节），在顺序写入消息时如果超出该设定的阈值，将会创建一组新的日志数据和索引文件。</p>
+</blockquote>
+<p>“.index”文件存储大量的索引信息，“.log”文件存储大量的数据，索引文件中的元数据指向对应数据文件中message的物理偏移地址。其中文件的命名是以第一个数据的偏移量来命名的。</p>
+<p><strong>kafka如何通过index文件快速找到log文件中的数据？</strong></p>
+<p>根据指定的偏移量，使用二分法查询定位出该偏移量对应的消息所在的分段索引文件和日志数据文件。然后通过二分查找法，继续查找出小于等于指定偏移量的最大偏移量，同时也得出了对应的position即实际物理位置。</p>
+<p>根据该物理位置在分段的日志数据文件中顺序扫描查找偏移量与指定偏移量相等的消息。由于index文件中的每条对应log文件中存储内容大小都相同，所以想要找到指定的消息，只需要用index文件中的该条的大小加上该条的偏移量即可得出log文件中指定消息的位置。</p>
+<p><img alt="MQ详解-006" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-006.png"></p>
+<h4 id="生产者分区策略">生产者分区策略</h4>
+<p>分区的原因：</p>
+<ul>
+<li>方便在集群中扩展，每个Partition可以通过调整以适应它所在的机器，而一个topic又可以有多个Partition组成，因此整个集群就可以适应适合的数据了；</li>
+<li>可以提高并发，因为可以以Partition为单位读写了，每个partition在不同的服务区上；</li>
+</ul>
+<p><img alt="MQ详解-007" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-007.png"></p>
+<ul>
+<li>在指明partition的情况下，直接将指明的值直接作为partiton值；</li>
+<li>在没有指明partition值但有key的情况下，将key的hash 值与topic的partition数进行取余得到partition值；</li>
+<li>既没有partition值又没有key值的情况下，第一次调用时随机生成一个整数（后面每次调用在这个整数上自增），将这个值与topic可用的partition总数取余得到partition值，也就是常说的round-robin算法；</li>
+</ul>
+<h4 id="生产者数据可靠性保证">生产者数据可靠性保证</h4>
+<p>为保证 producer 发送的数据，能可靠的发送到指定的 topic，topic 的每个 partition 收到 producer 发送的数据后，都需要向 producer 发送 ack(acknowledgement 确认收到)，如果 producer 收到 ack，就会进行下一轮的发送，否则重新发送数据。</p>
+<p><img alt="MQ详解-008" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-008.png"></p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>半数以上完成同步，就发 送 ack</td>
+<td>延迟低</td>
+<td>选举新的 leader 时，容忍 n 台 节点的故障，需要 2n+1 个副本</td>
+</tr>
+<tr>
+<td>全部完成同步，才发送ack</td>
+<td>选举新的 leader 时，容忍 n 台 节点的故障，需要 n+1 个副 本</td>
+<td>延迟高</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>理解 2n+1：
+半数以上完成同步才可以发ACK，如果挂了n台有副本的服务器，那么就需要有另外n台正常发送（这样正常发送的刚好是总数（挂的和没挂的）的一半（n（挂的）+n（正常的）=2n））,因为是半数以上所以2n+1.(所以总数2n+1的时候最多只能容忍n台有故障)</p>
+<p>即，如果挂了n台有副本的服务器，那么存在副本的服务器的总和为 2n+1</p>
+</blockquote>
+<p>kafka选择了第二种方案，原因如下:
+1.同样为了容忍 n 台节点的故障，第一种方案需要 2n+1 个副本，而第二种方案只需要 n+1 个副本，而 kafka 的每个分区都有大量的数据，第一种方案会造成大量数据的冗余；
+2.虽然第二种方案的网络延迟会比较高，但网络延迟对 kafka 的影响较小；</p>
+<p>采用第二种方案之后，设想以下情景： leader 收到数据，所有 follower 都开始同步数据，但有一个 follower，因为某种故障，迟迟不能与 leader 进行同步，那 leader 就要一直等下去，直到它完成同步，才能发送 ack。这个问题怎么解决呢？</p>
+<p>Leader 维护了一个动态的 in-sync replica set 即ISR。</p>
+<p>当和 leader 保持同步的 follower 集合。当 ISR 中的 follower 完成数据的同步之后，就会给 leader 发送 ack。如果 follower长时间未向leader同步数据，则该follower将被踢出ISR，该时间阈值由replica.lag.time.max.ms参数设定。 Leader 发生故障之后，就会从 ISR 中选举新的 leader。</p>
+<blockquote>
+<p>kafka是通过消息条数差值(replica.lag.time.max.messages) 加 通信时间长短(同步时间replica.lag.time.max.ms) 两个条件来选副本进ISR，在高版本中不再关注副本的消息条数最大条件。</p>
+</blockquote>
+<p>为何会去掉消息条数差值参数？</p>
+<p>因为kafka一般是按batch批量发数据到leader, 如果批量条数12条，replica.lag.time.max.messages参数设置是10条，那么当一个批次消息发到kafka leader，此时，ISR中就要踢掉所有的follower，很快follower同步完所有数据后，follower又要被加入到ISR，而且要加入到zookeeper中频繁操作，所以去除掉该条件。</p>
+<h4 id="生产者数据一致性保证">生产者数据一致性保证</h4>
+<p><img alt="MQ详解-009" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-009.png"></p>
+<ul>
+<li>
+<p>LEO：（Log End offset）每个副本的最后一个offset；</p>
+</li>
+<li>
+<p>HW：（High Watermark）高水位，指的是消费者能见到的最大的 offset， ISR 队列中最小的 LEO；</p>
+</li>
+<li>
+<p>follower 故障：follower 发生故障后会被临时踢出 ISR，待该 follower 恢复后， follower 会读取本地磁盘记录的上次的 HW，并将 log 文件高于 HW 的部分截取掉，从 HW 开始向 leader 进行同步。等该 follower 的 LEO 大于等于该 Partition 的 HW，即 follower 追上 leader 之后，就可以重新加入 ISR 了。</p>
+</li>
+<li>
+<p>leader 故障：leader 发生故障之后，会从 ISR 中选出一个新的 leader，之后，为保证多个副本之间的数据一致性， 其余的 follower 会先将各自的 log 文件高于 HW 的部分截掉，然后从新的 leader同步数据；如果少于 leader 中的数据则会从 leader 中进行同步。</p>
+</li>
+</ul>
+<h4 id="生产者ack机制">生产者ack机制</h4>
+<p>对于某些不太重要的数据，对数据的可靠性要求不是很高，能够容忍数据的少量丢失，所以没必要等 ISR 中的 follower 全部接收成功。kafka为生产者提供了三种ack可靠性级别配置：</p>
+<ul>
+<li>0：producer 不等待 broker 的 ack，这一操作提供了一个最低的延迟，broker 一接收到还没有写入磁盘就已经返回，当 broker 故障时有可能丢失数据；</li>
+<li>1： producer 等待 broker 的 ack， partition 的 leader 落盘成功后返回 ack，如果在 follower同步成功之前 leader 故障，那么将会丢失数据；</li>
+<li>-1/all：producer 等待 broker 的 ack， ISR队列中 partition 的 leader 和 ISR 的follower 全部落盘成功后才返回 ack。但是如果在 follower 同步完成后，broker 发送 ack 之前， leader 发生故障，那么会造成数据重复；</li>
+</ul>
+<h4 id="exactlyonce">ExactlyOnce</h4>
+<p>将服务器的 ACK 级别设置为-1，可以保证 Producer 到 Server 之间不会丢失数据，即 At Least Once 语义，至少发送一次；相对的，将服务器 ACK 级别设置为 0，可以保证生产者每条消息只会被发送一次，即 At Most Once 语义，至多发送一次。</p>
+<p>至少发送一次可以保证数据不丢失，但是不能保证数据不重复；相对的，至多发送一次可以保证数据不重复，但是不能保证数据不丢失。 但是，对于一些非常重要的信息，比如说交易数据，下游数据消费者要求数据既不重复也不丢失，即 Exactly Once 语义，准确发送一次。</p>
+<p>在0.11 版本的 Kafka，引入了一项重大特性：幂等性。所谓的幂等性就是指生产者不论向 Server 发送多少次重复数据， Server 端都只会持久化一条。幂等性结合 At Least Once 语义，就构成了 Kafka 的 Exactly Once 语义。</p>
+<p>要启用幂等性，只需要将 Producer 的参数中 <code>enable.idempotence</code> 设置为 true 即可。</p>
+<p>Kafka的幂等性实现其实就是将原来下游需要做的去重放在了数据上游。开启幂等性的 Producer 在初始化的时候会被分配一个 PID，发往同一 Partition 的消息会附带 Sequence Number。而Broker 端会对&lt;PID, Partition, SeqNumber&gt;做缓存，当具有相同主键的消息提交时， Broker 只会持久化一条。但是 PID 重启就会变化，同时不同的 Partition 也具有不同主键，所以幂等性无法保证跨分区跨会话的 Exactly Once。</p>
+<h4 id="生产者发送消息流程">生产者发送消息流程</h4>
+<p>kafka的生产者发送消息采用的是异步发送的方式。在消息发送的过程中，涉及到了两个线程——main 线程和 Sender 线程，以及一个线程共享变量——RecordAccumulator。</p>
+<p><img alt="MQ详解-010" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-010.png"></p>
+<p>在生产者发送消息时，main线程将消息发送给 RecordAccumulator，当数据积累到 batch.size 之后，sender线程才会不断从 RecordAccumulator 中拉取消息发送到 kafka的broker；如果数据迟迟未达到 batch.size，sender 线程等待 linger.time 之后就会发送数据。</p>
+<h3 id="消费者">消费者</h3>
+<h4 id="消费者分区分配策略">消费者分区分配策略</h4>
+<p>一个消费者组中有多个消费者，一个主题有多个分区，所以必然会涉及到分区的分配问题，即确定哪个分区由哪个消费者来消费。</p>
+<p>消费分配策略：</p>
+<ul>
+<li>round-robin：会采用轮询的方式将当前所有的分区依次分配给所有的消费者；</li>
+<li>range：首先会计算每个消费者可以消费的分区个数，然后按照顺序将指定个数范围的分区分配给各个消费者；</li>
+<li>sticky：这种分区策略是最新版本中新增的一种策略，将现有的分区尽可能均衡的分配给各个消费者，存在此目的的原因在于Round-Robin和Range分配策略实际上都会导致某几个消费者承载过多的分区，从而导致消费压力不均衡；</li>
+</ul>
+<p>轮询就不必说了，就是把分区按照hash排序，然后分配。range按范围分配，先将所有的分区放到一起然后排序，按照平均分配的方式计算每个消费者会得到多少个分区，如果没有除尽，则会将多出来的分区依次计算到前面几个消费者。
+比如这里是三个分区和两个消费者，那么每个消费者至少会得到1个分区，而3除以2后还余1，那么就会将多余的部分依次算到前面几个消费者，也就是这里的1会分配给第一个消费者，</p>
+<p>如果按照Range分区方式进行分配，其本质上是依次遍历每个topic，然后将这些topic的分区按照其所订阅的消费者数量进行平均的范围分配。这种方式从计算原理上就会导致排序在前面的消费者分配到更多的分区，从而导致各个消费者的压力不均衡。</p>
+<h4 id="消费者消费数据问题">消费者消费数据问题</h4>
+<p>消费者在消费的时候，需要维护一个offset，用于记录消费的位置，当offset提交时会有两个问题：重复消费和漏消费：</p>
+<ul>
+<li>当提交的offset小于当前程序处理的最后一条消息的offset,会造成重复消费。情景：先消费，后提交offset,如果消费成功、提交失败，消费者下次获取的offset还是以前的，所以会造成重复消费。</li>
+<li>当提交的offset大于当前程序处理的最后一条消息的offset,会造成漏消费。情景：先提交offset，后消费,如果提交成功、消费失败，消费者下次获取的offset已经是新的，所以会造成漏消费。</li>
+</ul>
+<p>这里就需要注意offset的提交方式，offset默认是自动提交，当然这会造成消费的不准确。offset提交方式：</p>
+<ul>
+<li>异步提交当前offset；</li>
+<li>同步提交当前offset；</li>
+<li>同步和异步组合提交；</li>
+<li>提交指定的offset；</li>
+</ul>
+<p>建议将offset保存在数据库中，使当前业务与offset提交绑定起来，这样可以一定程度避免重复消费问题，重复消费的问题，一方面需要消息中间件来进行保证。另一方面需要自己的处理逻辑来保证消息的幂等性。</p>
+<h3 id="kafka事务">kafka事务</h3>
+<p>kafka从0.11版本开始引入了事务支持。事务可以保证kafka在<a href="/iblog/posts/detailed/java-kafka/#exactlyonce">Exactly Once</a>语义的基础上，生产和消费可以跨分区和会话，要么全部成功，要么全部失败。</p>
+<ul>
+<li>生产者：为了实现跨分区跨会话的事务，需要引入一个全局唯一的事务ID，并将生产者获得的PID和事务ID绑定。这样当生产者重启后就可以通过正在进行的事务ID获得原来的PID，进而保证精准发送一次；</li>
+</ul>
+<blockquote>
+<p>为了管理 Transaction， Kafka 引入了一个新的组件 Transaction Coordinator。 Producer 就是通过和 Transaction Coordinator 交互获得 Transaction ID 对应的任务状态。 Transaction Coordinator 还负责将事务所有写入 Kafka 的一个内部 Topic，这样即使整个服务重启，由于事务状态得到保存，进行中的事务状态可以得到恢复，从而继续进行。</p>
+</blockquote>
+<ul>
+<li>消费者：对于消费者而言，事务的保证就会相对较弱，尤其时无法保证提交的信息被精确消费。这是由于消费者可以通过offset访问任意信息，而且不同的<a href="/iblog/posts/detailed/java-kafka/#文件存储">Segment File</a>生命周期不同，同一事务的消息可能会出现重启后被删除的情况；</li>
+</ul>
+<h3 id="消息积压">消息积压</h3>
+<p>如果线上遇到大量消息积压,那就是线上故障了.最可能是消费者出现故障</p>
+<p>一般这个时候，只能临时紧急扩容了:</p>
+<ul>
+<li>先修复消费者的问题，确保其恢复消费速度，然后将现有消费者都停掉</li>
+<li>新建一个 topic，partition 是原来的 10 倍，临时建立好原先 10 倍的 queue 数量;</li>
+<li>然后写一个临时的分发数据的 consumer 程序，这个程序部署上去消费积压的数据，消费之后不做耗时的处理，直接均匀轮询写入临时建立好的 10 倍数量的 queue;</li>
+<li>接着临时征用 10 倍的机器来部署 consumer，每一批 consumer 消费一个临时 queue 的数据。这种做法相当于是临时将 queue 资源和 consumer 资源扩大 10 倍，以正常的 10 倍速度来消费数据;</li>
+<li>等快速消费完积压数据之后，得恢复原先部署的架构，重新用原先的 consumer 机器来消费消息;</li>
+</ul>
+<p>如果没有消费者没有出现问题,而出现了消费积压的情况可以参考以下思路:</p>
+<ul>
+<li>提高消费并行度</li>
+<li>批量方式消费</li>
+<li>跳过非重要方式消费</li>
+<li>优化消息消费业务处理过程,简化过程</li>
+</ul>
+</div>
+                    <div id="post_footer" class="post_footer">
+                        <div class="meta">
+                            
+                            <div id="post_footer_info" class="info">
+                                <span class="field tags">
+                                    <i class="ri-stack-line"></i>
+                                    
+                                        
+                                        <a href="https://whiteppure.github.io/iblog/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a>
+                                    
+                                        <a href="https://whiteppure.github.io/iblog/tags/%E8%AF%A6%E8%A7%A3/">详解</a>
+                                    
+                                        <a href="https://whiteppure.github.io/iblog/tags/kafka/">Kafka</a>
+                                    
+                                    
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+<div id="doc_comments" class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://whiteppure.github.io/iblog/css/comments.css" />
+
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'pRSrjsfbN6L1DUxgfqJWOMYP-gzGzoHsz',
+        appKey: 'VPWpnDPGDM8Xhdlh5OvHOpak',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+        
+        emojiCDN: '//i0.hdslb.com/bfs/emote/',
+        
+        emojiMaps: {
+            "tv_doge": "6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png",
+            "tv_亲亲": "a8111ad55953ef5e3be3327ef94eb4a39d535d06.png",
+            "tv_偷笑": "bb690d4107620f1c15cff29509db529a73aee261.png",
+            "tv_再见": "180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png",
+            "tv_冷漠": "b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png",
+            "tv_发怒": "34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png",
+            "tv_发财": "34db290afd2963723c6eb3c4560667db7253a21a.png",
+            "tv_可爱": "9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png",
+            "tv_吐血": "09dd16a7aa59b77baa1155d47484409624470c77.png",
+            "tv_呆": "fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png",
+            "tv_呕吐": "9f996894a39e282ccf5e66856af49483f81870f3.png",
+            "tv_困": "241ee304e44c0af029adceb294399391e4737ef2.png",
+            "tv_坏笑": "1f0b87f731a671079842116e0991c91c2c88645a.png",
+            "tv_大佬": "093c1e2c490161aca397afc45573c877cdead616.png",
+            "tv_大哭": "23269aeb35f99daee28dda129676f6e9ea87934f.png",
+            "tv_委屈": "d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png",
+            "tv_害羞": "a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png",
+            "tv_尴尬": "7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png",
+            "tv_微笑": "70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png",
+            "tv_思考": "90cf159733e558137ed20aa04d09964436f618a1.png",
+            "tv_惊吓": "0d15c7e2ee58e935adc6a7193ee042388adc22af.png",
+            "tv_打脸": "56ab10b624063e966bfcb76ea5dc4794d87dfd47.png",
+            "tv_抓狂": "fe31c08edad661d63762b04e17b8d5ae3c71a757.png",
+            "tv_抠鼻": "c666f55e88d471e51bbd9fab9bb308110824a6eb.png",
+            "tv_斜眼笑": "911f987aa8bc1bee12d52aafe62bc41ef4474e6c.png",
+            "tv_无奈": "ea8ed89ee9878f2fece2dda0ea8a5dbfe21b5751.png",
+            "tv_晕": "5443c22b4d07fb1907ccc610c8e6db254f2461b7.png",
+            "tv_流汗": "cead1c351ab8d79e9f369605beb90148db0fbed3.png",
+            "tv_流泪": "7e71cde7858f0cd50d74b0264aa26db612a8a167.png",
+            "tv_流鼻血": "c32d39db2737f89b904ca32700d140a9241b0767.png",
+            "tv_点赞": "f85c354995bd99e28fc76c869bfe42ba6438eff4.png",
+            "tv_生气": "26702dcafdab5e8225b43ffd23c94ac1ff932654.png",
+            "tv_生病": "8b0ec90e6b86771092a498c54f09fc94621c1900.png",
+            "tv_疑问": "0793d949b18d7be716078349c202c15ff166f314.png",
+            "tv_白眼": "c1d59f439e379ee50eef488bcb5e5378e5044ea4.png",
+            "tv_皱眉": "72ccad6679fea0d14cce648b4d818e09b8ffea2d.png",
+            "tv_目瞪口呆": "0b8cb81a68de5d5365212c99375e7ace3e7891b7.png",
+            "tv_睡着": "8b196675b53af58264f383c50ad0945048290b33.png",
+            "tv_笑哭": "1abc628f6d4f4caf9d0e7800878f4697abbc8273.png",
+            "tv_腼腆": "89712c0d4af73e67f89e35cbc518420380a7f6f4.png",
+            "tv_色": "61822c7e9aae5da76475e7892534545336b23a6f.png",
+            "tv_调侃": "4bc022533ef31544ca0d72c12c808cf4a1cce3e3.png",
+            "tv_调皮": "b9c41de8e82dd7a8515ae5e3cb63e898bf245186.png",
+            "tv_鄙视": "6e72339f346a692a495b123174b49e4e8e781303.png",
+            "tv_闭嘴": "c9e990da7f6e93975e25fd8b70e2e290aa4086ef.png",
+            "tv_难过": "87f46748d3f142ebc6586ff58860d0e2fc8263ba.png",
+            "tv_馋": "fc7e829b845c43c623c8b490ee3602b7f0e76a31.png",
+            "tv_鬼脸": "0ffbbddf8a94d124ca2f54b360bbc04feb6bbfea.png",
+            "tv_黑人问号": "45821a01f51bc867da9edbaa2e070410819a95b2.png",
+            "tv_鼓掌": "1d21793f96ef4e6f48b23e53e3b9e42da833a0f6.png"
+        }
+    })
+</script>
+
+                
+            </div>
+        </div>
+    </div>
+    
+<a id="search-btn" style="display: inline-block;" href="javascript:void(0);">
+    <span class="ri-search-line"></span>
+</a>
+<div id="fastSearch">
+    <input id="searchInput" tabindex="0" autocomplete="off">
+    <ul id="searchResults"></ul>
+</div>
+<div class="side_nav">
+    
+    <a id="top_to_back" href="#" class="top_to_back">
+        <svg t="1688614744062" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2152" width="16" height="16"><path d="M966.4 323.2c-9.6-9.6-25.6-9.6-35.2 0l-416 416-425.6-416c-9.6-9.6-25.6-9.6-35.2 0-9.6 9.6-9.6 25.6 0 35.2l441.6 432c9.6 9.6 25.6 9.6 35.2 0l435.2-432C976 345.6 976 332.8 966.4 323.2z" p-id="2153" fill="#424242"></path></svg>    </a>
+    
+    <div>
+        <a id="content_display" class="content_display">
+            <svg t="1688606941910" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="57753" width="18" height="18"><path d="M192 448c10.9 0 21.8-4.2 30.2-12.5L497 160.8c5.4-5.4 11.8-6.2 15.1-6.2 3.3 0 9.6 0.8 15.1 6.2l274.7 274.7c16.7 16.7 43.7 16.7 60.3 0 16.7-16.7 16.7-43.7 0-60.3L587.4 100.4c-41.6-41.6-109.3-41.6-150.9 0L161.8 375.2c-16.7 16.7-16.7 43.7 0 60.3 8.4 8.3 19.3 12.5 30.2 12.5zM801.8 588.5L527.1 863.2c-5.4 5.4-11.8 6.2-15.1 6.2-3.3 0-9.7-0.8-15.1-6.2L222.2 588.5c-16.7-16.7-43.7-16.7-60.3 0-16.7 16.7-16.7 43.7 0 60.3l274.8 274.8c20.8 20.8 48.1 31.2 75.4 31.2 27.3 0 54.6-10.4 75.4-31.2l274.7-274.8c16.7-16.7 16.7-43.7 0-60.3-16.7-16.7-43.7-16.7-60.4 0z" fill="#424242" p-id="57754"></path></svg>
+        </a>
+        <a id="content_hidden" class="content_hidden">
+            <svg t="1688603143752" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15592" width="18" height="18"><path d="M479.004101 645.938677L165.25229 958.480465a37.510709 37.510709 0 0 0 0 54.059551 36.47863 36.47863 0 0 0 53.063061 0l293.679668-292.576411 293.715256 292.576411a36.443042 36.443042 0 0 0 53.063061 0 37.510709 37.510709 0 0 0 0-54.059551l-313.751811-312.541788c-21.210989-22.349834-36.514219-24.698702-66.017424 0z m66.053013-267.877709l312.577377-312.541789a37.510709 37.510709 0 0 0 0-54.059551 36.443042 36.443042 0 0 0-53.063061 0l-292.505234 292.576411L219.560963 11.459628a36.47863 36.47863 0 0 0-53.063061 0 37.510709 37.510709 0 0 0 0 54.059551l312.577377 312.541789a46.58588 46.58588 0 0 0 65.981835-0.035589z" p-id="15593" fill="#424242"></path></svg>
+        </a>
+    </div>
+    
+    <a id="back_to_top" href="#" class="back_to_top">
+        <svg t="1688628374733" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3166" width="16" height="16"><path d="M966.4 668.8l-435.2-432c-9.6-9.6-25.6-9.6-35.2 0l-441.6 432c-9.6 9.6-9.6 25.6 0 35.2 9.6 9.6 25.6 9.6 35.2 0l425.6-416 416 416c9.6 9.6 25.6 9.6 35.2 0S976 678.4 966.4 668.8z" p-id="3167" fill="#424242"></path></svg>
+    </a>
+</div>
+    <footer class="footer">
+    <div id="footer_powered_by" class="powered_by">
+        <a href="https://varkai.com">Designed by VarKai,</a>
+        <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+    </div>
+
+    <div id="footer_slogan" class="footer_slogan">
+        <span>from 2021</span>
+    </div>
+</footer>
+    <script src="https://whiteppure.github.io/iblog/js/jquery-3.5.1.min.js"></script>
+<link href="https://whiteppure.github.io/iblog/css/fancybox.min.css" rel="stylesheet">
+<script src="https://whiteppure.github.io/iblog/js/fancybox.min.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/darkmode.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/zozo.js"></script>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/html2canvas.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/utils.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/html2md.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/htmlexport.js"></script>
+
+<script src="https://whiteppure.github.io/iblog/js/fastsearch.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/fuse.js"></script>
+
+
+<script>
+    new Darkmode({
+        right: '32px', 
+        bottom: 'unset', 
+        
+        time: '0.15s', 
+        mixColor: '#f7f7f7', 
+        backgroundColor: '#f7f7f7', 
+        buttonColorDark: '#212121', 
+        buttonColorLight: '#f7f7f7', 
+        saveInCookies: false, 
+        autoMatchOsTheme: true 
+    }).showWidget();
+
+    function addDarkmodeWidget(){
+        const hours = new Date().getHours();
+        if (hours >= 19 || hours <= 5){
+            new Darkmode({
+                right: '32px', 
+                bottom: 'unset', 
+                
+                time: '0.3s', 
+                mixColor: '#f7f7f7', 
+                backgroundColor: '#f7f7f7', 
+                buttonColorDark: '#212121', 
+                buttonColorLight: '#f7f7f7', 
+                saveInCookies: false, 
+                autoMatchOsTheme: true 
+            }).toggle();
+        }
+    }
+    
+    
+</script>
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

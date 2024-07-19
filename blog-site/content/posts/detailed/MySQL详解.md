@@ -2,8 +2,8 @@
 title: "MySQL详解"
 date: 2024-05-30
 draft: false
-tags: ["MySQL","详解"]
-slug: "sql-select-fast"
+tags: ["数据库","详解"]
+slug: "java-mysql"
 ---
 
 

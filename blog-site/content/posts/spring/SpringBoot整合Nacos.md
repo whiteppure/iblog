@@ -2,7 +2,7 @@
 title: "SpringBoot整合Nacos"
 date: 2023-09-04
 draft: false
-tags: ["springboot", "nacos","spring"]
+tags: ["SpringBoot", "Nacos","Spring"]
 slug: "springboot-nacos"
 ---
 

@@ -2,7 +2,7 @@
 title: "Nginx入门"
 date: 2021-03-04
 draft: false
-tags: ["使用介绍" ,"nginx"]
+tags: ["入门" ,"Nginx"]
 slug: "nginx-start"
 ---
 

@@ -2,7 +2,7 @@
 title: "SpringBoot整合Kafka"
 date: 2020-08-20
 draft: false
-tags: ["springboot", "MQ","spring"]
+tags: ["SpringBoot", "Kafka","Spring"]
 slug: "springboot-kafka"
 ---
 

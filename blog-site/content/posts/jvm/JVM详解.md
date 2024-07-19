@@ -3,7 +3,7 @@ title: "JVM详解"
 date: 2024-05-26
 draft: false
 tags: ["Java", "JVM","详解"]
-slug: "java-memory-divide"
+slug: "java-jvm-detail"
 ---
 
 ## JVM整体结构

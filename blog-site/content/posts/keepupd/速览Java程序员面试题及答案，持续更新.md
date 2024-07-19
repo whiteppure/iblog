@@ -2,7 +2,7 @@
 title: "速览Java程序员面试题及答案，持续更新..."
 date: 2024-06-17
 draft: false
-tags: ["面试","面试题","Java","持续更新"]
+tags: ["面试","Java","持续更新"]
 slug: "interview-junior-javaer"
 top: true
 ---

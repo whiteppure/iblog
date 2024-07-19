@@ -2,7 +2,7 @@
 title: "SpringBoot整合Validator"
 date: 2023-07-01
 draft: false
-tags: ["springboot","spring"]
+tags: ["SpringBoot","Spring"]
 slug: "springboot-validator"
 ---
 
