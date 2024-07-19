@@ -35,6 +35,7 @@
 
     <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/toc.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/search.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/img.css" />
 
     
     
@@ -123,6 +124,36 @@
         </div>
     </div>
 </div>
+        
+<div class="content">
+    <div class="list_with_title">
+        <div class="listing_title">置顶</div>
+        <div class="listing">
+            
+            <div class="listing_item">
+                <div class="listing_post">
+                    <a href="/iblog/posts/keepupd/interview-junior-javaer/">速览Java程序员面试题及答案，持续更新...</a>
+                    <div class="post_time"><span class="date">2024-06-17</span></div>
+                </div>
+            </div>
+            
+            <div class="listing_item">
+                <div class="listing_post">
+                    <a href="/iblog/posts/keepupd/valuable-resource/">资源干货读书推荐，持续更新...</a>
+                    <div class="post_time"><span class="date">2024-03-30</span></div>
+                </div>
+            </div>
+            
+            <div class="listing_item">
+                <div class="listing_post">
+                    <a href="/iblog/posts/keepupd/java-dict/">编程专业术语汇总及解释，持续更新...</a>
+                    <div class="post_time"><span class="date">2023-02-13</span></div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
         <div class="content">
             <div class="list_with_title">
                 
@@ -131,7 +162,7 @@
                     
                     <div class="listing_item">
                         <div class="listing_post">
-                            <a href="/iblog/posts/essays/java-transaction/">分布式事务详解</a>
+                            <a href="/iblog/posts/detailed/distributed-transaction/">分布式事务详解</a>
                             <div class="post_time"><span class="date">08-02</span></div>
                         </div>
                     </div>
@@ -194,27 +225,40 @@
 <script src="http://localhost:1313/iblog/js/fuse.js"></script>
 
 
+<script>
+    new Darkmode({
+        right: '32px', 
+        bottom: 'unset', 
+        
+        time: '0.15s', 
+        mixColor: '#f7f7f7', 
+        backgroundColor: '#f7f7f7', 
+        buttonColorDark: '#212121', 
+        buttonColorLight: '#f7f7f7', 
+        saveInCookies: false, 
+        autoMatchOsTheme: true 
+    }).showWidget();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    function addDarkmodeWidget(){
+        const hours = new Date().getHours();
+        if (hours >= 19 || hours <= 5){
+            new Darkmode({
+                right: '32px', 
+                bottom: 'unset', 
+                
+                time: '0.3s', 
+                mixColor: '#f7f7f7', 
+                backgroundColor: '#f7f7f7', 
+                buttonColorDark: '#212121', 
+                buttonColorLight: '#f7f7f7', 
+                saveInCookies: false, 
+                autoMatchOsTheme: true 
+            }).toggle();
+        }
+    }
+    
+    
+</script>
 
 
 
