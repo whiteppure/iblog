@@ -8,7 +8,7 @@
 	
 	
 	
-	<title>volatile关键字详解 ｜ 脚踏实地</title>
+	<title>volatile关键字 ｜ 脚踏实地</title>
 	
     
     
@@ -60,6 +60,30 @@
     <div class="page-header"><strong></strong></div>
     <div id="page-scrollspy" class="toc-nav">
 
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#volatile">
+                    volatile
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
         
         
         
@@ -269,7 +293,7 @@
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
-                        <h2 id="post_single_title">volatile关键字详解</h2>
+                        <h2 id="post_single_title">volatile关键字</h2>
                         <span id="post_page_title_date" class="date">2024.07.11</span>
                         
                         <span id="busuanzi_container_page_pv" class="m-l-10">
@@ -277,8 +301,8 @@
                         </span>
                         
                     </div>
-                    <div class="post_content markdown"><p>volatile
-<code>volatile</code>通常被比喻成轻量级的锁，是Java并发编程中比较重要的一个关键字。<code>volatile</code>作用：</p>
+                    <div class="post_content markdown"><h2 id="volatile">volatile</h2>
+<p><code>volatile</code>通常被比喻成轻量级的锁，是Java并发编程中比较重要的一个关键字。<code>volatile</code>作用：</p>
 <ul>
 <li>可见性：当一个线程修改了 <code>volatile</code> 变量的值，新的值对于其他线程是立即可见的。这避免了其他线程读取到旧的缓存值。</li>
 <li>有序性：对 <code>volatile</code> 变量的读写操作不会被重排序。所有对 <code>volatile</code> 变量的写操作在内存中会按照程序的顺序执行，同时在一个线程中的操作不会重排序到 <code>volatile</code> 变量的读写操作之后。</li>
@@ -534,8 +558,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>用<code>volatile</code>修饰该变量，保证该变量被某个线程修改时，保证其他线程中的这个变量的可见性。
 在多线程环境下，CPU轮流切换线程执行，有可能某个线程修改了数据，准备回主内存，此时CPU切换到另一个线程修改了数据，并且写回到了主内存，此时就导致数据的不准确。
-<code>do...while()</code> + <code>CAS</code>的作用就是，当某个线程工作内存中的值与主内存中的值，如果不相同就会一直<code>while</code>循环下去，之所以用<code>do..while</code>是考虑到做自增操作。
-������</p>
+<code>do...while()</code> + <code>CAS</code>的作用就是，当某个线程工作内存中的值与主内存中的值，如果不相同就会一直<code>while</code>循环下去，之所以用<code>do..while</code>是考虑到做自增操作。</p>
 </div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">
