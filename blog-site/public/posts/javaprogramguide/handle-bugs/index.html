@@ -8,11 +8,11 @@
 	
 	
 	
-	<title>Js滑块拖拽 ｜ 脚踏实地</title>
+	<title>如何减少及解决bug ｜ 脚踏实地</title>
 	
     
     
-    <meta name="description" content="index.html &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;#34;en&amp;#34;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;#34;UTF-8&amp;#34;&amp;gt; &amp;lt;title&amp;gt;滑块拖拽&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;style&amp;gt; body { margin: 0; padding: 0; user-select: none; } .content { position: relative; width: 300px; height: 40px; margin: 50px auto; background-color: #E8E8EB; text-align: center; line-height: 40px; } .rect { position: absolute; width: 100%; height: 100%; } .rect .bg {" />
+    <meta name="description" content="bug的起源: 1945年，一只小飞蛾钻进了计算机电路里，导致系统无法工作，一位名叫格蕾丝·赫柏的人把飞蛾拍死在工作日志上，写道：就是这个 bug(虫子)，害我们今" />
     
 
     
@@ -48,71 +48,6 @@
     
     
 
-
-
-
-
-
-
-
-
-<div id="post_content_toc" class="toc">
-    <div class="page-header"><strong></strong></div>
-    <div id="page-scrollspy" class="toc-nav">
-
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#indexhtml">
-                    index.html
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e8%bf%90%e8%a1%8c%e6%95%88%e6%9e%9c">
-                    运行效果
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-
-    </div>
-
-</div>
 
 
 
@@ -205,123 +140,51 @@
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
-                        <h2 id="post_single_title">Js滑块拖拽</h2>
-                        <span id="post_page_title_date" class="date">2018.09.08</span>
+                        <h2 id="post_single_title">如何减少及解决bug</h2>
+                        <span id="post_page_title_date" class="date">2023.03.10</span>
                         
                         <span id="busuanzi_container_page_pv" class="m-l-10">
                           阅读量<span id="busuanzi_value_page_pv"></span>次
                         </span>
                         
                     </div>
-                    <div class="post_content markdown"><h2 id="indexhtml">index.html</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;en&#34;</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;UTF-8&#34;</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>滑块拖拽<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="nt">body</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">margin</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">user-select</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="nc">content</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">width</span><span class="p">:</span> <span class="mi">300</span><span class="kt">px</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">height</span><span class="p">:</span> <span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">margin</span><span class="p">:</span> <span class="mi">50</span><span class="kt">px</span> <span class="kc">auto</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">background-color</span><span class="p">:</span> <span class="mh">#E8E8EB</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">text-align</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">line-height</span><span class="p">:</span> <span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="nc">rect</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="nc">rect</span> <span class="p">.</span><span class="nc">bg</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">left</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">top</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">z-index</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">width</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">background</span><span class="p">:</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">122</span><span class="p">,</span><span class="mi">194</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mf">.4</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="nc">rect</span> <span class="p">.</span><span class="nc">move</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kp">-webkit-</span><span class="k">box-sizing</span><span class="p">:</span> <span class="kc">border-box</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="kp">-moz-</span><span class="k">box-sizing</span><span class="p">:</span> <span class="kc">border-box</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">box-sizing</span><span class="p">:</span> <span class="kc">border-box</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">width</span><span class="p">:</span> <span class="mi">45</span><span class="kt">px</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">height</span><span class="p">:</span> <span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">top</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">left</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">background-color</span><span class="p">:</span> <span class="mh">#fff</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="mh">#cccccc</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="nc">rect</span> <span class="nt">span</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;rect&#34;</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;bg&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>滑块拖动验证<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;move&#34;</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;images/right.png&#34;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&#34;图片拖动&#34;</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">oMove</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&#34;.move&#34;</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">oBg</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&#34;.bg&#34;</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">oRect</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&#34;.rect&#34;</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">oImage</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&#34;img&#34;</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">oSpan</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&#34;span&#34;</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">_X</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">oMove</span><span class="p">.</span><span class="nx">onmousedown</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="kd">var</span> <span class="nx">startX</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientX</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">document</span><span class="p">.</span><span class="nx">onmousemove</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="kd">var</span> <span class="nx">endX</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientX</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="nx">_X</span> <span class="o">=</span> <span class="nx">endX</span> <span class="o">-</span> <span class="nx">startX</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">_X</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="nx">_X</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">_X</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="nx">_X</span> <span class="o">=</span> <span class="mi">255</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="nx">oBg</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">oMove</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">left</span> <span class="o">=</span> <span class="nx">_X</span> <span class="o">+</span> <span class="s2">&#34;px&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">_X</span> <span class="o">&gt;=</span> <span class="mi">255</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="nx">oRect</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">color</span> <span class="o">=</span> <span class="s2">&#34;black&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                <span class="nx">oImage</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s2">&#34;images/left.png&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                <span class="nx">oSpan</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s2">&#34;验证成功&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                <span class="nx">oBg</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">oMove</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">left</span> <span class="o">=</span> <span class="mi">255</span> <span class="o">+</span> <span class="s2">&#34;px&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">};</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">document</span><span class="p">.</span><span class="nx">onmouseup</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">document</span><span class="p">.</span><span class="nx">onmousemove</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">_X</span> <span class="o">&lt;</span> <span class="mi">255</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="nx">oBg</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">oMove</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">left</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</span></span></code></pre></div><h2 id="运行效果">运行效果</h2>
-<p><img alt="Js滑块拖拽-01.png" src="/iblog/posts/annex/images/readme/Js%E6%BB%91%E5%9D%97%E6%8B%96%E6%8B%BD-01.png"></p>
+                    <div class="post_content markdown"><blockquote>
+<p>bug的起源:
+1945年，一只小飞蛾钻进了计算机电路里，导致系统无法工作，一位名叫格蕾丝·赫柏的人把飞蛾拍死在工作日志上，写道：就是这个 bug(虫子)，害我们今天的工作无法完成——于是，bug一词成了电脑系统程序的专业术语，形容那些系统中的缺陷或问题。</p>
+</blockquote>
+<p>bug一词，是指“故障”、“缺陷”。了解软件开发的朋友都非常熟悉，程序员和测试人员更不用说，在工作中会常遇到。 作为一名开发人员，项目出现bug是避免不了的。无论你是一名初入职场的小白，还是拥有经验丰富的大佬，只要经常写代码，梳理业务逻辑，很难免不出bug。正所谓常在河边走，哪能不湿鞋。记得以前经常听人说，如果你没有把系统搞宕机过，就不是一名合格的CTO，成为一名出色的开发人员，经验都是一个一个积累起来的。
+所谓的bug指的是生产环境发现的问题;那么只要线上不发现问题，那就不是bug。之所以这么讲是因为一旦影响程序的正常使用便会影响公司的利益，公司利益被影响你自己的利益也会被影响;所以为了自己写程序的时候尽量多测试，将可能会应对到的情况想得全一点，减少bug的出现。</p>
+<p>程序员能为了减少bug的出现能做的可以从代码方面下手:</p>
+<ul>
+<li>在正式开发前，做好准备工作，先梳理一下业务逻辑，根据业务场景可以使用什么设计模式，是否需要缓存，列一下需要用到的框架等，尽量考虑的全面一些，考虑一下不同的情况;</li>
+<li>在编写代码的时候需要注意以下几点，供参考：
+<ul>
+<li>在关键的地方写注释，标注一些关键的信息;</li>
+<li>增加校验;如: 调用第三方程序或者使用一些中间件的时候，拿到结果不要着急使用，先做校验，这样可以很大程度上避免NPE的出现;</li>
+<li>当在程序某个功能下加一个非堵塞性功能的时候，需要考虑是否会影响到主流程的使用，有时候可能不经意的一个问题会将它的影响无限放大，随之而来的就是用户投诉，老板亏钱;</li>
+<li>当编写代码的时候尽量写一些简洁，清晰的代码，比如一个方法实现的功能较多，应把它拆开。如果代码变得易于维护起来那么bug的数量也会大大降低;</li>
+<li>尽量编写一些能测试的代码，将一个方法的职责做到最小，一个方法就干一件事情;</li>
+<li>当开发功能完成之后不要着急测试，先自己审查一下代码，确认哪些地方可以进行优化，之后再调试功能进行单元测试;</li>
+</ul>
+</li>
+<li>当开发完成之后一定要进行单元测试，这可以大大降低bug的数量; 测试的时候需要模拟线上的环境数据来测试新增或修复的功能，否则即使改完功能之后可能会由于请求次数或数据量巨大问题导致功能不能使用。</li>
+</ul>
+<p>除此之外，一方面可以借助一些工具来进行bug的规避，比如sonar，可以发现一些潜在的错误和问题。另一方面我们要不断学习和提高自己的编程技能，以提高代码质量和减少错误的发生。</p>
+<p>尽管这样bug这种东西还是不可避免的，我们只能减少bug而不能消除bug，没有人保证自己的程序一定是没有问题的。减少bug的出现只能多测多验证，哪怕单元测试通过都不能非常有效减少bug，因为受到写单元测试的人的思维角度限制，导致单元测试的片面性。</p>
+<p>关于bug的种类，最容易出现的bug是逻辑上的bug，如复杂庞大一点软件如果不是所有地方都熟悉就写代码是比较容易遗漏一些特殊情况的。除了逻辑上的bug外在开发中还有框架中存在的bug，但是这种bug是我们避免不了的。如2021年爆发的log4j堪称史诗级的bug。
+没什么好的办法可以提前避免掉，就多用一些稳定的框架吧，有apache就用apache，没有就优先使用fork，start高的，从概率上减少。</p>
+<p>一个人的力量毕竟有限必要的时候可以叫上同事，进行code review。</p>
+<p>因为bug是不可避免的，所以解决bug能力就显得尤为重要，程序员归根到底拼的是解决问题的能力。</p>
+<p>bug的解决思路:</p>
+<ul>
+<li>确认bug的存在，包括复现bug的步骤和现象;</li>
+<li>分析bug的根本原因，找到导致bug的代码或逻辑，一般通过日志查看一些栈的信息;</li>
+<li>修复bug的代码或逻辑，并重新测试确认修复成功;</li>
+<li>编写针对bug的单元测试，验证bug是否修复;</li>
+<li>记录bug修复的过程和结果，以备将来参考和验证;</li>
+</ul>
+<p>亲自复现问题，关注第一现场，确定是必现还是偶现; 区分是人的问题还是环境的问题；如果是人的问题，那是配置参数的问题还是代码逻辑的问题。如果是配置参数的问题，则通过对比正常运行的配置参数发现问题。
+如果是代码逻辑的问题，则通过commit的历史二分查找缩小出现问题的逻辑范围; 如果是机器的问题，确定是单机问题还是集群问题; 如果是单机问题，则替换机器，如果是集群问题则考虑升级硬件设备。</p>
 </div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">
@@ -331,11 +194,7 @@
                                     <i class="ri-stack-line"></i>
                                     
                                         
-                                        <a href="http://localhost:1313/iblog/tags/js/">JS</a>
-                                    
-                                        <a href="http://localhost:1313/iblog/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a>
-                                    
-                                        <a href="http://localhost:1313/iblog/tags/%E5%BA%94%E7%94%A8/">应用</a>
+                                        <a href="http://localhost:1313/iblog/tags/%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97/">编程指南</a>
                                     
                                     
                                 </span>
