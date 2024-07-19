@@ -17,9 +17,9 @@
     </item>
     <item>
       <title>Java泛型</title>
-      <link>http://localhost:1313/iblog/posts/java/rookie-generics/</link>
+      <link>http://localhost:1313/iblog/posts/javabasics/rookie-generics/</link>
       <pubDate>Mon, 15 Jul 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/iblog/posts/java/rookie-generics/</guid>
+      <guid>http://localhost:1313/iblog/posts/javabasics/rookie-generics/</guid>
       <description>概览 在Java中，泛型是一种强大的编程特性，允许类、接口和方法在定义时声明一种参数化类型，而在使用时可以指定具体的类型参数。泛型的主要目的是提高代码的重用性和类</description>
     </item>
     <item>
@@ -30,14 +30,14 @@
       <description>概览 语法糖是指编程语言中的一种语法结构，它们并不提供新的功能，而是为了让代码更易读、更易写而设计的。 语法糖使得某些常见的编程模式或操作变得更加简洁和直观，但在底</description>
     </item>
     <item>
-      <title>synchronized关键字详解</title>
+      <title>synchronized关键字</title>
       <link>http://localhost:1313/iblog/posts/javakeyword/java-keyword-synchronized/</link>
       <pubDate>Thu, 11 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/iblog/posts/javakeyword/java-keyword-synchronized/</guid>
       <description>synchronized synchronized是Java提供的关键字译为同步，是Java中用于实现线程同步的一种机制。它可以确保在同一时间只有一个线程能够执行某段代码，从而避免线程</description>
     </item>
     <item>
-      <title>volatile关键字详解</title>
+      <title>volatile关键字</title>
       <link>http://localhost:1313/iblog/posts/javakeyword/java-keyword-volatile/</link>
       <pubDate>Thu, 11 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/iblog/posts/javakeyword/java-keyword-volatile/</guid>
@@ -45,9 +45,9 @@
     </item>
     <item>
       <title>ArrayList详解</title>
-      <link>http://localhost:1313/iblog/posts/essays/java-arraylist/</link>
+      <link>http://localhost:1313/iblog/posts/detailed/java-arraylist/</link>
       <pubDate>Wed, 26 Jun 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/iblog/posts/essays/java-arraylist/</guid>
+      <guid>http://localhost:1313/iblog/posts/detailed/java-arraylist/</guid>
       <description>ArrayList 在List接口实现类中，最常用的就是ArrayList，ArrayList类是一个可以动态修改的数组，与普通数组的区别就是它是没有固定大小的限制，可以添加或删</description>
     </item>
     <item>
@@ -59,9 +59,9 @@
     </item>
     <item>
       <title>Java程序常见问题</title>
-      <link>http://localhost:1313/iblog/posts/essays/java-always-problems/</link>
+      <link>http://localhost:1313/iblog/posts/codeguide/java-always-problems/</link>
       <pubDate>Tue, 28 May 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/iblog/posts/essays/java-always-problems/</guid>
+      <guid>http://localhost:1313/iblog/posts/codeguide/java-always-problems/</guid>
       <description>CPU使用过高 一般在生产环境排查程序故障，都会查看日志什么的，但是有些故障日志是看不出来的，就比如：CPU使用过高。 那应该怎么办呢？我们需要结合linux命令和</description>
     </item>
     <item>
@@ -86,6 +86,27 @@
       <description>读书推荐 Java电子书 《深入理解计算机系统》 《HeadFirst设计模式》 《Java数据结构和算法》 《大话数据结构》 《Java核心技术卷I基础知识》 《Java编</description>
     </item>
     <item>
+      <title>Java整合文件上传功能</title>
+      <link>http://localhost:1313/iblog/posts/toy/uploadfile-code/</link>
+      <pubDate>Fri, 11 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/iblog/posts/toy/uploadfile-code/</guid>
+      <description>结构 pom.xml fastdfs-client-java-1.27.jar：点击下载 &amp;lt;dependencies&amp;gt; &amp;lt;!-- fastdfs --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.csource&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;fastdfs-client-java&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.27&amp;lt;/version&amp;gt; &amp;lt;systemPath&amp;gt;${project.basedir}/lib/fastdfs-client-java-1.27.jar&amp;lt;/systemPath&amp;gt; &amp;lt;scope&amp;gt;system&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;!--aliyun oss 依赖--&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;com.aliyun.oss&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;aliyun-sdk-oss&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-test&amp;lt;/artifactId&amp;gt; &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.projectlombok&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;lombok&amp;lt;/artifactId&amp;gt; &amp;lt;optional&amp;gt;true&amp;lt;/optional&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;cn.hutool&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hutool-all&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;5.8.11&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt;</description>
+    </item>
+    <item>
+      <title>Java整合支付功能</title>
+      <link>http://localhost:1313/iblog/posts/toy/pay-code/</link>
+      <pubDate>Thu, 10 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/iblog/posts/toy/pay-code/</guid>
+      <description>结构 完整代码：https://gitee.com/gitee_pikaqiu/easy-archetype pom.xml &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-test&amp;lt;/artifactId&amp;gt; &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.projectlombok&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;lombok&amp;lt;/artifactId&amp;gt; &amp;lt;optional&amp;gt;true&amp;lt;/optional&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;cn.hutool&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hutool-all&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;5.8.11&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;com.alipay.sdk&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;alipay-sdk-java&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.9.9&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt;</description>
+    </item>
+    <item>
+      <title>Java管道流设计模式结合业务</title>
+      <link>http://localhost:1313/iblog/posts/toy/pipeline-business/</link>
+      <pubDate>Thu, 15 Jun 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/iblog/posts/toy/pipeline-business/</guid>
+      <description>流程图 代码实现 完整代码：https://gitee.com/gitee_pikaqiu/easy-pipeline pom &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.plugin&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-plugin-core&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;${spring.plugin.core.version}&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-test&amp;lt;/artifactId&amp;gt; &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.projectlombok&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;lombok&amp;lt;/artifactId&amp;gt; &amp;lt;optional&amp;gt;true&amp;lt;/optional&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;cn.hutool&amp;lt;/groupId&amp;gt;</description>
+    </item>
+    <item>
       <title>SpringMVC与SpringWebFlux</title>
       <link>http://localhost:1313/iblog/posts/spring/java-spring-mvc-webflux/</link>
       <pubDate>Fri, 14 Apr 2023 00:00:00 +0000</pubDate>
@@ -101,9 +122,9 @@
     </item>
     <item>
       <title>如何做好程序设计功能</title>
-      <link>http://localhost:1313/iblog/posts/essays/java-design/</link>
+      <link>http://localhost:1313/iblog/posts/codeguide/java-design/</link>
       <pubDate>Tue, 02 Aug 2022 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/iblog/posts/essays/java-design/</guid>
+      <guid>http://localhost:1313/iblog/posts/codeguide/java-design/</guid>
       <description>功能设计流程图 与外部系统交互、本系统模块之间流程，比较好用的画圈软件draw .io或在线的process on 数据库设计 从DDD角度界限上下文、ER图、评审表结构设</description>
     </item>
     <item>
@@ -114,10 +135,10 @@
       <description>写在前面 本文中所涉及的程序均为Java开发，如果您想要直接使用这些工具需要提前配置Java环境。所涉及到的程序均提供完整代码，如果您有兴趣可以尝试运行。 使用ja</description>
     </item>
     <item>
-      <title>数据结构与算法</title>
-      <link>http://localhost:1313/iblog/posts/essays/data-structures-algorithms/</link>
+      <title>数据结构与算法详解</title>
+      <link>http://localhost:1313/iblog/posts/detailed/data-structures-algorithms/</link>
       <pubDate>Fri, 10 Dec 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/iblog/posts/essays/data-structures-algorithms/</guid>
+      <guid>http://localhost:1313/iblog/posts/detailed/data-structures-algorithms/</guid>
       <description>数据结构 数据结构是一门研究组织数据方式的学科，有了编程语言也就有了数据结构，学好数据结构可以编写出更有效率的代码。数据结构是算法的基础，想要学好算法，就必须把数</description>
     </item>
     <item>
@@ -129,30 +150,30 @@
     </item>
     <item>
       <title>Java集合</title>
-      <link>http://localhost:1313/iblog/posts/java/rookie-java-container/</link>
+      <link>http://localhost:1313/iblog/posts/javabasics/rookie-java-container/</link>
       <pubDate>Mon, 04 Oct 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/iblog/posts/java/rookie-java-container/</guid>
+      <guid>http://localhost:1313/iblog/posts/javabasics/rookie-java-container/</guid>
       <description>概述 Java中的集合主要包括Collection和Map两种，Collection存储着对象的集合，而Map存储着键值对的映射表。 数组 如果你看过ArrayLis</description>
     </item>
     <item>
       <title>Java反射</title>
-      <link>http://localhost:1313/iblog/posts/java/rookie-reflect/</link>
+      <link>http://localhost:1313/iblog/posts/javabasics/rookie-reflect/</link>
       <pubDate>Sat, 02 Oct 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/iblog/posts/java/rookie-reflect/</guid>
+      <guid>http://localhost:1313/iblog/posts/javabasics/rookie-reflect/</guid>
       <description>概述 在Java程序运行状态中，对于任意一个实体类，都能够知道这个类的所有属性和方法，对于任意一个对象，都能够调用它的任意方法和属性。这种动态获取信息以及动态调用</description>
     </item>
     <item>
       <title>Java程序常见故障排查命令及工具</title>
-      <link>http://localhost:1313/iblog/posts/essays/eye-beam/</link>
+      <link>http://localhost:1313/iblog/posts/codeguide/eye-beam/</link>
       <pubDate>Wed, 08 Sep 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/iblog/posts/essays/eye-beam/</guid>
+      <guid>http://localhost:1313/iblog/posts/codeguide/eye-beam/</guid>
       <description>故障排查命令 收录Linux常用命令，以下命令来自https://www.bilibili.com/video/BV14A411378a 关机/重启/注销 常用命令 作</description>
     </item>
     <item>
       <title>JavaObject类方法</title>
-      <link>http://localhost:1313/iblog/posts/java/rookie-objectclass-methods/</link>
+      <link>http://localhost:1313/iblog/posts/javabasics/rookie-objectclass-methods/</link>
       <pubDate>Sat, 10 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/iblog/posts/java/rookie-objectclass-methods/</guid>
+      <guid>http://localhost:1313/iblog/posts/javabasics/rookie-objectclass-methods/</guid>
       <description>概览 Object类位于java.lang包中，编译时会自动导入。当我们创建一个类时，如果没有明确继承一个父类，那么它就会自动继承Object，成为Object的</description>
     </item>
     <item>
@@ -171,16 +192,16 @@
     </item>
     <item>
       <title>Java多线程</title>
-      <link>http://localhost:1313/iblog/posts/java/rookie-multi-thread/</link>
+      <link>http://localhost:1313/iblog/posts/javabasics/rookie-multi-thread/</link>
       <pubDate>Wed, 05 May 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/iblog/posts/java/rookie-multi-thread/</guid>
+      <guid>http://localhost:1313/iblog/posts/javabasics/rookie-multi-thread/</guid>
       <description>线程与进程 进程是一个具有一定独立功能的程序关于某个数据集合的一次运行活动。一个正在运行的程序的实例就是一个进程。 线程是操作系统能够进行运算调度的最小单位。它被包</description>
     </item>
     <item>
       <title>HashMap详解</title>
-      <link>http://localhost:1313/iblog/posts/essays/java-hashmap/</link>
+      <link>http://localhost:1313/iblog/posts/detailed/java-hashmap/</link>
       <pubDate>Mon, 03 May 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/iblog/posts/essays/java-hashmap/</guid>
+      <guid>http://localhost:1313/iblog/posts/detailed/java-hashmap/</guid>
       <description>HashMap HashMap是一个散列表，它存储的内容是键值对(key-value)映射。 HashMap实现了Map接口，根据键的HashCode值存储数据，具有很快的访问</description>
     </item>
     <item>
@@ -220,9 +241,9 @@
     </item>
     <item>
       <title>JavaIO</title>
-      <link>http://localhost:1313/iblog/posts/java/rookie-io/</link>
+      <link>http://localhost:1313/iblog/posts/javabasics/rookie-io/</link>
       <pubDate>Fri, 09 Apr 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/iblog/posts/java/rookie-io/</guid>
+      <guid>http://localhost:1313/iblog/posts/javabasics/rookie-io/</guid>
       <description>概览 IO，即in和out的缩写，也就是输入和输出，指应用程序和外部设备之间的数据传递，常见的外部设备包括文件、管道、网络连接。 从计算机结构的角度来看IO，IO就</description>
     </item>
     <item>
@@ -276,9 +297,9 @@
     </item>
     <item>
       <title>Java面向对象</title>
-      <link>http://localhost:1313/iblog/posts/java/rookie-object-oriented/</link>
+      <link>http://localhost:1313/iblog/posts/javabasics/rookie-object-oriented/</link>
       <pubDate>Mon, 15 Feb 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/iblog/posts/java/rookie-object-oriented/</guid>
+      <guid>http://localhost:1313/iblog/posts/javabasics/rookie-object-oriented/</guid>
       <description>概览 面向对象简称OO(object-oriented)是相对面向过程(procedure-oriented)来说的，是一种编程思想，Java就是一门面向对象的语</description>
     </item>
     <item>
@@ -290,23 +311,23 @@
     </item>
     <item>
       <title>Java运算</title>
-      <link>http://localhost:1313/iblog/posts/java/rookie-operation/</link>
+      <link>http://localhost:1313/iblog/posts/javabasics/rookie-operation/</link>
       <pubDate>Sat, 30 Jan 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/iblog/posts/java/rookie-operation/</guid>
+      <guid>http://localhost:1313/iblog/posts/javabasics/rookie-operation/</guid>
       <description>运算符与表达式 运算符 运算符指明对操作数的运算方式。组成表达式的Java操作符有很多种。 运算符按照其要求的操作数数目来分，可以有单目运算符、双目运算符和三目运算符</description>
     </item>
     <item>
       <title>Java数据类型</title>
-      <link>http://localhost:1313/iblog/posts/java/rookie-datatype/</link>
+      <link>http://localhost:1313/iblog/posts/javabasics/rookie-datatype/</link>
       <pubDate>Wed, 20 Jan 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/iblog/posts/java/rookie-datatype/</guid>
+      <guid>http://localhost:1313/iblog/posts/javabasics/rookie-datatype/</guid>
       <description>基本类型 Java语言提供了八种基本类型。六种数值类型（四个整数型，两个浮点型），一种字符类型，还有一种布尔型，俗称4类8种。 这里只介绍称4类8种，实际上，Jav</description>
     </item>
     <item>
       <title>Java异常</title>
-      <link>http://localhost:1313/iblog/posts/java/rookie-exception/</link>
+      <link>http://localhost:1313/iblog/posts/javabasics/rookie-exception/</link>
       <pubDate>Wed, 13 Jan 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/iblog/posts/java/rookie-exception/</guid>
+      <guid>http://localhost:1313/iblog/posts/javabasics/rookie-exception/</guid>
       <description>异常类型 Throwable可以用来表示任何可以作为异常抛出的类，分为两种：Error 和 Exception。 其中Error用来表示Java程序无法处理的错误，这类</description>
     </item>
     <item>
