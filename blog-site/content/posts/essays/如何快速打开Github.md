@@ -1,10 +1,11 @@
 ---
-title: "快速打开Github"
+title: "如何快速打开Github"
 date: 2024-03-21
 draft: false
-tags: ["其他"]
+tags: ["随笔"]
 slug: "accelerate-access-github"
 ---
+
 
 为什么我们打开Github速度很慢？很卡？甚至于访问不了，原因是中间有个域名通过DNS解析的过程，将域名解析为对应的ip地址，主要时间都花在了DNS解析上。
 

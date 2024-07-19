@@ -2,7 +2,7 @@
 title: "Java中常见的语法糖"
 date: 2024-07-14
 draft: false
-tags: ["Java"]
+tags: ["Java","随笔"]
 slug: "java-syntax-sugar"
 ---
 

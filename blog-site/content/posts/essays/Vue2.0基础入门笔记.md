@@ -2,7 +2,7 @@
 title: "Vue2.0基础入门笔记"
 date: 2019-05-23
 draft: false
-tags: ["Vue","笔记"]
+tags: ["随笔"]
 slug: "vue2-note"
 ---
 

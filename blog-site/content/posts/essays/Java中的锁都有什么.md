@@ -2,7 +2,7 @@
 title: "Java中的锁都有什么"
 date: 2020-04-07
 draft: false
-tags: ["线程", "Java"]
+tags: ["多线程", "Java","随笔"]
 slug: "java-locks"
 ---
 

@@ -2,7 +2,7 @@
 title: "Java中常用线程安全的集合"
 date: 2020-04-05
 draft: false
-tags: ["线程", "Java", "集合"]
+tags: ["多线程", "Java", "集合","随笔"]
 slug: "java-thread-collection"
 ---
 

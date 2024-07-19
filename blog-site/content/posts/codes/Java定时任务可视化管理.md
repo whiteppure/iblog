@@ -1,8 +1,8 @@
 ---
-title: "定时任务可视化管理"
+title: "Java定时任务可视化管理"
 date: 2023-09-09
 draft: false
-tags: ["应用","设计"]
+tags: ["应用","设计","Java","小程序"]
 slug: "scheduled-job"
 ---
 

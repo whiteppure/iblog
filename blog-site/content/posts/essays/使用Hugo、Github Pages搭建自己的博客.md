@@ -2,7 +2,7 @@
 title: "使用Hugo、Github Pages搭建自己的博客"
 date: 2024-04-15
 draft: false
-tags: ["其他"]
+tags: ["随笔"]
 slug: "build-blog"
 ---
 
