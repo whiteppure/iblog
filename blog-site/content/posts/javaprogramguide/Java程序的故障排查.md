@@ -1,14 +1,16 @@
 ---
-title: "Java程序常见故障排查命令及工具"
+title: "Java程序的故障排查"
 date: 2021-09-08
 draft: false
 tags: ["编程指南","Java"]
-slug: "java-eye-beam"
+slug: "java-problem-command-tools"
 ---
 
 
-## 故障排查命令
-收录Linux常用命令，以下命令来自[https://www.bilibili.com/video/BV14A411378a](https://www.bilibili.com/video/BV14A411378a)
+## Linux命令
+由于大多数Java程序部署到Linux服务器上，故障排查和性能调优通常需要结合使用Linux命令。
+Linux命令，可以实时查看系统的CPU、内存、磁盘和网络使用情况，帮助识别和解决系统级别的问题。
+常见的命令包括`top`用于显示实时的CPU和内存使用情况，`df`查看磁盘使用情况，`netstat`显示网络连接和监听端口，`ping`测试网络延迟，`systemctl`管理系统服务等。
 
 ### 关机/重启/注销
 
@@ -318,120 +320,135 @@ slug: "java-eye-beam"
 | apt-get upgrade           | 更新已安装软件包       |
 | apt-get clean             | 清理缓存               |
 
-## 故障排查分析工具
-### JDK自带分析工具
-参考文章：
-- [https://segmentfault.com/a/1190000038209665](https://segmentfault.com/a/1190000038209665)
-- [https://www.cnblogs.com/kongzhongqijing/articles/5534624.html](https://www.cnblogs.com/kongzhongqijing/articles/5534624.html)
+## JDK命令
+JDK命令用于诊断和优化Java应用程序的性能，分析JVM行为。通过这些命令，可以生成和分析堆转储，查看线程状态，获取JVM配置信息等。
+常用命令包括`jmap`用于生成堆转储，`jstack`打印线程堆栈跟踪，`jstat`查看垃圾回收统计信息，`jinfo`获取JVM系统属性和配置信息，`javap`反编译类文件。
 
-#### jps
-jps查询系统内所有HotSpot进程，它位于java的bin目录下。
+### jps
+`jps`是JDK提供的一个命令行工具，用于列出正在运行的JVM实例。它显示所有Java进程的进程ID和主类名。
 
-| 命令   | 含义                           |
-| ------ | ------------------------------ |
-| jps    | 输出当前运行主类名称，进程ID   |
-| jps -q | 只列出进程ID                   |
-| jps -l | 输出当前运行主类的全称，进程ID |
-| jps -v | 输出虚拟机进程启动时`JVM`参数  |
+| 命令      | 描述                                      |
+|-----------|-------------------------------------------|
+| `jps -l`  | 显示完整的主类名或 JAR 文件名              |
+| `jps -v`  | 显示 JVM 启动时的参数                     |
+| `jps -m`  | 显示传递给 main 方法的参数                |
+| `jps -q`  | 只显示进程 ID，不显示主类名或其他信息     |
+| `jps -J`  | 将参数传递给 `jps` 命令的 JVM             |
 
 
-#### jstat
-jstat是JDK自带的一个轻量级小工具。全称“Java Virtual Machine statistics monitoring tool”，和jps一样，都在bin目录下。
+### jstat
+`jstat`命令是JDK提供的一个工具，用于监视JVM的性能和运行时统计信息。它提供了多种选项来获取JVM内存、垃圾回收、编译和类加载的详细统计数据。
+通过`jstat`，可以实时获取JVM内部的各种状态信息，有助于性能监控和故障排查。
 
-| 命令                       | 含义                                                         |
-| -------------------------- | ------------------------------------------------------------ |
-| jstat -gc vmid 1000 10   | 查看进程`pid`的`GC`信息，每1000毫秒 输出一次，输出10次 |
-| jstat -gccause vmid 1000 10 | 查看进程`pid`的`GC`发生的原因,每一秒（1000毫秒）输出一次，输出10次 |
-| jstat -class vmid     | 查看`pid`的加载类信息 |
-| jstat -gcutil vmid | 对`java`垃圾回收信息的统计 |
-| jstat -gcnew vmid | 显示新生代`GC`的情况 |
-| jstat -gcold vmid | 显示老年代`GC`的情况 |
+| 命令                       | 描述                                        |
+|----------------------------|---------------------------------------------|
+| `jstat -gc <pid>`           | 显示垃圾回收相关的统计信息                  |
+| `jstat -gccapacity <pid>`   | 显示 GC 内存区容量的统计信息                |
+| `jstat -gcnew <pid>`        | 显示新生代的垃圾回收统计信息                |
+| `jstat -gcold <pid>`        | 显示老年代的垃圾回收统计信息                |
+| `jstat -gcutil <pid>`       | 显示各个内存区域的使用情况                  |
+| `jstat -printcompilation <pid>` | 显示正在编译的 Java 类的相关信息        |
+| `jstat -compiler <pid>`     | 显示编译器相关的统计信息                    |
+| `jstat -class <pid>`        | 显示类加载相关的统计信息                    |
+| `jstat -classload <pid>`    | 显示类加载的统计信息                        |
+| `jstat -heap <pid>`         | 显示 JVM 堆的使用情况                        |
+| `jstat -stack <pid>`        | 显示线程栈的统计信息                        |
 
-#### jinfo
-jinfo查看虚拟机参数信息，也可用于调整虚拟机配置参数。我们通过`jinfo --help`能看到相应的参数。
 
-| 命令                     | 含义                                 |
-| ------------------------ | ------------------------------------ |
-| jinfo pid                | 输出关于`pid`的一堆相关信息          |
-| jinfo -flags pid         | 查看当前进程曾经赋过值的一些参数              |
-| jinfo -flag name pid     | 查看指定进程的`JVM`参数名称的参数的值       |
-| jinfo -flag [+-]name pid | 开启或者关闭指定进程对应名称的`JVM`参数      |
-| jinfo -sysprops pid      | 来输出当前 `JVM`进行的全部的系统属性 |
+### jinfo
+`jinfo`命令是JDK提供的一个工具，用于显示JVM的配置信息和系统属性。`jinfo`查看虚拟机参数信息，也可用于调整虚拟机配置参数。
 
-当使用jinfo进行修改对应进程JVM参数时，有一定的局限性。并不是所有的参数都支持修改，只有参数被标记为manageable的参数才可以被实时修改。
+| 命令                             | 描述                                                |
+|----------------------------------|-----------------------------------------------------|
+| `jinfo -flags <pid>`              | 显示 JVM 启动时使用的所有标志和标志信息               |
+| `jinfo -sysprops <pid>`           | 显示 JVM 启动时设置的系统属性                        |
+| `jinfo -heap <pid>`               | 显示 JVM 的堆内存设置，包括堆的初始大小和最大大小      |
+| `jinfo -l <pid>`                  | 显示进程的锁信息，例如线程持有的锁和锁的竞争情况        |
+| `jinfo -version <pid>`            | 显示 JVM 的版本信息                                |
+| `jinfo -x <pid>`                  | 显示 JVM 的详细运行时信息，包括垃圾回收信息和类加载信息 |
+| `jinfo -jdwp <pid>`               | 显示 JDWP (Java Debug Wire Protocol) 相关信息         |
+| `jinfo -stack <pid>`              | 显示进程的线程栈信息                                |
+| `jinfo -set <option=value> <pid>` | 动态设置 JVM 参数，例如调整垃圾回收器的行为          |
 
-可以使用命令查看被标记为manageable的参数：`java -XX:+PrintFlagsFinal -version | grep manageable`
+当使用`jinfo`进行修改对应进程JVM参数时，有一定的局限性。并不是所有的参数都支持修改，只有参数被标记为`manageable`的参数才可以被实时修改。
+可以使用命令查看被标记为`manageable`的参数，`java -XX:+PrintFlagsFinal -version | grep manageable`。
 
-#### jmap
-jmap全称：Java Memory Map，主要用于打印指定Java进程(或核心文件、远程调试服务器)的共享对象内存映射或堆内存细节。jmap以生成 java程序的dump文件， 也可以查看堆内对象示例的统计信息、查看ClassLoader 的信息以及 finalizer 队列。
+### jmap
+`jmap`命令用于生成JVM的内存映像，可以帮助开发人员分析内存使用情况，进行内存泄漏检测和性能优化。它能够生成堆转储、查看堆的摘要信息、以及查看堆的使用情况等。
+`jmap`命令可以获得运行中的JVM的堆的快照，从而可以离线分析堆，来检查内存泄漏、检查一些严重影响性能的大对象的创建、检查系统中什么对象最多，各种对象所占内存的大小等等。
+可以使用`jmap`生成**Heap Dump**文件。
 
-jmap命令可以获得运行中的JVM的堆的快照，从而可以离线分析堆，以检查内存泄漏，检查一些严重影响性能的大对象的创建，检查系统中什么对象最多，各种对象所占内存的大小等等。可以使用jmap生成Heap Dump。
+| 命令                             | 描述                                                                                 |
+|----------------------------------|--------------------------------------------------------------------------------------|
+| `jmap -dump:format=b,file=<file> <pid>` | 生成堆转储文件，格式为 `b` 表示二进制格式，`file` 是输出的文件名                       |
+| `jmap -heap <pid>`                | 显示堆内存的详细信息，包括堆的初始大小、最大大小和各个内存区域的使用情况               |
+| `jmap -histo <pid>`               | 显示堆中对象的类和它们的实例数量，帮助分析内存中存储的对象                           |
+| `jmap -finalizerinfo <pid>`       | 显示所有对象的 finalizer 信息，帮助识别未及时清理的对象                               |
+| `jmap -stack <pid>`               | 显示堆栈的内容，包括线程堆栈信息，主要用于线程分析                                  |
+| `jmap -F <pid>`                   | 强制执行操作，适用于当进程在特定状态下时，确保 `jmap` 命令能够成功执行                |
 
-| 命令                    | 含义                                                         |
-| ----------------------- | ------------------------------------------------------------ |
-| jmap -heap pid       | 输出整个堆详细信息，包括GC的使用、堆的配置信息，以及内存的使用信息            |
-| jmap -histo:live pid | 输出堆中对象的相关统计信息；第一列是序号，第二列是对象个数，第三列是对象大小`byte`，第四列是`class name` |
-| jmap -finalizerinfo pid | 输出等待终结的对象信息                                       |
-| jmap -clstats pid    | 输出类加载器信息                                             |
-| jmap -dump:[live],format=b,file=filename.hprof pid | 把进程堆内存使用情况生成到堆转储`dump`文件中,`live`子选项是可选的，假如指定`live`选项,那么只输出活的对象到文件。`dump`文件主要作用，如果发生溢出可以使用`dump`文件分析是哪些数据导致的 |
-
-> Heap Dump又叫堆转储文件，指一个java进程在某一个时间点的内存快照文件。Heap Dump在触发内存快照的时候会保存以下信息：
+> `Heap Dump`又叫堆转储文件，指一个Java进程在某一个时间点的内存快照文件。`Heap Dump`在触发内存快照的时候会保存以下信息：
 >- 所有的对象
 >- 所有的class
 >- GC Roots
 >- 本地方法栈和本地变量
 >
-> 通常在写Dump文件前会触发一次Full GC，所以Heap Dump文件里保存的对象都是Full GC后保留的对象信息。
-> 由于生成dump文件比较耗时，所以请耐心等待，尤其是大内存镜像生成的dump文件，则需要更长的时间来完成。
+> 通常在写`dump`文件前会触发一次Full GC，所以`Heap Dump`文件里保存的对象都是`Full GC`后保留的对象信息。
+> 由于生成`dump`文件比较耗时，所以请耐心等待，尤其是大内存镜像生成的`dump`文件，则需要更长的时间来完成。
 
-可以通过参数配置当发生OOM时自动生成dump文件：`-XX:+HeapDumpOnOutOfMemeryError -XX:+HeapDumpPath=<filename.hprof>`,当然此种方式获取dump文件较大，如果想要获取dump文件较小可以手动获取dump文件并指定只获取存活的对象。
+可以通过参数配置当发生`OOM`时自动生成`Heap dump`文件：
+```shell
+-XX:+HeapDumpOnOutOfMemeryError -XX:+HeapDumpPath=<filename.hprof>
+```
+当然此种方式获取`dump`文件较大，如果想要获取`dump`文件较小可以手动获取`dump`文件并指定只获取存活的对象。
+
+### jhat
+`jhat`是一个用于分析Java堆转储的工具。它可以提供一个网页界面，用于查看堆转储文件中的对象信息、对象引用和内存使用情况等。
+`jhat`内置了一个微型的HTTP/HTML服务器，生成`dump`的分析结果后，可以在浏览器中查看。但是一般不会直接在服务器上进行分析，因为`jhat`是一个耗时并且耗费硬件资源的过程，一般把服务器生成的`dump`文件复制到本地或其他机器上进行分析。
+所以`jhat`在JDK9中已经移除，官方推荐使用`visualvm`来分析`dump`文件。
+
+| 命令                        | 描述                                                                                 |
+|-----------------------------|--------------------------------------------------------------------------------------|
+| `jhat <file>`               | 启动 `jhat` 工具并加载指定的堆转储文件 `<file>`，默认在本地服务器上提供一个网页界面   |
+| `jhat -d <seconds> <file>`  | 启动 `jhat` 工具并将堆转储文件 `<file>` 加载到内存中，`-d` 选项指定分析超时时间      |
+| `jhat -heap <file>`         | 显示堆内存的摘要信息和分析结果，包括堆的各个区域的内存使用情况                      |
+
+### jstack
+`jstack`是一个Java工具，用于用于生成虚拟机指定进程当前线程快照。它能帮助开发人员诊断线程死锁、线程阻塞等问题。
+`jstack`可以定位到线程堆栈，根据堆栈信息我们可以定位到具体代码，所以它在JVM性能调优中使用得非常多。
+
+| 命令                  | 描述                                                        |
+|-----------------------|-------------------------------------------------------------|
+| `jstack <pid>`        | 打印指定进程 ID `<pid>` 的线程堆栈跟踪                        |
+| `jstack -l <pid>`     | 打印指定进程 ID `<pid>` 的线程堆栈跟踪，包括锁信息            |
+| `jstack -F <pid>`     | 强制打印指定进程 ID `<pid>` 的线程堆栈跟踪，即使进程可能不响应 |
+| `jstack -m <pid>`     | 打印指定进程 ID `<pid>` 的线程堆栈跟踪，包括本地方法的堆栈信息  |
+
+`jstack`主要用于生成JVM当前时刻的线程快照。线程快照是当前JVM内每一条线程正在执行的方法堆栈的集合，生成线程快照的主要目的是定位线程出现长时间停顿的原因，如线程间死锁、死循环、请求外部资源导致的长时间等待等。
+除了可以使用`jstack`打印栈的信息，在代码层面也可以使用`Thread.getAllStackTraces()`方法获取堆栈信息。
+
+### jcmd
+`jcmd`是一个功能强大的Java命令行工具，用于诊断和管理Java进程。它可以执行多种诊断命令、控制JVM的行为，并生成诊断报告。
+`jcmd`是JDK7及更高版本中引入的工具，能够替代许多其他诊断工具如`jps`、`jstat`、`jstack`等，提供更加一致和全面的功能。
+
+| 命令                     | 描述                                                        |
+|--------------------------|-------------------------------------------------------------|
+| `jcmd <pid> VM.version`  | 显示指定进程 ID `<pid>` 的 JVM 版本信息                     |
+| `jcmd <pid> VM.flags`    | 显示指定进程 ID `<pid>` 的 JVM 启动参数                      |
+| `jcmd <pid> Thread.print`| 打印指定进程 ID `<pid>` 的线程堆栈跟踪                       |
+| `jcmd <pid> GC.run`      | 执行垃圾回收并生成 GC 日志                                  |
+| `jcmd <pid> GC.class_histogram` | 打印指定进程 ID `<pid>` 的类实例直方图                |
+| `jcmd <pid> JFR.start`   | 启动 Java Flight Recorder（JFR）数据采集                    |
+| `jcmd <pid> JFR.stop`    | 停止 JFR 数据采集并生成报告                                |
+| `jcmd <pid> JFR.dump`    | 导出 JFR 采集的数据                                        |
+| `jcmd <pid> VM.system_properties` | 显示指定进程 ID `<pid>` 的系统属性                   |
+| `jcmd <pid> VM.uptime`   | 显示指定进程 ID `<pid>` 的 JVM 启动时间                     |
 
 
-#### jhat
-JVM Heap Analysis Tool命令是与jmap搭配使用，用来分析jmap生成的dump文件，jhat内置了一个微型的HTTP/HTML服务器，生成dump的分析结果后，可以在浏览器中查看。在此要注意，一般不会直接在服务器上进行分析，因为jhat是一个耗时并且耗费硬件资源的过程，一般把服务器生成的dump文件复制到本地或其他机器上进行分析。
-
-注意，jhat在jdk9中已经移除，官方对贱使用visualvm来配置jmap进行分析。
-
-| 命令                                   | 含义                                                         |
-| -------------------------------------- | ------------------------------------------------------------ |
-| jhat -port 9998 /tmp/dump.dat          | 配合`jmap`命令使用，查看导出的`/tmp/dump.dat`文件，端口为9998；注意如果`dump`文件太大，可能需要加上`-J-Xmx512m`这种参数指定最大堆内存，即`jhat -J-Xmx512m -port 9998 /tmp/dump.dat` |
-| jhat -baseline dump2.phrof dump1.phrof | 对比`dump2.phrof `与`dump1.phrof`文件                        |
-| jhat heapDump                          | 分析`dump`文件,默认端口为7000     |
-
-
-#### jstack
-jstack，全称JVM Stack Trace栈空间追踪，用于生成虚拟机指定进程当前线程快照；主要分析堆栈空间，也就是分析线程的情况，可以分析出死锁问题，以及cpu100%的问题。jstack可以定位到线程堆栈，根据堆栈信息我们可以定位到具体代码，所以它在JVM性能调优中使用得非常多。
-
-> jstack主要用于生成java虚拟机当前时刻的线程快照。线程快照是当前java虚拟机内每一条线程正在执行的方法堆栈的集合，生成线程快照的主要目的是定位线程出现长时间停顿的原因，
-  如线程间死锁、死循环、请求外部资源导致的长时间等待等。
-
-| 命令                | 含义                                                    |
-| ------------------- | ------------------------------------------------------- |
-| jstack pid          | 打印出所有的线程，包括用户自己启动的线程和`JVM`后台线程 |
-| jstack 13324 >1.txt | 将13324进程中线程信息写入到`1.txt`文件中                |
-| jstack 21711｜grep 54ee | 在进程21711中查找线程ID为54ee(16进制)的信息 |
-| jstack -l pid | 除了堆栈信息外`-l`参数会显示线程锁的附加信息 |
-
-除了可以使用jstack打印栈的信息，在java层面也可以使用`Thread.getAllStackTraces()`方法获取堆栈信息。
-
-#### jcmd
-在JDK1.7之后，新增了一个命令行工具jcmd。
-
-它是一个多功能的工具，可以实现前面除了jstat之外的所有功能。例如，导出dump文件、查看线程信息、导出线程信息、执行GC，JVM运行时间等。
-
-jcmd拥有jmap的大部分功能，并且在官方网站上也推荐使用jcmd代替jmap。
-
-| 命令                | 含义                                                    |
-| ------------------- | ------------------------------------------------------- |
-| jcmd -l | 列出所有`JVM`的进程 |
-| jcmd pid help       | 针对指定进程罗列出可执行的命令 |
-| jcmd pid <具体命令> | 显示指定进程的指令命令的数据   |
-
-### GUI分析工具
-#### jconsole
-JConsole 是一个内置 Java 性能分析器，可以从命令行（直接输入jconsole）或在 GUI shell （jdk\bin下打开）中运行。
-
-它用于对JVM中内存，线程和类等的监控。这款工具的好处在于，占用系统资源少，而且结合Jstat，可以有效监控到java内存的变动情况，以及引起变动的原因。在项目追踪内存泄露问题时，很实用。
+### jconsole
+`jconsole`是一个图形化的管理工具，提供了对Java进程的监控和管理功能。它是JDK附带的工具，基于Java Management Extensions实现。
+通过`jconsole`，用户可以实时监控JVM的性能、内存使用情况、线程状态等，并对应用程序进行管理和配置。
+这款工具的好处在于，占用系统资源少，而且结合`jstat`可以有效监控Java内存的变动情况，以及引起变动的原因。在项目追踪内存泄露问题时，很实用。
 
 ![常见故障排查及程序配置-002](/iblog/posts/annex/images/essays/常见故障排查及程序配置-002.png)
 
@@ -439,45 +456,44 @@ JConsole 是一个内置 Java 性能分析器，可以从命令行（直接输�
 
 ![常见故障排查及程序配置-003](/iblog/posts/annex/images/essays/常见故障排查及程序配置-003.png)
 
-#### visual vm
-visual vm 是一个功能强大的多合一故障诊断和性能监控的可视化工具。它集成了多个JDK命令行工具，使用visual vm可用于显示虚拟机进程及进程的配置和环境信息，监视应用程序的CPU、GC、堆、方法区及线程的信息等，甚至代替jconsole。
+## 分析工具
 
-在JDK7，visual vm便作为JDK的一部分发布，在JDK的bin目录下，即：它完全免费。此外，visual vm也可以作为独立软件进行安装。
+### VisualVM
+`VisualVM`是一个强大的Java应用程序性能分析工具，它提供了对JVM实例的监控、分析和管理功能。它包括内存分析、线程分析、垃圾回收监控、CPU使用情况分析以及堆转储分析等功能。
+它集成了多个JDK命令行工具，使用`VisualVM`可用于显示虚拟机进程及进程的配置和环境信息，监视应用程序的CPU、GC、堆、方法区及线程的信息等，甚至代替`jconsole`。
 
-主要功能：
-- 生成读取dump文件
-- 查看JVM参数和系统属性
-- 查看运行中虚拟机进程
-- 生成读取线程快照
-- 程序资源的实时监控
+常用功能：
+- 内存分析：查看堆内存使用情况，分析对象的分布和大小。
+- 线程分析：监控线程的活动和状态，捕捉线程堆栈快照。
+- CPU使用分析：分析应用程序的 CPU 使用情况，识别热点方法。
+- 堆转储分析：分析堆转储文件，帮助识别内存泄漏。
+- 垃圾回收监控：查看垃圾回收的统计数据和日志，帮助优化垃圾回收策略。
 
-visual vm 支持插件扩展，可以在visual vm上安装插件，也可以将visual vm安装在idea上：
+`VisualVM`支持插件扩展，可以在`VisualVM`上安装插件，也可以将`VisualVM`安装在IDEA上。
 
 ![常见故障排查及程序配置-006](/iblog/posts/annex/images/essays/常见故障排查及程序配置-006.png)
 
 ![常见故障排查及程序配置-007](/iblog/posts/annex/images/essays/常见故障排查及程序配置-007.png)
 
-visual vm可以生成dump文件，生成的dump文件是临时的，如果想要保留该文件需要右键另存为即可：
+`VisualVM`可以生成`dump`文件，生成的`dump`文件是临时的，如果想要保留该文件需要右键另存为即可。
 
 ![常见故障排查及程序配置-004](/iblog/posts/annex/images/essays/常见故障排查及程序配置-004.png)
 
 ![常见故障排查及程序配置-005](/iblog/posts/annex/images/essays/常见故障排查及程序配置-005.png)
 
-如果堆文件数据较大，排查起来很困难，可以使用OQL语句进行筛选。
-> OQL:全称，Object Query Language 类似于SQL查询的一种语言，OQL使用SQL语法，可以在堆中进行对象的筛选。
->
+如果堆文件数据较大，排查起来很困难，可以使用`OQL`语句进行筛选。
+> OQL全称，Object Query Language类似于SQL查询的一种语言，OQL使用SQL语法，可以在堆中进行对象的筛选。
 > 基本语法：
 > ```
 > select <JavaScript expression to select> 
 > [ from (instanceof) <class name> <identifier>
 > ( where <JavaScript boolean expression to filter> ) ]
 > ```
-> 1.class name是java类的完全限定名
-> 2.instanceof表示也查询某一个类的子类
-> 3.from和where子句都是可选的 
-> 4.可以使用obj.field_name语法访问Java字段
+> 1.`class name`是java类的完全限定名；
+> 2.`instanceof`表示也查询某一个类的子类；
+> 3.`from`和`where`子句都是可选的；
+> 4.可以使用`obj.field_name`语法访问Java字段；
 > 
-> 例如
 >```
 >-- 查询长度大于等于100的字符串
 >select s from java.lang.String s where s.value.length >= 100
@@ -489,38 +505,26 @@ visual vm可以生成dump文件，生成的dump文件是临时的，如果想要
 >select o from instanceof 0x741012748 o
 >```
 
-visual vm也可以将两个dump文件进行比较：
+`VisualVM`也可以将两个`dump`文件进行比较。
 
 ![常见故障排查及程序配置-008](/iblog/posts/annex/images/essays/常见故障排查及程序配置-008.png)
 
-visual vm不但可以生成堆的dump文件，也可以对线程dump：
+`VisualVM`不但可以生成堆的`dump`文件，也可以对线程`dump`。
 
 ![常见故障排查及程序配置-009](/iblog/posts/annex/images/essays/常见故障排查及程序配置-009.png)
 
-#### eclipse MAT
-MAT全称，Memory Analyzer Tool 是一款功能强大的Java堆内存分析器。可以用于查找内存泄漏以及查看内存消耗情况。
+### Eclipse MAT
+全称Eclipse Memory Analyzer Tool，是一个强大的Java内存分析工具，用于分析Java 堆转储文件。它帮助开发人员和运维人员识别和解决内存泄漏、内存占用过高等问题。MAT提供了多种分析功能，包括对象分布分析、泄漏查询、内存占用分析等。
+MAT是Eclipse开发的，不仅可以单独使用，还可以作为插件嵌入在Eclipse中使用。是一款免费的性能分析工具，使用起来很方便。
 
-MAT是eclipse开发的，不仅可以单独使用，还可以作为插件嵌入在eclipse中使用。是一款免费的性能分析工具，使用起来很方便。
+常用功能：
+- 内存泄漏检测：通过分析堆转储文件，识别可能的内存泄漏源。
+- 对象占用分析：查看特定对象或类的内存占用情况。
+- 引用链分析：分析对象之间的引用关系，帮助理解为什么对象无法被垃圾回收。
+- 查询功能：通过`OQL`（对象查询语言）执行自定义查询，分析堆数据。
+- 报告生成：生成详细的内存分析报告，提供对内存使用的深入洞察。
 
-MAT的主要功能就是分析dump文件。分析dump最终目的是为了找出内存泄漏的疑点，防止内存泄漏。
-
-JVM内存包含信息：
-- 所有对象信息，包括对象实例、成员变量、存储于栈中的基本数据类型和存储于堆中的其他对象的引用值；
-- 所有的类信息，包括classloader、类名称、父类的信息、静态变量等；
-- GCRoot到所有的这些对象的引用路径;
-- 线程信息，包括线程的调用栈及线程的局部变量;
-
-常见获取dump文件方式：
-- 通过jmap或jcmd命令行方式获取；
-- 通过配置JVM参数"-XX:+HeapDumpOnOutOfMemoryError"或"-XX:+HeapDumpBeforeFullGC"
-- 使用第三方工具生成dump文件，如：visual vm
-
----
-**MAT介绍**
-
-导入dump文件：
-
-在生成可疑泄漏报告后，会在对应的堆转储文件目录下生成一个zip文件。
+使用MAT分析`dump`文件，生成可疑泄漏报告。在生成可疑泄漏报告后，会在对应的堆转储文件目录下生成一个zip文件。
 
 ![常见故障排查及程序配置-010](/iblog/posts/annex/images/essays/常见故障排查及程序配置-010.png)
 
@@ -532,10 +536,8 @@ JVM内存包含信息：
 
 ![常见故障排查及程序配置-016](/iblog/posts/annex/images/essays/常见故障排查及程序配置-016.png)
 
-MAT最主要的功能是分析dump文件，其中比较重要的功能就是histogram(直方图)和dominator tree(支配树)
 
----
-**直方图**
+MAT最主要的功能是分析`dump`文件，其中比较重要的功能就是直方图对象图。
 
 ![常见故障排查及程序配置-015](/iblog/posts/annex/images/essays/常见故障排查及程序配置-015.png)
 
@@ -543,29 +545,15 @@ MAT最主要的功能是分析dump文件，其中比较重要的功能就是hist
 - 深堆：一个对象被 GC 回收后，可以真实释放的内存大小；
 - 对象的实际大小：一个对象所能触及的所有对象的浅堆大小之和；
 
+举个例子
+
 ![常见故障排查及程序配置-017](/iblog/posts/annex/images/essays/常见故障排查及程序配置-017.png)
 
-如上图所示：（浅堆<= 深堆 <= 实际大小）
-- Object2浅堆大小：为Object2本身；
-- Object2深堆大小：Object2本身加上Object6；
-- Object2实际大小：Object2本身加上Object6加上Object5；
+- `Object2`浅堆大小：为`Object2`本身；
+- `Object2`深堆大小：`Object2`本身加上`Object6`，因为`Object5`被`Object1`引用；
+- `Object2`实际大小：`Object2`本身加上`Object6`加上`Object5`；
+
+在MAT中，可以选择直方图视图来查看每个堆转储文件中的对象分布。
+通过对比不同时间点的堆转储，识别持续增长的对象数量，从而帮助发现内存泄漏。
 
 ![常见故障排查及程序配置-014](/iblog/posts/annex/images/essays/常见故障排查及程序配置-014.png)
-
----
-**支配树对象图**
-
-![常见故障排查及程序配置-018](/iblog/posts/annex/images/essays/常见故障排查及程序配置-018.png)
-
-支配树概念源自图论。它体现了对象实例之间的支配关系。在对象的引用图中，所有指向对象B的路径都要经过对象A，则认为对象A支配对象B。如果对象A是离对象B最近的一个支配对象，则认为对象A为对象B的直接支配者。
-
-支配树是基于对象间的引用图建立的，它有以下性质：
-- 对象A的子树，即所有被对象A支配的对象集合，表示对象A的保留集，即深堆；
-- 如果对象A支配对象B，那么对象A直接支配者也支配对象B；
-- 支配树的边与对象引用图的边不相对应；
-
-分配树能直观的体现对象能否被回收的情况，如图所示，左为对象的引用图，右为对象的支配图。
-- C与E的关系为，C支配E，C是E的直接支配者，G和E为C的保留集；
-- C与H不是支配关系，因为H被F引用；
-
-![常见故障排查及程序配置-019](/iblog/posts/annex/images/essays/常见故障排查及程序配置-019.png)

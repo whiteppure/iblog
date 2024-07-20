@@ -707,7 +707,7 @@ Java泛型也是一种语法糖，在编译阶段完成类型的转换的工作�
 </span></span><span class="line"><span class="cl">Box&lt;String&gt; strBox = new Box&lt;&gt;(); // 使用 String 类型
 </span></span><span class="line"><span class="cl">strBox.setValue(&#34;Hello&#34;);
 </span></span><span class="line"><span class="cl">String strValue = strBox.getValue();
-</span></span></code></pre></div><p>如果&lt;&gt;中什么都不传入，则编译器会发出警告，提示使用原始类型，这是不推荐的做法。使用原始类型的主要问题是类型安全性降低，容易引发<code>ClassCastException</code>等运行时错误。</p>
+</span></span></code></pre></div><p>如果<code>&lt;&gt;</code>中什么都不传入，则编译器会发出警告，提示使用原始类型，这是不推荐的做法。使用原始类型的主要问题是类型安全性降低，容易引发<code>ClassCastException</code>等运行时错误。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">Box rawBox = new Box(); // 使用原始类型（不推荐）
 </span></span><span class="line"><span class="cl">rawBox.setValue(&#34;Hello&#34;);
 </span></span><span class="line"><span class="cl">String strValue = (String) rawBox.getValue(); // 需要强制转换

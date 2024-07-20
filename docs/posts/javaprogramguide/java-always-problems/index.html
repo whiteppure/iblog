@@ -12,7 +12,7 @@
 	
     
     
-    <meta name="description" content="CPU使用过高 一般在生产环境排查程序故障，都会查看日志什么的，但是有些故障日志是看不出来的，就比如：CPU使用过高。 那应该怎么办呢？我们需要结合linux命令和" />
+    <meta name="description" content="解决CPU使用过高 一般在生产环境排查程序故障，都会查看日志什么的，但是有些故障日志是看不出来的，就比如：CPU使用过高。 那应该怎么办呢？我们需要结合Linux命" />
     
 
     
@@ -72,8 +72,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#cpu%e4%bd%bf%e7%94%a8%e8%bf%87%e9%ab%98">
-                    CPU使用过高
+                <a class="nav-link text-left" href="#%e8%a7%a3%e5%86%b3cpu%e4%bd%bf%e7%94%a8%e8%bf%87%e9%ab%98">
+                    解决CPU使用过高
                 </a>
             </li>
             
@@ -152,8 +152,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e6%ad%bb%e9%94%81">
-                    死锁
+                <a class="nav-link text-left" href="#%e8%a7%a3%e5%86%b3%e6%ad%bb%e9%94%81">
+                    解决死锁
                 </a>
             </li>
             
@@ -300,8 +300,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8-trylock-%e8%bf%9b%e8%a1%8c%e8%b6%85%e6%97%b6%e9%94%81%e5%ae%9a">
-                    使用 tryLock 进行超时锁定
+                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8trylock%e8%bf%9b%e8%a1%8c%e8%b6%85%e6%97%b6%e9%94%81%e5%ae%9a">
+                    使用tryLock进行超时锁定
                 </a>
             </li>
             
@@ -328,8 +328,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%86%85%e5%ad%98%e6%b3%84%e9%9c%b2">
-                    内存泄露
+                <a class="nav-link text-left" href="#%e8%a7%a3%e5%86%b3%e5%86%85%e5%ad%98%e6%b3%84%e9%9c%b2">
+                    解决内存泄露
                 </a>
             </li>
             
@@ -408,32 +408,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#jvm%e5%8f%82%e6%95%b0%e8%b0%83%e4%bc%98">
-                    JVM参数调优
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e7%ba%bf%e4%b8%8a%e6%8e%a5%e5%8f%a3%e6%85%a2">
-                    线上接口慢
+                <a class="nav-link text-left" href="#%e8%a7%a3%e5%86%b3%e7%ba%bf%e4%b8%8a%e6%8e%a5%e5%8f%a3%e6%85%a2">
+                    解决线上接口慢
                 </a>
             </li>
             
@@ -517,7 +493,7 @@
             
             <li class="nav-item">
                 <a class="nav-link text-left" href="#%e6%95%b0%e6%8d%ae%e5%ba%93%e6%85%a2sql">
-                    数据库慢sql
+                    数据库慢SQL
                 </a>
             </li>
             
@@ -654,6 +630,30 @@
         
         </ul>
         
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#jvm%e5%8f%82%e6%95%b0%e8%b0%83%e4%bc%98">
+                    JVM参数调优
+                </a>
+            </li>
+            
+            
         </ul>
         
         </ul>
@@ -845,32 +845,32 @@
                         </span>
                         
                     </div>
-                    <div class="post_content markdown"><h2 id="cpu使用过高">CPU使用过高</h2>
+                    <div class="post_content markdown"><h2 id="解决cpu使用过高">解决CPU使用过高</h2>
 <p>一般在生产环境排查程序故障，都会查看日志什么的，但是有些故障日志是看不出来的，就比如：CPU使用过高。
-那应该怎么办呢？我们需要结合linux命令和JDK相关命令来排查程序故障。</p>
+那应该怎么办呢？我们需要结合Linux命令和JDK相关命令来排查程序故障。</p>
 <h3 id="排查过程">排查过程</h3>
 <ol>
-<li>首先使用top命令，找出CPU占比最高的Java进程，然后进一步定位后台程序，如果发现使用过高的进程ID，记录下来方便排查。</li>
+<li>首先使用<code>top</code>命令，找出CPU占比最高的Java进程，然后进一步定位后台程序，如果发现使用过高的进程ID，记录下来方便排查。</li>
 <li>定位到具体的线程，使用<code>ps -mp 进程ID -o THREAD,tid,time</code>命令可以找到有问题的线程ID。
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ps -mp 进程ID -o THREAD,tid,time 说明：
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">ps -mp 进程ID -o THREAD,tid,time 说明：
 </span></span><span class="line"><span class="cl">-m：显示所有线程；
 </span></span><span class="line"><span class="cl">-p：pid进程使用CPU的时间；
 </span></span><span class="line"><span class="cl">-o：该参数后是用户自定义参数
 </span></span></code></pre></div></li>
 <li>获取到线程ID后，需要将线程ID转化为16进制格式，如果有英文要小写格式；可以用命令<code>printf &quot;%x\n&quot; 线程ID</code>，当然也可以使用工具从10进制转16进制。
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">printf &#34;%x\n&#34; 16
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">printf</span> <span class="s2">&#34;%x\n&#34;</span> <span class="m">16</span>
 </span></span></code></pre></div></li>
 <li>线程ID转成16进制后，执行最后一个命令：<code>jstack 进程ID | grep 16进制线程ID -A50</code>或者dump下来，<code>jstack pid &gt; pid.log</code>，就能看到有问题的代码。</li>
 </ol>
 <h3 id="解决方案">解决方案</h3>
 <ol>
-<li>将dump文件下载下来，上传到第三方网站，如：https://fastthread.io/ 进行分析，然后找到解决方案；</li>
+<li>将<code>dump</code>文件下载下来，上传到第三方网站，如：<code>https://fastthread.io/</code> 进行分析，然后找到解决方案；</li>
 <li>确定是否新部署或有新变更： 首先需要确认是否在最近进行了新的部署或有其他相关的变更，例如代码更新、配置修改等。这些变更可能导致应用出现性能问题，特别是在高负载情况下；</li>
 <li>确定是否可重现问题：尝试重现CPU飙高的问题，可以通过模拟实际场景、使用压力测试工具或者观察日志等方式来尽量还原问题。如果能够确定问题的可重现性，将有助于后续的排查和分析；</li>
 <li>确定是否为GC造成：Java应用中频繁进行垃圾回收可能会导致CPU飙高。可以通过查看GC日志、分析堆内存使用情况以及GC时间等指标来确认是否为GC引起了性能问题；</li>
-<li>确定是否线程阻塞：线程阻塞也是常见的导致CPU飙高的原因之一。可以通过线程监控工具，如JMC、VisualVM，来检查是否存在长时间阻塞的线程，并分析造成线程阻塞的原因；</li>
+<li>确定是否线程阻塞：线程阻塞也是常见的导致CPU飙高的原因之一。可以通过线程监控工具，如JMC、<code>VisualVM</code>，来检查是否存在长时间阻塞的线程，并分析造成线程阻塞的原因；</li>
 </ol>
-<h2 id="死锁">死锁</h2>
+<h2 id="解决死锁">解决死锁</h2>
 <p>死锁是指两个或多个线程在执行过程中，由于竞争资源或者互相等待释放资源而造成的一种僵局，使得所有参与的线程无法继续执行。
 举个例子，当线程A持有锁a并尝试获取锁b，线程B持有锁b并尝试获取锁a时，就会出现死锁。简单来说，死锁问题的产生是由两个或者以上线程并行执行的时候，争夺资源而互相等待造成的。</p>
 <h3 id="排查过程-1">排查过程</h3>
@@ -915,7 +915,7 @@
 </span></span></span></code></pre></div><ol>
 <li>使用<code>jps -l</code>命令找到程序进程；</li>
 <li>使用<code>jstack pid</code>命令打印堆栈信息；
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Found one Java-level deadlock:
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">Found one Java-level deadlock:
 </span></span><span class="line"><span class="cl">=============================
 </span></span><span class="line"><span class="cl">&#34;线程BBB&#34;:
 </span></span><span class="line"><span class="cl">  waiting to lock monitor 0x00007feb0d80b018 (object 0x000000076af2d588, a java.lang.String),
@@ -1179,13 +1179,9 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Request 3 granted: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">granted3</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h4 id="使用-trylock-进行超时锁定">使用 tryLock 进行超时锁定</h4>
-<p>使用 <code>java.util.concurrent.locks.ReentrantLock</code> 的 <code>tryLock</code>方法可以尝试获取锁，并设置超时时间，避免长时间等待造成的死锁。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.concurrent.locks.Lock</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.concurrent.locks.ReentrantLock</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.concurrent.TimeUnit</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">Process</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Thread</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span></code></pre></div><h4 id="使用trylock进行超时锁定">使用tryLock进行超时锁定</h4>
+<p>使用<code>java.util.concurrent.locks.ReentrantLock</code>的 <code>tryLock</code>方法可以尝试获取锁，并设置超时时间，避免长时间等待造成的死锁。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Process</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Thread</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Lock</span><span class="w"> </span><span class="n">lock1</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Lock</span><span class="w"> </span><span class="n">lock2</span><span class="p">;</span><span class="w">
@@ -1237,7 +1233,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">process2</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="内存泄露">内存泄露</h2>
+</span></span></span></code></pre></div><h2 id="解决内存泄露">解决内存泄露</h2>
 <p>Java虚拟机是使用引用计数法和可达性分析来判断对象是否可回收，本质是判断一个对象是否还被引用，如果没有引用则回收。
 内存泄露是指，程序中己动态分配的堆内存由于某种原因程序未释放或无法释放，造成系统内存的浪费，导致程序运行速度减慢甚至系统崩溃等严重后果。
 简单来说，就是应该被垃圾回收的对象没有回收掉，导致占用的内存越来越多，最终导致内存溢出。</p>
@@ -1245,11 +1241,10 @@
 <ul>
 <li>在内存中加载过大的数据，例如从数据库取出过多数据；</li>
 <li>资源未关闭造成的内存泄漏；</li>
-<li>变量不合理的作用域，使用完毕，如果没有及时的赋值为null，则会造成内存泄露；</li>
+<li>变量不合理的作用域，使用完毕，如果没有及时的赋值为<code>null</code>，则会造成内存泄露；</li>
 <li>长生命周期的对象中引用短生命周期对象，很可能会出现内存泄露；</li>
 </ul>
-<p>举个例子，创建的连接不再使用时，需要调用 close 方法关闭连接，只有连接被关闭后，GC 才会回收对应的对象（Connection，Statement，ResultSet，Session）。忘记关闭这些资源会导致持续占有内存，无法被 GC 回收。
-这样就会导致内存泄露，最终导致内存溢出。</p>
+<p>举个例子，创建的连接不再使用时，需要调用<code>close</code>方法关闭连接，只有连接被关闭后，GC才会回收对应的对象。忘记关闭这些资源会导致持续占有内存，无法被GC回收。这样就会导致内存泄露，最终导致内存溢出。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MemoryLeak</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">try</span><span class="p">{</span><span class="w">
@@ -1267,33 +1262,89 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><h3 id="排查过程-2">排查过程</h3>
-<p>根据运维之前收集到的内存数据、GC 日志尝试判断哪里出现了问题。
-结果发现老年代的内存使用就算是发生 GC 也一直居高不下，而且随着时间推移也越来越高。</p>
+<p>根据运维之前收集到的内存数据、GC日志尝试判断哪里出现了问题。
+结果发现老年代的内存使用就算是发生GC也一直居高不下，而且随着时间推移也越来越高。</p>
 <p><img alt="内存泄漏问题-01" src="/iblog/posts/annex/images/essays/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98-01.png"></p>
-<p>使用<code>jstat -gc &lt;vmid&gt;</code> 查看GC垃圾回收统计信息，看Full GC后堆空间使用内存还持续增长，且有增长到Xmx设定值的趋势，基本可以肯定存在内存泄露。
+<p>使用<code>jstat -gc &lt;vmid&gt;</code> 查看GC垃圾回收统计信息，看<code>Full GC</code>后堆空间使用内存还持续增长，且有增长到<code>Xmx</code>设定值的趋势，基本可以肯定存在内存泄露。
 如果当前完全垃圾回收后内存增长到一个值之后，又能回落，总体上处于一个动态平衡，那么内存泄漏基本可以排除；也可以隔断时间抽取老年代占用内存情况，如果老年代占用情况持续上升也很有可能存在内存泄露的情况。</p>
 <h3 id="解决方案-2">解决方案</h3>
 <ol>
 <li>内存泄漏的主要表象就是内存不足，所以首先要看一下JVM启动参数中内存空间分配是否过小，如果是这种问题调整该参数即可；</li>
 <li>确定是否新部署或有新变更，首先需要确认是否在最近进行了新的部署或有其他相关的变更，例如代码更新、配置修改等。这些变更可能导致应用出现性能问题，特别是在高负载情况下；</li>
-<li>内存泄漏解决方案，最经典的就是用MAT工具分析dump文件，但如果dump文件巨大就不建议这样，可以使用其他方案，例如：重启、本地复现、<code>jmap -histo:live &lt;pid&gt;</code>在线进行分析等其他方案解决。</li>
+<li>内存泄漏解决方案，最经典的就是用MAT工具分析<code>dump</code>文件，但如果<code>dump</code>文件巨大就不建议这样，可以使用其他方案，例如：重启、本地复现、<code>jmap -histo:live &lt;pid&gt;</code>在线进行分析等其他方案解决。</li>
 </ol>
 <p>使用MAT定位内存泄漏思路：</p>
 <ol>
-<li>打开MAT中histogram，找到堆内存中占用最大的对象，内存泄漏很有可能就是由大对象导致的；
-<img alt="MAT-01" src="/iblog/posts/annex/images/essays/MAT-01.png"></li>
-<li>由大对象找被哪些线程引用，查看内存占用最大的线程；
-<img alt="MAT-02" src="/iblog/posts/annex/images/essays/MAT-02.png">
-<img alt="MAT-03" src="/iblog/posts/annex/images/essays/MAT-03.png"></li>
-<li>从线程中的堆栈信息找到项目中自定义的包和对象，从而可定位到具体的代码；
-<img alt="MAT-04" src="/iblog/posts/annex/images/essays/MAT-04.png">
-<img alt="MAT-05" src="/iblog/posts/annex/images/essays/MAT-05.png"></li>
+<li>
+<p>打开MAT中<code>histogram</code>，找到堆内存中占用最大的对象，内存泄漏很有可能就是由大对象导致的；</p>
+<p><img alt="MAT-01" src="/iblog/posts/annex/images/essays/MAT-01.png"></p>
+</li>
+<li>
+<p>由大对象找被哪些线程引用，查看内存占用最大的线程；</p>
+<p><img alt="MAT-02" src="/iblog/posts/annex/images/essays/MAT-02.png">
+<img alt="MAT-03" src="/iblog/posts/annex/images/essays/MAT-03.png"></p>
+</li>
+<li>
+<p>从线程中的堆栈信息找到项目中自定义的包和对象，从而可定位到具体的代码；</p>
+<p><img alt="MAT-04" src="/iblog/posts/annex/images/essays/MAT-04.png">
+<img alt="MAT-05" src="/iblog/posts/annex/images/essays/MAT-05.png"></p>
+</li>
 </ol>
+<h2 id="解决线上接口慢">解决线上接口慢</h2>
+<p>线上接口很慢，线上生产问题,我们绝对不能马虎放过抱着侥幸心理，必须要找到根本原因及时处理，防止下次留下更大的坑。
+线上接口慢，这是开发过程中常见的问题，通常表明系统在处理请求时出现了性能瓶颈。
+这种问题不仅影响用户体验，还可能导致系统的整体稳定性和可用性下降。解决这一问题需要系统地分析和优化多个层面。</p>
+<h3 id="定位问题">定位问题</h3>
+<p>首先要定位是哪里慢，定位接口哪一个环节比较慢，性能瓶颈在哪里，可以使用应用性能监控工具(APM)定位问题。常见工具：<code>skywalking</code>、<code>pinpoint</code>、<code>zipkin</code>。
+如果应用程序没有接入APM，可以在生产环境装一下<code>arthas</code>，利用<code>trace</code>接口方法和火焰图，大概能分析是那一块比较慢，定位能力稍微有点粗糙，也可以利用程序中的告警日志定位问题。</p>
+<h3 id="解决方案-3">解决方案</h3>
+<p>如果已经定位到具体是哪里的问题了，那么就可以进行解决，如果是最新的功能引起的，那么最快的办法就是回退版本。以下是几种常见接口慢的情况。</p>
+<h4 id="数据库慢sql">数据库慢SQL</h4>
+<p>如果是数据库<code>SQL</code>慢，可以使用执行计划去分析一下，常见<code>SQL</code>慢的几种情况：</p>
+<ul>
+<li>锁表；先把锁表的<code>SQL</code> <code>kill</code>一波，在分析具体原因；</li>
+<li>未加索引；添加索引，有可能会锁表，引发一系列问题，需要综合评估；</li>
+<li>索引失效；分析索引失效原因，如，索引列区分度（值大都相同）很低、索引列大量空值、对所索引列加方法转换等；</li>
+<li>小表驱动大表；在连接查询时尽量过滤数据，使用小表驱动大表，使笛卡尔积尽量小一些；</li>
+<li><code>SQL</code>太复杂；<code>join</code>超过3张表或者子查询比较多，建议拆分为多个<code>SQL</code>，接口间相互调用；比如先从某个著接口查询某个表数据，然后关联字段作为条件从另一个表查询，进行内存拼接；</li>
+<li>返回的数据量数据太多；当超过数据库一定限制的时候返回大量数据就会很慢，可以使用分页多批次完成，针对访问量不多的接口可使用多线程批量查询；</li>
+<li>单表数据量太大；（MySQL超500w较慢）如果单表数据量较大，考虑在数据库设计做文章，如分片分库、利用<code>ES</code>存储等；</li>
+</ul>
+<h4 id="调用第三方接口慢">调用第三方接口慢</h4>
+<ul>
+<li>设置合理的超时时间；调用第三方接口一定要设置合理的超时时间，在设置时一定要大于调用接口的平均相应时间；</li>
+<li>第三方接口大量超时；可以集成<code>sentinel</code>或<code>hystrix</code>限流熔断框架，防止第三方接口拖垮自己的接口；</li>
+<li>事务型操作根据实际情况决定是否采用补偿机制（本地消息表）；比如新增、修改等操作要考虑对方接口是否支持幂等，防止超发；</li>
+<li>循环调用，改为单次批量调用，减少IO损耗；如：调用根据id查询单条数据的接口，可优化为批量查询接口；</li>
+<li>缓存查询结果；考虑当前查询结果是否能做缓存，如用户信息等短时间内不会变化的信息，根据业务形态来决定；</li>
+</ul>
+<h4 id="中间件慢">中间件慢</h4>
+<p><code>Redis</code>慢：是否有大<code>key</code>、热<code>key</code>，可接入<code>hotkeys</code>监控，针对热<code>key</code>可以使用本地缓存来抗，针对大<code>key</code>可以将其拆分，采用<code>set</code>结构的<code>sismember</code>等方法。</p>
+<p><code>Kafka</code>：生产端慢，可以使用堵塞队列接收，批量丢消息；消费端慢，消费端慢会造成消息积压，可以扩分区、增加消费节点、增加消费线程，用数据机构接受批量写入库。</p>
+<h4 id="程序逻辑慢">程序逻辑慢</h4>
+<ul>
+<li>非法校验逻辑前置；避免无用数据穿透小号系统资源，减少无效调用；</li>
+<li>循环调用改为单次批量调用；在查询数据库或调用第三方接口，能批量就批量，数据在内存组装处理；</li>
+<li>同步调用改为异步调用；在接口没有相互依赖的关系的时候可以将其优化为异步查询；</li>
+<li>非核心逻辑剥离；将接口的大事务拆分为小事务，一些非核心逻辑可以异步处理，可以使用<code>MQ</code>异步解耦；</li>
+<li>线程池合理设置参数；不要使用JDK默认参数，如果在高并发的情况下容易<code>OOM</code>，线程池满了以后要重写拒绝策略，考虑告警加数据持久化处理；</li>
+<li>锁合理设置；本地读写锁设计使用不合理，要控制锁的力度，尽量小一些；分布式锁合理使用防止热<code>key</code>；</li>
+<li>优化GC参数；考虑GC是否频繁，调整GC算法，新生代老年代比例，根据长时间观察可以设置出来；</li>
+<li>只打印必要日志；当并发量比较高的时候打印日志也会损耗性能，所以日志应加上开关能不打就不打；</li>
+</ul>
+<h4 id="架构优化">架构优化</h4>
+<ul>
+<li>高并发读逻辑走<code>Redis</code>，尽可能不要穿透到<code>DB</code>；<code>Redis</code>查询不到也不要查<code>DB</code>，可通过定时任务，<code>MQ</code>写入<code>Redis</code>。尽量不要把风险给<code>DB</code>，<code>DB</code>如果挂了整个应用就用不了了；</li>
+<li>设计写逻辑数据，尽量异步、批量处理、分库分表提升写入性能；</li>
+<li>接口接入限流熔断兜底；</li>
+<li>接入监控告警；<code>error</code>日志告警、接口慢查询或者不可用或限流熔断告警、<code>DB</code>告警、中间件告警、应用系统告警等；</li>
+<li>接口需要加动态配置开关；能够快速切断流量或降级某些非核心服务调用；</li>
+<li>设计程序自愈能力；比如如果数据有问题，用配置好的程序逻辑自动去修复；</li>
+</ul>
 <h2 id="jvm参数调优">JVM参数调优</h2>
-<p>JVM优化是到最后不得已才采用的手段，对JVM内存的系统级的调优主要的目的是减少GC的频率和Full GC的次数。
-JVM参数说明：https://www.oracle.com/java/technologies/javase/vmoptions-jsp.html</p>
-<p>理想的情况下，一个Java程序使用JVM的默认设置也可以运行得很好，所以一般来说，没有必要设置任何JVM参数。然而，由于一些性能问题，我们需要设置合理的JVM参数。</p>
-<p>可以通过<code>java -XX:+PrintFlagsInitial</code> 命令查看JVM所有参数。</p>
+<p>JVM优化是到最后不得已才采用的手段，对JVM内存的系统级的调优主要的目的是减少GC的频率和<code>Full GC</code>的次数。
+理想的情况下，一个Java程序使用JVM的默认设置也可以运行得很好，所以一般来说，没有必要设置任何JVM参数。然而由于一些性能问题，我们需要设置合理的JVM参数。
+可以通过<code>java -XX:+PrintFlagsInitial</code>命令查看JVM所有参数。附<a href="https://www.oracle.com/java/technologies/javase/vmoptions-jsp.html">JVM参数说明</a>。</p>
 <p>常用参数：</p>
 <table>
 <thead>
@@ -1367,7 +1418,7 @@ JVM参数说明：https://www.oracle.com/java/technologies/javase/vmoptions-jsp.
 </tbody>
 </table>
 <p>示例参数：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 必备
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># 必备
 </span></span><span class="line"><span class="cl">-XX:+PrintGCDetails 
 </span></span><span class="line"><span class="cl">-XX:+PrintGCDateStamps 
 </span></span><span class="line"><span class="cl">-XX:+PrintTenuringDistribution 
@@ -1387,81 +1438,17 @@ JVM参数说明：https://www.oracle.com/java/technologies/javase/vmoptions-jsp.
 </span></span><span class="line"><span class="cl">-XX:NumberOfGCLogFiles=14
 </span></span><span class="line"><span class="cl"># 每个文件上限大小，超过就触发分割
 </span></span><span class="line"><span class="cl">-XX:GCLogFileSize=100M
-</span></span></code></pre></div><p>何时调优：</p>
+</span></span></code></pre></div><p>如果出现<code>Full GC</code>次数频繁、GC停顿时间过长、应用出现<code>OutOfMemory</code>等内存异常就需要考虑调优了。调优思路：</p>
 <ol>
-<li>Full GC 次数频繁；</li>
-<li>GC 停顿时间过长；</li>
-<li>应用出现OutOfMemory 等内存异常；</li>
-<li>堆内存持续上涨达到设置的最大内存值；</li>
-</ol>
-<p>调优原则：</p>
-<ol>
-<li>多数导致GC问题的Java应用，都不是因为我们参数设置错误，而是代码问题；</li>
-<li>在实际使用中，分析GC情况优化代码比优化JVM参数更好；</li>
-<li>减少创建对象的数量、减少使用全局变量和大对象；</li>
-</ol>
-<p>调优思路：</p>
-<ol>
-<li>分析GC日志及dump文件，判断是否需要优化，确定瓶颈问题点。如果各项参数设置合理，系统没有超时日志出现，GC频率不高，GC耗时不高，那么没有必要进行GC优化，如果GC时间超过1-3秒，或者频繁GC，则必须优化；</li>
+<li>首先应分析GC日志及<code>dump</code>文件，判断是否需要优化，确定瓶颈问题点。如果各项参数设置合理，系统没有超时日志出现，GC频率不高，GC耗时不高，那么没有必要进行GC优化，如果GC时间超过1-3秒，或者频繁GC则必须优化；</li>
 <li>确定JVM调优目标。如果内存分配过大或过小，或者采用的GC收集器比较慢，则应该优先调整这些参数，并且先找1台或几台机器进行测试，然后比较优化过的机器和没有优化的机器的性能对比，并有针对性的做出最后选择；</li>
 <li>不断的分析和调整，直到找到合适的JVM参数配置；</li>
 </ol>
-<h2 id="线上接口慢">线上接口慢</h2>
-<h3 id="定位问题">定位问题</h3>
-<p>首先要定位是哪里慢，定位接口哪一个环节比较慢，性能瓶颈在哪里，可以使用应用性能监控工具(APM)定位问题。常见工具: skywalking、pinpoint、cat、zipkin。</p>
-<p>如果应用程序没有接入APM，可以在生产环境装一下arthas，利用trace接口方法和火焰图，大概能分析是那一块比较慢，定位能力稍微有点粗糙，亦可以利用程序中的告警日志定位问题。</p>
-<h3 id="解决方案-3">解决方案</h3>
-<p>如果已经定位到具体是哪里的问题了，那么就可以进行解决，如果是最新的功能引起的，那么最快的办法就是回退版本。
-以下是几种常见接口慢的情况。</p>
-<h4 id="数据库慢sql">数据库慢sql</h4>
-<p>如果是数据库sql慢，可以使用执行计划去分析一下，常见sql慢的几种情况：</p>
-<ul>
-<li>锁表；先把锁表的sqlkill一波，在分析具体原因；</li>
-<li>未加索引；添加索引，有可能会锁表，引发一系列问题，需要综合评估；</li>
-<li>索引失效；分析索引失效原因，如：索引列区分度（值大都相同）很低、索引列大量空值、对所索引列加方法转换等；</li>
-<li>小表驱动大表；在连接查询时尽量过滤数据，使用小表驱动大表，使笛卡尔积尽量小一些；</li>
-<li>sql太复杂；join超过3张表或者子查询比较多，建议拆分为多个sql，接口间相互调用；比如先从某个著接口查询某个表数据，然后关联字段作为条件从另一个表查询，进行内存拼接；</li>
-<li>返回的数据量数据太多；当超过数据库一定限制的时候返回大量数据就会很慢，可以使用分页多批次完成，针对访问量不多的接口可使用多线程批量查询；</li>
-<li>单表数据量太大；（mysql超500w较慢）如果单表数据量较大，考虑在数据库设计做文章，如：分片分库、利用es存储等；</li>
-</ul>
-<h4 id="调用第三方接口慢">调用第三方接口慢</h4>
-<ul>
-<li>设置合理的超时时间；调用第三方接口一定要设置合理的超时时间，在设置时一定要大于调用接口的平均相应时间；</li>
-<li>第三方接口大量超时；可以集成sentinel或hystrix限流熔断框架，防止第三方接口拖垮自己的接口（兜底逻辑）；</li>
-<li>事务型操作根据实际情况决定是否采用补偿机制（本地消息表）；比如新增、修改等操作要考虑对方接口是否支持幂等，防止超发；</li>
-<li>循环调用，改为单次批量调用，减少IO损耗；如：调用根据id查询单条数据的接口，可优化为批量查询接口；</li>
-<li>缓存查询结果；考虑当前查询结果是否能做缓存，如用户信息等短时间内不会变化的信息，根据业务形态来决定；</li>
-</ul>
-<h4 id="中间件慢">中间件慢</h4>
-<ul>
-<li>redis慢：是否有大key、热key，可接入hotkeys监控；针对热key可以使用本地缓存来抗，针对大key可以将其拆分，采用set结构的sismember等方法</li>
-<li>kafka：生产端慢：可以使用堵塞队列接收，批量丢消息；消费端慢：消费端慢会造成消息积压，可以扩分区、增加消费节点、增加消费线程，用数据机构接受批量写入库；</li>
-</ul>
-<h4 id="程序逻辑慢">程序逻辑慢</h4>
-<ul>
-<li>非法校验逻辑前置；避免无用数据穿透小号系统资源，减少无效调用；</li>
-<li>循环调用改为单次批量调用；在查询数据库或调用第三方接口，能批量就批量，数据在内存组装处理；</li>
-<li>同步调用改为异步调用；在接口没有相互依赖的关系的时候可以将其优化为异步查询；</li>
-<li>非核心逻辑剥离；将接口的大事务拆分为小事务，一些非核心逻辑可以异步处理，可以使用mq异步解耦；</li>
-<li>线程池合理设置参数；不要使用JDK默认参数，如果在高并发的情况下容易OOM，线程池满了以后要重写拒绝策略，考虑告警加数据持久化处理；</li>
-<li>锁合理设置；本地读写锁设计使用不合理，要控制锁的力度，尽量小一些；分布式锁合理使用防止热key；</li>
-<li>优化GC参数；考虑GC是否频繁，调整GC算法，新生代老年代比例，根据长时间观察可以设置出来；</li>
-<li>只打印必要日志；当并发量比较高的时候打印日志也会损耗性能，所以日志应加上开关能不打就不打；</li>
-</ul>
-<h4 id="架构优化">架构优化</h4>
-<ul>
-<li>高并发读逻辑走redis，尽可能不要穿透到DB；redis查询不到也不要查DB，可通过定时任务，MQ写入redis。尽量不要把风险给DB，DB如果挂了整个应用就用不了了；</li>
-<li>设计写逻辑数据，尽量异步、批量处理、分库分表提升写入性能；</li>
-<li>接口接入限流熔断兜底；</li>
-<li>接入监控告警；error日志告警、接口慢查询或者不可用或限流熔断告警、DB告警、中间件告警、应用系统告警等；</li>
-<li>接口需要加动态配置开关；能够快速切断流量或降级某些非核心服务调用；</li>
-<li>设计程序自愈能力；比如如果数据有问题，用配置好的程序逻辑自动去修复；</li>
-</ul>
 <h2 id="transactional">@Transactional</h2>
 <p><code>@Transactional</code>是开发过程中使用比较频繁的注解，但是使用不当也会导致事务失效甚至导致一些其他问题，下面是使用<code>@Transactional</code>遇到的几种问题。</p>
 <h3 id="transactional失效情况">@Transactional失效情况</h3>
 <ol>
-<li>如果某个方法是非public的，那么<code>@Transactional</code>就会失效。因为事务的底层是利用<code>cglib</code>代理实现，<code>cglib</code>是基于父子类来实现的，子类是不能重载父类的private方法，所以无法很好利用代理，这种情况下会导致@Transactional失效；</li>
+<li>如果某个方法是非public的，那么<code>@Transactional</code>就会失效。因为事务的底层是利用<code>cglib</code>代理实现，<code>cglib</code>是基于父子类来实现的，子类是不能重载父类的<code>private</code>方法，所以无法很好利用代理，这种情况下会导致<code>@Transactional</code>失效；</li>
 <li>使用的数据库引擎不支持事务。因为Spring的事务调用的也是数据库事务的API，如果数据库都不支持事务，那么<code>@Transactional</code>注解也就失效了；</li>
 <li>添加了<code>@Transactional</code>注解的方法不能在同一个类中调用，否则会使事务失效。这是因为Spring AOP通过代理来管理事务，自调用不会经过代理；</li>
 <li><code>@Transactional</code> 注解属性 <code>propagation</code> 设置错误，若是错误的配置以下三种 <code>propagation</code>，事务将不会发生回滚：
@@ -1476,7 +1463,7 @@ JVM参数说明：https://www.oracle.com/java/technologies/javase/vmoptions-jsp.
 </ol>
 <p>我们在使用<code>@Transactional</code>时，要避免出现上述情况，以确保 <code>@Transactional</code> 注解正确生效，从而实现事务管理的可靠性和一致性。</p>
 <h3 id="transactional遇到锁">@Transactional遇到锁</h3>
-<p>看到这么一段代码，原来当Transactional碰到锁，有个大坑，觉得很有意思，于是便记录下来。</p>
+<p>看到这么一段代码，当<code>@Transactional</code>碰到锁，有个大坑，觉得很有意思，于是记录下来。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Service</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ServiceOne</span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 设置一把可重入的公平锁</span><span class="w">
@@ -1494,9 +1481,9 @@ JVM参数说明：https://www.oracle.com/java/technologies/javase/vmoptions-jsp.
 <p>在使用MySQL数据库的可重复读隔离机制，如果是高并发的情况下，假设真的就有多个线程同时调用<code>func</code>方法。
 要保证一定不能出现超卖的情况，那么就需要事务的开启与提交能完整的包裹在<code>lock</code>与<code>unlock</code>之间。</p>
 <p>为什么要保证事务的开启与提交，完整的包裹在<code>lock</code>与<code>unlock</code>之间呢？</p>
-<p>举个例子，假设现在库存就只有一个了，这个时候 A，B 两个线程来请求下单。A 请求先拿到锁，然后查询出库存为一，可以下单，走了下单流程，把库存减为 0 了。
-但是由于 A 先执行了 <code>unlock</code> 操作，而未提交事务，先释放了锁。B 线程看到后马上就冲过来拿到了锁，并执行了查询库存的操作。
-这个时候 A 线程还没来得及提交事务，所以 B 读取到的库存还是 1，如果程序没有做好控制，也走了下单流程，此时就造成了超卖。</p>
+<p>举个例子，假设现在库存就只有一个了，这个时候A，B两个线程来请求下单。A请求先拿到锁，然后查询出库存为一，可以下单，走了下单流程，把库存减为0了。
+但是由于A先执行了<code>unlock</code>操作，而未提交事务，先释放了锁。B线程看到后马上就冲过来拿到了锁，并执行了查询库存的操作。
+这个时候A线程还没来得及提交事务，所以B读取到的库存还是1，如果程序没有做好控制，也走了下单流程，此时就造成了超卖。</p>
 <p>那怎么保证事务的开启与提交，完整的包裹在<code>lock</code>与<code>unlock</code>之间呢？</p>
 <p>先来了解一下事务的启动和结束时机，这里直接说结论。
 事务的启动时机，在执行到它们之后的第一个操作数据库表的语句，事务才算是真正启动。在上述示例代码中第一个SQL是在加锁之后执行的，所以先加锁再开启事务。

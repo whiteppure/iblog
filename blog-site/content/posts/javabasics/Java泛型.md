@@ -390,7 +390,7 @@ Box<String> strBox = new Box<>(); // 使用 String 类型
 strBox.setValue("Hello");
 String strValue = strBox.getValue();
 ```
-如果<>中什么都不传入，则编译器会发出警告，提示使用原始类型，这是不推荐的做法。使用原始类型的主要问题是类型安全性降低，容易引发`ClassCastException`等运行时错误。
+如果`<>`中什么都不传入，则编译器会发出警告，提示使用原始类型，这是不推荐的做法。使用原始类型的主要问题是类型安全性降低，容易引发`ClassCastException`等运行时错误。
 ```text
 Box rawBox = new Box(); // 使用原始类型（不推荐）
 rawBox.setValue("Hello");
