@@ -398,8 +398,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8spring%e6%8f%90%e4%be%9b%e7%9a%84%e5%b7%a5%e5%85%b7%e7%b1%bbassert%e5%88%a4%e7%a9%ba">
-                    使用Spring提供的工具类Assert判空
+                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8%e5%b7%a5%e5%85%b7%e7%b1%bb%e5%88%a4%e7%a9%ba">
+                    使用工具类判空
                 </a>
             </li>
             
@@ -426,8 +426,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8java8%e9%93%be%e5%bc%8f%e8%b0%83%e7%94%a8%e7%89%b9%e6%80%a7%e5%88%a4%e7%a9%ba">
-                    使用Java8链式调用特性判空
+                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8optional%e5%88%a4%e7%a9%ba">
+                    使用Optional判空
                 </a>
             </li>
             
@@ -454,8 +454,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8beanvalidator%e6%b3%a8%e8%a7%a3%e5%88%a4%e7%a9%ba">
-                    使用BeanValidator注解判空
+                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8validator%e6%b3%a8%e8%a7%a3%e5%88%a4%e7%a9%ba">
+                    使用Validator注解判空
                 </a>
             </li>
             
@@ -1083,450 +1083,309 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="p">}</span><span class="w">  
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><h2 id="优雅判空">优雅判空</h2>
-<h3 id="使用spring提供的工具类assert判空">使用Spring提供的工具类Assert判空</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MyTest {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        Object obj = new Object();
-</span></span><span class="line"><span class="cl">        Assert.notNull(obj,&#34;对象不能为空&#34;);
-</span></span><span class="line"><span class="cl">        Assert.isTrue(obj != null,&#34;对象不能为空&#34;);
-</span></span><span class="line"><span class="cl">        ArrayList&lt;Object&gt; list = new ArrayList&lt;&gt;();
-</span></span><span class="line"><span class="cl">        Assert.notEmpty(list,&#34;list不能为空&#34;);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><h3 id="使用java8链式调用特性判空">使用Java8链式调用特性判空</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public class MyTest {
-</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">        Object obj = new Object();
-</span></span><span class="line"><span class="cl">        System.out.println(&#34;是否不为空：&#34; + Optional.of(obj).isPresent());
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        User user = new User();
-</span></span><span class="line"><span class="cl">        user.setId(1);
-</span></span><span class="line"><span class="cl">        user.setName(&#34;ls&#34;);
-</span></span><span class="line"><span class="cl">        Optional&lt;User&gt; zs = Optional.of(user).filter(u -&gt; u.getName().equals(&#34;zs&#34;));
-</span></span><span class="line"><span class="cl">        System.out.println(zs.get());
-</span></span><span class="line"><span class="cl">        zs.ifPresent(item -&gt;{
-</span></span><span class="line"><span class="cl">             System.out.println(&#34;对象不等于空，做的一系列操作&#34;);
-</span></span><span class="line"><span class="cl">         });
-</span></span><span class="line"><span class="cl">        User user1 = Optional.of(zs.orElse(new User())).get();
-</span></span><span class="line"><span class="cl">        System.out.println(user1);
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    static class User {
-</span></span><span class="line"><span class="cl">        private int id;
-</span></span><span class="line"><span class="cl">        private String name;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        public String getName() {
-</span></span><span class="line"><span class="cl">            return name;
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        public int getId() {
-</span></span><span class="line"><span class="cl">            return id;
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        public void setName(String name) {
-</span></span><span class="line"><span class="cl">            this.name = name;
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        public void setId(int id) {
-</span></span><span class="line"><span class="cl">            this.id = id;
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        @Override
-</span></span><span class="line"><span class="cl">        public String toString() {
-</span></span><span class="line"><span class="cl">            return &#34;User{&#34; +
-</span></span><span class="line"><span class="cl">                    &#34;id=&#34; + id +
-</span></span><span class="line"><span class="cl">                    &#34;, name=&#39;&#34; + name + &#39;\&#39;&#39; +
-</span></span><span class="line"><span class="cl">                    &#39;}&#39;;
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>自定义链式调用，对Optional扩展：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Data
-</span></span><span class="line"><span class="cl">public class User {
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    private String name;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    private String gender;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    private School school;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    @Data
-</span></span><span class="line"><span class="cl">    public static class School {
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        private String scName;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        private String adress;
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">/**</span>
-</span></span><span class="line"><span class="cl"><span class="o">*</span> <span class="err">@</span><span class="n">author</span> <span class="n">Axin</span>
-</span></span><span class="line"><span class="cl"><span class="o">*</span> <span class="err">@</span><span class="n">since</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">10</span>
-</span></span><span class="line"><span class="cl"><span class="o">*</span> <span class="err">@</span><span class="n">summary</span> <span class="err">链式调用</span> <span class="n">bean</span> <span class="err">中</span> <span class="n">value</span> <span class="err">的方法</span>
-</span></span><span class="line"><span class="cl"><span class="o">*/</span>
-</span></span><span class="line"><span class="cl"><span class="n">public</span> <span class="n">final</span> <span class="k">class</span> <span class="n">OptionalBean</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="k">static</span> <span class="n">final</span> <span class="n">OptionalBean</span><span class="o">&lt;</span><span class="err">?</span><span class="o">&gt;</span> <span class="n">EMPTY</span> <span class="o">=</span> <span class="n">new</span> <span class="n">OptionalBean</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="n">final</span> <span class="n">T</span> <span class="n">value</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="n">OptionalBean</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">this</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">空值会抛出空指针</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">value</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="n">OptionalBean</span><span class="p">(</span><span class="n">T</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">this</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">Objects</span><span class="o">.</span><span class="n">requireNonNull</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">包装一个不能为空的</span> <span class="n">bean</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">value</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">OptionalBean</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">of</span><span class="p">(</span><span class="n">T</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">new</span> <span class="n">OptionalBean</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">包装一个可能为空的</span> <span class="n">bean</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">value</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">OptionalBean</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">ofNullable</span><span class="p">(</span><span class="n">T</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">value</span> <span class="o">==</span> <span class="n">null</span> <span class="err">?</span> <span class="n">empty</span><span class="p">()</span> <span class="p">:</span> <span class="n">of</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">取出具体的值</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">fn</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="o">&lt;</span><span class="n">R</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">T</span> <span class="n">get</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">Objects</span><span class="o">.</span><span class="n">isNull</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="err">?</span> <span class="n">null</span> <span class="p">:</span> <span class="n">value</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">取出一个可能为空的对象</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">fn</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="o">&lt;</span><span class="n">R</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="o">&lt;</span><span class="n">R</span><span class="o">&gt;</span> <span class="n">OptionalBean</span><span class="o">&lt;</span><span class="n">R</span><span class="o">&gt;</span> <span class="n">getBean</span><span class="p">(</span><span class="n">Function</span><span class="o">&lt;</span><span class="err">?</span> <span class="n">super</span> <span class="n">T</span><span class="p">,</span> <span class="err">?</span> <span class="k">extends</span> <span class="n">R</span><span class="o">&gt;</span> <span class="n">fn</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">Objects</span><span class="o">.</span><span class="n">isNull</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="err">?</span> <span class="n">OptionalBean</span><span class="o">.</span><span class="n">empty</span><span class="p">()</span> <span class="p">:</span> <span class="n">OptionalBean</span><span class="o">.</span><span class="n">ofNullable</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">value</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">如果目标值为空</span> <span class="err">获取一个默认值</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">other</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">T</span> <span class="n">orElse</span><span class="p">(</span><span class="n">T</span> <span class="n">other</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">value</span> <span class="o">!=</span> <span class="n">null</span> <span class="err">?</span> <span class="n">value</span> <span class="p">:</span> <span class="n">other</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">如果目标值为空</span> <span class="err">通过</span><span class="n">lambda表达式获取一个值</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">other</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">T</span> <span class="n">orElseGet</span><span class="p">(</span><span class="n">Supplier</span><span class="o">&lt;</span><span class="err">?</span> <span class="k">extends</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">other</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">value</span> <span class="o">!=</span> <span class="n">null</span> <span class="err">?</span> <span class="n">value</span> <span class="p">:</span> <span class="n">other</span><span class="o">.</span><span class="n">get</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">如果目标值为空</span> <span class="err">抛出一个异常</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">exceptionSupplier</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="o">&lt;</span><span class="n">X</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">throws</span> <span class="n">X</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="o">&lt;</span><span class="n">X</span> <span class="k">extends</span> <span class="n">Throwable</span><span class="o">&gt;</span> <span class="n">T</span> <span class="n">orElseThrow</span><span class="p">(</span><span class="n">Supplier</span><span class="o">&lt;</span><span class="err">?</span> <span class="k">extends</span> <span class="n">X</span><span class="o">&gt;</span> <span class="n">exceptionSupplier</span><span class="p">)</span> <span class="n">throws</span> <span class="n">X</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">value</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">throw</span> <span class="n">exceptionSupplier</span><span class="o">.</span><span class="n">get</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">boolean</span> <span class="n">isPresent</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">value</span> <span class="o">!=</span> <span class="n">null</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="n">void</span> <span class="n">ifPresent</span><span class="p">(</span><span class="n">Consumer</span><span class="o">&lt;</span><span class="err">?</span> <span class="n">super</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">consumer</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="n">consumer</span><span class="o">.</span><span class="n">accept</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Override</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="ne">int</span> <span class="n">hashCode</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">Objects</span><span class="o">.</span><span class="n">hashCode</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">空值常量</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">OptionalBean</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">empty</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="err">@</span><span class="n">SuppressWarnings</span><span class="p">(</span><span class="s2">&#34;unchecked&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">OptionalBean</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">none</span> <span class="o">=</span> <span class="p">(</span><span class="n">OptionalBean</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="n">EMPTY</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">none</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">public static void main(String[] args) {
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    User axin = new User();
-</span></span><span class="line"><span class="cl">    User.School school = new User.School();
-</span></span><span class="line"><span class="cl">    axin.setName(&#34;hello&#34;);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // 1. 基本调用
-</span></span><span class="line"><span class="cl">    String value1 = OptionalBean.ofNullable(axin)
-</span></span><span class="line"><span class="cl">            .getBean(User::getSchool)
-</span></span><span class="line"><span class="cl">            .getBean(User.School::getAdress).get();
-</span></span><span class="line"><span class="cl">    System.out.println(value1);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // 2. 扩展的 isPresent方法 用法与 Optional 一样
-</span></span><span class="line"><span class="cl">    boolean present = OptionalBean.ofNullable(axin)
-</span></span><span class="line"><span class="cl">            .getBean(User::getSchool)
-</span></span><span class="line"><span class="cl">            .getBean(User.School::getAdress).isPresent();
-</span></span><span class="line"><span class="cl">    System.out.println(present);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // 3. 扩展的 ifPresent 方法
-</span></span><span class="line"><span class="cl">    OptionalBean.ofNullable(axin)
-</span></span><span class="line"><span class="cl">            .getBean(User::getSchool)
-</span></span><span class="line"><span class="cl">            .getBean(User.School::getAdress)
-</span></span><span class="line"><span class="cl">            .ifPresent(adress -&gt; System.out.println(String.format(&#34;地址存在:%s&#34;, adress)));
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // 4. 扩展的 orElse
-</span></span><span class="line"><span class="cl">    String value2 = OptionalBean.ofNullable(axin)
-</span></span><span class="line"><span class="cl">            .getBean(User::getSchool)
-</span></span><span class="line"><span class="cl">            .getBean(User.School::getAdress).orElse(&#34;家里蹲&#34;);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    System.out.println(value2);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    // 5. 扩展的 orElseThrow
-</span></span><span class="line"><span class="cl">    try {
-</span></span><span class="line"><span class="cl">        String value3 = OptionalBean.ofNullable(axin)
-</span></span><span class="line"><span class="cl">                .getBean(User::getSchool)
-</span></span><span class="line"><span class="cl">                .getBean(User.School::getAdress).orElseThrow(() -&gt; new RuntimeException(&#34;空指针了&#34;));
-</span></span><span class="line"><span class="cl">    } catch (Exception e) {
-</span></span><span class="line"><span class="cl">        System.out.println(e.getMessage());
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><h3 id="使用beanvalidator注解判空">使用BeanValidator注解判空</h3>
-<p>思路：定义一个注解，将需要校验的参数对象都标注该注解，利用SpringAOP，拦截该注解，将其中标注的参数取出，最后通过BeanValidator进行校验。</p>
-<p>所需依赖：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;dependency&gt;
-</span></span><span class="line"><span class="cl">    &lt;groupId&gt;org.hibernate&lt;/groupId&gt;
-</span></span><span class="line"><span class="cl">    &lt;artifactId&gt;hibernate-validator&lt;/artifactId&gt;
-</span></span><span class="line"><span class="cl">&lt;/dependency&gt;
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/**
-</span></span><span class="line"><span class="cl"> * facade接口注解， 用于统一对facade进行参数校验及异常捕获
-</span></span><span class="line"><span class="cl"> * @author whitepure
-</span></span><span class="line"><span class="cl"> */
-</span></span><span class="line"><span class="cl">@Target({ElementType.METHOD,ElementType.PARAMETER})
-</span></span><span class="line"><span class="cl">@Retention(RetentionPolicy.RUNTIME)
-</span></span><span class="line"><span class="cl">public @interface Facade {
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Slf4j
-</span></span><span class="line"><span class="cl">@Aspect
-</span></span><span class="line"><span class="cl">@Component
-</span></span><span class="line"><span class="cl">public class FacadeAspect {
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    @Around(&#34;@annotation(com.spring.example.annotation.Facade)&#34;)
-</span></span><span class="line"><span class="cl">    public Object facade(ProceedingJoinPoint pjp) throws Exception {
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        // 获取，执行目标方法
-</span></span><span class="line"><span class="cl">        Method method = ((MethodSignature) pjp.getSignature()).getMethod();
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        Object[] args = pjp.getArgs();
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        log.info(&#34;获取@Facede注解参数列表,参数: {}&#34;, args);
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        // 参数类型
-</span></span><span class="line"><span class="cl">        Class&lt;?&gt; returnType = ((MethodSignature) pjp.getSignature()).getMethod().getReturnType();
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        //循环遍历所有参数，进行参数校验
-</span></span><span class="line"><span class="cl">        for (Object parameter : args) {
-</span></span><span class="line"><span class="cl">            try {
-</span></span><span class="line"><span class="cl">                BeanValidator.validateObject(parameter);
-</span></span><span class="line"><span class="cl">            } catch (ValidationException e) {
-</span></span><span class="line"><span class="cl">                return getFailedResponse(returnType, e);
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        try {
-</span></span><span class="line"><span class="cl">            // 目标方法执行
-</span></span><span class="line"><span class="cl">            return pjp.proceed();
-</span></span><span class="line"><span class="cl">        } catch (Throwable throwable) {
-</span></span><span class="line"><span class="cl">            // 返回通用失败响应
-</span></span><span class="line"><span class="cl">            return getFailedResponse(returnType, throwable);
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    /**
-</span></span><span class="line"><span class="cl">     * 定义并返回一个通用的失败响应
-</span></span><span class="line"><span class="cl">     */
-</span></span><span class="line"><span class="cl">    private Object getFailedResponse(Class&lt;?&gt; returnType, Throwable throwable)
-</span></span><span class="line"><span class="cl">            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        //如果返回值的类型为BaseResponse 的子类，则创建一个通用的失败响应
-</span></span><span class="line"><span class="cl">        if (returnType.getDeclaredConstructor().newInstance() instanceof ApiResponse) {
-</span></span><span class="line"><span class="cl">            ApiResponse response = (ApiResponse) returnType.getDeclaredConstructor().newInstance();
-</span></span><span class="line"><span class="cl">            String message = throwable.getMessage();
-</span></span><span class="line"><span class="cl">            log.error(&#34;校验bean异常：&#34;, throwable);
-</span></span><span class="line"><span class="cl">            response.setMessage(message);
-</span></span><span class="line"><span class="cl">            response.setCode(Status.ERROR.getCode());
-</span></span><span class="line"><span class="cl">            return response;
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">        log.error(&#34;failed to getFailedResponse , returnType ({}) is not instanceof BaseResponse&#34;, returnType);
-</span></span><span class="line"><span class="cl">        return null;
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">public</span> <span class="k">class</span> <span class="n">BeanValidator</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">private</span> <span class="k">static</span> <span class="n">final</span> <span class="n">Validator</span> <span class="n">validator</span> <span class="o">=</span> <span class="n">Validation</span>
-</span></span><span class="line"><span class="cl">            <span class="o">.</span><span class="n">byProvider</span><span class="p">(</span><span class="n">HibernateValidator</span><span class="o">.</span><span class="k">class</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="o">.</span><span class="n">configure</span><span class="p">()</span><span class="o">.</span><span class="n">failFast</span><span class="p">(</span><span class="bp">true</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="o">.</span><span class="n">buildValidatorFactory</span><span class="p">()</span><span class="o">.</span><span class="n">getValidator</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">校验对象</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">object</span> <span class="n">object</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">groups</span> <span class="n">groups</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="n">void</span> <span class="n">validateObject</span><span class="p">(</span><span class="ne">Object</span> <span class="n">object</span><span class="p">,</span> <span class="n">Class</span><span class="o">&lt;</span><span class="err">?</span><span class="o">&gt;...</span> <span class="n">groups</span><span class="p">)</span> <span class="n">throws</span> <span class="n">ValidationException</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Set</span><span class="o">&lt;</span><span class="n">ConstraintViolation</span><span class="o">&lt;</span><span class="ne">Object</span><span class="o">&gt;&gt;</span> <span class="n">constraintViolations</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">object</span><span class="p">,</span> <span class="n">groups</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">constraintViolations</span><span class="o">.</span><span class="n">stream</span><span class="p">()</span><span class="o">.</span><span class="n">findFirst</span><span class="p">()</span><span class="o">.</span><span class="n">isPresent</span><span class="p">())</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">throw</span> <span class="n">new</span> <span class="n">ValidationException</span><span class="p">(</span><span class="n">constraintViolations</span><span class="o">.</span><span class="n">stream</span><span class="p">()</span><span class="o">.</span><span class="n">findFirst</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">getMessage</span><span class="p">());</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">校验对象</span><span class="n">bean</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">t</span>      <span class="n">bean</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">groups</span> <span class="err">校验组</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span> <span class="n">ValidResult</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">ValidResult</span> <span class="n">validateBean</span><span class="p">(</span><span class="n">T</span> <span class="n">t</span><span class="p">,</span> <span class="n">Class</span><span class="o">&lt;</span><span class="err">?</span><span class="o">&gt;...</span> <span class="n">groups</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">ValidResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ValidResult</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Set</span><span class="o">&lt;</span><span class="n">ConstraintViolation</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">violationSet</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">groups</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">boolean</span> <span class="n">hasError</span> <span class="o">=</span> <span class="n">violationSet</span> <span class="o">!=</span> <span class="n">null</span> <span class="o">&amp;&amp;</span> <span class="n">violationSet</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">result</span><span class="o">.</span><span class="n">setHasErrors</span><span class="p">(</span><span class="n">hasError</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">hasError</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="n">ConstraintViolation</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">violation</span> <span class="p">:</span> <span class="n">violationSet</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">result</span><span class="o">.</span><span class="n">addError</span><span class="p">(</span><span class="n">violation</span><span class="o">.</span><span class="n">getPropertyPath</span><span class="p">()</span><span class="o">.</span><span class="n">toString</span><span class="p">(),</span> <span class="n">violation</span><span class="o">.</span><span class="n">getMessage</span><span class="p">());</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">校验</span><span class="n">bean的某一个属性</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">obj</span>          <span class="n">bean</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="n">param</span> <span class="n">propertyName</span> <span class="err">属性名称</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">@</span><span class="k">return</span> <span class="n">ValidResult</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">ValidResult</span> <span class="n">validateProperty</span><span class="p">(</span><span class="n">T</span> <span class="n">obj</span><span class="p">,</span> <span class="ne">String</span> <span class="n">propertyName</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">ValidResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ValidResult</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Set</span><span class="o">&lt;</span><span class="n">ConstraintViolation</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">violationSet</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validateProperty</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">propertyName</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">boolean</span> <span class="n">hasError</span> <span class="o">=</span> <span class="n">violationSet</span> <span class="o">!=</span> <span class="n">null</span> <span class="o">&amp;&amp;</span> <span class="n">violationSet</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">result</span><span class="o">.</span><span class="n">setHasErrors</span><span class="p">(</span><span class="n">hasError</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">hasError</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="n">ConstraintViolation</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">violation</span> <span class="p">:</span> <span class="n">violationSet</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">result</span><span class="o">.</span><span class="n">addError</span><span class="p">(</span><span class="n">propertyName</span><span class="p">,</span> <span class="n">violation</span><span class="o">.</span><span class="n">getMessage</span><span class="p">());</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*</span> <span class="err">校验结果类</span>
-</span></span><span class="line"><span class="cl">     <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Data</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="k">class</span> <span class="n">ValidResult</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">         <span class="o">*</span> <span class="err">是否有错误</span>
-</span></span><span class="line"><span class="cl">         <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">        <span class="n">private</span> <span class="n">boolean</span> <span class="n">hasErrors</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">         <span class="o">*</span> <span class="err">错误信息</span>
-</span></span><span class="line"><span class="cl">         <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">        <span class="n">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">ErrorMessage</span><span class="o">&gt;</span> <span class="n">errors</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="n">ValidResult</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">this</span><span class="o">.</span><span class="n">errors</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="n">boolean</span> <span class="n">hasErrors</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">hasErrors</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="n">void</span> <span class="n">setHasErrors</span><span class="p">(</span><span class="n">boolean</span> <span class="n">hasErrors</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">this</span><span class="o">.</span><span class="n">hasErrors</span> <span class="o">=</span> <span class="n">hasErrors</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">         <span class="o">*</span> <span class="err">获取所有验证信息</span>
-</span></span><span class="line"><span class="cl">         <span class="o">*</span>
-</span></span><span class="line"><span class="cl">         <span class="o">*</span> <span class="err">@</span><span class="k">return</span> <span class="err">集合形式</span>
-</span></span><span class="line"><span class="cl">         <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">ErrorMessage</span><span class="o">&gt;</span> <span class="n">getAllErrors</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">errors</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="o">/**</span>
-</span></span><span class="line"><span class="cl">         <span class="o">*</span> <span class="err">获取所有验证信息</span>
-</span></span><span class="line"><span class="cl">         <span class="o">*</span>
-</span></span><span class="line"><span class="cl">         <span class="o">*</span> <span class="err">@</span><span class="k">return</span> <span class="err">字符串形式</span>
-</span></span><span class="line"><span class="cl">         <span class="o">*/</span>
-</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="ne">String</span> <span class="n">getErrors</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="n">new</span> <span class="n">StringBuilder</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="n">ErrorMessage</span> <span class="n">error</span> <span class="p">:</span> <span class="n">errors</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">sb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">getPropertyPath</span><span class="p">())</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&#34;:&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">getMessage</span><span class="p">())</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&#34; &#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">sb</span><span class="o">.</span><span class="n">toString</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="n">void</span> <span class="n">addError</span><span class="p">(</span><span class="ne">String</span> <span class="n">propertyName</span><span class="p">,</span> <span class="ne">String</span> <span class="n">message</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">this</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new</span> <span class="n">ErrorMessage</span><span class="p">(</span><span class="n">propertyName</span><span class="p">,</span> <span class="n">message</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">Data</span>
-</span></span><span class="line"><span class="cl">    <span class="n">public</span> <span class="k">static</span> <span class="k">class</span> <span class="n">ErrorMessage</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">private</span> <span class="ne">String</span> <span class="n">propertyPath</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">private</span> <span class="ne">String</span> <span class="n">message</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="n">ErrorMessage</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="n">ErrorMessage</span><span class="p">(</span><span class="ne">String</span> <span class="n">propertyPath</span><span class="p">,</span> <span class="ne">String</span> <span class="n">message</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">this</span><span class="o">.</span><span class="n">propertyPath</span> <span class="o">=</span> <span class="n">propertyPath</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="n">this</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div></div>
+<p>在开发中，处理空值是一个常见而且重要的任务。不当的处理不仅会导致代码变得复杂和难以维护，还可能引发运行时错误。
+特别是当我们的代码中充斥着大量的<code>null</code>检查和条件判断时，程序的可读性和可维护性会大打折扣。
+优雅地处理空值，不仅是为了提高代码的健壮性，更是为了提升代码的可读性和设计质量。</p>
+<h3 id="使用工具类判空">使用工具类判空</h3>
+<p>使用工具类来处理空值是一种常见的做法，工具类可以集中处理空值检查逻辑，使代码更加简洁和一致。
+常见工具类有，Spring中的<code>Assert</code>类、JDK中的<code>Objects</code>类、Apache Commons Lang库的<code>StringUtils</code>类。</p>
+<p>Apache Commons Lang库的<code>StringUtils</code>提供了许多用于处理字符串和空值的方法。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Example</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">printLength</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 使用 StringUtils.defaultIfEmpty 提供默认值</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">nonNullStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">StringUtils</span><span class="p">.</span><span class="na">defaultIfEmpty</span><span class="p">(</span><span class="n">str</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Default Value&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Length of string: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">nonNullStr</span><span class="p">.</span><span class="na">length</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>Objects</code>类是 Java7引入的，它提供了一些静态方法来简化对null的检查。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Example</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">printLength</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 使用 Objects.requireNonNullElse 提供默认值</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">nonNullStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Objects</span><span class="p">.</span><span class="na">requireNonNullElse</span><span class="p">(</span><span class="n">str</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Default Value&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Length of string: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">nonNullStr</span><span class="p">.</span><span class="na">length</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>在Spring框架中，<code>Assert</code>类是一个工具类，提供了一组静态方法用于验证条件。它可以帮助开发者在代码中做各种检查，如非空检查、范围检查等，若条件不满足则抛出相应的异常。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyTest</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Object</span><span class="w"> </span><span class="n">obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Assert</span><span class="p">.</span><span class="na">notNull</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span><span class="s">&#34;对象不能为空&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Assert</span><span class="p">.</span><span class="na">isTrue</span><span class="p">(</span><span class="n">obj</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="s">&#34;对象不能为空&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Assert</span><span class="p">.</span><span class="na">notEmpty</span><span class="p">(</span><span class="n">list</span><span class="p">,</span><span class="s">&#34;list不能为空&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="使用optional判空">使用Optional判空</h3>
+<p>Optional是Java8引入的一个容器类，用于表示可能为空的值。它提供了多种方法来处理空值情况，避免了显式的<code>null</code>检查。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Optional</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">findUserById</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 模拟查询用户，返回可能为空的结果</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">database</span><span class="p">.</span><span class="na">findUserById</span><span class="p">(</span><span class="n">userId</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Optional</span><span class="p">.</span><span class="na">ofNullable</span><span class="p">(</span><span class="n">user</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processUser</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Optional</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="n">userOpt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">findUserById</span><span class="p">(</span><span class="n">userId</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">userOpt</span><span class="p">.</span><span class="na">ifPresent</span><span class="p">(</span><span class="n">user</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 处理用户</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;User found: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">user</span><span class="p">.</span><span class="na">getName</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>自定义链式调用，对<code>Optional</code>扩展。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">* @author Axin
+</span></span></span><span class="line"><span class="cl"><span class="cm">* @since 2020-09-10
+</span></span></span><span class="line"><span class="cl"><span class="cm">* @summary 链式调用 bean 中 value 的方法
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kd">class</span> <span class="nc">OptionalBean</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">OptionalBean</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">EMPTY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">OptionalBean</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="nf">OptionalBean</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 空值会抛出空指针
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param value
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="nf">OptionalBean</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Objects</span><span class="p">.</span><span class="na">requireNonNull</span><span class="p">(</span><span class="n">value</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 包装一个不能为空的 bean
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param value
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param &lt;T&gt;
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">OptionalBean</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">of</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">OptionalBean</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">value</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 包装一个可能为空的 bean
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param value
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param &lt;T&gt;
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">OptionalBean</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">ofNullable</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">empty</span><span class="p">()</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">of</span><span class="p">(</span><span class="n">value</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 取出具体的值
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param fn
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param &lt;R&gt;
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">get</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Objects</span><span class="p">.</span><span class="na">isNull</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 取出一个可能为空的对象
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param fn
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param &lt;R&gt;
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="o">&lt;</span><span class="n">R</span><span class="o">&gt;</span><span class="w"> </span><span class="n">OptionalBean</span><span class="o">&lt;</span><span class="n">R</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getBean</span><span class="p">(</span><span class="n">Function</span><span class="o">&lt;?</span><span class="w"> </span><span class="kd">super</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">R</span><span class="o">&gt;</span><span class="w"> </span><span class="n">fn</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Objects</span><span class="p">.</span><span class="na">isNull</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">OptionalBean</span><span class="p">.</span><span class="na">empty</span><span class="p">()</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">OptionalBean</span><span class="p">.</span><span class="na">ofNullable</span><span class="p">(</span><span class="n">fn</span><span class="p">.</span><span class="na">apply</span><span class="p">(</span><span class="n">value</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 如果目标值为空 获取一个默认值
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param other
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">orElse</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">other</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">other</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 如果目标值为空 通过lambda表达式获取一个值
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param other
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">orElseGet</span><span class="p">(</span><span class="n">Supplier</span><span class="o">&lt;?</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">other</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="na">get</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 如果目标值为空 抛出一个异常
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param exceptionSupplier
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param &lt;X&gt;
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @throws X
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="o">&lt;</span><span class="n">X</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Throwable</span><span class="o">&gt;</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">orElseThrow</span><span class="p">(</span><span class="n">Supplier</span><span class="o">&lt;?</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">X</span><span class="o">&gt;</span><span class="w"> </span><span class="n">exceptionSupplier</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="n">exceptionSupplier</span><span class="p">.</span><span class="na">get</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">isPresent</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">ifPresent</span><span class="p">(</span><span class="n">Consumer</span><span class="o">&lt;?</span><span class="w"> </span><span class="kd">super</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">consumer</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">consumer</span><span class="p">.</span><span class="na">accept</span><span class="p">(</span><span class="n">value</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">hashCode</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Objects</span><span class="p">.</span><span class="na">hashCode</span><span class="p">(</span><span class="n">value</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 空值常量
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param &lt;T&gt;
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">OptionalBean</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">empty</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nd">@SuppressWarnings</span><span class="p">(</span><span class="s">&#34;unchecked&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">OptionalBean</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">none</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">OptionalBean</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="n">EMPTY</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">none</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">gender</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">School</span><span class="w"> </span><span class="n">school</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">School</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">scName</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">adress</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">User</span><span class="w"> </span><span class="n">axin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">User</span><span class="p">.</span><span class="na">School</span><span class="w"> </span><span class="n">school</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">.</span><span class="na">School</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">axin</span><span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="s">&#34;hello&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 1. 基本调用</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">value1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OptionalBean</span><span class="p">.</span><span class="na">ofNullable</span><span class="p">(</span><span class="n">axin</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="n">User</span><span class="p">::</span><span class="n">getSchool</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="n">User</span><span class="p">.</span><span class="na">School</span><span class="p">::</span><span class="n">getAdress</span><span class="p">).</span><span class="na">get</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">value1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 2. 扩展的 isPresent方法 用法与 Optional 一样</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">boolean</span><span class="w"> </span><span class="n">present</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OptionalBean</span><span class="p">.</span><span class="na">ofNullable</span><span class="p">(</span><span class="n">axin</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="n">User</span><span class="p">::</span><span class="n">getSchool</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="n">User</span><span class="p">.</span><span class="na">School</span><span class="p">::</span><span class="n">getAdress</span><span class="p">).</span><span class="na">isPresent</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">present</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 3. 扩展的 ifPresent 方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">OptionalBean</span><span class="p">.</span><span class="na">ofNullable</span><span class="p">(</span><span class="n">axin</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="n">User</span><span class="p">::</span><span class="n">getSchool</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="n">User</span><span class="p">.</span><span class="na">School</span><span class="p">::</span><span class="n">getAdress</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="na">ifPresent</span><span class="p">(</span><span class="n">adress</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">&#34;地址存在:%s&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">adress</span><span class="p">)));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 4. 扩展的 orElse</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">value2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OptionalBean</span><span class="p">.</span><span class="na">ofNullable</span><span class="p">(</span><span class="n">axin</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="n">User</span><span class="p">::</span><span class="n">getSchool</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="n">User</span><span class="p">.</span><span class="na">School</span><span class="p">::</span><span class="n">getAdress</span><span class="p">).</span><span class="na">orElse</span><span class="p">(</span><span class="s">&#34;家里蹲&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">value2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 5. 扩展的 orElseThrow</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">value3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OptionalBean</span><span class="p">.</span><span class="na">ofNullable</span><span class="p">(</span><span class="n">axin</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="n">User</span><span class="p">::</span><span class="n">getSchool</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="n">User</span><span class="p">.</span><span class="na">School</span><span class="p">::</span><span class="n">getAdress</span><span class="p">).</span><span class="na">orElseThrow</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="s">&#34;空指针了&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="使用validator注解判空">使用Validator注解判空</h3>
+<p>在Java中，使用<code>Validator</code>注解进行判空是一种优雅的方式来验证对象的状态，特别是在处理用户输入和表单数据时。<code>javax.validation</code>包中的注解可以帮助确保对象的属性满足指定的条件，如非空、长度限制等。
+这些注解通常与 Java <code>Bean</code> <code>Validation</code>规范一起使用，并可以通过Spring的<code>@Valid</code>注解在控制器中自动触发验证。</p>
+<p>从SpringBoot2.3开始，校验包被独立成了一个<code>starter</code>组件，所以需要引入<code>validation</code>和<code>web</code>，而<code>springboot-2.3</code>之前的版本只需要引入<code>web</code>依赖就可以了。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/dependency&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-validation<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 常用校验注解
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * JSR提供的校验注解：
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @Null 被注释的元素必须为 null
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @NotNull 被注释的元素必须不为 null
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @AssertTrue 被注释的元素必须为 true
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @AssertFalse 被注释的元素必须为 false
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @Min(value) 被注释的元素必须是一个数字，其值必须大于等于指定的最小值
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @Max(value) 被注释的元素必须是一个数字，其值必须小于等于指定的最大值
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @DecimalMin(value) 被注释的元素必须是一个数字，其值必须大于等于指定的最小值
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @DecimalMax(value) 被注释的元素必须是一个数字，其值必须小于等于指定的最大值
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @Size(max=, min=)   被注释的元素的大小必须在指定的范围内
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @Digits (integer, fraction)     被注释的元素必须是一个数字，其值必须在可接受的范围内
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @Past 被注释的元素必须是一个过去的日期
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @Future 被注释的元素必须是一个将来的日期
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @Pattern(regex=,flag=) 被注释的元素必须符合指定的正则表达式
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserEntity1</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@NotNull</span><span class="p">(</span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;id不能为空&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@NotBlank</span><span class="p">(</span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;用户名不能为空&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Size</span><span class="p">(</span><span class="n">max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">10</span><span class="p">,</span><span class="n">min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">7</span><span class="p">,</span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;密码位数必须在7-10位&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@NotBlank</span><span class="p">(</span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;密码不能为空&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">password</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@NotBlank</span><span class="p">(</span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;企业名称不能为空&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">enterpriseName</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Null</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">contactId</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Null</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">BigDecimal</span><span class="w"> </span><span class="n">money</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Email</span><span class="p">(</span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;电子邮箱不能为空&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">email</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@NotBlank</span><span class="p">(</span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;手机号不能为空&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">mobile</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Controller</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&#34;/user&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserController</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@PostMapping</span><span class="p">(</span><span class="s">&#34;/create&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@ResponseBody</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">createUser</span><span class="p">(</span><span class="nd">@Valid</span><span class="w"> </span><span class="nd">@RequestBody</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 如果 user 对象不符合验证规则，Spring 会自动返回错误响应</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;User created successfully&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">
                             

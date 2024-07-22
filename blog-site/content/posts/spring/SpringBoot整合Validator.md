@@ -45,7 +45,7 @@ Validator框架通常与注解一起使用，例如`@NotNull`、`@Min`、`@Max`�
 Validator框架入门，包括引入依赖、创建controller、创建校验实体、错误异常处理。
 
 ### pom依赖
-从SpringBoot2.3开始，校验包被独立成了一个starter组件，所以需要引入`validation`和`web`，而`springboot-2.3`之前的版本只需要引入`web`依赖就可以了.
+从SpringBoot2.3开始，校验包被独立成了一个`starter`组件，所以需要引入`validation`和`web`，而`springboot-2.3`之前的版本只需要引入`web`依赖就可以了。
 ```xml
 <dependency>
   <groupId>org.springframework.boot</groupId>
