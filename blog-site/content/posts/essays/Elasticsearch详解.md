@@ -7,902 +7,36 @@ slug: "java-elasticsearch"
 ---
 
 ## 概览
-Elasticsearch，简称为 ES， ES是一个开源的高扩展的分布式全文搜索引擎， 是整个 ElasticStack 技术栈的核心。它可以近乎实时的存储、检索数据；本身扩展性很好，可以扩展到上百台服务器，处理 PB 级别的数据。
-> Elastic Stack, 包括 Elasticsearch、 Kibana、 Beats 和 Logstash（也称为 ELK Stack）。能够安全可靠地获取任何来源、任何格式的数据，然后实时地对数据进行搜索、分析和可视化。
+`Elasticsearch`简称为`ES`，它是一个开源的高扩展的分布式全文搜索引擎，是整个`ElasticStack`技术栈的核心。
+它可以近乎实时的存储、检索数据，本身扩展性很好，可以扩展到上百台服务器，处理**PB级别**的数据。
+> 1PB等于1024TB，这是一个非常大的数据量，通常用于描述大规模的数据存储需求，比如在云计算、大数据分析、数据中心等领域。
 
-Elasticsearch 是面向文档型数据库，一条数据在这里就是一个文档。 Elasticsearch 里存储文档数据和关系型数据库 MySQL 存储数据的概念进行一个类比,如图:
+> `Elastic Stack`包括`Elasticsearch`、`Kibana`、`Beats`和`Logstash`，也称为 ELK。能够安全可靠地获取任何来源、任何格式的数据，然后实时地对数据进行搜索、分析和可视化。
+
+`Elasticsearch`是面向文档型数据库，一条数据在这里就是一个文档。`Elasticsearch`里存储文档数据和关系型数据库MySQL存储数据的概念进行一个类比，如图：
 ![Elasticsearch详解-01](/iblog/posts/annex/images/essays/Elasticsearch详解-01.png)
 
-ES 里的 Index 可以看做一个库，而 Types 相当于表， Documents 则相当于表的行。这里 Types 的概念已经被逐渐弱化， Elasticsearch 6.X 中，一个 index 下已经只能包含一个type， Elasticsearch 7.X 中, Type 的概念已经被删除了。
-
-官网下载地址: https://www.elastic.co/cn/downloads/past-releases
-
-## 使用
-### 与ES交互
-
-#### 索引创建
-发送put请求
-```http request
-http://127.0.0.1:9200/_indexname
-```
-
-#### 索引查询
-发送get请求,查询单条
-```http request
-http://127.0.0.1:9200/_indexname
-```
-查询所有索引,发送get请求
-```http request
-http://127.0.0.1:9200/_cat/indices
-```
-
-#### 索引删除
-发送delete请求
-```http request
-http://127.0.0.1:9200/_indexname
-```
-
-#### 文档创建修改
-发送post请求,第一次为创建,再一次发送为修改
-```http request
-http://127.0.0.1:9200/_indexname/_docname/idstr
-```
-请求参数
-```json
-{
-    "title":"华为手机",
-    "category":"小米",
-    "images":"http://www.gulixueyuan.com/xm.jpg",
-    "price":3999.00
-}
-```
-
-#### 文档局部修改
-发送post请求
-```http request
-http://127.0.0.1:9200/_indexname/_update/idstr
-```
-请求参数
-```json
-{
-  "doc": {
-    "title":"小米手机",
-    "category":"小米"
-  }
-}
-```
-
-#### 文档查询
-发送get请求,查询单条
-```http request
-http://127.0.0.1:9200/_indexname/_docname/idstr
-```
-
-#### 文档删除
-发送delete请求
-```http request
-http://127.0.0.1:9200/_indexname/_docname/idstr
-```
-
-#### 全查询
-发送get请求,能看到全部数据
-```http request
-http://127.0.0.1:9200/_indexname/_search
-```
-
-url带参查询,发get请求
-```http request
-http://127.0.0.1:9200/_indexname/_search?q=category:小米
-```
-
-请求体带参查询,发送get请求
-```http request
-http://127.0.0.1:9200/_indexname/_search
-```
-查询category是华为和小米的,price大于2000,只显示title,显示第一页,每页显示两个,根据price降序
-```json
-{
-  "query": {
-    "bool": {
-      "should": [{
-        "match": {
-          "category": "小米"
-        }
-      },
-        {
-          "match": {
-            "category": "华为"
-          }
-        }]
-    },
-    "filter": {
-      "range": {
-        "price": {
-          "gt": 2000
-        }
-      }
-    }
-  },
-  "_source": ["title"],
-  "from": 0,
-  "size": 2,
-  "sort": {
-    "price": {
-      "order": "desc"
-    }
-  }
-}
-```
-
-### 整合SpringBoot
-#### pom依赖
-```xml
-    <dependency>
-        <groupId>org.elasticsearch.client</groupId>
-        <artifactId>elasticsearch-rest-high-level-client</artifactId>
-        <version>7.5.2</version>
-    </dependency>
-    <dependency>
-        <groupId>org.elasticsearch.client</groupId>
-        <artifactId>elasticsearch-rest-client</artifactId>
-        <version>7.5.2</version>
-    </dependency>
-    <dependency>
-        <groupId>org.elasticsearch</groupId>
-        <artifactId>elasticsearch</artifactId>
-        <version>7.5.2</version>
-        <exclusions>
-            <exclusion>
-                <groupId>org.elasticsearch.client</groupId>
-                <artifactId>elasticsearch-rest-client</artifactId>
-            </exclusion>
-            <exclusion>
-                <groupId>org.elasticsearch</groupId>
-                <artifactId>elasticsearch</artifactId>
-            </exclusion>
-        </exclusions>
-    </dependency>
-```
-#### application.yml
-```yaml
-demo:
-  data:
-    elasticsearch:
-      cluster-name: elasticsearch
-      cluster-nodes: [127.0.0.1:1001,127.0.0.1:1002,127.0.0.1:1003]
-      index:
-        number-of-replicas: 0
-        number-of-shards: 3
-```
-#### ElasticsearchAutoConfiguration
-```java
-/**
- * ElasticsearchAutoConfiguration
- *
- * @since 2019-09-15 22:59
- */
-@Configuration
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnableConfigurationProperties(ElasticsearchProperties.class)
-public class ElasticsearchAutoConfiguration {
-
-    private final ElasticsearchProperties elasticsearchProperties;
-
-    private List<HttpHost> httpHosts = new ArrayList<>();
-
-    @Bean
-    @ConditionalOnMissingBean
-    public RestHighLevelClient restHighLevelClient() {
-
-        List<String> clusterNodes = elasticsearchProperties.getClusterNodes();
-        clusterNodes.forEach(node -> {
-            try {
-                String[] parts = StringUtils.split(node, ":");
-                Assert.notNull(parts, "Must defined");
-                Assert.state(parts.length == 2, "Must be defined as 'host:port'");
-                httpHosts.add(new HttpHost(parts[0], Integer.parseInt(parts[1]), elasticsearchProperties.getSchema()));
-            } catch (Exception e) {
-                throw new IllegalStateException("Invalid ES nodes " + "property '" + node + "'", e);
-            }
-        });
-        RestClientBuilder builder = RestClient.builder(httpHosts.toArray(new HttpHost[0]));
-
-        return getRestHighLevelClient(builder, elasticsearchProperties);
-    }
-
-
-    /**
-     * get restHistLevelClient
-     *
-     * @param builder                 RestClientBuilder
-     * @param elasticsearchProperties elasticsearch default properties
-     * @return {@link org.elasticsearch.client.RestHighLevelClient}
-     * @author fxbin
-     */
-    private static RestHighLevelClient getRestHighLevelClient(RestClientBuilder builder, ElasticsearchProperties elasticsearchProperties) {
-
-        // Callback used the default {@link RequestConfig} being set to the {@link CloseableHttpClient}
-        builder.setRequestConfigCallback(requestConfigBuilder -> {
-            requestConfigBuilder.setConnectTimeout(elasticsearchProperties.getConnectTimeout());
-            requestConfigBuilder.setSocketTimeout(elasticsearchProperties.getSocketTimeout());
-            requestConfigBuilder.setConnectionRequestTimeout(elasticsearchProperties.getConnectionRequestTimeout());
-            return requestConfigBuilder;
-        });
-
-        // Callback used to customize the {@link CloseableHttpClient} instance used by a {@link RestClient} instance.
-        builder.setHttpClientConfigCallback(httpClientBuilder -> {
-            httpClientBuilder.setMaxConnTotal(elasticsearchProperties.getMaxConnectTotal());
-            httpClientBuilder.setMaxConnPerRoute(elasticsearchProperties.getMaxConnectPerRoute());
-            return httpClientBuilder;
-        });
-
-        // Callback used the basic credential auth
-        ElasticsearchProperties.Account account = elasticsearchProperties.getAccount();
-        if (!StringUtils.isEmpty(account.getUsername()) && !StringUtils.isEmpty(account.getUsername())) {
-            final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-
-            credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(account.getUsername(), account.getPassword()));
-        }
-        return new RestHighLevelClient(builder);
-    }
-
-}
-```
-#### ElasticsearchProperties
-```java
-/**
- * ElasticsearchProperties
- *
- * @version v1.0
- * @since 2019-09-15 22:58
- */
-@Data
-@Builder
-@Component
-@NoArgsConstructor
-@AllArgsConstructor
-@ConfigurationProperties(prefix = "demo.data.elasticsearch")
-public class ElasticsearchProperties {
-
-    /**
-     * 请求协议
-     */
-    private String schema = "http";
-
-    /**
-     * 集群名称
-     */
-    private String clusterName = "elasticsearch";
-
-    /**
-     * 集群节点
-     */
-    @NotNull(message = "集群节点不允许为空")
-    private List<String> clusterNodes = new ArrayList<>();
-
-    /**
-     * 连接超时时间(毫秒)
-     */
-    private Integer connectTimeout = 1000;
-
-    /**
-     * socket 超时时间
-     */
-    private Integer socketTimeout = 30000;
-
-    /**
-     * 连接请求超时时间
-     */
-    private Integer connectionRequestTimeout = 500;
-
-    /**
-     * 每个路由的最大连接数量
-     */
-    private Integer maxConnectPerRoute = 10;
-
-    /**
-     * 最大连接总数量
-     */
-    private Integer maxConnectTotal = 30;
-
-    /**
-     * 索引配置信息
-     */
-    private Index index = new Index();
-
-    /**
-     * 认证账户
-     */
-    private Account account = new Account();
-
-    /**
-     * 索引配置信息
-     */
-    @Data
-    public static class Index {
-
-        /**
-         * 分片数量
-         */
-        private Integer numberOfShards = 3;
-
-        /**
-         * 副本数量
-         */
-        private Integer numberOfReplicas = 2;
-
-    }
-
-    /**
-     * 认证账户
-     */
-    @Data
-    public static class Account {
-
-        /**
-         * 认证用户
-         */
-        private String username;
-
-        /**
-         * 认证密码
-         */
-        private String password;
-
-    }
-
-}
-```
-#### ElasticsearchConstant
-```java
-/**
- * ElasticsearchConstant
- *
- * @version v1.0
- * @since 2019-09-15 23:03
- */
-public interface ElasticsearchConstant {
-
-    /**
-     * 索引名称
-     */
-    String INDEX_NAME = "person";
-
-
-    /**
-     * 文档名称(字段名称)
-     */
-    String COLUMN_NAME_1 = "column_1";
-    String COLUMN_NAME_2 = "column_2";
-    String COLUMN_NAME_3 = "column_3";
-    String COLUMN_NAME_4 = "column_4";
-    String COLUMN_NAME_5 = "column_5";
-
-    /**
-     * 高亮标签
-     */
-    String TAG_HIGH_LIGHT_START = "<label style='color:red'>";
-    String TAG_HIGH_LIGHT_END = "</label>";
-
-}
-```
-#### Person
-```java
-/**
- * Person
- *
- * @version v1.0
- * @since 2019-09-15 23:04
- */
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class Person implements Serializable {
-
-    private static final long serialVersionUID = 8510634155374943623L;
-
-    /**
-     * 主键
-     */
-    private Long id;
-
-    /**
-     * 名字
-     */
-    private String name;
-
-    /**
-     * 国家
-     */
-    private String country;
-
-    /**
-     * 年龄
-     */
-    private Integer age;
-
-    /**
-     * 生日
-     */
-    private Date birthday;
-
-    /**
-     * 介绍
-     */
-    private String remark;
-
-}
-```
-#### SearchPageHelper
-```java
-/**
- * @author: whitepure
- * @date: 2023/1/6 11:25
- * @description: SearchPageHelper
- */
-@Data
-@Accessors(chain = true)
-public class SearchPageHelper<E> {
-
-    private Long current;
-
-    private Long pageSize;
-
-    private Long total;
-
-    private List<E> records;
-
-}
-```
-#### PersonService
-```java
-/**
- * PersonService
- *
- * @version v1.0
- * @since 2019-09-15 23:07
- */
-public interface PersonService {
-
-    /**
-     * create Index
-     *
-     * @param index elasticsearch index name
-     * @author fxbin
-     */
-    void createIndex(String index);
-
-    /**
-     * delete Index
-     *
-     * @param index elasticsearch index name
-     * @author fxbin
-     */
-    void deleteIndex(String index);
-
-    /**
-     * insert document source
-     *
-     * @param index elasticsearch index name
-     * @param list  data source
-     * @author fxbin
-     */
-    void insert(String index, List<Person> list);
-
-    /**
-     * update document source
-     *
-     * @param index elasticsearch index name
-     * @param list  data source
-     * @author fxbin
-     */
-    void update(String index, List<Person> list);
-
-    /**
-     * delete document source
-     *
-     * @param person delete data source and allow null object
-     * @author fxbin
-     */
-    void delete(String index, @Nullable Person person);
-
-    /**
-     * search all doc records
-     *
-     * @param index elasticsearch index name
-     * @return person list
-     * @author fxbin
-     */
-    List<Person> searchList(String index);
-
-
-    /**
-     * 分页查询
-     *
-     * @param searchRequest search condition
-     * @return search list
-     */
-    SearchPageHelper<Person> searchPage(SearchRequest searchRequest);
-
-}
-```
-#### BaseElasticsearchService
-```java
-/**
- * BaseElasticsearchService
- *
- * @version 1.0v
- * @since 2019-09-16 15:44
- */
-@Slf4j
-public abstract class BaseElasticsearchService {
-
-    @Resource
-    protected RestHighLevelClient client;
-
-    @Resource
-    private ElasticsearchProperties elasticsearchProperties;
-
-    protected static final RequestOptions COMMON_OPTIONS;
-
-    static {
-        RequestOptions.Builder builder = RequestOptions.DEFAULT.toBuilder();
-
-        // 默认缓冲限制为100MB，此处修改为30MB。
-        builder.setHttpAsyncResponseConsumerFactory(new HttpAsyncResponseConsumerFactory.HeapBufferedResponseConsumerFactory(30 * 1024 * 1024));
-        COMMON_OPTIONS = builder.build();
-    }
-
-    /**
-     * create elasticsearch index (asyc)
-     *
-     * @param index elasticsearch index
-     * @author fxbin
-     */
-    protected void createIndexRequest(String index) {
-        try {
-            CreateIndexRequest request = new CreateIndexRequest(index);
-            // Settings for this index
-            request.settings(Settings.builder().put("index.number_of_shards", elasticsearchProperties.getIndex().getNumberOfShards()).put("index.number_of_replicas", elasticsearchProperties.getIndex().getNumberOfReplicas()));
-
-            CreateIndexResponse createIndexResponse = client.indices().create(request, COMMON_OPTIONS);
-
-            log.info(" whether all of the nodes have acknowledged the request : {}", createIndexResponse.isAcknowledged());
-            log.info(" Indicates whether the requisite number of shard copies were started for each shard in the index before timing out :{}", createIndexResponse.isShardsAcknowledged());
-        } catch (IOException e) {
-            throw new ElasticsearchException("创建索引 {" + index + "} 失败");
-        }
-    }
-
-    /**
-     * delete elasticsearch index
-     *
-     * @param index elasticsearch index name
-     * @author fxbin
-     */
-    protected void deleteIndexRequest(String index) {
-        DeleteIndexRequest deleteIndexRequest = buildDeleteIndexRequest(index);
-        try {
-            client.indices().delete(deleteIndexRequest, COMMON_OPTIONS);
-        } catch (IOException e) {
-            throw new ElasticsearchException("删除索引 {" + index + "} 失败");
-        }
-    }
-
-    /**
-     * build DeleteIndexRequest
-     *
-     * @param index elasticsearch index name
-     * @author fxbin
-     */
-    private static DeleteIndexRequest buildDeleteIndexRequest(String index) {
-        return new DeleteIndexRequest(index);
-    }
-
-    /**
-     * build IndexRequest
-     *
-     * @param index  elasticsearch index name
-     * @param id     request object id
-     * @param object request object
-     * @return {@link org.elasticsearch.action.index.IndexRequest}
-     * @author fxbin
-     */
-    protected static IndexRequest buildIndexRequest(String index, String id, Object object) {
-        return new IndexRequest(index).id(id).source(BeanUtil.beanToMap(object), XContentType.JSON);
-    }
-
-    /**
-     * exec updateRequest
-     *
-     * @param index  elasticsearch index name
-     * @param id     Document id
-     * @param object request object
-     * @author fxbin
-     */
-    protected void updateRequest(String index, String id, Object object) {
-        try {
-            UpdateRequest updateRequest = new UpdateRequest(index, id).doc(BeanUtil.beanToMap(object), XContentType.JSON);
-            client.update(updateRequest, COMMON_OPTIONS);
-        } catch (IOException e) {
-            throw new ElasticsearchException("更新索引 {" + index + "} 数据 {" + object + "} 失败");
-        }
-    }
-
-    /**
-     * exec deleteRequest
-     *
-     * @param index elasticsearch index name
-     * @param id    Document id
-     * @author fxbin
-     */
-    protected void deleteRequest(String index, String id) {
-        try {
-            DeleteRequest deleteRequest = new DeleteRequest(index, id);
-            client.delete(deleteRequest, COMMON_OPTIONS);
-        } catch (IOException e) {
-            throw new ElasticsearchException("删除索引 {" + index + "} 数据id {" + id + "} 失败");
-        }
-    }
-
-    /**
-     * 查询全部
-     *
-     * @param indices elasticsearch 索引名称
-     * @return {@link SearchResponse}
-     */
-    protected SearchResponse search(String... indices) {
-        SearchRequest searchRequest = new SearchRequest(indices);
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
-        searchRequest.source(searchSourceBuilder);
-        return search(searchRequest);
-    }
-
-
-    /**
-     * 查询全部
-     *
-     * @param searchRequest 查询条件
-     * @return {@link SearchResponse}
-     */
-    protected SearchResponse search(SearchRequest searchRequest) {
-        SearchResponse searchResponse;
-        try {
-            searchResponse = client.search(searchRequest, COMMON_OPTIONS);
-        } catch (IOException e) {
-            throw new org.elasticsearch.ElasticsearchException("查询索引 %s 失败" , e, Arrays.toString(Arrays.stream(searchRequest.indices()).toArray()));
-        }
-        return searchResponse;
-    }
-}
-```
-
-#### PersonServiceImpl
-```java
-/**
- * PersonServiceImpl
- *
- * @version v1.0
- * @since 2019-09-15 23:08
- */
-@Service
-public class PersonServiceImpl extends BaseElasticsearchService implements PersonService {
-
-    @Override
-    public void createIndex(String index) {
-        createIndexRequest(index);
-    }
-
-    @Override
-    public void deleteIndex(String index) {
-        deleteIndexRequest(index);
-    }
-
-    @SneakyThrows
-    @Override
-    public void insert(String index, List<Person> list) {
-        for (Person person : list) {
-            IndexRequest request = buildIndexRequest(index, String.valueOf(person.getId()), person);
-            client.index(request, COMMON_OPTIONS);
-        }
-    }
-
-    @Override
-    public void update(String index, List<Person> list) {
-        list.forEach(person -> updateRequest(index, String.valueOf(person.getId()), person));
-    }
-
-    @Override
-    public void delete(String index, Person person) {
-        if (ObjectUtils.isEmpty(person)) {
-            // 如果person 对象为空，则删除全量
-            searchList(index).forEach(p -> {
-                deleteRequest(index, String.valueOf(p.getId()));
-            });
-        }
-        deleteRequest(index, String.valueOf(person.getId()));
-    }
-
-    @Override
-    public List<Person> searchList(String index) {
-        return toSearchList(search(index));
-    }
-
-
-    @Override
-    public SearchPageHelper<Person> searchPage(SearchRequest searchRequest) {
-        SearchResponse searchResponse = search(searchRequest);
-        TotalHits totalHits = searchResponse.getHits().getTotalHits();
-        return new SearchPageHelper<Person>()
-            .setTotal(totalHits == null ? 0 : totalHits.value)
-            .setRecords(toSearchList(searchResponse))
-            .setPageSize(20L);
-    }
-
-
-    private List<Person> toSearchList(SearchResponse searchResponse) {
-        SearchHit[] hits = searchResponse.getHits().getHits();
-        List<Person> searchList = new ArrayList<>();
-
-        Arrays.stream(hits).forEach(hit -> {
-            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-            // 处理高亮数据
-            Map<String, HighlightField> highlightFields = hit.getHighlightFields();
-            highlightFields.forEach((k, v) -> {
-                    if (v != null && v.getFragments().length > 0) {
-                        sourceAsMap.put(k, StrUtil.strip(Arrays.toString(v.getFragments()), "[]"));
-                    }
-                }
-            );
-            Person search = BeanUtil.mapToBean(sourceAsMap, Person.class, true);
-            searchList.add(search);
-        });
-        return searchList;
-    }
-
-}
-```
-
-#### ElasticsearchApplicationTests
-```java
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class ElasticsearchApplicationTests {
-
-    @Autowired
-    private PersonService personService;
-
-    /**
-     * 测试删除索引
-     */
-    @Test
-    public void deleteIndexTest() {
-        personService.deleteIndex(ElasticsearchConstant.INDEX_NAME);
-    }
-
-    /**
-     * 测试创建索引
-     */
-    @Test
-    public void createIndexTest() {
-        personService.createIndex(ElasticsearchConstant.INDEX_NAME);
-    }
-
-    /**
-     * 测试新增
-     */
-    @Test
-    public void insertTest() {
-        List<Person> list = new ArrayList<>();
-        list.add(Person.builder().age(11).birthday(new Date()).country("CN").id(1L).name("哈哈").remark("test1").build());
-        list.add(Person.builder().age(22).birthday(new Date()).country("US").id(2L).name("hiahia").remark("test2").build());
-        list.add(Person.builder().age(33).birthday(new Date()).country("ID").id(3L).name("呵呵").remark("test3").build());
-
-        personService.insert(ElasticsearchConstant.INDEX_NAME, list);
-    }
-
-    /**
-     * 测试更新
-     */
-    @Test
-    public void updateTest() {
-        Person person = Person.builder().age(33).birthday(new Date()).country("ID_update").id(3L).name("呵呵update").remark("test3_update").build();
-        List<Person> list = new ArrayList<>();
-        list.add(person);
-        personService.update(ElasticsearchConstant.INDEX_NAME, list);
-    }
-
-    /**
-     * 测试删除
-     */
-    @Test
-    public void deleteTest() {
-        personService.delete(ElasticsearchConstant.INDEX_NAME, Person.builder().id(1L).build());
-    }
-
-    /**
-     * 测试查询
-     */
-    @Test
-    public void searchListTest() {
-        List<Person> personList = personService.searchList(ElasticsearchConstant.INDEX_NAME);
-        System.out.println(personList);
-    }
-
-
-    /**
-     * 测试分页查询
-     */
-    @Test
-    public void searchPageTest(){
-        int current = 1;
-        int pageSize = 20;
-        int maxCurrent = 500;
-
-        // 此处最大页数设置为500 为es浅分页; 如需深度分页需更换分页方法并移除此条件
-        if (current > maxCurrent) {
-            return;
-        }
-
-        // 构造查询条件
-        SearchRequest searchRequest = new SearchRequest(ElasticsearchConstant.INDEX_NAME);
-        searchRequest.source(new SearchSourceBuilder()
-            .trackTotalHits(true)
-            // 查询条件
-            .query(
-                QueryBuilders.boolQuery()
-                    // and
-                    .must(QueryBuilders.termQuery(ElasticsearchConstant.COLUMN_NAME_2, true))
-                    // or
-                    .must(
-                        QueryBuilders.boolQuery()
-                            .should(QueryBuilders.matchQuery(ElasticsearchConstant.COLUMN_NAME_1, 1))
-                            .should(QueryBuilders.matchQuery(ElasticsearchConstant.COLUMN_NAME_2, 2))
-                            .should(QueryBuilders.matchQuery(ElasticsearchConstant.COLUMN_NAME_3, 3))
-                    )
-            )
-            // 分页
-            .from((current - 1) * pageSize)
-            .size(pageSize)
-            // 相关度排序: SortBuilders.scoreSort()
-            .sort(
-                // 字段排序 可根据时间
-                SortBuilders
-                    .fieldSort(ElasticsearchConstant.COLUMN_NAME_2)
-                    .order(SortOrder.DESC)
-            )
-            // 高亮字段
-            .highlighter(new HighlightBuilder()
-                .requireFieldMatch(true)
-                .preTags(ElasticsearchConstant.TAG_HIGH_LIGHT_START)
-                .field(ElasticsearchConstant.COLUMN_NAME_1)
-                .field(ElasticsearchConstant.COLUMN_NAME_2)
-                .field(ElasticsearchConstant.COLUMN_NAME_3)
-                .postTags(ElasticsearchConstant.TAG_HIGH_LIGHT_END)
-            ));
-
-        SearchPageHelper<Person> personSearchPageHelper = personService.searchPage(searchRequest);
-        System.out.println(personSearchPageHelper);
-    }
-    
-}
-```
+`ES`里的`Index`可以看做一个库，而`Types`相当于表，`Documents`则相当于表的行。
+这里`Types`的概念已经被逐渐弱化，`Elasticsearch 6.X`中，一个`index`下已经只能包含一个`type`，`Elasticsearch 7.X`中，`Type`的概念已经被删除了。
 
 ## 集群架构
-一个运行中的 Elasticsearch 实例称为一个节点，而集群是由一个或者多个拥有相同 cluster.name 配置的节点组成， 它们共同承担数据和负载的压力。 当有节点加入集群中或者从集群中移除节点时，集群将会重新平均分布所有的数据。
+一个运行中的`Elasticsearch`实例称为一个节点，而集群是由一个或者多个拥有相同`cluster.name`配置的节点组成的，它们共同承担数据和负载的压力。
+当有节点加入集群中或者从集群中移除节点时，集群将会重新平均分布所有的数据。
 
-当一个节点被选举成为主节点时， 它将负责管理集群范围内的所有变更，例如增加、 删除索引，或者增加、删除节点等。 而主节点并不需要涉及到文档级别的变更和搜索等操作，所以当集群只拥有一个主节点的情况下，即使流量的增加它也不会成为瓶颈。 任何节点都可以成为主节点。我们的示例集群就只有一个节点，所以它同时也成为了主节点。
+当一个节点被选举成为主节点时，它将负责管理集群范围内的所有的变更，例如，增加、删除索引，或者增加、删除节点等。
+而主节点并不需要涉及到文档级别的变更和搜索等操作，所以当集群只拥有一个主节点的情况下，即使流量的增加它也不会成为瓶颈。
+任何节点都可以成为主节点。
 
-作为用户，我们可以将请求发送到集群中的任何节点 ，包括主节点。 每个节点都知道任意文档所处的位置，并且能够将我们的请求直接转发到存储我们所需文档的节点。 无论我们将请求发送到哪个节点，它都能负责从各个包含我们所需文档的节点收集回数据，并将最终结果返回给客户端。
+作为用户，我们可以将请求发送到集群中的任何节点，包括主节点。每个节点都知道任意文档所处的位置，并且能够将我们的请求直接转发到存储我们所需文档的节点。
+无论我们将请求发送到哪个节点，它都能负责从各个包含我们所需文档的节点收集回数据，并将最终结果返回给客户端。
 
 ### 搭建集群
-1. 创建 elasticsearch-cluster 文件夹，在内部复制三个 elasticsearch 服务。
-![Elasticsearch详解-02](/iblog/posts/annex/images/essays/Elasticsearch详解-02.png)
+1. 创建`elasticsearch-cluster`文件夹，在内部复制三个`elasticsearch`服务。
 
-2. 修改节点配置; config/elasticsearch.yml 文件
-   - node-1001 节点
+    ![Elasticsearch详解-02](/iblog/posts/annex/images/essays/Elasticsearch详解-02.png)
+
+2. 修改节点配置`config/elasticsearch.yml`文件。
+   - `node-1001`节点
       ```yaml
       #集群名称，节点之间要保持一致
       cluster.name: my-elasticsearch
@@ -926,7 +60,7 @@ public class ElasticsearchApplicationTests {
       http.cors.enabled: true
       http.cors.allow-origin: "*"
       ```
-   - node-1002 节点
+   - `node-1002`节点
      ```yaml
       #集群名称，节点之间要保持一致
       cluster.name: my-elasticsearch
@@ -950,7 +84,7 @@ public class ElasticsearchApplicationTests {
       http.cors.enabled: true
       http.cors.allow-origin: "*"
       ```
-   - node-1003 节点
+   - `node-1003`节点
      ```yaml
      #集群名称，节点之间要保持一致
      cluster.name: my-elasticsearch
@@ -975,107 +109,92 @@ public class ElasticsearchApplicationTests {
      http.cors.enabled: true
      http.cors.allow-origin: "*"
      ```
+3. 启动集群，点击`bin\elasticsearch.bat`
 
-3. 启动集群; 点击 bin\elasticsearch.bat
-![Elasticsearch详解-03](/iblog/posts/annex/images/essays/Elasticsearch详解-03.png)
+    ![Elasticsearch详解-03](/iblog/posts/annex/images/essays/Elasticsearch详解-03.png)
 
-如果启动不起来可能原因是分配内存不足，需要修改 config\jvm.options 文件中的内存属性
-
-启动之后使用ES可视化工具查看,可使用[elasticsearch-head](https://github.com/mobz/elasticsearch-head),[ElasticHD](https://gitee.com/farmerx/ElasticHD)
+如果启动不起来，可能原因是分配内存不足，需要修改`config\jvm.options`文件中的内存属性。
+启动之后可使用[elasticsearch-head](https://github.com/mobz/elasticsearch-head),[ElasticHD](https://gitee.com/farmerx/ElasticHD)等`ES`可视化工具查看。
 
 ### 分布式架构原理
-ElasticSearch 设计的理念就是分布式搜索引擎，底层其实还是基于 lucene 的。核心思想就是在多台机器上启动多个 ES 进程实例，组成了一个 ES 集群。
-
-ES分布式架构实际上就是对index的拆分,将index拆分成多个分片(shard),将分片分别放到不同的ES上实现集群部署.
+`ElasticSearch`设计的理念就是分布式搜索引擎，底层其实还是基于`lucene`的。
+其核心思想就是在多台机器上启动多个`ES`进程实例，组成了一个`ES`集群。
+`ES`分布式架构实际上就是对`index`进行拆分，将`index`拆分成多个分片，并将分片分别放到不同的`ES`上实现集群部署。
 
 ![Elasticsearch详解-05](/iblog/posts/annex/images/essays/Elasticsearch详解-05.png)
 
-分片优点:
-- 支持横向扩展: 比如你数据量是 3T，3 个 shard，每个 shard 就 1T 的数据，若现在数据量增加到 4T,怎么扩展，很简单，重新建一个有 4 个 shard 的索引，将数据导进去;
-- 提高性能: 数据分布在多个 shard，即多台服务器上，所有的操作，都会在多台机器上并行分布式执行，提高了吞吐量和性能;
+分片是其核心架构的一个重要组成部分，分片的设计使得`Elasticsearch`能够水平扩展，处理大规模数据和高负载查询。
+分片是索引的子集，用于将数据分布到不同的节点上。每个分片都是一个完整的倒排索引，它独立处理存储和搜索任务。
 
-分片的数据实际上是有多个备份存在的,会存在一个主分片,还有几个副本分片. 当写入数据的时候先写入主分片,然后并行将数据同步到副本分片上;当读数据的时候会获取到所有分片,负载均衡轮询读取.
+它支持横向扩展。比如你数据量是3T，3个分片，每个分片就是1T的数据。若现在数据量增加到4T，怎么扩展？很简单，重新建一个有4个分片的索引将数据导进去；
+还能提高性能。数据分布在多个分片，即多台服务器上，负载均衡分散了查询和索引操作的压力。查询请求会被分发到各个相关的分片上，提升了查询效率。
 
-当某个节点宕机了,还有其他分片副本保存在其他的机器上,从而实现了高可用. 如果是非主节点宕机了，那么会由主节点，让那个宕机节点上的主分片的数据转移到其他机器上的副本数据。接着你要是修复了那个宕机机器，重启了之后，主节点会控制将缺失的副本数据分配过去，同步后续修改的数据之类的，让集群恢复正常. 如果是主节点宕机,那么会重新选举一个节点为主节点.
+分片的数据实际上是有多个备份存在的，会存在一个主分片还有几个副本分片。如果主分片所在的节点发生故障，副本分片可以接管，确保数据不会丢失。
+当写入数据的时候先写入主分片，然后并行将数据同步到副本分片上。当读数据的时候会获取到所有分片，然后负载均衡轮询读取。
+
+当某个节点宕机了，还有其他分片副本保存在其他的机器上，从而实现了高可用。如果是非主节点宕机了，那么会由主节点，让那个宕机节点上的主分片的数据转移到其他机器上的副本数据。
+接着你要是修复了那个宕机机器，重启了之后，主节点会控制将缺失的副本数据分配过去，同步后续修改的数据之类的，让集群恢复正常。如果是主节点宕机，那么会重新选举一个节点为主节点。
 
 ### 故障转移
-在一个网络环境里，失败随时都可能发生，在某个分片/节点不知怎么的就处于离线状态，或者由于任何原因消失了，这种情况下，有一个故障转移机制是非常有用并且是强烈推荐的。为此目的，Elasticsearch 允许你创建分片的一份或多份拷贝，这些拷贝叫做复制分片。
+在一个网络环境里，失败随时都可能发生，在某个分片/节点不知怎么的就处于离线状态，或者由于任何原因消失了。
+这种情况下，有一个故障转移机制是非常有用并且是强烈推荐的。为此`Elasticsearch`允许创建分片的一份或多份拷贝，这些拷贝叫做复制分片。
 
-当集群中只有一个节点在运行时，意味着会有一个单点故障问题——没有冗余。 幸运的是，我们只需再启动一个节点即可防止数据丢失。当你在同一台机器上启动了第二个节点时，只要它和第一个节点有同样的 cluster.name 配置，它就会自动发现集群并加入到其中。
+当集群中只有一个节点在运行时，意味着会有一个单点故障问题。幸运的是，我们只需再启动一个节点即可防止数据丢失。
+当你在同一台机器上启动了第二个节点时，只要它和第一个节点有同样的`cluster.name`配置，它就会自动发现集群并加入到其中。
 
-ES最好部署3个以上的节点，并且配置仲裁数大于一半节点，防止master选举的脑裂问题。
-- 当一个节点掉线，如果该节点是master节点，则通过比较node ID，选择较小ID的节点为master；
-- 然后由master节点决定分片如何重新分配。同理，新加入节点也是由master决定如何分配分片；
+集群中的节点是通过心跳机制周期性地检查其他节点的健康状态。当节点未响应时，集群会将其标记为不可用。
+如果一个节点上的主分片发生故障，`Elasticsearch`会将其标记为“失效”。集群会自动选举一个副本分片作为新的主分片，来确保数据的可用性。
+如果一个节点上的副本分片发生故障，集群会尝试从其他节点上的副本分片中恢复。集群会自动重新分配副本分片到其他健康节点，来保证数据的冗余备份。
 
-> 关于master的选举: 
-  主要是由ZenDiscovery模块负责,包含Ping(节点之间通过这个RPC来发现彼此)和Unicast（单播模块包含-一个主机列表以控制哪些节点需要ping通）这两部分.
-  首先对所有可以成为master的节点(可以配置)根据nodeId排序,每次选举每个节点都把自己所知道节点排一次序,然后选出第一个,暂且认为它是master节点
-  如果对某个节点的投票数达到一定的值（可以成为master节点数n/2+1）并且该节点自己也选举自己,那这个节点就是master。否则重新选举一直到满足上述条件
+当故障的节点恢复时，集群会自动将其重新加入，并重新分配分片。如果原来的主分片已被重新选举，恢复的节点会从其他节点接收数据，确保数据的一致性。
+如果主分片发生故障并被替换，集群会将新的主分片的数据从副本分片恢复。`Elasticsearch`会将副本分片同步到恢复的节点，确保副本分片的最新状态。
 
-> ES在主节点上产生分歧，产生多个主节点，从而使集群分裂，使得集群处于异常状态。这个现象叫做脑裂。脑裂问题其实就是同一个集群的不同节点对于整个集群的状态有不同的理解，导致操作错乱，类似于精神分裂。
+集群中的节点使用心跳机制定期检查主节点的健康状态。如果主节点在一定时间内未响应，其他节点会认为主节点可能已故障。
+当现有主节点故障时，集群会自动开始主节点选举过程。所有节点都可以作为候选主节点参与选举。
+参与选举的节点会进行投票，选择一个候选节点成为新的主节点。当候选节点获得多数投票时，它将被选举为新的主节点。选举结果会被通知所有节点，新的主节点开始接管管理任务。
 
+当一个节点掉线，如果该节点是`master`节点，则通过比较`node ID`，选择较小`ID`的节点为`master`。然后由`master`节点决定分片如何重新分配。同理，新加入节点也是由`master`决定如何分配分片。
+但是`ES`在主节点的选举中会产生分歧，会产生多个主节点，从而使集群分裂，使得集群处于异常状态，这个现象叫做脑裂。
+脑裂问题其实就是同一个集群的不同节点对于整个集群的状态有不同的理解，导致操作错乱，类似于精神分裂。
+所以`ES`最好部署三个以上的节点，并且配置仲裁数大于一半节点，来防止`master`选举的脑裂问题。
 
 ### 分片控制
-当写入一个文档的时候，文档会被存储到一个主分片中。 Elasticsearch 集群如何知道一个文档应该存放到哪个分片中呢？
+当写入一个文档的时候，文档会被存储到一个主分片中。`Elasticsearch`集群是如何知道一个文档应该存放到哪个分片中呢？
 
-Elasticsearch 集群路由计算公式:
-```
+`Elasticsearch`集群路由计算公式：
+```text
 shard = hash(routing) % number_of_primary_shards
 ```
-routing 是一个可变值，默认是文档的 _id ，也可以设置成一个自定义的值。 routing 通过hash 函数生成一个数字，然后这个数字再除以 number_of_primary_shards （主分片的数量）后得到余数 。这个分布在 0 到 number_of_primary_shards-1 之间的余数，就是我们所寻求的文档所在分片的位置。
-
-这也就是创建索引的时候主分片的数量永远也不会改变的原因,如果数量变化了,那么所有之前路由的值都会无效,文档也再也找不到了.
-
-用户可以访问任何一个节点获取数据,因为存放的规则一致(副本和主分片存放的数据一致),这个节点称之为协调节点.如果当前节点访问量较大可能被转到其他节点上,所以当发送请求的时候,为了扩展负载,更好的做法是轮询集群中所有的节点.
+`routing`是一个可变值，默认是文档的`id`，也可以设置成一个自定义的值。`routing`通过`hash`函数生成一个数字，然后这个数字再除以`number_of_primary_shards`（主分片的数量）后得到余数。
+这个分布在0到`number_of_primary_shards-1`之间的余数，就是我们所寻求的文档所在分片的位置。
+这也就是创建索引的时候主分片的数量永远也不会改变的原因，如果数量变化了，那么所有之前路由的值都会无效，文档也再也找不到了。
 
 ### 写数据流程
 ![Elasticsearch详解-06](/iblog/posts/annex/images/essays/Elasticsearch详解-06.png)
 
-1. 客户端请请求任意集群节点(协调节点);
-2. 协调节点将请求转换到指定节点(路由计算);
-3. 主分片需要将数据保存;
-4. 主分片将保存数据的请求发送到各个副本;
-5. 各个副本保存后,进行响应;
-6. 主分片进行响应;
-7. 客户端获取响应;
+1. 写请求接收：用户发起的写请求（如 `index`、`update`、`delete`）会发送到集群中的任意节点，称为协调节点。
+2. 请求路由：协调节点将写请求路由到正确的主分片，负责处理写操作。
+3. 主分片处理：主分片将文档写入内存中的缓冲区，并更新索引的内部数据结构。数据会周期性地从内存刷新到磁盘上的段文件中，完成持久化。
+4. 同步副本：主分片将数据复制到所有副本分片，副本分片将数据写入内存缓冲区，并最终刷新到磁盘。
+5. 写操作确认：主分片和副本分片完成写入和同步后，写请求被标记为成功。协调节点收集分片的确认信息，并将结果返回给客户端。
+6. 持久化与刷新：定期刷新操作将内存中的数据刷新到磁盘，用户也可以强制刷新以将最新写操作纳入搜索中。
+7. 数据一致性：写操作具有原子性，要么完全成功，要么完全失败。副本分片同步提供数据冗余备份，主分片发生故障时副本分片可以接管。
 
-
-在客户端收到成功响应时，文档变更已经在主分片和所有副本分片执行完成，变更是安全的。有一些可选的请求参数允许您影响这个过程，可能以数据安全为代价提升性能。
-
-设置 consistency 参数值会影响写入操作.consistency 参数的值可以设为:
-- one ：只要主分片状态 ok 就允许执行写操作;
-- all：必须要主分片和所有副本分片的状态没问题才允许执行写操作;
-- quorum：默认值为quorum , 即大多数的分片副本状态没问题就允许执行写操作;
-
-当consistency值设置为quorum时,如果没有足够的副本分片Elasticsearch 会等待.默认情况下,它最多等待 1 分钟,可以使用timeout参数使它更早终止.
+当客户端收到成功响应时，文档变更已在主分片和所有副本分片中完成。可以通过一些请求参数来影响这一过程，这可能会提升性能，但可能会降低数据安全性。
+设置`consistency`参数值会影响写入操作。`consistency`参数的值可以设为：
+- `one`：只要主分片状态正常，就允许执行写操作。
+- `all`：必须要主分片和所有副本分片的状态正常才允许执行写操作。
+- `quorum`：默认值为 `quorum`，即大多数的分片副本状态正常就允许执行写操作。如果没有足够的副本分片，`Elasticsearch`会等待。默认情况下，它最多等待1分钟，可以使用`timeout`参数控制。
 
 ### 读数据流程
-
-1. 客户端发送查询请求到协调节点;
-2. 协调节点计算数据所在的分片及全部的副本位置,为了能负载均衡要轮询所有的分片;
-3. 将请求转发给具体的节点;
-4. 节点返回查询结果,将结果返回给客户端;
-
-在处理读取请求时，协调结点在每次请求的时候都会通过轮询所有的副本分片来达到负载均衡。在文档被检索时，已经保存的数据可能已经存在于主分片上但是还没有复制到副本分片。 在这种情况下，副本分片可能会报告文档不存在，但是主分片可能成功返回文档。 一旦索引请求成功返回给用户，文档在主分片和副本分片都是可用的。
-
-### 搜索数据过程
-1. 客户端发送请求到一个协调节点;
-2. 协调节点计算数据所在的分片及全部的副本位置;
-3. 每个分片将自己的搜索结果（其实就是一些 doc id ）返回给协调节点，由协调节点进行数据的合并、排序、分页等操作，产出最终结果;
-4. 接着由协调节点根据 doc id 去各个节点上拉取实际的 document 数据，最终返回给客户端;
-
-### 更新流程
-
-1. 客户端向某一节点发送更新请求;
-2. 将请求转发到主分片所在的节点;
-3. 从主分片检索文档，修改_source字段中的JSON，并且尝试重新索引主分片的文档。如果文档已经被另一个进程修改,它会重试步骤3 ,超过retry_on_conflict次后放弃;
-4. 如果主节点成功地更新文档，它将新版本的文档并行转发到副本分片，重新建立索引。一旦所有副本分片都返回成功，主节点向协调节点也返回成功，协调节点向客户端返回成功;
-
-在步骤4中,主分片把更改转发到副本分片时， 它不会转发更新请求。 相反，它转发完整文档的新版本。请记住，这些更改将会异步转发到副本分片，并且不能保证它们以发送它们相同的顺序到达。 如果 Elasticsearch 仅转发更改请求，则可能以错误的顺序应用更改，导致得到损坏的文档。
+1. 用户发起读请求（如 `search`、`get`），请求发送到集群中的任意节点，称为协调节点。
+2. 协调节点将请求路由到主分片和副本分片。主分片处理请求，查询内存中的数据，必要时从磁盘读取数据，并将结果返回给协调节点。副本分片也接收请求，从内存或磁盘读取数据，返回结果给协调节点。
+3. 协调节点从主分片和副本分片收集查询结果，进行合并和排序。
+5. 协调节点最终返回的结果可能包括主分片的最新数据和副本分片的同步数据。这样，即使副本分片尚未完全更新，客户端也能收到最新的数据或正确的查询结果。
 
 ## 原理
-分片是Elasticsearch最小的工作单元。传统的数据库每个字段存储单个值，但这对全文检索并不够。文本字段中的每个单词需要被搜索，对数据库意味着需要单个字段有索引多值的能力。最好的支持是一个字段多个值需求的数据结构是倒排索引。
-
+[//]: # (写到了这里)
+分片是`Elasticsearch`最小的工作单元。传统的数据库每个字段存储单个值，但这对全文检索并不够。文本字段中的每个单词需要被搜索，对数据库意味着需要单个字段有索引多值的能力。最好的支持是一个字段多个值需求的数据结构是倒排索引。
 
 ### 倒排索引
 Elasticsearch 使用一种称为 倒排索引 的结构，它适用于快速的全文搜索。一个倒排索引由文档中所有不重复词的列表构成，对于其中每个词，有一个包含它的文档列表。 倒排索引（Inverted Index）也叫反向索引，有反向索引必有正向索引。通俗地来讲，正向索引是通过key找value，反向索引则是通过value找key。
