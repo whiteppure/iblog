@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh" >
-<head><script src="/iblog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=iblog/livereload" data-no-instant defer></script>
+<head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,18 +22,18 @@
 
 	
 
-    <link rel="shortcut icon" href="http://localhost:1313/iblog/images/favicon.ico" />
+    <link rel="shortcut icon" href="https://whiteppure.github.io/iblog/images/favicon.ico" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/normalize.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/animate.min.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/zozo.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/zozo.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/highlight.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/highlight.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/toc.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/search.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/img.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/toc.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/search.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/img.css" />
 
     
     
@@ -120,8 +120,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e6%8e%92%e6%9f%a5%e8%a7%a3%e5%86%b3%e5%86%85%e5%ad%98%e6%b3%84%e6%bc%8f">
-                    排查解决内存泄漏
+                <a class="nav-link text-left" href="#%e6%8e%92%e6%9f%a5%e5%8f%8a%e8%a7%a3%e5%86%b3%e5%86%85%e5%ad%98%e6%b3%84%e6%bc%8f">
+                    排查及解决内存泄漏
                 </a>
             </li>
             
@@ -339,13 +339,13 @@
         <div class="nav_container animated fadeInDown">
     <div class="site_nav" id="site_nav">
         <ul><li class="">
-                <a href="http://localhost:1313/iblog/">首页</a>
+                <a href="https://whiteppure.github.io/iblog/">首页</a>
             </li><li class="">
-                <a href="http://localhost:1313/iblog/posts/">归档</a>
+                <a href="https://whiteppure.github.io/iblog/posts/">归档</a>
             </li><li class="">
-                <a href="http://localhost:1313/iblog/tags/">标签</a>
+                <a href="https://whiteppure.github.io/iblog/tags/">标签</a>
             </li><li class="">
-                <a href="http://localhost:1313/iblog/about/">关于</a>
+                <a href="https://whiteppure.github.io/iblog/about/">关于</a>
             </li>
         </ul>
     </div>
@@ -357,7 +357,7 @@
     <div class="site_title_container">
         <div class="site_title">
             <h1>
-                <a href="http://localhost:1313/iblog/">
+                <a href="https://whiteppure.github.io/iblog/">
                     <span>脚踏实地</span>
                 </a>
             </h1>
@@ -376,7 +376,7 @@
                     </a>
                     
                 
-                <a href="http://localhost:1313/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
                     <i class="ri-rss-fill"></i>
                 </a>
                 
@@ -422,7 +422,7 @@
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
                         <h2 id="post_single_title">内存泄漏详解</h2>
-                        <span id="post_page_title_date" class="date">2024.07.22</span>
+                        <span id="post_page_title_date" class="date">2024.07.23</span>
                         
                         <span id="busuanzi_container_page_pv" class="m-l-10">
                           阅读量<span id="busuanzi_value_page_pv"></span>次
@@ -460,7 +460,7 @@
 <p>所以减少长生命周期对象持有短生命周期对象的强引用是解决内存泄漏的一个关键点。利用弱引用或者软引用可以让垃圾回收器更容易回收不再需要的对象。对于外部资源，如数据库连接、文件、网络连接，用完后应该及时关闭。<code>try-with-resources</code>语句是管理这些资源的有效工具，同时移除不再需要的事件监听器也能防止内存泄漏。
 管理集合时，设定大小限制并定期清理过期数据可以避免无限增长。使用有界数据结构能帮助控制缓存的大小。静态集合要特别留意，避免它们占用过多内存，通过定期清理来管理数据的存储。
 通过这些措施，可以减少内存泄漏的风险。</p>
-<h2 id="排查解决内存泄漏">排查解决内存泄漏</h2>
+<h2 id="排查及解决内存泄漏">排查及解决内存泄漏</h2>
 <p>根据运维之前收集到的内存数据、GC日志尝试判断哪里出现了问题。结果发现老年代的内存使用就算是发生GC也一直居高不下，而且随着时间推移也越来越高。</p>
 <p><img alt="内存泄漏问题-01" src="/iblog/posts/annex/images/essays/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98-01.png"></p>
 <p>使用<code>jstat -gc &lt;vmid&gt;</code> 查看GC垃圾回收统计信息，看<code>Full GC</code>后堆空间使用内存还持续增长，且有增长到<code>Xmx</code>设定值的趋势，基本可以肯定存在内存泄露。
@@ -486,7 +486,7 @@
 </li>
 </ol>
 <h2 id="避免内存泄漏">避免内存泄漏</h2>
-<p>内存泄漏是由代码中的问题导致的，这些问题通常源于编程错误、设计不良或对资源管理的忽视。那怎么避免内存泄漏，就需要从代码层面入手。</p>
+<p>内存泄漏是由代码中的问题导致的，这些问题通常源于编程错误、设计不良或对资源管理的忽视。那想要避免内存泄漏，就需要从代码层面入手。</p>
 <h3 id="及时释放资源">及时释放资源</h3>
 <p>如数据库连接、网络连接和IO连接等，当不再使用时，需要调用<code>close</code>方法来释放连接。
 只有连接被关闭后，垃圾回收器才会回收对应的对象。否则如果在连接过程中，对一些对象不显性地关闭，将会造成大量的对象无法被回收，从而引起内存泄漏。</p>
@@ -645,11 +645,11 @@
                                     <i class="ri-stack-line"></i>
                                     
                                         
-                                        <a href="http://localhost:1313/iblog/tags/java/">Java</a>
+                                        <a href="https://whiteppure.github.io/iblog/tags/java/">Java</a>
                                     
-                                        <a href="http://localhost:1313/iblog/tags/jvm/">JVM</a>
+                                        <a href="https://whiteppure.github.io/iblog/tags/jvm/">JVM</a>
                                     
-                                        <a href="http://localhost:1313/iblog/tags/%E8%AF%A6%E8%A7%A3/">详解</a>
+                                        <a href="https://whiteppure.github.io/iblog/tags/%E8%AF%A6%E8%A7%A3/">详解</a>
                                     
                                     
                                 </span>
@@ -665,7 +665,7 @@
     <div id="vcomments"></div>
 </div>
 
-<link rel="stylesheet" href="http://localhost:1313/iblog/css/comments.css" />
+<link rel="stylesheet" href="https://whiteppure.github.io/iblog/css/comments.css" />
 
 <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
 
@@ -774,20 +774,20 @@
         <span>from 2021</span>
     </div>
 </footer>
-    <script src="http://localhost:1313/iblog/js/jquery-3.5.1.min.js"></script>
-<link href="http://localhost:1313/iblog/css/fancybox.min.css" rel="stylesheet">
-<script src="http://localhost:1313/iblog/js/fancybox.min.js"></script>
-<script src="http://localhost:1313/iblog/js/darkmode.js"></script>
-<script src="http://localhost:1313/iblog/js/zozo.js"></script>
+    <script src="https://whiteppure.github.io/iblog/js/jquery-3.5.1.min.js"></script>
+<link href="https://whiteppure.github.io/iblog/css/fancybox.min.css" rel="stylesheet">
+<script src="https://whiteppure.github.io/iblog/js/fancybox.min.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/darkmode.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/zozo.js"></script>
 <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="http://localhost:1313/iblog/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
-<script src="http://localhost:1313/iblog/js/html2canvas.js"></script>
-<script src="http://localhost:1313/iblog/js/utils.js"></script>
-<script src="http://localhost:1313/iblog/js/html2md.js"></script>
-<script src="http://localhost:1313/iblog/js/htmlexport.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/html2canvas.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/utils.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/html2md.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/htmlexport.js"></script>
 
-<script src="http://localhost:1313/iblog/js/fastsearch.js"></script>
-<script src="http://localhost:1313/iblog/js/fuse.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/fastsearch.js"></script>
+<script src="https://whiteppure.github.io/iblog/js/fuse.js"></script>
 
 
 <script>
