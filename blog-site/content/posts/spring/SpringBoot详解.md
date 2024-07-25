@@ -8,32 +8,65 @@ slug: "java-springboot"
 
 
 ## 概览
-> `SpringBoot`是由`Pivotal`团队提供的全新框架，其设计目的是用来简化新`Spring`应用的初始搭建以及开发过程。
-该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。`SpringBoot` 提供了一种新的编程范式，可以更加快速便捷地开发 `Spring` 项目，在开发过程当中可以专注于应用程序本身的功能开发，而无需在 `Spring` 配置上花太大的工夫。
+SpringBoot是由`Pivotal`团队提供的全新框架，其设计目的是用来简化Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。SpringBoot提供了一种新的编程范式，可以更加快速便捷地开发Spring项目，在开发过程当中可以专注于应用程序本身的功能开发，而无需在Spring配置上花太大的工夫。
 
-`SpringBoot` 基于 `Sring4` 进行设计，继承了原有 `Spring` 框架的优秀基因。`SpringBoot` 准确的说并不是一个框架，而是一些类库的集合。`maven` 或者 `gradle` 项目导入相应依赖即可使用 `SpringBoot`，而无需自行管理这些类库的版本。
+SpringBoot基于`Sring4`进行设计，继承了原有Spring框架的优秀基因。SpringBoot准确的说并不是一个框架，而是一些类库的集合。
+`maven`或者`gradle`项目导入相应依赖即可使用 SpringBoot，而无需自行管理这些类库的版本。
 
 特点：
-- 独立运行的 `Spring` 项目：
-  `SpringBoot` 可以以 jar 包的形式独立运行，运行一个 `SpringBoot` 项目只需通过 `java–jar xx.jar` 来运行。
-- 内嵌 `Servlet` 容器：
-  `SpringBoot` 可选择内嵌 `Tomcat`、`Jetty` 或者 `Undertow`，这样我们无须以 `war` 包形式部署项目。
-- 提供 `starter` 简化 `Maven` 配置：
-  `Spring` 提供了一系列的 `starter` pom 来简化 `Maven` 的依赖加载，例如，当你使用了`spring-boot-starter-web` 时，会自动加入依赖包。
-- 自动配置 `Spring`：
-  `SpringBoot` 会根据在类路径中的 jar 包、类，为 jar 包里的类自动配置 Bean，这样会极大地减少我们要使用的配置。当然，`SpringBoot` 只是考虑了大多数的开发场景，并不是所有的场景，若在实际开发中我们需要自动配置 `Bean`，而 `SpringBoot` 没有提供支持，则可以自定义自动配置。
-- 准生产的应用监控：
-  `SpringBoot` 提供基于 `http、ssh、telnet` 对运行时的项目进行监控。
-- 无代码生成和 xml 配置：
-  `SpringBoot` 的神奇的不是借助于代码生成来实现的，而是通过条件注解来实现的，这是 `Spring 4.x` 提供的新特性。`Spring 4.x` 提倡使用 Java 配置和注解配置组合，而 `SpringBoot` 不需要任何 xml 配置即可实现 `Spring` 的所有配置。
+- 自动配置：SpringBoot提供自动配置功能，根据项目的依赖和环境自动设置 Spring应用程序，减少了手动配置的复杂度。
+- 启动器：SpringBoot提供“启动器”依赖集合，如 `spring-boot-starter-web`，简化了项目的依赖管理。
+- 嵌入式服务器：SpringBoot支持嵌入式服务器，如`Tomcat`、`Jetty`和`Undertow`，使得应用程序可以独立运行，无需外部Web服务器。
+- 生产级别的特性：SpringBoot具备生产级别的功能，包括健康检查、应用监控、日志管理等。Actuator 模块可以轻松监控和管理应用程序。
+- 无配置的约定：SpringBoot遵循“无配置”的原则，使用合理的默认值和约定，减少需要编写的配置代码。
+- 快速开发：SpringBoot的项目结构和默认配置帮助开发者快速启动新项目。内置工具和插件支持开发、测试和部署。
 
 ## 与Spring的区别
+Spring和SpringBoot的最主要区别在于配置和启动的复杂性。
 
-## 使用SpringBoot
+Spring和SpringBoot的主要区别在于配置和启动的复杂性。Spring框架需要大量的手动配置，包括XML配置文件或Java配置类，配置过程较为繁琐且易出错。
+此外，Spring应用程序通常需要部署到外部的Web服务器，并需要额外的步骤来启动和运行。
 
-### SpringBoot常用注解
+相比之下，SpringBoot提供了自动配置功能，可以根据项目的依赖自动设置应用程序，极大地简化了配置工作。
+它还支持嵌入式服务器，使得应用程序能够独立运行，无需外部 Web 服务器，且可以通过`java -jar`命令直接启动。这些特点使得SpringBoot更加适合快速开发和部署应用程序。
 
-### SpringBoot异常处理
+## 创建SpringBoot项目
+在IDEA中使用`Spring Initializr`快速创建一个SpringBoot项目。
+
+![SpringBoot详解](/iblog/posts/annex/images/spring/SpringBoot详解-001.png)
+
+选择所需的依赖
+
+![SpringBoot详解](/iblog/posts/annex/images/spring/SpringBoot详解-002.png)
+
+SpringBoot项目通常包括以下几个主要部分：
+
+![SpringBoot详解](/iblog/posts/annex/images/spring/SpringBoot详解-003.png)
+
+在`src/main/resources`目录下创建`application.properties`或`application.yml`文件来配置应用程序。示例配置如下：
+
+![SpringBoot详解](/iblog/posts/annex/images/spring/SpringBoot详解-004.png)
+
+主应用类通常位于项目的根包，并使用`@SpringBootApplication`注解。
+
+![SpringBoot详解](/iblog/posts/annex/images/spring/SpringBoot详解-005.png)
+
+创建一个`Controller`处理`HTTP`请求并返回响应。使用`@RestController`注解定义控制器，使用`@RequestMapping`或`@GetMapping`处理请求。
+
+![SpringBoot详解](/iblog/posts/annex/images/spring/SpringBoot详解-006.png)
+
+在IDE中运行，右击主应用类并选择“Run”。
+
+![SpringBoot详解](/iblog/posts/annex/images/spring/SpringBoot详解-007.png)
+
+![SpringBoot详解](/iblog/posts/annex/images/spring/SpringBoot详解-008.png)
+
+通过浏览器输入`http://localhost:8081/api/hello` 测试。
+
+![SpringBoot详解](/iblog/posts/annex/images/spring/SpringBoot详解-009.png)
+
+## SpringBoot常用注解
+[//]: # (写到了这里)
 
 ## SpringBoot自动配置
 
@@ -65,7 +98,7 @@ public @interface SpringBootApplication {}
 ```
 
 ### @SpringBootConfiguration
-`@SpringBootConfiguration`核心注解是`@Configuration`的作用是将类标记为配置类，可以定义`@Bean`方法来创建和配置 Spring 容器中的Bean。
+`@SpringBootConfiguration`核心注解是`@Configuration`的作用是将类标记为配置类，可以定义`@Bean`方法来创建和配置 Spring容器中的Bean。
 ```java
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
@@ -89,7 +122,7 @@ public @interface Component{}
 ```
 
 ### @EnableAutoConfiguration
-`@EnableAutoConfiguration`作用是启用`SpringBoot`的自动配置机制。它的核心是`@AutoConfigurationPackage`和`@Import({AutoConfigurationImportSelector.class})`
+`@EnableAutoConfiguration`作用是启用SpringBoot的自动配置机制。它的核心是`@AutoConfigurationPackage`和`@Import({AutoConfigurationImportSelector.class})`
 ```java
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
@@ -147,10 +180,10 @@ protected List<String> getCandidateConfigurations(AnnotationMetadata metadata, A
 public class SpringApplicationAdminJmxAutoConfiguration {}
 ```
 
-当一个类使用 `@SpringBootApplication` 注解时，`SpringBoot`会自动进行一系列配置，让应用快速启动并运行。这个注解包含了 `@SpringBootConfiguration`，相当于告诉 Spring 这是一个配置类，就像使用了 `@Configuration` 一样。
-`@Configuration` 的作用是将类标记为配置类，这个配置类可以定义 `@Bean` 方法来创建和配置 Spring 容器中的 Bean。同时，`@EnableAutoConfiguration` 启用了`SpringBoot`的自动配置功能，`SpringBoot`会根据项目中的依赖，自动配置很多常用的 Spring 组件，这样就不需要手动配置它们。
-这个自动配置的过程是通过扫描 `spring.factories` 文件中的自动配置类来实现的。另外，`@ComponentScan` 让 Spring 自动扫描当前包及其子包下的所有组件，比如标注了 `@Component`、`@Service`、`@Repository` 和 `@Controller` 的类，并把它们注册到 Spring 容器中。
-因此，把应用的主类放在根包中，`SpringBoot`就会自动扫描并加载所有需要的组件和配置，让你可以专注于编写业务代码，而不用担心复杂的配置细节。`SpringBoot`通过这一系列自动化的配置和扫描机制，简化了开发和配置的工作量，让应用能够快速启动并运行。
+当一个类使用 `@SpringBootApplication` 注解时，SpringBoot会自动进行一系列配置，让应用快速启动并运行。这个注解包含了 `@SpringBootConfiguration`，相当于告诉 Spring这是一个配置类，就像使用了 `@Configuration` 一样。
+`@Configuration` 的作用是将类标记为配置类，这个配置类可以定义 `@Bean` 方法来创建和配置 Spring容器中的 `Bean`。同时，`@EnableAutoConfiguration` 启用了SpringBoot的自动配置功能，SpringBoot会根据项目中的依赖，自动配置很多常用的 Spring组件，这样就不需要手动配置它们。
+这个自动配置的过程是通过扫描 `spring.factories` 文件中的自动配置类来实现的。另外，`@ComponentScan` 让 Spring自动扫描当前包及其子包下的所有组件，比如标注了 `@Component`、`@Service`、`@Repository` 和 `@Controller` 的类，并把它们注册到 Spring容器中。
+因此，把应用的主类放在根包中，SpringBoot就会自动扫描并加载所有需要的组件和配置，让你可以专注于编写业务代码，而不用担心复杂的配置细节。SpringBoot通过这一系列自动化的配置和扫描机制，简化了开发和配置的工作量，让应用能够快速启动并运行。
 
-
+## SpringBoot嵌入式服务器
 

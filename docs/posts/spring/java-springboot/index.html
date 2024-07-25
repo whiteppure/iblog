@@ -12,7 +12,7 @@
 	
     
     
-    <meta name="description" content="概览 SpringBoot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。 该框架使用了特定的方式来进行配置，从" />
+    <meta name="description" content="概览 SpringBoot是由Pivotal团队提供的全新框架，其设计目的是用来简化Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而" />
     
 
     
@@ -120,8 +120,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8springboot">
-                    使用SpringBoot
+                <a class="nav-link text-left" href="#%e5%88%9b%e5%bb%baspringboot%e9%a1%b9%e7%9b%ae">
+                    创建SpringBoot项目
                 </a>
             </li>
             
@@ -138,8 +138,6 @@
         
         
         
-        <ul class="nav">
-            
         <ul class="nav">
             
         <ul class="nav">
@@ -152,36 +150,6 @@
             </li>
             
             
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#springboot%e5%bc%82%e5%b8%b8%e5%a4%84%e7%90%86">
-                    SpringBoot异常处理
-                </a>
-            </li>
-            
-            
-        </ul>
-        
         </ul>
         
         </ul>
@@ -317,6 +285,30 @@
         
         
         
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#springboot%e5%b5%8c%e5%85%a5%e5%bc%8f%e6%9c%8d%e5%8a%a1%e5%99%a8">
+                    SpringBoot嵌入式服务器
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
 
     </div>
 
@@ -414,7 +406,7 @@
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
                         <h2 id="post_single_title">SpringBoot详解</h2>
-                        <span id="post_page_title_date" class="date">2024.07.18</span>
+                        <span id="post_page_title_date" class="date">2024.07.25</span>
                         
                         <span id="busuanzi_container_page_pv" class="m-l-10">
                           阅读量<span id="busuanzi_value_page_pv"></span>次
@@ -422,30 +414,43 @@
                         
                     </div>
                     <div class="post_content markdown"><h2 id="概览">概览</h2>
-<blockquote>
-<p><code>SpringBoot</code>是由<code>Pivotal</code>团队提供的全新框架，其设计目的是用来简化新<code>Spring</code>应用的初始搭建以及开发过程。
-该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。<code>SpringBoot</code> 提供了一种新的编程范式，可以更加快速便捷地开发 <code>Spring</code> 项目，在开发过程当中可以专注于应用程序本身的功能开发，而无需在 <code>Spring</code> 配置上花太大的工夫。</p>
-</blockquote>
-<p><code>SpringBoot</code> 基于 <code>Sring4</code> 进行设计，继承了原有 <code>Spring</code> 框架的优秀基因。<code>SpringBoot</code> 准确的说并不是一个框架，而是一些类库的集合。<code>maven</code> 或者 <code>gradle</code> 项目导入相应依赖即可使用 <code>SpringBoot</code>，而无需自行管理这些类库的版本。</p>
+<p>SpringBoot是由<code>Pivotal</code>团队提供的全新框架，其设计目的是用来简化Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。SpringBoot提供了一种新的编程范式，可以更加快速便捷地开发Spring项目，在开发过程当中可以专注于应用程序本身的功能开发，而无需在Spring配置上花太大的工夫。</p>
+<p>SpringBoot基于<code>Sring4</code>进行设计，继承了原有Spring框架的优秀基因。SpringBoot准确的说并不是一个框架，而是一些类库的集合。
+<code>maven</code>或者<code>gradle</code>项目导入相应依赖即可使用 SpringBoot，而无需自行管理这些类库的版本。</p>
 <p>特点：</p>
 <ul>
-<li>独立运行的 <code>Spring</code> 项目：
-<code>SpringBoot</code> 可以以 jar 包的形式独立运行，运行一个 <code>SpringBoot</code> 项目只需通过 <code>java–jar xx.jar</code> 来运行。</li>
-<li>内嵌 <code>Servlet</code> 容器：
-<code>SpringBoot</code> 可选择内嵌 <code>Tomcat</code>、<code>Jetty</code> 或者 <code>Undertow</code>，这样我们无须以 <code>war</code> 包形式部署项目。</li>
-<li>提供 <code>starter</code> 简化 <code>Maven</code> 配置：
-<code>Spring</code> 提供了一系列的 <code>starter</code> pom 来简化 <code>Maven</code> 的依赖加载，例如，当你使用了<code>spring-boot-starter-web</code> 时，会自动加入依赖包。</li>
-<li>自动配置 <code>Spring</code>：
-<code>SpringBoot</code> 会根据在类路径中的 jar 包、类，为 jar 包里的类自动配置 Bean，这样会极大地减少我们要使用的配置。当然，<code>SpringBoot</code> 只是考虑了大多数的开发场景，并不是所有的场景，若在实际开发中我们需要自动配置 <code>Bean</code>，而 <code>SpringBoot</code> 没有提供支持，则可以自定义自动配置。</li>
-<li>准生产的应用监控：
-<code>SpringBoot</code> 提供基于 <code>http、ssh、telnet</code> 对运行时的项目进行监控。</li>
-<li>无代码生成和 xml 配置：
-<code>SpringBoot</code> 的神奇的不是借助于代码生成来实现的，而是通过条件注解来实现的，这是 <code>Spring 4.x</code> 提供的新特性。<code>Spring 4.x</code> 提倡使用 Java 配置和注解配置组合，而 <code>SpringBoot</code> 不需要任何 xml 配置即可实现 <code>Spring</code> 的所有配置。</li>
+<li>自动配置：SpringBoot提供自动配置功能，根据项目的依赖和环境自动设置 Spring应用程序，减少了手动配置的复杂度。</li>
+<li>启动器：SpringBoot提供“启动器”依赖集合，如 <code>spring-boot-starter-web</code>，简化了项目的依赖管理。</li>
+<li>嵌入式服务器：SpringBoot支持嵌入式服务器，如<code>Tomcat</code>、<code>Jetty</code>和<code>Undertow</code>，使得应用程序可以独立运行，无需外部Web服务器。</li>
+<li>生产级别的特性：SpringBoot具备生产级别的功能，包括健康检查、应用监控、日志管理等。Actuator 模块可以轻松监控和管理应用程序。</li>
+<li>无配置的约定：SpringBoot遵循“无配置”的原则，使用合理的默认值和约定，减少需要编写的配置代码。</li>
+<li>快速开发：SpringBoot的项目结构和默认配置帮助开发者快速启动新项目。内置工具和插件支持开发、测试和部署。</li>
 </ul>
 <h2 id="与spring的区别">与Spring的区别</h2>
-<h2 id="使用springboot">使用SpringBoot</h2>
-<h3 id="springboot常用注解">SpringBoot常用注解</h3>
-<h3 id="springboot异常处理">SpringBoot异常处理</h3>
+<p>Spring和SpringBoot的最主要区别在于配置和启动的复杂性。</p>
+<p>Spring和SpringBoot的主要区别在于配置和启动的复杂性。Spring框架需要大量的手动配置，包括XML配置文件或Java配置类，配置过程较为繁琐且易出错。
+此外，Spring应用程序通常需要部署到外部的Web服务器，并需要额外的步骤来启动和运行。</p>
+<p>相比之下，SpringBoot提供了自动配置功能，可以根据项目的依赖自动设置应用程序，极大地简化了配置工作。
+它还支持嵌入式服务器，使得应用程序能够独立运行，无需外部 Web 服务器，且可以通过<code>java -jar</code>命令直接启动。这些特点使得SpringBoot更加适合快速开发和部署应用程序。</p>
+<h2 id="创建springboot项目">创建SpringBoot项目</h2>
+<p>在IDEA中使用<code>Spring Initializr</code>快速创建一个SpringBoot项目。</p>
+<p><img alt="SpringBoot详解" src="/iblog/posts/annex/images/spring/SpringBoot%E8%AF%A6%E8%A7%A3-001.png"></p>
+<p>选择所需的依赖</p>
+<p><img alt="SpringBoot详解" src="/iblog/posts/annex/images/spring/SpringBoot%E8%AF%A6%E8%A7%A3-002.png"></p>
+<p>SpringBoot项目通常包括以下几个主要部分：</p>
+<p><img alt="SpringBoot详解" src="/iblog/posts/annex/images/spring/SpringBoot%E8%AF%A6%E8%A7%A3-003.png"></p>
+<p>在<code>src/main/resources</code>目录下创建<code>application.properties</code>或<code>application.yml</code>文件来配置应用程序。示例配置如下：</p>
+<p><img alt="SpringBoot详解" src="/iblog/posts/annex/images/spring/SpringBoot%E8%AF%A6%E8%A7%A3-004.png"></p>
+<p>主应用类通常位于项目的根包，并使用<code>@SpringBootApplication</code>注解。</p>
+<p><img alt="SpringBoot详解" src="/iblog/posts/annex/images/spring/SpringBoot%E8%AF%A6%E8%A7%A3-005.png"></p>
+<p>创建一个<code>Controller</code>处理<code>HTTP</code>请求并返回响应。使用<code>@RestController</code>注解定义控制器，使用<code>@RequestMapping</code>或<code>@GetMapping</code>处理请求。</p>
+<p><img alt="SpringBoot详解" src="/iblog/posts/annex/images/spring/SpringBoot%E8%AF%A6%E8%A7%A3-006.png"></p>
+<p>在IDE中运行，右击主应用类并选择“Run”。</p>
+<p><img alt="SpringBoot详解" src="/iblog/posts/annex/images/spring/SpringBoot%E8%AF%A6%E8%A7%A3-007.png"></p>
+<p><img alt="SpringBoot详解" src="/iblog/posts/annex/images/spring/SpringBoot%E8%AF%A6%E8%A7%A3-008.png"></p>
+<p>通过浏览器输入<code>http://localhost:8081/api/hello</code> 测试。</p>
+<p><img alt="SpringBoot详解" src="/iblog/posts/annex/images/spring/SpringBoot%E8%AF%A6%E8%A7%A3-009.png"></p>
+<h2 id="springboot常用注解">SpringBoot常用注解</h2>
 <h2 id="springboot自动配置">SpringBoot自动配置</h2>
 <h2 id="springboot配置管理">SpringBoot配置管理</h2>
 <h2 id="springbootapplication原理">@SpringBootApplication原理</h2>
@@ -468,7 +473,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nd">@Filter</span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterType</span><span class="p">.</span><span class="na">CUSTOM</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AutoConfigurationExcludeFilter</span><span class="p">.</span><span class="na">class</span><span class="p">)</span><span class="w"> </span><span class="p">})</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="nd">@interface</span><span class="w"> </span><span class="n">SpringBootApplication</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span></span></span></code></pre></div><h3 id="springbootconfiguration">@SpringBootConfiguration</h3>
-<p><code>@SpringBootConfiguration</code>核心注解是<code>@Configuration</code>的作用是将类标记为配置类，可以定义<code>@Bean</code>方法来创建和配置 Spring 容器中的Bean。</p>
+<p><code>@SpringBootConfiguration</code>核心注解是<code>@Configuration</code>的作用是将类标记为配置类，可以定义<code>@Bean</code>方法来创建和配置 Spring容器中的Bean。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">TYPE</span><span class="p">})</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Documented</span><span class="w">
@@ -487,7 +492,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Indexed</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="nd">@interface</span><span class="w"> </span><span class="n">Component</span><span class="p">{}</span><span class="w">
 </span></span></span></code></pre></div><h3 id="enableautoconfiguration">@EnableAutoConfiguration</h3>
-<p><code>@EnableAutoConfiguration</code>作用是启用<code>SpringBoot</code>的自动配置机制。它的核心是<code>@AutoConfigurationPackage</code>和<code>@Import({AutoConfigurationImportSelector.class})</code></p>
+<p><code>@EnableAutoConfiguration</code>作用是启用SpringBoot的自动配置机制。它的核心是<code>@AutoConfigurationPackage</code>和<code>@Import({AutoConfigurationImportSelector.class})</code></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">TYPE</span><span class="p">})</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Documented</span><span class="w">
@@ -535,10 +540,11 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@AutoConfigureAfter</span><span class="p">(</span><span class="n">JmxAutoConfiguration</span><span class="p">.</span><span class="na">class</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@ConditionalOnProperty</span><span class="p">(</span><span class="n">prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;spring.application.admin&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;enabled&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">havingValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;true&#34;</span><span class="p">,</span><span class="n">matchIfMissing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SpringApplicationAdminJmxAutoConfiguration</span><span class="w"> </span><span class="p">{}</span><span class="w">
-</span></span></span></code></pre></div><p>当一个类使用 <code>@SpringBootApplication</code> 注解时，<code>SpringBoot</code>会自动进行一系列配置，让应用快速启动并运行。这个注解包含了 <code>@SpringBootConfiguration</code>，相当于告诉 Spring 这是一个配置类，就像使用了 <code>@Configuration</code> 一样。
-<code>@Configuration</code> 的作用是将类标记为配置类，这个配置类可以定义 <code>@Bean</code> 方法来创建和配置 Spring 容器中的 Bean。同时，<code>@EnableAutoConfiguration</code> 启用了<code>SpringBoot</code>的自动配置功能，<code>SpringBoot</code>会根据项目中的依赖，自动配置很多常用的 Spring 组件，这样就不需要手动配置它们。
-这个自动配置的过程是通过扫描 <code>spring.factories</code> 文件中的自动配置类来实现的。另外，<code>@ComponentScan</code> 让 Spring 自动扫描当前包及其子包下的所有组件，比如标注了 <code>@Component</code>、<code>@Service</code>、<code>@Repository</code> 和 <code>@Controller</code> 的类，并把它们注册到 Spring 容器中。
-因此，把应用的主类放在根包中，<code>SpringBoot</code>就会自动扫描并加载所有需要的组件和配置，让你可以专注于编写业务代码，而不用担心复杂的配置细节。<code>SpringBoot</code>通过这一系列自动化的配置和扫描机制，简化了开发和配置的工作量，让应用能够快速启动并运行。</p>
+</span></span></span></code></pre></div><p>当一个类使用 <code>@SpringBootApplication</code> 注解时，SpringBoot会自动进行一系列配置，让应用快速启动并运行。这个注解包含了 <code>@SpringBootConfiguration</code>，相当于告诉 Spring这是一个配置类，就像使用了 <code>@Configuration</code> 一样。
+<code>@Configuration</code> 的作用是将类标记为配置类，这个配置类可以定义 <code>@Bean</code> 方法来创建和配置 Spring容器中的 <code>Bean</code>。同时，<code>@EnableAutoConfiguration</code> 启用了SpringBoot的自动配置功能，SpringBoot会根据项目中的依赖，自动配置很多常用的 Spring组件，这样就不需要手动配置它们。
+这个自动配置的过程是通过扫描 <code>spring.factories</code> 文件中的自动配置类来实现的。另外，<code>@ComponentScan</code> 让 Spring自动扫描当前包及其子包下的所有组件，比如标注了 <code>@Component</code>、<code>@Service</code>、<code>@Repository</code> 和 <code>@Controller</code> 的类，并把它们注册到 Spring容器中。
+因此，把应用的主类放在根包中，SpringBoot就会自动扫描并加载所有需要的组件和配置，让你可以专注于编写业务代码，而不用担心复杂的配置细节。SpringBoot通过这一系列自动化的配置和扫描机制，简化了开发和配置的工作量，让应用能够快速启动并运行。</p>
+<h2 id="springboot嵌入式服务器">SpringBoot嵌入式服务器</h2>
 </div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">
