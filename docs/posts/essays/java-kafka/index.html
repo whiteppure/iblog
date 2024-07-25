@@ -12,7 +12,7 @@
 	
     
     
-    <meta name="description" content="概览 MQ 即 messagequeue 消息队列，是分布式系统的重要组件，主要解决异步消息，应用解耦，消峰等问题。从而实现高可用，高性能，可伸缩和最终一致性的架构。使用较多的MQ有：acti" />
+    <meta name="description" content="JMS消息模型 JMS即Java Message Service是Java平台的消息传递标准，用于实现消息中间件的通信。JMS提供了两种消息模型：点对点模型和发布订阅模型。 点对点" />
     
 
     
@@ -72,102 +72,6 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e6%a6%82%e8%a7%88">
-                    概览
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#mq%e4%bc%98%e7%82%b9">
-                    MQ优点
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#mq%e7%bc%ba%e7%82%b9">
-                    MQ缺点
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%b8%b8%e8%a7%81mq%e5%af%b9%e6%af%94">
-                    常见MQ对比
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
                 <a class="nav-link text-left" href="#jms%e6%b6%88%e6%81%af%e6%a8%a1%e5%9e%8b">
                     JMS消息模型
                 </a>
@@ -190,46 +94,14 @@
             
         <ul class="nav">
             
-        <ul class="nav">
-            
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e7%82%b9%e5%af%b9%e7%82%b9%e6%a8%a1%e5%bc%8f">
-                    点对点模式
+                <a class="nav-link text-left" href="#mq%e6%a6%82%e8%a7%88">
+                    MQ概览
                 </a>
             </li>
             
             
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%8f%91%e5%b8%83%e8%ae%a2%e9%98%85%e6%a8%a1%e5%bc%8f">
-                    发布订阅模式
-                </a>
-            </li>
-            
-            
-        </ul>
-        
         </ul>
         
         </ul>
@@ -249,7 +121,7 @@
             
             <li class="nav-item">
                 <a class="nav-link text-left" href="#kafka">
-                    kafka
+                    Kafka
                 </a>
             </li>
             
@@ -488,70 +360,6 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e7%94%9f%e4%ba%a7%e8%80%85ack%e6%9c%ba%e5%88%b6">
-                    生产者ack机制
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#exactlyonce">
-                    ExactlyOnce
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
                 <a class="nav-link text-left" href="#%e7%94%9f%e4%ba%a7%e8%80%85%e5%8f%91%e9%80%81%e6%b6%88%e6%81%af%e6%b5%81%e7%a8%8b">
                     生产者发送消息流程
                 </a>
@@ -644,8 +452,72 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e6%b6%88%e8%b4%b9%e8%80%85%e6%b6%88%e8%b4%b9%e6%95%b0%e6%8d%ae%e9%97%ae%e9%a2%98">
-                    消费者消费数据问题
+                <a class="nav-link text-left" href="#%e6%b6%88%e8%b4%b9%e8%80%85%e9%87%8d%e5%a4%8d%e6%b6%88%e8%b4%b9">
+                    消费者重复消费
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%b6%88%e8%b4%b9%e8%80%85%e6%bc%8f%e6%b6%88%e8%b4%b9">
+                    消费者漏消费
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%b6%88%e8%b4%b9%e8%80%85%e6%b6%88%e6%81%af%e7%a7%af%e5%8e%8b">
+                    消费者消息积压
                 </a>
             </li>
             
@@ -675,35 +547,7 @@
             
             <li class="nav-item">
                 <a class="nav-link text-left" href="#kafka%e4%ba%8b%e5%8a%a1">
-                    kafka事务
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e6%b6%88%e6%81%af%e7%a7%af%e5%8e%8b">
-                    消息积压
+                    Kafka事务
                 </a>
             </li>
             
@@ -821,21 +665,36 @@
                         </span>
                         
                     </div>
-                    <div class="post_content markdown"><h2 id="概览">概览</h2>
-<p>MQ 即 messagequeue 消息队列，是分布式系统的重要组件，主要解决异步消息，应用解耦，消峰等问题。从而实现高可用，高性能，可伸缩和最终一致性的架构。使用较多的MQ有：activeMQ，rabbitMQ，kafka，metaMQ。</p>
-<h2 id="mq优点">MQ优点</h2>
+                    <div class="post_content markdown"><h2 id="jms消息模型">JMS消息模型</h2>
+<p>JMS即<code>Java Message Service</code>是Java平台的消息传递标准，用于实现消息中间件的通信。JMS提供了两种消息模型：点对点模型和发布订阅模型。</p>
 <ul>
-<li><strong>异步消息处理</strong>：可以将一些非核心流程，如日志，短信，邮件等，通过MQ的方式异步去处理。这样做的好处是缩短主流程的响应时间，提升用户体验；</li>
-<li><strong>应用解耦合</strong>：商品服务和订单服务之间。用户下单后，订单服务会通知商品服务。不使用MQ的情况是订单服务调用商品服务的接口，这样订单服务和商品服务之间是耦合的；使用MQ，订单服务完成持久化处理，将消息写入MQ消息队列中，返回用户订单下单成功，商品服务来订阅这个下单的消息，采用拉或推的方式获得下单信息，商品服务根据商品下单信息进行商品库存信息修改，这样当下单时商品服务不可用时，也不影响正常下单，这就完成了订单服务和商品服务之间的解耦；</li>
-<li><strong>流量消峰</strong>：秒杀活动流量过大，导致流量暴增，最终可能导致应用挂掉。一般会在应用前端加入消息队列来控制活动人数，假如消息队列超过最大数量，应该直接抛弃用户请求或者跳转到错误页面。秒杀业务根据消息队列中的请求信息在做后续的业务处理。比如在抢购时，可能一下子过来了10万个请求，但MQ只接受前100个用户的请求，超过100个不接收了。这样就成功限制了用户请求；</li>
+<li>
+<p>点对点模型：消息发送者发送消息，消息代理将其放入消息队列中，消息接受者从队列中获取消息，消息读取后被移除消息队列。
+每个消息都被发送到一个特定的队列，接收者从队列中获取消息。队列保留着消息，直到它们被消费或超时。</p>
+<p><img alt="MQ详解-001" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-001.png"></p>
+<p>虽然可能有多个客户端在队列中侦听消息，但只有一个可以读取到消息，之后消息将不存在，其他消费者将无法读取。
+也就是说消息队列只有唯一一个发送者和接受者，但是并不能说只有一个接收者。</p>
+<p>它的特点是每个消息只有一个消费者，即消息一旦被消费，消息就不在消息队列中；
+发送者和接收者之间在时间上没有依赖性，也就是说当发送者发送了消息之后，不管接收者有没有正在运行，它不会影响到消息被发送到队列；
+接收者在成功接收消息之后需向队列应答成功；</p>
+</li>
+<li>
+<p>发布订阅模型：发布者将消息发送到主题<code>Topic</code>中，多个订阅者订阅这个主题，订阅者不断的去轮询监听消息队列中的消息，那么就会在消息到达的同时接收消息。</p>
+<p><img alt="MQ详解-002" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-002.png"></p>
+<p>它的特点是每个消息可以有多个消费者，消费完消息之后消息不会清除；
+发布者和订阅者之间有时间上的依赖性：针对某个主题的订阅者，它必须创建一个订阅之后，才能消费发布者的消息，而且为了消费消息，订阅者必须保持运行的状态。
+当然了缓和这种严格的时间相关性，JMS允许订阅者创建一个可持久化的订阅。这样即使订阅者没有运行，它也能接收到发布者的消息；</p>
+</li>
 </ul>
-<h2 id="mq缺点">MQ缺点</h2>
+<h2 id="mq概览">MQ概览</h2>
+<p>JMS定义了消息传递的标准接口。它并不是一个消息中间件，而是一个规范，用于与各种实现消息中间件，如<code>ActiveMQ</code>、<code>RabbitMQ</code>、<code>RocketMQ</code>、<code>Kafka</code>进行交互。</p>
+<p>MQ即<code>messagequeue</code>消息队列，是分布式系统的重要组件，主要解决异步消息，应用解耦，流量消峰等问题。从而实现高可用，高性能，可伸缩和最终一致性的架构。
+使用较多的MQ有，<code>activeMQ</code>，<code>rabbitMQ</code>，<code>Kafka</code>。</p>
 <ul>
-<li>系统可用性降低: 系统引入的外部依赖越多，越容易挂掉;</li>
-<li>系统复杂度提高: 加个 MQ 进来，你怎么保证消息没有重复消费？怎么处理消息丢失的情况？怎么保证消息传递的顺序性？头大头大，问题一大堆，痛苦不已;</li>
-<li>一致性问题: A 系统处理完了直接返回成功了，人都以为你这个请求就成功了；但是问题是，要是 BCD 三个系统那里，BD 两个系统写库成功了，结果 C 系统写库失败了，你这数据就不一致了;</li>
+<li>异步消息处理：可以将一些非核心流程，如日志，短信，邮件等，通过MQ的方式异步去处理。这样做的好处是缩短主流程的响应时间，提升用户体验；</li>
+<li>应用解耦：商品服务和订单服务之间。用户下单后，订单服务会通知商品服务。不使用MQ的情况是订单服务调用商品服务的接口，这样订单服务和商品服务之间是耦合的；使用MQ，订单服务完成持久化处理，将消息写入MQ消息队列中，返回用户订单下单成功，商品服务来订阅这个下单的消息，采用拉或推的方式获得下单信息，商品服务根据商品下单信息进行商品库存信息修改，这样当下单时商品服务不可用时，也不影响正常下单，这就完成了订单服务和商品服务之间的解耦；</li>
+<li>流量消峰：秒杀活动流量过大，导致流量暴增，最终可能导致应用挂掉。一般会在应用前端加入消息队列来控制活动人数，假如消息队列超过最大数量，应该直接抛弃用户请求或者跳转到错误页面。秒杀业务根据消息队列中的请求信息在做后续的业务处理。比如在抢购时，可能一下子过来了10万个请求，但MQ只接受前100个用户的请求，超过100个不接收了。这样就成功限制了用户请求；</li>
 </ul>
-<h2 id="常见mq对比">常见MQ对比</h2>
 <table>
 <thead>
 <tr>
@@ -855,11 +714,11 @@
 <td>10 万级，高吞吐，一般配合大数据类的系统来进行实时数据计算、日志采集等场景</td>
 </tr>
 <tr>
-<td>topic 数量对吞吐量的影响</td>
-<td></td>
-<td></td>
-<td>topic 可以达到几百/几千的级别，吞吐量会有较小幅度的下降，这是 RocketMQ 的一大优势，在同等机器下，可以支撑大量的 topic</td>
-<td>topic 从几十到几百个时候，吞吐量会大幅度下降，在同等机器下，Kafka 尽量保证 topic 数量不要过多，如果要支撑大规模的 topic，需要增加更多的机器资源</td>
+<td>Topic 数量对吞吐量的影响</td>
+<td>吞吐量基本稳定</td>
+<td>吞吐量基本稳定</td>
+<td>Topic 可以达到几百/几千的级别，吞吐量会有较小幅度的下降，这是 RocketMQ 的一大优势，在同等机器下，可以支撑大量的 Topic</td>
+<td>Topic 从几十到几百个时候，吞吐量会大幅度下降，在同等机器下，Kafka 尽量保证 Topic 数量不要过多，如果要支撑大规模的 Topic，需要增加更多的机器资源</td>
 </tr>
 <tr>
 <td>时效性</td>
@@ -885,226 +744,242 @@
 <tr>
 <td>功能支持</td>
 <td>MQ 领域的功能极其完备</td>
-<td>基于 erlang 开发，并发能力很强，性能极好，延时很低</td>
+<td>基于 Erlang 开发，并发能力很强，性能极好，延时很低</td>
 <td>MQ 功能较为完善，还是分布式的，扩展性好</td>
 <td>功能较为简单，主要支持简单的 MQ 功能，在大数据领域的实时计算以及日志采集被大规模使用</td>
 </tr>
+<tr>
+<td>消息模型</td>
+<td>点对点和发布订阅</td>
+<td>点对点和发布订阅</td>
+<td>点对点和发布/订阅</td>
+<td>发布/订阅</td>
+</tr>
 </tbody>
 </table>
-<p>一般的业务系统要引入 MQ，最早大家都用 ActiveMQ，但是现在确实大家用的不多了，没经过大规模吞吐量场景的验证，社区也不是很活跃，所以大家还是算了吧，我个人不推荐用这个了。</p>
-<p>后来大家开始用 RabbitMQ，但是确实 erlang 语言阻止了大量的 Java 工程师去深入研究和掌控它，对公司而言，几乎处于不可控的状态，但是确实人家是开源的，比较稳定的支持，活跃度也高。</p>
-<p>不过现在确实越来越多的公司会去用 RocketMQ，确实很不错，毕竟是阿里出品，但社区可能有突然黄掉的风险,目前 RocketMQ 已捐给 Apache，但 GitHub 上的活跃度其实不算高,对自己公司技术实力有绝对自信的，推荐用 RocketMQ，否则回去老老实实用 RabbitMQ 吧，人家有活跃的开源社区，绝对不会黄。</p>
-<p>所以中小型公司，技术实力较为一般，技术挑战不是特别高，用 RabbitMQ 是不错的选择；大型公司，基础架构研发实力较强，用 RocketMQ 是很好的选择。</p>
-<p>如果是大数据领域的实时计算、日志采集等场景，用 Kafka 是业内标准的，绝对没问题，社区活跃度很高，绝对不会黄，何况几乎是全世界这个领域的事实性规范。</p>
-<h2 id="jms消息模型">JMS消息模型</h2>
-<p>JMS即JavaMessageService，Java消息服务应用程序接口，是一个Java平台中关于面向消息中间件的API，用于在两个应用程序之间，或分布式系统中发送消息，进行异步通信。</p>
-<p>JMS是基于JVM的消息代理规范，ActiveMQ、HornetMQ等是JMS的实现。</p>
-<p>Java消息服务是一个与具体平台无关的API，绝大多数MOM提供商都对JMS提供支持。我们可以简单的理解：两个应用程序之间需要进行通信，我们使用一个JMS服务，进行中间的转发，通过JMS的使用，我们可以解除两个程序之间的耦合。</p>
-<h3 id="点对点模式">点对点模式</h3>
-<p>消息发送者发送消息，消息代理将其放入消息队列中，消息接受者从队列中获取消息，消息读取后被移除消息队列。每个消息都被发送到一个特定的队列，接收者从队列中获取消息。队列保留着消息，直到它们被消费或超时。</p>
-<p><img alt="MQ详解-001" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-001.png"></p>
-<p>虽然可能有多个客户端在队列中侦听消息，但只有一个可以读取到消息，之后消息将不存在，其他消费者将无法读取。也就是说消息队列只有唯一一个发送者和<em>接受者</em>，但是并不能说只有一个<em>接收者</em>。</p>
-<p>特点：</p>
-<ul>
-<li>每个消息只有一个消费者，即消息一旦被消费，消息就不在消息队列中；</li>
-<li>发送者和接收者之间在时间上没有依赖性，也就是说当发送者发送了消息之后，不管接收者有没有正在运行，它不会影响到消息被发送到队列；</li>
-<li>接收者在成功接收消息之后需向队列应答成功；</li>
-</ul>
-<h3 id="发布订阅模式">发布订阅模式</h3>
-<p>发布者将消息发送到主题Topic中，多个订阅者订阅这个主题，订阅者不断的去轮询监听消息队列中的消息，那么就会在消息到达的同时接收消息。</p>
-<p><img alt="MQ详解-002" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-002.png"></p>
-<p>特点：</p>
-<ul>
-<li>每个消息可以有多个消费者，消费完消息之后消息不会清除；</li>
-<li>发布者和订阅者之间有时间上的依赖性：针对某个主题(Topic)的订阅者，它必须创建一个订阅之后，才能消费发布者的消息，而且为了消费消息，订阅者必须保持运行的状态。当然，为了缓和这种严格的时间相关性，JMS允许订阅者创建一个可持久化的订阅。这样即使订阅者没有运行，它也能接收到发布者的消息；</li>
-</ul>
-<h2 id="kafka">kafka</h2>
-<p>kafka是一个分布式的基于发布/订阅模式的消息队列，主要应用于大数据实时处理领域。</p>
+<p>一般的业务系统要引入MQ，最早大家都用<code>ActiveMQ</code>，但是现在确实大家用的不多了，没经过大规模吞吐量场景的验证，社区也不是很活跃，所以大家还是算了吧，我个人不推荐用这个了。</p>
+<p>后来大家开始用<code>RabbitMQ</code>，但是确实Erlang语言阻止了大量的Java工程师去深入研究和掌控它，对公司而言，几乎处于不可控的状态，但是确实人家是开源的，比较稳定的支持，活跃度也高。</p>
+<p>不过现在确实越来越多的公司会去用<code>RocketMQ</code>，确实很不错，毕竟是阿里出品，但社区可能有突然黄掉的风险，目前<code>RocketMQ</code>已捐给<code>Apache</code>，但<code>GitHub</code>上的活跃度其实不算高，对自己公司技术实力有绝对自信的，推荐用<code>RocketMQ</code>，否则回去老老实实用<code>RabbitMQ</code>吧，人家有活跃的开源社区，绝对不会黄。</p>
+<p>所以中小型公司，技术实力较为一般，技术挑战不是特别高，用<code>RabbitMQ</code>是不错的选择。大型公司，基础架构研发实力较强，用<code>RocketMQ</code>是很好的选择。
+如果是大数据领域的实时计算、日志采集等场景，用<code>Kafka</code>是业内标准的，绝对没问题，社区活跃度很高，绝对不会黄，何况几乎是全世界这个领域的事实性规范。</p>
+<h2 id="kafka">Kafka</h2>
+<p><code>Kafka</code>是一个分布式的基于发布订阅模式的消息队列，由<code>Apache</code>软件基金会开发。它主要用于处理大规模的实时数据流，适用于各种数据管道、流处理和日志收集场景。</p>
 <h3 id="基础架构">基础架构</h3>
 <p><img alt="MQ详解-003" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-003.png"></p>
 <ul>
-<li>Producer：消息生产者，向kafka推送消息；</li>
-<li>Consumer：消息消费者，向kafka中broker获取消息的客户端；</li>
-<li>Topic：主题，可以理解为一个队列，生产者和消费者面向的都是一个topic；</li>
-<li>Broker：经纪人，一台kafka服务器就是一个broker。一个集群由多个broker组成。一个broker可以容纳多个topic；</li>
-<li>Partition：分区，为了实现扩展性，一个非常大的topic可以分布到多个服务器上，一个主题可以分为多个分区，每个分区是一个有序的队列；</li>
-<li>ConsumerGroup：消费者组，由多个消费者组成。消费者组内每个消费者负责消费不同分区的数据，一个分区只能由一个消费者组内的一个消费者消费；消费者组之间互不影响。所有的消费者都属于某个消费者组，即消费者组是逻辑上的一个订阅者；</li>
-<li>Replica：副本，为保证集群中的某个节点发生故障时，该节点上的分区数据不丢失，且kafka仍然能够继续工作，kafka提供了副本机制，一个topic的每个分区都有若干个副本，一个leader和若干个follower；</li>
-<li>Leader：每个分区多个副本的“主”，生产者发送数据的对象，以及消费者消费数据的对象都是leader。leader是针对topic的，而不是broker的，即不同的kafka服务区中会出现同一个leader；</li>
-<li>Follower：每个分区多个副本中的“从”，实时从leader中同步数据，保持和leader数据的同步。leader发生故障时，某个Follower会成为新的leader；</li>
-<li>Controller：Kafka 集群中有一个broker会被选举为Controller，负责管理集群broker的上下线，所有topic的分区副本分配和leader选举等工作，Controller的管理工作都是依赖于Zookeeper的；</li>
+<li><code>Broker</code>：<code>Broker</code>是<code>Kafka</code>集群中的服务器节点，一台<code>Kafka</code>服务器就是一个<code>Broker</code>。每个<code>Broker</code>负责存储和管理消息，处理生产者的写入请求和消费者的读取请求。<code>Kafka</code>集群可以通过增加更多的<code>Brokers</code>来扩展处理能力和存储容量，一个<code>Broker</code>可以容纳多个<code>Topic</code>。</li>
+<li><code>Topic</code>：<code>Topic</code>是<code>Kafka</code>中的消息分类标准。消息被发送到特定的主题，消费者从主题中读取消息。每个主题可以分为多个<code>Partition</code>，用来提高处理能力和扩展性。</li>
+<li><code>Partition</code>：<code>Partition</code>是<code>Topic</code>的一个子集，是<code>Kafka</code>存储消息的实际单位。每个<code>Partition</code>是一个有序的、不可变的消息序列，存储在磁盘上的日志文件中。每个<code>Partition</code>有一个领导者（<code>Leader</code>）和多个副本（<code>Replicas</code>）。</li>
+<li><code>Leader</code>： 每个<code>Partition</code>有一个<code>Leader</code>，负责处理所有读写请求，写入消息到分区。</li>
+<li><code>Follower</code>： 每个<code>Partition</code>的副本从<code>Leader</code>复制消息，用于提供高可用性和数据备份。副本可以在<code>Leader</code>失败时接管。</li>
+<li><code>Producer</code>：<code>Producer</code>是负责将消息发送到<code>Kafka``Topic</code>的客户端应用程序。生产者将消息发布到一个或多个<code>Topic</code>中，可以选择<code>Partition</code>策略决定消息写入到哪个分区。</li>
+<li><code>Consumer</code>：<code>Consumer</code>是从<code>Kafka``Topic</code>中读取消息的客户端应用程序。消费者可以独立工作，也可以作为<code>Consumer Group</code>的一部分，订阅一个或多个<code>Topic</code>，从主题的一个或多个<code>Partition</code>中读取消息。</li>
+<li><code>Consumer Group</code>：<code>Consumer Group</code>是一组消费者组成的集合，用于共同处理一个或多个主题中的消息。消费者组中的每个消费者负责处理主题的不同<code>Partition</code>，确保消息的负载均衡和避免重复消费。</li>
+<li><code>Zookeeper</code>：<code>Zookeeper</code>是一个分布式协调服务，用于<code>Kafka</code>集群的管理。它维护<code>Kafka</code>集群的元数据，如<code>Broker</code>信息、<code>Topic</code>和<code>Partition</code>信息，进行分区的领导者选举，监控<code>Kafka</code>集群的健康状态。</li>
 </ul>
-<p>消费者组的作用为了提高消费能力，即提高并发。</p>
-<p>解耦合是消息队列作用之一，当消费者宕机后，再次启动的时候会继续消费消息，而不是从头消费消息。因为这个特性所以消费者会保存一些消费的进度信息，被称为offset，保存的位置在kafka0.9之前保存在zookpeer当中，在此之后保存在kafka本地。即最终kafka会将消息保存在本地磁盘中，默认保留168个小时，即7天。</p>
-<p>kafka中消息是以topic进行分类的，producer生产消息，consumer消费消息，都是面向topic的。topic是逻辑上的概念，而partition是物理上的概念，每个partition对应于一个log文件，该log文件中存储的就是producer生产的数据。</p>
-<p>Producer生产的数据会被不断追加到该log文件末端，且每条数据都有自己的offset。consumer组中的每个consumer，都会实时记录自己消费到了哪个offset，以便出错恢复时，从上次的位置继续消费。</p>
+<p>当消费者宕机后，再次启动的时候会继续消费消息，而不是从头消费消息。因为这个特性所以消费者会保存一些消费的进度信息，被称为<code>offset</code>，在<code>Kafka 0.9</code>之前保存在<code>Zookeeper</code>当中，在此之后保存在<code>Kafka</code>本地。即最终<code>Kafka</code>会将消息保存在本地磁盘中，默认保留 168 个小时，即 7 天。</p>
+<p><code>Kafka</code>中消息是以<code>Topic</code>进行分类的，<code>Producer</code>生产消息，<code>Consumer</code>消费消息，都是面向<code>Topic</code>的。<code>Topic</code>是逻辑上的概念，而<code>Partition</code>是物理上的概念，每个<code>Partition</code>对应于一个<code>log</code>文件，该<code>log</code>文件中存储的就是<code>Producer</code>生产的数据。</p>
+<p><code>Producer</code>生产的数据会被不断追加到该<code>log</code>文件末端，且每条数据都有自己的<code>offset</code>。<code>Consumer</code>组中的每个<code>Consumer</code>，都会实时记录自己消费到了哪个<code>offset</code>，以便出错恢复时，从上次的位置继续消费。</p>
 <h3 id="发布订阅工作流程">发布订阅工作流程</h3>
 <p><img alt="MQ详解-004" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-004.png"></p>
 <ol>
-<li>生产者定期向主题发送消息；</li>
-<li>kafka代理将所有消息存储在为特定主题配置的分区中。它确保消息在分区之间平均共享。如果生产者发送了两个消息，并且有两个分区，kafka将在第一个分区中存储一个消息，在第二个分区中存储第二个消息；</li>
-<li>消费者订阅主题后，kafka将向消费者提供该主题的当前偏移量，并将偏移量保存在Zookeeper集合中；</li>
-<li>消费者将定期向kafka请求新消息,一旦kafka从生产者那里收到消息，它将把这些消息转发给消费者，消费者将收到消息并进行处理；</li>
-<li>消息处理后，消费者将向kafka代理发送确认；</li>
-<li>一旦kafka收到确认，它将偏移量更改为新值并在Zookeeper中对其进行更新。由于在Zookeeper中保留了偏移量，因此即使在服务器出现故障时，使用者也可以正确读取下一条消息；</li>
-<li>4、5、6步骤流程将重复进行，直到消费者停止请求为止；</li>
+<li>生产者发布消息
+<ul>
+<li>消息创建：生产者创建消息，并指定消息内容及相关元数据。</li>
+<li>选择主题和分区：生产者决定将消息发送到哪个<code>Topic</code>。如果未指定分区策略，<code>Kafka</code>会根据配置选择一个分区。分区策略可能包括按键分配或轮询。</li>
+<li>消息发送：消息被发送到指定的<code>Topic</code>的分区中。每个分区在本地磁盘上有一个日志文件，生产者将消息追加到日志文件末端。</li>
+<li>消息确认：生产者等待<code>Kafka</code>确认消息已成功写入，确认可以是来自单个副本或所有副本，取决于<code>acks</code>配置。</li>
+</ul>
+</li>
+<li>消息存储
+<ul>
+<li>消息存储在分区的日志文件中，每条消息都有一个唯一的<code>offset</code>，表示在该分区中的位置。消息存储在磁盘上，<code>Kafka</code>默认保留消息 168 小时（即 7 天），可以通过配置调整保留时间。</li>
+</ul>
+</li>
+<li>消费者订阅消息
+<ul>
+<li>消费者组：消费者可以独立工作，也可以作为消费者组的一部分。每个消费者组由一个或多个消费者组成，共同处理来自同一<code>Topic</code>的消息。</li>
+<li>主题订阅：消费者订阅一个或多个<code>Topic</code>，<code>Kafka</code>会将相应<code>Topic</code>的分区分配给消费者组中的消费者。</li>
+</ul>
+</li>
+<li>消息消费
+<ul>
+<li>拉取消息：消费者从分区中拉取消息，消费者可以定期或按需拉取消息。</li>
+<li>处理消息：消费者处理拉取到的消息。处理完成后，消费者可以选择提交当前的<code>offset</code>，记录处理进度。</li>
+<li>提交<code>offset</code>：消费者将当前的<code>offset</code>提交到<code>Kafka</code>，以便在恢复或重新启动时从正确的位置继续消费。<code>offset</code>提交到<code>Kafka</code>（在<code>Kafka 0.9</code>及之后版本）或<code>Zookeeper</code>（在<code>Kafka 0.8</code>及之前版本）。</li>
+</ul>
+</li>
+<li>消息确认和备份
+<ul>
+<li>消息确认：消费者可以选择自动或手动提交<code>offset</code>。自动提交是<code>Kafka</code>定期提交消费者的<code>offset</code>，手动提交是消费者显式提交。</li>
+<li>容错和恢复：如果消费者宕机或失败，<code>Kafka</code>会根据提交的<code>offset</code>进行消息恢复，确保消息不会丢失。<code>Kafka</code>使用<code>Leader</code>和<code>Follower</code>模型来提供高可用性和数据备份。</li>
+</ul>
+</li>
 </ol>
-<p>消费者可以选择随时倒退或跳至所需的主题偏移量并阅读所有后续消息。</p>
 <h3 id="生产者">生产者</h3>
+<p>生产者是<code>Kafka</code>中负责将消息发送到<code>Topic</code>的客户端应用程序。它将消息发布到指定的<code>Topic</code>，<code>Kafka</code>中的消息是按<code>Topic</code>进行分类的。</p>
 <h4 id="生产者文件存储">生产者文件存储</h4>
-<p>参考文章：</p>
-<ul>
-<li><a href="https://www.jianshu.com/p/3e54a5a39683">https://www.jianshu.com/p/3e54a5a39683</a></li>
-</ul>
 <p><img alt="MQ详解-005" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-005.png"></p>
-<p>由于生产者生产的消息会不断追加到log文件末尾，为防止log文件过大导致数据定位效率低下，kafka采取了分片和索引机制，将每个partition分为多个segment。
-每个segment对应两个文件：“.index”文件和“.log”文件。这些文件位于一个文件夹下，该文件夹的命名规则为：topic名称+分区序号。例如，first这个topic有三个分区，则其对应的文件夹为 first-0,first-1,first-2。其中，每个segment中的日志数据文件大小均相等。</p>
+<p><code>Kafka</code>中的消息存储在<code>Broker</code>服务器上的磁盘中，每个<code>Topic</code>被分为一个或多个<code>Partition</code>。
+每个<code>Partition</code>在磁盘上对应一个日志文件，生产者发布的消息被追加到该日志文件的末尾。
+由于生产者生产的消息会不断追加到<code>log</code>文件末尾，为防止<code>log</code>文件过大，导致数据定位效率低下，<code>Kafka</code>采取了分片和索引机制，将每个<code>Partition</code>分为多个<code>Segment</code>。
+每个<code>Segment</code>对应两个文件，“.index”文件和“.log”文件。这些文件位于一个文件夹下，该文件夹的命名规则为，<code>Topic</code>名称+分区序号。
+例如，<code>first</code>这个Topic有三个分区，则其对应的文件夹为<code>first-0</code>，<code>first-1</code>，<code>first-2</code>。其中，每个<code>Segment</code>中的日志数据文件大小均相等。
+“.index”文件存储大量的索引信息，“.log”文件存储大量的数据，索引文件中的元数据指向对应数据文件中<code>message</code>的物理偏移地址。其中文件的命名是以第一个数据的偏移量来命名的。</p>
 <blockquote>
-<p>该日志数据文件的大小可以通过在kafka Broker的config/server.properties配置文件的中的“log.segment.bytes”进行设置，默认为1G大小（1073741824字节），在顺序写入消息时如果超出该设定的阈值，将会创建一组新的日志数据和索引文件。</p>
+<p>该日志数据文件的大小可以通过在Kafka Broker的config/server.properties配置文件的中的“log.segment.bytes”进行设置，默认为1G大小（1073741824字节），在顺序写入消息时如果超出该设定的阈值，将会创建一组新的日志数据和索引文件。</p>
 </blockquote>
-<p>“.index”文件存储大量的索引信息，“.log”文件存储大量的数据，索引文件中的元数据指向对应数据文件中message的物理偏移地址。其中文件的命名是以第一个数据的偏移量来命名的。</p>
-<p><strong>kafka如何通过index文件快速找到log文件中的数据？</strong></p>
-<p>根据指定的偏移量，使用二分法查询定位出该偏移量对应的消息所在的分段索引文件和日志数据文件。然后通过二分查找法，继续查找出小于等于指定偏移量的最大偏移量，同时也得出了对应的position即实际物理位置。</p>
-<p>根据该物理位置在分段的日志数据文件中顺序扫描查找偏移量与指定偏移量相等的消息。由于index文件中的每条对应log文件中存储内容大小都相同，所以想要找到指定的消息，只需要用index文件中的该条的大小加上该条的偏移量即可得出log文件中指定消息的位置。</p>
+<p><code>Kafka</code>如何通过<code>index</code>文件快速找到<code>log</code>文件中的数据？</p>
 <p><img alt="MQ详解-006" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-006.png"></p>
+<p>根据指定的偏移量，使用二分法查询定位出该偏移量对应的消息所在的分段索引文件和日志数据文件。
+然后通过二分查找法，继续查找出小于等于指定偏移量的最大偏移量，同时也得出了对应的<code>position</code>即实际物理位置。</p>
+<p>根据该物理位置在分段的日志数据文件中顺序扫描查找偏移量与指定偏移量相等的消息。
+由于<code>index</code>文件中的每条对应<code>log</code>文件中存储内容大小都相同，所以想要找到指定的消息，只需要用<code>index</code>文件中的该条的大小加上该条的偏移量即可得出<code>log</code>文件中指定消息的位置。</p>
 <h4 id="生产者分区策略">生产者分区策略</h4>
-<p>分区的原因：</p>
+<p>分区是<code>Kafka</code>中的物理存储单位，每个<code>Topic</code>可以有多个<code>Partition</code>。消息在<code>Partition</code>中按顺序存储，每个消息有一个唯一的<code>offset</code>。</p>
+<p>分区策略决定了消息如何分配到不同的<code>Partition</code>中，直接影响到<code>Kafka</code>的负载均衡和性能。合理的分区策略可以提高并发处理能力，优化资源利用。</p>
+<p>分区策略类型：</p>
 <ul>
-<li>方便在集群中扩展，每个Partition可以通过调整以适应它所在的机器，而一个topic又可以有多个Partition组成，因此整个集群就可以适应适合的数据了；</li>
-<li>可以提高并发，因为可以以Partition为单位读写了，每个partition在不同的服务区上；</li>
+<li>轮询：轮询分区策略是<code>Kafka</code>的默认策略。生产者将消息按顺序轮询地发送到各个分区，确保负载均衡。
+优点是实现简单，能够均匀分配负载，适用于消息内容无关的场景。但无法控制消息在分区中的顺序。</li>
+<li>按键分配：在这种策略中，生产者使用消息的<code>Key</code>来决定消息发送到哪个分区。消息的<code>Key</code>被哈希，确保具有相同<code>Key</code>的消息总是发送到同一个分区。
+优点是保证具有相同<code>Key</code>的消息顺序一致，适用于需要顺序处理的场景。但可能导致某些分区负载过重，从而造成负载不均衡。</li>
+<li>自定义分区器：允许开发者实现自定义的分区策略。通过实现<code>Partitioner</code>接口，生产者可以定义复杂的分区逻辑以满足特定的业务需求。
+优点是灵活性高，可以根据具体业务需求实现自定义分区规则。但需要开发者实现和维护自定义分区器类。</li>
 </ul>
-<p><img alt="MQ详解-007" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-007.png"></p>
-<ul>
-<li>在指明partition的情况下，直接将指明的值直接作为partiton值；</li>
-<li>在没有指明partition值但有key的情况下，将key的hash 值与topic的partition数进行取余得到partition值；</li>
-<li>既没有partition值又没有key值的情况下，第一次调用时随机生成一个整数（后面每次调用在这个整数上自增），将这个值与topic可用的partition总数取余得到partition值，也就是常说的round-robin算法；</li>
-</ul>
+<p>每种分区策略有其特定的应用场景和优缺点。根据具体的业务需求和系统性能要求，选择合适的分区策略可以优化 Kafka 的负载均衡和消息处理效率。</p>
 <h4 id="生产者数据可靠性保证">生产者数据可靠性保证</h4>
-<p>为保证 producer 发送的数据，能可靠的发送到指定的 topic，topic 的每个 partition 收到 producer 发送的数据后，都需要向 producer 发送 ack(acknowledgement 确认收到)，如果 producer 收到 ack，就会进行下一轮的发送，否则重新发送数据。</p>
+<p>为保证生产者发送的数据，能可靠的发送到指定的<code>Topic</code>，<code>Topic</code>的每个分区收到生产者发送的数据后，都需要向生产者发送<code>ACK</code>(<code>acknowledgement</code>确认收到)。
+如果生产者收到<code>ACK</code>，就会进行下一轮的发送，否则重新发送数据。</p>
 <p><img alt="MQ详解-008" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-008.png"></p>
+<p><code>Kafka</code>确保消息在<code>Leader</code>副本和<code>Follower</code>副本中都得到确认。消息在<code>Leader</code>副本写入成功后，<code>Leader</code>会将消息复制到其他<code>Follower</code>副本。
+副本确认机制保证了即使某个副本出现故障，数据也不会丢失。<code>ACK</code>配置项决定了生产者需要等待多少个副本确认消息已写入才能认为请求成功。可以设置为以下值：</p>
+<ul>
+<li><code>0</code>：生产者不会等待任何确认，可能导致消息丢失。</li>
+<li><code>1</code>：生产者等待领导者副本的确认，提供基本的可靠性。</li>
+<li><code>all</code>或<code>-1</code>：生产者等待所有副本的确认，提供最高级别的数据可靠性。</li>
+</ul>
 <table>
 <thead>
 <tr>
-<th>方案</th>
+<th>同步方案</th>
 <th>优点</th>
 <th>缺点</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>半数以上完成同步，就发 送 ack</td>
+<td>半数以上完成同步，就发送ACK</td>
 <td>延迟低</td>
-<td>选举新的 leader 时，容忍 n 台 节点的故障，需要 2n+1 个副本</td>
+<td>选举新的Leader时，容忍n台 节点的故障，需要2n+1个副本</td>
 </tr>
 <tr>
-<td>全部完成同步，才发送ack</td>
-<td>选举新的 leader 时，容忍 n 台 节点的故障，需要 n+1 个副 本</td>
+<td>全部完成同步，才发送ACK</td>
+<td>选举新的Leader时，容忍n台节点的故障，需要n+1个副本</td>
 <td>延迟高</td>
 </tr>
 </tbody>
 </table>
 <blockquote>
 <p>理解 2n+1：
-半数以上完成同步才可以发ACK，如果挂了n台有副本的服务器，那么就需要有另外n台正常发送（这样正常发送的刚好是总数（挂的和没挂的）的一半（n（挂的）+n（正常的）=2n））,因为是半数以上所以2n+1.(所以总数2n+1的时候最多只能容忍n台有故障)</p>
-<p>即，如果挂了n台有副本的服务器，那么存在副本的服务器的总和为 2n+1</p>
+半数以上完成同步才可以发ACK，如果挂了n台有副本的服务器，那么就需要有另外n台正常发送（这样正常发送的刚好是总数（挂的和没挂的）的一半（n（挂的）+n（正常的）=2n）），因为是半数以上所以2n+1。所以总数2n+1的时候最多只能容忍n台有故障。即如果挂了n台有副本的服务器，那么存在副本的服务器的总和为 2n+1</p>
 </blockquote>
-<p>kafka选择了第二种方案，原因如下:
-1.同样为了容忍 n 台节点的故障，第一种方案需要 2n+1 个副本，而第二种方案只需要 n+1 个副本，而 kafka 的每个分区都有大量的数据，第一种方案会造成大量数据的冗余；
-2.虽然第二种方案的网络延迟会比较高，但网络延迟对 kafka 的影响较小；</p>
-<p>采用第二种方案之后，设想以下情景： leader 收到数据，所有 follower 都开始同步数据，但有一个 follower，因为某种故障，迟迟不能与 leader 进行同步，那 leader 就要一直等下去，直到它完成同步，才能发送 ack。这个问题怎么解决呢？</p>
-<p>Leader 维护了一个动态的 in-sync replica set 即ISR。</p>
-<p>当和 leader 保持同步的 follower 集合。当 ISR 中的 follower 完成数据的同步之后，就会给 leader 发送 ack。如果 follower长时间未向leader同步数据，则该follower将被踢出ISR，该时间阈值由replica.lag.time.max.ms参数设定。 Leader 发生故障之后，就会从 ISR 中选举新的 leader。</p>
-<blockquote>
-<p>kafka是通过消息条数差值(replica.lag.time.max.messages) 加 通信时间长短(同步时间replica.lag.time.max.ms) 两个条件来选副本进ISR，在高版本中不再关注副本的消息条数最大条件。</p>
-</blockquote>
-<p>为何会去掉消息条数差值参数？</p>
-<p>因为kafka一般是按batch批量发数据到leader, 如果批量条数12条，replica.lag.time.max.messages参数设置是10条，那么当一个批次消息发到kafka leader，此时，ISR中就要踢掉所有的follower，很快follower同步完所有数据后，follower又要被加入到ISR，而且要加入到zookeeper中频繁操作，所以去除掉该条件。</p>
+<p><code>Kafka</code>选择了第二种方案，原因是，同样为了容忍n台节点的故障，第一种方案需要<code>2n+1</code>个副本，而第二种方案只需要<code>n+1</code>个副本，而<code>Kafka</code>的每个分区都有大量的数据，第一种方案会造成大量数据的冗余；
+虽然第二种方案的网络延迟会比较高，但网络延迟对<code>Kafka</code>的影响较小。</p>
+<p>采用第二种方案之后，设想以下情景，<code>Leader</code>收到数据，所有<code>Follower</code>都开始同步数据，但有一个<code>Follower</code>，因为某种故障，迟迟不能与<code>Leader</code>进行同步，那<code>Leader</code>就要一直等下去，直到它完成同步，才能发送<code>ACK</code>。这个问题怎么解决呢？</p>
+<p><code>Leader</code>维护了一个动态的<code>in-sync replica set</code>即<code>ISR</code>。
+当和<code>Leader</code>保持同步的<code>Follower</code>集合。当<code>ISR</code>中的<code>Follower</code>完成数据的同步之后，就会给<code>Leader</code>发送<code>ACK</code>。
+如果<code>Follower</code>长时间未向<code>Leader</code>同步数据，则该<code>Follower</code>将被踢出<code>ISR</code>，该时间阈值由<code>replica.lag.time.max.ms</code>参数设定。<code>Leader</code>发生故障之后，就会从<code>ISR</code>中选举新的<code>Leader</code>。</p>
 <h4 id="生产者数据一致性保证">生产者数据一致性保证</h4>
 <p><img alt="MQ详解-009" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-009.png"></p>
 <ul>
-<li>
-<p>LEO：（Log End offset）每个副本的最后一个offset；</p>
-</li>
-<li>
-<p>HW：（High Watermark）高水位，指的是消费者能见到的最大的 offset， ISR 队列中最小的 LEO；</p>
-</li>
-<li>
-<p>follower 故障：follower 发生故障后会被临时踢出 ISR，待该 follower 恢复后， follower 会读取本地磁盘记录的上次的 HW，并将 log 文件高于 HW 的部分截取掉，从 HW 开始向 leader 进行同步。等该 follower 的 LEO 大于等于该 Partition 的 HW，即 follower 追上 leader 之后，就可以重新加入 ISR 了。</p>
-</li>
-<li>
-<p>leader 故障：leader 发生故障之后，会从 ISR 中选出一个新的 leader，之后，为保证多个副本之间的数据一致性， 其余的 follower 会先将各自的 log 文件高于 HW 的部分截掉，然后从新的 leader同步数据；如果少于 leader 中的数据则会从 leader 中进行同步。</p>
-</li>
+<li><code>LEO</code>：<code>Log End offset</code>每个副本的最后一个<code>offset</code>；</li>
+<li><code>HW</code>：<code>High Watermark</code>高水位，指的是消费者能见到的最大的<code>offset</code>，<code>ISR</code>队列中最小的<code>LEO</code>；</li>
 </ul>
-<h4 id="生产者ack机制">生产者ack机制</h4>
-<p>对于某些不太重要的数据，对数据的可靠性要求不是很高，能够容忍数据的少量丢失，所以没必要等 ISR 中的 follower 全部接收成功。kafka为生产者提供了三种ack可靠性级别配置：</p>
-<ul>
-<li>0：producer 不等待 broker 的 ack，这一操作提供了一个最低的延迟，broker 一接收到还没有写入磁盘就已经返回，当 broker 故障时有可能丢失数据；</li>
-<li>1： producer 等待 broker 的 ack， partition 的 leader 落盘成功后返回 ack，如果在 follower同步成功之前 leader 故障，那么将会丢失数据；</li>
-<li>-1/all：producer 等待 broker 的 ack， ISR队列中 partition 的 leader 和 ISR 的follower 全部落盘成功后才返回 ack。但是如果在 follower 同步完成后，broker 发送 ack 之前， leader 发生故障，那么会造成数据重复；</li>
-</ul>
-<h4 id="exactlyonce">ExactlyOnce</h4>
-<p>将服务器的 ACK 级别设置为-1，可以保证 Producer 到 Server 之间不会丢失数据，即 At Least Once 语义，至少发送一次；相对的，将服务器 ACK 级别设置为 0，可以保证生产者每条消息只会被发送一次，即 At Most Once 语义，至多发送一次。</p>
-<p>至少发送一次可以保证数据不丢失，但是不能保证数据不重复；相对的，至多发送一次可以保证数据不重复，但是不能保证数据不丢失。 但是，对于一些非常重要的信息，比如说交易数据，下游数据消费者要求数据既不重复也不丢失，即 Exactly Once 语义，准确发送一次。</p>
-<p>在0.11 版本的 Kafka，引入了一项重大特性：幂等性。所谓的幂等性就是指生产者不论向 Server 发送多少次重复数据， Server 端都只会持久化一条。幂等性结合 At Least Once 语义，就构成了 Kafka 的 Exactly Once 语义。</p>
-<p>要启用幂等性，只需要将 Producer 的参数中 <code>enable.idempotence</code> 设置为 true 即可。</p>
-<p>Kafka的幂等性实现其实就是将原来下游需要做的去重放在了数据上游。开启幂等性的 Producer 在初始化的时候会被分配一个 PID，发往同一 Partition 的消息会附带 Sequence Number。而Broker 端会对&lt;PID, Partition, SeqNumber&gt;做缓存，当具有相同主键的消息提交时， Broker 只会持久化一条。但是 PID 重启就会变化，同时不同的 Partition 也具有不同主键，所以幂等性无法保证跨分区跨会话的 Exactly Once。</p>
+<p><code>Follower</code>发生故障后会被临时踢出<code>ISR</code>，待该<code>Follower</code>恢复后，<code>Follower</code>会读取本地磁盘记录的上次的<code>HW</code>，并将<code>log</code>文件高于<code>HW</code>的部分截取掉，从<code>HW</code>开始向<code>Leader</code>进行同步。等该<code>Follower</code>的<code>LEO</code>大于等于该<code>Partition</code>的<code>HW</code>，即 Follower 追上<code>Leader</code>之后，就可以重新加入<code>ISR</code>了。
+当<code>Leader</code>发生故障之后，会从<code>ISR</code>中选出一个新的<code>Leader</code>，之后，为保证多个副本之间的数据一致性， 其余的<code>Follower</code>会先将各自的<code>log</code>文件高于<code>HW</code>的部分截掉，然后从新的<code>Leader</code>同步数据；如果少于<code>Leader</code>中的数据则会从<code>Leader</code>中进行同步。</p>
 <h4 id="生产者发送消息流程">生产者发送消息流程</h4>
-<p>kafka的生产者发送消息采用的是异步发送的方式。在消息发送的过程中，涉及到了两个线程——main 线程和 Sender 线程，以及一个线程共享变量——RecordAccumulator。</p>
+<p><code>Kafka</code>的生产者发送消息采用的是异步发送的方式。在消息发送的过程中，涉及到了两个线程<code>main</code>线程和<code>Sender</code>线程，以及一个线程共享变量即<code>RecordAccumulator</code>。</p>
 <p><img alt="MQ详解-010" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-010.png"></p>
-<p>在生产者发送消息时，main线程将消息发送给 RecordAccumulator，当数据积累到 batch.size 之后，sender线程才会不断从 RecordAccumulator 中拉取消息发送到 kafka的broker；如果数据迟迟未达到 batch.size，sender 线程等待 linger.time 之后就会发送数据。</p>
+<p>在生产者发送消息时，<code>main</code>线程将消息发送给<code>RecordAccumulator</code>，当数据积累到<code>batch.size</code>之后，<code>sender</code>线程才会不断从<code>RecordAccumulator</code>中拉取消息发送到<code>Kafka</code>的<code>Broker</code>；如果数据迟迟未达到<code>batch.size</code>，<code>sender</code>线程等待<code>linger.time</code>之后就会发送数据。</p>
 <h3 id="消费者">消费者</h3>
+<p><code>Kafka</code>消费者是用于从<code>Kafka</code>主题中读取消息的客户端应用程序。</p>
 <h4 id="消费者分区分配策略">消费者分区分配策略</h4>
-<p>一个消费者组中有多个消费者，一个主题有多个分区，所以必然会涉及到分区的分配问题，即确定哪个分区由哪个消费者来消费。</p>
-<p>消费分配策略：</p>
+<p>一个消费者组中有多个消费者，一个主题有多个分区，所以必然会涉及到分区的分配问题，即确定哪个分区由哪个消费者来消费。消费分配策略：</p>
 <ul>
-<li>round-robin：会采用轮询的方式将当前所有的分区依次分配给所有的消费者；</li>
-<li>range：首先会计算每个消费者可以消费的分区个数，然后按照顺序将指定个数范围的分区分配给各个消费者；</li>
-<li>sticky：这种分区策略是最新版本中新增的一种策略，将现有的分区尽可能均衡的分配给各个消费者，存在此目的的原因在于Round-Robin和Range分配策略实际上都会导致某几个消费者承载过多的分区，从而导致消费压力不均衡；</li>
+<li><code>round-robin</code>：采用轮询的方式将当前所有的分区依次分配给所有的消费者，这种方法确保每个消费者都能获得一个相对均匀的分区负载；</li>
+<li><code>range</code>：首先会计算每个消费者可以消费的分区个数，然后按照顺序将指定个数范围的分区分配给各个消费者；</li>
+<li><code>sticky</code>：这种分区策略是最新版本中新增的一种策略，将现有的分区尽可能均衡的分配给各个消费者，存在此目的的原因在于<code>round-robin</code>和<code>range</code>分配策略实际上都会导致某几个消费者承载过多的分区，从而导致消费压力不均衡；</li>
 </ul>
-<p>轮询就不必说了，就是把分区按照hash排序，然后分配。range按范围分配，先将所有的分区放到一起然后排序，按照平均分配的方式计算每个消费者会得到多少个分区，如果没有除尽，则会将多出来的分区依次计算到前面几个消费者。
-比如这里是三个分区和两个消费者，那么每个消费者至少会得到1个分区，而3除以2后还余1，那么就会将多余的部分依次算到前面几个消费者，也就是这里的1会分配给第一个消费者，</p>
-<p>如果按照Range分区方式进行分配，其本质上是依次遍历每个topic，然后将这些topic的分区按照其所订阅的消费者数量进行平均的范围分配。这种方式从计算原理上就会导致排序在前面的消费者分配到更多的分区，从而导致各个消费者的压力不均衡。</p>
-<h4 id="消费者消费数据问题">消费者消费数据问题</h4>
-<p>消费者在消费的时候，需要维护一个offset，用于记录消费的位置，当offset提交时会有两个问题：重复消费和漏消费：</p>
+<p><code>range</code>按范围分配，先将所有的分区放到一起然后排序，按照平均分配的方式计算每个消费者会得到多少个分区，如果没有除尽，则会将多出来的分区依次计算到前面几个消费者。
+比如这里是三个分区和两个消费者，那么每个消费者至少会得到1个分区，而3除以2后还余1，那么就会将多余的部分依次算到前面几个消费者，也就是这里的1会分配给第一个消费者。
+如果按照<code>range</code>分区方式进行分配，其本质上是依次遍历每个<code>Topic</code>，然后将这些<code>Topic</code>的分区按照其所订阅的消费者数量进行平均的范围分配。这种方式从计算原理上就会导致排序在前面的消费者分配到更多的分区，从而导致各个消费者的压力不均衡。</p>
+<h4 id="消费者重复消费">消费者重复消费</h4>
+<p>消费者在消费的时候，需要维护一个<code>offset</code>，用于记录消费的位置。当提交的<code>offset</code>小于当前程序处理的最后一条消息的<code>offset</code>，会造成重复消费。
+就是先消费，后提交<code>offset</code>，如果消费成功、提交失败，消费者下次获取的<code>offset</code>还是以前的，所以会造成重复消费。</p>
+<p>解决重复消费：</p>
 <ul>
-<li>当提交的offset小于当前程序处理的最后一条消息的offset,会造成重复消费。情景：先消费，后提交offset,如果消费成功、提交失败，消费者下次获取的offset还是以前的，所以会造成重复消费。</li>
-<li>当提交的offset大于当前程序处理的最后一条消息的offset,会造成漏消费。情景：先提交offset，后消费,如果提交成功、消费失败，消费者下次获取的offset已经是新的，所以会造成漏消费。</li>
+<li>将接口设计具有幂等性。处理消息时使用唯一标识符来检测是否已经处理过该消息，从而避免重复处理。</li>
+<li><code>Kafka</code>支持事务机制，允许将消息处理和偏移量提交放在同一个事务中，确保操作的原子性。使用事务可以减少因消费者失败导致的消息重复处理。</li>
+<li>将<code>offset</code>保存在数据库中，使当前业务与<code>offset</code>提交绑定起来，这样可以一定程度避免重复消费问题。</li>
 </ul>
-<p>这里就需要注意offset的提交方式，offset默认是自动提交，当然这会造成消费的不准确。offset提交方式：</p>
+<h4 id="消费者漏消费">消费者漏消费</h4>
+<p>消费者在消费时，当提交的<code>offset</code>大于当前程序处理的最后一条消息的<code>offset</code>，会造成漏消费。
+就是先提交<code>offset</code>，后消费，如果提交成功、消费失败，消费者下次获取的<code>offset</code>已经是新的，所以会造成漏消费。</p>
+<p>解决漏消费：</p>
 <ul>
-<li>异步提交当前offset；</li>
-<li>同步提交当前offset；</li>
-<li>同步和异步组合提交；</li>
-<li>提交指定的offset；</li>
+<li>在处理完消息并确保处理成功后，再提交偏移量。可以使用<code>commitSync</code>方法来保证偏移量的同步提交，从而确保只有在消息处理成功后才提交偏移量。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"> try {
+</span></span><span class="line"><span class="cl">     processMessage(message);
+</span></span><span class="line"><span class="cl">     consumer.commitSync(Collections.singletonMap(new TopicPartition(topic, partition), new OffsetAndMetadata(lastOffset + 1)));
+</span></span><span class="line"><span class="cl"> } catch (Exception e) {
+</span></span><span class="line"><span class="cl">     // 处理异常情况
+</span></span><span class="line"><span class="cl"> }
+</span></span></code></pre></div></li>
+<li>使用事务来保证消息处理和偏移量提交的原子性。<code>Kafka</code>提供了事务机制来确保消息处理和偏移量提交的可靠性。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"> consumer.beginTransaction();
+</span></span><span class="line"><span class="cl"> try {
+</span></span><span class="line"><span class="cl">     processMessage(message);
+</span></span><span class="line"><span class="cl">     consumer.commitTransaction();
+</span></span><span class="line"><span class="cl"> } catch (Exception e) {
+</span></span><span class="line"><span class="cl">     consumer.abortTransaction();
+</span></span><span class="line"><span class="cl"> }
+</span></span></code></pre></div></li>
 </ul>
-<p>建议将offset保存在数据库中，使当前业务与offset提交绑定起来，这样可以一定程度避免重复消费问题，重复消费的问题，一方面需要消息中间件来进行保证。另一方面需要自己的处理逻辑来保证消息的幂等性。</p>
-<h3 id="kafka事务">kafka事务</h3>
-<p>kafka从0.11版本开始引入了事务支持。事务可以保证kafka在<a href="/iblog/posts/essays/java-kafka/#exactlyonce">Exactly Once</a>语义的基础上，生产和消费可以跨分区和会话，要么全部成功，要么全部失败。</p>
+<h4 id="消费者消息积压">消费者消息积压</h4>
+<p>消费者消息积压是指消费者处理消息的速度跟不上生产者发送消息的速度，导致消息在<code>Kafka</code>的分区中堆积，从而造成系统的延迟增加和资源消耗增加。
+如果线上遇到大量消息积压，那就是线上故障了，最可能的原因是消费者出现故障。</p>
+<p>一般这个时候，只能临时紧急扩容了。先修复消费者的问题，确保其恢复消费速度，然后将现有消费者都停掉。
+新建一个<code>Topic</code>，<code>Partition</code>是原来的 10 倍，临时建立好原先10倍的<code>queue</code>数量。
+然后写一个临时的分发数据的<code>Consumer</code>程序，这个程序部署上去消费积压的数据，消费之后不做耗时的处理，直接均匀轮询写入临时建立好的 10 倍数量的<code>queue</code>。
+接着临时征用10倍的机器来部署<code>Consumer</code>，每一批<code>Consumer</code>消费一个临时<code>queue</code>的数据。这种做法相当于是临时将<code>queue</code>资源和<code>Consumer</code>资源扩大 10 倍，以正常的 10 倍速度来消费数据。
+等快速消费完积压数据之后，得恢复原先部署的架构，重新用原先的<code>Consumer</code>机器来消费消息。</p>
+<p>如果没有消费者没有出现问题，而出现了消费积压的情况可以参考以下思路：</p>
 <ul>
-<li>生产者：为了实现跨分区跨会话的事务，需要引入一个全局唯一的事务ID，并将生产者获得的PID和事务ID绑定。这样当生产者重启后就可以通过正在进行的事务ID获得原来的PID，进而保证精准发送一次；</li>
+<li>提高消费并行度；</li>
+<li>批量方式消费；</li>
+<li>跳过非重要方式消费；</li>
+<li>优化消息消费业务处理过程，简化过程；</li>
 </ul>
+<h3 id="kafka事务">Kafka事务</h3>
+<p><code>Kafka</code>从<code>0.11</code>版本开始引入了事务支持。<code>Kafka</code>的事务机制允许生产者以原子性方式写入消息到多个分区和主题中。这意味着生产者可以将一组消息作为一个事务提交，要么全部成功，要么全部失败。
+这种机制对于保证消息的一致性和防止数据丢失至关重要。</p>
 <blockquote>
-<p>为了管理 Transaction， Kafka 引入了一个新的组件 Transaction Coordinator。 Producer 就是通过和 Transaction Coordinator 交互获得 Transaction ID 对应的任务状态。 Transaction Coordinator 还负责将事务所有写入 Kafka 的一个内部 Topic，这样即使整个服务重启，由于事务状态得到保存，进行中的事务状态可以得到恢复，从而继续进行。</p>
+<p>为了管理 Transaction，Kafka引入了一个新的组件 Transaction Coordinator。 Producer 就是通过和 Transaction Coordinator 交互获得 Transaction ID 对应的任务状态。 Transaction Coordinator 还负责将事务所有写入 Kafka 的一个内部 Topic，这样即使整个服务重启，由于事务状态得到保存，进行中的事务状态可以得到恢复，从而继续进行。</p>
 </blockquote>
+<p>生产者事务工作流程：</p>
 <ul>
-<li>消费者：对于消费者而言，事务的保证就会相对较弱，尤其时无法保证提交的信息被精确消费。这是由于消费者可以通过offset访问任意信息，而且不同的<a href="/iblog/posts/essays/java-kafka/#文件存储">Segment File</a>生命周期不同，同一事务的消息可能会出现重启后被删除的情况；</li>
+<li>初始化事务：生产者需要通过<code>initTransactions()</code>方法初始化事务资源，为事务操作做准备。</li>
+<li>开始事务：通过<code>beginTransaction()</code>方法启动一个事务。这个事务会有一个全局唯一的事务<code>ID</code>，和生产者的<code>PID</code>绑定。如果生产者重启，能够通过这个事务<code>ID</code>找到原来的<code>PID</code>，从而继续事务。</li>
+<li>发送消息：在事务进行中，可以将消息发送到<code>Kafka</code>主题。消息会被标记为事务的一部分，直到事务完成。</li>
+<li>提交事务：使用<code>commitTransaction()</code>方法来提交事务。如果所有消息都成功发送，事务被提交，消息对消费者可见。</li>
+<li>中止事务：如果在事务期间出现问题，可以调用<code>abortTransaction()</code>方法来中止事务。这样未提交的消息不会对消费者可见。</li>
 </ul>
-<h3 id="消息积压">消息积压</h3>
-<p>如果线上遇到大量消息积压,那就是线上故障了.最可能是消费者出现故障</p>
-<p>一般这个时候，只能临时紧急扩容了:</p>
+<p>对于消费者而言，事务的保证就会相对较弱，尤其时无法保证提交的信息被精确消费。这是由于消费者可以通过<code>offset</code>访问任意信息，而且不同的<code>Segment``File</code>生命周期不同，同一事务的消息可能会出现重启后被删除的情况。</p>
+<p>消费者事务工作流程：</p>
 <ul>
-<li>先修复消费者的问题，确保其恢复消费速度，然后将现有消费者都停掉</li>
-<li>新建一个 topic，partition 是原来的 10 倍，临时建立好原先 10 倍的 queue 数量;</li>
-<li>然后写一个临时的分发数据的 consumer 程序，这个程序部署上去消费积压的数据，消费之后不做耗时的处理，直接均匀轮询写入临时建立好的 10 倍数量的 queue;</li>
-<li>接着临时征用 10 倍的机器来部署 consumer，每一批 consumer 消费一个临时 queue 的数据。这种做法相当于是临时将 queue 资源和 consumer 资源扩大 10 倍，以正常的 10 倍速度来消费数据;</li>
-<li>等快速消费完积压数据之后，得恢复原先部署的架构，重新用原先的 consumer 机器来消费消息;</li>
-</ul>
-<p>如果没有消费者没有出现问题,而出现了消费积压的情况可以参考以下思路:</p>
-<ul>
-<li>提高消费并行度</li>
-<li>批量方式消费</li>
-<li>跳过非重要方式消费</li>
-<li>优化消息消费业务处理过程,简化过程</li>
+<li>配置隔离级别：设置<code>isolation.level=read_committed</code>，让消费者只读取已经提交的消息。</li>
+<li>消费消息：消费者从<code>Kafka</code>读取消息。由于配置了事务隔离级别，只会处理已经提交的消息，未提交的消息不会被读取。</li>
 </ul>
 </div>
                     <div id="post_footer" class="post_footer">
