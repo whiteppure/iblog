@@ -218,7 +218,7 @@ public class RedisDistributedLock {
                     "else\n" +
                     "   return 0\n" +
                     "end;";
-            Object result = jedis.eval(lua_scripts, Collections.singletonList(REDIS_LOCK), Collections.singletonList(value))
+            Object result = jedis.eval(lua_scripts, Collections.singletonList(REDIS_LOCK), Collections.singletonList(value));
             if (result.equals("1")) {
                 System.out.println("删除key成功");
             }

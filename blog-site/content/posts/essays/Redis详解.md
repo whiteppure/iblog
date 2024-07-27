@@ -7,41 +7,190 @@ slug: "java-redis"
 ---
 
 
-## Redis概述
-参考文章：
-- [https://www.runoob.com/redis/redis-intro.html](https://www.runoob.com/redis/redis-intro.html)
-- [https://www.redis.com.cn/redis-interview-questions.html](https://www.redis.com.cn/redis-interview-questions.html)
+## 概述
+`Redis`全称`Remote Dictionary Server`，是一个开源的使用`ANSI C`语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、`Key-Value`数据库，并提供多种语言的API的非关系型数据库。
+简而言之，`Redis`是一个可基于内存亦可持久化的日志型、`Key-Value`非关系型数据库。
 
-### 什么是Redis
-Redis(**Remote Dictionary Server**) Redis 是一个开源的使用 ANSI C 语言编写、遵守 BSD 协议、支持网络、可基于内存亦可持久化的日志型、Key-Value 数据库，并提供多种语言的 API 的**非关系型数据库**。
+非关系型数据库，简称`NoSQL`，是`Not Only SQL`的缩写，是对不同于传统的关系型数据库的数据库管理系统的统称，泛指非关系型的数据库。
+`NoSQL`不依赖业务逻辑方式存储，而以简单的`Key-Value`模式存储。因此大大的增加了数据库的扩展能力。
 
-**简而言之，Redis是一个可基于内存亦可持久化的日志型、Key-Value非关系型数据库。**
+`Redis`提供高性能的内存存储和丰富的数据结构支持，具备灵活的持久化机制以及强大的高可用性和分布式扩展能力。同时，`Redis`通过事务和脚本增强了操作的原子性和灵活性。
+但是`Redis`面临内存限制问题，大数据集存储可能受限；持久化操作可能对性能造成影响；单线程模型在高并发情况下可能成为瓶颈；复杂的数据结构和操作也可能需要额外的优化。
 
-### 非关系型数据库
-非关系型数据库，简称NoSql，是Not Only SQL 的缩写，是对不同于传统的关系型数据库的数据库管理系统的统称，泛指非关系型的数据库。
-NoSql 不依赖业务逻辑方式存储，而以简单的key-value模式存储。因此大大的增加了数据库的扩展能力。
+`Redis`主要用于缓存数据、会话存储、实时数据处理、排行榜和计数器、分布式锁、发布/订阅系统、数据过期管理和全页缓存等场景。
+其高性能、支持丰富数据结构和操作的特性，使其成为处理高并发、快速读写和实时数据需求的理想解决方案。
 
-NoSql特点:
-- 不遵循SQL标准;
-- 不支持ACID;
-- 远超于SQL的性能;
+## Redis数据类型
+Redis可以存储键和不同类型的值之间的映射。键的类型只能为字符串，值常见有五种数据类型，字符串、列表、集合、散列表、有序集合，`Redis`后续的更新中又新添加了位图、地理位置等数据类型。
 
-NoSql适用场景:
-- 对数据高并发的读写;
-- 海量数据的读写;
-- 对数据高可扩展性的;
+| 数据类型              | 描述                                             | 使用场景                                |
+|-------------------|--------------------------------------------------|----------------------------------------|
+| 字符串（String）       | 最基本的数据类型，存储文本或二进制数据。                    | 缓存、会话存储、简单数据存储                    |
+| 哈希（Hash）          | 存储键值对集合，适用于表示对象或字典。                        | 用户信息存储、配置管理                        |
+| 列表（List）          | 双端链表，支持有序的元素集合。                          | 消息队列、任务调度、栈操作                      |
+| 集合（Set）           | 无序且不允许重复元素的集合。                           | 标签管理、去重、社交网络好友关系                |
+| 有序集合（Sorted Set）  | 每个元素有一个分数，按分数排序。                         | 排行榜、排名系统、延迟队列                    |
+| 位图（Bitmap）        | 高效存储和操作位数据。                                | 用户活跃度统计、权限管理                       |
+| 基数统计（HyperLogLog） | 用于估算唯一元素的数量，提供近似值。                      | 大规模去重统计、唯一用户数统计                |
+| 地理位置（Geospatial）  | 存储和查询地理位置数据。                              | 地理位置服务、位置附近的搜索                  |
 
-NoSql不适用场景:
-- 需要事务支持;
-- 基于sql的结构化查询存储，处理复杂的关系,需要及时查询;
-- 用不着sql的和用了sql也不行的情况，请考虑用NoSql；
+### String
+`Redis`的`String`类型是`Redis`支持的最基本数据类型之一。它的主要特点是简单、高效，适用于存储和操作文本或二进制数据。
+`Redis` `String`类型是一种键值对存储结构，其中键是唯一的，值可以是任意的二进制数据，包括文本、图像等。`String`类型的值可以达到`512MB`，这是`Redis`中支持的最大值长度。
 
-传统数据库遵循 ACID 规则。而 Nosql 一般为分布式,而分布式一般遵循 [CAP](/iblog/posts/essays/java-transaction/#cap理论) 定理。
+`String`的数据结构为简单动态字符串。是可以修改的字符串，内部结构实现上类似于Java的`ArrayList`，采用预分配冗余空间的方式来减少内存的频繁分配。
 
-### Redis相关知识
-Redis 默认16个数据库，类似数组下标从0开始，初始默认使用0号库。可使用命令 `select  <dbid>`来切换数据库。如: `select 8` 。
+![Redis详解-001](/iblog/posts/annex/images/essays/Redis详解-001.png)
 
-Redis是单线程+[多路IO复用技术](/iblog/posts/rookie/rookie-io/#reactor-模型)
+内部为当前字符串实际分配的空间`capacity`一般要高于实际字符串长度`len`。当字符串长度小于1M时，扩容都是加倍现有的空间，如果超过`1M`，扩容时一次只会多扩`1M`的空间。需要注意的是字符串最大长度为`512M`。
+
+常用命令：
+- 添加键值对：`set <key> <value>`；
+- 查询对应键值：`get <key>`；
+- 将给定的`<value>`追加到原值的末尾：`append <key> <value>`；
+- 获得值的长度：`strlen <key>`；
+- 只有在`<key>`不存在时设置<key>的值：`setnx <key> <value>`；
+- 将`<key>`中储存的数字值增1，只能对数字值操作，如果为空，新增值为1：`incr <key>`；
+- 将`<key>`中储存的数字值减1，只能对数字值操作，如果为空，新增值为-1：`decr <key>`；
+- 将`<key>`中储存的数字值增减，自定义步长：`incrby/decrby <key><步长>`；
+
+### List
+`Redis`列表是简单的字符串列表，按照插入顺序排序。你可以添加一个元素到列表的头部或者尾部，单键多值。
+它的底层实际是个双向链表，对两端的操作性能很高，通过索引下标的操作中间的节点性能会较差。
+
+![Redis详解-002](/iblog/posts/annex/images/essays/Redis详解-002.png)
+
+`List`的数据结构为快速链表`quickList`。首先在列表元素较少的情况下会使用一块连续的内存存储，这个结构是`ziplist`，也即是压缩列表。
+它将所有的元素紧挨着一起存储，分配的是一块连续的内存。当数据量比较多的时候才会改成`quicklist`。
+
+常用命令：
+- 从左边/右边插入一个或多个值：`lpush/rpush <key><value1><value2><value3>`；
+- 从左边/右边吐出一个值：`lpop/rpop <key>`；
+- 从`<key1>`列表右边吐出一个值，插到<key2>列表左边：`rpoplpush <key1><key2>`；
+- 按照索引下标获得元素，从左到右，`0 -1`表示获取所有：`lrange <key><start><stop>`；
+- 获得列表长度：`llen <key>`；
+- 在`<value>`的后面插入<newvalue>插入值：`linsert <key> before <value><newvalue>`；
+- 从左边删除n个`<value>`：`lrem <key><n><value>`；
+- 将列表`key`下标为`<index>`的值替换成value：`lset <key><index><value>`；
+
+### Set
+`Redis` `Set`对外提供的功能与`List`类似是一个列表的功能，特殊之处在于`Set`是可以自动去重的。
+当你需要存储一个列表数据，又不希望出现重复数据时，`Set`是一个很好的选择，并且`Set`提供了判断某个成员是否在一个`Set`集合内的重要接口，这个也是`List`所不能提供的。
+
+`Redis`的`Set`是`String`类型的无序集合。它底层其实是一个`value`为`null`的`hash`表，所以添加，删除，查找的复杂度都是`O(1)`。
+> 复杂度O(1)：数据增加，查找数据的时间不变。
+
+`Set`数据结构是`dict`字典，字典是用哈希表实现的。在Java中`HashSet`的内部实现使用的是`HashMap`，只不过所有的`value`都指向同一个对象。`Redis`的`Set`结构也是一样，它的内部也使用`Hash`结构，所有的`value`都指向同一个内部值。
+
+常用命令：
+- 将一个或多个元素加入到集合`key`中，已经存在的元素将被忽略：`sadd <key><value1><value2>`
+- 取出该集合的所有值：`smembers <key>`
+- 判断集合`<key>`是否为含有该`<value>`值，有1，没有0：`sismember <key><value>`
+- 返回该集合的元素个数：`scard<key>`
+- 删除集合中的某个元素：`srem <key><value1><value2>`
+- 随机从该集合中吐出一个值，可指定key，会从集合中删除：`spop <key>`
+- 随机从该集合中取出n个值，不会从集合中删除：`srandmember <key><n>`
+- 把集合中一个值从一个集合移动到另一个集合：`smove <source Key><destination Key><value>`
+- 返回两个集合的交集元素：`sinter <key1><key2>`
+- 返回两个集合的并集元素：`sunion <key1><key2>`
+- 返回两个集合的差集元素(`key1`中的，不包含`key2`中的)：`sdiff <key1><key2>`
+
+### Hash  
+`Redis`中的`hash`是一个键值对集合。`hash`是一个`String`类型的`field`和`value`的映射表，`hash`特别适合用于存储对象。类似Java里面的`Map`。
+`hash`类型对应的数据结构是两种，`ziplist`（压缩列表），`hashtable`（哈希表）。当`field-value`长度较短且个数较少时，使用`ziplist`，否则使用`hashtable`。
+
+常用命令：
+- 给`<key>`集合中的`<field>`键赋值`<value>`：`hset <key><field><value>`；
+- 从`<key1>`集合`<field>`取出`value`：`hget <key1><field>`；
+- 批量设置`hash`的值：`hmset <key1><field1><value1><field2><value2>...`；
+- 查看哈希表`<key>`中，给定域`<field>`是否存在：`hexists<key1><field>`；
+- 列出该`hash`集合的所有`<field>`：`hkeys <key>`；
+- 列出该`hash`集合的所有`<value>`：`hvals <key>`；
+- 为哈希表`<key>`中的域`<field>`的值加上增量1：`hincrby <key><field><increment>`；
+- 将哈希表`<key>`中的域`<field>`的值设置为`<value>`，当且仅当域`<field>`不存在：`hsetnx <key><field><value>`；
+
+### ZSet
+`Sorted Set`有序集合也称为`ZSet`，`Redis`有序集合`ZSet`与普通集合`Set`非常相似，是一个没有重复元素的字符串集合。
+不同之处是有序集合的每个成员都关联了一个评分，这个评分被用来按照从最低分到最高分的方式排序集合中的成员。集合的成员是唯一的，但是评分可以是重复了 。
+
+因为元素是有序的，所以你也可以很快的根据评分或者次序来获取一个范围的元素。
+访问有序集合的中间元素也是非常快的，因此你能够使用有序集合作为一个没有重复成员的智能列表。
+
+`Sorted Set`是`Redis`提供的一个非常特别的数据结构，一方面它等价于Java的数据结构`Map`，可以给每一个元素`value`赋予一个权重`score`，另一方面它又类似于`TreeSet`，内部的元素会按照权重`score`进行排序，可以得到每个元素的名次，还可以通过`score`的范围来获取元素的列表。
+
+`Sorted Set`底层使用了两个数据结构：
+- `hash`：`hash`的作用就是关联元素`value`和权重`score`，保障元素`value`的唯一性，可以通过元素`value`找到相应的`score`值;
+- 跳跃表：跳跃表的目的在于给元素`value`排序，根据`score`的范围获取元素列表;
+
+有序集合在生活中比较常见，例如根据成绩对学生排名，根据得分对玩家排名等。对于有序集合的底层实现，可以用数组、平衡树、链表等。数组不便元素的插入、删除；平衡树或红黑树虽然效率高但结构复杂；链表查询需要遍历所有效率低。
+Redis采用的是跳跃表。跳跃表效率堪比红黑树，实现远比红黑树简单。举例：对比有序链表和跳跃表，从链表中查询出51。
+- 有序链表：查找值为51的元素，需要从第一个元素开始依次查找、比较才能找到;共需要6次比较。
+
+   ![Redis详解-003](/iblog/posts/annex/images/essays/Redis详解-003.png)
+- 跳跃表：从第2层开始，1节点比51节点小，向后比较；21节点比51节点小，继续向后比较，后面就是NULL了，所以从21节点向下到第1层；在第1层，41节点比51节点小，继续向后，61节点比51节点大，所以从41向下；在第0层，51节点为要查找的节点，节点被找到，共查找4次。
+   
+   ![Redis详解-004](/iblog/posts/annex/images/essays/Redis详解-004.png)
+
+可以看出跳跃表比有序链表效率要高。
+
+常用命令：
+- 将一个或多个元素及其`score`值加入到有序集`key`当中：`zadd  <key><score1><value1><score2><value2>...`；
+- 返回有序集`key`中，下标在`<start><stop>`之间的元素，带`withscores`，可以让分数一起和值返回到结果集：`zrange <key><start><stop> [WITHSCORES]`；
+- 返回有序集`key`中，所有`score`值介于`min`和`max`之间(包括等于`min`或`max`)的成员，有序集成员按`score`值递增次序排列：`zrangebyscore key minmax [withscores] [limit offset count]`；
+- 为元素的`score`加上增量：`zincrby <key><increment><value>`；
+- 删除该集合下，指定值的元素：`zrem <key><value>`；
+- 统计该集合，分数区间内的元素个数：`zcount <key><min><max>`；
+- 返回该值在集合中的排名，从0开始：`zrank <key><value>`；
+
+### Bitmaps
+`Bitmaps`并不是一种数据结构，实际上它就是字符串，但是可以对字符串的位进行操作。
+
+>bit（位）简介：现代计算机用二进制（位）作为信息的基础单位，1个字节等于8位， 例如“abc”字符串是由3个字节组成，但实际在计算机存储时将其用二进制表示。“abc”分别对应的ASCII码分别是97、 98、 99， 对应的二进制分别是01100001、 01100010和01100011。
+
+`Bitmaps`单独提供了一套命令，所以在`Redis`中使用`Bitmaps`和使用字符串的方法不太相同。
+可以把`Bitmaps`想象成一个以位为单位的数组，数组的每个单元只能存储0和1，数组的下标在`Bitmaps`中叫做偏移量。
+
+![Redis详解-009](/iblog/posts/annex/images/essays/Redis详解-009.png)
+
+常用命令：
+- 设置`Bitmaps`中某个偏移量的值0或1，`offset`偏移量从0开始：`setbit <key><offset><value>`；
+- 获取`Bitmaps`中某个偏移量的值，获取键的第`offset`位的值，`offset`偏移量从0开始，不存在则返回0：`getbit <key><offset>`；
+- 统计字符串从`start`字节到`end`字节`bit`值为1的数量：`bitcount <key>[start end]`；
+
+`Bitmap`主要用于高效存储和处理大量二进制标志数据。它适合用于用户活跃度统计，比如记录用户每日登录状态；权限标志管理，每个权限用一位表示；大规模去重，如日志中的唯一用户统计；以及数据标记，比如任务完成情况。
+由于其紧凑的存储和高效的位操作能力，`Bitmap`能够处理大规模的二进制数据，并提供快速的位级访问和操作。
+
+### HyperLogLog
+Redis在2.8.9版本添加了`HyperLogLog`结构，`HyperLogLog`是用来做基数统计的算法。
+`HyperLogLog`的优点是，在输入元素的数量或者体积非常非常大时，计算基数所需的空间总是固定的、并且是很小的。适用于需要处理大量唯一值而又不要求精确计数的场景。
+
+> HyperLogLog中的基数：比如数据集 {1, 3, 5, 7, 5, 7, 8}， 那么这个数据集的基数集为 {1, 3, 5 ,7, 8}, 不重复元素为5个，5就是基数。基数估计就是在误差可接受的范围内，快速计算基数。
+
+在`Redis`里面，每个`HyperLogLog`键只需要花费`12KB`内存，就可以计算接近`2^64`个不同元素的基数。这和计算基数时，元素越多耗费内存就越多的集合形成鲜明对比。
+但是因为`HyperLogLog`只会根据输入元素来计算基数，而不会储存输入元素本身，所以`HyperLogLog`不能像集合那样，返回输入的各个元素。
+
+常用命令：
+- 添加指定元素到`HyperLogLog`中，估计的近似基数发生变化，则返回1，否则返回0：`pfadd <key>< element> [element ...]`；
+- 计算`<key>`的近似基数：`pfcount<key> [key ...]`；
+- 将一个或多个`<key>`合并后的结果存储在另一个`<key>`中：`pfmerge <destkey><sourcekey> [sourcekey ...]`；
+
+`Redis` `HyperLogLog`主要用于估算大规模数据集中的唯一元素数量，尤其在需要处理大量唯一值但不要求精确计数的场景下。
+它适合用于网站或应用中的唯一用户数统计、流量分析、广告点击量、搜索查询以及日志去重等场景。
+
+### Geospatial
+`Geospatial`是一种用于存储和处理地理位置信息的功能。它允许你在`Redis`中存储地理坐标，并基于这些坐标进行各种地理空间查询。
+这个功能非常适合处理需要地理位置数据的应用场景，如位置服务、地理搜索、附近商店推荐等。
+> 两极无法直接添加，一般会下载城市数据，直接通过 Java 程序一次性导入。有效的经度从 -180 度到 180 度。有效的纬度从 -85.05112878 度到 85.05112878 度。当坐标位置超出指定范围时，该命令将会返回一个错误。已经添加的数据，是无法再次往里面添加的。
+
+常用命令：
+- 添加地理位置，`key`名称、经度、纬度、名称：`geoadd <key>< longitude><latitude><member> [longitude latitude member...]`；
+- 获得指定地区的坐标值：`geopos  <key><member> [member...]`；
+- 获取两个位置之间的直线距离，默认单位，米、km表示单位为千米、mi表示单位为英里、ft表示单位为英尺：`geodist <key><member1><member2>  [m|km|ft|mi ]`；
+- 以给定的经纬度为中心，找出某一半径内的元素：`georadius <key><longitude><latitude><radius><m|km|ft|mi> [withcoord]`；
+
+## IO多路复用
+[//]: # (写到了这里)
+Redis是单线程+多路IO复用技术
 
 **多路复用：**
 指使用一个线程来检查多个文件描述符（Socket）的就绪状态，比如调用select和poll函数，传入多个文件描述符，如果有一个文件描述符就绪，则返回，否则阻塞直到超时。得到就绪状态后进行真正的操作可以在同一个线程里执行，也可以启动线程执行，比如使用线程池。
@@ -51,32 +200,9 @@ Redis是单线程+[多路IO复用技术](/iblog/posts/rookie/rookie-io/#reactor-
 在单线程中，能够在单条指令中完成的操作都可以认为是"原子操作"，因为中断只能发生于指令之间；在多线程中，不能被其它进程或线程打断的操作就叫原子操作；
 **Redis命令的原子性主要得益于Redis的单线程机制。**
 
-Redis使用场景：
-- 配合关系型数据库做高速缓存
-    - 高频次，热门访问的数据，放入Redis中可降低数据库IO
-    - 分布式架构，做session共享
-- 多样的数据结构存储持久化数据
-    - 利用zset排序，做排行榜功能、大数据去重；
-    - 利用Redis key的实效性数据，如将手机验证码放入Redis；
-    - 发布订阅消息系统，构建队列；
-    - 利用Redis的原子性来做计数器、秒杀等；
+## 使用Redis
+Redis默认16个数据库，类似数组下标，从0开始，初始默认使用0号库。可使用命令 `select  <dbid>`来切换数据库。如`select 8` 。
 
-Redis特点：
-- Redis 支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用;
-- Redis 支持数据的备份，即master-slave模式的数据备份;
-- Redis 可以存储键与不同数据结构类型之间的映射:
- 
-Redis优点：
-- 性能极高 – 因为是纯内存操作，Redis能读的速度是110000次/s,写的速度是81000次/s；
-- 丰富的特性 – Redis还支持 publish/subscribe, 通知, key 过期等等特性；
-- 丰富的数据类型 – Redis支持二进制案例的 Strings, Lists, Hashes, Sets 及 Ordered Sets 数据类型操作；
-- 原子 – Redis的所有操作都是原子性的，意思就是要么成功执行要么失败完全不执行。单个操作是原子性的。多个操作也支持事务，即原子性，通过MULTI和EXEC指令包起来；
-
-Redis缺点：
-- Redis 的主要缺点是数据库容量受到物理内存的限制，不能用作海量数据的高性能读写，因此Redis适合的场景主要局限在较小数据量的高性能操作和运算上。
-
-
-### Redis基础命令
 > 如果你使用docker可以先启动Redis容器再用`docker exec -it <容器ID> redis-cli`命令进入redis客户端。
 
 基础命令：
@@ -95,185 +221,6 @@ Redis缺点：
 更多命令详见：
 - [http://www.redis.cn/commands.html](http://www.redis.cn/commands.html)
 - [https://www.redis.com.cn/commands.html](https://www.redis.com.cn/commands.html)
-
-### Redis数据类型
-Redis 可以存储键和不同类型的值之间的映射。键的类型只能为字符串，值常见有五种数据类型：字符串、列表、集合、散列表、有序集合，Redis后续的更新中又新添加了位图、地理位置等数据类型。
-
-| 名称                     | 使用场景                                                     |
-| ------------------------ | ------------------------------------------------------------ |
-| [string-字符串](#string)         | 作为常规的key-value缓存应用                                  |
-| [hash-哈希](#hash)             | 主要用来存储对象信息                                         |
-| [list-列表](#list)             | 缓存一些列表数据：关注列表、粉丝列表等                       |
-| [set-集合](#set)              | 去重；提供了求交集、并集、差集等操作，可以用来做共同关注、共同好友 |
-| [sorted set-有序集合](#zset)   | 用来做排行榜                                                 |
-| [bitmaps-位图](#bitmaps)         | 可以用来统计状态，如日活是否浏览过某个东西                   |
-| [hyperloglog-基数统计](#hyperloglog) | 用来做统计独立IP数、搜索记录数                               |
-| [geospatial-地理位置](#geospatial)   | 可以用来做附近的人、地图的一些推送接口   
-
-
-#### String
-String是Redis最基本的类型，一个key对应一个value。String类型是二进制安全的。意味着Redis的string可以包含任何数据。比如jpg图片或者序列化的对象。String类型是Redis最基本的数据类型，一个Redis中字符串value最多可以是512M。
-
-![Redis详解-001](/iblog/posts/annex/images/essays/Redis详解-001.png)
-
-String的数据结构为简单动态字符串(Simple Dynamic String,缩写SDS)。是可以修改的字符串，内部结构实现上类似于Java的ArrayList，采用预分配冗余空间的方式来减少内存的频繁分配.
-
-如图中所示,内部为当前字符串实际分配的空间capacity一般要高于实际字符串长度len。当字符串长度小于1M时，扩容都是加倍现有的空间，如果超过1M，扩容时一次只会多扩1M的空间。需要注意的是字符串最大长度为512M。
-
-常用命令：
-- 添加键值对：`set <key> <value>`
-- 查询对应键值：`get <key>`
-- 将给定的<value>追加到原值的末尾：`append <key> <value>`
-- 获得值的长度：`strlen <key>`
-- 只有在<key>不存在时设置<key>的值：`setnx <key> <value>`
-- 将<key>中储存的数字值增1,只能对数字值操作，如果为空，新增值为1：`incr <key>`
-- 将<key>中储存的数字值减1,只能对数字值操作，如果为空，新增值为-1：`decr <key>`
-- 将<key>中储存的数字值增减，自定义步长：`incrby/decrby <key><步长>`
-
-#### List
-Redis列表是简单的字符串列表，按照插入顺序排序。你可以添加一个元素到列表的头部（左边）或者尾部（右边）,单键多值。它的底层实际是个双向链表，对两端的操作性能很高，通过索引下标的操作中间的节点性能会较差。
-
-![Redis详解-002](/iblog/posts/annex/images/essays/Redis详解-002.png)
-
-List的数据结构为快速链表quickList。首先在列表元素较少的情况下会使用一块连续的内存存储，这个结构是ziplist，也即是压缩列表。它将所有的元素紧挨着一起存储，分配的是一块连续的内存。当数据量比较多的时候才会改成quicklist。
-
-常用命令：
-- 从左边/右边插入一个或多个值：`lpush/rpush <key><value1><value2><value3>`
-- 从左边/右边吐出一个值：`lpop/rpop <key>`
-- 从<key1>列表右边吐出一个值，插到<key2>列表左边：`rpoplpush <key1><key2>`
-- 按照索引下标获得元素，从左到右，`0 -1`表示获取所有：`lrange <key><start><stop>`
-- 获得列表长度：`llen <key>`
-- 在<value>的后面插入<newvalue>插入值：`linsert <key> before <value><newvalue>`
-- 从左边删除n个<value>：`lrem <key><n><value>`
-- 将列表key下标为<index>的值替换成value：`lset <key><index><value>`
-
-#### Set
-Redis set对外提供的功能与list类似是一个列表的功能，特殊之处在于set是可以**自动去重的**，当你需要存储一个列表数据，又不希望出现重复数据时，set是一个很好的选择，并且set提供了判断某个成员是否在一个set集合内的重要接口，这个也是list所不能提供的。
-
-Redis的Set是string类型的无序集合。它底层其实是一个value为null的hash表，所以添加，删除，查找的复杂度都是O(1)。
-> 复杂度O(1)：数据增加，查找数据的时间不变。
-
-Set数据结构是dict字典，字典是用哈希表实现的。在Java中HashSet的内部实现使用的是HashMap，只不过所有的value都指向同一个对象。Redis的set结构也是一样，它的内部也使用hash结构，所有的value都指向同一个内部值。
-
-常用命令：
-- 将一个或多个元素加入到集合key中，已经存在的元素将被忽略：`sadd <key><value1><value2>`
-- 取出该集合的所有值：`smembers <key>`
-- 判断集合<key>是否为含有该<value>值，有1，没有0：`sismember <key><value>`
-- 返回该集合的元素个数：`scard<key>`
-- 删除集合中的某个元素：`srem <key><value1><value2>`
-- 随机从该集合中吐出一个值，可指定key，会从集合中删除：`spop <key>`
-- 随机从该集合中取出n个值，不会从集合中删除：`srandmember <key><n>`
-- 把集合中一个值从一个集合移动到另一个集合：`smove <source Key><destination Key><value>`
-- 返回两个集合的交集元素：`sinter <key1><key2>`
-- 返回两个集合的并集元素：`sunion <key1><key2>`
-- 返回两个集合的差集元素(key1中的，不包含key2中的)：`sdiff <key1><key2>`
-
-#### Hash
-Redis hash 是一个键值对集合。Redis hash是一个string类型的field和value的映射表，hash特别适合用于存储对象。类似Java里面的Map<String,Object>。
-
-Hash类型对应的数据结构是两种：ziplist（压缩列表），hashtable（哈希表）。当field-value长度较短且个数较少时，使用ziplist，否则使用hashtable。
-
-常用命令：
-- 给<key>集合中的<field>键赋值<value>：`hset <key><field><value>`
-- 从<key1>集合<field>取出 value：`hget <key1><field>`
-- 批量设置hash的值：`hmset <key1><field1><value1><field2><value2>...` 
-- 查看哈希表<key>中，给定域<field>是否存在：`hexists<key1><field>`
-- 列出该hash集合的所有<field>：`hkeys <key>`
-- 列出该hash集合的所有<value>：`hvals <key>`
-- 为哈希表<key>中的域<field>的值加上增量1：`hincrby <key><field><increment>`
-- 将哈希表<key>中的域<field> 的值设置为<value>,当且仅当域<field>不存在：`hsetnx <key><field><value>`
-
-#### ZSet
-sorted set 有序集合也称为 zset，Redis有序集合zset与普通集合set非常相似，是一个没有重复元素的字符串集合。不同之处是有序集合的每个成员都关联了一个评分（score）,这个评分被用来按照从最低分到最高分的方式排序集合中的成员。集合的成员是唯一的，但是评分可以是重复了 。
-
-因为元素是有序的, 所以你也可以很快的根据评分（score）或者次序（position）来获取一个范围的元素。
-访问有序集合的中间元素也是非常快的,因此你能够使用有序集合作为一个没有重复成员的智能列表。
-
-SortedSet(zset)是Redis提供的一个非常特别的数据结构，一方面它等价于Java的数据结构Map<String, Double>，可以给每一个元素value赋予一个权重score，另一方面它又类似于TreeSet，内部的元素会按照权重score进行排序，可以得到每个元素的名次，还可以通过score的范围来获取元素的列表。
-
-zset底层使用了两个数据结构:
-- hash，hash的作用就是关联元素value和权重score，保障元素value的唯一性，可以通过元素value找到相应的score值;
-- 跳跃表，跳跃表的目的在于给元素value排序，根据score的范围获取元素列表;
-
->跳跃表：<br>
->有序集合在生活中比较常见，例如根据成绩对学生排名，根据得分对玩家排名等。对于有序集合的底层实现，可以用数组、平衡树、链表等。数组不便元素的插入、删除；平衡树或红黑树虽然效率高但结构复杂；链表查询需要遍历所有效率低。Redis采用的是跳跃表。跳跃表效率堪比红黑树，实现远比红黑树简单。
-> <br>
->举例：对比有序链表和跳跃表，从链表中查询出51
->
-> 有序链表: 查找值为51的元素，需要从第一个元素开始依次查找、比较才能找到;共需要6次比较。
-> ![Redis详解-003](/iblog/posts/annex/images/essays/Redis详解-003.png)
->
-> 跳跃表:从第2层开始，1节点比51节点小，向后比较；21节点比51节点小，继续向后比较，后面就是NULL了，所以从21节点向下到第1层；在第1层，41节点比51节点小，继续向后，61节点比51节点大，所以从41向下；在第0层，51节点为要查找的节点，节点被找到，共查找4次。
->![Redis详解-004](/iblog/posts/annex/images/essays/Redis详解-004.png)
->
->可以看出跳跃表比有序链表效率要高。
-
-常用命令：
-- 将一个或多个元素及其score值加入到有序集key当中：`zadd  <key><score1><value1><score2><value2>...`
-- 返回有序集 key 中，下标在<start><stop>之间的元素,带withscores，可以让分数一起和值返回到结果集：`zrange <key><start><stop> [WITHSCORES]`
-- 返回有序集 key 中，所有 score 值介于 min 和 max 之间(包括等于 min 或 max )的成员;有序集成员按 score 值递增(从小到大)次序排列：`zrangebyscore key minmax [withscores] [limit offset count]`
-- 为元素的 score 加上增量：`zincrby <key><increment><value>`
-- 删除该集合下，指定值的元素：`zrem <key><value>`
-- 统计该集合，分数区间内的元素个数：`zcount <key><min><max>`
-- 返回该值在集合中的排名，从0开始：`zrank <key><value>`
-
-#### Bitmaps
-Bitmaps 并不是一种数据结构，实际上它就是字符串，但是可以对字符串的位进行操作。
-
->bit（位）简介：<br> 
->现代计算机用二进制（位） 作为信息的基础单位， 1个字节等于8位， 例如“abc”字符串是由3个字节组成， 但实际在计算机存储时将其用二进制表示， “abc”分别对应的ASCII码分别是97、 98、 99， 对应的二进制分别是01100001、 01100010和01100011。
-
-Bitmaps单独提供了一套命令， 所以在Redis中使用Bitmaps和使用字符串的方法不太相同。 可以把Bitmaps想象成一个以位为单位的数组， 数组的每个单元只能存储0和1， 数组的下标在Bitmaps中叫做偏移量。
-
-![Redis详解-009](/iblog/posts/annex/images/essays/Redis详解-009.png)
-
-常用命令：
-- 设置Bitmaps中某个偏移量的值(0或1),offset偏移量从0开始：`setbit <key><offset><value>`
-- 获取Bitmaps中某个偏移量的值,获取键的第offset位的值,offset偏移量从0开始，不存在则返回0：`getbit <key><offset>`
-- 统计字符串从start字节到end字节bit值为1的数量：`bitcount <key>[start end]`
-
-虽然使用位操作能够极大提高内存使用效率，但也并非总是如此，合理地使用操作位能才能够有效地提高内存使用率和开发效率。
-
-假设网站有1亿用户， 每天独立访问的用户有5千万， 如果每天用集合类型和Bitmaps分别存储活跃用户可以得到表：
-
-Set和Bitmaps存储一天活跃用户对比：
->- **Set每个用户id占用空间**：假设用户id用的是long存储占8字节，所以Set用户id占用空间是8*8bit=64bit。
->- **Bitmaps需要存储的用户量**：因为Bitmaps 并不是一种数据结构，实际上是字符串，所以在存储的时候需要存储全部的用户，此处为1亿。
-
-| 数据类型 | 每个用户id占用空间                      | 需要存储的用户量 | 全部内存量             |
-| -------- | --------------------------------------- | ---------------- | ---------------------- |
-| Set      | 64bit | 50000000         | 64位*50000000 = 400MB  |
-| Bitmaps  | 1bit  | 100000000        | 1位*100000000 = 12.5MB |
-
-但Bitmaps并不是万金油，假如该网站每天的独立访问用户很少，例如只有10万，这时候使用Bitmaps就不太合适了，两者的对比如下表所示：
-| 数据类型 | 每个用户id占用空间 | 需要存储的用户量 | 全部内存量             |
-| -------- | ------------------ | ---------------- | ---------------------- |
-| Set      | 64位               | 100000           | 64位*100000 = 800KB    |
-| Bitmaps  | 1位                | 100000000        | 1位*100000000 = 12.5MB |
-
-#### HyperLogLog
-Redis 在 2.8.9 版本添加了 HyperLogLog 结构。Redis HyperLogLog 是用来做**基数**统计的算法，HyperLogLog 的优点是，在输入元素的数量或者体积非常非常大时，计算基数所需的空间总是固定的、并且是很小的。
-
-> HyperLogLog中的基数：比如数据集 {1, 3, 5, 7, 5, 7, 8}， 那么这个数据集的基数集为 {1, 3, 5 ,7, 8}, 不重复元素为5个，5就是基数。 基数估计就是在误差可接受的范围内，快速计算基数。
-
-在 Redis 里面，每个 HyperLogLog 键只需要花费 12 KB 内存，就可以计算接近 2^64 个不同元素的基数。这和计算基数时，元素越多耗费内存就越多的集合形成鲜明对比。
-
-但是，因为 HyperLogLog 只会根据输入元素来计算基数，而不会储存输入元素本身，所以 HyperLogLog 不能像集合那样，返回输入的各个元素。
-
-常用命令：
-- 添加指定元素到 HyperLogLog 中,估计的近似基数发生变化，则返回1，否则返回0：`pfadd <key>< element> [element ...]`
-- 计算<key>的近似基数：`pfcount<key> [key ...]`
-- 将一个或多个<key>合并后的结果存储在另一个<key>中：`pfmerge <destkey><sourcekey> [sourcekey ...]`
-
-#### Geospatial
-GEO，Geographic，地理信息的缩写。该类型，就是元素的2维坐标，在地图上就是经纬度。redis基于该类型，提供了经纬度设置、查询、范围查询、距离查询、经纬度Hash等常见操作。
-
-常用命令：
-- 添加地理位置，key名称、经度、纬度、名称：`geoadd <key>< longitude><latitude><member> [longitude latitude member...]`
-> 两极无法直接添加，一般会下载城市数据，直接通过 Java 程序一次性导入。有效的经度从 -180 度到 180 度。有效的纬度从 -85.05112878 度到 85.05112878 度。当坐标位置超出指定范围时，该命令将会返回一个错误。已经添加的数据，是无法再次往里面添加的。
-- 获得指定地区的坐标值：`geopos  <key><member> [member...]`
-- 获取两个位置之间的直线距离,默认单位，米、km表示单位为千米、mi表示单位为英里、ft表示单位为英尺。：`geodist <key><member1><member2>  [m|km|ft|mi ]`
-- 以给定的经纬度为中心，找出某一半径内的元素：`georadius <key><longitude><latitude><radius><m|km|ft|mi> [withcoord]`
 
 ## Redis发布与订阅
 Redis 发布订阅 (pub/sub) 是一种消息通信模式：发送者 (pub) 发送消息，订阅者 (sub) 接收消息。Redis 客户端可以订阅任意数量的频道。
