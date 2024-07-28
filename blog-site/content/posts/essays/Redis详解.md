@@ -164,7 +164,7 @@ Redis采用的是跳跃表。跳跃表效率堪比红黑树，实现远比红黑
 Redis在2.8.9版本添加了`HyperLogLog`结构，`HyperLogLog`是用来做基数统计的算法。
 `HyperLogLog`的优点是，在输入元素的数量或者体积非常非常大时，计算基数所需的空间总是固定的、并且是很小的。适用于需要处理大量唯一值而又不要求精确计数的场景。
 
-> HyperLogLog中的基数：比如数据集 {1, 3, 5, 7, 5, 7, 8}， 那么这个数据集的基数集为 {1, 3, 5 ,7, 8}, 不重复元素为5个，5就是基数。基数估计就是在误差可接受的范围内，快速计算基数。
+> HyperLogLog中的基数：比如数据集 {1, 3, 5, 7, 5, 7, 8}， 那么这个数据集的基数集为 {1, 3, 5 ,7, 8}，不重复元素为5个，5就是基数。基数估计就是在误差可接受的范围内，快速计算基数。
 
 在`Redis`里面，每个`HyperLogLog`键只需要花费`12KB`内存，就可以计算接近`2^64`个不同元素的基数。这和计算基数时，元素越多耗费内存就越多的集合形成鲜明对比。
 但是因为`HyperLogLog`只会根据输入元素来计算基数，而不会储存输入元素本身，所以`HyperLogLog`不能像集合那样，返回输入的各个元素。
@@ -206,7 +206,7 @@ IO多路复用技术允许`Redis`在一个线程中高效地处理多个IO操作
 ## 单线程模型
 `Redis`的核心运行在一个主线程中，这个线程负责处理所有的客户端请求。单线程的设计避免了多线程环境中的许多复杂问题，如锁竞争和上下文切换，从而简化了代码并提高了性能。
 
-`Redis`的命令大多数都是原子操作，即在执行过程中不会被中断。这种特性确保了即使在高并发的环境下，操作也能保持一致性。
+`Redis`的命令大多数都是原子操作，即在执行过程中不会被中断。这种特性保证了即使在高并发的环境下，操作也能保持一致性。
 由于`Redis`采用单线程模型，它避免了多线程环境中的上下文切换开销。这种设计能够减少系统资源的浪费，提高整体性能。
 
 虽然`Redis`运行在单线程中，但它使用了IO多路复用技术来处理多个客户端的连接。
@@ -227,7 +227,7 @@ IO多路复用技术允许`Redis`在一个线程中高效地处理多个IO操作
 - 判断某个`key`是否存在：`exists <key>`；
 - 查看`key`是什么类型：`type <key>`；
 - 删除指定的`key`数据：`del <key>`；
-- 根据`value`选择非阻塞删除,异步删除：`unlink <key>`；
+- 根据`value`选择非阻塞删除，异步删除：`unlink <key>`；
 - 为给定的`key`设置过期时间：`expire key <time>`；
 - 查看还有多少秒过期，-1表示永不过期，-2表示已过期：`ttl <key>`；
 - 切换数据库：`select <dbid>`；
@@ -370,739 +370,513 @@ QUEUED
 还可以将缓存更新操作放在后台任务中，并设置补偿机制来修复数据不一致。如果后台任务失败，补偿机制会尝试重新同步数据。
 
 ### 大Key问题
-[//]: # (写到了这里)
-所谓的大key问题是某个key的value比较大，所以本质上是大value问题.因为key往往是程序可以自行设置的，value往往不受程序控制，因此可能导致value很大。
+所谓的大`Key`问题是指某个`Key`的`value`比较大，所以本质上是大`value`问题。因为`Key`往往是程序可以自行设置的，`value`往往不受程序控制，因此可能导致`value`很大。
+大`Key`占用的内存非常多，可能导致`Redis`实例的内存使用量急剧增加。大Key的读取、写入或删除可能会显著拖慢`Redis`的性能。例如，操作一个非常大的列表会占用大量的CPU和IO资源，导致其他操作的响应时间变慢。
 
-因为Redis是单线程的,单线程中请求任务的处理是串行的，前面完不成，后面处理不了，同时也导致分布式架构中内存数据和CPU的不平衡.所以大key问题最典型的就是阻塞线程，并发量下降，导致客户端超时，服务端业务成功率下降。
+大`Key`问题一般是由于业务方案设计不合理，没有预见`value`的动态增长问题产生的。一直往`value`塞数据，没有删除机制，迟早要爆炸或数据没有合理做分片，将大`Key`变成小`Key`。
+在线上一般通过设置`Redis`监控，及时发现和处理大Key问题。可以使用工具监控键的大小，避免存储异常大的数据项。
 
-大key问题一般是由于业务方案设计不合理,没有预见value的动态增长问题产生的.一直往value塞数据，没有删除机制，迟早要爆炸或数据没有合理做分片，将大key变成小key. 在线上一般通过集成[Redis可视化工具](https://www.redis.com.cn/clients.html),来发现和定位大key问题.
-
-解决大key问题,根据大key的实际用途可以分为两种情况：可删除和不可删除。如果发现某些大key并非热key就可以在DB中查询使用，则可以在Redis中删掉.
-- 删除
-    1. 当Redis版本大于4.0时，可使用UNLINK命令安全地删除大Key，该命令能够以非阻塞的方式，逐步地清理传入的Key。
-    2. 当Redis版本小于4.0时，避免使用阻塞式命令KEYS，而是建议通过SCAN命令执行增量迭代扫描key，然后判断进行删除。
-
-- 不可删除
-    1. 当value是string时，比较难拆分，则使用序列化、压缩算法将key的大小控制在合理范围内，但是序列化和反序列化都会带来更多时间上的消耗。
-    2. 当value是string，压缩之后仍然是大key，则需要进行拆分，一个大key分为不同的部分，记录每个部分的key，使用 multi get 等操作实现事务读取。
+解决思路：
+- 可在应用层或客户端设置最大键值大小限制，防止大`Key`被写入`Redis`。
+- 定期检查`Redis`中的大`Key`，并进行必要的清理或优化操作。
+- 如果`Redis`中已经存在大`Key`，根据大`Key`的实际用途可以分为可删除和不可删除，如果发现某些大`Key`并非热`Key`就可以在DB中查询使用，则可以在`Redis`中删掉。
+如果不可删除，则需要拆分大`Key`，将大`Key`拆分成多个小`Key`，然后进行删除。
 
 ### 缓存穿透
+缓存穿透是指查询请求绕过缓存直接访问数据库，通常是因为请求中的数据在缓存中不存在。这个问题可能导致缓存失效，增加数据库负担，并影响系统性能。
+缓存穿透的原因通常是，用户请求的数据在缓存和数据库中都不存在，或者是请求的数据在缓存中未命中，直接查询数据库，并未将结果正确地缓存起来。
+
 ![Redis详解-027](/iblog/posts/annex/images/essays/Redis详解-027.png)
 
-Redis中的key对应的数据在数据源并不存在，每次针对此key的请求从缓存获取不到，请求都会压到数据源，从而可能压垮数据源。简单理解为,避开缓存,疯狂请求数据库里没有的数据.从而造成服务器宕机。
-
-**解决方法**
-- 对空值缓存：如果一个查询返回的数据为空，不管是数据是否不存在，我们仍然把这个空结果进行缓存，设置空结果的过期时间会很短，最长不超过五分钟；
-```
-    @Resource
-    private RedisTemplate<Long, String> redisTemplate;
+解决方法：
+- 布隆过滤器：布隆过滤器是一种空间高效的数据结构，用于判断某个元素是否在集合中。它可以减少对数据库的访问次数，通过在缓存层使用布隆过滤器，来快速判断请求的数据是否可能存在于数据库中。
+将可能存在的键加入布隆过滤器。在每次查询之前，先检查布隆过滤器。如果布隆过滤器显示数据不存在，则直接返回空值或错误，不访问数据库。
+    ```java
+    public class BloomFilterExample {
+        private BloomFilter<String> bloomFilter;
+        private StringRedisTemplate redisTemplate;
+        
+        public BloomFilterExample(StringRedisTemplate redisTemplate) {
+            this.redisTemplate = redisTemplate;
+            // Initialize Bloom Filter with an expected insertions and false positive probability
+            this.bloomFilter = BloomFilter.create(Funnels.stringFunnel(Charsets.UTF_8), 100000, 0.01);
+        }
     
-    @Resource
-    private TestMapper testMapper;
-
-    public Test findById(Long id) {
-        String testStr = redisTemplate.opsForValue().get(id);
-        //判断缓存是否存在，是否为空对象
-        if (StringUtils.isEmpty(testStr)) {
-            // 这里的锁，使用的时候注意锁的力度，这里建议换成分布式锁，这里做演示
-            synchronized (TestServiceImpl.class){
-                testStr = redisTemplate.opsForValue().get(id);
-                if (StringUtils.isEmpty(testStr)) {
-                    Test test = testMapper.findById(id);
-                    if(test == null){
-                        //构建一个空对象
-                        test= new Test();
-                    }
-                    testStr = JSON.toJSONString(test);
-                    // 存入Redis中，下次再次访问就不访问数据库
-                    redisTemplate.opsForValue().set(id, testStr);
-                }
+        public String getData(String key) {
+            // Check if the key is in the Bloom Filter
+            if (!bloomFilter.mightContain(key)) {
+                return null; // Key definitely not in cache or DB
             }
+    
+            // Check cache
+            String value = redisTemplate.opsForValue().get(key);
+            if (value != null) {
+                return value;
+            }
+    
+            // Load from DB (simulate)
+            value = loadFromDatabase(key);
+    
+            // Cache the result and add to Bloom Filter
+            if (value != null) {
+                redisTemplate.opsForValue().set(key, value);
+                bloomFilter.put(key);
+            }
+    
+            return value;
         }
-        Test test = JSON.parseObject(testStr, Test.class);
-        //空对象处理
-        if(test.getId() == null){
-            return null;
+    
+        private String loadFromDatabase(String key) {
+            // Simulate DB access
+            return "DatabaseValueFor" + key;
         }
-        return JSON.parseObject(testStr, Test.class);
     }
-```
-
-- 设置可访问的白名单：使用bitmaps类型定义一个可以访问的名单，名单id作为bitmaps的偏移量，每次访问和bitmap里面的id进行比较，如果访问id不在bitmaps里面，进行拦截，不允许访问。
-- 使用布隆过滤器：布隆过滤器（Bloom Filter）是1970年由布隆提出的。它实际上是一个很长的二进制向量(位图)和一系列随机映射函数（哈希函数）。布隆过滤器可以用于检索一个元素是否在一个集合中。它的优点是空间效率和查询时间都远远超过一般的算法，缺点是有一定的误识别率和删除困难。将所有可能存在的数据哈希到一个足够大的bitmaps中，一个一定不存在的数据会被 这个bitmaps拦截掉，从而避免了对底层存储系统的查询压力。
-```
-    @Resource
-    private TestMapper testMapper;
-
-    @Resource
-    private RedisTemplate<Long, String> redisTemplate;
-
-    private static BloomFilter<Long> bloomFilter = BloomFilter.create(Funnels.longFunnel(), 1000000000L);
-
-    @Override
-    public Test findById(Long id) {
-        String testStr = redisTemplate.opsForValue().get(id);
-        if (StringUtils.isEmpty(testStr)) {
-            //校验是否在布隆过滤器中
-            if(bloomFilter.mightContain(id)){
-                return null;
-            }
-            // 这里的锁，使用的时候注意锁的力度，这里建议换成分布式锁，这里做演示
-            synchronized (TestServiceImpl.class){
-                testStr = redisTemplate.opsForValue().get(id);
-                if (StringUtils.isEmpty(testStr) ) {
-                    if(bloomFilter.mightContain(id)){
-                        return null;
-                    }
-                    Test test = testMapper.findById(id);
-                    if(test == null){
-                        //放入布隆过滤器中
-                        bloomFilter.put(id);
-                        return null;
-                    }
-                    testStr = JSON.toJSONString(test);
-                    redisTemplate.opsForValue().set(id, testStr);
-                }
-            }
+    ```
+- 缓存空对象：当数据库查询返回空结果时，将空结果缓存到`Redis`中，使用一个特殊的标识，如空字符串、`null`、特定的空值对象等。后续相同的查询可以直接从缓存中获取空结果，避免再次访问数据库。
+设置空对象的缓存时间较短，避免长时间缓存无效数据。
+    ```java
+    public class CacheEmptyObjectExample {
+        private static final String EMPTY_OBJECT_PLACEHOLDER = "EMPTY";
+        private StringRedisTemplate redisTemplate;
+    
+        public CacheEmptyObjectExample(StringRedisTemplate redisTemplate) {
+            this.redisTemplate = redisTemplate;
         }
-        return JSON.parseObject(testStr, Test.class);
+    
+        public String getData(String key) {
+            // Check cache
+            String value = redisTemplate.opsForValue().get(key);
+            if (EMPTY_OBJECT_PLACEHOLDER.equals(value)) {
+                return null; // Data definitely does not exist
+            }
+            if (value != null) {
+                return value;
+            }
+    
+            // Load from DB (simulate)
+            value = loadFromDatabase(key);
+    
+            if (value != null) {
+                redisTemplate.opsForValue().set(key, value);
+            } else {
+                redisTemplate.opsForValue().set(key, EMPTY_OBJECT_PLACEHOLDER);
+            }
+    
+            return value;
+        }
+    
+        private String loadFromDatabase(String key) {
+            // Simulate DB access
+            return null; // Simulate no data found
+        }
     }
-```
+    ```
+
 
 ### 缓存击穿
+缓存击穿 是指在缓存中某个热点数据的缓存失效时，多个请求同时访问数据库，导致数据库压力剧增的情况。
+这种问题通常发生在缓存数据过期或被删除时，如果请求大量集中在短时间内，可能会导致数据库负载急剧上升。
+
 ![Redis详解-028](/iblog/posts/annex/images/essays/Redis详解-028.png)
 
-key对应的数据存在，但在redis中过期，此时若有大量并发请求过来，这些请求发现缓存过期一般都会从后端数据库加载数据并回设到缓存，大并发集中对这一个点进行访问，当这个key在失效的瞬间，持续的大并发就穿破缓存，直接请求数据库，就像在一个屏障上凿开了一个洞。这个时候大并发的请求可能会瞬间把后端数据源压垮。
-
-**解决方法**
-- 预先设置热门数据：在redis高峰访问之前，把一些热门数据提前存入到redis里面，加大这些热门数据key的时长；
-- 实时调整：现场监控哪些数据热门，实时调整key的过期时长；
-- 使用锁：在缓存失效的时候判断拿出来的值为空，先使用缓存工具的某些带成功操作返回值的操作,去set一个mutex key,而不是立即去访问数据源；当操作返回成功时，再进行访问数据库的操作，并回设缓存,最后删除mutex key；当操作返回失败，证明有线程在访问数据源，当前线程睡眠一段时间再重试整个get缓存的方法；
-```
- @Resource
- private RedisTemplate<String,Long> template;
- 
- @Resource
- private TestMapper testMapper;
- 
- public Long findById(Long id){
-     Long value = template.opsForValue().get(id);
-     
-     if (StringUtils.isEmpty(value)){
-         String key = id + ":nx";
-         // 使用 redis setnx 命令如果设置为 1 则代表成功
-         if (template.opsForValue().setIfAbsent(key, 1L, 3 * 60, TimeUnit.SECONDS)){
-             value = testMapper.findById(id);
-             template.opsForValue().set(id.toString(),value,30 * 60);
-             template.delete(key);
-         }else {
-             try {
-                 // 睡眠50ms后重试
-                 Thread.sleep(50);
-                 value = template.opsForValue().get(id);
-             } catch (InterruptedException e) {
-                 Thread.interrupted();
-             }
-         }
-         return value;
-     }else {
-         return value;
-     }
- }
-```
+解决方法：
+- 加锁机制：在缓存失效时，对数据的访问进行加锁，保证只有一个请求能够从数据库中加载数据并更新缓存。其他请求需要等待锁释放后，才能获取缓存中的数据。
+    ```java
+    public class CacheLockExample {
+        private StringRedisTemplate redisTemplate;
+        private RedisTemplate<String, Object> redisLockTemplate;
+        private static final String LOCK_KEY_PREFIX = "lock:";
+    
+        public CacheLockExample(StringRedisTemplate redisTemplate, RedisTemplate<String, Object> redisLockTemplate) {
+            this.redisTemplate = redisTemplate;
+            this.redisLockTemplate = redisLockTemplate;
+        }
+    
+        public String getData(String key) {
+            String cacheKey = "cache:" + key;
+            String lockKey = LOCK_KEY_PREFIX + key;
+    
+            // Check cache
+            String value = redisTemplate.opsForValue().get(cacheKey);
+            if (value != null) {
+                return value;
+            }
+    
+            // Acquire lock
+            Boolean lockAcquired = redisLockTemplate.opsForValue().setIfAbsent(lockKey, "locked");
+            if (lockAcquired != null && lockAcquired) {
+                try {
+                    // Load from DB (simulate)
+                    value = loadFromDatabase(key);
+    
+                    // Cache the result
+                    if (value != null) {
+                        redisTemplate.opsForValue().set(cacheKey, value);
+                    }
+                } finally {
+                    // Release lock
+                    redisLockTemplate.delete(lockKey);
+                }
+            } else {
+                // Wait for lock to be released and retry
+                try {
+                    Thread.sleep(100); // Wait for 100 milliseconds
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+                return redisTemplate.opsForValue().get(cacheKey);
+            }
+    
+            return value;
+        }
+    
+        private String loadFromDatabase(String key) {
+            // Simulate DB access
+            return "DatabaseValueFor" + key;
+        }
+    }
+    ```
+- 缓存预热：在缓存过期前，提前将热点数据加载到缓存中，减少缓存失效对数据库的冲击。这可以通过定期刷新缓存或使用缓存预热策略来实现。
+    ```java
+    public class CachePreheatExample {
+        private StringRedisTemplate redisTemplate;
+    
+        public CachePreheatExample(StringRedisTemplate redisTemplate) {
+            this.redisTemplate = redisTemplate;
+        }
+    
+        public void preheatCache() {
+            // Simulate loading all hotspot data
+            for (String key : getHotspotKeys()) {
+                String value = loadFromDatabase(key);
+                if (value != null) {
+                    redisTemplate.opsForValue().set("cache:" + key, value);
+                }
+            }
+        }
+    
+        private Iterable<String> getHotspotKeys() {
+            // Simulate getting all hotspot keys
+            return List.of("key1", "key2", "key3");
+        }
+    
+        private String loadFromDatabase(String key) {
+            // Simulate DB access
+            return "DatabaseValueFor" + key;
+        }
+    }
+    ```
 
 ### 缓存雪崩
+缓存雪崩 是指当大量缓存同时失效或遭遇问题时，造成大量请求同时涌入数据库，导致数据库负载过重，从而引发服务不可用的情况。这种情况常见于缓存失效时间集中或缓存服务宕机等场景。
+
 ![Redis详解-029](/iblog/posts/annex/images/essays/Redis详解-029.png)
 
-key对应的数据存在，但在redis中过期，此时若有大量并发请求过来，这些请求发现缓存过期一般都会从后端数据源加载数据并回设到缓存，这个时候大并发的请求可能会瞬间把后端数据源压垮，简单理解为,在某一个时间段,缓存key大面积失效,集中过期.可能会导致服务器宕机。
-
-**解决方法**
-- 构建多级缓存架构：nginx缓存 + redis缓存 + 其他缓存等；
-- 使用锁或队列：限流降级,在同一时间段,只允许某个线程访问，性能较差；
-- 设置缓存key永不过期，异步更新；虽然这种方式不会堵塞线程，但是不保证数据一致性，代码复杂度较大，容易堆积垃圾数据；
-- 将缓存失效时间分散开：比如我们可以在原有的失效时间基础上增加一个随机值，比如1-5分钟随机，这样每一个缓存的过期时间的重复率就会降低，就很难引发集体失效的事件；
-```
-    @Resource
-    private RedisTemplate<String,Long> template;
-
-    public void setKeys(){
-        template.opsForValue().set("k1",1L,30 * 60 + (new Random().nextInt(9999)));
-        template.opsForValue().set("k2",2L,30 * 60 + (new Random().nextInt(9999)));
+解决方法：
+- 缓存过期时间随机化：通过对缓存的过期时间进行随机化，避免所有缓存同时过期。根据业务需求设置合理的缓存过期时间。避免缓存过期时间设置过长或过短，导致缓存失效的集中现象。
+    ```java
+    public class CacheRandomExpirationExample {
+        private StringRedisTemplate redisTemplate;
+        private static final int EXPIRATION_TIME = 600; // 10 minutes
+    
+        public CacheRandomExpirationExample(StringRedisTemplate redisTemplate) {
+            this.redisTemplate = redisTemplate;
+        }
+    
+        public String getData(String key) {
+            String cacheKey = "cache:" + key;
+            String value = redisTemplate.opsForValue().get(cacheKey);
+    
+            if (value != null) {
+                return value;
+            }
+    
+            // Load from DB (simulate)
+            value = loadFromDatabase(key);
+    
+            if (value != null) {
+                // Set cache with random expiration time between 10 and 20 minutes
+                int expiration = EXPIRATION_TIME + (int) (Math.random() * 600);
+                redisTemplate.opsForValue().set(cacheKey, value, expiration, TimeUnit.SECONDS);
+            }
+    
+            return value;
+        }
+    
+        private String loadFromDatabase(String key) {
+            // Simulate DB access
+            return "DatabaseValueFor" + key;
+        }
     }
-``` 
+    ```
+- 使用多级缓存：引入多级缓存策略，比如本地缓存和分布式缓存结合使用。这样即使分布式缓存失效，本地缓存仍能提供服务，减少对数据库的压力。
+    ```java
+    public class MultiLevelCacheExample {
+        private StringRedisTemplate redisTemplate;
+        private Cache<String, String> localCache;
+    
+        public MultiLevelCacheExample(StringRedisTemplate redisTemplate) {
+            this.redisTemplate = redisTemplate;
+            this.localCache = Caffeine.newBuilder()
+                .expireAfterWrite(10, TimeUnit.MINUTES)
+                .build();
+        }
+    
+        public String getData(String key) {
+            // Check local cache first
+            String value = localCache.getIfPresent(key);
+            if (value != null) {
+                return value;
+            }
+    
+            String cacheKey = "cache:" + key;
+            value = redisTemplate.opsForValue().get(cacheKey);
+            if (value != null) {
+                localCache.put(key, value);
+                return value;
+            }
+    
+            // Load from DB (simulate)
+            value = loadFromDatabase(key);
+    
+            if (value != null) {
+                redisTemplate.opsForValue().set(cacheKey, value, 10, TimeUnit.MINUTES);
+                localCache.put(key, value);
+            }
+    
+            return value;
+        }
+    
+        private String loadFromDatabase(String key) {
+            // Simulate DB access
+            return "DatabaseValueFor" + key;
+        }
+    }
+    ```
 
 ## Redis部署策略
 
-### Redis主从复制
+| 部署方式        | 描述                                                                                              |
+|-----------------|---------------------------------------------------------------------------------------------------|
+| 单机部署        | 适用于对数据可靠性要求不高、规模较小的应用。部署简单，但没有冗余和高可用性。                             |
+| 主从复制        | 数据从主节点同步到一个或多个从节点，提升读性能和数据备份能力。主节点处理写操作，从节点处理读请求。适用于需要读扩展和备份的场景。 |
+| 哨兵模式        | 提供监控、自动故障转移和高可用性。通过多个 Sentinel 节点监控 Redis 实例，主节点故障时自动切换到从节点。适用于需要高可用性的场景。 |
+| Redis 集群      | 数据分布在多个节点上，通过分片和复制实现水平扩展和高可用性。适合大规模应用，支持负载均衡和自动故障转移，但配置复杂。       |
+
+### 单机部署
+`Redis`单机部署是最基本的部署方式，适用于对数据可靠性和高可用性要求不高的小型应用或开发环境。
+
+单机部署配置简单，通常只需要安装`Redis`并启动即可，不涉及复杂的集群或高可用配置。所有数据和处理任务都集中在一个节点上，因此其性能直接受到单个服务器资源（CPU、内存、磁盘IO）的限制。
+但只有一个`Redis`实例，没有数据备份或冗余机制，如果服务器发生故障，则可能会导致数据丢失或服务中断。
+
+Redis单机部署是最基础的使用方式，适用于对高可用性和扩展性要求不高的场景，但在生产环境中，通常需要考虑更复杂的部署策略来提高可靠性和性能。
+
+### 主从复制
+主从复制，是指将一台`Redis`服务器的数据，复制到其他的`Redis`服务器。前者称为主节点，后者称为从节点，数据的复制是单向的，只能由主节点到从节点。主节点以写为主，从节点以读为主。
+
 ![Redis详解-022](/iblog/posts/annex/images/essays/Redis详解-022.png)
 
-主从复制，是指将一台Redis服务器的数据，复制到其他的Redis服务器。前者称为主节点(master)，后者称为从节点(slave)；数据的复制是单向的，只能由主节点到从节点。Master以写为主，Slave以读为主。
+`Redis`主从复制 通过将数据从主节点同步到一个或多个从节点来提高读性能和数据备份能力。其主要优点在于可以分担读操作负载，通过从节点处理读请求，从而减轻主节点的压力，并提供数据备份。
+如果主节点出现故障，可以将从节点提升为新的主节点，实现一定程度的容错和数据恢复。适用于读操作频繁的场景，或需要备份数据的环境。
 
-主从复制的作用：
-- 读写分离，性能扩展
-- 负载均衡
-- 容灾快速恢复
+不过，由于主从复制默认是异步的，从节点的数据可能会有延迟，导致读取的数据可能不是最新的。此外，所有写操作仍由主节点处理，主节点可能成为性能瓶颈。
+主节点故障时，需要额外的工具来实现自动故障转移和高可用性。主从复制最适合用于读多写少的应用，以及需要数据备份和读扩展的场景。
 
-搭建主从复制：
-1. 至少启动三个redis服务器，并分别连接其客户端；
-2. 在客户端使用命令`info replication` 查看主从相关信息；
-3. 选定从服务器，并在其客户端执行`slaveof <ip> <port>`命令将该服务器设置为从服务器；
-4. 在客户端使用命令`info replication` 查看主从相关信息，查看是否生效；
-5. 在主从服务器上测试读写；
+### 哨兵模式
+哨兵模式是`Redis`提供的一种高可用性解决方案，用于管理`Redis`实例的监控、故障转移和通知。
+它通过多个`Sentinel`节点来实现`Redis`系统的高可用性和故障恢复，来保证`Redis`服务的持续运行。
 
-主从复制过程：
-
-![Redis详解-023](/iblog/posts/annex/images/essays/Redis详解-023.png)
-
-1. 当从服务器连接到主服务器后，从服务器会向主服务器发送同步数据请求；
-2. 主服务器接收到从服务器发送过来的请求，首先会把主服务器数据进行持久化，变为rdb文件，把rdb文件发送到从服务器，从服务器拿到rdb文件进行读取；
-3. 每次主服务器进行写操作后，会向从服务器进行数据同步；
-
-全量复制：用于初次复制或其他无法进行部分复制的情况，将主节点中的所有数据都发送给从节点，是一个非常重型的操作。
-
-部分复制：用于网络中断等情况后的复制，只将中断期间主节点执行的写命令发送给从节点，与全量复制相比更加高效。需要注意的是，如果网络中断时间过长，导致主节点没有能够完整地保存中断期间执行的写命令，则无法进行部分复制，仍使用全量复制。
-
-### 一主二仆
-![Redis详解-024](/iblog/posts/annex/images/essays/Redis详解-024.png)
-
-特点：
-- 当主服务挂掉之后，从服务器不会上位；
-- 当从服务器挂掉之后，主服务器再次写入数据，此时从服务器再次启动，数据与主服务器保持一致；
-- 从服务器不能执行写操作；
-
-### 薪火相传
-![Redis详解-025](/iblog/posts/annex/images/essays/Redis详解-025.png)
-
-特点：
-- 当主服务挂掉之后，从服务器不会上位；
-- 上一个slaver可以是下一个slaver的master，可以有效减轻master的写压力,去中心化降低风险；
-- 一旦某个slave宕机，后面的slave都没法备份，主机挂了，从机还是从机，都无法写数据了；
-
-可以使用命令`slaveof <ip> <port>`将该服务器设置为某服务器的从机。
-
-### 反客为主
-当一个master宕机后，后面的slave可以立刻升为master，其后面的slave不用做任何修改，手动执行命令`slaveof  no one` 将从机变为主机。可以使用哨兵模式让"反客为主"模式变为自动。
-
-### Redis哨兵模式
 ![Redis详解-026](/iblog/posts/annex/images/essays/Redis详解-026.png)
 
-反客为主的自动版，能够后台监控主机是否故障，如果故障了根据投票数自动将从库转换为主库。当主机挂掉，从机选举中产生新的主机,当之前的主机再次启动，会变为从机。
+`Sentinel`节点周期性地向`Redis`实例发送`ping`请求，检查其响应状态。如果检测到主节点或从节点的响应超时或不正常，`Sentinel`会将其标记为“下线”状态。
+当主节点被标记为故障，`Sentinel`节点会进行选举，从多个从节点中选择一个提升为新的主节点。
+一旦选定新的主节点，`Sentinel`会通知其他从节点并更新它们的配置，使它们从新的主节点进行数据同步。最后`Sentinel`更新客户端的配置，保证它们能够连接到新的主节点。
 
-#### 搭建哨兵模式
-1. 搭建[主从模式](#搭建主从复制)
-2. 新建哨兵配置`sentinel.conf`文件：
->- sentinel：哨兵模式
->- monitor：监控
->- mymaster：主服务器别名
->- 127.0.0.1 6379：ip端口
->- 1：至少有多少个哨兵同意迁移的数量
-><br>
-> sentinel monitor mymaster 127.0.0.1 6379 1
-3. 执行`redis-sentinel ./sentinel.conf`启动哨兵
+`Redis`哨兵模式 提供了高可用性解决方案，通过多个`Sentinel`节点来实现对`Redis`系统的监控和故障转移。它的主要优点是能够自动处理主节点故障，将从节点提升为新的主节点，从而减少服务中断时间，增强系统的稳定性和可靠性。
+哨兵模式还可以自动更新客户端配置，使客户端迅速连接到新的主节点，从而减少了人工干预的需求。该模式适用于生产环境中对`Redis`服务有高可用性要求的应用。
 
-#### 复制延时
-由于所有的写操作都是先在Master上操作，然后同步更新到Slave上，所以从Master同步到Slave机器有一定的延迟，当系统很繁忙的时候，延迟问题会更加严重，Slave机器数量的增加也会使这个问题更加严重。
-
-#### 选举机制
-1. 优先选择优先级靠前的；
-    > 优先级在redis.conf中默认：slave-priority 100，值越小优先级越高。
-2. 选择偏移量最大的;
-    > 偏移量是指获得原主机数据最全的。
-3. 选择runid最小的服务；
-    > 每个redis实例启动后都会随机生成一个40位的runid,这里也就是随机选择。
+但是，哨兵模式也存在一些缺点。配置和管理多个`Sentinel`节点可能增加系统复杂性，特别是在大规模部署时。
+此外，监控和故障转移的过程可能带来性能开销，并且在故障转移期间可能会出现短暂的数据不一致。
+哨兵模式最适合那些需要高可用性和自动故障恢复的场景，但需要平衡其带来的复杂性和性能影响。
 
 ### Redis集群
-Redis 集群是 Redis 提供的分布式数据库方案，集群通过分片来实现数据共享，并提供复制和故障转移。
+`Redis`集群是一种分布式部署解决方案，用于在多个`Redis`节点上分片数据，实现高可用性和水平扩展。`Redis`集群可以将数据自动分布到多个主节点上，并提供自动故障转移功能，来保证数据的高可用性。
 
-Redis集群模式是哨兵模式的一种拓展，在没有Redis 集群的时候，人们使用哨兵模式，所有的数据都存在 master 上面，master 的压力越来越大，垂直扩容再多的 salve 已经不能分担 master 的压力的，因为所有的写操作集中都集中在 master 上。所以人们就想到了水平扩容，就是搭建多个 master 节点。客户端进行分片，手动的控制访问其中某个节点。但是这几个节点之间的数据是不共享的。并且如果增加一个节点，需要手动的将数据进行迁移，维护起来很麻烦。
-另外，主从模式，薪火相传模式，主机宕机，导致ip地址发生变化，应用程序中配置需要修改对应的主机地址、端口等信息。所以才产生了 Redis 集群。
+`Redis`集群模式是哨兵模式的一种拓展，在没有`Redis`集群的时候，人们使用哨兵模式，所有的数据都存在`master`上面，但`master`的压力越来越大，垂直扩容再多的`salve`已经不能分担`master`的压力的，因为所有的写操作集中都集中在`master`上。
+所以人们就想到了水平扩容，就是搭建多个`master`节点。客户端进行分片，手动的控制访问其中某个节点。但是这几个节点之间的数据是不共享的。并且如果增加一个节点，需要手动的将数据进行迁移，维护起来很麻烦。
 
-Redis集群是无中心化集群，即每个结点都是入口。Redis 集群通过分区来提供一定程度的可用性;即使集群中有一部分节点失效或者无法进行通讯，集群也可以继续处理命令请求。
+`Redis`集群是无中心化集群，即每个结点都是入口。`Redis`集群通过分区来提供一定程度的可用性，即使集群中有一部分节点失效或者无法进行通讯，集群也可以继续处理命令请求。
 
-Redis集群故障恢复：
-- 如果主节点挂掉后，从结点会上位，主节点恢复后，变为从结点；
-- 如果某一段插槽的主从节点都宕掉，redis服务是否能运行，这个与redis.conf中的参数`cluster-require-full-coverage`相关；如果为yes则可以继续使用，为no，那么，该插槽数据全都不能使用，也无法存储；
+`Redis`集群提供了一种分布式解决方案，通过将数据分片到多个主节点上，实现了水平扩展和高可用性。
+它的主要优点是能够处理大规模的数据和高并发请求，自动故障转移功能减少了服务中断时间，同时分散了数据和负载，减少了单点故障的风险。
+该模式非常适合需要处理大量数据和高流量的应用，例如大型网站、实时数据分析系统以及高性能缓存场景。
 
-Redis集群优点：
-- 实现扩容；
-- 分摊服务器压力；
-- 无中心配置相对简单；
+不过，`Redis`集群的配置和管理较为复杂，需要处理节点间的通信、数据分片及故障恢复问题。此外，在集群模式下的写操作涉及多个节点，可能会导致操作延迟增加。
+网络延迟较高时，集群性能可能会受到影响。因此，这种模式最适合需要高可用性和扩展能力的应用，但在实施时需要考虑到其复杂性和潜在的性能影响。
 
-Redis集群缺点：
-- 多键操作是不被支持、多键的Redis事务是不被支持、lua脚本不被支持；
-- 由于集群方案出现较晚，很多公司已经采用了其他的集群方案，而代理或者客户端分片的方案想要迁移至redis cluster，需要整体迁移而不是逐步过渡，复杂度较大；
-
-#### Redis集群数据分片
-Redis 集群没有使用一致性hash, 而是引入了 哈希槽的概念. Redis cluster 有固定的 16384 个 hash slot，对每个 key 计算 CRC16 值，然后对 16384 取模，可以获取来决定放置哪个槽.
-
-集群的每个节点负责一部分hash槽,举个例子,比如当前集群有3个节点,那么:
-- 节点 A 包含 0 到 5500号哈希槽.
-- 节点 B 包含5501 到 11000 号哈希槽.
-- 节点 C 包含11001 到 16384号哈希槽.
-
-这种结构很容易添加或者删除节点. 比如如果我想新添加个节点D, 我需要从节点 A, B, C中得部分槽到D上. 如果我想移除节点A,需要将A中的槽移到B和C节点上,然后将没有任何槽的A节点从集群中移除即可. 由于从一个节点将哈希槽移动到另一个节点并不会停止服务,所以无论添加删除或者改变某个节点的哈希槽的数量都不会造成集群不可用的状态.
-
-#### 搭建Redis集群
-1. 修改`redis.conf`配置文件，修改前建议备份，修改之后启动redis服务；
-    > redis.conf:
-    > // 引入原始配置文件
-    > include /home/bigdata/redis.conf
-    > // 端口
-      port 6379
-    >// pid文件名称
-      pidfile "/var/run/redis_6379.pid"
-    >// rdb文件名称
-      dbfilename "dump6379.rdb"
-    >// 日志文件
-      logfile "/home/bigdata/redis_cluster/redis_err_6379.log"
-    >// 启用集群模式
-      cluster-enabled yes
-    >// 设定节点配置文件名，启动后会自动生成
-      cluster-config-file nodes-6379.conf
-    >// 设定节点失联时间，超过该时间（毫秒），集群自动进行主从切换
-      cluster-node-timeout 15000
-2. 确保所有redis实例启动后,`nodes-xxxx.conf`文件都正常生成；
-3. `cd /opt/redis-6.2.1/src`进入redis的src目录，执行：
-    > 此处不要用127.0.0.1,请用真实IP地址
-    > redis-cli --cluster create --cluster-replicas 1 192.168.11.101:6379 192.168.11.101:6380 192.168.11.101:6381 192.168.11.101:6389 192.168.11.101:6390 192.168.11.101:6391
-4. 使用命令`redis-cli -c -p<port>`登陆redis集群；
-5. 在客户端使用命令`cluster nodes`查看集群信息；
-
-#### 操作Redis集群
-- 执行写入一个键值操作：
-    ```
-    set k1 v1
-    ->Redirected to slot [12706] located at 192.168.137.3:6381
-    OK
-    ```
-    > 这里的slot是插槽：
-    > 一个 Redis 集群包含 16384 个插槽（hash slot），数据库中的每个键都属于这 16384 个插槽的其中一个；集群使用公式 CRC16(key) % 16384 来计算键 key 属于哪个槽， 其中 CRC16(key) 语句用于计算键 key 的 CRC16 校验和。集群中的每个节点负责处理一部分插槽。
-    > 在redis客户端每次录入、查询键值，redis都会计算出该key应该送往的插槽。 
-    >
-    > 举个例子，如果一个集群可以有主节点，其中：节点 A 负责处理 0 号至 5460 号插槽;节点 B 负责处理 5461 号至 10922 号插槽;节点 C 负责处理 10923 号至 16383 号插槽。
-    >
-- 执行写入多个键值操作：
-    ```
-    mset k1 v1 k2 v2 k3 v3
-    (error) CORSSSLOT Keys in request don't hash to the same slot 
-    ```
-    不在一个slot下的键值，是不能使用mget,mset等多键操作,但是可以可以通过{}来定义组的概念，从而使key中{}内相同内容的键值对放到一个slot中去：
-    ```
-    mset k1{cust} v1 k2{cust} v2 k3{cust} v3
-    ```
-- 查询集群中的值：
-    - 查询count个slot槽中的键：`cluster getkeysinslot <slot> <count>`
-    - 计算key的插槽值：`cluster keyslot <key>`
-    - 计算插槽值有几个key：`cluster countkeysinslot <slot>`
-
-
-## Redis内存淘汰策略
-长期把Redis做缓存用，总有一天Redis内存总会满的。有没有相关这个问题，Redis内存满了会怎么样？
-
-在`redis.conf`中把Redis内存设置为1个字节，做一个测试：
-```
+## Redis内存管理
+长期把`Redis`做缓存用，总有一天`Redis`内存总会满的。有没有思考过这个问题，`Redis`内存满了会怎么样？
+在`redis.conf`中把`Redis`内存设置为1个字节，做一个测试：
+```text
 // 默认单位就是字节
 maxmemory 1 
 ```
-设置完之后重启为了确保测试的准确性，重启一下Redis，之后在用下面的命令，向Redis中存入键值对,模拟Redis打满的情况：
-```
+设置完之后重启是为了保证测试的准确性，重启一下`Redis`，之后在用下面的命令，向`Redis`中存入键值对，模拟`Redis`打满的情况：
+```shell
 set k1 v1
 ```
 执行完后会看到下面的信息：
-```
+```text
 (error) OOM command not allowed when used memory > 'maxmemory'.
 ```
-大意：OOM，当当前内存大于最大内存时，这个命令不允许被执行。
+大意：`OOM`，当前内存大于最大内存时，这个命令不允许被执行。
 
-是的，Redis也会出现OOM，正因如此，我们才要避免这种情况发生，正常情况下，不考虑极端业务，Redis不是MySql数据库，不能什么都往里边写，一般情况下Redis只存放热点数据。
-
-Redis默认最大内存是全部的内存，我们在实际配置的时候，一般配实际服务器内存的3/4也就足够了。
+`Redis`也会出现`OOM`，正因如此，我们才要避免这种情况发生。正常情况下，不考虑极端业务，`Redis`只存放热点数据，`Redis`不是`MySQL`数据库，不能什么都往里边写。
+`Redis`默认最大内存是全部的内存，我们在实际配置的时候，一般配实际服务器内存的3/4也就足够了。
 
 ### 删除策略
-正因为Redis内存打满后报OOM，为了避免出现该情况所以要设置Redis的删除策略。思考一个问题，一个键到了过期时间之后是不是马上就从内存中被删除的？
-
-当然不是的，那过期之后到底什么时候被删除？是个什么操作？
-
-Redis提供了三种删除策略：
-1. 定时删除：创建一个定时器，定时随机的对key执行删除操作；
-2. 惰性删除：类似与懒加载，每次只有用到key的时候才会检查，该key是否已经过期，如果过期进行删除操作；
-3. 定期删除：每隔一段时间，就会检查删除掉过期的key；
-
-定时删除，即用时间换空间；它对于内存来说是友好的，定时清理出干净的空间，但是对于CPU来说并不是友好的，程序需要维护一个定时器，这就会占用CPU资源。
-
-惰性的删除，即用空间换时间；它对于CPU来说是友好的，CPU不需要维护其它额外的操作，但是对于内存来说是不友好的，因为要是有些key一直没有被访问到，就会一直占用着内存。
-
-定期删除，是上面两种方案的折中方案，它每隔一段时间删除过期的key，也就是根据具体的业务，合理的取一个时间定期的删除key。
-
-若果在数据量很大的情况下，定时删除时，key从来没有被检查到过；惰性删除时，key从来没有被使用过，这样就会造成内存泄漏，大量的key堆积在内存中，导致Redis内存空间紧张。
-
-所以我们必须有一个兜底方案，即Redis的内存淘汰策略。
+正因为`Redis`内存打满后报`OOM`，为了避免出现该情况所以要设置`Redis`的删除策略。`Redis`提供了几种删除策略：
+- 定期删除：在后台定期扫描数据库并删除过期数据。这种方法能有效清理过期数据，防止积累大量无用数据，保持内存使用效率。定期删除可能导致性能开销增加，尤其是当数据量很大时。适用于需要清理过期数据的场景，如缓存系统中的临时数据管理。
+- 惰性删除：在客户端访问数据时检查数据是否过期，如果过期则删除。实现简单，对 Redis 性能的影响较小，但可能导致过期数据在被访问前仍然存在，占用内存。适合对数据过期处理要求不严格的应用，尤其是在需要高性能的场景中。
+- 过期时间：策略允许为每个键设置过期时间，数据到达指定时间后会自动删除。精确控制数据的生命周期，可以避免过期数据占用空间。需要管理过期时间，增加了一定的复杂度。适用于需要精确控制数据生命周期的应用，例如缓存数据和会话管理。
+- 主动删除：通过应用逻辑或管理工具手动删除数据，可以根据业务需求自定义删除规则。提供了灵活的删除控制，但需要额外的管理和维护工作，删除操作可能影响 Redis 性能。适合需要手动管理或根据业务逻辑自定义删除规则的场景。
 
 ### 淘汰策略
-在 `Redis 4.0` 版本之前有 6 种策略，4.0 增加了 2种，主要新增了 `LFU` 算法。下图为 `Redis 6.2.0` 版本的配置文件：
+`Redis`的内存淘汰策略用于管理当 Redis 数据库达到最大内存限制时，决定如何处理额外的数据。淘汰策略默认，使用`noeviction`，意思是不再驱逐的，即等着内存被打满。
+`Redis`内存淘汰策略在`Redis 4.0`版本之前有6种策略，4.0增加了两种，主要新增了`LFU`算法。下图为`Redis 6.2.0`版本的配置文件：
 
 ![Redis详解-012](/iblog/posts/annex/images/essays/Redis详解-012.png)
 
-淘汰策略默认,使用`noeviction`，意思是不再驱逐的，即等着内存被打满。
-```
-The default is:
-maxmemory-policy noeviction
-```
-| 策略名称               | 描述                                                         |
-| ---------------------- | ------------------------------------------------------------ |
-| `noeviction`(默认策略) | 不会驱逐任何key，即内存满了就报错。   |
-| `allkeys-lru`          | 所有key都是使用**LRU算法**进行淘汰。                         |
-| `volatile-lru`         | 所有**设置了过期时间的key使用LRU算法**进行淘汰。             |
-| `allkeys-random`       | 所有的key使用**随机淘汰**的方式进行淘汰。                    |
-| `volatile-random`      | 所有**设置了过期时间的key使用随机淘汰**的方式进行淘汰。      |
-| `volatile-ttl`         | 所有设置了过期时间的key**根据过期时间进行淘汰，越早过期就越快被淘汰**。 |
+| 策略名称         | 描述                                           | 优点                                             | 缺点                                             | 使用场景                                            |
+|------------------|------------------------------------------------|--------------------------------------------------|--------------------------------------------------|-----------------------------------------------------|
+| noeviction       | 当达到最大内存限制时，拒绝所有写操作。         | 保持数据完整性，不会自动删除任何数据。           | 一旦达到内存限制，所有新的写操作都会失败。       | 对数据完整性要求高，不希望数据被自动删除的场景。   |
+| allkeys-lru      | 在所有键中使用 LRU 算法来淘汰数据。             | 能够有效释放内存空间，保留活跃数据。             | LRU 算法的性能可能会受到大规模数据集的影响。     | 数据访问模式有明显使用频率差异的场景。             |
+| allkeys-random   | 在所有键中随机选择一些进行删除。               | 实现简单，开销较小。                             | 删除的数据是随机的，重要数据可能被淘汰。         | 对数据重要性没有明确排序的场景。                   |
+| volatile-lru     | 只在设置了过期时间的键中使用 LRU 算法进行淘汰。 | 优先淘汰过期数据，能更好地利用内存。             | 对没有设置过期时间的键没有影响。                | 希望优先淘汰过期数据，同时保留重要数据的场景。     |
+| volatile-random  | 只在设置了过期时间的键中随机选择一些进行删除。 | 实现简单，不需要计算键的使用频率。               | 删除的数据是随机的，可能会淘汰重要的过期数据。   | 需要删除过期数据，但对具体选择方式要求不高的场景。 |
+| volatile-ttl     | 只在设置了过期时间的键中，优先淘汰即将过期的键。 | 能够控制内存使用，同时保留即将过期的数据。       | 可能会导致频繁的内存释放操作，增加 Redis 的管理开销。 | 优先删除即将过期的数据的场景。                     |
 
-假如在Redis中的数据有一部分是热点数据，而剩下的数据是冷门数据，或者我们不太清楚我们应用的缓存访问分布状况，这时可以使用`allkeys-lru`。
+在`Redis`中，最常使用的内存淘汰策略通常是`allkeys-lru`和`volatile-lru`。
 
-可以在`redis.conf`配置文件中配置:
-```
-maxmemory-policy allkeys-lru   // 淘汰策略名字
-```
-当然也可以动态的配置，在Redis运行时修改：
-```
-// 设置内存淘汰策略
-config set maxmemory-policy allkeys-lru
+`allkeys-lru`策略在 Redis 达到内存限制时，会在所有存储的键中使用`LRU`算法进行数据淘汰。无论键是否设置了过期时间，`Redis`都会选择最近最少使用的键进行删除，释放内存。
+这种策略适用于需要对所有数据进行管理的场景，例如`web`缓存和会话管理，可以有效保留访问频率高的数据。
 
-// 查看内存淘汰策略
-config get maxmemory-policy
-```
+相比之下，`volatile-lru`策略只对设置了过期时间的键使用 LRU 算法。当`Redis`达到内存限制时，它会在所有设置了过期时间的键中选择最近最少使用的数据进行淘汰。
+未设置过期时间的键不会被考虑，这样能够保留重要的未过期数据。这种策略适合有明确过期需求的应用，如缓存系统和用户会话存储，能够有效管理内存而不会影响长期存在的数据。
 
-### LRU算法及实现
-LRU是，`Least Recently Used`的缩写，即最近最少使用，是一种常用的页面置换算法。
+区别在于处理数据的范围。`allkeys-lru`适用于管理所有存储的键，考虑所有数据的使用情况；`volatile-lru`专注于管理设置了过期时间的键，优先淘汰过期数据，保留未过期的键。
+`volatile-lru`适合处理需要管理过期数据的场景，而`allkeys-lru`适用于全面管理所有数据的情况。
 
->页面置换算法：
->进程运行时，若其访问的页面不在内存而需将其调入，但内存已无空闲空间时，就需要从内存中调出一页程序或数据，送入磁盘的对换区，其中选择调出页面的算法就称为页面置换算法。
+### LRU算法
+`LRU`是`Least Recently Used`的缩写，即最近最少使用，是一种常用的页面置换算法。
 
-这个算法的思想就是： 如果一个数据在最近一段时间没有被访问到，那么在将来它被访问的可能性也很小。所以，当指定的空间已存满数据时，应当把最久没有被访问到的数据淘汰。
+>页面置换算法：进程运行时，若其访问的页面不在内存而需将其调入，但内存已无空闲空间时，就需要从内存中调出一页程序或数据，送入磁盘的对换区，其中选择调出页面的算法就称为页面置换算法。
 
-明白了思想之后，要实现LRU算法，首先要确定数据结构，再确定实现思路。如果对算法有要求，查询和插入的时间复杂度都是`O(1)`，可以选用链表+哈希的结构来存储：
+这个算法的思想是，如果一个数据在最近一段时间没有被访问到，那么在将来它被访问的可能性也很小。所以当指定的空间已存满数据时，应当把最久没有被访问到的数据淘汰。
+`LRU`算法常用于缓存管理，目的是在缓存满时，保留最常使用的数据，同时移除最久未被使用的数据。
 
-![Redis详解-013](/iblog/posts/annex/images/essays/Redis详解-013.png)
+使用哈希表与双向链表结合实现`LRU`算法：
+```java
+class LRUCache {
+    private final int capacity;
+    private final HashMap<Integer, Node> cache;
+    private final DoublyLinkedList list;
 
-#### 方式一
-链表+哈希，我们不难想到JDK中的`LinkedHashMap`,在`LinkedHashMap`文档注释中找到关于LRU算法的相关描述：
->A special {@link #LinkedHashMap(int,float,boolean) constructor} is provided to create a linked hash map whose order of iteration is the order  in which its entries were last accessed,from least-recently accessed to most-recently (<i>access-order</i>).  This kind of map is well-suited to building LRU caches.
+    class Node {
+        int key, value;
+        Node prev, next;
 
-大意：`{@link #LinkedHashMap(int,float,boolean)}`提供了一个特殊的构造器来创建一个链表散列映射，其迭代顺序为其条目最后访问的顺序，从最近最少访问到最近最近(`access-order`)。这种映射非常适合构建LRU缓存。
-
-参照`LinkedHashMap`实现LRU算法：
-```
-public class MainTest {
-
-    public static void main(String[] args) {
-        LRUDemo<Integer,String> list0 = new LRUDemo<>(3,true);
-        System.out.println("-------------accessOrder等于true-------------");
-        context(list0);
-        System.out.println("-------------accessOrder等于false-------------");
-        LRUDemo<Integer,String> list1 = new LRUDemo<>(3,false);
-        context(list1);
-    }
-    
-    public static void context(LRUDemo<Integer,String> list){
-        list.put(1,"a");
-        list.put(2,"b");
-        list.put(3,"c");
-        System.out.println(list.keySet());
-
-        list.put(4,"d");
-        System.out.println(list.keySet());
-        System.out.println();
-
-        list.put(3,"123");
-        System.out.println(list.keySet());
-
-        list.put(3,"1234");
-        System.out.println(list.keySet());
-
-        list.put(3,"12345");
-        System.out.println(list.keySet());
-        System.out.println();
-
-        list.put(5,"123456");
-        System.out.println(list.keySet());
-    }
-}
-
-class LRUDemo<K,V> extends LinkedHashMap<K,V>{
-
-    private int capacity;
-
-    public LRUDemo(int capacity, boolean accessOrder) {
-        /**
-         * accessOrder the ordering mode -
-         * <tt>true</tt> for access-order 存取顺序:如果存贮集合中有相同的元素，再次插入时先删除在插入
-         * <tt>false</tt> for insertion-order 插入顺序：不会因为集合中有相同元素，再次插入该元素就会打乱位置
-         */
-        super(capacity,0.75f,accessOrder);
-        this.capacity = capacity;
-    }
-
-    @Override
-    protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
-        return super.size() > capacity;
-    }
-}
-```
-
-#### 方式二
-除了可以参照`LinkedHashMap`，也可以自己手动实现：
-```
-public class MainTest {
-
-    public static void main(String[] args) {
-        LRUDemo<Integer,String> list0 = new LRUDemo<>(3);
-        context(list0);
-    }
-
-    public static void context(LRUDemo<Integer,String> list){
-        list.put(1,"a");
-        list.put(2,"b");
-        list.put(3,"c");
-        System.out.println(list.getMap().keySet());
-
-        list.put(4,"d");
-        System.out.println(list.getMap().keySet());
-        System.out.println();
-
-        list.put(3,"123");
-        System.out.println(list.getMap().keySet());
-
-        list.put(3,"1234");
-        System.out.println(list.getMap().keySet());
-
-        list.put(3,"12345");
-        System.out.println(list.getMap().keySet());
-        System.out.println();
-
-        list.put(5,"123456");
-        System.out.println(list.getMap().keySet());
-    }
-}
-
-class LRUDemo<K, V> {
-
-    static class Node<K,V>{
-        K key;
-        V value;
-        Node<K,V> prev;
-        Node<K, V> next;
-
-        public Node(){
-            prev = next = null;
-        }
-
-        public Node(K key,V value){
+        Node(int key, int value) {
             this.key = key;
             this.value = value;
         }
     }
 
-    static class DoubleLinkedList<K,V>{
-        Node<K,V> head;
-        Node<K, V> tail;
+    class DoublyLinkedList {
+        private final Node head, tail;
 
-        public DoubleLinkedList(){
-            head = new Node<>();
-            tail = new Node<>();
-            
-            // 如果变成尾插法，需要调换头、尾指针的指向
+        DoublyLinkedList() {
+            head = new Node(-1, -1);
+            tail = new Node(-1, -1);
             head.next = tail;
             tail.prev = head;
         }
 
-        public void putHead(Node<K, V> node){
+        void addFirst(Node node) {
             node.next = head.next;
-            node.prev = head; // 将新结点插到头部
+            node.prev = head;
             head.next.prev = node;
             head.next = node;
         }
 
-        public void remove(Node<K, V> node){
+        void remove(Node node) {
             node.prev.next = node.next;
             node.next.prev = node.prev;
-            node.prev = node.next = null;
         }
 
-        public Node<K,V> getLastNode(){
-            return tail.prev;
+        Node removeLast() {
+            if (tail.prev == head) return null;
+            Node node = tail.prev;
+            remove(node);
+            return node;
         }
     }
 
-    private int capacity;
-    private Map<K, Node<K,V>> map;
-    private DoubleLinkedList<K,V> doubleLinkedList;
-
-    public Map<K, Node<K, V>> getMap() {
-        return map;
-    }
-
-    public LRUDemo(int capacity){
+    public LRUCache(int capacity) {
         this.capacity = capacity;
-        this.map = new HashMap<>();
-        doubleLinkedList = new DoubleLinkedList<>();
+        this.cache = new HashMap<>();
+        this.list = new DoublyLinkedList();
     }
 
-    public void put(K key,V val){
-        if (key == null || val == null){
-            return;
-        }
-        // 如果集合中key已经存在，则先删除
-        if (map.containsKey(key)){
-            Node<K, V> node = map.get(key);
-            node.value = val;
-            map.put(key,node);
-
-            // 刷新node
-            doubleLinkedList.remove(node);
-            doubleLinkedList.putHead(node);
-        }else {
-            // 删除最少使用的key
-            if (map.size() == capacity){
-                Node<K, V> lastNode = doubleLinkedList.getLastNode();
-                doubleLinkedList.remove(lastNode);
-                map.remove(lastNode.key);
-            }
-            Node<K, V> newNode = new Node<>(key,val);
-            map.put(key,newNode);
-            doubleLinkedList.putHead(newNode);
-        }
-    }
-
-    public V get(K key){
-        if (!map.containsKey(key)){
-            return null;
-        }
-        Node<K, V> node = map.get(key);
-
-        // 刷新结点位置，将该key移动到队列头部
-        doubleLinkedList.remove(node);
-        doubleLinkedList.putHead(node);
+    public int get(int key) {
+        if (!cache.containsKey(key)) return -1;
+        Node node = cache.get(key);
+        list.remove(node);
+        list.addFirst(node);
         return node.value;
+    }
+
+    public void put(int key, int value) {
+        if (cache.containsKey(key)) {
+            Node node = cache.get(key);
+            list.remove(node);
+            node.value = value;
+            list.addFirst(node);
+        } else {
+            if (cache.size() >= capacity) {
+                Node tail = list.removeLast();
+                if (tail != null) cache.remove(tail.key);
+            }
+            Node node = new Node(key, value);
+            list.addFirst(node);
+            cache.put(key, node);
+        }
     }
 }
 ```
+使用哈希表提供快速查找，同时利用链表维护访问顺序。哈希表保证了操作的平均时间复杂度为`O(1)`，适合高效的缓存实现。
+
 ## Redis持久化
-**什么是Redis持久化？** 持久化就是把内存的数据写到磁盘中去，防止服务宕机了内存数据丢失。Redis 提供了两种持久化方式:RDB（默认） 和AOF。
+`Redis`持久化是将内存中的数据保存到磁盘，是防止数据丢失的机制。`Redis`提供了两种主要的持久化方式：
+- `RDB`：`Redis`会在指定的时间间隔内创建数据的快照，并将快照保存到磁盘。这种方式会生成一个包含所有数据的二进制文件。
+- `AOF`：`Redis`会将所有对数据库的写操作记录到一个日志文件中。每次写操作都会被追加到`AOF`文件的末尾。
 
-- RDB，简而言之，就是在指定的时间间隔内，将 redis 存储的数据生成快照并存储到磁盘等介质上；
-- AOF，则是换了一个角度来实现持久化，那就是将 redis 执行过的所有写指令记录下来，在下次 redis 重新启动时，只要把这些写指令从前到后再重复执行一遍，就可以实现数据恢复了；
+| 特性   | RDB（快照）                         | AOF（追加文件）                     |
+|--------|------------------------------------|-------------------------------------|
+| 描述   | 在指定时间间隔内生成内存数据的快照并保存到磁盘 | 记录所有写操作并追加到日志文件中    |
+| 优点 | 1. 快速恢复数据                     | 1. 数据持久性高，几乎不丢失数据      |
+|        | 2. 生成的快照文件压缩，占用磁盘空间较小 | 2. 支持不同的同步策略               |
+| 缺点 | 1. 快照生成时 Redis 会阻塞服务       | 1. 文件可能变得很大，恢复速度较慢    |
+|        | 2. 可能丢失快照间隔期间的数据        | 2. 写操作性能可能会受到影响          |
+| 使用场景 | 适用于对数据持久化要求不高但需要快速恢复的场景，如缓存和数据分析系统 | 适用于对数据持久性要求高的场景，如金融系统和在线事务处理系统 |
 
-其实 RDB 和 AOF 两种方式也可以同时使用，在这种情况下，则会**优先采用 AOF 方式来进行数据恢复**，这是因为 AOF 方式的数据恢复完整度更高。如果你没有数据持久化的需求，也完全可以关闭 RDB 和 AOF 方式，这样的话，redis 将变成一个纯内存数据库，就像 `memcache` 一样。
+`RDB`持久化方式在设定的时间间隔内将内存数据生成快照并保存到磁盘。
+其优点包括生成的快照文件体积较小，占用的磁盘空间较少，且数据恢复速度较快。这种方式适用于对数据持久化要求不高但需要快速恢复的场景，如缓存系统和数据分析应用。
+生成快照的过程可能会阻塞`Redis`，影响系统性能。如果发生故障，快照间隔期间的数据可能会丢失。
 
-### RDB持久化
-RDB （Redis DataBase）方式，是将 redis 某一时刻的数据持久化到磁盘中，是一种快照式的持久化方法。
+`AOF`持久化方式通过记录所有的写操作，并将这些操作追加到日志文件中来实现数据持久化。
+`AOF`提供了较高的数据持久性，因为几乎不会丢失数据，并且支持多种同步策略，以满足不同的需求。适用于对数据一致性要求高的场景，如金融系统和在线事务处理。
+`AOF`文件可能会变得非常大，导致恢复速度较慢，且写操作的性能可能受到影响。`AOF`还需要定期进行日志重写和压缩，来维持文件的管理。
 
-#### 相关配置
-- 在redis.conf中配置文件名称,默认是dump.rdb：
-    ```
-    dbfilename dump.rdb
-    ```
-- rdb文件的保存路径，也可以修改。默认为Redis启动时命令行所在的目录下：
-    ```
-    dir ./
-    ```
-- 默认的快照配置：
-    ```
-    save 3600 1
-    save 30 10
-    save 60 10000
-    ```
-- 当Redis无法写入磁盘的话，直接关掉Redis的写操作,默认yes：
-    ```
-    stop-writes-on-bgsave-error yes
-    ```
-- 对于存储到磁盘中的快照，可以设置是否进行压缩存储。如果是的话，redis会采用LZF算法进行压缩：
-    ```
-    rdbcompression yes
-    ```
-- 检查数据完整性,在存储快照后，还可以让redis使用CRC64算法来进行数据校验，但是这样做会增加大约10%的性能消耗，如果希望获取到最大的性能提升，可以关闭此功能，推荐yes：
-    ```
-    rdbchecksum yes
-    ```
-
-#### 执行过程
-redis 在进行数据持久化的过程中，会先将数据写入到一个临时文件中，待持久化过程都结束了，才会用这个临时文件替换上次持久化好的文件。正是这种特性，让我们可以随时来进行备份，因为快照文件总是完整可用的。对于 RDB 方式，redis 会单独创建（fork）一个子进程来进行持久化，而主进程是不会进行任何 IO 操作的，这样就确保了 redis 极高的性能。
-
-> fork：
->- 在Linux程序中，fork()会产生一个和父进程完全相同的子进程，但子进程在此后多会exec系统调用，出于效率考虑，Linux中引入了“写时复制技术”；
->- 一般情况父进程和子进程会共用同一段物理内存，只有进程空间的各段的内容要发生变化时，才会将父进程的内容复制一份给子进程；
-
-![Redis详解-020](/iblog/posts/annex/images/essays/Redis详解-020.png)
-
-如果需要进行大规模数据的恢复，且对于数据恢复的完整性不是非常敏感，那 RDB 方式要比 AOF 方式更加的高效。虽然 RDB 有不少优点，但它的缺点也是不容忽视的：丢失数据风险较大，fork进程在保存rdb文件时会先复制旧文件，如果文件较大则耗时较多。如果你对数据的完整性非常敏感，那么 RDB 方式就不太适合你，因为即使你每 5 分钟都持久化一次，当 redis 故障时，仍然会有近 5 分钟的数据丢失。所以，redis 还提供了另一种持久化方式，那就是 AOF。
-
-### AOF持久化
-AOF，英文是 Append Only File，即只允许追加不允许改写的文件。如前面介绍的，AOF 方式是**将执行过的写指令记录下来**，在数据恢复时按照从前到后的顺序再将指令都执行一遍。
-
-#### 相关配置
-- 在redis中AOF默认时不开启的：
-    ```
-    appendonly no
-    ```
-- AOF文件名称,文件路径与rdb保持一致：
-    ```
-    appendfilename "appendonly.aof"
-    ```
-- AOF同步频率设置：默认的 AOF 持久化策略是每秒钟 fsync 一次（fsync 是指把缓存中的写指令记录到磁盘中），因为在这种情况下，redis 仍然可以保持很好的处理性能，即使 redis 故障，也只会丢失最近 1 秒钟的数据。
-
-    1. 始终同步，每次Redis的写入都会立刻记入日志；性能较差但数据完整性比较好：
-    ```
-    appendfsync always
-    ```
-    2. 每秒同步，每秒记入日志一次，如果宕机，本秒的数据可能丢失：
-    ```
-    appendfsync everysec
-    ```
-    3. redis不主动进行同步，把同步时机交给操作系统：
-    ```
-    appendfsync no
-    ```
-- Rewrite压缩：AOF采用文件追加方式，文件会越来越大为避免出现此种情况，新增了重写机制,当AOF文件的大小超过所设定的阈值时，Redis就会启动AOF文件的内容压缩，只保留可以恢复数据的最小指令集。举个例子或许更形象，假如我们调用了 100 次 INCR 指令，在 AOF 文件中就要存储 100 条指令，但这明显是很低效的，完全可以把这 100 条指令合并成一条 SET 指令，这就是重写机制的原理。在进行 AOF 重写时，仍然是采用先写临时文件，全部完成后再替换的流程，所以断电、磁盘满等问题都不会影响 AOF 文件的可用性。
-
-    1. 设置重写的基准值，文件达到100%时开始重写：
-    ```
-    auto-aof-rewrite-percentage
-    ```
-    2. 设置重写的基准值，最小文件64MB。达到这个值开始重写：
-    ```
-    auto-aof-rewrite-min-size
-    ```
-    > 例如：文件达到70MB开始重写，降到50MB，下次什么时候开始重写？
-    > 系统载入时或者上次重写完毕时，Redis会记录此时AOF大小，设为base_size,如果Redis的AOF文件当前大小>= base_size +base_size*100% (默认)且当前大小>=64mb(默认)的情况下，Redis会对AOF进行重写。
-    > 
-    >当前base_size为50MB，根据公式：base_size +base_size*100% = 100MB
-
-- 如果在追加日志时，恰好遇到磁盘空间满或断电等情况导致日志写入不完整，也没有关系，可以进行恢复：
-    ```
-    redis-check-aof --fix AOP文件名称
-    ```
-
-#### 执行过程
-![Redis详解-021](/iblog/posts/annex/images/essays/Redis详解-021.png)
-
-- 客户端的请求写命令会被append追加到AOF缓冲区内；
-- AOF缓冲区根据AOF持久化策略[always,everysec,no]将操作sync同步到磁盘的AOF文件中；
-- AOF文件大小超过重写策略或手动重写时，会对AOF文件rewrite重写，压缩AOF文件容量；
-- Redis服务重启时，会重新load加载AOF文件中的写操作达到数据恢复的目的；
-
-AOF 方式的一个好处，我们通过一个“场景再现”来说明。某同学在操作 redis 时，不小心执行了 FLUSHALL，导致 redis 内存中的数据全部被清空了，这是很悲剧的事情。不过这也不是世界末日，只要 redis 配置了 AOF 持久化方式，且 AOF 文件还没有被重写（rewrite），我们就可以用最快的速度暂停 redis 并编辑 AOF 文件，将最后一行的 FLUSHALL 命令删除，然后重启 redis，就可以恢复 redis 的所有数据到 FLUSHALL 之前的状态了。这就是 AOF 持久化方式的好处之一。但是如果 AOF 文件已经被重写了，那就无法通过这种方法来恢复数据了。
-
-虽然优点多多，但 AOF 方式也同样存在缺陷，比如在同样数据规模的情况下，AOF 文件要比 RDB 文件的体积大。而且 AOF 方式的恢复速度也要慢于 RDB 方式。
-
-### 对比及使用
-官方推荐两个都启用，如果对数据不敏感，可以选单独用RDB，如果对数据不敏感，可以选单独用RDB，如果只是做纯内存缓存，可以都不用。
-
-|              | RDB                                      | AOF                                                          |
-| ------------ | ---------------------------------------- | ------------------------------------------------------------ |
-| 定义         | 在指定的时间间隔能对你的数据进行快照存储 | 记录每次对服务器的写操作,当服务器重启的时候会重新执行这些命令来恢复原始的数据,AOF命令以redis协议追加保存每次写的操作到文件末尾 |
-| 优先级       | 低                                       | 高                                                           |
-| 数据完整性   | 易丢失                                   | 不易丢失                                                     |
-| 恢复数据速度 | 较快                                     | 较慢                                                         |
-| 数据文件损坏 | 不能修复                                 | 可使用命令进行修复                                           |
-| 数据文件大小 | 较小                                     | 较大，但是可压缩                                             |
-
+`RDB`和`AOF`这两种方式不是说非要用一种，也可以同时使用。同时使用时，则会优先采用`AOF`方式来进行数据恢复，这是因为`AOF`方式的数据恢复完整度更高。
+如果你没有数据持久化的需求，也完全可以关闭`RDB`和`AOF`方式，这样的话，`Redis`将变成一个纯内存数据库，就像`Memcache`一样。
