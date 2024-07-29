@@ -65,7 +65,7 @@ slug: "java-netty"
 单`Reactor`单线程模型适用于连接数目较少、负载不高的应用场景，例如小型网络服务或低并发的应用。在处理高并发、大流量的应用时，可能需要使用多 Reactor 或多线程模型，以更好地满足性能需求。
 
 #### 单Reactor多线程
-[单Reactor多线程](/iblog/posts/annex/images/essays/单Reactor多线程.png)
+![单Reactor多线程](/iblog/posts/annex/images/essays/单Reactor多线程.png)
 
 工作原理：
 - `Reactor`对象通过对`select`监听请求事件，收到请求事件后交给`Dispatch`进行转发；
@@ -103,7 +103,7 @@ slug: "java-netty"
 
 ![Netty模型](/iblog/posts/annex/images/essays/Netty模型.png)
 
-Netty的线程模型设计高效地支持大规模并发网络通信。核心包括两个主要类型的线程：
+`Netty`的线程模型设计高效地支持大规模并发网络通信。核心包括两个主要类型的线程：
 - 主事件循环线程（`Boss Thread`）：主要负责监听和接受新的网络连接。`Netty`中的`ServerBootstrap`配置了一个或多个主事件循环线程，这些线程负责绑定网络端口并接收客户端的连接请求。当新的连接到达时，主线程会将这些连接注册到工作事件循环线程上进行进一步处理。
 - 工作事件循环线程（`Worker Thread`）：负责处理已经建立连接的IO操作，包括读取和写入数据。每个连接的IO操作由工作线程负责处理，这些线程通常以线程池的形式存在，可以并行处理多个连接的IO事件。`Netty`允许为工作线程配置多个线程组，从而能够高效地处理大量并发请求。
 
@@ -122,6 +122,13 @@ Netty的线程模型设计高效地支持大规模并发网络通信。核心包
   2. 处理IO事件，即`read`，`write`事件，在对应`NioSocketChannel`处理；
   3. 处理任务队列的任务，即`runAllTasks`；
 - 每个`WorkerNioEventLoop`处理业务时，会使用`pipeline`，`pipeline`中包含了`channel`，即通过`pipeline`可以获取到对应通道，管道中维护了很多的处理器；
+
+## Netty核心组件
+
+### Netty长连接
+
+### 心跳机制
+
 
 ## 使用Netty
 `Netty`是一个高性能的网络通信框架，广泛应用于需要高并发和高吞吐量的场景。它适用于构建各种类型的网络服务，包括但不限于高性能的`TCP`服务器、实时的`WebSocket`应用、轻量级的`UDP`服务和高效的HTTP/HTTPS 服务。
@@ -414,7 +421,12 @@ public class TcpClient {
 }
 ```
 
-## Netty零拷贝
+## Netty内存管理
+
+### Netty对象池
+
+
+### Netty零拷贝
 零拷贝是计算机的一种技术，目的是减少数据在内存和存储设备之间的拷贝操作。这种技术优化了数据的传输过程，通过减少数据拷贝的次数来提高性能并降低资源消耗。
 
 假设我们有一个大文件，需要将其内容发送到客户端。传统的文件传输流程如下：
@@ -461,13 +473,55 @@ ByteBuf buffer = Unpooled.directBuffer(1024); // 创建一个直接内存缓冲�
 buffer.writeBytes(data); // 直接写入数据到内存
 ```
 
-## mpsc无锁编程
-[//]: # (写到了这里)
+## Netty高性能数据结构
 
+### Mpsc无锁队列
+`Mpsc`的全称是`Multi Producer Single Consumer`，多生产者单消费者。`Mpsc Queue`可以保证多个生产者同时访问队列是线程安全的，而且同一时刻只允许一个消费者从队列中读取数据。
+`Netty Reactor`线程中任务队列必须满足多个生产者可以同时提交任务，所以`Mpsc Queue`非常适合`Netty Reactor`线程模型。
 
-## Netty对象池
+在`Netty`中，`EventLoopGroup` 是一个核心组件，负责管理和调度处理网络事件的线程。`EventLoopGroup` 实现中使用了无锁队列来维护待处理的任务和事件。具体来说是`SingleThreadEventLoop`和`NioEventLoop`这两个类使用无锁队列来存储任务和事件。
+这些队列是`MPSC`类型的无锁队列，允许多个线程同时提交任务，而由单个事件循环线程处理这些任务。无锁队列的使用有效地提高了并发性能，减少了锁竞争的开销，使得事件处理更加高效。
 
-## Netty长连接、心跳机制
+在传统的锁机制下，当多个线程尝试同时访问共享数据结构时，会产生竞争，从而导致性能下降。使用无锁队列可以避免使用锁，减少线程间的竞争和上下文切换，提高并发性能。
+它的核心在于利用原子操作来保证线程安全。原子操作是指在执行过程中不会被其他线程打断的操作，保证数据的一致性。
+通常实现是使用链表结构，其中每个节点包含数据和指向下一个节点的引用。队列的头节点和尾节点通过原子操作来维护，插入和删除操作通过调整节点的链接来完成。
+```java
+public class MpscQueue<E> {
+    private final Node<E> head;
+    private final AtomicReference<Node<E>> tail;
 
-## 参考文章
-- https://dongzl.github.io/netty-handbook/#/
+    public MpscQueue() {
+        head = new Node<>(null);
+        tail = new AtomicReference<>(head);
+    }
+
+    public void offer(E item) {
+        Node<E> newTail = new Node<>(item);
+        Node<E> oldTail = tail.getAndSet(newTail);
+        oldTail.next = newTail;
+    }
+
+    public E poll() {
+        Node<E> headNode = head.next;
+        if (headNode == null) {
+            return null; // 队列为空
+        }
+        head.next = headNode.next;
+        return headNode.item;
+    }
+
+    private static class Node<E> {
+        private final E item;
+        private Node<E> next;
+
+        Node(E item) {
+            this.item = item;
+        }
+    }
+}
+```
+
+### FastThreadLocal
+
+### Netty时间轮
+
