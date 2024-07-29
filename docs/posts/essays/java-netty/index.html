@@ -12,7 +12,7 @@
 	
     
     
-    <meta name="description" content="Netty 参考文章：https://dongzl.github.io/netty-handbook/#/ 概述 Netty is an asynchronous event-driven network application framework for rapid development of maintainable high performance protocol servers &amp;amp; clients. Netty 是一个异步的、基于事" />
+    <meta name="description" content="概述 Netty是一个高性能、异步的网络应用框架，用于开发高效的网络通信程序。它是Java NIO的一个抽象，简化了网络编程的复杂性，并提供了一系列高级功能，使网络" />
     
 
     
@@ -72,32 +72,6 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#netty">
-                    Netty
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
                 <a class="nav-link text-left" href="#%e6%a6%82%e8%bf%b0">
                     概述
                 </a>
@@ -108,6 +82,28 @@
         
         </ul>
         
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e7%ba%bf%e7%a8%8b%e6%a8%a1%e5%9e%8b%e7%9a%84%e6%bc%94%e5%8f%98">
+                    线程模型的演变
+                </a>
+            </li>
+            
+            
+        </ul>
+        
         </ul>
         
         
@@ -126,8 +122,36 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e7%ba%bf%e7%a8%8b%e6%a8%a1%e5%9e%8b%e6%bc%94%e5%8f%98">
-                    线程模型演变
+                <a class="nav-link text-left" href="#%e4%bc%a0%e7%bb%9fio%e6%a8%a1%e5%9e%8b">
+                    传统IO模型
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#reactor%e6%a8%a1%e5%9e%8b">
+                    Reactor模型
                 </a>
             </li>
             
@@ -156,8 +180,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e4%bc%a0%e7%bb%9f-io-%e6%a8%a1%e5%9e%8b">
-                    传统 IO 模型
+                <a class="nav-link text-left" href="#%e5%8d%95reactor%e5%8d%95%e7%ba%bf%e7%a8%8b">
+                    单Reactor单线程
                 </a>
             </li>
             
@@ -188,8 +212,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#reactor-%e6%a8%a1%e5%9e%8b">
-                    Reactor 模型
+                <a class="nav-link text-left" href="#%e5%8d%95reactor%e5%a4%9a%e7%ba%bf%e7%a8%8b">
+                    单Reactor多线程
                 </a>
             </li>
             
@@ -212,6 +236,36 @@
         
         <ul class="nav">
             
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%b8%bb%e4%bb%8ereactor%e5%a4%9a%e7%ba%bf%e7%a8%8b">
+                    主从Reactor多线程
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
         <ul class="nav">
             
         <ul class="nav">
@@ -232,7 +286,6 @@
         
         </ul>
         
-        </ul>
         
         
         
@@ -241,23 +294,18 @@
         
         
         
-        
-        <ul class="nav">
-            
         <ul class="nav">
             
         <ul class="nav">
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e7%ae%80%e5%8d%95%e4%bd%bf%e7%94%a8">
-                    简单使用
+                <a class="nav-link text-left" href="#%e4%bd%bf%e7%94%a8netty">
+                    使用Netty
                 </a>
             </li>
             
             
-        </ul>
-        
         </ul>
         
         </ul>
@@ -377,6 +425,126 @@
         
         
         
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#netty%e9%9b%b6%e6%8b%b7%e8%b4%9d">
+                    Netty零拷贝
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#mpsc%e6%97%a0%e9%94%81%e7%bc%96%e7%a8%8b">
+                    mpsc无锁编程
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#netty%e5%af%b9%e8%b1%a1%e6%b1%a0">
+                    Netty对象池
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#netty%e9%95%bf%e8%bf%9e%e6%8e%a5%e5%bf%83%e8%b7%b3%e6%9c%ba%e5%88%b6">
+                    Netty长连接、心跳机制
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%8f%82%e8%80%83%e6%96%87%e7%ab%a0">
+                    参考文章
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
 
     </div>
 
@@ -481,63 +649,49 @@
                         </span>
                         
                     </div>
-                    <div class="post_content markdown"><h2 id="netty">Netty</h2>
-<p>参考文章：https://dongzl.github.io/netty-handbook/#/</p>
-<h3 id="概述">概述</h3>
-<blockquote>
-<p><a href="https://netty.io">Netty is an asynchronous event-driven network application framework for rapid development of maintainable high performance protocol servers &amp; clients.</a></p>
-</blockquote>
-<ol>
-<li>Netty 是一个异步的、基于事件驱动的网络应用框架，用以快速开发高性能、高可靠性的网络 IO 程序。</li>
-<li>Netty 主要针对在 TCP 协议下，面向 Client 端的高并发应用，或者 Peer-to-Peer 场景下的大量数据持续传输的应用。</li>
-<li>Netty 本质是一个 NIO 框架，适用于服务器通讯相关的多种应用场景。</li>
-<li>Netty 是由 JBoss 提供的一个 Java 开源框架，现为 Github 上的独立项目。</li>
-</ol>
-<h3 id="线程模型演变">线程模型演变</h3>
-<p>目前存在的线程模型有：</p>
-<ul>
-<li>传统阻塞 I/O 服务模型</li>
-<li>Reactor 模式
-<ul>
-<li>单 Reactor 单线程</li>
-<li>单 Reactor 多线程</li>
-<li>主从 Reactor多线程</li>
-</ul>
-</li>
-</ul>
-<p>Netty 主要基于主从 Reactor 多线程模型做了一定的改进。</p>
-<h4 id="传统-io-模型">传统 IO 模型</h4>
+                    <div class="post_content markdown"><h2 id="概述">概述</h2>
+<p><code>Netty</code>是一个高性能、异步的网络应用框架，用于开发高效的网络通信程序。它是Java <code>NIO</code>的一个抽象，简化了网络编程的复杂性，并提供了一系列高级功能，使网络编程变得更简单。</p>
+<p><code>Netty</code>是一个高效的网络框架，专注于处理大量并发连接。它通过异步IO处理来避免阻塞，这让它在处理高并发时表现出色。
+<code>Netty</code>还利用了优化的内存管理和零拷贝技术，降低了性能开销。框架的灵活性也很高，开发者可以通过管道机制自定义数据处理流程，API和文档丰富，帮助简化网络编程。</p>
+<p>不过，<code>Netty</code>的学习曲线可能较陡，对于不熟悉网络编程的开发者来说，理解和使用它可能需要一些时间。虽然框架提供了很多抽象，底层控制和调试可能会有一定的复杂性。
+为了实现最佳性能，可能还需要对<code>Netty</code>的工作原理有深入了解。总的来说，<code>Netty</code>适合需要高性能和高并发的应用场景，如高性能<code>HTTP</code>服务器、实时消息系统、游戏服务器、代理服务器以及数据传输处理。</p>
+<h2 id="线程模型的演变">线程模型的演变</h2>
+<p>网络编程采用传统的阻塞IO模型。在这种模型中，每个IO操作会阻塞线程，直到操作完成。为了处理多个连接，通常需要为每个连接创建一个线程。
+这个方式虽然简单，但在处理大量并发连接时效率低，因为线程的创建和销毁开销大，而且线程会在等待IO操作完成期间无法执行其他任务，导致资源利用不充分，系统扩展性差。</p>
+<p><code>Reactor</code>模型的出现是为了改进传统IO模型中的问题。通过引入事件驱动机制和非阻塞 IO，<code>Reactor</code>模型提高了处理并发IO操作的效率。
+事件循环机制允许单个线程同时处理多个IO操作，而非阻塞IO避免了线程在等待数据时的阻塞状态。这种设计改进了资源利用率和系统响应速度，适应了高并发环境的需求。</p>
+<p><code>Netty</code>在<code>Reactor</code>模型的基础上进行了进一步的优化和扩展。它通过异步编程技术和管道机制提升了性能和开发效率。
+<code>Netty</code>的事件循环机制经过优化，减少了线程和上下文切换的开销。管道机制将数据处理分解为多个阶段，使得网络应用的开发更加灵活和高效。</p>
+<h3 id="传统io模型">传统IO模型</h3>
 <p><img alt="传统IO模型" src="/iblog/posts/annex/images/essays/%E4%BC%A0%E7%BB%9FIO%E6%A8%A1%E5%9E%8B.png"></p>
-<p>采用阻塞 IO 模式获取输入的数据，每个连接都需要独立的线程完成数据的输入，业务处理，数据返回。
-当并发数很大，就会创建大量的线程，占用很大系统资源，连接创建后，如果当前线程暂时没有数据可读，该线程会阻塞在 read 操作，造成线程资源浪费。</p>
-<h4 id="reactor-模型">Reactor 模型</h4>
-<p>基于 I/O 复用模型，多个连接共用一个阻塞对象，应用程序只需要在一个阻塞对象等待，无需阻塞等待所有连接。 当某个连接有新的数据可以处理时，操作系统通知应用程序，线程从阻塞状态返回，开始进行业务处理。</p>
+<p>在阻塞IO模型中，线程在执行IO操作时会被阻塞，直到操作完成。例如，当一个线程发起读操作时，它会一直等待数据到达，无法处理其他任务。
+这种模型简单易理解，但在高并发环境下，可能会导致大量的线程阻塞和上下文切换，从而降低系统的性能。</p>
+<p>传统IO模型通常使用阻塞方式处理IO操作，其中每个IO请求都会分配一个线程，该线程在等待数据传输时会被阻塞。
+这种方式简单易理解，但在高并发环境下，线程的创建、销毁和上下文切换开销较大，导致性能问题。每个线程的阻塞状态使得系统资源利用效率低，处理大量并发连接时表现不佳。</p>
+<p>相比之下，<code>Reactor</code> IO模型采用非阻塞方式，通过事件循环和回调机制来处理IO操作。在这个模型中，单个或少量线程通过事件循环机制监听和分发IO事件，避免了线程的阻塞。
+这样线程可以在等待IO操作的同时处理其他任务，大幅提高了系统的性能和资源利用效率。<code>Reactor</code>模型利用事件多路复用技术，能够在高并发环境下高效地管理大量连接和IO操作，适用于需要处理大量并发请求的应用场景。</p>
+<h3 id="reactor模型">Reactor模型</h3>
+<p><code>Reactor</code>模型是一种高效处理并发IO操作的设计模式，主要依赖事件驱动机制和非阻塞IO。
+它基于IO复用模型，多个连接共用一个阻塞对象，应用程序只需要在一个阻塞对象等待，无需阻塞等待所有连接。 当某个连接有新的数据可以处理时，操作系统通知应用程序，线程从阻塞状态返回，开始进行业务处理。
+<code>Netty</code>主要基于主从<code>Reactor</code>多线程模型做了一定的改进。</p>
 <p><img alt="Reactor模式" src="/iblog/posts/annex/images/essays/Reactor%E6%A8%A1%E5%BC%8F.png"></p>
-<p>为了避免浪费可以创建一个线程池，当客户端发起请求时，通过<code>DispatcherHandler</code>进行分发请求处理到线程池，线程池中在使用具体的线程进行事件处理。 服务器端程序处理传入的多个请求,并将它们同步分派到相应的处理线程，因此 Reactor 模式也叫 Dispatcher 模式。</p>
-<p>Reactor 模式使用 IO 复用监听事件，收到事件后，分发给某个线程（进程），这点就是网络服务器高并发处理关键。</p>
-<h5 id="单-reactor-单线程">单 Reactor 单线程</h5>
+<p>为了避免浪费创建了一个线程池，当客户端发起请求时，通过<code>DispatcherHandler</code>进行分发请求处理到线程池，线程池中在使用具体的线程进行事件处理。
+服务器端程序处理传入的多个请求，并将它们同步分派到相应的处理线程，因此<code>Reactor</code>模式也叫<code>Dispatcher</code>模式。
+<code>Reactor</code>模式使用IO复用监听事件，收到事件后，分发给某个线程，这点就是网络服务器高并发处理关键。</p>
+<h4 id="单reactor单线程">单Reactor单线程</h4>
 <p><img alt="单Reactor单线程" src="/iblog/posts/annex/images/essays/%E5%8D%95Reactor%E5%8D%95%E7%BA%BF%E7%A8%8B.png"></p>
-<p>步骤：</p>
+<p>工作原理：</p>
 <ul>
-<li>Reactor 对象通过 Select 监控客户端请求事件，收到事件后通过 Dispatch 进行分发</li>
-<li>如果是建立连接请求事件，则由 Acceptor 通过 Accept 处理连接请求，然后创建一个 Handler 对象处理连接完成后的后续业务处理</li>
-<li>如果不是建立连接事件，则 Reactor 会分发调用连接对应的 Handler 来响应</li>
-<li>Handler 会完成 <code>Read → 业务处理 → Send</code> 的完整业务流程</li>
+<li><code>Reactor</code>对象通过<code>Select</code>监控客户端请求事件，收到事件后通过<code>Dispatch</code>进行分发；</li>
+<li>如果是建立连接请求事件，则由<code>Acceptor</code>通过<code>Accept</code>处理连接请求，然后创建一个<code>Handler</code>对象处理连接完成后的后续业务处理；</li>
+<li>如果不是建立连接事件，则<code>Reactor</code>会分发调用连接对应的<code>Handler</code>来响应；</li>
+<li><code>Handler</code>会完成 <code>Read</code> → 业务处理 → <code>Send</code> 的完整业务流程；</li>
 </ul>
-<p>缺点：</p>
-<ul>
-<li>性能问题，只有一个线程，无法完全发挥多核 CPU 的性能</li>
-<li>如果线程意外终止，或者进入死循环，会导致整个系统通信模块不可用，不能接收和处理外部消息</li>
-</ul>
-<p>优点：</p>
-<ul>
-<li>模型简单，没有多线程、进程通信、竞争的问题，全部都在一个线程中完成</li>
-</ul>
-<p>使用场景：</p>
-<ul>
-<li>客户端的数量有限，业务处理非常快速的情况</li>
-</ul>
-<h5 id="单-reactor-多线程">单 Reactor 多线程</h5>
+<p>单<code>Reactor</code>单线程模型的优点在于其简单性和高效的资源利用。由于只有一个线程负责处理所有的IO事件，这种模型避免了多线程管理的复杂性，减少了上下文切换和线程开销，使得系统资源消耗较少。
+在低并发环境下，这种模型可以有效地处理IO操作，降低了系统的复杂性和开发难度。</p>
+<p>这个模型的局限性包括处理能力的限制。在高并发场景中，单线程可能成为性能瓶颈，无法处理大量的并发请求。此外，如果某个IO操作发生阻塞，可能会影响到其他事件的处理，导致整体系统性能下降。</p>
+<p>单<code>Reactor</code>单线程模型适用于连接数目较少、负载不高的应用场景，例如小型网络服务或低并发的应用。在处理高并发、大流量的应用时，可能需要使用多 Reactor 或多线程模型，以更好地满足性能需求。</p>
+<h4 id="单reactor多线程">单Reactor多线程</h4>
 <p><img alt="单Reactor多线程" src="/iblog/posts/annex/images/essays/%E5%8D%95Reactor%E5%A4%9A%E7%BA%BF%E7%A8%8B.png"></p>
 <p>步骤：</p>
 <ul>
@@ -557,7 +711,7 @@
 <ul>
 <li>可以充分利用CPU资源</li>
 </ul>
-<h5 id="主从-reactor-多线程">主从 Reactor 多线程</h5>
+<h4 id="主从reactor多线程">主从Reactor多线程</h4>
 <p><img alt="主从Reactor线程" src="/iblog/posts/annex/images/essays/%E4%B8%BB%E4%BB%8EReactor%E7%BA%BF%E7%A8%8B.png"></p>
 <p>Reactor 主线程可以对应多个 Reactor 子线程，即 MainRecator 可以关联多个 SubReactor，从而解决了Reactor 在单线程中运行，高并发场景下容易成为性能瓶颈。
 步骤：</p>
@@ -580,7 +734,7 @@
 <li>编程复杂度较高</li>
 </ul>
 <p>这种模型在许多项目中广泛使用，包括 Nginx 主从 Reactor 多进程模型，Memcached 主从多线程，Netty 主从多线程模型的支持。</p>
-<h4 id="netty-模型">Netty 模型</h4>
+<h3 id="netty-模型">Netty 模型</h3>
 <p><img alt="Netty模型" src="/iblog/posts/annex/images/essays/Netty%E6%A8%A1%E5%9E%8B.png"></p>
 <p><img alt="netty结构" src="/iblog/posts/annex/images/essays/netty%E7%BB%93%E6%9E%84.png"></p>
 <ul>
@@ -597,13 +751,13 @@
 <li>每个 <code>WorkerNioEventLoop</code> 循环执行的步骤
 <ul>
 <li>轮询 <code>read，write</code> 事件</li>
-<li>处理 I/O 事件，即 <code>read，write</code> 事件，在对应 <code>NioSocketChannel</code> 处理</li>
+<li>处理IO事件，即 <code>read，write</code> 事件，在对应 <code>NioSocketChannel</code> 处理</li>
 <li>处理任务队列的任务，即 <code>runAllTasks</code></li>
 </ul>
 </li>
 <li>每个 <code>WorkerNioEventLoop</code> 处理业务时，会使用 <code>pipeline</code>（管道），<code>pipeline</code> 中包含了 <code>channel</code>(通道)，即通过 <code>pipeline</code> 可以获取到对应通道，管道中维护了很多的处理器</li>
 </ul>
-<h3 id="简单使用">简单使用</h3>
+<h2 id="使用netty">使用Netty</h2>
 <p>1.<a href="https://netty.io/downloads.html">导入依赖</a></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;dependency&gt;
 </span></span><span class="line"><span class="cl">    &lt;groupId&gt;io.netty&lt;/groupId&gt;
@@ -848,7 +1002,7 @@
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><h3 id="异步模型">异步模型</h3>
 <p>异步的概念和同步相对。当一个异步过程调用发出后，调用者不能立刻得到结果。实际处理这个调用的组件在完成后，通过状态、通知和回调来通知调用者。</p>
-<p><code>Netty</code> 中的 I/O 操作是异步的，包括 <code>Bind、Write、Connect</code> 等操作会简单的返回一个 <code>ChannelFuture</code>。 调用者并不能立刻获得结果，而是通过 <code>Future-Listener</code> 机制，用户可以方便的主动获取或者通过通知机制获得 IO 操作结果。</p>
+<p><code>Netty</code> 中的IO操作是异步的，包括 <code>Bind、Write、Connect</code> 等操作会简单的返回一个 <code>ChannelFuture</code>。 调用者并不能立刻获得结果，而是通过 <code>Future-Listener</code> 机制，用户可以方便的主动获取或者通过通知机制获得IO操作结果。</p>
 <p>当 <code>Future</code> 对象刚刚创建时，处于非完成状态，调用者可以通过返回的 <code>ChannelFuture</code> 来获取操作执行的状态，注册监听函数来执行完成后的操作。</p>
 <p>常见有如下操作：</p>
 <ul>
@@ -1273,7 +1427,15 @@
 </span></span><span class="line"><span class="cl">        <span class="n">out</span><span class="o">.</span><span class="n">writeBytes</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">getContent</span><span class="p">());</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div></div>
+</span></span></code></pre></div><h2 id="netty零拷贝">Netty零拷贝</h2>
+<h2 id="mpsc无锁编程">mpsc无锁编程</h2>
+<h2 id="netty对象池">Netty对象池</h2>
+<h2 id="netty长连接心跳机制">Netty长连接、心跳机制</h2>
+<h2 id="参考文章">参考文章</h2>
+<ul>
+<li><a href="https://dongzl.github.io/netty-handbook/#/">https://dongzl.github.io/netty-handbook/#/</a></li>
+</ul>
+</div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">
                             

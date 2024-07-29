@@ -464,7 +464,7 @@ select id,first_name,last_name from student where id = '%123%' and first_name li
 - `id`值相同，执行顺序由上至下；
 - `id`值不同，`id`值越大优先级越高，越先被执行；
 
-表的执行顺序与表中数据息息相关，举个例子：表A：3条数据 表B：4条数据 表C：6条数据
+表的执行顺序与表中数据息息相关，举个例子：表A：3条数据 表B：4条数据 表C：6条数据。
 假设在执行某条`SQL`的情况下表A、B、C的`id`值相同，假设执行顺序：表A、B、C。在给表B添加4条数据后，再次执行前面的这条`SQL`发现执行顺序变为：表A、C、B。
 这是因为中间结果会影响表的执行顺序：
 ```text
@@ -1004,7 +1004,7 @@ page faults：显示页面错误相关开销信息；
 source：显示和Source_function，Source_file，Source_line相关的开销信息；
 swaps：显示交换次数相关开销的信息；
 
-```
+```sql
  show profile cpu,block io for query 3;
  +----------------------------+----------+----------+------------+--------------+---------------+
  | Status                     | Duration | CPU_user | CPU_system | Block_ops_in | Block_ops_out |
