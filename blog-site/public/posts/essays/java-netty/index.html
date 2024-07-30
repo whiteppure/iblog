@@ -326,8 +326,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#netty%e9%95%bf%e8%bf%9e%e6%8e%a5">
-                    Netty长连接
+                <a class="nav-link text-left" href="#bootstrap">
+                    Bootstrap
                 </a>
             </li>
             
@@ -354,8 +354,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%bf%83%e8%b7%b3%e6%9c%ba%e5%88%b6">
-                    心跳机制
+                <a class="nav-link text-left" href="#eventloop">
+                    EventLoop
                 </a>
             </li>
             
@@ -464,6 +464,34 @@
             <li class="nav-item">
                 <a class="nav-link text-left" href="#tcp%e7%b2%98%e5%8c%85%e6%8b%86%e5%8c%85">
                     TCP粘包拆包
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e8%87%aa%e5%ae%9a%e4%b9%89%e5%8d%8f%e8%ae%ae%e9%80%9a%e4%bf%a1">
+                    自定义协议通信
                 </a>
             </li>
             
@@ -986,7 +1014,7 @@
 <li>工作事件循环线程（<code>Worker Thread</code>）：负责处理已经建立连接的IO操作，包括读取和写入数据。每个连接的IO操作由工作线程负责处理，这些线程通常以线程池的形式存在，可以并行处理多个连接的IO事件。<code>Netty</code>允许为工作线程配置多个线程组，从而能够高效地处理大量并发请求。</li>
 </ul>
 <p><img alt="netty结构" src="/iblog/posts/annex/images/essays/netty%E7%BB%93%E6%9E%84.png"></p>
-<p>工作原理：</p>
+<p>工作流程：</p>
 <ul>
 <li><code>Netty</code>抽象出两组线程池 <code>BossGroup</code>专门负责接收客户端的连接，<code>WorkerGroup</code>专门负责网络的读写；<code>BossGroup</code>和<code>WorkerGroup</code>类型都是<code>NioEventLoopGroup</code>；</li>
 <li><code>NioEventLoopGroup</code>相当于一个事件循环组，这个组中含有多个事件循环，每一个事件循环是<code>NioEventLoop</code>，每个<code>NioEventLoop</code>都有一个<code>Selector</code>，用于监听绑定在其上的<code>socket</code>的网络通讯；</li>
@@ -1008,8 +1036,189 @@
 <li>每个<code>WorkerNioEventLoop</code>处理业务时，会使用<code>pipeline</code>，<code>pipeline</code>中包含了<code>channel</code>，即通过<code>pipeline</code>可以获取到对应通道，管道中维护了很多的处理器；</li>
 </ul>
 <h2 id="netty核心组件">Netty核心组件</h2>
-<h3 id="netty长连接">Netty长连接</h3>
-<h3 id="心跳机制">心跳机制</h3>
+<img src="/iblog/posts/annex/images/essays/Netty核心组件.svg" alt=""/>
+<ul>
+<li><code>Bootstrap/ServerBootstrap</code>: <code>Bootstrap</code> 用于客户端的启动配置，指定服务器地址、端口等参数。<code>ServerBootstrap</code> 用于服务端配置，处理客户端连接请求。这两个组件通过 <code>EventLoopGroup</code> 配置 IO 线程池，管理网络 IO 操作的线程资源。</li>
+<li><code>EventLoopGroup</code>: 这个组件管理着多个 <code>EventLoop</code> 实例，每个 <code>EventLoop</code> 负责处理网络 IO 操作。<code>EventLoopGroup</code> 通过线程池分配线程给 <code>EventLoop</code>，使得网络事件的处理更加高效。启动工具通过 <code>EventLoopGroup</code> 配置和管理这些线程池。</li>
+<li><code>EventLoop</code>: <code>EventLoop</code> 是一个单线程的组件，处理多个 <code>Channel</code> 的网络 IO 操作。每个 <code>EventLoop</code> 负责处理自己的 <code>Channel</code> 读写任务，减少了线程切换的开销，提升了 IO 操作的效率。</li>
+<li><code>Channel</code>: <code>Channel</code> 代表一个网络连接，用于数据的发送和接收。每个 <code>Channel</code> 由一个 <code>EventLoop</code> 进行管理。<code>Channel</code> 使用 <code>ChannelPipeline</code> 处理数据流，负责实际的数据传输工作。</li>
+<li><code>ChannelPipeline</code>: <code>ChannelPipeline</code> 是 <code>Channel</code> 内的数据处理链。它包含多个 <code>ChannelHandler</code>，按顺序处理传入和传出的数据。数据流通过 <code>ChannelPipeline</code> 进行一系列处理，执行编解码、业务逻辑等操作。</li>
+<li><code>ChannelHandler</code>: <code>ChannelHandler</code> 是处理数据的组件，执行特定的逻辑，如编解码、业务处理等。它们被添加到 <code>ChannelPipeline</code> 中，并按顺序处理数据流。每个 <code>ChannelHandler</code> 处理完数据后，将结果传递给下一个 <code>ChannelHandler</code>。</li>
+<li><code>ByteBuf</code>: <code>ByteBuf</code> 是用于高效存储和处理数据的缓冲区。与传统的 Java <code>NIO</code> 缓冲区相比，它支持动态扩展和更高效的内存管理。<code>ByteBuf</code> 用于存储和操作网络传输的数据，提升了数据处理的性能。</li>
+<li><code>ChannelFuture</code>: <code>ChannelFuture</code> 表示一个异步操作的结果。它跟踪操作的状态，允许查询操作是否完成，并在操作完成后执行回调。<code>ChannelFuture</code> 提供了获取操作结果和处理异步操作的机制。</li>
+<li><code>ChannelPromise</code>: <code>ChannelPromise</code> 是 <code>ChannelFuture</code> 的一个特定形式，表示异步操作的结果。与 <code>ChannelFuture</code> 类似，它允许设置操作的完成状态或异常，并通知其他组件操作的结果，用于异步操作完成后的结果通知。</li>
+<li><code>ByteBufAllocator</code>: <code>ByteBufAllocator</code> 负责创建和管理 <code>ByteBuf</code> 实例。它提供了多种缓冲区分配方法，以满足不同性能需求。这个组件帮助高效管理 <code>ByteBuf</code> 的创建和释放，优化内存使用。</li>
+<li><code>FutureListener</code>: <code>FutureListener</code> 是一个接口，用于监听 <code>ChannelFuture</code> 的完成状态。当异步操作完成时，<code>FutureListener</code> 执行特定的回调逻辑，处理操作结果或异常，提供了处理异步操作结果的机制。</li>
+<li><code>Callback Handler</code>: <code>Callback Handler</code> 处理 <code>FutureListener</code> 的回调。当异步操作完成后，<code>Callback Handler</code> 接收回调通知，并执行相应的业务处理逻辑，确保操作结果能够被适当地处理。</li>
+</ul>
+<h3 id="bootstrap">Bootstrap</h3>
+<p><code>Bootstrap</code>作为整个<code>Netty</code>客户端和服务端的程序入口，可以把<code>Netty</code>的核心组件像搭积木一样组装在一起。<code>Netty</code>服务端的启动过程大致分为三个步骤：</p>
+<ul>
+<li>配置线程池：Netty 是采用 Reactor 模型进行开发的，可以非常容易切换三种 Reactor 模式：单线程模式、多线程模式、主从多线程模式。
+<ol>
+<li>单线程模式：<code>Reactor</code>单线程模型所有IO操作都由一个线程完成，所以只需要启动一个<code>EventLoopGroup</code>即可。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">EventLoopGroup group = new NioEventLoopGroup(1);
+</span></span><span class="line"><span class="cl">ServerBootstrap b = new ServerBootstrap();
+</span></span><span class="line"><span class="cl">b.group(group)
+</span></span></code></pre></div></li>
+<li>多线程模式：在<code>Netty</code>中使用<code>Reactor</code>多线程模型与单线程模型非常相似，区别是<code>NioEventLoopGroup</code>可以不需要任何参数，它默认会启动2倍CPU核数的线程。当然你也可以自己手动设置固定的线程数。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">EventLoopGroup group = new NioEventLoopGroup();
+</span></span><span class="line"><span class="cl">ServerBootstrap b = new ServerBootstrap();
+</span></span><span class="line"><span class="cl">b.group(group)
+</span></span></code></pre></div></li>
+<li>主从多线程模式：<code>Boss</code>是主<code>Reactor</code>，<code>Worker</code>是从<code>Reactor</code>。它们分别使用不同的<code>NioEventLoopGroup</code>，主<code>Reactor</code>负责处理<code>Accept</code>，然后把<code>Channel</code>注册到从<code>Reactor</code>上，从<code>Reactor</code>主要负责<code>Channel</code>生命周期内的所有IO事件。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">EventLoopGroup bossGroup = new NioEventLoopGroup();
+</span></span><span class="line"><span class="cl">EventLoopGroup workerGroup = new NioEventLoopGroup();
+</span></span><span class="line"><span class="cl">ServerBootstrap b = new ServerBootstrap();
+</span></span><span class="line"><span class="cl">b.group(bossGroup, workerGroup)
+</span></span></code></pre></div></li>
+</ol>
+</li>
+<li><code>Channel</code>初始化；
+<ol>
+<li>设置<code>Channel</code>类型：NIO模型是<code>Netty</code>中最成熟且被广泛使用的模型。因此，推荐<code>Netty</code>服务端采用<code>NioServerSocketChannel</code>作为<code>Channel</code>的类型，客户端采用<code>NioSocketChannel</code>。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">b.channel(NioServerSocketChannel.class);
+</span></span></code></pre></div></li>
+<li>注册<code>ChannelHandler</code>：在<code>Netty</code>中可以通过<code>ChannelPipeline</code>去注册多个<code>ChannelHandler</code>，每个<code>ChannelHandler</code>各司其职，这样就可以实现最大化的代码复用。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">b.childHandler(new ChannelInitializer&lt;SocketChannel&gt;() {
+</span></span><span class="line"><span class="cl">    @Override
+</span></span><span class="line"><span class="cl">    public void initChannel(SocketChannel ch) {
+</span></span><span class="line"><span class="cl">        ch.pipeline()
+</span></span><span class="line"><span class="cl">                .addLast(&#34;codec&#34;, new HttpServerCodec())
+</span></span><span class="line"><span class="cl">                .addLast(&#34;compressor&#34;, new HttpContentCompressor())
+</span></span><span class="line"><span class="cl">                .addLast(&#34;aggregator&#34;, new HttpObjectAggregator(65536)) 
+</span></span><span class="line"><span class="cl">                .addLast(&#34;handler&#34;, new HttpServerHandler());
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">})
+</span></span></code></pre></div><code>Channel</code>初始化时都会绑定一个<code>Pipeline</code>，它主要用于服务编排。<code>Pipeline</code>管理了多个<code>ChannelHandler</code>。IO事件依次在<code>ChannelHandler</code>中传播，<code>ChannelHandler</code>负责业务逻辑处理。上述<code>HTTP</code>服务器示例中使用链式的方式加载了多个<code>ChannelHandler</code>，包含<code>HTTP</code>编解码处理器、<code>HTTPContent</code>压缩处理器、<code>HTTP</code>消息聚合处理器、自定义业务逻辑处理器。</li>
+<li>设置<code>Channel</code>参数：<code>Netty</code>提供了十分便捷的方法，用于设置<code>Channel</code>参数。关于<code>Channel</code>的参数数量非常多，如果每个参数都需要自己设置，那会非常繁琐。<code>Netty</code>提供了默认参数设置，实际场景下默认参数已经满足我们的需求，我们仅需要修改自己关系的参数即可。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">b.option(ChannelOption.SO_KEEPALIVE, true);
+</span></span></code></pre></div><code>ServerBootstrap</code>设置<code>Channel</code>属性有<code>option</code>和<code>childOption</code>两个方法，<code>option</code>主要负责设置<code>Boss</code>线程组，而<code>childOption</code>对应的是<code>Worker</code>线程组。</li>
+</ol>
+</li>
+<li>端口绑定：在完成上述<code>Netty</code>的配置之后，<code>bind</code>方法会真正触发启动，<code>sync</code>方法则会阻塞，直至整个启动过程完成。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">ChannelFuture f = b.bind().sync();
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="eventloop">EventLoop</h3>
+<p><code>EventLoop</code>这个概念其实并不是<code>Netty</code>独有的，它是一种事件等待和处理的程序模型，可以解决多线程资源消耗高的问题。
+例如 Node.js就采用了<code>EventLoop</code>的运行机制，不仅占用资源低，而且能够支撑了大规模的流量访问。</p>
+<p>在<code>Netty</code>中<code>EventLoop</code>是<code>Netty</code> <code>Reactor</code>线程模型的事件处理引擎。每个<code>EventLoop</code>线程都维护一个<code>Selector</code>选择器和任务队列<code>taskQueue</code>。它主要负责处理IO事件、普通任务和定时任务。
+<code>Netty</code>中推荐使用<code>NioEventLoop</code>作为实现类，<code>NioEventLoop</code>最核心的<code>run()</code>方法源码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(;;)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">selectStrategy</span><span class="p">.</span><span class="na">calculateStrategy</span><span class="p">(</span><span class="n">selectNowSupplier</span><span class="p">,</span><span class="w"> </span><span class="n">hasTasks</span><span class="p">()))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">case</span><span class="w"> </span><span class="n">SelectStrategy</span><span class="p">.</span><span class="na">CONTINUE</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="k">continue</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">case</span><span class="w"> </span><span class="n">SelectStrategy</span><span class="p">.</span><span class="na">BUSY_WAIT</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">case</span><span class="w"> </span><span class="n">SelectStrategy</span><span class="p">.</span><span class="na">SELECT</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">select</span><span class="p">(</span><span class="n">wakenUp</span><span class="p">.</span><span class="na">getAndSet</span><span class="p">(</span><span class="kc">false</span><span class="p">));</span><span class="w"> </span><span class="c1">// 轮询 IO 事件</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">wakenUp</span><span class="p">.</span><span class="na">get</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="n">selector</span><span class="p">.</span><span class="na">wakeup</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">default</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">rebuildSelector0</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">handleLoopException</span><span class="p">(</span><span class="n">e</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">continue</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">cancelledKeys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">needsToSelectAgain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ioRatio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">ioRatio</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ioRatio</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">100</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">processSelectedKeys</span><span class="p">();</span><span class="w"> </span><span class="c1">// 处理 IO 事件</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">runAllTasks</span><span class="p">();</span><span class="w"> </span><span class="c1">// 处理所有任务</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">ioStartTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">nanoTime</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">processSelectedKeys</span><span class="p">();</span><span class="w"> </span><span class="c1">// 处理 IO 事件</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">ioTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">nanoTime</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ioStartTime</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">runAllTasks</span><span class="p">(</span><span class="n">ioTime</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">100</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ioRatio</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">ioRatio</span><span class="p">);</span><span class="w"> </span><span class="c1">// 处理完 IO 事件，再处理异步任务队列</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Throwable</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">handleLoopException</span><span class="p">(</span><span class="n">t</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isShuttingDown</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">closeAll</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">confirmShutdown</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="k">return</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Throwable</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">handleLoopException</span><span class="p">(</span><span class="n">t</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>NioEventLoop</code>每次循环的处理流程都包含事件轮询<code>select</code>、事件处理<code>processSelectedKeys</code>、任务处理<code>runAllTasks</code>几个步骤，是典型的<code>Reactor</code>线程模型的运行机制。
+而且<code>Netty</code>提供了一个参数<code>ioRatio</code>，可以调整IO事件处理和任务处理的时间比例。</p>
+<p><code>NioEventLoop</code>的事件处理机制采用的是无锁串行化的设计思路。</p>
+<ul>
+<li><code>BossEventLoopGroup</code>和<code>WorkerEventLoopGroup</code>包含一个或者多个<code>NioEventLoop</code>。<code>BossEventLoopGroup</code>负责监听客户端的<code>Accept</code>事件，当事件触发时，将事件注册至<code>WorkerEventLoopGroup</code>中的一个<code>NioEventLoop</code>上。每新建一个<code>Channel</code>， 只选择一个<code>NioEventLoop</code>与其绑定。所以说<code>Channel</code>生命周期的所有事件处理都是线程独立的，不同的<code>NioEventLoop</code>线程之间不会发生任何交集。</li>
+<li><code>NioEventLoop</code>完成数据读取后，会调用绑定的<code>ChannelPipeline</code>进行事件传播，<code>ChannelPipeline</code>也是线程安全的，数据会被传递到<code>ChannelPipeline</code>的第一个<code>ChannelHandler</code>中。数据处理完成后，将加工完成的数据再传递给下一个<code>ChannelHandler</code>，整个过程是串行化执行，不会发生线程上下文切换的问题。</li>
+</ul>
+<p><code>NioEventLoop</code>无锁串行化的设计不仅使系统吞吐量达到最大化，而且降低了用户开发业务逻辑的难度，不需要花太多精力关心线程安全问题。虽然单线程执行避免了线程切换，但是它的缺陷就是不能执行时间过长的IO操作，一旦某个IO事件发生阻塞，那么后续的所有IO事件都无法执行，甚至造成事件积压。在使用<code>Netty</code>进行程序开发时，要对<code>ChannelHandler</code>的实现逻辑有充分的风险意识。</p>
+<p><code>NioEventLoop</code>线程的可靠性至关重要，一旦<code>NioEventLoop</code>发生阻塞或者陷入空轮询，就会导致整个系统不可用。在 JDK中，<code>Epoll</code>的实现是存在漏洞的，即使<code>Selector</code>轮询的事件列表为空，<code>NIO</code>线程一样可以被唤醒，导致CPU100%占用。这就是臭名昭著的JDK <code>epoll</code>空轮询的Bug。</p>
+<p><code>Netty</code>采用了机制来检测线程是否可能陷入空轮询。在执行<code>select()</code>操作之前，记录当前时间。通过比较事件轮询的持续时间与预期的超时时间，<code>Netty</code>能够判断是否发生了空轮询。<code>Netty</code>引入了计数变量<code>selectCnt</code>，当<code>selectCnt</code>达到阈值时，会重建<code>Selector</code>对象。这种方法避免了JDK <code>epoll</code>的空轮询Bug。</p>
+<p><code>NioEventLoop</code>任务队列遵循<code>FIFO</code>规则，可以保证任务执行的公平性。NioEventLoop 处理的任务类型基本可以分为三类。</p>
+<ol>
+<li>普通任务：通过<code>NioEventLoop</code>的<code>execute()</code>方法向任务队列<code>taskQueue</code>中添加任务。例如<code>Netty</code>在写数据时会封装<code>WriteAndFlushTask</code>提交给<code>taskQueue</code>。<code>taskQueue</code>的实现类是多生产者单消费者队列<code>MpscChunkedArrayQueue</code>，在多线程并发添加任务时，可以保证线程安全。</li>
+<li>定时任务：通过调用<code>NioEventLoop</code>的<code>schedule()</code>方法向定时任务队列<code>scheduledTaskQueue</code>添加一个定时任务，用于周期性执行该任务。例如，心跳消息发送等。定时任务队列 <code>scheduledTaskQueue</code> 采用优先队列<code>PriorityQueue</code>实现。</li>
+<li>尾部队列：<code>tailTasks</code>相比于普通任务队列优先级较低，在每次执行完<code>taskQueue</code>中任务后会去获取尾部队列中任务执行。尾部任务并不常用，主要用于做一些收尾工作，例如统计事件循环的执行时间、监控信息上报等。</li>
+</ol>
+<p><code>NioEventLoop</code>处理任务的逻辑，源码实现如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">protected</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">runAllTasks</span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="n">timeoutNanos</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 1. 合并定时任务到普通任务队列</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">fetchFromScheduledTaskQueue</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 2. 从普通任务队列中取出任务</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Runnable</span><span class="w"> </span><span class="n">task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pollTask</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">task</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">afterRunningAllTasks</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 3. 计算任务处理的超时时间</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">deadline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ScheduledFutureTask</span><span class="p">.</span><span class="na">nanoTime</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">timeoutNanos</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">runTasks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">lastExecutionTime</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(;;)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 4. 安全执行任务</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">safeExecute</span><span class="p">(</span><span class="n">task</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">runTasks</span><span class="o">++</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 5. 每执行 64 个任务检查一下是否超时</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">runTasks</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">0x3F</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">lastExecutionTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ScheduledFutureTask</span><span class="p">.</span><span class="na">nanoTime</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lastExecutionTime</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">deadline</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">break</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pollTask</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">task</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">lastExecutionTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ScheduledFutureTask</span><span class="p">.</span><span class="na">nanoTime</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 6. 收尾工作</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">afterRunningAllTasks</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">lastExecutionTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lastExecutionTime</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>可以分为6个步骤：</p>
+<ol>
+<li><code>fetchFromScheduledTaskQueue</code>函数：将定时任务从<code>scheduledTaskQueue</code>中取出，聚合放入普通任务队列<code>taskQueue</code>中，只有定时任务的截止时间小于当前时间才可以被合并。</li>
+<li>从普通任务队列<code>taskQueue</code>中取出任务。</li>
+<li>计算任务执行的最大超时时间。</li>
+<li><code>safeExecute</code>函数：安全执行任务，实际直接调用<code>Runnable</code>的<code>run()</code>方法。</li>
+<li>每执行64个任务进行超时时间的检查，如果执行时间大于最大超时时间，则立即停止执行任务，避免影响下一轮的IO事件的处理。</li>
+<li>最后获取尾部队列中的任务执行。</li>
+</ol>
 <h2 id="使用netty">使用Netty</h2>
 <p><code>Netty</code>是一个高性能的网络通信框架，广泛应用于需要高并发和高吞吐量的场景。它适用于构建各种类型的网络服务，包括但不限于高性能的<code>TCP</code>服务器、实时的<code>WebSocket</code>应用、轻量级的<code>UDP</code>服务和高效的HTTP/HTTPS 服务。
 <code>Netty</code>的异步非阻塞IO模型使其特别适合处理大量并发连接和高负载情况，广泛用于金融系统、在线游戏、实时聊天、流媒体传输、分布式系统和微服务架构等领域。凭借其灵活的架构和高效的性能，<code>Netty</code>能够满足对延迟敏感的应用需求，并且支持复杂的协议和自定义业务逻辑。</p>
@@ -1102,7 +1311,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">start</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Event loop groups for handling I/O operations</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Event loop groups for handling IO operations</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">final</span><span class="w"> </span><span class="n">NioEventLoopGroup</span><span class="w"> </span><span class="n">bossGroup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">NioEventLoopGroup</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">final</span><span class="w"> </span><span class="n">NioEventLoopGroup</span><span class="w"> </span><span class="n">workerGroup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">NioEventLoopGroup</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -1282,7 +1491,167 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">data</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="netty内存池管理">Netty内存池管理</h2>
+</span></span></span></code></pre></div><h3 id="自定义协议通信">自定义协议通信</h3>
+<p>目前市面上已经有不少通用的协议，例如 HTTP、HTTPS、JSON-RPC、FTP、IMAP、Protobuf 等。通用协议兼容性好，易于维护，各种异构系统之间可以实现无缝对接。如果在满足业务场景以及性能需求的前提下，推荐采用通用协议的方案。相比通用协议，自定义协议主要有以下优点。</p>
+<ul>
+<li>极致性能：通用的通信协议考虑了很多兼容性的因素，必然在性能方面有所损失。</li>
+<li>扩展性：自定义的协议相比通用协议更好扩展，可以更好地满足自己的业务需求。</li>
+<li>安全性：通用协议是公开的，很多漏洞已经很多被黑客攻破。自定义协议更加安全，因为黑客需要先破解你的协议内容。</li>
+</ul>
+<p>一个完备的网络协议需要具备的基本要素：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">+---------------------------------------------------------------+
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| 魔数 2byte | 协议版本号 1byte | 序列化算法 1byte | 报文类型 1byte  |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">+---------------------------------------------------------------+
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| 状态 1byte |        保留字段 4byte     |      数据长度 4byte     | 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">+---------------------------------------------------------------+
+</span></span><span class="line"><span class="cl">|                   数据内容 （长度不定）                          |
+</span></span><span class="line"><span class="cl">+---------------------------------------------------------------+
+</span></span></code></pre></div><ol>
+<li>魔数：魔数是通信双方协商的一个暗号，通常采用固定的几个字节表示。魔数的作用是防止任何人随便向服务器的端口上发送数据。服务端在接收到数据时会解析出前几个固定字节的魔数，然后做正确性比对。如果和约定的魔数不匹配，则认为是非法数据，可以直接关闭连接或者采取其他措施以增强系统的安全防护。魔数的思想在压缩算法、Java Class 文件等场景中都有所体现，例如 Class 文件开头就存储了魔数 0xCAFEBABE，在加载 Class 文件时首先会验证魔数的正确性。</li>
+<li>协议版本号：随着业务需求的变化，协议可能需要对结构或字段进行改动，不同版本的协议对应的解析方法也是不同的。所以在生产级项目中强烈建议预留协议版本号这个字段。</li>
+<li>序列化算法：序列化算法字段表示数据发送方应该采用何种方法将请求的对象转化为二进制，以及如何再将二进制转化为对象，如 JSON、Hessian、Java 自带序列化等。</li>
+<li>报文类型：在不同的业务场景中，报文可能存在不同的类型。例如在 RPC 框架中有请求、响应、心跳等类型的报文，在 IM 即时通信的场景中有登陆、创建群聊、发送消息、接收消息、退出群聊等类型的报文。</li>
+<li>长度域字段：长度域字段代表请求数据的长度，接收方根据长度域字段获取一个完整的报文。</li>
+<li>请求数据：请求数据通常为序列化之后得到的二进制流，每种请求数据的内容是不一样的。</li>
+<li>状态：状态字段用于标识请求是否正常。一般由被调用方设置。例如一次 RPC 调用失败，状态字段可被服务提供方设置为异常状态。</li>
+<li>保留字段：保留字段是可选项，为了应对协议升级的可能性，可以预留若干字节的保留字段，以备不时之需。</li>
+</ol>
+<p>在<code>Netty</code>中，需要实现<code>ByteToMessageDecoder</code>和<code>MessageToByteEncoder</code>类来处理编解码操作。</p>
+<ul>
+<li>解码器<code>ByteToMessageDecoder</code>：将接收到的字节流解码为协议消息对象。</li>
+<li>编码器<code>MessageToByteEncoder</code>：将协议消息对象编码为字节流发送出去。</li>
+</ul>
+<p>在<code>Netty</code>中自定义协议步骤：</p>
+<ol>
+<li>定义协议结构的常量和数据结构。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyProtocolConstants</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">MAGIC_NUMBER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0xABCD</span><span class="p">;</span><span class="w"> </span><span class="c1">// 魔数</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">byte</span><span class="w"> </span><span class="n">PROTOCOL_VERSION</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w"> </span><span class="c1">// 协议版本号</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">byte</span><span class="w"> </span><span class="n">SERIALIZATION_TYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w"> </span><span class="c1">// 序列化算法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">byte</span><span class="w"> </span><span class="n">MESSAGE_TYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w"> </span><span class="c1">// 报文类型</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">HEADER_LENGTH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">13</span><span class="p">;</span><span class="w"> </span><span class="c1">// 消息头长度</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>定义协议数据结构。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyProtocolMessage</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">magicNumber</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">byte</span><span class="w"> </span><span class="n">version</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">byte</span><span class="w"> </span><span class="n">serializationType</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">byte</span><span class="w"> </span><span class="n">messageType</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">byte</span><span class="w"> </span><span class="n">status</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">reserved</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">dataLength</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">data</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">MyProtocolMessage</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">magicNumber</span><span class="p">,</span><span class="w"> </span><span class="kt">byte</span><span class="w"> </span><span class="n">version</span><span class="p">,</span><span class="w"> </span><span class="kt">byte</span><span class="w"> </span><span class="n">serializationType</span><span class="p">,</span><span class="w"> </span><span class="kt">byte</span><span class="w"> </span><span class="n">messageType</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                             </span><span class="kt">byte</span><span class="w"> </span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">reserved</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">dataLength</span><span class="p">,</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">magicNumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">magicNumber</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">version</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">serializationType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">serializationType</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">messageType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">messageType</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">status</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">reserved</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reserved</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">dataLength</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dataLength</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Getter methods...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>实现自定义解码器，继承<code>ByteToMessageDecoder</code>。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyProtocolDecoder</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">ByteToMessageDecoder</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">decode</span><span class="p">(</span><span class="n">ChannelHandlerContext</span><span class="w"> </span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">ByteBuf</span><span class="w"> </span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">in</span><span class="p">.</span><span class="na">readableBytes</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">MyProtocolConstants</span><span class="p">.</span><span class="na">HEADER_LENGTH</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">in</span><span class="p">.</span><span class="na">markReaderIndex</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">magicNumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">in</span><span class="p">.</span><span class="na">readInt</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">byte</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">in</span><span class="p">.</span><span class="na">readByte</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">byte</span><span class="w"> </span><span class="n">serializationType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">in</span><span class="p">.</span><span class="na">readByte</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">byte</span><span class="w"> </span><span class="n">messageType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">in</span><span class="p">.</span><span class="na">readByte</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">byte</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">in</span><span class="p">.</span><span class="na">readByte</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">reserved</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[</span><span class="n">4</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">in</span><span class="p">.</span><span class="na">readBytes</span><span class="p">(</span><span class="n">reserved</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">dataLength</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">in</span><span class="p">.</span><span class="na">readInt</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">in</span><span class="p">.</span><span class="na">readableBytes</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">dataLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">in</span><span class="p">.</span><span class="na">resetReaderIndex</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[</span><span class="n">dataLength</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">in</span><span class="p">.</span><span class="na">readBytes</span><span class="p">(</span><span class="n">data</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">MyProtocolMessage</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MyProtocolMessage</span><span class="p">(</span><span class="n">magicNumber</span><span class="p">,</span><span class="w"> </span><span class="n">version</span><span class="p">,</span><span class="w"> </span><span class="n">serializationType</span><span class="p">,</span><span class="w"> </span><span class="n">messageType</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="n">reserved</span><span class="p">,</span><span class="w"> </span><span class="n">dataLength</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">out</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">message</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>实现自定义编码器，继承<code>MessageToByteEncoder</code>。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyProtocolEncoder</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">MessageToByteEncoder</span><span class="o">&lt;</span><span class="n">MyProtocolMessage</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">encode</span><span class="p">(</span><span class="n">ChannelHandlerContext</span><span class="w"> </span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">MyProtocolMessage</span><span class="w"> </span><span class="n">msg</span><span class="p">,</span><span class="w"> </span><span class="n">ByteBuf</span><span class="w"> </span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">out</span><span class="p">.</span><span class="na">writeInt</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="na">getMagicNumber</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">out</span><span class="p">.</span><span class="na">writeByte</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="na">getVersion</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">out</span><span class="p">.</span><span class="na">writeByte</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="na">getSerializationType</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">out</span><span class="p">.</span><span class="na">writeByte</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="na">getMessageType</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">out</span><span class="p">.</span><span class="na">writeByte</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="na">getStatus</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">out</span><span class="p">.</span><span class="na">writeBytes</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="na">getReserved</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">out</span><span class="p">.</span><span class="na">writeInt</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="na">getDataLength</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">out</span><span class="p">.</span><span class="na">writeBytes</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="na">getData</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>实现消息处理器，继承<code>SimpleChannelInboundHandler</code>。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyProtocolHandler</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">SimpleChannelInboundHandler</span><span class="o">&lt;</span><span class="n">MyProtocolMessage</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">channelRead0</span><span class="p">(</span><span class="n">ChannelHandlerContext</span><span class="w"> </span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">MyProtocolMessage</span><span class="w"> </span><span class="n">msg</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 处理消息</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Received message with magic number: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">msg</span><span class="p">.</span><span class="na">getMagicNumber</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 进一步处理消息...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>在<code>ChannelInitializer</code>中配置自定义的编解码器。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyChannelInitializer</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">ChannelInitializer</span><span class="o">&lt;</span><span class="n">SocketChannel</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">initChannel</span><span class="p">(</span><span class="n">SocketChannel</span><span class="w"> </span><span class="n">ch</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ChannelPipeline</span><span class="w"> </span><span class="n">pipeline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ch</span><span class="p">.</span><span class="na">pipeline</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">pipeline</span><span class="p">.</span><span class="na">addLast</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">MyProtocolDecoder</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">pipeline</span><span class="p">.</span><span class="na">addLast</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">MyProtocolEncoder</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">pipeline</span><span class="p">.</span><span class="na">addLast</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">MyProtocolHandler</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>启动<code>Netty</code>服务器并绑定到指定端口。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyNettyServer</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">EventLoopGroup</span><span class="w"> </span><span class="n">bossGroup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">NioEventLoopGroup</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">EventLoopGroup</span><span class="w"> </span><span class="n">workerGroup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">NioEventLoopGroup</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">ServerBootstrap</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ServerBootstrap</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">b</span><span class="p">.</span><span class="na">group</span><span class="p">(</span><span class="n">bossGroup</span><span class="p">,</span><span class="w"> </span><span class="n">workerGroup</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">             </span><span class="p">.</span><span class="na">channel</span><span class="p">(</span><span class="n">NioServerSocketChannel</span><span class="p">.</span><span class="na">class</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">             </span><span class="p">.</span><span class="na">childHandler</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">MyChannelInitializer</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">ChannelFuture</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="na">bind</span><span class="p">(</span><span class="n">8080</span><span class="p">).</span><span class="na">sync</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">f</span><span class="p">.</span><span class="na">channel</span><span class="p">().</span><span class="na">closeFuture</span><span class="p">().</span><span class="na">sync</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">bossGroup</span><span class="p">.</span><span class="na">shutdownGracefully</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">workerGroup</span><span class="p">.</span><span class="na">shutdownGracefully</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+</ol>
+<h2 id="netty内存池管理">Netty内存池管理</h2>
 <p><code>PooledByteBufAllocator</code>是<code>Netty</code>提供的内存池实现。它用于分配和管理<code>ByteBuf</code>对象，减少频繁的内存分配和释放操作，提高性能。
 内存池将内存分为不同大小的块，每个大小对应一个内存池。内存池中的块被分为多个层级，包括<code>Chunk</code>、<code>Page</code>、<code>Subpage</code>。</p>
 <p><code>Chunk</code>是<code>Netty</code>向操作系统申请内存的单位，所有的内存分配操作也是基于<code>Chunk</code>完成的，<code>Chunk</code>可以理解为<code>Page</code>的集合，每个<code>Chunk</code>默认大小为<code>16M</code>。

@@ -109,7 +109,7 @@ slug: "java-netty"
 
 ![netty结构](/iblog/posts/annex/images/essays/netty结构.png)
 
-工作原理：
+工作流程：
 - `Netty`抽象出两组线程池 `BossGroup`专门负责接收客户端的连接，`WorkerGroup`专门负责网络的读写；`BossGroup`和`WorkerGroup`类型都是`NioEventLoopGroup`；
 - `NioEventLoopGroup`相当于一个事件循环组，这个组中含有多个事件循环，每一个事件循环是`NioEventLoop`，每个`NioEventLoop`都有一个`Selector`，用于监听绑定在其上的`socket`的网络通讯；
 - `NioEventLoopGroup`可指定多个`NioEventLoop`；
@@ -124,11 +124,196 @@ slug: "java-netty"
 - 每个`WorkerNioEventLoop`处理业务时，会使用`pipeline`，`pipeline`中包含了`channel`，即通过`pipeline`可以获取到对应通道，管道中维护了很多的处理器；
 
 ## Netty核心组件
+<img src="/iblog/posts/annex/images/essays/Netty核心组件.svg" alt=""/>
 
-### Netty长连接
+- `Bootstrap/ServerBootstrap`: `Bootstrap` 用于客户端的启动配置，指定服务器地址、端口等参数。`ServerBootstrap` 用于服务端配置，处理客户端连接请求。这两个组件通过 `EventLoopGroup` 配置 IO 线程池，管理网络 IO 操作的线程资源。
+- `EventLoopGroup`: 这个组件管理着多个 `EventLoop` 实例，每个 `EventLoop` 负责处理网络 IO 操作。`EventLoopGroup` 通过线程池分配线程给 `EventLoop`，使得网络事件的处理更加高效。启动工具通过 `EventLoopGroup` 配置和管理这些线程池。
+- `EventLoop`: `EventLoop` 是一个单线程的组件，处理多个 `Channel` 的网络 IO 操作。每个 `EventLoop` 负责处理自己的 `Channel` 读写任务，减少了线程切换的开销，提升了 IO 操作的效率。
+- `Channel`: `Channel` 代表一个网络连接，用于数据的发送和接收。每个 `Channel` 由一个 `EventLoop` 进行管理。`Channel` 使用 `ChannelPipeline` 处理数据流，负责实际的数据传输工作。
+- `ChannelPipeline`: `ChannelPipeline` 是 `Channel` 内的数据处理链。它包含多个 `ChannelHandler`，按顺序处理传入和传出的数据。数据流通过 `ChannelPipeline` 进行一系列处理，执行编解码、业务逻辑等操作。
+- `ChannelHandler`: `ChannelHandler` 是处理数据的组件，执行特定的逻辑，如编解码、业务处理等。它们被添加到 `ChannelPipeline` 中，并按顺序处理数据流。每个 `ChannelHandler` 处理完数据后，将结果传递给下一个 `ChannelHandler`。
+- `ByteBuf`: `ByteBuf` 是用于高效存储和处理数据的缓冲区。与传统的 Java `NIO` 缓冲区相比，它支持动态扩展和更高效的内存管理。`ByteBuf` 用于存储和操作网络传输的数据，提升了数据处理的性能。
+- `ChannelFuture`: `ChannelFuture` 表示一个异步操作的结果。它跟踪操作的状态，允许查询操作是否完成，并在操作完成后执行回调。`ChannelFuture` 提供了获取操作结果和处理异步操作的机制。
+- `ChannelPromise`: `ChannelPromise` 是 `ChannelFuture` 的一个特定形式，表示异步操作的结果。与 `ChannelFuture` 类似，它允许设置操作的完成状态或异常，并通知其他组件操作的结果，用于异步操作完成后的结果通知。
+- `ByteBufAllocator`: `ByteBufAllocator` 负责创建和管理 `ByteBuf` 实例。它提供了多种缓冲区分配方法，以满足不同性能需求。这个组件帮助高效管理 `ByteBuf` 的创建和释放，优化内存使用。
+- `FutureListener`: `FutureListener` 是一个接口，用于监听 `ChannelFuture` 的完成状态。当异步操作完成时，`FutureListener` 执行特定的回调逻辑，处理操作结果或异常，提供了处理异步操作结果的机制。
+- `Callback Handler`: `Callback Handler` 处理 `FutureListener` 的回调。当异步操作完成后，`Callback Handler` 接收回调通知，并执行相应的业务处理逻辑，确保操作结果能够被适当地处理。
 
-### 心跳机制
+### Bootstrap
+`Bootstrap`作为整个`Netty`客户端和服务端的程序入口，可以把`Netty`的核心组件像搭积木一样组装在一起。`Netty`服务端的启动过程大致分为三个步骤：
+- 配置线程池：Netty 是采用 Reactor 模型进行开发的，可以非常容易切换三种 Reactor 模式：单线程模式、多线程模式、主从多线程模式。
+  1. 单线程模式：`Reactor`单线程模型所有IO操作都由一个线程完成，所以只需要启动一个`EventLoopGroup`即可。
+      ```text
+      EventLoopGroup group = new NioEventLoopGroup(1);
+      ServerBootstrap b = new ServerBootstrap();
+      b.group(group)
+      ```
+  2. 多线程模式：在`Netty`中使用`Reactor`多线程模型与单线程模型非常相似，区别是`NioEventLoopGroup`可以不需要任何参数，它默认会启动2倍CPU核数的线程。当然你也可以自己手动设置固定的线程数。
+      ```text
+      EventLoopGroup group = new NioEventLoopGroup();
+      ServerBootstrap b = new ServerBootstrap();
+      b.group(group)
+      ```
+  3. 主从多线程模式：`Boss`是主`Reactor`，`Worker`是从`Reactor`。它们分别使用不同的`NioEventLoopGroup`，主`Reactor`负责处理`Accept`，然后把`Channel`注册到从`Reactor`上，从`Reactor`主要负责`Channel`生命周期内的所有IO事件。
+      ```text
+      EventLoopGroup bossGroup = new NioEventLoopGroup();
+      EventLoopGroup workerGroup = new NioEventLoopGroup();
+      ServerBootstrap b = new ServerBootstrap();
+      b.group(bossGroup, workerGroup)
+      ```
+- `Channel`初始化；
+  1. 设置`Channel`类型：NIO模型是`Netty`中最成熟且被广泛使用的模型。因此，推荐`Netty`服务端采用`NioServerSocketChannel`作为`Channel`的类型，客户端采用`NioSocketChannel`。
+     ```text
+     b.channel(NioServerSocketChannel.class);
+     ```
+  2. 注册`ChannelHandler`：在`Netty`中可以通过`ChannelPipeline`去注册多个`ChannelHandler`，每个`ChannelHandler`各司其职，这样就可以实现最大化的代码复用。
+     ```text
+     b.childHandler(new ChannelInitializer<SocketChannel>() {
+         @Override
+         public void initChannel(SocketChannel ch) {
+             ch.pipeline()
+                     .addLast("codec", new HttpServerCodec())
+                     .addLast("compressor", new HttpContentCompressor())
+                     .addLast("aggregator", new HttpObjectAggregator(65536)) 
+                     .addLast("handler", new HttpServerHandler());
+         }
+     })
+     ```
+     `Channel`初始化时都会绑定一个`Pipeline`，它主要用于服务编排。`Pipeline`管理了多个`ChannelHandler`。IO事件依次在`ChannelHandler`中传播，`ChannelHandler`负责业务逻辑处理。上述`HTTP`服务器示例中使用链式的方式加载了多个`ChannelHandler`，包含`HTTP`编解码处理器、`HTTPContent`压缩处理器、`HTTP`消息聚合处理器、自定义业务逻辑处理器。
+  3. 设置`Channel`参数：`Netty`提供了十分便捷的方法，用于设置`Channel`参数。关于`Channel`的参数数量非常多，如果每个参数都需要自己设置，那会非常繁琐。`Netty`提供了默认参数设置，实际场景下默认参数已经满足我们的需求，我们仅需要修改自己关系的参数即可。
+     ```text
+     b.option(ChannelOption.SO_KEEPALIVE, true);
+     ```
+     `ServerBootstrap`设置`Channel`属性有`option`和`childOption`两个方法，`option`主要负责设置`Boss`线程组，而`childOption`对应的是`Worker`线程组。
+- 端口绑定：在完成上述`Netty`的配置之后，`bind`方法会真正触发启动，`sync`方法则会阻塞，直至整个启动过程完成。
+    ```text
+    ChannelFuture f = b.bind().sync();
+    ```
 
+### EventLoop
+`EventLoop`这个概念其实并不是`Netty`独有的，它是一种事件等待和处理的程序模型，可以解决多线程资源消耗高的问题。
+例如 Node.js就采用了`EventLoop`的运行机制，不仅占用资源低，而且能够支撑了大规模的流量访问。
+
+在`Netty`中`EventLoop`是`Netty` `Reactor`线程模型的事件处理引擎。每个`EventLoop`线程都维护一个`Selector`选择器和任务队列`taskQueue`。它主要负责处理IO事件、普通任务和定时任务。
+`Netty`中推荐使用`NioEventLoop`作为实现类，`NioEventLoop`最核心的`run()`方法源码如下：
+```java
+protected void run() {
+    for (;;) {
+        try {
+            try {
+                switch (selectStrategy.calculateStrategy(selectNowSupplier, hasTasks())) {
+                case SelectStrategy.CONTINUE:
+                    continue;
+                case SelectStrategy.BUSY_WAIT:
+                case SelectStrategy.SELECT:
+                    select(wakenUp.getAndSet(false)); // 轮询 IO 事件
+                    if (wakenUp.get()) {
+                        selector.wakeup();
+                    }
+                default:
+                }
+            } catch (IOException e) {
+                rebuildSelector0();
+                handleLoopException(e);
+                continue;
+            }
+            cancelledKeys = 0;
+            needsToSelectAgain = false;
+            final int ioRatio = this.ioRatio;
+            if (ioRatio == 100) {
+                try {
+                    processSelectedKeys(); // 处理 IO 事件
+                } finally {
+                    runAllTasks(); // 处理所有任务
+                }
+            } else {
+                final long ioStartTime = System.nanoTime();
+                try {
+                    processSelectedKeys(); // 处理 IO 事件
+                } finally {
+                    final long ioTime = System.nanoTime() - ioStartTime;
+                    runAllTasks(ioTime * (100 - ioRatio) / ioRatio); // 处理完 IO 事件，再处理异步任务队列
+                }
+            }
+        } catch (Throwable t) {
+            handleLoopException(t);
+        }
+        try {
+            if (isShuttingDown()) {
+                closeAll();
+                if (confirmShutdown()) {
+                    return;
+                }
+            }
+        } catch (Throwable t) {
+            handleLoopException(t);
+        }
+    }
+}
+```
+`NioEventLoop`每次循环的处理流程都包含事件轮询`select`、事件处理`processSelectedKeys`、任务处理`runAllTasks`几个步骤，是典型的`Reactor`线程模型的运行机制。
+而且`Netty`提供了一个参数`ioRatio`，可以调整IO事件处理和任务处理的时间比例。
+
+`NioEventLoop`的事件处理机制采用的是无锁串行化的设计思路。
+- `BossEventLoopGroup`和`WorkerEventLoopGroup`包含一个或者多个`NioEventLoop`。`BossEventLoopGroup`负责监听客户端的`Accept`事件，当事件触发时，将事件注册至`WorkerEventLoopGroup`中的一个`NioEventLoop`上。每新建一个`Channel`， 只选择一个`NioEventLoop`与其绑定。所以说`Channel`生命周期的所有事件处理都是线程独立的，不同的`NioEventLoop`线程之间不会发生任何交集。
+- `NioEventLoop`完成数据读取后，会调用绑定的`ChannelPipeline`进行事件传播，`ChannelPipeline`也是线程安全的，数据会被传递到`ChannelPipeline`的第一个`ChannelHandler`中。数据处理完成后，将加工完成的数据再传递给下一个`ChannelHandler`，整个过程是串行化执行，不会发生线程上下文切换的问题。
+
+`NioEventLoop`无锁串行化的设计不仅使系统吞吐量达到最大化，而且降低了用户开发业务逻辑的难度，不需要花太多精力关心线程安全问题。虽然单线程执行避免了线程切换，但是它的缺陷就是不能执行时间过长的IO操作，一旦某个IO事件发生阻塞，那么后续的所有IO事件都无法执行，甚至造成事件积压。在使用`Netty`进行程序开发时，要对`ChannelHandler`的实现逻辑有充分的风险意识。
+
+`NioEventLoop`线程的可靠性至关重要，一旦`NioEventLoop`发生阻塞或者陷入空轮询，就会导致整个系统不可用。在 JDK中，`Epoll`的实现是存在漏洞的，即使`Selector`轮询的事件列表为空，`NIO`线程一样可以被唤醒，导致CPU100%占用。这就是臭名昭著的JDK `epoll`空轮询的Bug。
+
+`Netty`采用了机制来检测线程是否可能陷入空轮询。在执行`select()`操作之前，记录当前时间。通过比较事件轮询的持续时间与预期的超时时间，`Netty`能够判断是否发生了空轮询。`Netty`引入了计数变量`selectCnt`，当`selectCnt`达到阈值时，会重建`Selector`对象。这种方法避免了JDK `epoll`的空轮询Bug。
+
+`NioEventLoop`任务队列遵循`FIFO`规则，可以保证任务执行的公平性。NioEventLoop 处理的任务类型基本可以分为三类。
+1. 普通任务：通过`NioEventLoop`的`execute()`方法向任务队列`taskQueue`中添加任务。例如`Netty`在写数据时会封装`WriteAndFlushTask`提交给`taskQueue`。`taskQueue`的实现类是多生产者单消费者队列`MpscChunkedArrayQueue`，在多线程并发添加任务时，可以保证线程安全。
+2. 定时任务：通过调用`NioEventLoop`的`schedule()`方法向定时任务队列`scheduledTaskQueue`添加一个定时任务，用于周期性执行该任务。例如，心跳消息发送等。定时任务队列 `scheduledTaskQueue` 采用优先队列`PriorityQueue`实现。
+3. 尾部队列：`tailTasks`相比于普通任务队列优先级较低，在每次执行完`taskQueue`中任务后会去获取尾部队列中任务执行。尾部任务并不常用，主要用于做一些收尾工作，例如统计事件循环的执行时间、监控信息上报等。
+
+`NioEventLoop`处理任务的逻辑，源码实现如下：
+```java
+protected boolean runAllTasks(long timeoutNanos) {
+    // 1. 合并定时任务到普通任务队列
+    fetchFromScheduledTaskQueue();
+    // 2. 从普通任务队列中取出任务
+    Runnable task = pollTask();
+    if (task == null) {
+        afterRunningAllTasks();
+        return false;
+    }
+    // 3. 计算任务处理的超时时间
+    final long deadline = ScheduledFutureTask.nanoTime() + timeoutNanos;
+    long runTasks = 0;
+    long lastExecutionTime;
+    for (;;) {
+        // 4. 安全执行任务
+        safeExecute(task);
+        runTasks++;
+        // 5. 每执行 64 个任务检查一下是否超时
+        if ((runTasks & 0x3F) == 0) {
+            lastExecutionTime = ScheduledFutureTask.nanoTime();
+            if (lastExecutionTime >= deadline) {
+                break;
+            }
+        }
+        task = pollTask();
+        if (task == null) {
+            lastExecutionTime = ScheduledFutureTask.nanoTime();
+            break;
+        }
+    }
+    // 6. 收尾工作
+    afterRunningAllTasks();
+    this.lastExecutionTime = lastExecutionTime;
+    return true;
+}
+```
+可以分为6个步骤：
+1. `fetchFromScheduledTaskQueue`函数：将定时任务从`scheduledTaskQueue`中取出，聚合放入普通任务队列`taskQueue`中，只有定时任务的截止时间小于当前时间才可以被合并。
+2. 从普通任务队列`taskQueue`中取出任务。
+3. 计算任务执行的最大超时时间。
+4. `safeExecute`函数：安全执行任务，实际直接调用`Runnable`的`run()`方法。
+5. 每执行64个任务进行超时时间的检查，如果执行时间大于最大超时时间，则立即停止执行任务，避免影响下一轮的IO事件的处理。
+6. 最后获取尾部队列中的任务执行。
 
 ## 使用Netty
 `Netty`是一个高性能的网络通信框架，广泛应用于需要高并发和高吞吐量的场景。它适用于构建各种类型的网络服务，包括但不限于高性能的`TCP`服务器、实时的`WebSocket`应用、轻量级的`UDP`服务和高效的HTTP/HTTPS 服务。
@@ -226,7 +411,7 @@ slug: "java-netty"
         }
     
         public void start() throws Exception {
-            // Event loop groups for handling I/O operations
+            // Event loop groups for handling IO operations
             final NioEventLoopGroup bossGroup = new NioEventLoopGroup();
             final NioEventLoopGroup workerGroup = new NioEventLoopGroup();
             try {
@@ -420,6 +605,171 @@ public class TcpClient {
     }
 }
 ```
+
+### 自定义协议通信
+目前市面上已经有不少通用的协议，例如 HTTP、HTTPS、JSON-RPC、FTP、IMAP、Protobuf 等。通用协议兼容性好，易于维护，各种异构系统之间可以实现无缝对接。如果在满足业务场景以及性能需求的前提下，推荐采用通用协议的方案。相比通用协议，自定义协议主要有以下优点。
+- 极致性能：通用的通信协议考虑了很多兼容性的因素，必然在性能方面有所损失。
+- 扩展性：自定义的协议相比通用协议更好扩展，可以更好地满足自己的业务需求。
+- 安全性：通用协议是公开的，很多漏洞已经很多被黑客攻破。自定义协议更加安全，因为黑客需要先破解你的协议内容。
+
+一个完备的网络协议需要具备的基本要素：
+```text
++---------------------------------------------------------------+
+
+| 魔数 2byte | 协议版本号 1byte | 序列化算法 1byte | 报文类型 1byte  |
+
++---------------------------------------------------------------+
+
+| 状态 1byte |        保留字段 4byte     |      数据长度 4byte     | 
+
++---------------------------------------------------------------+
+|                   数据内容 （长度不定）                          |
++---------------------------------------------------------------+
+```
+1. 魔数：魔数是通信双方协商的一个暗号，通常采用固定的几个字节表示。魔数的作用是防止任何人随便向服务器的端口上发送数据。服务端在接收到数据时会解析出前几个固定字节的魔数，然后做正确性比对。如果和约定的魔数不匹配，则认为是非法数据，可以直接关闭连接或者采取其他措施以增强系统的安全防护。魔数的思想在压缩算法、Java Class 文件等场景中都有所体现，例如 Class 文件开头就存储了魔数 0xCAFEBABE，在加载 Class 文件时首先会验证魔数的正确性。
+2. 协议版本号：随着业务需求的变化，协议可能需要对结构或字段进行改动，不同版本的协议对应的解析方法也是不同的。所以在生产级项目中强烈建议预留协议版本号这个字段。
+3. 序列化算法：序列化算法字段表示数据发送方应该采用何种方法将请求的对象转化为二进制，以及如何再将二进制转化为对象，如 JSON、Hessian、Java 自带序列化等。
+4. 报文类型：在不同的业务场景中，报文可能存在不同的类型。例如在 RPC 框架中有请求、响应、心跳等类型的报文，在 IM 即时通信的场景中有登陆、创建群聊、发送消息、接收消息、退出群聊等类型的报文。
+5. 长度域字段：长度域字段代表请求数据的长度，接收方根据长度域字段获取一个完整的报文。
+6. 请求数据：请求数据通常为序列化之后得到的二进制流，每种请求数据的内容是不一样的。
+7. 状态：状态字段用于标识请求是否正常。一般由被调用方设置。例如一次 RPC 调用失败，状态字段可被服务提供方设置为异常状态。
+8. 保留字段：保留字段是可选项，为了应对协议升级的可能性，可以预留若干字节的保留字段，以备不时之需。
+
+在`Netty`中，需要实现`ByteToMessageDecoder`和`MessageToByteEncoder`类来处理编解码操作。
+- 解码器`ByteToMessageDecoder`：将接收到的字节流解码为协议消息对象。
+- 编码器`MessageToByteEncoder`：将协议消息对象编码为字节流发送出去。
+
+在`Netty`中自定义协议步骤：
+1. 定义协议结构的常量和数据结构。
+    ```java
+    public class MyProtocolConstants {
+        public static final int MAGIC_NUMBER = 0xABCD; // 魔数
+        public static final byte PROTOCOL_VERSION = 1; // 协议版本号
+        public static final byte SERIALIZATION_TYPE = 1; // 序列化算法
+        public static final byte MESSAGE_TYPE = 1; // 报文类型
+        public static final int HEADER_LENGTH = 13; // 消息头长度
+    }
+    ```
+2. 定义协议数据结构。
+    ```java
+    public class MyProtocolMessage {
+        private final int magicNumber;
+        private final byte version;
+        private final byte serializationType;
+        private final byte messageType;
+        private final byte status;
+        private final byte[] reserved;
+        private final int dataLength;
+        private final byte[] data;
+    
+        public MyProtocolMessage(int magicNumber, byte version, byte serializationType, byte messageType,
+                                 byte status, byte[] reserved, int dataLength, byte[] data) {
+            this.magicNumber = magicNumber;
+            this.version = version;
+            this.serializationType = serializationType;
+            this.messageType = messageType;
+            this.status = status;
+            this.reserved = reserved;
+            this.dataLength = dataLength;
+            this.data = data;
+        }
+    
+        // Getter methods...
+    }
+    ```
+3. 实现自定义解码器，继承`ByteToMessageDecoder`。
+    ```java
+    public class MyProtocolDecoder extends ByteToMessageDecoder {
+        @Override
+        protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+            if (in.readableBytes() < MyProtocolConstants.HEADER_LENGTH) {
+                return;
+            }
+    
+            in.markReaderIndex();
+            int magicNumber = in.readInt();
+            byte version = in.readByte();
+            byte serializationType = in.readByte();
+            byte messageType = in.readByte();
+            byte status = in.readByte();
+            byte[] reserved = new byte[4];
+            in.readBytes(reserved);
+            int dataLength = in.readInt();
+    
+            if (in.readableBytes() < dataLength) {
+                in.resetReaderIndex();
+                return;
+            }
+    
+            byte[] data = new byte[dataLength];
+            in.readBytes(data);
+    
+            MyProtocolMessage message = new MyProtocolMessage(magicNumber, version, serializationType, messageType,
+                    status, reserved, dataLength, data);
+            out.add(message);
+        }
+    }
+    ```
+4. 实现自定义编码器，继承`MessageToByteEncoder`。
+    ```java
+    public class MyProtocolEncoder extends MessageToByteEncoder<MyProtocolMessage> {
+        @Override
+        protected void encode(ChannelHandlerContext ctx, MyProtocolMessage msg, ByteBuf out) throws Exception {
+            out.writeInt(msg.getMagicNumber());
+            out.writeByte(msg.getVersion());
+            out.writeByte(msg.getSerializationType());
+            out.writeByte(msg.getMessageType());
+            out.writeByte(msg.getStatus());
+            out.writeBytes(msg.getReserved());
+            out.writeInt(msg.getDataLength());
+            out.writeBytes(msg.getData());
+        }
+    }
+    ```
+5. 实现消息处理器，继承`SimpleChannelInboundHandler`。
+    ```java
+    public class MyProtocolHandler extends SimpleChannelInboundHandler<MyProtocolMessage> {
+        @Override
+        protected void channelRead0(ChannelHandlerContext ctx, MyProtocolMessage msg) throws Exception {
+            // 处理消息
+            System.out.println("Received message with magic number: " + msg.getMagicNumber());
+            // 进一步处理消息...
+        }
+    }
+    ```
+6. 在`ChannelInitializer`中配置自定义的编解码器。
+    ```java
+    public class MyChannelInitializer extends ChannelInitializer<SocketChannel> {
+        @Override
+        protected void initChannel(SocketChannel ch) throws Exception {
+            ChannelPipeline pipeline = ch.pipeline();
+            pipeline.addLast(new MyProtocolDecoder());
+            pipeline.addLast(new MyProtocolEncoder());
+            pipeline.addLast(new MyProtocolHandler());
+        }
+    }
+    ```
+7. 启动`Netty`服务器并绑定到指定端口。
+    ```java
+    public class MyNettyServer {
+        public static void main(String[] args) throws Exception {
+            EventLoopGroup bossGroup = new NioEventLoopGroup();
+            EventLoopGroup workerGroup = new NioEventLoopGroup();
+            try {
+                ServerBootstrap b = new ServerBootstrap();
+                b.group(bossGroup, workerGroup)
+                 .channel(NioServerSocketChannel.class)
+                 .childHandler(new MyChannelInitializer());
+    
+                ChannelFuture f = b.bind(8080).sync();
+                f.channel().closeFuture().sync();
+            } finally {
+                bossGroup.shutdownGracefully();
+                workerGroup.shutdownGracefully();
+            }
+        }
+    }
+    ```
 
 ## Netty内存池管理
 `PooledByteBufAllocator`是`Netty`提供的内存池实现。它用于分配和管理`ByteBuf`对象，减少频繁的内存分配和释放操作，提高性能。
