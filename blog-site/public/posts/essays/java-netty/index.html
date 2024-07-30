@@ -488,8 +488,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#netty%e5%86%85%e5%ad%98%e7%ae%a1%e7%90%86">
-                    Netty内存管理
+                <a class="nav-link text-left" href="#netty%e5%86%85%e5%ad%98%e6%b1%a0%e7%ae%a1%e7%90%86">
+                    Netty内存池管理
                 </a>
             </li>
             
@@ -514,8 +514,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#netty%e5%af%b9%e8%b1%a1%e6%b1%a0">
-                    Netty对象池
+                <a class="nav-link text-left" href="#poolarena">
+                    PoolArena
                 </a>
             </li>
             
@@ -536,6 +536,144 @@
         
         <ul class="nav">
             
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#poolchunklist">
+                    PoolChunkList
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#poolchunk">
+                    PoolChunk
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#poolsubpage">
+                    PoolSubpage
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#poolthreadcache">
+                    PoolThreadCache
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%86%85%e5%ad%98%e5%88%86%e9%85%8d%e6%b5%81%e7%a8%8b">
+                    内存分配流程
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
         <ul class="nav">
             
         <ul class="nav">
@@ -548,8 +686,6 @@
             </li>
             
             
-        </ul>
-        
         </ul>
         
         </ul>
@@ -574,34 +710,6 @@
             </li>
             
             
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#mpsc%e6%97%a0%e9%94%81%e9%98%9f%e5%88%97">
-                    Mpsc无锁队列
-                </a>
-            </li>
-            
-            
-        </ul>
-        
         </ul>
         
         </ul>
@@ -650,8 +758,36 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#netty%e6%97%b6%e9%97%b4%e8%bd%ae">
-                    Netty时间轮
+                <a class="nav-link text-left" href="#hashedwheeltimer%e6%97%b6%e9%97%b4%e8%bd%ae">
+                    HashedWheelTimer时间轮
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#mpsc%e6%97%a0%e9%94%81%e9%98%9f%e5%88%97">
+                    Mpsc无锁队列
                 </a>
             </li>
             
@@ -1146,9 +1282,121 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">data</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="netty内存管理">Netty内存管理</h2>
-<h3 id="netty对象池">Netty对象池</h3>
-<h3 id="netty零拷贝">Netty零拷贝</h3>
+</span></span></span></code></pre></div><h2 id="netty内存池管理">Netty内存池管理</h2>
+<p><code>PooledByteBufAllocator</code>是<code>Netty</code>提供的内存池实现。它用于分配和管理<code>ByteBuf</code>对象，减少频繁的内存分配和释放操作，提高性能。
+内存池将内存分为不同大小的块，每个大小对应一个内存池。内存池中的块被分为多个层级，包括<code>Chunk</code>、<code>Page</code>、<code>Subpage</code>。</p>
+<p><code>Chunk</code>是<code>Netty</code>向操作系统申请内存的单位，所有的内存分配操作也是基于<code>Chunk</code>完成的，<code>Chunk</code>可以理解为<code>Page</code>的集合，每个<code>Chunk</code>默认大小为<code>16M</code>。
+<code>Page</code>是<code>Chunk</code>用于管理内存的单位，<code>Netty</code>中的<code>Page</code>的大小为<code>8K</code>，不要与<code>Linux</code>中的内存页<code>Page</code>混淆了。假如我们需要分配<code>64K</code>的内存，需要在<code>Chunk</code>中选取8个<code>Page</code>进行分配。</p>
+<p><code>Subpage</code>负责<code>Page</code>内的内存分配，假如我们分配的内存大小远小于<code>Page</code>，直接分配一个<code>Page</code>会造成严重的内存浪费，所以需要将<code>Page</code>划分为多个相同的子块进行分配，这里的子块就相当于<code>Subpage</code>。
+按照<code>Tiny</code>和<code>Small</code>两种内存规格，<code>SubPage</code>的大小也会分为两种情况。在<code>Tiny</code>场景下，最小的划分单位为<code>16B</code>，按<code>16B</code>依次递增，<code>16B</code>、<code>32B</code>、<code>48B</code> …… <code>496B</code>；在<code>Small</code>场景下，总共可以划分为<code>512B</code>、<code>1024B</code>、<code>2048B</code>、<code>4096B</code>四种情况。
+<code>Subpage</code>没有固定的大小，需要根据用户分配的缓冲区大小决定，例如分配<code>1K</code>的内存时，<code>Netty</code>会把一个<code>Page</code>等分为8个<code>1K</code>的<code>Subpage</code>。</p>
+<h3 id="poolarena">PoolArena</h3>
+<p><code>PoolArena</code>是<code>PooledByteBufAllocator</code>内部用于实际管理内存块的组件。
+<code>PoolArena</code>的数据结构包含两个<code>PoolSubpage</code>数组和六个<code>PoolChunkList</code>，两个<code>PoolSubpage</code>数组分别存放<code>Tiny</code>和<code>Small</code>类型的内存块，六个<code>PoolChunkList</code> 分别存储不同利用率的<code>Chunk</code>，构成一个双向循环链表。
+其中<code>PoolSubpage</code>用于分配小于<code>8K</code>的内存，<code>PoolChunkList</code>用于分配大于<code>8K</code>的内存。</p>
+<p><code>PoolSubpage</code>也是按照<code>Tiny</code>和<code>Small</code>两种内存规格，设计了<code>tinySubpagePools</code>和<code>smallSubpagePools</code>两个数组，在<code>Tiny</code>场景下，内存单位最小为<code>16B</code>，按<code>16B</code>依次递增，共32种情况，<code>Small</code>场景下共分为<code>512B</code>、<code>1024B</code>、<code>2048B</code>、<code>4096B</code>四种情况，分别对应两个数组的长度大小，每种粒度的内存单位都由一个<code>PoolSubpage</code>进行管理。
+假如我们分配<code>20B</code>大小的内存空间，也会向上取整找到<code>32B</code>的<code>PoolSubpage</code>节点进行分配。</p>
+<p><code>PoolChunkList</code>用于<code>Chunk</code>场景下的内存分配，<code>PoolArena</code>中初始化了六个<code>PoolChunkList</code>，分别为<code>qInit</code>、<code>q000</code>、<code>q025</code>、<code>q050</code>、<code>q075</code>、<code>q100</code>，它们分别代表不同的内存使用率。</p>
+<ul>
+<li><code>qInit</code>，内存使用率为<code>0 ~ 25%</code>的<code>Chunk</code>。</li>
+<li><code>q000</code>，内存使用率为<code>1 ~ 50%</code>的<code>Chunk</code>。</li>
+<li><code>q025</code>，内存使用率为<code>25% ~ 75%</code> 的<code>Chunk</code>。</li>
+<li><code>q050</code>，内存使用率为<code>50% ~ 100%</code>的<code>Chunk</code>。</li>
+<li><code>q075</code>，内存使用率为<code>75% ~ 100%</code>的<code>Chunk</code>。</li>
+<li><code>q100</code>，内存使用率为<code>100%</code> 的<code>Chunk</code>。</li>
+</ul>
+<p>六种类型的<code>PoolChunkList</code>除了<code>qInit</code>，它们之间形成了双向链表。
+<code>qInit</code>用于存储初始分配的<code>PoolChunk</code>，因为在第一次内存分配时，<code>PoolChunkList</code>中并没有可用的<code>PoolChunk</code>，所以需要新创建一个<code>PoolChunk</code> 并添加到<code>qInit</code>列表中。
+<code>qInit</code>中的<code>PoolChunk</code>即使内存被完全释放也不会被回收，避免<code>PoolChunk</code>的重复初始化工作。
+其余类型的<code>PoolChunkList</code>中的<code>PoolChunk</code>当内存被完全释放后，<code>PoolChunk</code>从链表中移除，对应分配的内存也会被回收。</p>
+<p>在使用<code>PoolChunkList</code>分配内存时，也就是分配大于<code>8K</code>的内存，其链表的访问顺序是<code>q050</code>-&gt;<code>q025</code>-&gt;<code>q000</code>-&gt;<code>qInit</code>-&gt;<code>q075</code>，遍历检查<code>PoolChunkList</code>中是否有<code>PoolChunk</code>可以用于内存分配。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">allocateNormal</span><span class="p">(</span><span class="n">PooledByteBuf</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">reqCapacity</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">normCapacity</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">q050</span><span class="p">.</span><span class="na">allocate</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="n">reqCapacity</span><span class="p">,</span><span class="w"> </span><span class="n">normCapacity</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">q025</span><span class="p">.</span><span class="na">allocate</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="n">reqCapacity</span><span class="p">,</span><span class="w"> </span><span class="n">normCapacity</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">q000</span><span class="p">.</span><span class="na">allocate</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="n">reqCapacity</span><span class="p">,</span><span class="w"> </span><span class="n">normCapacity</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">qInit</span><span class="p">.</span><span class="na">allocate</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="n">reqCapacity</span><span class="p">,</span><span class="w"> </span><span class="n">normCapacity</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">q075</span><span class="p">.</span><span class="na">allocate</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="n">reqCapacity</span><span class="p">,</span><span class="w"> </span><span class="n">normCapacity</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">PoolChunk</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">newChunk</span><span class="p">(</span><span class="n">pageSize</span><span class="p">,</span><span class="w"> </span><span class="n">maxOrder</span><span class="p">,</span><span class="w"> </span><span class="n">pageShifts</span><span class="p">,</span><span class="w"> </span><span class="n">chunkSize</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">boolean</span><span class="w"> </span><span class="n">success</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="na">allocate</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="n">reqCapacity</span><span class="p">,</span><span class="w"> </span><span class="n">normCapacity</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">assert</span><span class="w"> </span><span class="n">success</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">qInit</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">c</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>这是一个折中的选择，在频繁分配内存的场景下，如果从<code>q000</code>开始，会有大部分的<code>PoolChunk</code>面临频繁的创建和销毁，造成内存分配的性能降低。
+如果从<code>q050</code>开始，会使<code>PoolChunk</code>的使用率范围保持在中间水平，降低了<code>PoolChunk</code>被回收的概率，从而兼顾了性能。</p>
+<h3 id="poolchunklist">PoolChunkList</h3>
+<p><code>PoolChunkList</code>负责管理多个<code>PoolChunk</code>的生命周期，同一个<code>PoolChunkList</code>中存放内存使用率相近的<code>PoolChunk</code>，这些<code>PoolChunk</code>同样以双向链表的形式连接在一起。
+因为<code>PoolChunk</code>经常要从<code>PoolChunkList</code>中删除，并且需要在不同的<code>PoolChunkList</code>中移动，所以双向链表是管理<code>PoolChunk</code>时间复杂度较低的数据结构。</p>
+<p>每个<code>PoolChunkList</code>都有内存使用率的上下限，<code>minUsage</code>和<code>maxUsage</code>，当<code>PoolChunk</code>进行内存分配后，如果使用率超过<code>maxUsage</code>，那么<code>PoolChunk</code>会从当前<code>PoolChunkList</code>移除，并移动到下一个<code>PoolChunkList</code>。
+同理，<code>PoolChunk</code>中的内存发生释放后，如果使用率小于<code>minUsage</code>，那么<code>PoolChunk</code>会从当前<code>PoolChunkList</code>移除，并移动到前一个<code>PoolChunkList</code>。</p>
+<h3 id="poolchunk">PoolChunk</h3>
+<p><code>Netty</code>内存的分配和回收都是基于<code>PoolChunk</code>完成的，<code>PoolChunk</code>是真正存储内存数据的地方，每个<code>PoolChunk</code>的默认大小为<code>16M</code>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">final</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PoolChunk</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">PoolChunkMetric</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">PoolArena</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">arena</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">memory</span><span class="p">;</span><span class="w"> </span><span class="c1">// 存储的数据</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">memoryMap</span><span class="p">;</span><span class="w"> </span><span class="c1">// 满二叉树中的节点是否被分配，数组大小为 4096</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">depthMap</span><span class="p">;</span><span class="w"> </span><span class="c1">// 满二叉树中的节点高度，数组大小为 4096</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">PoolSubpage</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;[]</span><span class="w"> </span><span class="n">subpages</span><span class="p">;</span><span class="w"> </span><span class="c1">// PoolChunk 中管理的 2048 个 8K 内存块</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">freeBytes</span><span class="p">;</span><span class="w"> </span><span class="c1">// 剩余的内存大小</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">PoolChunkList</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">parent</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">PoolChunk</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">prev</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">PoolChunk</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">next</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 省略其他代码</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>PoolChunk</code>可以理解为<code>Page</code>的集合，<code>Page</code>只是一种抽象的概念，实际在<code>Netty</code>中<code>Page</code>所指的是<code>PoolChunk</code>所管理的子内存块，每个子内存块采用<code>PoolSubpage</code>表示。
+<code>Netty</code>会使用伙伴算法将<code>PoolChunk</code>分配成2048个<code>Page</code>，最终形成一颗满二叉树，二叉树中所有子节点的内存都属于其父节点管理，</p>
+<h3 id="poolsubpage">PoolSubpage</h3>
+<p>它的主要作用是管理内存池中的小内存块，在分配的内存大小小于一个<code>8K</code>时，会使用<code>PoolSubpage</code>进行管理。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">final</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PoolSubpage</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">PoolSubpageMetric</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">PoolChunk</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">chunk</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">memoryMapIdx</span><span class="p">;</span><span class="w"> </span><span class="c1">// 对应满二叉树节点的下标</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">runOffset</span><span class="p">;</span><span class="w"> </span><span class="c1">// PoolSubpage 在 PoolChunk 中 memory 的偏移量</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="o">[]</span><span class="w"> </span><span class="n">bitmap</span><span class="p">;</span><span class="w"> </span><span class="c1">// 记录每个小内存块的状态</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 与 PoolArena 中 tinySubpagePools 或 smallSubpagePools 中元素连接成双向链表</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">PoolSubpage</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">prev</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">PoolSubpage</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">next</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">elemSize</span><span class="p">;</span><span class="w"> </span><span class="c1">// 每个小内存块的大小</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">maxNumElems</span><span class="p">;</span><span class="w"> </span><span class="c1">// 最多可以存放多少小内存块：8K/elemSize</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">numAvail</span><span class="p">;</span><span class="w"> </span><span class="c1">// 可用于分配的内存块个数</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 省略其他代码</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>PoolSubpage</code>通过管理小于<code>PageSize</code>的内存块来优化内存分配。它从<code>PoolChunk</code>中预留一块连续内存区域，并将其划分为多个小块。每个<code>PoolSubpage</code>内部维护一个空闲块链表。当需要分配内存时，<code>PoolSubpage</code>会检查其内存区域中的空闲块，并从中选择一个可用的块进行分配。
+这样通过细化管理和复用小块内存，<code>PoolSubpage</code>能够高效地处理小块内存的分配请求，减少内存碎片化并提高性能。</p>
+<h3 id="poolthreadcache">PoolThreadCache</h3>
+<p><code>PoolThreadCache</code>是本地线程缓存，内存分配时，首先尝试从线程本地缓存<code>PoolThreadCache</code>中获取内存块，如果缓存中没有，才会从全局内存池中获取。
+每个线程有自己的<code>PoolThreadCache</code>，可以快速分配和回收内存块，减少对全局内存池的争用。
+<code>PoolThreadCache</code>缓存<code>Tiny</code>、<code>Small</code>、<code>Normal</code>三种类型的数据，而且根据堆内和堆外内存的类型进行了区分：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">final</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PoolThreadCache</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">PoolArena</span><span class="o">&lt;</span><span class="kt">byte</span><span class="o">[]&gt;</span><span class="w"> </span><span class="n">heapArena</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">PoolArena</span><span class="o">&lt;</span><span class="n">ByteBuffer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">directArena</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">MemoryRegionCache</span><span class="o">&lt;</span><span class="kt">byte</span><span class="o">[]&gt;[]</span><span class="w"> </span><span class="n">tinySubPageHeapCaches</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">MemoryRegionCache</span><span class="o">&lt;</span><span class="kt">byte</span><span class="o">[]&gt;[]</span><span class="w"> </span><span class="n">smallSubPageHeapCaches</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">MemoryRegionCache</span><span class="o">&lt;</span><span class="n">ByteBuffer</span><span class="o">&gt;[]</span><span class="w"> </span><span class="n">tinySubPageDirectCaches</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">MemoryRegionCache</span><span class="o">&lt;</span><span class="n">ByteBuffer</span><span class="o">&gt;[]</span><span class="w"> </span><span class="n">smallSubPageDirectCaches</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">MemoryRegionCache</span><span class="o">&lt;</span><span class="kt">byte</span><span class="o">[]&gt;[]</span><span class="w"> </span><span class="n">normalHeapCaches</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">MemoryRegionCache</span><span class="o">&lt;</span><span class="n">ByteBuffer</span><span class="o">&gt;[]</span><span class="w"> </span><span class="n">normalDirectCaches</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 省略其他代码</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>PoolThreadCache</code>中有一个重要的数据结构，<code>MemoryRegionCache</code>。<code>MemoryRegionCache</code>有三个重要的属性，分别为<code>queue</code>，<code>sizeClass</code>和<code>size</code>。
+<code>MemoryRegionCache</code>实际就是一个队列，当内存释放时，将内存块加入队列当中，下次再分配同样规格的内存时，直接从队列中取出空闲的内存块。
+<code>PoolThreadCache</code>将不同规格大小的内存都使用单独的<code>MemoryRegionCache</code>维护。</p>
+<h3 id="内存分配流程">内存分配流程</h3>
+<p><code>Netty</code>的内存分配流程首先从<code>PoolThreadCache</code>中尝试分配内存。对于小于<code>8K</code>的内存请求，<code>Netty</code>首先检查本地线程缓存。
+如果缓存中没有足够的内存块，则会向<code>PoolArena</code>请求。对于大于<code>8K</code>的内存请求，<code>Netty</code>直接向<code>PoolArena</code>请求内存，不经过本地线程缓存。<code>PoolArena</code>使用<code>PoolChunk</code>来管理较大的内存块，通过伙伴算法和二叉树结构进行内存分配。
+对于小内存请求，<code>PoolArena</code>使用<code>PoolSubpage</code>来管理，按位图记录内存块的使用情况。释放的内存块会被缓存到<code>PoolThreadCache</code>中，定期进行整理，并在线程退出时释放。</p>
+<p>具体来说：</p>
+<ol>
+<li>分配请求处理：当应用程序需要分配内存时，<code>Netty</code>首先检查是否可以从 <code>PoolThreadCache</code>中获得所需的内存块。<code>PoolThreadCache</code> 是<code>Netty</code>为每个线程维护的缓存，它用于存储和管理小块内存。
+这种缓存机制目的是提高内存分配的速度，减少线程间的竞争。</li>
+<li>线程缓存检查：如果 <code>PoolThreadCache</code> 中有足够的空闲内存块，<code>Netty</code>将直接从缓存中分配内存。这种方式比从全局内存池中分配内存要快，因为它避免了对全局内存池的访问和管理开销。线程缓存的使用可以显著减少内存分配和释放的延迟。</li>
+<li>请求<code>PoolArena</code>：当线程缓存中的内存不足以满足请求时，<code>Netty</code>将向<code>PoolArena</code>请求内存。<code>PoolArena</code> 负责管理整个内存池中的内存块，它会根据内存块的大小选择适当的管理策略。</li>
+<li><code>PoolArena</code>内存分配：<code>PoolArena</code> 处理内存分配时，会根据内存块的大小选择不同的管理策略。对于较小的内存块，<code>PoolArena</code> 使用 <code>PoolSubpage</code> 进行内存分配。<code>PoolSubpage</code> 使用位图来跟踪和管理内存块的使用状态，来减少内存碎片。
+对于较大的内存块，<code>PoolArena</code> 使用 <code>PoolChunk</code>，<code>PoolChunk</code>通过伙伴算法或其他内存管理策略来处理大块内存。<code>PoolChunk</code> 负责分配较大的内存区域，能够应对不同的内存请求。</li>
+<li>内存分配和回收：内存块从<code>PoolArena</code>的<code>PoolSubpage</code>或<code>PoolChunk</code>中分配后，会被返回给应用程序使用。释放内存时，内存块将被归还到相应的内存管理区域。根据内存块的大小和当前的缓存状态，内存块可能会被归还到线程缓存中，或者直接归还到 <code>PoolArena</code> 中进行进一步管理。</li>
+<li>线程缓存整理：为了保持线程缓存的有效性，Netty 定期对 <code>PoolThreadCache</code> 中的内存块进行整理。这一过程可以减少内存碎片，提高内存使用效率。
+当线程结束时，与该线程相关的线程缓存内存也会被释放和整理。</li>
+</ol>
+<h2 id="netty零拷贝">Netty零拷贝</h2>
 <p>零拷贝是计算机的一种技术，目的是减少数据在内存和存储设备之间的拷贝操作。这种技术优化了数据的传输过程，通过减少数据拷贝的次数来提高性能并降低资源消耗。</p>
 <p>假设我们有一个大文件，需要将其内容发送到客户端。传统的文件传输流程如下：</p>
 <ol>
@@ -1190,11 +1438,267 @@
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">ByteBuf buffer = Unpooled.directBuffer(1024); // 创建一个直接内存缓冲区
 </span></span><span class="line"><span class="cl">buffer.writeBytes(data); // 直接写入数据到内存
 </span></span></code></pre></div><h2 id="netty高性能数据结构">Netty高性能数据结构</h2>
-<h3 id="mpsc无锁队列">Mpsc无锁队列</h3>
+<p><code>Netty</code> 用高性能数据结构的主要目的是为了提高网络通信的效率和系统的整体性能。</p>
+<p>所谓的高性能数据结构是指，那些在特定场景下优化了性能和效率的数据结构，通常能够提供更快的操作速度、更低的内存消耗或更高的并发处理能力。</p>
+<table>
+<thead>
+<tr>
+<th>数据结构</th>
+<th>原因</th>
+<th>好处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FastThreadLocal</td>
+<td><code>ThreadLocal</code> 在高并发场景中性能较低且容易造成内存泄漏。</td>
+<td>更快的访问速度，优化线程本地存储；避免内存泄漏，提供更安全的内存管理。</td>
+</tr>
+<tr>
+<td>HashedWheelTimer</td>
+<td>传统定时任务调度效率低，在高负载环境中成为性能瓶颈。</td>
+<td>高效调度，时间轮算法优化任务组织；减少资源消耗，通过批量处理任务。</td>
+</tr>
+<tr>
+<td>MpscLinkedQueue</td>
+<td>传统队列实现性能瓶颈，需要无锁队列支持多个生产者。</td>
+<td>提高并发性，支持多个线程同时添加任务；高效任务处理，减少锁竞争。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="fastthreadlocal">FastThreadLocal</h3>
+<p><code>FastThreadLocal</code>是<code>Netty</code>针对高并发场景优化的线程本地存储解决方案，通过减少内存占用、锁竞争和性能开销，提供了比<code>ThreadLocal</code>更高效的线程本地存储能力。</p>
+<p>在<code>Netty</code>中，<code>FastThreadLocal</code>被广泛使用于处理网络事件和任务调度。主要包括：</p>
+<ul>
+<li><code>EventLoop</code>： <code>Netty</code>的<code>EventLoop</code>组件使用<code>FastThreadLocal</code>来存储和管理线程本地的数据，如<code>Channel</code>处理上下文、任务调度信息等。</li>
+<li>线程池管理：<code>FastThreadLocal</code>用于优化线程池中的线程本地存储，来提高任务处理的效率。</li>
+</ul>
+<p><code>FastThreadLocal</code>对比<code>ThreadLocal</code>优势主要在快速的定位数据和更高的安全性。<code>FastThreadLocal</code>的设计是为了在高性能需求场景下提供优化的性能表现。</p>
+<p>快速定位数据具体体现在，当调用<code>ThreadLocal.set()</code>添加<code>Entry</code>对象时，<code>ThreadLocal</code>是使用线性探测法解决<code>Hash</code>冲突的。
+线性探测法是一种用于解决哈希表中冲突的开放地址法。它的基本思路是在哈希表中发生冲突时，线性地探测哈希表中的下一个位置来寻找空闲的存储位置。
+当两个或更多的元素被哈希到相同的槽位时，会发生冲突。当发生冲突时，探测下一个位置。如果下一个位置也被占用，则继续探测下一个位置，直到找到一个空闲的位置。</p>
+<p>为了便于理解，我们采用一组简单的数据模拟<code>ThreadLocal.set()</code>的过程是如何解决<code>Hash</code>冲突的。</p>
+<ul>
+<li><code>threadLocalHashCode = 4</code>，<code>threadLocalHashCode &amp; 15 = 4</code>；此时数据应该放在数组下标为4的位置。下标4的位置正好没有数据，可以存放。</li>
+<li><code>threadLocalHashCode = 19</code>，<code>threadLocalHashCode &amp; 15 = 4</code>；但是下标4的位置已经有数据了，如果当前需要添加的<code>Entry</code>与下标4位置已存在的<code>Entry</code>两者的<code>key</code>相同，那么该位置<code>Entry</code>的<code>value</code>将被覆盖为新的值。我们假设<code>key</code>都是不相同的，所以此时需要向后移动一位，下标5的位置没有冲突，可以存放。</li>
+<li><code>threadLocalHashCode = 33</code>，<code>threadLocalHashCode &amp; 15 = 3</code>；下标3的位置已经有数据，向后移一位，下标4位置还是有数据，继续向后查找，发现下标6没有数据，可以存放。</li>
+</ul>
+<p><code>ThreadLocal.get()</code>的过程也是类似的，也是根据<code>threadLocalHashCode</code>的值定位到数组下标，然后判断当前位置<code>Entry</code>对象与待查询<code>Entry</code>对象的<code>key</code>是否相同，如果不同，继续向下查找。
+由此可见，<code>ThreadLocal.set()/get()</code>方法在数据密集时很容易出现<code>Hash</code>冲突，需要<code>O(n)</code>时间复杂度解决冲突问题，效率较低。</p>
+<p><code>FastThreadLocal</code>在定位数据的时候可以直接根据数组下标<code>index</code>获取，时间复杂度<code>O(1)</code>。
+此外，<code>FastThreadLocal</code>相比<code>ThreadLocal</code>数据扩容更加简单高效，<code>FastThreadLocal</code>以<code>index</code>为基准向上取整到2的次幂作为扩容后容量，然后把原数据拷贝到新数组。而<code>ThreadLocal</code>由于采用的哈希表，所以在扩容后需要再做一轮<code>rehash</code>。</p>
+<p>安全性体现在，<code>ThreadLocal</code>使用不当可能造成内存泄漏，只能等待线程销毁。在使用线程池的场景下，<code>ThreadLocal</code>只能通过主动检测的方式防止内存泄漏，从而造成了一定的开销。
+然而<code>FastThreadLocal</code>不仅提供了<code>remove()</code>主动清除对象的方法，而且在线程池场景中<code>Netty</code>还封装了<code>FastThreadLocalRunnable</code>，<code>FastThreadLocalRunnable</code>最后会执行<code>FastThreadLocal</code>.<code>removeAll()</code>将<code>Set</code>集合中所有<code>FastThreadLocal</code>对象都清理掉，</p>
+<p><code>FastThreadLocal</code>使用示例：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FastThreadLocalExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">FastThreadLocal</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">threadLocal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FastThreadLocal</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">protected</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">initialValue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;Initial Value&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 创建并启动两个线程</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">FastThreadLocalThread</span><span class="w"> </span><span class="n">thread1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FastThreadLocalThread</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">threadLocal</span><span class="p">.</span><span class="na">get</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Thread1 initial value: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">value</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">threadLocal</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&#34;Thread1 Value&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Thread1 new value: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">threadLocal</span><span class="p">.</span><span class="na">get</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">FastThreadLocalThread</span><span class="w"> </span><span class="n">thread2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FastThreadLocalThread</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">threadLocal</span><span class="p">.</span><span class="na">get</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Thread2 initial value: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">value</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">threadLocal</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&#34;Thread2 Value&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Thread2 new value: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">threadLocal</span><span class="p">.</span><span class="na">get</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">thread1</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">thread2</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">thread1</span><span class="p">.</span><span class="na">join</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">thread2</span><span class="p">.</span><span class="na">join</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">InterruptedException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="hashedwheeltimer时间轮">HashedWheelTimer时间轮</h3>
+<p>为了实现高性能的定时任务调度，<code>Netty</code>引入了时间轮算法驱动定时任务的执行。它通过将定时任务分配到轮盘上的不同槽位来避免高频率的任务调度开销，这种设计主要用于处理大量的定时任务。</p>
+<p>在<code>Netty</code>中，<code>HashedWheelTimer</code>主要用于处理任务的延迟执行，例如定时任务、超时处理等。
+<code>HashedWheelTimer</code>是一种基于时间轮算法的定时任务调度器，主要用于高效地管理和执行大量定时任务。时间轮算法将时间分割成一个个固定大小的时间片，并将任务安排到相应的时间片上，从而优化了定时任务的管理。</p>
+<p>时间轮可以理解为一种环形结构，像钟表一样被分为多个<code>slot</code>槽位。每个<code>slot</code>代表一个时间段，每个<code>slot</code>中可以存放多个任务，使用的是链表结构保存该时间段到期的所有任务。
+时间轮通过一个时针随着时间一个个<code>slot</code>转动，并执行<code>slot</code>中的所有到期任务。</p>
+<p>时间轮有点类似<code>HashMap</code>，如果多个任务如果对应同一个<code>slot</code>，处理冲突的方法采用的是拉链法。在任务数量比较多的场景下，适当增加时间轮的<code>slot</code>数量，可以减少时针转动时遍历的任务个数。
+时间轮定时器最大的优势就是，任务的新增和取消都是<code>O(1)</code>时间复杂度，而且只需要一个线程就可以驱动时间轮进行工作。</p>
+<p>时间轮是以时间作为刻度组成的一个环形队列，所以叫做时间轮。这个环形队列采用数组来实现<code>HashedWheelBucket[]</code>，数组的每个元素称为槽，每个槽可以存放一个定时任务列表，叫<code>HashedWheelBucket</code>，它是一个双向链表，链表的每个节点表示一个定时任务项（<code>HashedWheelTimeout</code>），其中封装了真正的定时任务<code>TimerTask</code>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="nf">HashedWheelTimer</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ThreadFactory</span><span class="w"> </span><span class="n">threadFactory</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">tickDuration</span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">TimeUnit</span><span class="w"> </span><span class="n">unit</span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">ticksPerWheel</span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">boolean</span><span class="w"> </span><span class="n">leakDetection</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">maxPendingTimeouts</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 省略其他代码</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">wheel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">createWheel</span><span class="p">(</span><span class="n">ticksPerWheel</span><span class="p">);</span><span class="w"> </span><span class="c1">// 创建时间轮的环形数组结构</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">mask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wheel</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w"> </span><span class="c1">// 用于快速取模的掩码</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">duration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">unit</span><span class="p">.</span><span class="na">toNanos</span><span class="p">(</span><span class="n">tickDuration</span><span class="p">);</span><span class="w"> </span><span class="c1">// 转换成纳秒处理</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 省略其他代码</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">workerThread</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">threadFactory</span><span class="p">.</span><span class="na">newThread</span><span class="p">(</span><span class="n">worker</span><span class="p">);</span><span class="w"> </span><span class="c1">// 创建工作线程</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">leak</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leakDetection</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="n">workerThread</span><span class="p">.</span><span class="na">isDaemon</span><span class="p">()</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">leakDetector</span><span class="p">.</span><span class="na">track</span><span class="p">(</span><span class="k">this</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w"> </span><span class="c1">// 是否开启内存泄漏检测</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">maxPendingTimeouts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">maxPendingTimeouts</span><span class="p">;</span><span class="w"> </span><span class="c1">// 最大允许等待任务数，HashedWheelTimer 中任务超出该阈值时会抛出异常</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 如果 HashedWheelTimer 的实例数超过 64，会打印错误日志</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">INSTANCE_COUNTER</span><span class="p">.</span><span class="na">incrementAndGet</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">INSTANCE_COUNT_LIMIT</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">WARNED_TOO_MANY_INSTANCES</span><span class="p">.</span><span class="na">compareAndSet</span><span class="p">(</span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">reportTooManyInstances</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>HashedWheelTimer</code>的核心组件：</p>
+<ul>
+<li><code>HashedWheelTimeout</code>，任务的封装类，包含任务的到期时间、需要经历的圈数<code>remainingRounds</code>等属性。</li>
+<li><code>HashedWheelBucket</code>，相当于时间轮的每个<code>slot</code>，内部采用双向链表保存了当前需要执行的<code>HashedWheelTimeout</code>列表。</li>
+<li><code>Worker</code>，<code>HashedWheelTimer</code>的核心工作引擎，负责处理定时任务。</li>
+</ul>
+<p><code>HashedWheelTimer</code>的工作流程：</p>
+<ul>
+<li>新增任务：通过当前时间和任务的延迟时间计算出任务的到期时间。根据任务的到期时间，计算出任务应放置在时间轮的哪个槽位。这个计算基于当前时间与到期时间的差值，经过一定的模运算。
+将任务封装成<code>HashedWheelTimeout</code>对象，并插入到对应的<code>HashedWheelBucket</code>中。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="n">Timeout</span><span class="w"> </span><span class="nf">newTimeout</span><span class="p">(</span><span class="n">TimerTask</span><span class="w"> </span><span class="n">task</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">delay</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="w"> </span><span class="n">unit</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 计算任务的到期时间</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">deadline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">nanoTime</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">unit</span><span class="p">.</span><span class="na">toNanos</span><span class="p">(</span><span class="n">delay</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 计算任务应插入的槽位</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">tick</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="p">((</span><span class="n">deadline</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">tickDurationNanos</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">mask</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 创建 HashedWheelTimeout 对象</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">HashedWheelTimeout</span><span class="w"> </span><span class="n">timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashedWheelTimeout</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">task</span><span class="p">,</span><span class="w"> </span><span class="n">deadline</span><span class="p">,</span><span class="w"> </span><span class="n">tick</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 将任务添加到相应的 HashedWheelBucket 中</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">wheel</span><span class="o">[</span><span class="n">tick</span><span class="o">]</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">timeout</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">timeout</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>执行任务：<code>HashedWheelTimer</code> 使用 <code>Worker</code> 线程来周期性地推进时间轮。<code>Worker</code>线程每隔一个刻度时间推进时间轮一个槽位。每次推进时，它检查当前槽位中的所有任务。
+对于到期的任务，<code>Worker</code>线程将其从槽位中移除并执行。任务执行后，<code>HashedWheelTimeout</code> 对象会被标记为已完成，执行相关的回调方法。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Worker</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Runnable</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">workerState</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">WORKER_STATE_STARTED</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="n">tickDuration</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">advanceClock</span><span class="p">();</span><span class="w"> </span><span class="c1">// 推进时间轮</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">processTimeouts</span><span class="p">();</span><span class="w"> </span><span class="c1">// 执行到期任务</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">InterruptedException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="c1">// 处理异常</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">advanceClock</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 更新当前时间轮的槽位</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processTimeouts</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 遍历当前槽位，执行到期任务</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>取消任务：如果需要取消一个任务，可以调用<code>Timeout</code>对象的<code>cancel</code>方法。取消任务会从槽位中移除相应的<code>HashedWheelTimeout</code>对象，确保它不会被执行。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">cancel</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">boolean</span><span class="w"> </span><span class="n">removed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bucket</span><span class="p">.</span><span class="na">remove</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w"> </span><span class="c1">// 从槽位中移除</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">removed</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 执行取消回调等操作</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">removed</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li>停止定时器：当需要停止<code>HashedWheelTimer</code>时，<code>stop</code>方法会被调用。使用<code>CAS</code>操作将<code>Worker</code>线程的状态更新为<code>SHUTDOWN</code>，确保不会再有新的任务被添加。
+中断<code>Worker</code>线程并等待其停止。处理线程中断异常，确保线程被完全停止。关闭内存泄漏检测器并减少实例计数，返回所有未处理的任务。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Timeout</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">stop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 如果当前线程是 workerThread，则抛出异常</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">workerThread</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalStateException</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">HashedWheelTimer</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getSimpleName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="s">&#34;.stop() cannot be called from &#34;</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">TimerTask</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getSimpleName</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 尝试通过 CAS 操作将工作线程的状态更新为 SHUTDOWN</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">WORKER_STATE_UPDATER</span><span class="p">.</span><span class="na">compareAndSet</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">WORKER_STATE_STARTED</span><span class="p">,</span><span class="w"> </span><span class="n">WORKER_STATE_SHUTDOWN</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">WORKER_STATE_UPDATER</span><span class="p">.</span><span class="na">getAndSet</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">WORKER_STATE_SHUTDOWN</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">WORKER_STATE_SHUTDOWN</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">INSTANCE_COUNTER</span><span class="p">.</span><span class="na">decrementAndGet</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">leak</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="kt">boolean</span><span class="w"> </span><span class="n">closed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leak</span><span class="p">.</span><span class="na">close</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">assert</span><span class="w"> </span><span class="n">closed</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">Collections</span><span class="p">.</span><span class="na">emptySet</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">boolean</span><span class="w"> </span><span class="n">interrupted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 中断 workerThread 并等待其停止</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">workerThread</span><span class="p">.</span><span class="na">isAlive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">workerThread</span><span class="p">.</span><span class="na">interrupt</span><span class="p">();</span><span class="w"> </span><span class="c1">// 中断工作线程</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">workerThread</span><span class="p">.</span><span class="na">join</span><span class="p">(</span><span class="n">100</span><span class="p">);</span><span class="w"> </span><span class="c1">// 等待工作线程停止</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">InterruptedException</span><span class="w"> </span><span class="n">ignored</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">interrupted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">interrupted</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">interrupt</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">INSTANCE_COUNTER</span><span class="p">.</span><span class="na">decrementAndGet</span><span class="p">();</span><span class="w"> </span><span class="c1">// 减少实例计数</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">leak</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kt">boolean</span><span class="w"> </span><span class="n">closed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leak</span><span class="p">.</span><span class="na">close</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="n">closed</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">worker</span><span class="p">.</span><span class="na">unprocessedTimeouts</span><span class="p">();</span><span class="w"> </span><span class="c1">// 返回未处理的任务</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>以下是<code>HashedWheelTimer</code>使用示例，展示了如何创建定时器、添加定时任务、执行任务以及停止定时器：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HashedWheelTimerExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 创建 HashedWheelTimer 实例，刻度为1秒，时间轮槽的数量为512</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">HashedWheelTimer</span><span class="w"> </span><span class="n">timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashedWheelTimer</span><span class="p">(</span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">,</span><span class="w"> </span><span class="n">512</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 定义一个定时任务</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">TimerTask</span><span class="w"> </span><span class="n">task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TimerTask</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="n">Timeout</span><span class="w"> </span><span class="n">timeout</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;定时任务执行时间: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 添加定时任务到时间轮，设置任务延迟5秒执行</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">timer</span><span class="p">.</span><span class="na">newTimeout</span><span class="p">(</span><span class="n">task</span><span class="p">,</span><span class="w"> </span><span class="n">5</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 等待10秒，让定时任务有机会执行</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="n">10000</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">InterruptedException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 停止时间轮定时器，并返回未处理的定时任务数量</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Timeout</span><span class="o">&gt;</span><span class="w"> </span><span class="n">unprocessedTimeouts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">timer</span><span class="p">.</span><span class="na">stop</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;未处理的定时任务数量: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">unprocessedTimeouts</span><span class="p">.</span><span class="na">size</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="mpsc无锁队列">Mpsc无锁队列</h3>
 <p><code>Mpsc</code>的全称是<code>Multi Producer Single Consumer</code>，多生产者单消费者。<code>Mpsc Queue</code>可以保证多个生产者同时访问队列是线程安全的，而且同一时刻只允许一个消费者从队列中读取数据。
 <code>Netty Reactor</code>线程中任务队列必须满足多个生产者可以同时提交任务，所以<code>Mpsc Queue</code>非常适合<code>Netty Reactor</code>线程模型。</p>
-<p>在<code>Netty</code>中，<code>EventLoopGroup</code> 是一个核心组件，负责管理和调度处理网络事件的线程。<code>EventLoopGroup</code> 实现中使用了无锁队列来维护待处理的任务和事件。具体来说是<code>SingleThreadEventLoop</code>和<code>NioEventLoop</code>这两个类使用无锁队列来存储任务和事件。
-这些队列是<code>MPSC</code>类型的无锁队列，允许多个线程同时提交任务，而由单个事件循环线程处理这些任务。无锁队列的使用有效地提高了并发性能，减少了锁竞争的开销，使得事件处理更加高效。</p>
+<p>在<code>Netty</code>中，<code>EventLoopGroup</code>负责管理和调度处理网络事件的线程。<code>EventLoopGroup</code>的实现使用了无锁队列来维护待处理的任务和事件。具体来说是<code>SingleThreadEventLoop</code>和<code>NioEventLoop</code>这两个类使用无锁队列来存储任务和事件。
+这些队列是<code>Mpsc</code>类型的无锁队列，允许多个线程同时提交任务，而由单个事件循环线程处理这些任务。无锁队列的使用有效地提高了并发性能，减少了锁竞争的开销，使得事件处理更加高效。</p>
 <p>在传统的锁机制下，当多个线程尝试同时访问共享数据结构时，会产生竞争，从而导致性能下降。使用无锁队列可以避免使用锁，减少线程间的竞争和上下文切换，提高并发性能。
 它的核心在于利用原子操作来保证线程安全。原子操作是指在执行过程中不会被其他线程打断的操作，保证数据的一致性。
 通常实现是使用链表结构，其中每个节点包含数据和指向下一个节点的引用。队列的头节点和尾节点通过原子操作来维护，插入和删除操作通过调整节点的链接来完成。</p>
@@ -1231,9 +1735,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h3 id="fastthreadlocal">FastThreadLocal</h3>
-<h3 id="netty时间轮">Netty时间轮</h3>
-</div>
+</span></span></span></code></pre></div></div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">
                             
