@@ -1054,7 +1054,7 @@
 <h3 id="bootstrap">Bootstrap</h3>
 <p><code>Bootstrap</code>作为整个<code>Netty</code>客户端和服务端的程序入口，可以把<code>Netty</code>的核心组件像搭积木一样组装在一起。<code>Netty</code>服务端的启动过程大致分为三个步骤：</p>
 <ul>
-<li>配置线程池：Netty 是采用 Reactor 模型进行开发的，可以非常容易切换三种 Reactor 模式：单线程模式、多线程模式、主从多线程模式。
+<li>配置线程池：<code>Netty</code> 是采用 <code>Reactor</code> 模型进行开发的，可以非常容易切换三种 <code>Reactor</code> 模式：单线程模式、多线程模式、主从多线程模式。
 <ol>
 <li>单线程模式：<code>Reactor</code>单线程模型所有IO操作都由一个线程完成，所以只需要启动一个<code>EventLoopGroup</code>即可。
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">EventLoopGroup group = new NioEventLoopGroup(1);
@@ -1713,7 +1713,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 省略其他代码</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p><code>PoolChunk</code>可以理解为<code>Page</code>的集合，<code>Page</code>只是一种抽象的概念，实际在<code>Netty</code>中<code>Page</code>所指的是<code>PoolChunk</code>所管理的子内存块，每个子内存块采用<code>PoolSubpage</code>表示。
-<code>Netty</code>会使用伙伴算法将<code>PoolChunk</code>分配成2048个<code>Page</code>，最终形成一颗满二叉树，二叉树中所有子节点的内存都属于其父节点管理，</p>
+<code>Netty</code>会使用伙伴算法将<code>PoolChunk</code>分配成2048个<code>Page</code>，最终形成一颗满二叉树，二叉树中所有子节点的内存都属于其父节点管理。</p>
 <h3 id="poolsubpage">PoolSubpage</h3>
 <p>它的主要作用是管理内存池中的小内存块，在分配的内存大小小于一个<code>8K</code>时，会使用<code>PoolSubpage</code>进行管理。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">final</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PoolSubpage</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">PoolSubpageMetric</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -1857,7 +1857,7 @@
 <p><code>FastThreadLocal</code>在定位数据的时候可以直接根据数组下标<code>index</code>获取，时间复杂度<code>O(1)</code>。
 此外，<code>FastThreadLocal</code>相比<code>ThreadLocal</code>数据扩容更加简单高效，<code>FastThreadLocal</code>以<code>index</code>为基准向上取整到2的次幂作为扩容后容量，然后把原数据拷贝到新数组。而<code>ThreadLocal</code>由于采用的哈希表，所以在扩容后需要再做一轮<code>rehash</code>。</p>
 <p>安全性体现在，<code>ThreadLocal</code>使用不当可能造成内存泄漏，只能等待线程销毁。在使用线程池的场景下，<code>ThreadLocal</code>只能通过主动检测的方式防止内存泄漏，从而造成了一定的开销。
-然而<code>FastThreadLocal</code>不仅提供了<code>remove()</code>主动清除对象的方法，而且在线程池场景中<code>Netty</code>还封装了<code>FastThreadLocalRunnable</code>，<code>FastThreadLocalRunnable</code>最后会执行<code>FastThreadLocal</code>.<code>removeAll()</code>将<code>Set</code>集合中所有<code>FastThreadLocal</code>对象都清理掉，</p>
+然而<code>FastThreadLocal</code>不仅提供了<code>remove()</code>主动清除对象的方法，而且在线程池场景中<code>Netty</code>还封装了<code>FastThreadLocalRunnable</code>，<code>FastThreadLocalRunnable</code>最后会执行<code>FastThreadLocal</code>.<code>removeAll()</code>将<code>Set</code>集合中所有<code>FastThreadLocal</code>对象都清理掉。</p>
 <p><code>FastThreadLocal</code>使用示例：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FastThreadLocalExample</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">

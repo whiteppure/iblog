@@ -141,7 +141,7 @@ slug: "java-netty"
 
 ### Bootstrap
 `Bootstrap`作为整个`Netty`客户端和服务端的程序入口，可以把`Netty`的核心组件像搭积木一样组装在一起。`Netty`服务端的启动过程大致分为三个步骤：
-- 配置线程池：Netty 是采用 Reactor 模型进行开发的，可以非常容易切换三种 Reactor 模式：单线程模式、多线程模式、主从多线程模式。
+- 配置线程池：`Netty` 是采用 `Reactor` 模型进行开发的，可以非常容易切换三种 `Reactor` 模式：单线程模式、多线程模式、主从多线程模式。
   1. 单线程模式：`Reactor`单线程模型所有IO操作都由一个线程完成，所以只需要启动一个`EventLoopGroup`即可。
       ```text
       EventLoopGroup group = new NioEventLoopGroup(1);
@@ -845,7 +845,7 @@ final class PoolChunk<T> implements PoolChunkMetric {
 }
 ```
 `PoolChunk`可以理解为`Page`的集合，`Page`只是一种抽象的概念，实际在`Netty`中`Page`所指的是`PoolChunk`所管理的子内存块，每个子内存块采用`PoolSubpage`表示。
-`Netty`会使用伙伴算法将`PoolChunk`分配成2048个`Page`，最终形成一颗满二叉树，二叉树中所有子节点的内存都属于其父节点管理，
+`Netty`会使用伙伴算法将`PoolChunk`分配成2048个`Page`，最终形成一颗满二叉树，二叉树中所有子节点的内存都属于其父节点管理。
 
 ### PoolSubpage
 它的主要作用是管理内存池中的小内存块，在分配的内存大小小于一个`8K`时，会使用`PoolSubpage`进行管理。
@@ -987,7 +987,7 @@ buffer.writeBytes(data); // 直接写入数据到内存
 此外，`FastThreadLocal`相比`ThreadLocal`数据扩容更加简单高效，`FastThreadLocal`以`index`为基准向上取整到2的次幂作为扩容后容量，然后把原数据拷贝到新数组。而`ThreadLocal`由于采用的哈希表，所以在扩容后需要再做一轮`rehash`。
 
 安全性体现在，`ThreadLocal`使用不当可能造成内存泄漏，只能等待线程销毁。在使用线程池的场景下，`ThreadLocal`只能通过主动检测的方式防止内存泄漏，从而造成了一定的开销。
-然而`FastThreadLocal`不仅提供了`remove()`主动清除对象的方法，而且在线程池场景中`Netty`还封装了`FastThreadLocalRunnable`，`FastThreadLocalRunnable`最后会执行`FastThreadLocal`.`removeAll()`将`Set`集合中所有`FastThreadLocal`对象都清理掉，
+然而`FastThreadLocal`不仅提供了`remove()`主动清除对象的方法，而且在线程池场景中`Netty`还封装了`FastThreadLocalRunnable`，`FastThreadLocalRunnable`最后会执行`FastThreadLocal`.`removeAll()`将`Set`集合中所有`FastThreadLocal`对象都清理掉。
 
 `FastThreadLocal`使用示例：
 ```java
