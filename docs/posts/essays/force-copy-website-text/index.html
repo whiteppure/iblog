@@ -121,7 +121,7 @@
             
             <li class="nav-item">
                 <a class="nav-link text-left" href="#%e5%88%a9%e7%94%a8js%e8%84%9a%e6%9c%ac">
-                    利用js脚本
+                    利用JS脚本
                 </a>
             </li>
             
@@ -145,31 +145,7 @@
             
             <li class="nav-item">
                 <a class="nav-link text-left" href="#%e7%a6%81%e7%94%a8js%e6%89%a7%e8%a1%8c">
-                    禁用js执行
-                </a>
-            </li>
-            
-            
-        </ul>
-        
-        </ul>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <ul class="nav">
-            
-        <ul class="nav">
-            
-            
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%bc%80%e5%8f%91%e8%80%85%e5%b7%a5%e5%85%b7%e4%b8%8d%e8%83%bd%e6%89%93%e5%bc%80">
-                    开发者工具不能打开
+                    禁用JS执行
                 </a>
             </li>
             
@@ -286,25 +262,34 @@
                         
                     </div>
                     <div class="post_content markdown"><p>平时浏览网页和查找资料时，总会需要复制一些文字内容，用来引用、收藏、摘抄啊什么的，但是偶尔会遇到一些网站会禁止复制文字，一般都是让你开会员或者注册登录。
-针这种情况，可以利用一些小技巧进行复制。</p>
+针这种情况，可以利用一些技巧进行复制。</p>
 <h2 id="拖拽复制">拖拽复制</h2>
-<p>一种简单直接的方法，不用进行任何其他操作，直接选中文字，然后将文字拖动到文档或者社交软件对话窗口，直接就能自动粘贴你选中的文字，简单排版就可以使用了。</p>
+<p>一种简单直接的方法，不用进行任何其他操作，从浏览器上直接选中文字，然后将文字拖动到文档或者社交软件对话窗口，直接就能自动粘贴你选中的文字，简单排版就可以使用了。</p>
 <h2 id="利用开发者工具">利用开发者工具</h2>
-<p>在电脑上打开浏览器，找到具体网站，按下F12，打开开发者工具，直接复制对应文字即可。或鼠标右键点击查看源代码，然后复制对应文字。</p>
-<p>当在一些网站搜集资料的时候，按右键复制却出现弹窗，无法复制粘贴，必须关注公众号，或者是付费才能复制，这时候也能利用开发这工具进行规避，找到对应的html代码去掉即可。</p>
-<h2 id="利用js脚本">利用js脚本</h2>
-<p>在电脑上打开浏览器，找到具体网站，按下F12，打开开发者工具，然后在控制台输入以下代码，回车即可。</p>
+<p>在电脑上打开浏览器，找到具体网站，按下F12或右键选择检查，打开开发者工具，直接复制对应文字即可。或者鼠标右键点击查看源代码，然后复制对应文字。</p>
+<p>当在一些网站搜集资料的时候，按右键复制却出现弹窗，无法复制粘贴，必须关注公众号，或者是付费才能复制，这时候也能利用开发这工具进行规避，找到对应的<code>html</code>代码去掉即可。</p>
+<p>多数情况会使用开发者工具或者禁用JS脚本，来进行规避不能复制的问题，但有些时候开发者工具打不开。比如一打开就出现<code>debugger</code>，放行会跳空页面，百度的文心一言就是这样。
+但是不要担心，用户拥有JS代码最高控制权，所以就算百度自己有浏览器也没办法阻止用户调试注入代码。</p>
+<p>拿文心一言举例，解决这个问题可以不用代码注入。解决思路为，先设置禁用断点在进入对应网站。
+具体操作步骤，在其它页面打开开发者工具，选择“Sources”，点亮禁用断点，然后在地址栏输入 <code>https://yiyan.baidu.com/</code> 访问文心一言，就能正常使用开发者工具。</p>
+<h2 id="利用js脚本">利用JS脚本</h2>
+<p>理论上用打开开发者工具的方式能复制所有的文本，当然这种复制代码或者文字时，可能会因为样式问题，复制的不完整，导致一段一段的很麻烦，为了弥补这种方式带来的问题，可以利用JS脚本进行复制。</p>
+<p>这种方式是通过篡改当前网页的JS脚本从而达到可以复制的目的。具体操作步骤，在电脑上打开浏览器，找到具体网站，按下F12，打开开发者工具，然后在控制台输入以下代码，回车即可。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="nx">javascript</span><span class="o">:!</span><span class="kd">function</span> <span class="nx">e</span><span class="p">(</span><span class="nx">t</span><span class="p">){</span><span class="kd">function</span> <span class="nx">n</span><span class="p">(){}</span><span class="kd">function</span> <span class="nx">o</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span><span class="nx">e</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">e</span><span class="p">)}</span><span class="kd">function</span> <span class="nx">r</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span><span class="k">return</span><span class="p">[].</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="nx">e</span><span class="p">))}</span><span class="kd">function</span> <span class="nx">c</span><span class="p">(</span><span class="nx">t</span><span class="p">){</span><span class="kd">function</span> <span class="nx">n</span><span class="p">(){</span><span class="nx">s</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">o</span><span class="p">)</span><span class="k">try</span><span class="p">{</span><span class="kd">var</span> <span class="nx">n</span><span class="o">=</span><span class="nx">t</span><span class="p">.</span><span class="nx">contentDocument</span><span class="p">;</span><span class="nx">n</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">.</span><span class="nx">length</span><span class="o">&amp;&amp;</span><span class="p">(</span><span class="nx">o</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="nx">e</span><span class="p">(</span><span class="nx">n</span><span class="p">))}</span><span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span><span class="nx">o</span><span class="o">=</span><span class="mi">0</span><span class="p">}},</span><span class="mi">100</span><span class="p">)}</span><span class="nx">a</span><span class="p">[</span><span class="nx">l</span><span class="p">](</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span><span class="nx">t</span><span class="p">[</span><span class="s1">&#39;on&#39;</span><span class="o">+</span><span class="nx">e</span><span class="p">]</span><span class="o">=</span><span class="kc">null</span><span class="p">});</span><span class="kd">var</span> <span class="nx">o</span><span class="p">;</span><span class="nx">n</span><span class="p">(),</span><span class="nx">t</span><span class="p">.</span><span class="nx">οnlοad</span><span class="o">=</span><span class="nx">n</span><span class="p">}</span><span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="s1">&#39;parentNode&#39;</span><span class="p">,</span><span class="nx">l</span><span class="o">=</span><span class="s1">&#39;forEach&#39;</span><span class="p">,</span><span class="nx">a</span><span class="o">=</span><span class="s1">&#39;contextmenu dragstart selectstart select copy beforecopy mouseup mousedown&#39;</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">),</span><span class="nx">u</span><span class="o">=</span><span class="nx">setTimeout</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span><span class="nx">u</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span><span class="nx">u</span><span class="o">--</span><span class="p">)</span><span class="nx">clearTimeout</span><span class="p">(</span><span class="nx">u</span><span class="p">);</span><span class="k">for</span><span class="p">(</span><span class="nx">u</span><span class="o">=</span><span class="nx">setInterval</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span><span class="mf">1e8</span><span class="p">);</span><span class="nx">u</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span><span class="nx">u</span><span class="o">--</span><span class="p">)</span><span class="nx">clearInterval</span><span class="p">(</span><span class="nx">u</span><span class="p">);</span><span class="kd">var</span> <span class="nx">s</span><span class="o">=</span><span class="nx">setTimeout</span><span class="p">;</span><span class="nx">setTimeout</span><span class="o">=</span><span class="nx">setInterval</span><span class="o">=</span><span class="nx">n</span><span class="p">,</span><span class="nx">r</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">)[</span><span class="nx">l</span><span class="p">](</span><span class="nx">o</span><span class="p">);</span><span class="kd">var</span> <span class="nx">m</span><span class="o">=</span><span class="p">[];</span><span class="nx">r</span><span class="p">(</span><span class="s1">&#39;iframe,frame&#39;</span><span class="p">)[</span><span class="nx">l</span><span class="p">](</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span><span class="nx">m</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">e</span><span class="p">),</span><span class="nx">e</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">replaceChild</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">),</span><span class="nx">e</span><span class="p">)});</span><span class="kd">var</span> <span class="nx">f</span><span class="o">=</span><span class="nx">t</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">innerHTML</span><span class="p">;</span><span class="nx">t</span><span class="p">.</span><span class="nx">open</span><span class="p">(),</span><span class="nx">t</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s1">&#39;&lt;!DOCTYPE html&gt;&#39;</span><span class="p">),</span><span class="nx">t</span><span class="p">.</span><span class="nx">close</span><span class="p">(),</span><span class="nx">t</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">innerHTML</span><span class="o">=</span><span class="nx">f</span><span class="p">,</span><span class="nx">r</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">)[</span><span class="nx">l</span><span class="p">](</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span><span class="nx">e</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">replaceChild</span><span class="p">(</span><span class="nx">m</span><span class="p">.</span><span class="nx">shift</span><span class="p">(),</span><span class="nx">e</span><span class="p">)}),</span><span class="nx">r</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">)[</span><span class="nx">l</span><span class="p">](</span><span class="nx">c</span><span class="p">),</span><span class="nx">c</span><span class="p">(</span><span class="nx">t</span><span class="p">),</span><span class="nx">a</span><span class="p">[</span><span class="nx">l</span><span class="p">](</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span><span class="nx">t</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span><span class="nx">e</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">()},</span><span class="o">!</span><span class="mi">0</span><span class="p">)});</span><span class="kd">var</span> <span class="nx">p</span><span class="o">=</span><span class="nx">t</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;style&#39;</span><span class="p">);</span><span class="nx">p</span><span class="p">.</span><span class="nx">innerHTML</span><span class="o">=</span><span class="s1">&#39;*{-webkit-user-select:text!important;-moz-user-select:text!important;user-select:text!important;}&#39;</span><span class="p">,</span><span class="nx">t</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">p</span><span class="p">)}(</span><span class="nb">document</span><span class="p">);</span>
-</span></span></code></pre></div><h2 id="禁用js执行">禁用js执行</h2>
-<p>有两种方法可以禁用网站的js：</p>
+</span></span></code></pre></div><p>除了自己向控制台复制脚本，还可以通过油猴插件，更具象的管理网站上的脚本。原理跟是一样的，但是有一个控制管理的界面会更省心，还可以从油猴脚本商店搜索需要的脚本。
+你需要安装油猴浏览器插件，然后再从插件中搜索需要的脚本。</p>
+<ul>
+<li>油猴官网：<a href="https://www.tampermonkey.net/index.php">https://www.tampermonkey.net/index.php</a></li>
+</ul>
+<h2 id="禁用js执行">禁用JS执行</h2>
+<p>除了篡改JS脚本，还可以通过禁用JS脚本来规避复制限制。
+有两种方法可以禁用网站的JS：</p>
 <ol>
-<li>直接在浏览器中禁用js；以google浏览器为例，直接输入新开tab: chrome://settings/content/javascript 回车即可找到禁用入口；在禁止栏, 输入要该站点的网址即可完成；</li>
-<li>在网站中添加一段js代码，禁用js；</li>
-</ol>
+<li>直接在浏览器中禁用JS；以google浏览器为例，直接输入新开tab，输入<code>chrome://settings/content/javascript</code>回车即可找到禁用入口，在禁止栏，输入要该站点的网址即可完成；</li>
+<li>在网站中添加一段JS代码，也可以达到禁用JS的目的；
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="nx">javascript</span><span class="o">:</span><span class="k">void</span><span class="p">(</span><span class="nx">$</span><span class="o">=</span><span class="p">{});</span>
-</span></span></code></pre></div><h2 id="开发者工具不能打开">开发者工具不能打开</h2>
-<p>一般多数情况会使用开发者工具或者禁用js脚本，来进行规避，但有些时候开发者工具打不开，比如一打开就出现debugger，放行会跳空页面，百度的文心一言就是这样。 但是不要担心，用户拥有js代码最高控制权，所以就算百度自己有浏览器也没办法阻止用户调试注入代码。</p>
-<p>解决百度这个问题可以不用代码注入，解决思路为，先设置禁用断点在进入对应网站。具体操作步骤，在其它页面打开开发者工具，选择“Sources”，点亮禁用断点，然后在地址栏输入https://yiyan.baidu.com/访问文心一言，就能正常使用开发者工具。</p>
+</span></span></code></pre></div></li>
+</ol>
 </div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">

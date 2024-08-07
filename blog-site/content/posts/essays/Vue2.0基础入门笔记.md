@@ -7,28 +7,15 @@ slug: "vue2-note"
 ---
 
 ## 参考资料
-- vue官方文档: https://cn.vuejs.org/v2/guide
-- vue参考视频资料: https://www.bilibili.com/video/av50680998
-- vue菜鸟教程文档: https://www.runoob.com/vue2/vue-tutorial.html
-
-## vue-组件
-参考资料:
-- https://cn.vuejs.org/v2/guide/components.html#ad
-
-组件是可复用的 Vue 实例，且带有一个名字. 组件的出现是为了拆分vue实例的代码量,能够让我们以不同的组件,来划分不同的功能模块,将来我们需要什么样的功能,就可以去调用对应的组件即可.
-
-## vue-路由
-参考资料:
-- url中的hash: https://blog.csdn.net/weixin_42218847/article/details/81488075
-- vue中的路由: https://router.vuejs.org/zh/installation.html
-
-路由概念:
-- 后端路由:对于普通网站,所有的超链接都是URL地址,所有的URL地址都对应服务器上的资源
-- 前端路由:对于单页面的应用程序来说,主要通过URL中的hash(#号)来实现不同页面的切换,同时,hash有一个特点,http请求中不包含hash相关的内容;所以单页面程序的跳转主要用hash来实现,这种通过hash改变切换页面的方式,成为前端路由,区别于后端路由
+- 代码中的依赖库：[Vue2.x-lib.zip](/iblog/posts/annex/zip/vue2.x-lib.zip)
+- Vue官方文档：[https://cn.vuejs.org/v2/guide](https://cn.vuejs.org/v2/guide)
+- Vue参考视频资料：[https://www.bilibili.com/video/av50680998](https://www.bilibili.com/video/av50680998)
+- Vue菜鸟教程文档：[https://www.runoob.com/vue2/vue-tutorial.html](https://www.runoob.com/vue2/vue-tutorial.html)
+- Vue组件参考资料：[https://cn.vuejs.org/v2/guide/components.html#ad](https://cn.vuejs.org/v2/guide/components.html#ad)
+- Vue路由参考资料1：[https://router.vuejs.org/zh/installation.html](https://router.vuejs.org/zh/installation.html)
+- Vue路由参考资料2：[https://blog.csdn.net/weixin_42218847/article/details/81488075](https://blog.csdn.net/weixin_42218847/article/details/81488075)
 
 ## 代码案例
-### 依赖的库
-[点击下载](/iblog/posts/annex/zip/vue2.x-lib.zip)
 
 ### 1.helloWorld.html
 ```html

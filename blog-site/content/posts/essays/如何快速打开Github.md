@@ -7,15 +7,17 @@ slug: "accelerate-access-github"
 ---
 
 
-为什么我们打开Github速度很慢？很卡？甚至于访问不了，原因是中间有个域名通过DNS解析的过程，将域名解析为对应的ip地址，主要时间都花在了DNS解析上。
+为什么打开`Github`速度很慢、很卡？甚至访问不了，原因是中间有个域名通过DNS解析的过程，将域名解析为对应的IP地址，卡的原因主要是时间都花在了DNS解析上。
 
-我们在浏览器输入 GitHub 的网址时，会向 DNS 服务器发送一个请求，获取到 GitHub 网站所在的服务器 IP 地址，从而进行访问。如果 DNS 告诉了你错误的地址、或者请求被拦截、再或者 DNS 挂了，都会导致你无法访问网站。
+我们在浏览器输入`GitHub`的网址时，会向DNS服务器发送一个请求，获取到`GitHub`网站所在的服务器IP地址，从而进行访问。
+如果DNS告诉了你错误的地址、或者请求被拦截、再或者DNS挂了，都会导致你无法访问网站。
 
-可以通过修改 hosts 文件，解决： GitHub 访问速度慢的问题，推荐[GitHub520](https://github.com/521xueweihan/GitHub520)。
-- Windows 系统中的文件路径：`C:\WINDOWS\system32\drivers\etc`
-- Linux 系统中的文件路径：`/etc/hosts`
+所以懂得了这个原理，可以通过修改`hosts`文件，解决`GitHub`访问速度慢的问题，推荐[GitHub520](https://github.com/521xueweihan/GitHub520)。
+- Windows 系统中的文件路径：`C:\WINDOWS\system32\drivers\etc`；
+- Linux 系统中的文件路径：`/etc/hosts`；
 
-Github520，截至这篇文章发布之前，host文件内容：
+`GitHub520`，让你“爱”上`GitHub`，它能解决访问时图裂、加载慢的问题。主要是通过配置`hosts`文件，将`GitHub`的域名解析到指定的IP地址上，从而解决访问速度慢的问题。
+`Github520`，截至这篇文章发布之前，`host`文件内容：
 ```text
 # GitHub520 Host Start
 140.82.112.25                 alive.github.com
@@ -58,17 +60,13 @@ Github520，截至这篇文章发布之前，host文件内容：
 13.107.253.40                 vscode.dev
 140.82.113.21                 education.github.com
 ```
+有时候尝试过手动修改`host`文件来解决网站的访问的问题不好用，这里推荐一个备用方案[FastGithub](https://github.com/WangGithubUser/FastGitHub)。
+它是`GitHub`加速神器，解决`GitHub`打不开、用户头像无法加载等问题，我现在正在用，挺不错的。在每次访问`GitHub`之前记得要先保证`FastGithub`在运行的状态，`FastGitHub`会自动更改你的DNS。
 
-有时候尝试过手动修改host文件来解决网站的访问问题，及更换网络但还是有时候无法如愿的访问GitHub，这里推荐一个备用方案，[FastGithub](https://github.com/WangGithubUser/FastGithub/releases)。
-在每次访问GitHub之前记得要先保证FastGithub在运行的状态，FastGitHub会自动更改你的DNS。
+如果上述方法还是都不行，我们可以换一种思路，使用镜像访问`Github`，推荐几个网站：
+- [https://gitclone.com](https://gitclone.com)
+- [https://help.kkgithub.com](https://help.kkgithub.com)
 
-如果上述的方法都不行，我们可以换一种思路，使用镜像访问Github，推荐几个网站：
-- https://gitclone.com/
-- https://help.kkgithub.com/
-
-上述方法如果仍然无法解决问题，我们可以尝试使用VPN，下面是一些推荐的网站：
-- https://sdkdns.github.io/
-- https://www.naiun.top/#/login
-
-
-
+最后如果还是不能访问`GitHub`，这个一定能解决，我们可以尝试使用VPN，下面是一些推荐的网站：
+- [https://sdkdns.github.io](https://sdkdns.github.io)
+- [https://www.naiun.top/#/login](https://www.naiun.top/#/login)
