@@ -14,7 +14,7 @@ slug: "java-keyword-volatile"
 
 注意`volatile`不保证原子性，也就是线程不安全。
 
-### 使用案例
+### 使用示例
 在Java中`volatile`是一个变量修饰符，只能用来修饰变量。`volatile`典型的使用就是单例模式中的双重检查锁实现。
 ```java
 /**
