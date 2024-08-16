@@ -26,9 +26,109 @@ strictfp只对float和double类型的计算有效，且会限制某些优化，�
 > IEEE-754是浮点数运算的标准，定义了浮点数的表示、运算方式和异常处理。它包括单精度32位和双精度64位浮点数格式，涉及符号位、指数位和尾数位的定义，以及特殊值如零、无穷大和非数。
 该标准还规定了几种舍入模式，如最近偶数舍入，以保证浮点运算的精度。
 
-
+1. 当在类上使用strictfp时，类中的所有方法的浮点运算都将严格遵循IEEE-754规范。
+    ```java
+    public strictfp class StrictFPClassExample {
+    
+        public static void main(String[] args) {
+            double result = computeDifference();
+            // 输出结果: 3.141592653589793
+            System.out.println("With strictfp (class level): " + result);
+        }
+    
+        public static double computeDifference() {
+            double large = 1e40;
+            double pi = 3.141592653589793;
+            return large + pi - large;
+        }
+    }
+    
+    public class WithoutStrictFPClassExample {
+    
+        public static void main(String[] args) {
+            double result = computeDifference();
+            // 输出结果: 0.0
+            System.out.println("Without strictfp (class level): " + result);
+        }
+    
+        public static double computeDifference() {
+            double large = 1e40;
+            double pi = 3.141592653589793;
+            return large + pi - large;
+        }
+    }
+    ```
+2. 在方法级别使用strictfp，仅影响该方法的浮点运算。
+    ```java
+    public class StrictFPMethodExample {
+    
+        public static void main(String[] args) {
+            double strictFPResult = computeWithStrictFP();
+            double nonStrictFPResult = computeWithoutStrictFP();
+    
+            // With strictfp: 3.141592653589793
+            System.out.println("With strictfp (method level): " + strictFPResult);
+    
+            // Without strictfp: 0.0
+            System.out.println("Without strictfp (method level): " + nonStrictFPResult);
+        }
+    
+        public strictfp static double computeWithStrictFP() {
+            double large = 1e40;
+            double pi = 3.141592653589793;
+            return large + pi - large;
+        }
+    
+        public static double computeWithoutStrictFP() {
+            double large = 1e40;
+            double pi = 3.141592653589793;
+            return large + pi - large;
+        }
+    }
+    ```
+3. 在接口上使用strictfp，所有实现该接口的类中的方法都将严格遵循IEEE-754规范。
+    ```java
+    public strictfp interface StrictFPInterface {
+        double computeDifference(double large, double pi);
+    }
+    
+    public class StrictFPInterfaceImplementation implements StrictFPInterface {
+    
+        @Override
+        public double computeDifference(double large, double pi) {
+            return large + pi - large;
+        }
+    
+        public static void main(String[] args) {
+            StrictFPInterfaceImplementation impl = new StrictFPInterfaceImplementation();
+            double result = impl.computeDifference(1e40, 3.141592653589793);
+            // 输出结果: 3.141592653589793
+            System.out.println("With strictfp (interface level): " + result);
+        }
+    }
+    
+    public interface NonStrictFPInterface {
+        double computeDifference(double large, double pi);
+    }
+    
+    public class NonStrictFPInterfaceImplementation implements NonStrictFPInterface {
+    
+        @Override
+        public double computeDifference(double large, double pi) {
+            return large + pi - large;
+        }
+    
+        public static void main(String[] args) {
+            NonStrictFPInterfaceImplementation impl = new NonStrictFPInterfaceImplementation();
+            double result = impl.computeDifference(1e40, 3.141592653589793);
+            // 输出结果: 0.0
+            System.out.println("Without strictfp (interface level): " + result);
+        }
+    }
+    ```
 
 ### strictfp与BigDecimal
+
 
 
 ### strictfp底层原理
