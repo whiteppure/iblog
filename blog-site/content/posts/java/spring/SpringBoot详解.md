@@ -21,8 +21,12 @@ SpringBoot基于`Sring4`进行设计，继承了原有Spring框架的优秀基�
 - 无配置的约定：SpringBoot遵循“无配置”的原则，使用合理的默认值和约定，减少需要编写的配置代码。
 - 快速开发：SpringBoot的项目结构和默认配置帮助开发者快速启动新项目。内置工具和插件支持开发、测试和部署。
 
-## 与Spring的区别
-Spring和SpringBoot的最主要区别在于配置和启动的复杂性。
+## 与Spring区别
+Spring提供了大量的子模块，如Spring Core、Spring Web、Spring Data等，但它们的配置复杂度较高，且需要开发者手动配置各类文件和依赖。
+SpringBoot基于Spring，目的是简化Spring应用的创建和配置。
+
+SpringBoot是对Spring的扩展，简化了Spring应用开发的过程，但仍然依赖Spring核心库。
+使用SpringBoot开发的应用实际上是基于Spring的，只是通过自动配置和内置依赖提升了开发效率。
 
 Spring和SpringBoot的主要区别在于配置和启动的复杂性。Spring框架需要大量的手动配置，包括XML配置文件或Java配置类，配置过程较为繁琐且易出错。
 此外，Spring应用程序通常需要部署到外部的Web服务器，并需要额外的步骤来启动和运行。
