@@ -1,5 +1,5 @@
 ---
-title: "配置IDEA及使用技巧"
+title: "IDEA常用插件及使用技巧"
 date: 2022-12-16
 draft: false
 tags: ["随笔"]
@@ -9,7 +9,7 @@ slug: "dev-idea"
 
 ## 下载
 工欲善其事必先利其器，一个好的开发工具，能极大提高开发效率。IDEA新UI很漂亮，IDEA 官方下载地址： https://www.jetbrains.com/zh-cn/idea/download/other.html 。
-下载完之后激活，激活工具百度云下载，链接： https://pan.baidu.com/s/1bmktlKMWC6nIqgJNSUYx_A?pwd=8888 。
+下载完之后激活，激活工具百度云下载，链接： https://pan.baidu.com/s/1bmktlKMWC6nIqgJNSUYx_A?pwd=8888 。DIEA版本为2023.3.4。
 
 ![idea常用配置](/iblog/posts/annex/images/essays/idea常用配置-01.jpg)
 

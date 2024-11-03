@@ -1471,7 +1471,7 @@ MySQL锁分为全局锁、表级锁以及行级锁，不同的存储引擎支持
 
 通常来说，这两个方案其实都可以选用，但是建议中小型公司选用`Sharding-jdbc`，`client`层方案轻便，而且维护成本低，不需要额外增派人手。而且中小型公司系统复杂度会低一些，项目也没那么多；但是中大型公司最好还是选用 `Mycat` 这类 `proxy` 层方案，因为可能大公司系统和项目非常多，团队很大，人员充足，那么最好是专门弄个人来研究和维护`Mycat`，然后大量项目直接透明使用即可。
 
-## 参考链接
+## 参考文章
 - https://mp.weixin.qq.com/s/-Jipxjwe-jAax4hJSe-9Jg
 - https://www.hollischuang.com/archives/6330
 - https://dev.mysql.com/doc/refman/8.0/en/using-explain.html
