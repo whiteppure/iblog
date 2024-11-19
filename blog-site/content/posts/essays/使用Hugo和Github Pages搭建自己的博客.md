@@ -73,3 +73,4 @@ Hexo：
 - 使用`Hugo`搭建个人博客站点: https://blog.coderzh.com/2015/08/29/hugo
 - 不蒜子计数统计: https://busuanzi.ibruce.info
 - 暗黑主题: https://darkmodejs.learn.uno
+- 添加搜索功能：https://www.beizigen.com/post/hugo-implements-simple-on-site-search
