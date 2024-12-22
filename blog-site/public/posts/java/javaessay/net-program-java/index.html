@@ -8,7 +8,7 @@
 	
 	
 	
-	<title>网络编程 ｜ 脚踏实地</title>
+	<title>网络与安全 ｜ 脚踏实地</title>
 	
     
     
@@ -398,6 +398,34 @@
             
             
             <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%94%be%e7%81%ab%e5%a2%99">
+                    放火墙
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
                 <a class="nav-link text-left" href="#%e7%bd%91%e7%bb%9c%e5%8a%a0%e5%af%86%e6%8a%80%e6%9c%af">
                     网络加密技术
                 </a>
@@ -533,7 +561,7 @@
             <div class="post_page">
                 <div class="post animate__animated animate__fadeInDown">
                     <div class="post_title post_detail_title">
-                        <h2 id="post_single_title">网络编程</h2>
+                        <h2 id="post_single_title">网络与安全</h2>
                         <span id="post_page_title_date" class="date">2024.11.24</span>
                         
                         <span id="busuanzi_container_page_pv" class="m-l-10">
@@ -882,7 +910,25 @@ CDN和反向代理的使用能够将流量分散到多个节点，减少单点�
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">fileType</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="s">&#34;image/jpeg&#34;</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">fileType</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="s">&#34;image/png&#34;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Exception</span><span class="p">(</span><span class="s">&#34;Invalid file type.&#34;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h3 id="网络加密技术">网络加密技术</h3>
+</span></span></span></code></pre></div><h3 id="放火墙">放火墙</h3>
+<p>防火墙是一种用于保护计算机网络的安全设备，通过对进出网络的流量进行监控和控制来防止未经授权的访问或恶意攻击。</p>
+<p>工作流程：</p>
+<ol>
+<li>当外部或内部请求数据包进入防火墙时，防火墙会根据预定义的规则对数据包进行检查。</li>
+<li>防火墙会评估数据包的各个字段（如源IP、目标IP、端口号、协议等），判断数据包是否符合安全规则。</li>
+<li>根据判断结果，防火墙决定允许、拒绝或进一步处理数据包。</li>
+<li>对于符合规则的数据包，防火墙将其转发到目标设备或服务。对于不符合规则的数据包，防火墙会阻止其进入或离开网络。</li>
+</ol>
+<p>工作原理：</p>
+<ol>
+<li>数据包过滤： 防火墙首先会检查网络中的数据包，基于预设的规则（如IP地址、端口号、协议类型等）决定是否允许这些数据包通过。例如，防火墙可能允许来自某个IP地址的流量，但拒绝来自其他地址的流量。</li>
+<li>状态检测： 在基本的数据包过滤的基础上，防火墙会使用状态检测技术，跟踪每个连接的状态（如TCP连接的三次握手过程）。这使得防火墙能够判断数据包是否属于已建立的合法连接，并允许合法的流量通过，同时阻止伪造的连接。</li>
+<li>代理服务： 在代理模式下，防火墙充当网络请求和响应之间的中介。客户端发出的请求首先到达防火墙，防火墙代理请求并代表客户端发送到目标服务器。通过这种方式，防火墙能够隐藏内部网络的真实IP地址，从而增加系统的安全性。</li>
+<li>网络地址转换（NAT）： 防火墙还可以执行NAT功能，将内部网络的私有IP地址转换为公共IP地址。这样，外部网络只能看到防火墙的IP地址，而无法直接访问内部网络的设备，增强了网络的隐蔽性和安全性。</li>
+<li>入侵检测与防御： 一些高级防火墙具备入侵检测和防御功能，可以实时监测网络流量，识别潜在的攻击或异常行为，并采取相应的防御措施，如阻断可疑流量或报警。</li>
+<li>访问控制策略： 防火墙根据事先定义的访问控制列表（ACL）进行工作，规则可能包括允许或拒绝某些IP地址、端口、协议的流量。这些控制策略帮助管理员制定精细的流量过滤和访问管理策略。</li>
+</ol>
+<h3 id="网络加密技术">网络加密技术</h3>
 <p>网络加密技术是为了保证网络中传输的数据的安全性，防止数据在传输过程中被窃取、篡改或伪造。加密技术主要通过将明文数据转化为密文，使得即便数据被截获，也无法被未经授权的第三方读取或理解。网络加密技术广泛应用于网络通信协议、数据存储和身份验证等多个领域。</p>
 <table>
 <thead>

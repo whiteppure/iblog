@@ -7,11 +7,9 @@ slug: "interview-junior-javaer"
 top: true
 ---
 
-为方便面试，不至于在网上像一个无头苍蝇乱翻，整理了一篇关于面试的资料。本文几乎涵盖了Java所有的知识点，包括：Java基础、网络与安全、常见框架、分布式服务治理、数据库、算法与数据结构、开发中遇到的一些问题以及一些架构设计方案。
-如果全都理解并吸收，相信你能轻松吊打绝大多数面试官。
+为方便面试，不至于在网上像一个无头苍蝇乱翻，整理了一系列关于面试的资料。本系列文章几乎涵盖了Java所有的知识点，包括：Java基础、网络与安全、常见框架、分布式服务治理、数据库、算法与数据结构、开发中遇到的一些问题以及一些架构设计方案。 如果全都理解并吸收，相信你能轻松吊打绝大多数面试官。
 
-本文中的面试题更偏向于底层，为方便阅读，在此只简短概述面试题的答案，不做详细解析。
-本资料完全公开免费，资料中的面试题，大多为原创，但也有小部分参考于网络，我将尽可能的把问题和答案概括的通俗易懂。
+本系列中的面试题更偏向于底层，为方便阅读，在此只简短概述面试题的答案，不做详细解析。 我承诺本资料完全公开免费，资料中的面试题，大多为原创，但也有小部分参考于网络，我将尽可能的把问题和答案概括的通俗易懂。
 
 本人时间精力有限，如有遗漏或错误，欢迎在评论留言补充，我会及时的完善修正。
 
@@ -19,72 +17,83 @@ top: true
 
 ### 基础汇总
 #### 如何复制一个对象
-在实际开发中，复制、转换对象是非常常用的操作，如将一个DTO转化成PO，PO转换成VO等。
+在实际开发过程中，对象的复制与转换是非常常见且重要的操作。这类操作通常出现在不同层之间的数据传递或转换中，例如将数据传输对象（DTO）转换为持久化对象（PO），或是将持久化对象（PO）转化为视图对象（VO）。数据转换有助于隔离各层之间的业务逻辑，避免不同层之间的紧耦合，同时优化代码的可维护性和可扩展性，提升模块或系统之间的数据兼容性。
 
-要想复制一个对象，需要实现`Cloneable`接口，然后重写`clone()`方法。至于你想要怎么克隆，是深克隆还是浅克隆，关键是你这个`clone()`方法怎么写。
-虽然`Cloneable`和`clone()`方法在Java中是标准的浅拷贝方式，但它们在实际开发中不太常用。主要是因为使用`clone()`方法来拷贝一个对象即复杂又有风险，它会抛出异常，并且还需要类型转换。
-在实际开发中，一般都是使用第三方类库，如`BeanUtils`，不过这种方式大多为浅拷贝。
+要想复制一个对象，需要实现`Cloneable`接口，然后重写`clone()`方法。至于你想要怎么克隆，是深克隆还是浅克隆，关键是你这个`clone()`方法怎么写。虽然`Cloneable`和`clone()`方法在Java中是标准的浅拷贝方式，但它们在实际开发中不太常用。主要是因为使用`clone()`方法来拷贝一个对象即复杂又有风险，它会抛出异常，并且还需要类型转换。
 
-不过面试问这种问题，一般都是在问浅拷贝和深拷贝。
-- 浅拷贝创建一个新对象，这个新对象的字段内容与原对象相同，但如果字段是引用类型（比如数组、对象），浅拷贝只复制引用地址，不复制引用的实际对象。
-    ```java
-    class MyObject implements Cloneable {
-        int value;
-        int[] array;
-    
-        MyObject(int value, int[] array) {
-            this.value = value;
-            this.array = array;
-        }
-    
-        @Override
-        protected Object clone() throws CloneNotSupportedException {
-            return super.clone(); // 浅拷贝
-        }
-    
-        public static void main(String[] args) {
-            try {
-                int[] arr = {1, 2, 3};
-                MyObject original = new MyObject(42, arr);
-                MyObject copy = (MyObject) original.clone();
-                original.array[0] = 99;
-                System.out.println(copy.array[0]); // 输出 99
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-            }
+在实际开发中，对象转换通常依赖于第三方类库（如`BeanUtils`），不过这种方式大多是浅拷贝，适用于简单的属性复制。对于更复杂的需求，常见的转换方式包括手动映射、工具类辅助转换，或使用框架（如`MapStruct`、`ModelMapper`）来实现自动化处理。手动映射虽然能够提供更细粒度的控制，但在字段较多或逻辑复杂时，可能导致代码冗长且不易维护。自动化框架则能简化转换过程，尤其是在涉及复杂的类型转换、字段过滤或自定义映射规则时，能够有效提升数据转换的准确性与一致性。
+
+不过面试问这种问题，一般都是在问浅拷贝和深拷贝，所以答的时候要从这两方面答。
+
+浅拷贝创建一个新对象，这个新对象的字段内容与原对象相同，当字段是基本数据类型时，值被直接复制；但如果字段是引用类型（如数组或其他对象），则只复制引用地址，而不会复制实际的引用对象。
+- 对于基本数据类型字段，浅拷贝会将值从原对象复制到新对象。
+- 对于引用类型字段，浅拷贝只复制引用地址，因此原对象和新对象的引用类型字段会指向同一个内存地址，修改其中一个对象的引用类型字段内容会影响另一个对象。
+
+浅拷贝举例：
+```java
+class MyObject implements Cloneable {
+    int value;
+    int[] array;
+
+    MyObject(int value, int[] array) {
+        this.value = value;
+        this.array = array;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone(); // 浅拷贝
+    }
+
+    public static void main(String[] args) {
+        try {
+            int[] arr = {1, 2, 3};
+            MyObject original = new MyObject(42, arr);
+            MyObject copy = (MyObject) original.clone();
+            original.array[0] = 99;
+            System.out.println(copy.array[0]); // 输出 99
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
         }
     }
-    ```
-- 深拷贝创建一个新对象，这个新对象和原对象完全独立，包括复制所有引用类型字段的实际对象，而不仅仅是引用地址。
-    ```java
-    class MyObject implements Cloneable {
-        int value;
-        int[] array;
-    
-        MyObject(int value, int[] array) {
-            this.value = value;
-            this.array = array;
-        }
-    
-        @Override
-        protected MyObject clone() throws CloneNotSupportedException {
-            int[] arrayCopy = array.clone(); // 复制数组
-            return new MyObject(value, arrayCopy);
-        }
-    
-        public static void main(String[] args) {
-            try {
-                int[] arr = {1, 2, 3};
-                MyObject original = new MyObject(42, arr);
-                MyObject copy = original.clone();
-                original.array[0] = 99;
-                System.out.println(copy.array[0]); // 输出 1
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-            }
+}
+```
+
+深拷贝是创建一个新对象，该新对象与原对象完全独立。它不仅复制原对象的基本数据类型字段，还递归地复制所有引用类型字段所指向的实际对象，而不是仅复制引用地址。这意味着，深拷贝后的对象和原对象在内存中完全隔离，修改其中一个对象的字段不会影响另一个对象。
+- 复制基本类型字段：和浅拷贝一样，深拷贝会复制原对象中所有的基本数据类型字段（如 int、char 等）的值。
+- 递归复制引用类型字段：对于引用类型字段（如对象、数组、集合等），深拷贝会递归地创建新的对象，而不仅仅是复制引用地址。这样两个对象的引用类型字段指向不同的内存地址，它们的数据完全独立。
+- 完全独立的副本：经过深拷贝后，原对象和新对象在内存中完全独立，修改其中一个对象的内容不会影响另一个对象，避免了引用类型字段的共享问题。
+
+深拷贝举例：
+```java
+class MyObject implements Cloneable {
+    int value;
+    int[] array;
+
+    MyObject(int value, int[] array) {
+        this.value = value;
+        this.array = array;
+    }
+
+    @Override
+    protected MyObject clone() throws CloneNotSupportedException {
+        int[] arrayCopy = array.clone(); // 复制数组
+        return new MyObject(value, arrayCopy);
+    }
+
+    public static void main(String[] args) {
+        try {
+            int[] arr = {1, 2, 3};
+            MyObject original = new MyObject(42, arr);
+            MyObject copy = original.clone();
+            original.array[0] = 99;
+            System.out.println(copy.array[0]); // 输出 1
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
         }
     }
-    ```
+}
+```
 
 #### String类为什么设计成不可变的
 面试问这个问题，可以从`String`类的优点这个思路回答。
