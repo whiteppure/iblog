@@ -44,7 +44,7 @@ Hexo：
 
 要开始使用`Hugo`，你需要先安装它。可以访问[Hugo的官方网站](https://gohugo.io/getting-started/quick-start/)下载对应操作系统的版本，并按照指南进行安装。安装完成后，你就可以创建你的第一个博客了。
 
-`Hugo`的安装方式有两种，一种是直接下载编译好的`Hugo`二进制文件。另一种方式是获取`Hugo`的源码，自己编译。如果只是使用`Hugo`推荐第一种方式，[下载地址](https://gohugo.io/installation/)。
+`Hugo`的安装方式有两种，一种是直接下载编译好的`Hugo`二进制文件。另一种方式是获取`Hugo`的源码，自己编译。如果只是使用`Hugo`推荐第一种方式[下载地址](https://github.com/gohugoio/hugo/releases)。
 
 如果[Hugo官网](https://gohugo.io)，英文阅读起来有困难，可以参考：
 - `Hugo`中文帮助文档: https://hugo.aiaide.com
@@ -73,4 +73,4 @@ Hexo：
 - 使用`Hugo`搭建个人博客站点: https://blog.coderzh.com/2015/08/29/hugo
 - 不蒜子计数统计: https://busuanzi.ibruce.info
 - 暗黑主题: https://darkmodejs.learn.uno
-- 添加搜索功能：https://www.beizigen.com/post/hugo-implements-simple-on-site-search
+- 添加搜索功能: https://www.beizigen.com/post/hugo-implements-simple-on-site-search
