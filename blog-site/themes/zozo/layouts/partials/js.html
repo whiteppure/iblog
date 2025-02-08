@@ -13,8 +13,8 @@
 <script src="{{ "js/fastsearch.js" | absURL }}"></script>
 <script src="{{ "js/fuse.js" | absURL }}"></script>
 
-<!-- 夜间模式 -->
 <script>
+    <!-- 手动控制夜间模式  -->
     // new Darkmode({
     //     right: '32px', // default: '32px'
     //     bottom: 'unset', // default: '32px'
@@ -30,7 +30,7 @@
 
     function addDarkmodeWidget(){
         const hours = new Date().getHours();
-        // if (hours >= 19 || hours <= 5){
+        if (hours >= 19 || hours <= 5){
             new Darkmode({
                 right: '32px', // default: '32px'
                 bottom: 'unset', // default: '32px'
@@ -43,13 +43,21 @@
                 saveInCookies: false, // default: true,
                 autoMatchOsTheme: true // default: true
             }).toggle();
-        // }
+        }
     }
     // 自动调用夜间模式
-    window.addEventListener('DOMContentLoaded', addDarkmodeWidget);
+    addDarkmodeWidget();
+
+    // 给文章内所有超链接 加上 target="_blank"
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('.content a');
+        links.forEach(function(link) {
+            link.setAttribute('target', '_blank');
+        });
+    });
 </script>
 
-<!-- 启用数学公式 -->
+<!-- 数学公式 -->
 {{ if .Site.Params.enableMathJax }}
 {{ partial "mathjax.html" . }}
 {{ end }}
