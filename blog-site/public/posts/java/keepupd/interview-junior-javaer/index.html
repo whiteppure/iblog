@@ -192,8 +192,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#string%e7%b1%bb%e6%9c%89%e6%b2%a1%e6%9c%89%e9%95%bf%e5%ba%a6%e9%99%90%e5%88%b6">
-                    String类有没有长度限制
+                <a class="nav-link text-left" href="#string%e7%b1%bb%e5%88%b0%e5%ba%95%e6%9c%89%e6%b2%a1%e6%9c%89%e9%95%bf%e5%ba%a6%e9%99%90%e5%88%b6">
+                    String类到底有没有长度限制
                 </a>
             </li>
             
@@ -6569,10 +6569,10 @@
 <li>线程安全。字符串在Java中的使用频率可谓高之又高，那在高并发的情况下不可变性也使得对字符串的读写操作不用考虑多线程竞争的情况。
 不可变的字符串在多线程环境中是安全的。由于<code>String</code>对象一旦创建就不能被修改，因此多个线程可以安全地共享相同的<code>String</code>实例，而不需要担心数据被修改。</li>
 <li><code>String</code>常量池的需要。字符串常量池的基础就是字符串的不可变性，如果字符串是可变的，那想一想，常量池就没必要存在了。
-如果一个<code>String</code> 对象已经被创建过了，那么就会从<code>String</code>常量池中取得引用。只有<code>String</code>是不可变的，才可能使用 String常量池。</li>
+如果一个<code>String</code> 对象已经被创建过了，那么就会从<code>String</code>常量池中取得引用。只有<code>String</code>是不可变的，才可能使用<code>String</code>常量池。</li>
 <li>可以缓存<code>hash</code>值。因为<code>String</code>的<code>hash</code>值经常被使用，像<code>Set</code>、<code>Map</code>结构中的<code>key</code>值也需要用到<code>HashCode</code>来保证唯一性和一致性，因此不可变的<code>HashCode</code>才是安全可靠的。</li>
 </ol>
-<h4 id="string类有没有长度限制">String类有没有长度限制</h4>
+<h4 id="string类到底有没有长度限制">String类到底有没有长度限制</h4>
 <p><code>String</code>类是有长度限制的。Java中的<code>String</code>内部是用一个字符数组<code>char[]</code>存储字符数据的，数组的最大长度限制由Java虚拟机规范决定。
 理论上，Java数组的最大长度是<code>Integer.MAX_VALUE(2^31 - 1)</code>，即2147483647，但在实际操作中，能分配的最大数组长度受可用内存限制。</p>
 <p>但是并不是这样，字符串字面量的长度不能超过65535字符，如果字符串字面量长度超过这个限制，编译器会抛出错误。</p>
