@@ -3,7 +3,7 @@
 <script src="{{ "js/fancybox.min.js" | absURL }}"></script>
 <script src="{{ "js/darkmode.js" | absURL }}"></script>
 <script src="{{ "js/zozo.js" | absURL }}"></script>
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>-->
 <script src="{{ "js/busuanzi_2.3_busuanzi.pure.mini.js" | absURL }}"></script>
 <script src="{{ "js/html2canvas.js" | absURL }}"></script>
 <script src="{{ "js/utils.js" | absURL }}"></script>
@@ -15,27 +15,27 @@
 
 <!-- 夜间模式 -->
 <script>
-    new Darkmode({
-        right: '32px', // default: '32px'
-        bottom: 'unset', // default: '32px'
-        // left: '32px', // default: 'unset'
-        time: '0.15s', // default: '0.3s'
-        mixColor: '#f7f7f7', // default: '#fff'
-        backgroundColor: '#f7f7f7', // default: '#fff'
-        buttonColorDark: '#212121', // default: '#100f2c'
-        buttonColorLight: '#f7f7f7', // default: '#fff'
-        saveInCookies: false, // default: true,
-        autoMatchOsTheme: true // default: true
-    }).showWidget();
+    // new Darkmode({
+    //     right: '32px', // default: '32px'
+    //     bottom: 'unset', // default: '32px'
+    //     // left: '32px', // default: 'unset'
+    //     time: '0.15s', // default: '0.3s'
+    //     mixColor: '#f7f7f7', // default: '#fff'
+    //     backgroundColor: '#f7f7f7', // default: '#fff'
+    //     buttonColorDark: '#212121', // default: '#100f2c'
+    //     buttonColorLight: '#f7f7f7', // default: '#fff'
+    //     saveInCookies: false, // default: true,
+    //     autoMatchOsTheme: true // default: true
+    // }).showWidget();
 
     function addDarkmodeWidget(){
         const hours = new Date().getHours();
-        if (hours >= 19 || hours <= 5){
+        // if (hours >= 19 || hours <= 5){
             new Darkmode({
                 right: '32px', // default: '32px'
                 bottom: 'unset', // default: '32px'
                 // left: '32px', // default: 'unset'
-                time: '0.3s', // default: '0.3s'
+                time: '0.1s', // default: '0.3s'
                 mixColor: '#f7f7f7', // default: '#fff'
                 backgroundColor: '#fff', // default: '#fff'
                 buttonColorDark: '#100f2c', // default: '#100f2c'
@@ -43,10 +43,10 @@
                 saveInCookies: false, // default: true,
                 autoMatchOsTheme: true // default: true
             }).toggle();
-        }
+        // }
     }
     // 自动调用夜间模式
-    // window.addEventListener('load', addDarkmodeWidget);
+    window.addEventListener('DOMContentLoaded', addDarkmodeWidget);
 </script>
 
 <!-- 启用数学公式 -->
