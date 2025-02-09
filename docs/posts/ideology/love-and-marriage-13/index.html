@@ -143,11 +143,11 @@
                     <div class="post_title post_detail_title">
                         <h2 id="post_single_title">曾仕强-爱情与婚姻-结婚典礼应该注意的事情</h2>
                         <span id="post_page_title_date" class="date">2024.05.08</span>
-                        
-                        <span id="busuanzi_container_page_pv" class="m-l-10">
-                          阅读量<span id="busuanzi_value_page_pv"></span>次
-                        </span>
-                        
+
+
+
+
+
                     </div>
                     <div class="post_content markdown"><p>结婚要有典礼最关键的是因为有见证人。在古代，由于交通不便和信息闭塞，人们很难证明自己的婚姻关系，因此需要通过婚礼来邀请亲友作为见证人，确保婚姻的真实性和有效性。
 如今，虽然法律已经承认了婚姻的合法性，但见证人仍然是婚礼的重要组成部分，代表着亲友的祝福和支持。</p>
@@ -335,18 +335,18 @@
 
 <script>
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    new Darkmode({
+        right: '32px', 
+        bottom: 'unset', 
+        
+        time: '0.15s', 
+        mixColor: '#f7f7f7', 
+        backgroundColor: '#f7f7f7', 
+        buttonColorDark: '#212121', 
+        buttonColorLight: '#f7f7f7', 
+        saveInCookies: false, 
+        autoMatchOsTheme: true 
+    }).showWidget();
 
     function addDarkmodeWidget(){
         const hours = new Date().getHours();
@@ -366,7 +366,7 @@
         }
     }
     
-    addDarkmodeWidget();
+    
 
     
     document.addEventListener('DOMContentLoaded', function() {
@@ -375,6 +375,36 @@
             link.setAttribute('target', '_blank');
         });
     });
+
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        const uvE = document.getElementById('busuanzi_value_site_uv');
+        const pvE = document.getElementById('busuanzi_value_site_pv');
+        const uvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    uvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 10000;
+                    break;
+                }
+            }
+        });
+        const pvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    pvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 300000;
+                    break;
+                }
+            }
+        });
+        const config = {
+            childList: true
+        };
+        uvObs.observe(uvE, config);
+        pvObs.observe(pvE, config);
+    });
+
 </script>
 
 

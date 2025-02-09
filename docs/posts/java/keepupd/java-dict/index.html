@@ -1528,11 +1528,11 @@
                     <div class="post_title post_detail_title">
                         <h2 id="post_single_title">编程专业术语汇总及解释，持续更新...</h2>
                         <span id="post_page_title_date" class="date">2024.11.23</span>
-                        
-                        <span id="busuanzi_container_page_pv" class="m-l-10">
-                          阅读量<span id="busuanzi_value_page_pv"></span>次
-                        </span>
-                        
+
+
+
+
+
                     </div>
                     <div class="post_content markdown"><h2 id="api">API</h2>
 <p>API即Application Programming Interface，翻译过来是应用程序编程接口，它是一组定义了不同软件组件之间交互方式的规范和协议。
@@ -1850,18 +1850,18 @@ URN是一种URI，用于通过名称来唯一标识资源，但不包含资源�
 
 <script>
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    new Darkmode({
+        right: '32px', 
+        bottom: 'unset', 
+        
+        time: '0.15s', 
+        mixColor: '#f7f7f7', 
+        backgroundColor: '#f7f7f7', 
+        buttonColorDark: '#212121', 
+        buttonColorLight: '#f7f7f7', 
+        saveInCookies: false, 
+        autoMatchOsTheme: true 
+    }).showWidget();
 
     function addDarkmodeWidget(){
         const hours = new Date().getHours();
@@ -1881,7 +1881,7 @@ URN是一种URI，用于通过名称来唯一标识资源，但不包含资源�
         }
     }
     
-    addDarkmodeWidget();
+    
 
     
     document.addEventListener('DOMContentLoaded', function() {
@@ -1890,6 +1890,36 @@ URN是一种URI，用于通过名称来唯一标识资源，但不包含资源�
             link.setAttribute('target', '_blank');
         });
     });
+
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        const uvE = document.getElementById('busuanzi_value_site_uv');
+        const pvE = document.getElementById('busuanzi_value_site_pv');
+        const uvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    uvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 10000;
+                    break;
+                }
+            }
+        });
+        const pvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    pvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 300000;
+                    break;
+                }
+            }
+        });
+        const config = {
+            childList: true
+        };
+        uvObs.observe(uvE, config);
+        pvObs.observe(pvE, config);
+    });
+
 </script>
 
 

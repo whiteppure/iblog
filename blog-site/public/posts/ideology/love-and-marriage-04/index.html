@@ -143,11 +143,11 @@
                     <div class="post_title post_detail_title">
                         <h2 id="post_single_title">曾仕强-爱情与婚姻-恋爱和婚姻都需要正确的学习</h2>
                         <span id="post_page_title_date" class="date">2024.04.20</span>
-                        
-                        <span id="busuanzi_container_page_pv" class="m-l-10">
-                          阅读量<span id="busuanzi_value_page_pv"></span>次
-                        </span>
-                        
+
+
+
+
+
                     </div>
                     <div class="post_content markdown"><p>在生活的长河中，爱情与婚姻似乎是每个人的必经之路，它们如家常便饭，看似简单，却蕴含着无尽的学问。
 很多人误以为只要相爱，就能自然而然地走进婚姻的殿堂，但事实并非如此。没有经过学习和准备，盲目地踏入这段旅程，往往会遭遇重重困难。</p>
@@ -318,18 +318,18 @@
 
 <script>
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    new Darkmode({
+        right: '32px', 
+        bottom: 'unset', 
+        
+        time: '0.15s', 
+        mixColor: '#f7f7f7', 
+        backgroundColor: '#f7f7f7', 
+        buttonColorDark: '#212121', 
+        buttonColorLight: '#f7f7f7', 
+        saveInCookies: false, 
+        autoMatchOsTheme: true 
+    }).showWidget();
 
     function addDarkmodeWidget(){
         const hours = new Date().getHours();
@@ -349,7 +349,7 @@
         }
     }
     
-    addDarkmodeWidget();
+    
 
     
     document.addEventListener('DOMContentLoaded', function() {
@@ -358,6 +358,36 @@
             link.setAttribute('target', '_blank');
         });
     });
+
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        const uvE = document.getElementById('busuanzi_value_site_uv');
+        const pvE = document.getElementById('busuanzi_value_site_pv');
+        const uvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    uvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 10000;
+                    break;
+                }
+            }
+        });
+        const pvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    pvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 300000;
+                    break;
+                }
+            }
+        });
+        const config = {
+            childList: true
+        };
+        uvObs.observe(uvE, config);
+        pvObs.observe(pvE, config);
+    });
+
 </script>
 
 

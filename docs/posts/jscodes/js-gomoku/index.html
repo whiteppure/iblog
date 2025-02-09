@@ -232,11 +232,11 @@
                     <div class="post_title post_detail_title">
                         <h2 id="post_single_title">Js五子棋</h2>
                         <span id="post_page_title_date" class="date">2018.09.10</span>
-                        
-                        <span id="busuanzi_container_page_pv" class="m-l-10">
-                          阅读量<span id="busuanzi_value_page_pv"></span>次
-                        </span>
-                        
+
+
+
+
+
                     </div>
                     <div class="post_content markdown"><h2 id="indexhtml">index.html</h2>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html PUBLIC &#34;-//W3C//DTD XHTML 1.0 Transitional//EN&#34; &#34;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&#34;&gt;</span>
@@ -658,18 +658,18 @@
 
 <script>
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    new Darkmode({
+        right: '32px', 
+        bottom: 'unset', 
+        
+        time: '0.15s', 
+        mixColor: '#f7f7f7', 
+        backgroundColor: '#f7f7f7', 
+        buttonColorDark: '#212121', 
+        buttonColorLight: '#f7f7f7', 
+        saveInCookies: false, 
+        autoMatchOsTheme: true 
+    }).showWidget();
 
     function addDarkmodeWidget(){
         const hours = new Date().getHours();
@@ -689,7 +689,7 @@
         }
     }
     
-    addDarkmodeWidget();
+    
 
     
     document.addEventListener('DOMContentLoaded', function() {
@@ -698,6 +698,36 @@
             link.setAttribute('target', '_blank');
         });
     });
+
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        const uvE = document.getElementById('busuanzi_value_site_uv');
+        const pvE = document.getElementById('busuanzi_value_site_pv');
+        const uvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    uvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 10000;
+                    break;
+                }
+            }
+        });
+        const pvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    pvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 300000;
+                    break;
+                }
+            }
+        });
+        const config = {
+            childList: true
+        };
+        uvObs.observe(uvE, config);
+        pvObs.observe(pvE, config);
+    });
+
 </script>
 
 

@@ -268,11 +268,11 @@
                     <div class="post_title post_detail_title">
                         <h2 id="post_single_title">transient关键字详解</h2>
                         <span id="post_page_title_date" class="date">2024.08.18</span>
-                        
-                        <span id="busuanzi_container_page_pv" class="m-l-10">
-                          阅读量<span id="busuanzi_value_page_pv"></span>次
-                        </span>
-                        
+
+
+
+
+
                     </div>
                     <div class="post_content markdown"><h2 id="transient">transient</h2>
 <p>transient关键字在Java中用于声明一个类的成员变量，它表示该变量不应被序列化。当对象序列化时，该字段不会被持久化到目标字节流中。也就是说，使用transient修饰的字段在序列化过程中将被忽略，反序列化时这些字段会被初始化为默认值，基本数据类型为0，引用类型为null。</p>
@@ -579,18 +579,18 @@ static和transient修饰的字段是不会被序列化的，在序列化底层�
 
 <script>
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    new Darkmode({
+        right: '32px', 
+        bottom: 'unset', 
+        
+        time: '0.15s', 
+        mixColor: '#f7f7f7', 
+        backgroundColor: '#f7f7f7', 
+        buttonColorDark: '#212121', 
+        buttonColorLight: '#f7f7f7', 
+        saveInCookies: false, 
+        autoMatchOsTheme: true 
+    }).showWidget();
 
     function addDarkmodeWidget(){
         const hours = new Date().getHours();
@@ -610,7 +610,7 @@ static和transient修饰的字段是不会被序列化的，在序列化底层�
         }
     }
     
-    addDarkmodeWidget();
+    
 
     
     document.addEventListener('DOMContentLoaded', function() {
@@ -619,6 +619,36 @@ static和transient修饰的字段是不会被序列化的，在序列化底层�
             link.setAttribute('target', '_blank');
         });
     });
+
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        const uvE = document.getElementById('busuanzi_value_site_uv');
+        const pvE = document.getElementById('busuanzi_value_site_pv');
+        const uvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    uvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 10000;
+                    break;
+                }
+            }
+        });
+        const pvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    pvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 300000;
+                    break;
+                }
+            }
+        });
+        const config = {
+            childList: true
+        };
+        uvObs.observe(uvE, config);
+        pvObs.observe(pvE, config);
+    });
+
 </script>
 
 

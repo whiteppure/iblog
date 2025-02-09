@@ -820,11 +820,11 @@
                     <div class="post_title post_detail_title">
                         <h2 id="post_single_title">IDEA常用插件及使用技巧</h2>
                         <span id="post_page_title_date" class="date">2022.12.16</span>
-                        
-                        <span id="busuanzi_container_page_pv" class="m-l-10">
-                          阅读量<span id="busuanzi_value_page_pv"></span>次
-                        </span>
-                        
+
+
+
+
+
                     </div>
                     <div class="post_content markdown"><h2 id="下载">下载</h2>
 <p>工欲善其事必先利其器，一个好的开发工具，能极大提高开发效率。IDEA新UI很漂亮，IDEA 官方下载地址： <a href="https://www.jetbrains.com/zh-cn/idea/download/other.html">https://www.jetbrains.com/zh-cn/idea/download/other.html</a> 。
@@ -905,7 +905,7 @@
 <p><img alt="idea常用配置" src="/posts/annex/images/essays/idea%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE-20.jpg"></p>
 <h3 id="idea快捷键及设置">IDEA快捷键及设置</h3>
 <blockquote>
-<p>本人IDEA设置(windows版)供参考 [下载](<a href="https://whiteppure.github.io">https://whiteppure.github.io</a>(/posts/annex/zip/idea-settings.zip)</p>
+<p>本人IDEA设置(windows版)供参考 <a href="/posts/annex/zip/idea-settings.zip">下载</a></p>
 </blockquote>
 <p>IDEA Windows版本常用快捷键如下：</p>
 <table>
@@ -1152,18 +1152,18 @@
 
 <script>
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    new Darkmode({
+        right: '32px', 
+        bottom: 'unset', 
+        
+        time: '0.15s', 
+        mixColor: '#f7f7f7', 
+        backgroundColor: '#f7f7f7', 
+        buttonColorDark: '#212121', 
+        buttonColorLight: '#f7f7f7', 
+        saveInCookies: false, 
+        autoMatchOsTheme: true 
+    }).showWidget();
 
     function addDarkmodeWidget(){
         const hours = new Date().getHours();
@@ -1183,7 +1183,7 @@
         }
     }
     
-    addDarkmodeWidget();
+    
 
     
     document.addEventListener('DOMContentLoaded', function() {
@@ -1192,6 +1192,36 @@
             link.setAttribute('target', '_blank');
         });
     });
+
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        const uvE = document.getElementById('busuanzi_value_site_uv');
+        const pvE = document.getElementById('busuanzi_value_site_pv');
+        const uvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    uvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 10000;
+                    break;
+                }
+            }
+        });
+        const pvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    pvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 300000;
+                    break;
+                }
+            }
+        });
+        const config = {
+            childList: true
+        };
+        uvObs.observe(uvE, config);
+        pvObs.observe(pvE, config);
+    });
+
 </script>
 
 

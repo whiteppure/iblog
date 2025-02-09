@@ -143,11 +143,11 @@
                     <div class="post_title post_detail_title">
                         <h2 id="post_single_title">关于</h2>
                         <span id="post_page_title_date" class="date">2021.02.20</span>
-                        
-                        <span id="busuanzi_container_page_pv" class="m-l-10">
-                          阅读量<span id="busuanzi_value_page_pv"></span>次
-                        </span>
-                        
+
+
+
+
+
                     </div>
                     <div class="post_content markdown"><p>最初希望能将自己学习的知识记录下来，梳理自己的思想，于是开始搭建博客。发布过一些其他博客网站，但是都用着不太舒服，最后选择了自己搭建，开始是自己买服务器，用<a href="https://gitee.com/halo-dev/halo">halo</a>搭建，随着时间的推移，当时囊中羞涩，没有再续费，最后摸索出来使用<a href="https://docs.github.com/zh/pages/getting-started-with-github-pages">GitHub Page</a>搭建。</p>
 <p>本博客于2021年2月20日正式发布，使用 <a href="https://gohugo.io">hugo</a> + <a href="https://docs.github.com/zh/pages/getting-started-with-github-pages">GitHub Page</a> 进行搭建，使用的主题为 <a href="https://github.com/varkai/hugo-theme-zozo">zozo</a> Designed by <a href="https://www.varkai.com">VarKai</a>。
@@ -303,18 +303,18 @@
 
 <script>
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    new Darkmode({
+        right: '32px', 
+        bottom: 'unset', 
+        
+        time: '0.15s', 
+        mixColor: '#f7f7f7', 
+        backgroundColor: '#f7f7f7', 
+        buttonColorDark: '#212121', 
+        buttonColorLight: '#f7f7f7', 
+        saveInCookies: false, 
+        autoMatchOsTheme: true 
+    }).showWidget();
 
     function addDarkmodeWidget(){
         const hours = new Date().getHours();
@@ -334,7 +334,7 @@
         }
     }
     
-    addDarkmodeWidget();
+    
 
     
     document.addEventListener('DOMContentLoaded', function() {
@@ -343,6 +343,36 @@
             link.setAttribute('target', '_blank');
         });
     });
+
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        const uvE = document.getElementById('busuanzi_value_site_uv');
+        const pvE = document.getElementById('busuanzi_value_site_pv');
+        const uvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    uvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 10000;
+                    break;
+                }
+            }
+        });
+        const pvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    pvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 300000;
+                    break;
+                }
+            }
+        });
+        const config = {
+            childList: true
+        };
+        uvObs.observe(uvE, config);
+        pvObs.observe(pvE, config);
+    });
+
 </script>
 
 

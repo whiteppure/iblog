@@ -532,11 +532,11 @@
                     <div class="post_title post_detail_title">
                         <h2 id="post_single_title">JVM中的执行引擎</h2>
                         <span id="post_page_title_date" class="date">2021.04.15</span>
-                        
-                        <span id="busuanzi_container_page_pv" class="m-l-10">
-                          阅读量<span id="busuanzi_value_page_pv"></span>次
-                        </span>
-                        
+
+
+
+
+
                     </div>
                     <div class="post_content markdown"><h2 id="概述">概述</h2>
 <p>执行引擎是Java虚拟机核心的组成部分之一，属于JVM的下层，里面包括 解释器、及时编译器、垃圾回收器。</p>
@@ -598,7 +598,7 @@
 <li>去虚拟化：对唯一的实现樊进行内联；</li>
 <li>冗余消除：在运行期间把一些不会执行的代码折叠掉；</li>
 </ul>
-<p>C2的优化主要是在全局层面，[逃逸分析](<a href="https://whiteppure.github.io">https://whiteppure.github.io</a>(/posts/jvm/jvm-heap/#逃逸分析)是优化的基础。基于逃逸分析在C2上有如下几种优化：</p>
+<p>C2的优化主要是在全局层面，<a href="/posts/jvm/jvm-heap/#%E9%80%83%E9%80%B8%E5%88%86%E6%9E%90">逃逸分析</a>是优化的基础。基于逃逸分析在C2上有如下几种优化：</p>
 <ul>
 <li>标量替换：用标量值代替聚合对象的属性值；</li>
 <li>栈上分配：对于未逃逸的对象分配对象在栈而不是堆；</li>
@@ -838,18 +838,18 @@ Java 9引入了实验性AOT编译工具AOTC。它借助了Graal编译器，将�
 
 <script>
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    new Darkmode({
+        right: '32px', 
+        bottom: 'unset', 
+        
+        time: '0.15s', 
+        mixColor: '#f7f7f7', 
+        backgroundColor: '#f7f7f7', 
+        buttonColorDark: '#212121', 
+        buttonColorLight: '#f7f7f7', 
+        saveInCookies: false, 
+        autoMatchOsTheme: true 
+    }).showWidget();
 
     function addDarkmodeWidget(){
         const hours = new Date().getHours();
@@ -869,7 +869,7 @@ Java 9引入了实验性AOT编译工具AOTC。它借助了Graal编译器，将�
         }
     }
     
-    addDarkmodeWidget();
+    
 
     
     document.addEventListener('DOMContentLoaded', function() {
@@ -878,6 +878,36 @@ Java 9引入了实验性AOT编译工具AOTC。它借助了Graal编译器，将�
             link.setAttribute('target', '_blank');
         });
     });
+
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        const uvE = document.getElementById('busuanzi_value_site_uv');
+        const pvE = document.getElementById('busuanzi_value_site_pv');
+        const uvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    uvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 10000;
+                    break;
+                }
+            }
+        });
+        const pvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    pvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 300000;
+                    break;
+                }
+            }
+        });
+        const config = {
+            childList: true
+        };
+        uvObs.observe(uvE, config);
+        pvObs.observe(pvE, config);
+    });
+
 </script>
 
 

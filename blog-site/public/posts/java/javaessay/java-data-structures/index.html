@@ -964,11 +964,11 @@
                     <div class="post_title post_detail_title">
                         <h2 id="post_single_title">数据结构详解</h2>
                         <span id="post_page_title_date" class="date">2024.11.19</span>
-                        
-                        <span id="busuanzi_container_page_pv" class="m-l-10">
-                          阅读量<span id="busuanzi_value_page_pv"></span>次
-                        </span>
-                        
+
+
+
+
+
                     </div>
                     <div class="post_content markdown"><p>数据结构是一门研究数据组织方式的学科，是编程语言的重要组成部分。学好数据结构，可以编写出更高效的代码，同时为学习和掌握算法奠定坚实的基础。</p>
 <p>数据结构分为两大类：线性结构和非线性结构。线性结构是最常用的数据结构，其特点是数据元素之间存在一对一的线性关系。根据存储方式的不同，线性结构分为顺序存储和链式存储：</p>
@@ -4103,18 +4103,18 @@ B+树的插入和删除操作较为复杂，需要调整节点结构，并可能
 
 <script>
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    new Darkmode({
+        right: '32px', 
+        bottom: 'unset', 
+        
+        time: '0.15s', 
+        mixColor: '#f7f7f7', 
+        backgroundColor: '#f7f7f7', 
+        buttonColorDark: '#212121', 
+        buttonColorLight: '#f7f7f7', 
+        saveInCookies: false, 
+        autoMatchOsTheme: true 
+    }).showWidget();
 
     function addDarkmodeWidget(){
         const hours = new Date().getHours();
@@ -4134,7 +4134,7 @@ B+树的插入和删除操作较为复杂，需要调整节点结构，并可能
         }
     }
     
-    addDarkmodeWidget();
+    
 
     
     document.addEventListener('DOMContentLoaded', function() {
@@ -4143,6 +4143,36 @@ B+树的插入和删除操作较为复杂，需要调整节点结构，并可能
             link.setAttribute('target', '_blank');
         });
     });
+
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        const uvE = document.getElementById('busuanzi_value_site_uv');
+        const pvE = document.getElementById('busuanzi_value_site_pv');
+        const uvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    uvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 10000;
+                    break;
+                }
+            }
+        });
+        const pvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    pvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 300000;
+                    break;
+                }
+            }
+        });
+        const config = {
+            childList: true
+        };
+        uvObs.observe(uvE, config);
+        pvObs.observe(pvE, config);
+    });
+
 </script>
 
 

@@ -552,11 +552,11 @@
                     <div class="post_title post_detail_title">
                         <h2 id="post_single_title">JVM中的垃圾回收机制</h2>
                         <span id="post_page_title_date" class="date">2021.04.21</span>
-                        
-                        <span id="busuanzi_container_page_pv" class="m-l-10">
-                          阅读量<span id="busuanzi_value_page_pv"></span>次
-                        </span>
-                        
+
+
+
+
+
                     </div>
                     <div class="post_content markdown"><h2 id="什么是垃圾">什么是垃圾</h2>
 <p>垃圾回收（Garbage Collection，GC），顾名思义就是释放垃圾占用的空间，防止内存爆掉。有效的使用可以使用的内存，对内存堆中已经死亡的或者长时间没有使用的对象进行清除和回收。
@@ -688,7 +688,7 @@
 <p><img alt="标记清除算法" src="/posts/annex/images/essays/%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4%E7%AE%97%E6%B3%95.png"></p>
 <p>标记的是可达对象，不是垃圾对象，清除回收的是垃圾对象。</p>
 <p>标记的是可达对象，不是垃圾对象，清除回收的是垃圾对象，那么什么是清除？</p>
-<p>所谓的清除并不是真的置空，而是把需要清除的对象地址保存在[空闲的地址列表](<a href="https://whiteppure.github.io">https://whiteppure.github.io</a>(/posts/jvm/java-object/#创建对象的过程及步骤)里。
+<p>所谓的清除并不是真的置空，而是把需要清除的对象地址保存在<a href="/posts/jvm/java-object/#%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%BF%87%E7%A8%8B%E5%8F%8A%E6%AD%A5%E9%AA%A4">空闲的地址列表</a>里。
 下次有新对象需要加载时，判断垃圾的位置空间是否够，如果够，就存放覆盖原有的地址。</p>
 <p>缺点：</p>
 <ul>
@@ -939,18 +939,18 @@ M.L.Minsky在该论文中描述的算法被人们称为复制算法，它将可�
 
 <script>
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    new Darkmode({
+        right: '32px', 
+        bottom: 'unset', 
+        
+        time: '0.15s', 
+        mixColor: '#f7f7f7', 
+        backgroundColor: '#f7f7f7', 
+        buttonColorDark: '#212121', 
+        buttonColorLight: '#f7f7f7', 
+        saveInCookies: false, 
+        autoMatchOsTheme: true 
+    }).showWidget();
 
     function addDarkmodeWidget(){
         const hours = new Date().getHours();
@@ -970,7 +970,7 @@ M.L.Minsky在该论文中描述的算法被人们称为复制算法，它将可�
         }
     }
     
-    addDarkmodeWidget();
+    
 
     
     document.addEventListener('DOMContentLoaded', function() {
@@ -979,6 +979,36 @@ M.L.Minsky在该论文中描述的算法被人们称为复制算法，它将可�
             link.setAttribute('target', '_blank');
         });
     });
+
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        const uvE = document.getElementById('busuanzi_value_site_uv');
+        const pvE = document.getElementById('busuanzi_value_site_pv');
+        const uvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    uvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 10000;
+                    break;
+                }
+            }
+        });
+        const pvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    pvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 300000;
+                    break;
+                }
+            }
+        });
+        const config = {
+            childList: true
+        };
+        uvObs.observe(uvE, config);
+        pvObs.observe(pvE, config);
+    });
+
 </script>
 
 
