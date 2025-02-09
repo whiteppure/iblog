@@ -15,36 +15,36 @@
 
 <script>
     <!-- 手动控制夜间模式  -->
-    new Darkmode({
-        right: '32px', // default: '32px'
-        bottom: 'unset', // default: '32px'
-        // left: '32px', // default: 'unset'
-        time: '0.15s', // default: '0.3s'
-        mixColor: '#f7f7f7', // default: '#fff'
-        backgroundColor: '#f7f7f7', // default: '#fff'
-        buttonColorDark: '#212121', // default: '#100f2c'
-        buttonColorLight: '#f7f7f7', // default: '#fff'
-        saveInCookies: false, // default: true,
-        autoMatchOsTheme: true // default: true
-    }).showWidget();
-
-    function addDarkmodeWidget(){
-        const hours = new Date().getHours();
-        if (hours >= 19 || hours <= 5){
-            new Darkmode({
-                right: '32px', // default: '32px'
-                bottom: 'unset', // default: '32px'
-                // left: '32px', // default: 'unset'
-                time: '0.1s', // default: '0.3s'
-                mixColor: '#f7f7f7', // default: '#fff'
-                backgroundColor: '#fff', // default: '#fff'
-                buttonColorDark: '#100f2c', // default: '#100f2c'
-                buttonColorLight: '#f7f7f7', // default: '#fff'
-                saveInCookies: false, // default: true,
-                autoMatchOsTheme: true // default: true
-            }).toggle();
-        }
-    }
+    // new Darkmode({
+    //     right: '32px', // default: '32px'
+    //     bottom: 'unset', // default: '32px'
+    //     // left: '32px', // default: 'unset'
+    //     time: '0.15s', // default: '0.3s'
+    //     mixColor: '#f7f7f7', // default: '#fff'
+    //     backgroundColor: '#f7f7f7', // default: '#fff'
+    //     buttonColorDark: '#212121', // default: '#100f2c'
+    //     buttonColorLight: '#f7f7f7', // default: '#fff'
+    //     saveInCookies: false, // default: true,
+    //     autoMatchOsTheme: true // default: true
+    // }).showWidget();
+    //
+    // function addDarkmodeWidget(){
+    //     const hours = new Date().getHours();
+    //     if (hours >= 19 || hours <= 5){
+    //         new Darkmode({
+    //             right: '32px', // default: '32px'
+    //             bottom: 'unset', // default: '32px'
+    //             // left: '32px', // default: 'unset'
+    //             time: '0.1s', // default: '0.3s'
+    //             mixColor: '#f7f7f7', // default: '#fff'
+    //             backgroundColor: '#fff', // default: '#fff'
+    //             buttonColorDark: '#100f2c', // default: '#100f2c'
+    //             buttonColorLight: '#f7f7f7', // default: '#fff'
+    //             saveInCookies: false, // default: true,
+    //             autoMatchOsTheme: true // default: true
+    //         }).toggle();
+    //     }
+    // }
     // 自动调用夜间模式
     // addDarkmodeWidget();
 
@@ -64,7 +64,7 @@
             for (let mutation of mutationsList) {
                 if (mutation.type === 'childList') {
                     uvObs.disconnect();
-                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 10000;
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 11030;
                     break;
                 }
             }
@@ -73,7 +73,7 @@
             for (let mutation of mutationsList) {
                 if (mutation.type === 'childList') {
                     pvObs.disconnect();
-                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 300000;
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 203040;
                     break;
                 }
             }
