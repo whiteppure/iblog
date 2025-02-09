@@ -8,7 +8,7 @@ slug: "jvm-heap"
 Java虚拟机定义了若干种程序运行期间会使用到的运行时数据区，其中有一些会随着虚拟机启动而创建，随着虚拟机退出而销毁。
 另外一些则是与线程一一对应的，这些与线程对应的数据区域会随着线程开始和结束而创建和销毁。
 
-![运行时数据区](/iblog/posts/annex/images/essays/运行时数据区.png)
+![运行时数据区](/posts/annex/images/essays/运行时数据区.png)
 
 运行时数据区域包括：
 - 程序计数寄存器
@@ -38,10 +38,10 @@ Java虚拟机定义了若干种程序运行期间会使用到的运行时数据�
 也就是触发了GC的时候，才会进行回收，如果堆中对象马上被回收，那么用户线程就会收到影响，一个方法频繁的调用频繁的回收程序性能会收到影响。
 所以堆是GC执行垃圾回收的重点区域。
 
-![堆内存分配](/iblog/posts/annex/images/essays/堆内存分配.png)
+![堆内存分配](/posts/annex/images/essays/堆内存分配.png)
 
 ## 堆内存细分
-![堆内存划分](/iblog/posts/annex/images/essays/堆内存划分.png)
+![堆内存划分](/posts/annex/images/essays/堆内存划分.png)
 
 Java 7及之前，堆内存逻辑上分为三部分：新生区+养老区+永久区
 - `Young Generation Space` 新生区，新生区被划分为又被划分为`Eden`区和`Survivor`区；
@@ -55,14 +55,14 @@ Java 8及之后，堆内存逻辑上分为三部分：新生区+养老区+元空
 
 堆空间内部结构，JDK1.8之后永久代替换成了元空间。
 
-![堆内存结构](/iblog/posts/annex/images/essays/堆内存结构.png)
+![堆内存结构](/posts/annex/images/essays/堆内存结构.png)
 
 ## 设置堆内存大小
 堆内存的大小是可以调节的，Java堆区用于存储Java对象实例，那么堆的大小在JVM启动时就已经设定好了，可以通过选项`-Xmx`和`-Xms`来进行设置。
 - `-Xms`用于表示堆区的起始内存，等价于 -XX:InitialHeapSize；
 - `-Xmx`则用于表示堆区的最大内存，等价于 -XX:MaxHeapSize；
 
-![设置堆大小](/iblog/posts/annex/images/essays/设置堆大小.png)
+![设置堆大小](/posts/annex/images/essays/设置堆大小.png)
 
 默认情况下，初始堆内存大小为，物理电脑内存大小/64；最大堆内存大小为，物理电脑内存大小/4。
 在生产环境和开发环境，通常会将`-Xms`和`-Xmx`两个参数配置相同的值，其目的是为了能够在 Java 垃圾回收机制清理完堆区后不需要重新分隔计算堆区的大小，从而提高性能。
@@ -84,13 +84,13 @@ public class MainTest {
 ## 查看堆内存大小
 可通过程序启动加入`-XX:+PrintGCDetails`参数来查看堆内存大小。
 
-![-XXPrintGCDetails](/iblog/posts/annex/images/essays/-XXPrintGCDetails.png)
+![-XXPrintGCDetails](/posts/annex/images/essays/-XXPrintGCDetails.png)
 
-![PrintGCDetails查看堆内存](/iblog/posts/annex/images/essays/PrintGCDetails查看堆内存.png)
+![PrintGCDetails查看堆内存](/posts/annex/images/essays/PrintGCDetails查看堆内存.png)
 
 在程序运行过程中可以通过`jstat`命令来查看堆内存大小。
 
-![jstat](/iblog/posts/annex/images/essays/jstat.png)
+![jstat](/posts/annex/images/essays/jstat.png)
 
 
 ## 年轻代与老年代
@@ -101,7 +101,7 @@ public class MainTest {
 Java堆区进一步细分的话，可以划分为年轻代和老年代。其中年轻代又可以划分为Eden区、`Survivor0` 区和 `Survivor1` 区（有时也叫做from区、to区）。
 没有明确规定，to 区是 `Survivor1`，这两个区域是不断进行交换的，是从一个区到另外一个区。
 
-![年轻代与老年代](/iblog/posts/annex/images/essays/年轻代与老年代.png)
+![年轻代与老年代](/posts/annex/images/essays/年轻代与老年代.png)
 
 年轻代是对象的诞生、成长、消亡的区域，一个对象在这里产生、应用，最后被垃圾回收器收集、结束生命。
 
@@ -114,7 +114,7 @@ Java堆区进一步细分的话，可以划分为年轻代和老年代。其中�
 - 默认`-XX:NewRatio=2`。表示新生代占1，老年代占2，新生代占整个堆的1/3；
 - 可以修改`-XX:NewRatio=4`。表示新生代占1，老年代占4，新生代占整个堆的1/5；
 
-![NewRatio](/iblog/posts/annex/images/essays/NewRatio.png)
+![NewRatio](/posts/annex/images/essays/NewRatio.png)
 
 当发现在整个项目中，生命周期长的对象偏多，那么就可以通过调整年轻代与老年代的比例，来进行调优。
 
@@ -123,21 +123,21 @@ Java堆区进一步细分的话，可以划分为年轻代和老年代。其中�
 
 在HotSpot中，`Eden`空间和另外两个`Survivor`空间缺省所占的比例是8：1：1，当然开发人员可以通过选项`-XX:SurvivorRatio`调整这个空间比例，比如：`-XX:SurvivorRatio=8`。
 
-![SurvivorRatio](/iblog/posts/annex/images/essays/SurvivorRatio.png)
+![SurvivorRatio](/posts/annex/images/essays/SurvivorRatio.png)
 
 在实际开发中使用hotspot虚拟机，默认情况下不是8：1：1，是因为虚拟机有一个自适应内存分配策略，可以通过`-XX:-UseAdaptiveSizePolicy`关闭再来进行查看。
 
 几乎所有的Java对象都是在Eden区被new出来的，绝大部分的Java对象的销毁都在新生代进行了，有些大的对象在Eden区无法存储时候，将直接进入老年代。
 IBM公司的专门研究表明，新生代中80%的对象都是“朝生夕死”的。
 
-![eden与Survivor与tenured](/iblog/posts/annex/images/essays/eden与Survivor与tenured.png)
+![eden与Survivor与tenured](/posts/annex/images/essays/eden与Survivor与tenured.png)
 
 可以使用选项`-Xmn`设置新生代最大内存大小，当`-Xmn`参数与`-XX:NewRatio`设置的值发生冲突时，会以`-Xmn`设置的具体值为准。
 
 ## 为对象分配内存
 为新对象分配内存是一件非常严谨和复杂的任务，JVM的设计者们需要考虑内存如何分配、在哪里分配等问题，并且由于内存分配算法与内存回收算法密切相关，所以还需要考虑GC执行完内存回收后是否会在内存空间中产生内存碎片。
 
-![对象内存分配策略](/iblog/posts/annex/images/essays/对象内存分配策略.png)
+![对象内存分配策略](/posts/annex/images/essays/对象内存分配策略.png)
 
 对象分配内存步骤：
 1. 新的对象先放伊甸园区，此区有大小限制，如果对象过大可能直接分配在老年代（元空间）。
@@ -177,7 +177,7 @@ public class HeapInstanceTest {
 ```
 打开`VisualVM`图形化界面，通过`VisualGC`进行动态化查看
 
-![代码演示对象分配过程](/iblog/posts/annex/images/essays/代码演示对象分配过程.gif)
+![代码演示对象分配过程](/posts/annex/images/essays/代码演示对象分配过程.gif)
 
 
 ## GC简单介绍
@@ -291,7 +291,7 @@ TLAB全称：Thread Local Allocation Buffer 译为，线程本地分配缓冲区
 为避免多个线程操作同一地址，需要使用加锁等机制，进而影响分配速度，使用锁又会影响性能，TLAB应运而生。
 多线程同时分配内存时，使用TLAB可以避免一系列的非线程安全问题，同时还能够提升内存分配的吞吐量，因此我们可以将这种内存分配方式称之为快速分配策略。
 
-![TLAB](/iblog/posts/annex/images/essays/TLAB.png)
+![TLAB](/posts/annex/images/essays/TLAB.png)
 
 从内存模型而不是垃圾收集的角度，对Eden区域继续进行划分，JVM为每个线程分配了一个私有缓存区域，它包含在Eden空间内。
 默认情况下，TLAB空间的内存非常小，仅占有整个Eden空间的1%，当然我们可以通过选项`-XX:TLABWasteTargetPercent`设置TLAB空间所占用Eden空间的百分比大小。
@@ -299,7 +299,7 @@ TLAB全称：Thread Local Allocation Buffer 译为，线程本地分配缓冲区
 对象首先是通过TLAB开辟空间，如果不能放入，那么需要通过Eden来进行分配。尽管不是所有的对象实例都能够在TLAB中成功分配内存，但JVM确实是将TLAB作为内存分配的首选。
 可以通过选项`-XX:UseTLAB`设置是否开启TLAB空间，默认是开启的。一旦对象在TLAB空间分配内存失败时，JVM就会尝试着通过使用加锁机制确保数据操作的原子性，从而直接在Eden空间中分配内存。
 
-![TLAB分配过程.png](/iblog/posts/annex/images/essays/TLAB分配过程.png)
+![TLAB分配过程.png](/posts/annex/images/essays/TLAB分配过程.png)
 
 ## JVM堆空间参数设置
 官网：https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html
@@ -403,13 +403,13 @@ class User {
 ```
 花费的时间为：881 ms
 ```
-![栈上分配逃逸分析前](/iblog/posts/annex/images/essays/栈上分配逃逸分析前.png)
+![栈上分配逃逸分析前](/posts/annex/images/essays/栈上分配逃逸分析前.png)
 
 逃逸分析之后
 ```
 花费的时间为：5 ms
 ```
-![栈上分配逃逸分析后](/iblog/posts/annex/images/essays/栈上分配逃逸分析后.png)
+![栈上分配逃逸分析后](/posts/annex/images/essays/栈上分配逃逸分析后.png)
 
 ### 同步省略
 如果一个对象只有一个线程可以访问到，那么对于这个对象的操作可以不考虑同步。

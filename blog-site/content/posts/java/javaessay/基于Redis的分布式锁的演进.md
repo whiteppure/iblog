@@ -276,7 +276,7 @@ public class RedisDistributedLock {
 `Redisson`大致工作原理，只要线程加锁成功，就会启动一个`watch dog`看门狗，它是一个后台线程，会每隔10秒检查一下，如果线程还持有锁，那么就会不断的延长锁key的生存时间。
 因此，`Redisson`解决了锁过期释放，业务没执行完问题。
 
-![Redis详解-011](/iblog/posts/annex/images/essays/Redis详解-011.png)
+![Redis详解-011](/posts/annex/images/essays/Redis详解-011.png)
 
 看似完美的解决方案，但是在高并发下可能也会出现下面的异常：
 ```text

@@ -8,7 +8,7 @@ slug: "pay-code"
 
 
 ## 结构
-![整合支付功能](/iblog/posts/annex/images/essays/整合支付功能-01.jpg)
+![整合支付功能](/posts/annex/images/essays/整合支付功能-01.jpg)
 
 完整代码：[https://gitee.com/gitee_pikaqiu/easy-archetype](https://gitee.com/gitee_pikaqiu/easy-archetype)
 ## pom.xml

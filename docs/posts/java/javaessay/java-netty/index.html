@@ -22,19 +22,19 @@
 
 	
 
-    <link rel="shortcut icon" href="https://whiteppure.github.io/iblog/images/favicon.ico" />
+    <link rel="shortcut icon" href="https://whiteppure.github.io/images/favicon.ico" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/normalize.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/animate.min.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/zozo.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/zozo.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/remixicon.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/highlight.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/highlight.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/toc.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/search.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/img.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/toc.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/search.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/img.css" />
 
     
     
@@ -844,13 +844,13 @@
         <div class="nav_container animated fadeInDown">
     <div class="site_nav" id="site_nav">
         <ul><li class="">
-                <a href="https://whiteppure.github.io/iblog/">首页</a>
+                <a href="https://whiteppure.github.io/">首页</a>
             </li><li class="">
-                <a href="https://whiteppure.github.io/iblog/posts/">归档</a>
+                <a href="https://whiteppure.github.io/posts/">归档</a>
             </li><li class="">
-                <a href="https://whiteppure.github.io/iblog/tags/">标签</a>
+                <a href="https://whiteppure.github.io/tags/">标签</a>
             </li><li class="">
-                <a href="https://whiteppure.github.io/iblog/about/">关于</a>
+                <a href="https://whiteppure.github.io/about/">关于</a>
             </li>
         </ul>
     </div>
@@ -862,7 +862,7 @@
     <div class="site_title_container">
         <div class="site_title">
             <h1>
-                <a href="https://whiteppure.github.io/iblog/">
+                <a href="https://whiteppure.github.io/">
                     <span>脚踏实地</span>
                 </a>
             </h1>
@@ -881,7 +881,7 @@
                     </a>
                     
                 
-                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                <a href="https://whiteppure.github.io/index.xml" type="application/rss+xml" title="rss" target="_blank">
                     <i class="ri-rss-fill"></i>
                 </a>
                 
@@ -948,7 +948,7 @@
 <p><code>Netty</code>在<code>Reactor</code>模型的基础上进行了进一步的优化和扩展。它通过异步编程技术和管道机制提升了性能和开发效率。
 <code>Netty</code>的事件循环机制经过优化，减少了线程和上下文切换的开销。管道机制将数据处理分解为多个阶段，使得网络应用的开发更加灵活和高效。</p>
 <h3 id="传统io模型">传统IO模型</h3>
-<p><img alt="传统IO模型" src="/iblog/posts/annex/images/essays/%E4%BC%A0%E7%BB%9FIO%E6%A8%A1%E5%9E%8B.png"></p>
+<p><img alt="传统IO模型" src="/posts/annex/images/essays/%E4%BC%A0%E7%BB%9FIO%E6%A8%A1%E5%9E%8B.png"></p>
 <p>在阻塞IO模型中，线程在执行IO操作时会被阻塞，直到操作完成。例如，当一个线程发起读操作时，它会一直等待数据到达，无法处理其他任务。
 这种模型简单易理解，但在高并发环境下，可能会导致大量的线程阻塞和上下文切换，从而降低系统的性能。</p>
 <p>传统IO模型通常使用阻塞方式处理IO操作，其中每个IO请求都会分配一个线程，该线程在等待数据传输时会被阻塞。
@@ -959,12 +959,12 @@
 <p><code>Reactor</code>模型是一种高效处理并发IO操作的设计模式，主要依赖事件驱动机制和非阻塞IO。
 它基于IO复用模型，多个连接共用一个阻塞对象，应用程序只需要在一个阻塞对象等待，无需阻塞等待所有连接。 当某个连接有新的数据可以处理时，操作系统通知应用程序，线程从阻塞状态返回，开始进行业务处理。
 <code>Netty</code>主要基于主从<code>Reactor</code>多线程模型做了一定的改进。</p>
-<p><img alt="Reactor模式" src="/iblog/posts/annex/images/essays/Reactor%E6%A8%A1%E5%BC%8F.png"></p>
+<p><img alt="Reactor模式" src="/posts/annex/images/essays/Reactor%E6%A8%A1%E5%BC%8F.png"></p>
 <p>为了避免浪费创建了一个线程池，当客户端发起请求时，通过<code>DispatcherHandler</code>进行分发请求处理到线程池，线程池中在使用具体的线程进行事件处理。
 服务器端程序处理传入的多个请求，并将它们同步分派到相应的处理线程，因此<code>Reactor</code>模式也叫<code>Dispatcher</code>模式。
 <code>Reactor</code>模式使用IO复用监听事件，收到事件后，分发给某个线程，这点就是网络服务器高并发处理关键。</p>
 <h4 id="单reactor单线程">单Reactor单线程</h4>
-<p><img alt="单Reactor单线程" src="/iblog/posts/annex/images/essays/%E5%8D%95Reactor%E5%8D%95%E7%BA%BF%E7%A8%8B.png"></p>
+<p><img alt="单Reactor单线程" src="/posts/annex/images/essays/%E5%8D%95Reactor%E5%8D%95%E7%BA%BF%E7%A8%8B.png"></p>
 <p>工作原理：</p>
 <ul>
 <li><code>Reactor</code>对象通过<code>Select</code>监控客户端请求事件，收到事件后通过<code>Dispatch</code>进行分发；</li>
@@ -977,7 +977,7 @@
 <p>这个模型的局限性包括处理能力的限制。在高并发场景中，单线程可能成为性能瓶颈，无法处理大量的并发请求。此外，如果某个IO操作发生阻塞，可能会影响到其他事件的处理，导致整体系统性能下降。
 单<code>Reactor</code>单线程模型适用于连接数目较少、负载不高的应用场景，例如小型网络服务或低并发的应用。在处理高并发、大流量的应用时，可能需要使用多 Reactor 或多线程模型，以更好地满足性能需求。</p>
 <h4 id="单reactor多线程">单Reactor多线程</h4>
-<p><img alt="单Reactor多线程" src="/iblog/posts/annex/images/essays/%E5%8D%95Reactor%E5%A4%9A%E7%BA%BF%E7%A8%8B.png"></p>
+<p><img alt="单Reactor多线程" src="/posts/annex/images/essays/%E5%8D%95Reactor%E5%A4%9A%E7%BA%BF%E7%A8%8B.png"></p>
 <p>工作原理：</p>
 <ul>
 <li><code>Reactor</code>对象通过对<code>select</code>监听请求事件，收到请求事件后交给<code>Dispatch</code>进行转发；</li>
@@ -991,7 +991,7 @@
 但是<code>Reactor</code>对象在处理所有事件的监听和响应都是单线程的，在高并发场景容易出现性能瓶颈。</p>
 <h4 id="主从reactor多线程">主从Reactor多线程</h4>
 <p><code>Reactor</code>主线程可以对应多个<code>Reactor</code>子线程，即<code>MainRecator</code>可以关联多个<code>SubReactor</code>，从而解决了<code>Reactor</code> 在单线程中运行，高并发场景下容易成为性能瓶颈。</p>
-<p><img alt="主从Reactor线程" src="/iblog/posts/annex/images/essays/%E4%B8%BB%E4%BB%8EReactor%E7%BA%BF%E7%A8%8B.png"></p>
+<p><img alt="主从Reactor线程" src="/posts/annex/images/essays/%E4%B8%BB%E4%BB%8EReactor%E7%BA%BF%E7%A8%8B.png"></p>
 <p>工作原理：</p>
 <ul>
 <li><code>Reactor</code>主线程<code>MainReactor</code>对象通过<code>select</code>监听连接事件，收到事件后，通过<code>Acceptor</code>处理连接事件；</li>
@@ -1008,13 +1008,13 @@
 尽管该模型的实现复杂度增加，但它在处理大量并发请求时提供了卓越的性能和扩展性。</p>
 <h3 id="netty模型">Netty模型</h3>
 <p><code>Netty</code>的线程模型设计旨在高效处理大量并发连接，并最大限度地利用CPU资源。其核心思想是将IO操作和业务逻辑处理分开，通过线程池和事件循环机制实现异步处理。</p>
-<p><img alt="Netty模型" src="/iblog/posts/annex/images/essays/Netty%E6%A8%A1%E5%9E%8B.png"></p>
+<p><img alt="Netty模型" src="/posts/annex/images/essays/Netty%E6%A8%A1%E5%9E%8B.png"></p>
 <p><code>Netty</code>的线程模型设计高效地支持大规模并发网络通信。核心包括两个主要类型的线程：</p>
 <ul>
 <li>主事件循环线程（<code>Boss Thread</code>）：主要负责监听和接受新的网络连接。<code>Netty</code>中的<code>ServerBootstrap</code>配置了一个或多个主事件循环线程，这些线程负责绑定网络端口并接收客户端的连接请求。当新的连接到达时，主线程会将这些连接注册到工作事件循环线程上进行进一步处理。</li>
 <li>工作事件循环线程（<code>Worker Thread</code>）：负责处理已经建立连接的IO操作，包括读取和写入数据。每个连接的IO操作由工作线程负责处理，这些线程通常以线程池的形式存在，可以并行处理多个连接的IO事件。<code>Netty</code>允许为工作线程配置多个线程组，从而能够高效地处理大量并发请求。</li>
 </ul>
-<p><img alt="netty结构" src="/iblog/posts/annex/images/essays/netty%E7%BB%93%E6%9E%84.png"></p>
+<p><img alt="netty结构" src="/posts/annex/images/essays/netty%E7%BB%93%E6%9E%84.png"></p>
 <p>工作流程：</p>
 <ul>
 <li><code>Netty</code>抽象出两组线程池 <code>BossGroup</code>专门负责接收客户端的连接，<code>WorkerGroup</code>专门负责网络的读写；<code>BossGroup</code>和<code>WorkerGroup</code>类型都是<code>NioEventLoopGroup</code>；</li>
@@ -1037,7 +1037,7 @@
 <li>每个<code>WorkerNioEventLoop</code>处理业务时，会使用<code>pipeline</code>，<code>pipeline</code>中包含了<code>channel</code>，即通过<code>pipeline</code>可以获取到对应通道，管道中维护了很多的处理器；</li>
 </ul>
 <h2 id="netty核心组件">Netty核心组件</h2>
-<img src="/iblog/posts/annex/images/essays/Netty核心组件.svg" alt=""/>
+<img src="(/posts/annex/images/essays/Netty核心组件.svg" alt=""/>
 <ul>
 <li><code>Bootstrap/ServerBootstrap</code>: <code>Bootstrap</code> 用于客户端的启动配置，指定服务器地址、端口等参数。<code>ServerBootstrap</code> 用于服务端配置，处理客户端连接请求。这两个组件通过 <code>EventLoopGroup</code> 配置 IO 线程池，管理网络 IO 操作的线程资源。</li>
 <li><code>EventLoopGroup</code>: 这个组件管理着多个 <code>EventLoop</code> 实例，每个 <code>EventLoop</code> 负责处理网络 IO 操作。<code>EventLoopGroup</code> 通过线程池分配线程给 <code>EventLoop</code>，使得网络事件的处理更加高效。启动工具通过 <code>EventLoopGroup</code> 配置和管理这些线程池。</li>
@@ -2114,9 +2114,9 @@
                                     <i class="ri-stack-line"></i>
                                     
                                         
-                                        <a href="https://whiteppure.github.io/iblog/tags/netty/">Netty</a>
+                                        <a href="https://whiteppure.github.io/tags/netty/">Netty</a>
                                     
-                                        <a href="https://whiteppure.github.io/iblog/tags/%E8%AF%A6%E8%A7%A3/">详解</a>
+                                        <a href="https://whiteppure.github.io/tags/%E8%AF%A6%E8%A7%A3/">详解</a>
                                     
                                     
                                 </span>
@@ -2132,7 +2132,7 @@
     <div id="vcomments"></div>
 </div>
 
-<link rel="stylesheet" href="https://whiteppure.github.io/iblog/css/comments.css" />
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
 
 <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
 
@@ -2241,20 +2241,20 @@
         <span>from 2021</span>
     </div>
 </footer>
-    <script src="https://whiteppure.github.io/iblog/js/jquery-3.5.1.min.js"></script>
-<link href="https://whiteppure.github.io/iblog/css/fancybox.min.css" rel="stylesheet">
-<script src="https://whiteppure.github.io/iblog/js/fancybox.min.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/darkmode.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/zozo.js"></script>
+    <script src="https://whiteppure.github.io/js/jquery-3.5.1.min.js"></script>
+<link href="https://whiteppure.github.io/css/fancybox.min.css" rel="stylesheet">
+<script src="https://whiteppure.github.io/js/fancybox.min.js"></script>
+<script src="https://whiteppure.github.io/js/darkmode.js"></script>
+<script src="https://whiteppure.github.io/js/zozo.js"></script>
 
-<script src="https://whiteppure.github.io/iblog/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/html2canvas.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/utils.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/html2md.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/htmlexport.js"></script>
+<script src="https://whiteppure.github.io/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
+<script src="https://whiteppure.github.io/js/html2canvas.js"></script>
+<script src="https://whiteppure.github.io/js/utils.js"></script>
+<script src="https://whiteppure.github.io/js/html2md.js"></script>
+<script src="https://whiteppure.github.io/js/htmlexport.js"></script>
 
-<script src="https://whiteppure.github.io/iblog/js/fastsearch.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/fuse.js"></script>
+<script src="https://whiteppure.github.io/js/fastsearch.js"></script>
+<script src="https://whiteppure.github.io/js/fuse.js"></script>
 
 <script>
     

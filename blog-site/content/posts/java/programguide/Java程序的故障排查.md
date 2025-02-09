@@ -450,11 +450,11 @@ JDK命令用于诊断和优化Java应用程序的性能，分析JVM行为。通�
 通过`jconsole`，用户可以实时监控JVM的性能、内存使用情况、线程状态等，并对应用程序进行管理和配置。
 这款工具的好处在于，占用系统资源少，而且结合`jstat`可以有效监控Java内存的变动情况，以及引起变动的原因。在项目追踪内存泄露问题时，很实用。
 
-![常见故障排查及程序配置-002](/iblog/posts/annex/images/essays/常见故障排查及程序配置-002.png)
+![常见故障排查及程序配置-002](/posts/annex/images/essays/常见故障排查及程序配置-002.png)
 
-![常见故障排查及程序配置-001](/iblog/posts/annex/images/essays/常见故障排查及程序配置-001.png)
+![常见故障排查及程序配置-001](/posts/annex/images/essays/常见故障排查及程序配置-001.png)
 
-![常见故障排查及程序配置-003](/iblog/posts/annex/images/essays/常见故障排查及程序配置-003.png)
+![常见故障排查及程序配置-003](/posts/annex/images/essays/常见故障排查及程序配置-003.png)
 
 ## 分析工具
 
@@ -471,15 +471,15 @@ JDK命令用于诊断和优化Java应用程序的性能，分析JVM行为。通�
 
 `VisualVM`支持插件扩展，可以在`VisualVM`上安装插件，也可以将`VisualVM`安装在IDEA上。
 
-![常见故障排查及程序配置-006](/iblog/posts/annex/images/essays/常见故障排查及程序配置-006.png)
+![常见故障排查及程序配置-006](/posts/annex/images/essays/常见故障排查及程序配置-006.png)
 
-![常见故障排查及程序配置-007](/iblog/posts/annex/images/essays/常见故障排查及程序配置-007.png)
+![常见故障排查及程序配置-007](/posts/annex/images/essays/常见故障排查及程序配置-007.png)
 
 `VisualVM`可以生成`dump`文件，生成的`dump`文件是临时的，如果想要保留该文件需要右键另存为即可。
 
-![常见故障排查及程序配置-004](/iblog/posts/annex/images/essays/常见故障排查及程序配置-004.png)
+![常见故障排查及程序配置-004](/posts/annex/images/essays/常见故障排查及程序配置-004.png)
 
-![常见故障排查及程序配置-005](/iblog/posts/annex/images/essays/常见故障排查及程序配置-005.png)
+![常见故障排查及程序配置-005](/posts/annex/images/essays/常见故障排查及程序配置-005.png)
 
 如果堆文件数据较大，排查起来很困难，可以使用`OQL`语句进行筛选。
 > OQL全称，Object Query Language类似于SQL查询的一种语言，OQL使用SQL语法，可以在堆中进行对象的筛选。
@@ -507,11 +507,11 @@ JDK命令用于诊断和优化Java应用程序的性能，分析JVM行为。通�
 
 `VisualVM`也可以将两个`dump`文件进行比较。
 
-![常见故障排查及程序配置-008](/iblog/posts/annex/images/essays/常见故障排查及程序配置-008.png)
+![常见故障排查及程序配置-008](/posts/annex/images/essays/常见故障排查及程序配置-008.png)
 
 `VisualVM`不但可以生成堆的`dump`文件，也可以对线程`dump`。
 
-![常见故障排查及程序配置-009](/iblog/posts/annex/images/essays/常见故障排查及程序配置-009.png)
+![常见故障排查及程序配置-009](/posts/annex/images/essays/常见故障排查及程序配置-009.png)
 
 ### Eclipse MAT
 全称Eclipse Memory Analyzer Tool，是一个强大的Java内存分析工具，用于分析Java 堆转储文件。它帮助开发人员和运维人员识别和解决内存泄漏、内存占用过高等问题。MAT提供了多种分析功能，包括对象分布分析、泄漏查询、内存占用分析等。
@@ -526,20 +526,20 @@ MAT是Eclipse开发的，不仅可以单独使用，还可以作为插件嵌入�
 
 使用MAT分析`dump`文件，生成可疑泄漏报告。在生成可疑泄漏报告后，会在对应的堆转储文件目录下生成一个zip文件。
 
-![常见故障排查及程序配置-010](/iblog/posts/annex/images/essays/常见故障排查及程序配置-010.png)
+![常见故障排查及程序配置-010](/posts/annex/images/essays/常见故障排查及程序配置-010.png)
 
-![常见故障排查及程序配置-011](/iblog/posts/annex/images/essays/常见故障排查及程序配置-011.png)
+![常见故障排查及程序配置-011](/posts/annex/images/essays/常见故障排查及程序配置-011.png)
 
-![常见故障排查及程序配置-012](/iblog/posts/annex/images/essays/常见故障排查及程序配置-012.png)
+![常见故障排查及程序配置-012](/posts/annex/images/essays/常见故障排查及程序配置-012.png)
 
-![常见故障排查及程序配置-013](/iblog/posts/annex/images/essays/常见故障排查及程序配置-013.png)
+![常见故障排查及程序配置-013](/posts/annex/images/essays/常见故障排查及程序配置-013.png)
 
-![常见故障排查及程序配置-016](/iblog/posts/annex/images/essays/常见故障排查及程序配置-016.png)
+![常见故障排查及程序配置-016](/posts/annex/images/essays/常见故障排查及程序配置-016.png)
 
 
 MAT最主要的功能是分析`dump`文件，其中比较重要的功能就是直方图对象图。
 
-![常见故障排查及程序配置-015](/iblog/posts/annex/images/essays/常见故障排查及程序配置-015.png)
+![常见故障排查及程序配置-015](/posts/annex/images/essays/常见故障排查及程序配置-015.png)
 
 - 浅堆：一个对象结构所占用的大小，即对象头+实例数据+对齐填充，不包括内部引用对象大小；
 - 深堆：一个对象被 GC 回收后，可以真实释放的内存大小；
@@ -547,7 +547,7 @@ MAT最主要的功能是分析`dump`文件，其中比较重要的功能就是�
 
 举个例子
 
-![常见故障排查及程序配置-017](/iblog/posts/annex/images/essays/常见故障排查及程序配置-017.png)
+![常见故障排查及程序配置-017](/posts/annex/images/essays/常见故障排查及程序配置-017.png)
 
 - `Object2`浅堆大小：为`Object2`本身；
 - `Object2`深堆大小：`Object2`本身加上`Object6`，因为`Object5`被`Object1`引用；
@@ -556,4 +556,4 @@ MAT最主要的功能是分析`dump`文件，其中比较重要的功能就是�
 在MAT中，可以选择直方图视图来查看每个堆转储文件中的对象分布。
 通过对比不同时间点的堆转储，识别持续增长的对象数量，从而帮助发现内存泄漏。
 
-![常见故障排查及程序配置-014](/iblog/posts/annex/images/essays/常见故障排查及程序配置-014.png)
+![常见故障排查及程序配置-014](/posts/annex/images/essays/常见故障排查及程序配置-014.png)

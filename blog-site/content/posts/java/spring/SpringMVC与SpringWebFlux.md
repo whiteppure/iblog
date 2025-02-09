@@ -21,7 +21,7 @@ SpringMVC是基于Spring的，是Spring中的一个模块，专门用来做Web�
 更多详情查看[官方资料](https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc)这里不在赘述。
 
 ### MVC架构
-![MVC架构图](/iblog/posts/annex/images/essays/SpringMVC与SpringWebFlux-02.jpg)
+![MVC架构图](/posts/annex/images/essays/SpringMVC与SpringWebFlux-02.jpg)
 
 MVC模式是一种将应用程序分为三个主要部分的架构模式，主要用于分离应用程序的内部表示和用户交互。它由以下三个部分组成：
 - `Model`（模型）：处理与应用程序的数据和业务逻辑相关的部分。
@@ -32,7 +32,7 @@ SpringMVC是一种基于Spring框架的MVC设计模型，它是Spring框架的�
 SpringMVC的核心思想是将MVC设计模式应用于Spring框架，实现了请求-响应模式，将业务逻辑、数据、显示分离，提高了部分代码的复用性，降低了各个模块间的耦合性。
 
 ### 请求处理流程
-![SpringMVC原理图](/iblog/posts/annex/images/essays/SpringMVC与SpringWebFlux-01.jpg)
+![SpringMVC原理图](/posts/annex/images/essays/SpringMVC与SpringWebFlux-01.jpg)
 
 流程描述:
 - 用户发送请求至前端控制器 `DispatcherServlet`;
@@ -174,7 +174,7 @@ SpringWebFlux是一个异步非阻塞式的 Web 框架，所以它特别适合�
 ### 请求处理流程
 SpringWebFlux因为将默认的Web服务器改为Netty，所以底层实现依赖Reactor模式。Spring做的就是通过抽象和封装，把Reactor的能力通过Controller来使用。
 
-![SpringMVC与SpringWebFlux](/iblog/posts/annex/images/essays/SpringMVC与SpringWebFlux-03.jpg)
+![SpringMVC与SpringWebFlux](/posts/annex/images/essays/SpringMVC与SpringWebFlux-03.jpg)
 
 请求执行的流程大致和SpringMVC差不多，SpringMVC核心控制器是`DispatcherServlet`，SpringWebFlux核心处理器是`DispatcherHandler`：
 - 先是通过`RequestMapping`，拿到`HandlerMethod`处理器；
@@ -273,7 +273,7 @@ public class UserHandler {
 ```
 
 ## 两者使用对比及建议
-![SpringMVC与SpringWebFlux](/iblog/posts/annex/images/essays/SpringMVC与SpringWebFlux-04.jpg)
+![SpringMVC与SpringWebFlux](/posts/annex/images/essays/SpringMVC与SpringWebFlux-04.jpg)
 
 SpringWebFlux并不是SpringMVC的替代方案，两者可以混合使用，都可以使用SpringMVC注解，如`@Controller`、`@RequestMapping`等。均可以使用Tomcat、Jetty、Undertow Servlet 容器。
 

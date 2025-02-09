@@ -13,7 +13,7 @@ Spring是一个轻量级的Java开源框架，是为了解决企业应用开发�
 - IOC叫控制反转，在没用IOC之前都要手动`new`创建对象，使用IOC之后由容器进行对象的创建，并且由容器来管理对象，减去了开发上的成本，提高了工作效率。
 - AOP叫面向切面编程，在实际项目开发中需要嵌入一些与业务不想关的代码的时候就可以使用AOP。比如，权限日志的增加。
 
-![Spring详解-001](/iblog/posts/annex/images/spring/Spring详解-001.png)
+![Spring详解-001](/posts/annex/images/spring/Spring详解-001.png)
 
 Spring虽然把它当成框架来使用，但其本质是一个容器，即IOC容器。里面最核心是如何创建对象和管理对象，包含了Bean的生命周期和Spring的一些扩展点，也包含对AOP的应用。
 除此之外，Spring真正的强大之处在于其生态，它包含了`Spring Framework`、`SpringBoot`、`SpringCloud`等一些列框架，极大提高了开发效率。
@@ -24,7 +24,7 @@ Spring虽然把它当成框架来使用，但其本质是一个容器，即IOC�
 - `SpringCloud`则进一步扩展了`SpringBoot`，专注于解决分布式系统开发中的复杂性。它提供了诸如服务发现、配置中心、负载均衡、断路器、网关等微服务模式的实现。`SpringCloud`的出现使得开发者能够更轻松地构建和管理分布式系统，提高了系统的弹性和可伸缩性。
 
 ## Spring启动流程
-![Spring详解-004](/iblog/posts/annex/images/spring/Spring详解-004.png)
+![Spring详解-004](/posts/annex/images/spring/Spring详解-004.png)
 
 Spring启动流程的主要步骤及对应的代码如下：
 1. 启动入口，从main方法调用`SpringApplication.run`。
@@ -200,7 +200,7 @@ public void refresh() throws BeansException, IllegalStateException {
 Spring循环依赖是指两个或多个Bean相互依赖，导致Spring无法在不部分实例化这些Bean的情况下完成它们的创建。
 在Spring框架中，为了解决循环依赖问题，Spring使用了三级缓存机制。
 
-![Spring详解-003](/iblog/posts/annex/images/spring/Spring详解-003.png)
+![Spring详解-003](/posts/annex/images/spring/Spring详解-003.png)
 
 假设BeanA依赖BeanB，BeanB依赖BeanA，Spring循环依赖调用流程如下：
 1. 初始化BeanA：
@@ -922,7 +922,7 @@ public class UserService {
  */
 public interface Aware {}
 ```
-![Aware子接口](/iblog/posts/annex/images/essays/Aware子接口.png)
+![Aware子接口](/posts/annex/images/essays/Aware子接口.png)
 
 常用的`Aware`接口：
 - `ApplicationContextAware`，允许Bean访问`ApplicationContext`，从而可以访问容器中的其他Bean或执行更高级的容器操作。
@@ -1293,7 +1293,7 @@ public static void registerAspectJAnnotationAutoProxyCreatorIfNecessary(
 }
 ```
 
-![AOP核心组件1](/iblog/posts/annex/images/essays/AOP核心组件.png)
+![AOP核心组件1](/posts/annex/images/essays/AOP核心组件.png)
 
 `@EnableAspectJAutoProxy`注解最主要的作用实际上就是通过`@Import`注解把`AnnotationAwareAspectJAutoProxyCreator`这个对象注入到Spring容器中。
 现在只要把`AnnotationAwareAspectJAutoProxyCreator`组件何时注册搞懂，`AspectJAutoProxyRegistrar`组件何时注册也就明白了。

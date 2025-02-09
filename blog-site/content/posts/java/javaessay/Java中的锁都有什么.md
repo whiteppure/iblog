@@ -617,7 +617,7 @@ public class ResourceOrderingExample {
 ```
 
 #### 使用银行家算法避免死锁
-![银行家算法](/iblog/posts/annex/images/essays/银行家算法.png)
+![银行家算法](/posts/annex/images/essays/银行家算法.png)
 
 银行家算法：一个避免死锁的著名算法，是由艾兹格·迪杰斯特拉在1965年为T.H.E系统设计的一种避免死锁产生的算法。它以银行借贷系统的分配策略为基础，判断并保证系统的安全运行。
 

@@ -61,7 +61,7 @@ pBridge->Register(kDestroy);
 
 ## 垃圾回收主要关注的区域
 垃圾收集器主要对方法区 、堆中的垃圾进行收集。
-![GC作用区域](/iblog/posts/annex/images/essays/GC作用区域.png)
+![GC作用区域](/posts/annex/images/essays/GC作用区域.png)
 
 垃圾收集器可以对年轻代回收，也可以对老年代回收，甚至是全栈和方法区的回收，其中Java堆是垃圾收集器的工作重点。
 
@@ -89,7 +89,7 @@ pBridge->Register(kDestroy);
 这个方法实现简单，效率高，但是目前主流的虚拟机中并没有选择这个算法来管理内存，其最主要的原因是它很难解决对象之间循环引用的问题。
 当p的指针断开的时候，内部的引用形成一个循环，从而造成内存泄漏。
 
-![循环引用](/iblog/posts/annex/images/essays/循环引用.png)
+![循环引用](/posts/annex/images/essays/循环引用.png)
 
 虽然引用计数算法存在循环引用的问题，但是很多语言的资源回收选择，例如：因人工智能而更加火热的Python，它更是同时支持引用计数和垃圾收集机制。
 具体哪种最优是要看场景的，业界有大规模实践中仅保留引用计数机制，以提高吞吐量的尝试。
@@ -101,7 +101,7 @@ pBridge->Register(kDestroy);
 ### 可达性分析算法
 可达性分析算法是以根对象集合`GCRoots`为起始点，从这些节点开始向下搜索，节点所走过的路径称为引用链，当一个对象到`GCRoots`没有任何引用链相连的话，则证明此对象是不可用的，需要被回收。
 
-![可达性分析算法](/iblog/posts/annex/images/essays/可达性分析算法.png)
+![可达性分析算法](/posts/annex/images/essays/可达性分析算法.png)
 
 相对于引用计数算法而言，可达性分析算法不仅同样具备实现简单和执行高效等特点，更重要的是，该算法可以有效地解决在引用计数算法中循环引用的问题，防止内存泄漏的发生。
 只要你无法与`GCRoot`建立直接或间接的连接，系统就会判定你为可回收对象。所谓根集合`GCRoots`就是一组必须活跃的引用，即有在栈中有指针指向堆中的地址，它们是程序运行时的起点，是一切引用链的源头。
@@ -117,7 +117,7 @@ pBridge->Register(kDestroy);
 
 除了堆空间产生对象的一些结构外，比如：虚拟机栈、本地方法栈、方法区、字符串常量池等地方对堆空间的对象的引用，都可以作为`GCRoots`进行可达性分析。
 
-![对象集合GCroots](/iblog/posts/annex/images/essays/对象集合GCroots.png)
+![对象集合GCroots](/posts/annex/images/essays/对象集合GCroots.png)
 
 如何判定是否为`GC root`?
 由于Root采用栈方式存放变量和指针，所以如果一个指针，保存了堆内存里面的对象，但是自己又不存放在堆内存里面，那它就是一个`GC root`。代码演示：
@@ -157,13 +157,13 @@ public class StackReference {
 - 标记：垃圾收集器从引用根节点（GCRoots）开始遍历，标记所有被引用的对象，一般是在对象的Header中记录为可达对象。
 - 清除：垃圾收集器对堆内存从头到尾进行线性的遍历，如果发现某个对象在其Header中没有标记为可达对象，则将其回收。
 
-![标记清除算法](/iblog/posts/annex/images/essays/标记清除算法.png)
+![标记清除算法](/posts/annex/images/essays/标记清除算法.png)
 
 标记的是可达对象，不是垃圾对象，清除回收的是垃圾对象。
 
 标记的是可达对象，不是垃圾对象，清除回收的是垃圾对象，那么什么是清除？
 
-所谓的清除并不是真的置空，而是把需要清除的对象地址保存在[空闲的地址列表](https://whiteppure.github.io/iblog/posts/jvm/java-object/#创建对象的过程及步骤)里。
+所谓的清除并不是真的置空，而是把需要清除的对象地址保存在[空闲的地址列表](https://whiteppure.github.io(/posts/jvm/java-object/#创建对象的过程及步骤)里。
 下次有新对象需要加载时，判断垃圾的位置空间是否够，如果够，就存放覆盖原有的地址。
 
 缺点：
@@ -175,7 +175,7 @@ public class StackReference {
 复制算法是在标记清除算法上演化而来的，为了解决标记清除算法的内存碎片问题，M.L.Minsky于1963年发表了著名的论文：“使用双存储区的Lisp语言垃圾收集器（CA LISP Garbage Collector Algorithm Using Serial Secondary Storage）”。
 M.L.Minsky在该论文中描述的算法被人们称为复制算法，它将可用内存按容量划分为大小相等的两块，每次只使用其中的一块，它也被M.L.Minsky成功地引入到了Lisp语言的一个实现版本中。
 
-![复制算法](/iblog/posts/annex/images/essays/复制算法.png)
+![复制算法](/posts/annex/images/essays/复制算法.png)
 
 将分配内存空间分为两块，每次只使用其中一块，在垃圾回收时将正在使用的内存中存活对象复制到未被使用的内存块中去，之后清除正在使用的内存块中的所有对象，交换两个内存的角色，最后完成垃圾回收。
 
@@ -194,7 +194,7 @@ M.L.Minsky在该论文中描述的算法被人们称为复制算法，它将可�
 标记清除算法的确可以应用在老年代中，但是该算法不仅执行效率低下，而且在执行完内存回收后还会产生内存碎片，所以JVM的设计者需要在此基础之上进行改进。
 1970年前后，`G.L.Steele、C.J.Chene`和`D.s.Wise`等研究者发布标记整理算法。在许多现代的垃圾收集器中，人们都使用了标记整理算法或其改进版本。
 
-![标记整理算法](/iblog/posts/annex/images/essays/标记整理算法.png)
+![标记整理算法](/posts/annex/images/essays/标记整理算法.png)
 
 标记整理算法，标记过程仍然与标记清除算法一样，但后续步骤不是直接对可回收对象进行清理，而是让所有存活的对象都向一端移动，再清理掉端边界以外的内存区域。
 

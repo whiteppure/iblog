@@ -28,7 +28,7 @@ slug: "springboot-elasticsearch"
 ## 引入pom依赖
 要注意导入依赖的版本和安装`Elasticsearch`的版本与`springboot`的兼容问题。
 
-![springbootelasticsearch.jpg](/iblog/posts/annex/images/application/Springboot对应elasticseach版本.jpg)
+![springbootelasticsearch.jpg](/posts/annex/images/application/Springboot对应elasticseach版本.jpg)
 
 ```xml
 <dependency>

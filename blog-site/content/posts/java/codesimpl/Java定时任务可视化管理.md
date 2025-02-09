@@ -9,7 +9,7 @@ slug: "scheduled-job"
 
 代码结构
 
-![定时任务可视化管理-01](/iblog/posts/annex/images/essays/定时任务可视化管理-01.png)
+![定时任务可视化管理-01](/posts/annex/images/essays/定时任务可视化管理-01.png)
 
 ## pom依赖
 ```xml

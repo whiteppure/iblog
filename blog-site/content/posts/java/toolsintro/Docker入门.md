@@ -59,11 +59,11 @@ slug: "docker-start"
 
 以阿里云获取镜像地址为例， [https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors](https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors)登陆后，左侧菜单选中镜像加速器就可以看到你的专属地址了。
 
-![获取阿里云docker地址](/iblog/posts/annex/images/application/获取阿里云docker地址.jpg)
+![获取阿里云docker地址](/posts/annex/images/application/获取阿里云docker地址.jpg)
 
 配置`Docker`镜像地址，添加以下内容：
 
-![docker配置](/iblog/posts/annex/images/application/docker配置.jpg)
+![docker配置](/posts/annex/images/application/docker配置.jpg)
 
 也可以创建或编辑`/etc/docker/daemon.json`文件，并添加以下内容：
 ```text
@@ -81,12 +81,12 @@ sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```
 在终端执行`docker info`命令。
-![docker信息](/iblog/posts/annex/images/application/docker信息.jpg)
+![docker信息](/posts/annex/images/application/docker信息.jpg)
 
 出现上图所示，`Docker`镜像加速器配置成功。
 
 ## 工作原理
-![docker架构](/iblog/posts/annex/images/application/docker架构.png)
+![docker架构](/posts/annex/images/application/docker架构.png)
 
 `Docker`架构分为三部分，客户端、宿主机、注册中心。
 1. `Docker`客户端是用户与`Docker`交互的接口。用户通过客户端输入命令（如 `docker run`），这些命令会发送到`Docker`守护进程来执行。

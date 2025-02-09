@@ -186,7 +186,7 @@ public class ResourceOrderingExample {
 ```
 
 #### 使用银行家算法避免死锁
-![银行家算法](/iblog/posts/annex/images/essays/银行家算法.png)
+![银行家算法](/posts/annex/images/essays/银行家算法.png)
 
 银行家算法：一个避免死锁的著名算法，是由艾兹格·迪杰斯特拉在1965年为T.H.E系统设计的一种避免死锁产生的算法。它以银行借贷系统的分配策略为基础，判断并保证系统的安全运行。
 
@@ -422,7 +422,7 @@ public class MemoryLeak {
 根据运维之前收集到的内存数据、GC日志尝试判断哪里出现了问题。
 结果发现老年代的内存使用就算是发生GC也一直居高不下，而且随着时间推移也越来越高。
 
-![内存泄漏问题-01](/iblog/posts/annex/images/essays/内存泄漏问题-01.png)
+![内存泄漏问题-01](/posts/annex/images/essays/内存泄漏问题-01.png)
 
 使用`jstat -gc <vmid>` 查看GC垃圾回收统计信息，看`Full GC`后堆空间使用内存还持续增长，且有增长到`Xmx`设定值的趋势，基本可以肯定存在内存泄露。
 如果当前完全垃圾回收后内存增长到一个值之后，又能回落，总体上处于一个动态平衡，那么内存泄漏基本可以排除；也可以隔断时间抽取老年代占用内存情况，如果老年代占用情况持续上升也很有可能存在内存泄露的情况。
@@ -435,15 +435,15 @@ public class MemoryLeak {
 使用MAT定位内存泄漏思路：
 1. 打开MAT中`histogram`，找到堆内存中占用最大的对象，内存泄漏很有可能就是由大对象导致的；
 
-   ![MAT-01](/iblog/posts/annex/images/essays/MAT-01.png)
+   ![MAT-01](/posts/annex/images/essays/MAT-01.png)
 2. 由大对象找被哪些线程引用，查看内存占用最大的线程；
 
-   ![MAT-02](/iblog/posts/annex/images/essays/MAT-02.png)
-   ![MAT-03](/iblog/posts/annex/images/essays/MAT-03.png)
+   ![MAT-02](/posts/annex/images/essays/MAT-02.png)
+   ![MAT-03](/posts/annex/images/essays/MAT-03.png)
 3. 从线程中的堆栈信息找到项目中自定义的包和对象，从而可定位到具体的代码；
 
-   ![MAT-04](/iblog/posts/annex/images/essays/MAT-04.png)
-   ![MAT-05](/iblog/posts/annex/images/essays/MAT-05.png)
+   ![MAT-04](/posts/annex/images/essays/MAT-04.png)
+   ![MAT-05](/posts/annex/images/essays/MAT-05.png)
 
 ## 解决线上接口慢
 线上接口很慢，线上生产问题,我们绝对不能马虎放过抱着侥幸心理，必须要找到根本原因及时处理，防止下次留下更大的坑。

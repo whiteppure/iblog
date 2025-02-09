@@ -224,19 +224,19 @@ slug: "js-snow"
 ```
 
 ## 图片
-![Js雪花飘落](/iblog/posts/annex/images/readme/Js雪花飘落-con-bg.png)
+![Js雪花飘落](/posts/annex/images/readme/Js雪花飘落-con-bg.png)
 
-![Js雪花飘落](/iblog/posts/annex/images/readme/Js雪花飘落-header-bg.png)
+![Js雪花飘落](/posts/annex/images/readme/Js雪花飘落-header-bg.png)
 
-![Js雪花飘落](/iblog/posts/annex/images/readme/Js雪花飘落-ice.png)
+![Js雪花飘落](/posts/annex/images/readme/Js雪花飘落-ice.png)
 
-![Js雪花飘落](/iblog/posts/annex/images/readme/Js雪花飘落-snow.png)
+![Js雪花飘落](/posts/annex/images/readme/Js雪花飘落-snow.png)
 
-![Js雪花飘落](/iblog/posts/annex/images/readme/Js雪花飘落-snow-bg.png)
+![Js雪花飘落](/posts/annex/images/readme/Js雪花飘落-snow-bg.png)
 
-![Js雪花飘落](/iblog/posts/annex/images/readme/Js雪花飘落-tree.png)
+![Js雪花飘落](/posts/annex/images/readme/Js雪花飘落-tree.png)
 
 
 ## 运行效果
-![Js雪花飘落](/iblog/posts/annex/images/readme/Js-雪花飘落-01.png)
+![Js雪花飘落](/posts/annex/images/readme/Js-雪花飘落-01.png)
 

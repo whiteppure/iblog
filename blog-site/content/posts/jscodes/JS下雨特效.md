@@ -161,5 +161,5 @@ canvas雨滴逻辑思路:
 </html>
 ```
 ## 运行效果
-![Js下雨特效-01.png](/iblog/posts/annex/images/readme/Js下雨特效-01.png)
+![Js下雨特效-01.png](/posts/annex/images/readme/Js下雨特效-01.png)
 

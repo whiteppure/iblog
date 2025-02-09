@@ -10,14 +10,14 @@ slug: "jvm-classloader"
 在Java中，类加载器把一个class装入JVM中，要经过以下步骤： 加载、验证、准备、解析和初始化。其中验证，准备，解析统称为连接。
 这5个阶段一般是顺序发生的，但在动态绑定的情况下，解析阶段发生在初始化阶段之后。
 
-![Jvm内存图](/iblog/posts/annex/images/essays/Jvm内存图.png)
+![Jvm内存图](/posts/annex/images/essays/Jvm内存图.png)
 
 类加载器只负责class文件的加载，至于它是否可以运行，则由执行引擎(Execution Engine)决定。
 被加载的类信息存放于一块称为方法区的内存空间。除了类的信息外，方法区中还会存放运行时常量池信息，可能还包括字符串字面量和数字常量。
 
 类加载过程流程图：
 
-![类加载过程](/iblog/posts/annex/images/essays/类加载过程.png)
+![类加载过程](/posts/annex/images/essays/类加载过程.png)
 
 ### 加载
 加载阶段是类加载过程的第一个阶段。在这个阶段，JVM 的主要目的是将字节码从各个位置（网络、磁盘等）转化为二进制字节流加载到内存中，接着会为这个类在 JVM 的方法区创建一个对应的 Class 对象，这个 Class 对象就是这个类各种数据的访问入口。
@@ -307,7 +307,7 @@ public class MyClassLoader extends ClassLoader {
 ```
 
 ## 双亲委派模型
-![双亲委派模型](/iblog/posts/annex/images/essays/双亲委派模型.png)
+![双亲委派模型](/posts/annex/images/essays/双亲委派模型.png)
 
 ClassLoader 类使用委托模型来搜索类和资源，每个 ClassLoader 实例都有一个相关的父类加载器。需要查找类或资源时，ClassLoader 实例会在试图亲自查找类或资源之前，将搜索类或资源的任务委托给其父类加载器。
 这种层次关系称为**类加载器的双亲委派模型。** 我们把每一层上面的类加载器叫做当前层类加载器的父加载器，当然，它们之间的父子关系并不是通过继承关系来实现的，而是使用组合关系来复用父加载器中的代码。

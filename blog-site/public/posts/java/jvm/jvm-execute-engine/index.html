@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh" >
-<head><script src="/iblog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=iblog/livereload" data-no-instant defer></script>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,19 +22,19 @@
 
 	
 
-    <link rel="shortcut icon" href="http://localhost:1313/iblog/images/favicon.ico" />
+    <link rel="shortcut icon" href="http://localhost:1313/images/favicon.ico" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/normalize.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/animate.min.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/zozo.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/zozo.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/remixicon.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/highlight.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/highlight.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/toc.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/search.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/img.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/toc.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/search.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/img.css" />
 
     
     
@@ -448,13 +448,13 @@
         <div class="nav_container animated fadeInDown">
     <div class="site_nav" id="site_nav">
         <ul><li class="">
-                <a href="http://localhost:1313/iblog/">首页</a>
+                <a href="http://localhost:1313/">首页</a>
             </li><li class="">
-                <a href="http://localhost:1313/iblog/posts/">归档</a>
+                <a href="http://localhost:1313/posts/">归档</a>
             </li><li class="">
-                <a href="http://localhost:1313/iblog/tags/">标签</a>
+                <a href="http://localhost:1313/tags/">标签</a>
             </li><li class="">
-                <a href="http://localhost:1313/iblog/about/">关于</a>
+                <a href="http://localhost:1313/about/">关于</a>
             </li>
         </ul>
     </div>
@@ -466,7 +466,7 @@
     <div class="site_title_container">
         <div class="site_title">
             <h1>
-                <a href="http://localhost:1313/iblog/">
+                <a href="http://localhost:1313/">
                     <span>脚踏实地</span>
                 </a>
             </h1>
@@ -485,7 +485,7 @@
                     </a>
                     
                 
-                <a href="http://localhost:1313/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                <a href="http://localhost:1313/index.xml" type="application/rss+xml" title="rss" target="_blank">
                     <i class="ri-rss-fill"></i>
                 </a>
                 
@@ -540,18 +540,18 @@
                     </div>
                     <div class="post_content markdown"><h2 id="概述">概述</h2>
 <p>执行引擎是Java虚拟机核心的组成部分之一，属于JVM的下层，里面包括 解释器、及时编译器、垃圾回收器。</p>
-<p><img alt="执行引擎" src="/iblog/posts/annex/images/essays/%E6%89%A7%E8%A1%8C%E5%BC%95%E6%93%8E.png"></p>
+<p><img alt="执行引擎" src="/posts/annex/images/essays/%E6%89%A7%E8%A1%8C%E5%BC%95%E6%93%8E.png"></p>
 <p>“虚拟机”是一个相对于“物理机”的概念，这两种机器都有代码执行能力，其区别是物理机的执行引擎是直接建立在处理器、缓存、指令集和操作系统层面上的，而虚拟机的执行引擎则是由软件自行实现的，因此可以不受物理条件制约地定制指令集与执行引擎的结构体系，能够执行那些不被硬件直接支持的指令集格式。</p>
 <p>JVM的主要任务是负责装载字节码到其内部，但字节码并不能够直接运行在操作系统之上，因为字节码指令并非等价于本地机器指令，它内部包含的仅仅只是一些能够被JVM所识别的字节码指令、符号表，以及其他辅助信息。
 那么，如果想要让一个Java程序运行起来，执行引擎的任务就是将字节码指令 解释/编译 为对应平台上的本地机器指令才可以。
 简单来说，JVM中的执行引擎充当了将高级语言翻译为机器语言的译者。</p>
 <p>所有的Java虚拟机的执行引擎输入，输出都是一致的，即输入的是字节码二进制流，处理过程是字节码解析执行的等效过程，输出的是执行过程。</p>
 <h2 id="工作流程">工作流程</h2>
-<p><img alt="执行引擎工作流程" src="/iblog/posts/annex/images/essays/%E6%89%A7%E8%A1%8C%E5%BC%95%E6%93%8E%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png"></p>
+<p><img alt="执行引擎工作流程" src="/posts/annex/images/essays/%E6%89%A7%E8%A1%8C%E5%BC%95%E6%93%8E%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png"></p>
 <p>执行引擎负责将字节码指令翻译为cpu执行的命令。在执行过程中究竟执行什么样的字节码指令完全依赖于PC寄存器，每当执行完一项指令操作后，PC寄存器就会更新下一条需要被执行的指令地址。
 当然方法在执行的过程中，执行引擎有可能会通过存储在局部变量表中的对象引用准确定位到存储在Java堆区中的对象实例信息，以及通过对象头中的元数据指针定位到目标对象的类型信息。</p>
 <h2 id="执行过程">执行过程</h2>
-<p><img alt="执行引擎执行过程" src="/iblog/posts/annex/images/essays/%E6%89%A7%E8%A1%8C%E5%BC%95%E6%93%8E%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B.png"></p>
+<p><img alt="执行引擎执行过程" src="/posts/annex/images/essays/%E6%89%A7%E8%A1%8C%E5%BC%95%E6%93%8E%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B.png"></p>
 <p>大部分的程序代码转换成物理机的目标代码或虚拟机能执行的指令集之前，都需要经过图中的各个步骤：</p>
 <ol>
 <li>前面橙色部分是生成字节码文件的过程，和JVM无关；</li>
@@ -564,7 +564,7 @@
 <p>如今Java采用的是解释和编译混合的模式，JVM在执行Java代码的时候，会将解释执行与编译执行二者结合起来进行。</p>
 <p>执行引擎获取到，由<code>javac</code>将源码编译成字节码文件<code>.class</code>之后，然后在运行的时候通过解释器<code>interpreter</code>转换成最终的机器码。
 另外JVM平台支持一种叫作<em>即时编译的技术</em>。即时编译的目的是避免函数被解释执行，它将整个函数体编译成为机器码，这种方式可以使执行效率大幅度提升。</p>
-<p><img alt="解释器&amp;即时编译器" src="/iblog/posts/annex/images/essays/%E8%A7%A3%E9%87%8A%E5%99%A8&%E5%8D%B3%E6%97%B6%E7%BC%96%E8%AF%91%E5%99%A8.png"></p>
+<p><img alt="解释器&amp;即时编译器" src="/posts/annex/images/essays/%E8%A7%A3%E9%87%8A%E5%99%A8&%E5%8D%B3%E6%97%B6%E7%BC%96%E8%AF%91%E5%99%A8.png"></p>
 <p>为什么说Java是半解释半编译型语言？</p>
 <p>最初的Java语言只有解释器，所以定位为“解释执行”还是比较准确的，即先编译成字节码，再对字节码逐行用解释器解释执行。
 后来Java也发展出来可以直接生成本地代码的编译器，即JVM执行引擎中解释器和即时编译器共存的，所以叫做半解释半编译型。</p>
@@ -598,7 +598,7 @@
 <li>去虚拟化：对唯一的实现樊进行内联；</li>
 <li>冗余消除：在运行期间把一些不会执行的代码折叠掉；</li>
 </ul>
-<p>C2的优化主要是在全局层面，<a href="https://whiteppure.github.io/iblog/posts/jvm/jvm-heap/#%E9%80%83%E9%80%B8%E5%88%86%E6%9E%90">逃逸分析</a>是优化的基础。基于逃逸分析在C2上有如下几种优化：</p>
+<p>C2的优化主要是在全局层面，[逃逸分析](<a href="https://whiteppure.github.io">https://whiteppure.github.io</a>(/posts/jvm/jvm-heap/#逃逸分析)是优化的基础。基于逃逸分析在C2上有如下几种优化：</p>
 <ul>
 <li>标量替换：用标量值代替聚合对象的属性值；</li>
 <li>栈上分配：对于未逃逸的对象分配对象在栈而不是堆；</li>
@@ -645,7 +645,7 @@
 <li><code>-Xcomp</code>：完全采用即时编译器模式执行程序。如果即时编译出现问题，解释器会介入执行；</li>
 <li><code>-Xmixed</code>：采用解释器+即时编译器的混合模式共同执行程序。</li>
 </ul>
-<p><img alt="Hotspot编译器解释器切换" src="/iblog/posts/annex/images/essays/Hotspot%E7%BC%96%E8%AF%91%E5%99%A8%E8%A7%A3%E9%87%8A%E5%99%A8%E5%88%87%E6%8D%A2.png"></p>
+<p><img alt="Hotspot编译器解释器切换" src="/posts/annex/images/essays/Hotspot%E7%BC%96%E8%AF%91%E5%99%A8%E8%A7%A3%E9%87%8A%E5%99%A8%E5%88%87%E6%8D%A2.png"></p>
 <h2 id="静态提前编译器">静态提前编译器</h2>
 <p>JDK9 引入了静态提前编译器（Ahead of Time Compiler）。
 Java 9引入了实验性AOT编译工具AOTC。它借助了Graal编译器，将所输入的Java类文件转换为机器码，并存放至生成的动态共享库之中。</p>
@@ -694,9 +694,9 @@ Java 9引入了实验性AOT编译工具AOTC。它借助了Graal编译器，将�
                                     <i class="ri-stack-line"></i>
                                     
                                         
-                                        <a href="http://localhost:1313/iblog/tags/java/">Java</a>
+                                        <a href="http://localhost:1313/tags/java/">Java</a>
                                     
-                                        <a href="http://localhost:1313/iblog/tags/jvm/">JVM</a>
+                                        <a href="http://localhost:1313/tags/jvm/">JVM</a>
                                     
                                     
                                 </span>
@@ -712,7 +712,7 @@ Java 9引入了实验性AOT编译工具AOTC。它借助了Graal编译器，将�
     <div id="vcomments"></div>
 </div>
 
-<link rel="stylesheet" href="http://localhost:1313/iblog/css/comments.css" />
+<link rel="stylesheet" href="http://localhost:1313/css/comments.css" />
 
 <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
 
@@ -821,20 +821,20 @@ Java 9引入了实验性AOT编译工具AOTC。它借助了Graal编译器，将�
         <span>from 2021</span>
     </div>
 </footer>
-    <script src="http://localhost:1313/iblog/js/jquery-3.5.1.min.js"></script>
-<link href="http://localhost:1313/iblog/css/fancybox.min.css" rel="stylesheet">
-<script src="http://localhost:1313/iblog/js/fancybox.min.js"></script>
-<script src="http://localhost:1313/iblog/js/darkmode.js"></script>
-<script src="http://localhost:1313/iblog/js/zozo.js"></script>
+    <script src="http://localhost:1313/js/jquery-3.5.1.min.js"></script>
+<link href="http://localhost:1313/css/fancybox.min.css" rel="stylesheet">
+<script src="http://localhost:1313/js/fancybox.min.js"></script>
+<script src="http://localhost:1313/js/darkmode.js"></script>
+<script src="http://localhost:1313/js/zozo.js"></script>
 
-<script src="http://localhost:1313/iblog/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
-<script src="http://localhost:1313/iblog/js/html2canvas.js"></script>
-<script src="http://localhost:1313/iblog/js/utils.js"></script>
-<script src="http://localhost:1313/iblog/js/html2md.js"></script>
-<script src="http://localhost:1313/iblog/js/htmlexport.js"></script>
+<script src="http://localhost:1313/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
+<script src="http://localhost:1313/js/html2canvas.js"></script>
+<script src="http://localhost:1313/js/utils.js"></script>
+<script src="http://localhost:1313/js/html2md.js"></script>
+<script src="http://localhost:1313/js/htmlexport.js"></script>
 
-<script src="http://localhost:1313/iblog/js/fastsearch.js"></script>
-<script src="http://localhost:1313/iblog/js/fuse.js"></script>
+<script src="http://localhost:1313/js/fastsearch.js"></script>
+<script src="http://localhost:1313/js/fuse.js"></script>
 
 <script>
     
@@ -873,7 +873,7 @@ Java 9引入了实验性AOT编译工具AOTC。它借助了Graal编译器，将�
 
     
     document.addEventListener('DOMContentLoaded', function() {
-        var links = document.querySelectorAll('.content');
+        var links = document.querySelectorAll('.content a');
         links.forEach(function(link) {
             link.setAttribute('target', '_blank');
         });

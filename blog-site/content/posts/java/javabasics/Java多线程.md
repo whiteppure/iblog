@@ -15,7 +15,7 @@ slug: "rookie-multi-thread"
 
 Java程序是多线程程序，每启动一个Java程序，至少我们知道的都会包含一个主线程和一个垃圾回收线程。而且启动的时候，每条线程可以并行执行不同的任务。
 
-![线程与进程的关系](/iblog/posts/annex/images/essays/线程与进程的关系.jpg)
+![线程与进程的关系](/posts/annex/images/essays/线程与进程的关系.jpg)
 
 ## 线程的并行、串行、并发
 - 并行：前提是在多核CPU，多个线程同时被多个CPU执行，同时执行的线程并不会抢占CPU资源。
@@ -34,7 +34,7 @@ Java程序是多线程程序，每启动一个Java程序，至少我们知道的
 而对于多CPU的计算机说，同一时间能干多个事，如果多个CPU同时执行多个线程就是并行，如果一个CPU同时执行多个线程就是并行。
 
 并行与并发区别图解
-![并行与并发区别](/iblog/posts/annex/images/essays/并行与并发区别.png)
+![并行与并发区别](/posts/annex/images/essays/并行与并发区别.png)
 
 并发是两个队列交替使用一台咖啡机，并行是两个队列同时使用两台咖啡机；
 如果串行，一个队列使用一台咖啡机，那么哪怕前面那个人便秘了去厕所呆半天，后面的人也只能死等着他回来才能去接咖啡，这种效率无疑是最低的。
@@ -138,7 +138,7 @@ public class MainTest {
 ## 线程的状态
 线程状态共包含6种，通过`Thread.State`枚举类表示的。6种状态又可以互相的转换，线程状态转换关系：
 
-![线程状态转换](/iblog/posts/annex/images/essays/线程转换图.jpg)
+![线程状态转换](/posts/annex/images/essays/线程转换图.jpg)
 
 1. 新建状态(New): 线程被创建但尚未启动。例如，`Thread t = new Thread();` 状态为NEW；调用线程对象的`start()`方法会使线程从NEW状态转变为RUNNABLE状态。
 2. 可运行状态(Runnable): 线程在Java虚拟机中执行中。这包括运行状态和就绪状态，线程可能正在运行，也可能等待操作系统为其分配CPU时间。
@@ -545,7 +545,7 @@ public class AsyncConfig {
 ```
 
 #### 线程池工作原理
-![线程池工作原理](/iblog/posts/annex/images/essays/线程池工作原理.png)
+![线程池工作原理](/posts/annex/images/essays/线程池工作原理.png)
 
 在创建了线程池后，等待提交过来的任务请求，当调用`execute`方法添加一个请求任务时，线程池会做如下判断：
 1. 如果当前运行的线程数小于`corePoolSize`，那么马上创建线程运行该任务。
@@ -559,7 +559,7 @@ public class AsyncConfig {
 - 当阻塞队列是空时，从队列中获取元素的操作将会被阻塞。
 - 当阻塞队列是满时，往队列里添加元素的操作将会被阻塞。
 
-![阻塞队列](/iblog/posts/annex/images/essays/阻塞队列结构.jpeg)
+![阻塞队列](/posts/annex/images/essays/阻塞队列结构.jpeg)
 
 在多线程编程中，阻塞队列扮演着重要角色，特别适用于生产者-消费者模式，确保线程之间的同步和有序执行。阻塞队列的本质是一种数据结构，用于存储待执行的任务。
 当任务提交给线程池时，如果核心线程已满或任务队列达到容量上限，新任务将被放入阻塞队列中，等待执行条件的满足。
@@ -1255,7 +1255,7 @@ public class ResourceOrderingExample {
 ```
 
 #### 使用银行家算法避免死锁
-![银行家算法](/iblog/posts/annex/images/essays/银行家算法.png)
+![银行家算法](/posts/annex/images/essays/银行家算法.png)
 
 银行家算法：一个避免死锁的著名算法，是由艾兹格·迪杰斯特拉在1965年为T.H.E系统设计的一种避免死锁产生的算法。它以银行借贷系统的分配策略为基础，判断并保证系统的安全运行。
 
@@ -1461,7 +1461,7 @@ public class TryLockExample {
 JMM规定了变量的读取和写入如何在主内存和各线程的工作内存之间进行，保证了并发编程的**原子性**、**可见性**及**有序性**。
 内存模型解决并发问题主要采用两种方式，**限制处理器优化**和使用**内存屏障**。
 
-![Java内存模型](/iblog/posts/annex/images/essays/Java内存模型.jpg)
+![Java内存模型](/posts/annex/images/essays/Java内存模型.jpg)
 
 ### 原子性
 原子性指的是一个操作或一组操作在执行时不可被中断，即这些操作要么全部完成，要么全部不完成。
@@ -1805,7 +1805,7 @@ flags: ACC_PUBLIC, ACC_STATIC, ACC_VOLATILE
 ```text
 openjdk8/hotspot/src/share/vm/interpreter/bytecodeInterpreter.cpp
 ```
-![volitile字节码](/iblog/posts/annex/images/essays/volitile字节码.png)
+![volitile字节码](/posts/annex/images/essays/volitile字节码.png)
 
 重点是`cache->is_volatile()`方法，调用栈如下：
 ```text
@@ -1850,7 +1850,7 @@ inline void OrderAccess::fence() {
 
 为了提高CPU处理器的执行速度，在处理器和内存之间增加了多级缓存来提升。但是由于引入了多级缓存，就存在缓存数据不一致问题。
 
-![CPU多级缓存](/iblog/posts/annex/images/essays/CPU多级缓存.jpg)
+![CPU多级缓存](/posts/annex/images/essays/CPU多级缓存.jpg)
 
 所以如果一个变量被`volatile`所修饰的话，在每次数据变化之后，其值都会被强制刷入主存。
 而其他处理器的缓存由于遵守了缓存一致性协议，也会把这个变量的值从主存加载到自己的缓存中。这就保证了一个`volatile`在并发编程中，其值在多个缓存中是可见的。
@@ -2158,7 +2158,7 @@ ObjectMonitor() {
 
 当多个线程同时访问一段同步代码时，首先会进入`_EntryList`队列中，当某个线程获取到对象的`monitor`后进入`_Owner`区域，并把`monitor`中的`_owner`变量设置为当前线程，同时`monitor`中的计数器`_count`加1，即获得对象锁。
 
-![synchronized原理](/iblog/posts/annex/images/essays/synchronized原理.gif)
+![synchronized原理](/posts/annex/images/essays/synchronized原理.gif)
 
 若此时持有`monitor`的线程调用`wait()`方法，将释放当前对象持有的`monitor`，`_owner`变量恢复为`null`，`_count`自减1，同时该线程进入`_WaitSet`集合中等待被唤醒。若当前线程执行完毕也将释放`monitor`并复位变量的值，以便其他线程进入获取`monitor`。
 
@@ -2602,7 +2602,7 @@ CPU处理器速度远远大于在主内存中的速度，为了加快访问速�
 每个CPU核心都有自己的缓存，用于存储频繁访问的数据。当一个线程在某个CPU核心上修改了共享变量的值时，其他CPU核心上缓存中的该变量会被标记为无效，这样其他线程再访问该变量时就会重新从主内存中获取最新值，从而保证了数据的一致性。
 CAS操作通过CPU提供的原子指令`cmpxchg`来比较和交换变量的值，它的原子性和线程安全性依赖于CPU的硬件支持和缓存一致性协议的保障。
 
-![CPU多级缓存](/iblog/posts/annex/images/essays/CPU多级缓存.jpg)
+![CPU多级缓存](/posts/annex/images/essays/CPU多级缓存.jpg)
 
 所以当执行CAS方法时，读取变量当前的值，并与预期值进行比较。如果变量的当前值等于预期值，则将其更新为新值。如果变量的当前值不等于预期值，则不执行更新操作。
 注意CAS操作是原子的，即整个过程不会被其他线程打断。
@@ -2700,7 +2700,7 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
 
 `java.util.concurrent`包中的锁在`locks`包下：
 
-![juc.locks](/iblog/posts/annex/images/essays/juc.locks.png)
+![juc.locks](/posts/annex/images/essays/juc.locks.png)
 
 `Lock`和`ReadWriteLock`是两大锁的根接口，`Lock`代表实现类是`ReentrantLock`，`ReadWriteLock`的代表实现类是`ReentrantReadWriteLock`。
 
@@ -2987,19 +2987,19 @@ AQS是指`java.util.concurrent.locks`包下的一个抽象类`AbstractQueuedSync
 
 在JUC包下，能够看到有许多类都继承了AQS，如`ReentrantLock`、`CountDownLatch`、`ReentrantReadWriteLock`、`Semaphore`。
 
-![JUC.locks包UML](/iblog/posts/annex/images/essays/JUC.locks包UML.png)
+![JUC.locks包UML](/posts/annex/images/essays/JUC.locks包UML.png)
 
 AQS是用来构建锁或其它同步器组件的重要基础框架，以及是整个JUC体系的基石，它用于实现依赖先进先出队列的阻塞锁和相关的同步器。
 AQS提供了一个框架，用于创建在等待队列中具有独占或共享模式的同步器。
 
-![AQS](/iblog/posts/annex/images/essays/AQS.png)
+![AQS](/posts/annex/images/essays/AQS.png)
 
 AQS可以理解为一个框架，因为它定义了一些JUC包下常用"锁"的标准。
 AQS简单来说，包含一个`status`和一个队列。`status`保存线程持有锁的状态，用于判断该线程获没获取到锁，没获取到锁就去队列中排队。
 AQS中的队列，是指CLH队列（Craig， Landin， and Hagerste[三个人名组成]）锁队列的变体，是一个双向队列。
 队列中的元素即`Node`结点，每个`Node`中包含：头结点、尾结点、等待状态、存放的线程等。`Node`遵循从尾部入队，从头部出队的规则，即先进先出原则。
 
-![AQS简单理解](/iblog/posts/annex/images/essays/AQS简单理解.png)
+![AQS简单理解](/posts/annex/images/essays/AQS简单理解.png)
 
 在多线程并发环境下，使用`lock`加锁，当处在加锁与解锁之间的代码，只能有一个线程来执行。这时候其他线程不能够获取锁，如果不处理线程就会造成了堵塞。
 在AQS框架中，会将暂时获取不到锁的线程加入到队列里，这个队列就是AQS的抽象表现。它会将这些线程封装成队列的结点，通过CAS、自旋以及`LockSupport.park()`的方式，维护`state`变量的状态，使并发达到同步的效果。
@@ -3069,7 +3069,7 @@ Java提供了两种锁机制来控制多个线程对共享资源的互斥访问�
 在多线程并发环境下，某个线程持有锁，将`state`由0设置为1，如果有其他线程再次进入，线程则会经过一系列判断，然后构建`Node`结点，最终形成双向链表结构。
 最后执行`LockSupport.park()`方法，将等待的线程挂起，如果当前持有锁的线程释放了锁，则将`state`变量设置为0，调用`LockSpoort.unpark()`方法指定唤醒等待队列中的某个线程。
 
-![reentrantLock加锁](/iblog/posts/annex/images/essays/reentrantLock加锁.png)
+![reentrantLock加锁](/posts/annex/images/essays/reentrantLock加锁.png)
 
 `ReentrantLock`加锁有两种形式，默认是非公平锁，但可以通过构造方法来指定为公平锁。
 ```java
@@ -3291,7 +3291,7 @@ public final void acquire(int arg) {
 当等待的线程被唤起后，检查中断状态，如果处于中断状态，那么需要中断当前线程。
 
 #### 释放锁原理
-![reentrantLock解锁](/iblog/posts/annex/images/essays/reentrantLock解锁.png)
+![reentrantLock解锁](/posts/annex/images/essays/reentrantLock解锁.png)
 
 `ReentrantLock`释放锁调用栈：
 ```text
@@ -3416,7 +3416,7 @@ public class MainTest {
 ```
 `CyclicBarrier`要做的事情是，让一组线程达到一个屏障时被阻塞，直到最后一个线程达到屏障时，所有被屏障拦截的线程才会继续干活，线程进入屏障通过`CyclicBarrier.await()`方法。
 
-![CyclicBarrier](/iblog/posts/annex/images/essays/CyclicBarrier.gif)
+![CyclicBarrier](/posts/annex/images/essays/CyclicBarrier.gif)
 
 `CyclicBarrier`是基于`ReentrantLock`实现的，其底层也是基于AQS。
 `CyclicBarrier`通过一个内部的计数器和一个锁来实现线程间的协调。当所有线程都调用`await`方法时，计数器递减，当计数器为零时，所有等待的线程将被唤醒，并重置计数器，以便下一次使用。
@@ -3863,7 +3863,7 @@ public ConcurrentHashMap(int initialCapacity, float loadFactor, int concurrencyL
 ```
 相比之下，JDK1.8中的`ConcurrentHashMap`改进了这一点，不再使用固定的分段数量，而是根据当前的容量动态调整分段的数量，从而更好地适应不同的并发场景，提升了并发性能和灵活性。
 
-![jdk1.7ConcurrentHashMap](/iblog/posts/annex/images/essays/jdk1.7ConcurrentHashMap.png)
+![jdk1.7ConcurrentHashMap](/posts/annex/images/essays/jdk1.7ConcurrentHashMap.png)
 
 整个`ConcurrentHashMap`被划分为多个分段，每个分段都是一个独立的哈希表。每个分段独立加锁，细化了锁的粒度，同时允许多个线程同时操作不同的分段，从而提高并发性能。
 使用`ReentrantLock`锁定分段，在执行插入、删除或更新操作时，只有操作涉及的分段会被锁定，其他分段不受影响。
@@ -3985,7 +3985,7 @@ JDK1.8中彻底放弃了`Segment`转而采用的是`Node`，其设计思想也�
 `ConcurrentHashMap`在JDK1.8中不再使用分段锁，而是使用与`HashMap`类似的数组+链表/红黑树的数据结构。
 数组中的每个桶是一个链表或红黑树的头节点。`HashMap`不同的是`ConcurrentHashMap`只是增加了同步操作来控制并发。
 
-![jdk1.8ConcurrentHashMap](/iblog/posts/annex/images/essays/jdk1.8ConcurrentHashMap.png)
+![jdk1.8ConcurrentHashMap](/posts/annex/images/essays/jdk1.8ConcurrentHashMap.png)
 
 插入操作首先根据键的哈希值定位到具体的桶。如果该桶为空，则使用CAS操作插入新的节点。如果该桶非空，则使用`synchronized`锁定该桶，并进行链表或红黑树的插入操作。
 ```text

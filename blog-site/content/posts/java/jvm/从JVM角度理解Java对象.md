@@ -111,7 +111,7 @@ slug: "jvm-object"
     ```
 
 ## 对象的创建步骤
-![对象创建步骤](/iblog/posts/annex/images/essays/对象创建步骤.png)
+![对象创建步骤](/posts/annex/images/essays/对象创建步骤.png)
 
 以下面代码为例，创建对象字节码指令如下：
 ```java
@@ -121,7 +121,7 @@ public class MainTest {
     }
 }
 ```
-![创建对象字节码指令](/iblog/posts/annex/images/essays/创建对象字节码指令.png)
+![创建对象字节码指令](/posts/annex/images/essays/创建对象字节码指令.png)
 
 1. 首先是通过`new`指令在堆上为对象分配内存。
 2. 紧接着调用构造方法，`dup`指令复制对象引用，并将其压入操作数栈。`invokespecial`指令调用`java.lang.Object`的构造方法`<init>`，用于初始化对象。
@@ -153,7 +153,7 @@ public class MainTest {
 6. 执行`init`方法进行初始化。初始化成员变量，执行实例化代码块，调用类的构造方法，并把堆内对象的首地址赋值给引用变量。因此一般来说（由字节码中跟随 `invokespecial` 指令所决定），new指令之后会接着执行方法，把对象按照程序员的意愿进行初始化，这样一个真正可用的对象才算完成创建出来。
 
 ## 对象组成
-![Java对象的布局](/iblog/posts/annex/images/essays/Java对象的布局.png)
+![Java对象的布局](/posts/annex/images/essays/Java对象的布局.png)
 
 ### 查看对象的组成
 ```xml
@@ -304,7 +304,7 @@ Java中的锁机制分为多种类型，主要包括偏向锁、轻量级锁和�
 ## 对象的访问定位
 JVM是如何通过栈帧中的对象引用访问到其内部的对象实例呢？
 
-![对象指针访问](/iblog/posts/annex/images/essays/对象指针访问.png)
+![对象指针访问](/posts/annex/images/essays/对象指针访问.png)
 
 hotspot使用的是直接访问，因为句柄访问开辟了句柄池，所以直接访问相较于句柄访问效率稍高一点。
 
@@ -313,12 +313,12 @@ hotspot使用的是直接访问，因为句柄访问开辟了句柄池，所以�
 
 `reference`中存储稳定句柄地址，对象被移动（垃圾收集时移动对象很普遍）时只会改变句柄中实例数据指针即可，`reference` 本身不需要被修改。
 
-![句柄访问](/iblog/posts/annex/images/essays/句柄访问.png)
+![句柄访问](/posts/annex/images/essays/句柄访问.png)
 
 ### 直接访问
 直接指针是局部变量表中的引用，直接指向堆中的实例，在对象实例中有类型指针，指向的是方法区中的对象类型数据。
 
-![直接访问](/iblog/posts/annex/images/essays/直接访问.png)
+![直接访问](/posts/annex/images/essays/直接访问.png)
 
 ## 对象的终止机制
 `finalize`方法是Java提供的对象终止机制，允许开发人员提供对象被销毁之前的自定义处理逻辑。

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh" >
-<head><script src="/iblog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=iblog/livereload" data-no-instant defer></script>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,19 +22,19 @@
 
 	
 
-    <link rel="shortcut icon" href="http://localhost:1313/iblog/images/favicon.ico" />
+    <link rel="shortcut icon" href="http://localhost:1313/images/favicon.ico" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/normalize.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/animate.min.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/zozo.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/zozo.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/remixicon.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/highlight.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/highlight.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/toc.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/search.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/img.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/toc.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/search.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/img.css" />
 
     
     
@@ -1500,13 +1500,13 @@
         <div class="nav_container animated fadeInDown">
     <div class="site_nav" id="site_nav">
         <ul><li class="">
-                <a href="http://localhost:1313/iblog/">首页</a>
+                <a href="http://localhost:1313/">首页</a>
             </li><li class="">
-                <a href="http://localhost:1313/iblog/posts/">归档</a>
+                <a href="http://localhost:1313/posts/">归档</a>
             </li><li class="">
-                <a href="http://localhost:1313/iblog/tags/">标签</a>
+                <a href="http://localhost:1313/tags/">标签</a>
             </li><li class="">
-                <a href="http://localhost:1313/iblog/about/">关于</a>
+                <a href="http://localhost:1313/about/">关于</a>
             </li>
         </ul>
     </div>
@@ -1518,7 +1518,7 @@
     <div class="site_title_container">
         <div class="site_title">
             <h1>
-                <a href="http://localhost:1313/iblog/">
+                <a href="http://localhost:1313/">
                     <span>脚踏实地</span>
                 </a>
             </h1>
@@ -1537,7 +1537,7 @@
                     </a>
                     
                 
-                <a href="http://localhost:1313/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                <a href="http://localhost:1313/index.xml" type="application/rss+xml" title="rss" target="_blank">
                     <i class="ri-rss-fill"></i>
                 </a>
                 
@@ -1603,7 +1603,7 @@
 <li>支持分库分表、读写分离、高可用。</li>
 </ul>
 <p>MySQL逻辑架构，主要分为：连接层，服务层，引擎层，存储层。客户端执行一条<code>select</code>命令的流程如下：</p>
-<p><img alt="MySqlSQL优化及锁机制-001" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-001.png"></p>
+<p><img alt="MySqlSQL优化及锁机制-001" src="/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-001.png"></p>
 <ul>
 <li>连接层：最上层是一些客户端和连接服务，包含本地<code>socket</code>通信和大多数基于客户端/服务端工具实现的类似于<code>tcpIp</code>的通信。主要完成一些类似于连接处理、授权认证、及相关的安全方案。在该层上引入了线程池的概念，为通过认证安全接入的客户端提供线程。同样在该层上可以实现基于SSL的安全链接。服务器也会为安全接入的每个客户端验证它所具有的操作权限。</li>
 <li>服务层：第二层架构主要完成大多少的核心服务功能，如<code>SQL</code>接口，并完成缓存的查询，<code>SQL</code>的分析和优化及部分内置函数的执行。所有跨存储引擎的功能也在这一层实现，如过程、函数等。在该层，服务器会解析查询并创建相应的内部解析树，并对其完成相应的优化如确定查询表的顺序是否利用索引等，最后生成相应的执行操作。如果是<code>select</code>语句，服务器还会查询内部的缓存。如果缓存空间足够大，这样在解决大量读操作的环境中能够很好的提升系统的性能。</li>
@@ -1613,7 +1613,7 @@
 <h2 id="mysql存储引擎">MySQL存储引擎</h2>
 <p>MySQL核心在于存储引擎，MySQL5.5.5之前，<code>MyISAM</code>是MySQL的默认存储引擎。5.5.5版本之后，<code>InnoDB</code>是MySQL的默认存储引擎。
 可以使用<code>show engines;</code>命令来查看存储引擎。</p>
-<p><img alt="MySQL存储引擎" src="/iblog/posts/annex/images/essays/MySQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.png"></p>
+<p><img alt="MySQL存储引擎" src="/posts/annex/images/essays/MySQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.png"></p>
 <p>MySQL存储引擎有很多，但最主要的就是<code>InnoDB</code>和<code>MyISAM</code>。</p>
 <table>
 <thead>
@@ -1878,7 +1878,7 @@ MySQL和PostgreSQL都对这一机制进行自己的实现。</p>
 <p>在MySQL中，索引属于存储引擎级别的概念，不同存储引擎对索引的实现方式是不同的，这里主要讨论<code>MyISAM</code>、<code>InnoDB</code>两个不同的存储引擎对索引实现方式。</p>
 <h4 id="myisam索引的实现">MyISAM索引的实现</h4>
 <p>在<code>MyISAM</code>引擎中，建立的索引文件和数据文件是分离的，<code>B+Tree</code>叶节点存放的是数据记录的地址。</p>
-<p><img alt="MyISAM索引结构" src="/iblog/posts/annex/images/essays/MyISAM%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84.png"></p>
+<p><img alt="MyISAM索引结构" src="/posts/annex/images/essays/MyISAM%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84.png"></p>
 <p>在索引检索的时候，首先按照<code>B+Tree</code>搜索算法搜索索引，如果指定的<code>Key</code>存在，则取出其叶子结点的值，然后以叶子结点的值为地址读取相应的数据记录。
 这种表示索引结构与数据行存储顺序无关的索引，叫做非聚集索引。</p>
 <p><code>MyISAM</code>中的主索引和辅助索引在结构上是类似的，都是采用<code>B-Tree</code>结构。它们之间的主要区别在于，主索引要求索引列的值必须唯一，而辅助索引则可以包含重复值。
@@ -1886,7 +1886,7 @@ MySQL和PostgreSQL都对这一机制进行自己的实现。</p>
 因此，当通过索引访问数据时，<code>MyISAM</code>需要进行两次查找：首先在索引中找到对应记录的位置，然后根据该位置读取实际的数据行。</p>
 <h4 id="innodb索引的实现">InnoDB索引的实现</h4>
 <p>在<code>InnoDB</code>引擎中，其数据文件本身就是索引文件。</p>
-<p><img alt="Innodb索引结构" src="/iblog/posts/annex/images/essays/Innodb%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84.png"></p>
+<p><img alt="Innodb索引结构" src="/posts/annex/images/essays/Innodb%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84.png"></p>
 <p>表数据文件本身就是按<code>B+Tree</code>组织的一个索引结构，这棵树的叶节点<code>data</code>域保存了完整的数据记录。这个索引的<code>key</code>是数据表的主键，因此<code>InnoDB</code>表数据文件本身就是<strong>主索引</strong>。
 索引的键值决定了表中数据的物理顺序，这种被称为聚簇索引或聚集索引。</p>
 <p>因为<code>InnoDB</code>的数据文件本身要按主键聚集，所以<code>InnoDB</code>要求表必须有主键，<code>MyISAM</code>可以没有。如果没有显式指定，则MySQL系统会自动选择一个可以唯一标识数据记录的列作为主键。
@@ -2732,18 +2732,18 @@ swaps：显示交换次数相关开销的信息；</p>
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w"> </span><span class="c1">-- Table_locks_waited：出现表级锁定争用而发生等待的次数(不能立即获取锁的次数，每等待一次锁值加1)，此值高则说明存在着较严重的表级锁争用情况
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;table_locks%&#39;</span><span class="p">;</span><span class="w">
 </span></span></span></code></pre></div><p>给表添加读锁及测试读操作：</p>
-<p><img alt="MySqlSQL优化及锁机制-002" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-002.png"></p>
-<p><img alt="MySqlSQL优化及锁机制-004" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-004.png"></p>
+<p><img alt="MySqlSQL优化及锁机制-002" src="/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-002.png"></p>
+<p><img alt="MySqlSQL优化及锁机制-004" src="/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-004.png"></p>
 <p>给表添加读锁及测试写操作：</p>
-<p><img alt="MySqlSQL优化及锁机制-003" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-003.png"></p>
-<p><img alt="MySqlSQL优化及锁机制-005" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-005.png"></p>
+<p><img alt="MySqlSQL优化及锁机制-003" src="/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-003.png"></p>
+<p><img alt="MySqlSQL优化及锁机制-005" src="/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-005.png"></p>
 <p>给某个表添加读锁之后，所有会话都能对这个表进行读操作，但是当前会话不能对该表进行写操作，对其他表进行读、写操作；其他会话能需要等持有锁的会话释放该表的锁后，才能进行写操作，期间将会一直处于等待状态，可以对其他表进行读写操作。</p>
 <p>给表添加写锁及测试读操作：</p>
-<p><img alt="MySqlSQL优化及锁机制-006" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-006.png"></p>
-<p><img alt="MySqlSQL优化及锁机制-007" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-007.png"></p>
+<p><img alt="MySqlSQL优化及锁机制-006" src="/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-006.png"></p>
+<p><img alt="MySqlSQL优化及锁机制-007" src="/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-007.png"></p>
 <p>给表添加写锁及测试写操作：</p>
-<p><img alt="MySqlSQL优化及锁机制-008" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-008.png"></p>
-<p><img alt="MySqlSQL优化及锁机制-009" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-009.png"></p>
+<p><img alt="MySqlSQL优化及锁机制-008" src="/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-008.png"></p>
+<p><img alt="MySqlSQL优化及锁机制-009" src="/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-009.png"></p>
 <p>给某个表添加写锁之后，当前会话可以对该表进行写操作、读操作，其他会话要想对该表进行读写操作需要等持有锁的会话释放锁，否则期间将会一直等待该锁释放；但是当前持有锁的会话是不能对其他表进行读写操作，其他会话能够对其他表进行读写操作。</p>
 <p>对于表锁，<code>MyISAM</code>在执行查询语句前，会自动给涉及的所有表加读锁，在执行增删改操作前，会自动给涉及的表加写锁。</p>
 <ul>
@@ -2781,8 +2781,8 @@ swaps：显示交换次数相关开销的信息；</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="w"> </span><span class="c1">-- 关闭自动提交；0关闭，1打开
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">autocommit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">
 </span></span></span></code></pre></div><p>测试行锁读写操作：</p>
-<p><img alt="MySqlSQL优化及锁机制-010" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-010.png"></p>
-<p><img alt="MySqlSQL优化及锁机制-011" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-011.png"></p>
+<p><img alt="MySqlSQL优化及锁机制-010" src="/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-010.png"></p>
+<p><img alt="MySqlSQL优化及锁机制-011" src="/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-011.png"></p>
 <p>当前会话当关闭MySQL自动提交后，修改表中的某一行数据，未提交前其他会话是不可见该修改的数据的；如果当前会话和修改某一行数据其他会话也修改该行数据则其他会话会一直等待，直到持有锁的会话<code>commit</code>后才会执行。
 如果当前会话和其他会话操作同一张表的不同行数据时，则相互不影响。使用行锁时注意，无索引行或索引失效都会导致行锁变为表锁。</p>
 <p>当我们用范围条件而不是相等条件检索数据，并请求共享或排他锁时，<code>InnoDB</code>会给符合条件的已有数据记录的索引项加锁，对于键值在条件范围内但并不存在的记录，叫做“间隙”。
@@ -2791,7 +2791,7 @@ swaps：显示交换次数相关开销的信息；</p>
 间隙锁有一个比较致命的弱点，就是当锁定一个范围键值之后，即使某些不存在的键值也会被无辜的锁定，而造成在锁定的时候无法插入锁定键值范围内的任何数据。在某些场景下这可能会对性能造成很大的危害。</p>
 <p>如何锁定一行？在查询语句使用<code>for update</code>关键字可以实现锁定一行。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">test_innodb_lock</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">a</span><span class="o">=</span><span class="mi">8</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">update</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><p><img alt="MySqlSQL优化及锁机制-012" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-012.png"></p>
+</span></span></span></code></pre></div><p><img alt="MySqlSQL优化及锁机制-012" src="/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-012.png"></p>
 <p><code>Innodb</code>存储引擎由于实现了行级锁定，虽然在锁定机制的实现方面所带来的性能损耗可能比表级锁定会要更高一些，但是在整体并发处理能力方面要远远优于<code>MyISAM</code>的表级锁定的。
 当系统并发量较高的时候，<code>Innodb</code>的整体性能和<code>MyISAM</code>相比就会有比较明显的优势了。但是<code>Innodb</code>的行级锁定同样也有其脆弱的一面，当我们使用不当的时候，可能会让<code>Innodb</code>的整体性能表现不仅不能比<code>MyISAM</code>高，甚至可能会更差。</p>
 <h2 id="分库分表">分库分表</h2>
@@ -2828,11 +2828,11 @@ swaps：显示交换次数相关开销的信息；</p>
 <ul>
 <li>
 <p>在一个库内拆分多个表：先分库，将不同数据库中的表拆分为了多个子表，多个子表存在于同一数据库中；
-<img alt="MySqlSQL优化及锁机制-013" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-013.png"></p>
+<img alt="MySqlSQL优化及锁机制-013" src="/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-013.png"></p>
 </li>
 <li>
 <p>用多库拆分一个表，将一个数据库中的表拆分到多个数据库中；
-<img alt="MySqlSQL优化及锁机制-014" src="/iblog/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-014.png"></p>
+<img alt="MySqlSQL优化及锁机制-014" src="/posts/annex/images/essays/MySqlSQL%E4%BC%98%E5%8C%96%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6-014.png"></p>
 </li>
 </ul>
 <p>在一个数据库中将一张表拆分为几个子表，在一定程度上可以解决单表查询性能的问题，但是也会遇到单数据库存储瓶颈这个问题，所以用的更多的还是将子表拆分到多个数据库中。</p>
@@ -2894,9 +2894,9 @@ swaps：显示交换次数相关开销的信息；</p>
                                     <i class="ri-stack-line"></i>
                                     
                                         
-                                        <a href="http://localhost:1313/iblog/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+                                        <a href="http://localhost:1313/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
                                     
-                                        <a href="http://localhost:1313/iblog/tags/%E8%AF%A6%E8%A7%A3/">详解</a>
+                                        <a href="http://localhost:1313/tags/%E8%AF%A6%E8%A7%A3/">详解</a>
                                     
                                     
                                 </span>
@@ -2912,7 +2912,7 @@ swaps：显示交换次数相关开销的信息；</p>
     <div id="vcomments"></div>
 </div>
 
-<link rel="stylesheet" href="http://localhost:1313/iblog/css/comments.css" />
+<link rel="stylesheet" href="http://localhost:1313/css/comments.css" />
 
 <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
 
@@ -3021,20 +3021,20 @@ swaps：显示交换次数相关开销的信息；</p>
         <span>from 2021</span>
     </div>
 </footer>
-    <script src="http://localhost:1313/iblog/js/jquery-3.5.1.min.js"></script>
-<link href="http://localhost:1313/iblog/css/fancybox.min.css" rel="stylesheet">
-<script src="http://localhost:1313/iblog/js/fancybox.min.js"></script>
-<script src="http://localhost:1313/iblog/js/darkmode.js"></script>
-<script src="http://localhost:1313/iblog/js/zozo.js"></script>
+    <script src="http://localhost:1313/js/jquery-3.5.1.min.js"></script>
+<link href="http://localhost:1313/css/fancybox.min.css" rel="stylesheet">
+<script src="http://localhost:1313/js/fancybox.min.js"></script>
+<script src="http://localhost:1313/js/darkmode.js"></script>
+<script src="http://localhost:1313/js/zozo.js"></script>
 
-<script src="http://localhost:1313/iblog/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
-<script src="http://localhost:1313/iblog/js/html2canvas.js"></script>
-<script src="http://localhost:1313/iblog/js/utils.js"></script>
-<script src="http://localhost:1313/iblog/js/html2md.js"></script>
-<script src="http://localhost:1313/iblog/js/htmlexport.js"></script>
+<script src="http://localhost:1313/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
+<script src="http://localhost:1313/js/html2canvas.js"></script>
+<script src="http://localhost:1313/js/utils.js"></script>
+<script src="http://localhost:1313/js/html2md.js"></script>
+<script src="http://localhost:1313/js/htmlexport.js"></script>
 
-<script src="http://localhost:1313/iblog/js/fastsearch.js"></script>
-<script src="http://localhost:1313/iblog/js/fuse.js"></script>
+<script src="http://localhost:1313/js/fastsearch.js"></script>
+<script src="http://localhost:1313/js/fuse.js"></script>
 
 <script>
     
@@ -3073,7 +3073,7 @@ swaps：显示交换次数相关开销的信息；</p>
 
     
     document.addEventListener('DOMContentLoaded', function() {
-        var links = document.querySelectorAll('.content');
+        var links = document.querySelectorAll('.content a');
         links.forEach(function(link) {
             link.setAttribute('target', '_blank');
         });

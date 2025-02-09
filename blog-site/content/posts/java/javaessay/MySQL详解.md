@@ -20,7 +20,7 @@ MySQL是一种关系型数据库，主要用于持久化存储我们系统中的
 
 MySQL逻辑架构，主要分为：连接层，服务层，引擎层，存储层。客户端执行一条`select`命令的流程如下：
 
-![MySqlSQL优化及锁机制-001](/iblog/posts/annex/images/essays/MySqlSQL优化及锁机制-001.png)
+![MySqlSQL优化及锁机制-001](/posts/annex/images/essays/MySqlSQL优化及锁机制-001.png)
 
 - 连接层：最上层是一些客户端和连接服务，包含本地`socket`通信和大多数基于客户端/服务端工具实现的类似于`tcpIp`的通信。主要完成一些类似于连接处理、授权认证、及相关的安全方案。在该层上引入了线程池的概念，为通过认证安全接入的客户端提供线程。同样在该层上可以实现基于SSL的安全链接。服务器也会为安全接入的每个客户端验证它所具有的操作权限。
 - 服务层：第二层架构主要完成大多少的核心服务功能，如`SQL`接口，并完成缓存的查询，`SQL`的分析和优化及部分内置函数的执行。所有跨存储引擎的功能也在这一层实现，如过程、函数等。在该层，服务器会解析查询并创建相应的内部解析树，并对其完成相应的优化如确定查询表的顺序是否利用索引等，最后生成相应的执行操作。如果是`select`语句，服务器还会查询内部的缓存。如果缓存空间足够大，这样在解决大量读操作的环境中能够很好的提升系统的性能。
@@ -32,7 +32,7 @@ MySQL逻辑架构，主要分为：连接层，服务层，引擎层，存储层
 MySQL核心在于存储引擎，MySQL5.5.5之前，`MyISAM`是MySQL的默认存储引擎。5.5.5版本之后，`InnoDB`是MySQL的默认存储引擎。
 可以使用`show engines;`命令来查看存储引擎。
 
-![MySQL存储引擎](/iblog/posts/annex/images/essays/MySQL存储引擎.png)
+![MySQL存储引擎](/posts/annex/images/essays/MySQL存储引擎.png)
 
 MySQL存储引擎有很多，但最主要的就是`InnoDB`和`MyISAM`。
 
@@ -278,7 +278,7 @@ B树即`B-tree`树，B即`Balanced`平衡的意思。B树通过重新组织节�
 #### MyISAM索引的实现 
 在`MyISAM`引擎中，建立的索引文件和数据文件是分离的，`B+Tree`叶节点存放的是数据记录的地址。
 
-![MyISAM索引结构](/iblog/posts/annex/images/essays/MyISAM索引结构.png)
+![MyISAM索引结构](/posts/annex/images/essays/MyISAM索引结构.png)
 
 在索引检索的时候，首先按照`B+Tree`搜索算法搜索索引，如果指定的`Key`存在，则取出其叶子结点的值，然后以叶子结点的值为地址读取相应的数据记录。
 这种表示索引结构与数据行存储顺序无关的索引，叫做非聚集索引。
@@ -290,7 +290,7 @@ B树即`B-tree`树，B即`Balanced`平衡的意思。B树通过重新组织节�
 #### InnoDB索引的实现
 在`InnoDB`引擎中，其数据文件本身就是索引文件。
 
-![Innodb索引结构](/iblog/posts/annex/images/essays/Innodb索引结构.png)
+![Innodb索引结构](/posts/annex/images/essays/Innodb索引结构.png)
 
 表数据文件本身就是按`B+Tree`组织的一个索引结构，这棵树的叶节点`data`域保存了完整的数据记录。这个索引的`key`是数据表的主键，因此`InnoDB`表数据文件本身就是**主索引**。
 索引的键值决定了表中数据的物理顺序，这种被称为聚簇索引或聚集索引。
@@ -1298,29 +1298,29 @@ MySQL锁分为全局锁、表级锁以及行级锁，不同的存储引擎支持
 
 给表添加读锁及测试读操作：
 
-![MySqlSQL优化及锁机制-002](/iblog/posts/annex/images/essays/MySqlSQL优化及锁机制-002.png)
+![MySqlSQL优化及锁机制-002](/posts/annex/images/essays/MySqlSQL优化及锁机制-002.png)
 
-![MySqlSQL优化及锁机制-004](/iblog/posts/annex/images/essays/MySqlSQL优化及锁机制-004.png)
+![MySqlSQL优化及锁机制-004](/posts/annex/images/essays/MySqlSQL优化及锁机制-004.png)
 
 给表添加读锁及测试写操作：
 
-![MySqlSQL优化及锁机制-003](/iblog/posts/annex/images/essays/MySqlSQL优化及锁机制-003.png)
+![MySqlSQL优化及锁机制-003](/posts/annex/images/essays/MySqlSQL优化及锁机制-003.png)
 
-![MySqlSQL优化及锁机制-005](/iblog/posts/annex/images/essays/MySqlSQL优化及锁机制-005.png)
+![MySqlSQL优化及锁机制-005](/posts/annex/images/essays/MySqlSQL优化及锁机制-005.png)
 
 给某个表添加读锁之后，所有会话都能对这个表进行读操作，但是当前会话不能对该表进行写操作，对其他表进行读、写操作；其他会话能需要等持有锁的会话释放该表的锁后，才能进行写操作，期间将会一直处于等待状态，可以对其他表进行读写操作。
 
 给表添加写锁及测试读操作：
 
-![MySqlSQL优化及锁机制-006](/iblog/posts/annex/images/essays/MySqlSQL优化及锁机制-006.png)
+![MySqlSQL优化及锁机制-006](/posts/annex/images/essays/MySqlSQL优化及锁机制-006.png)
 
-![MySqlSQL优化及锁机制-007](/iblog/posts/annex/images/essays/MySqlSQL优化及锁机制-007.png)
+![MySqlSQL优化及锁机制-007](/posts/annex/images/essays/MySqlSQL优化及锁机制-007.png)
 
 给表添加写锁及测试写操作：
 
-![MySqlSQL优化及锁机制-008](/iblog/posts/annex/images/essays/MySqlSQL优化及锁机制-008.png)
+![MySqlSQL优化及锁机制-008](/posts/annex/images/essays/MySqlSQL优化及锁机制-008.png)
 
-![MySqlSQL优化及锁机制-009](/iblog/posts/annex/images/essays/MySqlSQL优化及锁机制-009.png)
+![MySqlSQL优化及锁机制-009](/posts/annex/images/essays/MySqlSQL优化及锁机制-009.png)
 
 给某个表添加写锁之后，当前会话可以对该表进行写操作、读操作，其他会话要想对该表进行读写操作需要等持有锁的会话释放锁，否则期间将会一直等待该锁释放；但是当前持有锁的会话是不能对其他表进行读写操作，其他会话能够对其他表进行读写操作。
 
@@ -1370,9 +1370,9 @@ MySQL锁分为全局锁、表级锁以及行级锁，不同的存储引擎支持
 
 测试行锁读写操作：
 
-![MySqlSQL优化及锁机制-010](/iblog/posts/annex/images/essays/MySqlSQL优化及锁机制-010.png)
+![MySqlSQL优化及锁机制-010](/posts/annex/images/essays/MySqlSQL优化及锁机制-010.png)
 
-![MySqlSQL优化及锁机制-011](/iblog/posts/annex/images/essays/MySqlSQL优化及锁机制-011.png)
+![MySqlSQL优化及锁机制-011](/posts/annex/images/essays/MySqlSQL优化及锁机制-011.png)
 
 当前会话当关闭MySQL自动提交后，修改表中的某一行数据，未提交前其他会话是不可见该修改的数据的；如果当前会话和修改某一行数据其他会话也修改该行数据则其他会话会一直等待，直到持有锁的会话`commit`后才会执行。
 如果当前会话和其他会话操作同一张表的不同行数据时，则相互不影响。使用行锁时注意，无索引行或索引失效都会导致行锁变为表锁。
@@ -1388,7 +1388,7 @@ MySQL锁分为全局锁、表级锁以及行级锁，不同的存储引擎支持
  select * from test_innodb_lock where a=8 for update;
 ```
 
-![MySqlSQL优化及锁机制-012](/iblog/posts/annex/images/essays/MySqlSQL优化及锁机制-012.png)
+![MySqlSQL优化及锁机制-012](/posts/annex/images/essays/MySqlSQL优化及锁机制-012.png)
 
 `Innodb`存储引擎由于实现了行级锁定，虽然在锁定机制的实现方面所带来的性能损耗可能比表级锁定会要更高一些，但是在整体并发处理能力方面要远远优于`MyISAM`的表级锁定的。
 当系统并发量较高的时候，`Innodb`的整体性能和`MyISAM`相比就会有比较明显的优势了。但是`Innodb`的行级锁定同样也有其脆弱的一面，当我们使用不当的时候，可能会让`Innodb`的整体性能表现不仅不能比`MyISAM`高，甚至可能会更差。
@@ -1428,10 +1428,10 @@ MySQL锁分为全局锁、表级锁以及行级锁，不同的存储引擎支持
 因为数据库是有缓存的，你访问频率高的行字段越少，就可以在缓存里缓存更多的行，性能就越好，这个一般在表层面做的较多一些。
 
 - 在一个库内拆分多个表：先分库，将不同数据库中的表拆分为了多个子表，多个子表存在于同一数据库中；
-  ![MySqlSQL优化及锁机制-013](/iblog/posts/annex/images/essays/MySqlSQL优化及锁机制-013.png)
+  ![MySqlSQL优化及锁机制-013](/posts/annex/images/essays/MySqlSQL优化及锁机制-013.png)
 
 - 用多库拆分一个表，将一个数据库中的表拆分到多个数据库中；
-  ![MySqlSQL优化及锁机制-014](/iblog/posts/annex/images/essays/MySqlSQL优化及锁机制-014.png)
+  ![MySqlSQL优化及锁机制-014](/posts/annex/images/essays/MySqlSQL优化及锁机制-014.png)
 
 在一个数据库中将一张表拆分为几个子表，在一定程度上可以解决单表查询性能的问题，但是也会遇到单数据库存储瓶颈这个问题，所以用的更多的还是将子表拆分到多个数据库中。
 

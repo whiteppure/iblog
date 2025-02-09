@@ -22,19 +22,19 @@
 
 	
 
-    <link rel="shortcut icon" href="https://whiteppure.github.io/iblog/images/favicon.ico" />
+    <link rel="shortcut icon" href="https://whiteppure.github.io/images/favicon.ico" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/normalize.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/animate.min.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/zozo.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/zozo.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/remixicon.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/highlight.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/highlight.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/toc.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/search.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/img.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/toc.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/search.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/img.css" />
 
     
     
@@ -412,13 +412,13 @@
         <div class="nav_container animated fadeInDown">
     <div class="site_nav" id="site_nav">
         <ul><li class="">
-                <a href="https://whiteppure.github.io/iblog/">首页</a>
+                <a href="https://whiteppure.github.io/">首页</a>
             </li><li class="">
-                <a href="https://whiteppure.github.io/iblog/posts/">归档</a>
+                <a href="https://whiteppure.github.io/posts/">归档</a>
             </li><li class="">
-                <a href="https://whiteppure.github.io/iblog/tags/">标签</a>
+                <a href="https://whiteppure.github.io/tags/">标签</a>
             </li><li class="">
-                <a href="https://whiteppure.github.io/iblog/about/">关于</a>
+                <a href="https://whiteppure.github.io/about/">关于</a>
             </li>
         </ul>
     </div>
@@ -430,7 +430,7 @@
     <div class="site_title_container">
         <div class="site_title">
             <h1>
-                <a href="https://whiteppure.github.io/iblog/">
+                <a href="https://whiteppure.github.io/">
                     <span>脚踏实地</span>
                 </a>
             </h1>
@@ -449,7 +449,7 @@
                     </a>
                     
                 
-                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                <a href="https://whiteppure.github.io/index.xml" type="application/rss+xml" title="rss" target="_blank">
                     <i class="ri-rss-fill"></i>
                 </a>
                 
@@ -524,7 +524,7 @@
 <p>Java使用可达性分析算法来标记垃圾对象。在这个过程中，算法会标记那些仍然可以从根对象（如栈、静态变量等）直接访问到的对象为“可达”，而那些无法从根对象访问到的对象则标记为“不可达”。
 不可达的对象是候选垃圾，可以被回收。有时候即使某些对象不再使用，它们的引用链可能仍然存在，导致这些对象没有被标记为不可达，从而造成内存泄漏。
 在这种情况下，虽然这些对象已经不再被实际使用，但由于引用链未断开，它们仍然占用内存。</p>
-<p><img alt="内存泄漏" src="/iblog/posts/annex/images/essays/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F.png"></p>
+<p><img alt="内存泄漏" src="/posts/annex/images/essays/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F.png"></p>
 <p>尽管内存泄漏并不会立刻引起程序崩溃，但是一旦发生内存泄漏，程序中的可用内存就会被逐步蚕食，直至耗尽所有内存，最终出现<code>OutOfMemory</code>异常，导致程序崩溃。</p>
 <p>举例：</p>
 <ul>
@@ -629,7 +629,7 @@
 <li>虚引用（<code>PhantomReference</code>）：一个对象是否有虚引用的存在，完全不会对其生存时间构成影响，也无法通过虚引用来获得一个对象的实例。为一个对象设置虚引用关联的唯一目的就是能在这个对象被收集器回收时收到一个系统通知。</li>
 </ul>
 <p>这4种引用强度依次逐渐减弱。除强引用外，其他3种引用均可以在<code>java.lang.ref</code>包中找到它们的身影。强引用为JVM内部实现，其他三类引用类型全部继承自<code>Reference</code>父类。</p>
-<p><img alt="强软弱虚" src="/iblog/posts/annex/images/essays/%E5%BC%BA%E8%BD%AF%E5%BC%B1%E8%99%9A.jpg"></p>
+<p><img alt="强软弱虚" src="/posts/annex/images/essays/%E5%BC%BA%E8%BD%AF%E5%BC%B1%E8%99%9A.jpg"></p>
 <p>上述引用垃圾回收的前提条件是，对象都是可触及的(可达性分析结果为可达)，如果对象不可触及就直接被垃圾回收器回收了。</p>
 <h3 id="强引用">强引用</h3>
 <p>在Java程序中，最常见的引用类型是强引用，普通系统99%以上都是强引用，也就是我们最常见的普通对象引用，也是默认的引用类型。
@@ -818,9 +818,9 @@
                                     <i class="ri-stack-line"></i>
                                     
                                         
-                                        <a href="https://whiteppure.github.io/iblog/tags/java/">Java</a>
+                                        <a href="https://whiteppure.github.io/tags/java/">Java</a>
                                     
-                                        <a href="https://whiteppure.github.io/iblog/tags/jvm/">JVM</a>
+                                        <a href="https://whiteppure.github.io/tags/jvm/">JVM</a>
                                     
                                     
                                 </span>
@@ -836,7 +836,7 @@
     <div id="vcomments"></div>
 </div>
 
-<link rel="stylesheet" href="https://whiteppure.github.io/iblog/css/comments.css" />
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
 
 <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
 
@@ -945,20 +945,20 @@
         <span>from 2021</span>
     </div>
 </footer>
-    <script src="https://whiteppure.github.io/iblog/js/jquery-3.5.1.min.js"></script>
-<link href="https://whiteppure.github.io/iblog/css/fancybox.min.css" rel="stylesheet">
-<script src="https://whiteppure.github.io/iblog/js/fancybox.min.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/darkmode.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/zozo.js"></script>
+    <script src="https://whiteppure.github.io/js/jquery-3.5.1.min.js"></script>
+<link href="https://whiteppure.github.io/css/fancybox.min.css" rel="stylesheet">
+<script src="https://whiteppure.github.io/js/fancybox.min.js"></script>
+<script src="https://whiteppure.github.io/js/darkmode.js"></script>
+<script src="https://whiteppure.github.io/js/zozo.js"></script>
 
-<script src="https://whiteppure.github.io/iblog/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/html2canvas.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/utils.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/html2md.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/htmlexport.js"></script>
+<script src="https://whiteppure.github.io/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
+<script src="https://whiteppure.github.io/js/html2canvas.js"></script>
+<script src="https://whiteppure.github.io/js/utils.js"></script>
+<script src="https://whiteppure.github.io/js/html2md.js"></script>
+<script src="https://whiteppure.github.io/js/htmlexport.js"></script>
 
-<script src="https://whiteppure.github.io/iblog/js/fastsearch.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/fuse.js"></script>
+<script src="https://whiteppure.github.io/js/fastsearch.js"></script>
+<script src="https://whiteppure.github.io/js/fuse.js"></script>
 
 <script>
     

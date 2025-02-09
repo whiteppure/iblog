@@ -37,37 +37,37 @@ Spring和SpringBoot的主要区别在于配置和启动的复杂性。Spring框�
 ## 创建SpringBoot项目
 在IDEA中使用`Spring Initializr`快速创建一个SpringBoot项目。
 
-![SpringBoot详解](/iblog/posts/annex/images/spring/SpringBoot详解-001.png)
+![SpringBoot详解](/posts/annex/images/spring/SpringBoot详解-001.png)
 
 选择所需的依赖
 
-![SpringBoot详解](/iblog/posts/annex/images/spring/SpringBoot详解-002.png)
+![SpringBoot详解](/posts/annex/images/spring/SpringBoot详解-002.png)
 
 SpringBoot项目通常包括以下几个主要部分：
 
-![SpringBoot详解](/iblog/posts/annex/images/spring/SpringBoot详解-003.png)
+![SpringBoot详解](/posts/annex/images/spring/SpringBoot详解-003.png)
 
 在`src/main/resources`目录下创建`application.properties`或`application.yml`文件来配置应用程序。示例配置如下：
 
-![SpringBoot详解](/iblog/posts/annex/images/spring/SpringBoot详解-004.png)
+![SpringBoot详解](/posts/annex/images/spring/SpringBoot详解-004.png)
 
 主应用类通常位于项目的根包，并使用`@SpringBootApplication`注解。
 
-![SpringBoot详解](/iblog/posts/annex/images/spring/SpringBoot详解-005.png)
+![SpringBoot详解](/posts/annex/images/spring/SpringBoot详解-005.png)
 
 创建一个`Controller`处理`HTTP`请求并返回响应。使用`@RestController`注解定义控制器，使用`@RequestMapping`或`@GetMapping`处理请求。
 
-![SpringBoot详解](/iblog/posts/annex/images/spring/SpringBoot详解-006.png)
+![SpringBoot详解](/posts/annex/images/spring/SpringBoot详解-006.png)
 
 在IDE中运行，右击主应用类并选择“Run”。
 
-![SpringBoot详解](/iblog/posts/annex/images/spring/SpringBoot详解-007.png)
+![SpringBoot详解](/posts/annex/images/spring/SpringBoot详解-007.png)
 
-![SpringBoot详解](/iblog/posts/annex/images/spring/SpringBoot详解-008.png)
+![SpringBoot详解](/posts/annex/images/spring/SpringBoot详解-008.png)
 
 通过浏览器输入`http://localhost:8081/api/hello` 测试。
 
-![SpringBoot详解](/iblog/posts/annex/images/spring/SpringBoot详解-009.png)
+![SpringBoot详解](/posts/annex/images/spring/SpringBoot详解-009.png)
 
 ## SpringBoot常用注解
 在SpringBoot开发中，常用的注解简化了配置和开发流程。
@@ -340,7 +340,7 @@ protected List<String> getCandidateConfigurations(AnnotationMetadata metadata, A
     return configurations;
 }
 ```
-![找到spring.factories](/iblog/posts/annex/images/essays/找到spring.factories.png)
+![找到spring.factories](/posts/annex/images/essays/找到spring.factories.png)
 
 但是`spring.factories`包含了很多类，并不是全部都加载的，在某些类里面，是有一个条件`@ConditionalOnXXX`注解，只有当这个注解上的条件满足才会加载。如`SpringApplicationAdminJmxAutoConfiguration`。
 ```java

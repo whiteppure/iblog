@@ -99,5 +99,5 @@ slug: "js-trans-skin"
 ```
 
 ## 运行效果
-![Js-换肤特效-01](/iblog/posts/annex/images/readme/Js-换肤特效-01.png)
+![Js-换肤特效-01](/posts/annex/images/readme/Js-换肤特效-01.png)
 

@@ -32,7 +32,7 @@ Java虚拟机就是二进制字节码的运行环境，负责装载字节码到�
 ## JVM整体结构
 HotSpot VM是目前市面上高性能虚拟机的代表作之一。下图就是 HotSport 虚拟机结构图
 
-![Jvm内存模型](/iblog/posts/annex/images/essays/Jvm内存模型.png)
+![Jvm内存模型](/posts/annex/images/essays/Jvm内存模型.png)
 
 - 类加载子系统：将class文件加载到内存中。具体分为三个步骤：装载，链接，初始化。
 - 运行时数据区：JVM 定义了 Java 程序运行期间需要使用到的内存区域，简单来说，这块内存区域存放了字节码信息以及程序执行过程的数据，垃圾收集器也会针对运行时数据区进行对象回收的工作。
@@ -42,7 +42,7 @@ HotSpot VM是目前市面上高性能虚拟机的代表作之一。下图就是 
 ## Java代码执行流程
 Java代码通过编译器生成字节码文件，字节码通过Java虚拟机跟操作系统交互。
 
-![Java代码执行流程](/iblog/posts/annex/images/essays/Java代码执行流程.png)
+![Java代码执行流程](/posts/annex/images/essays/Java代码执行流程.png)
 
 ## JVM架构模型
 Java编译器输入的指令流基本上是一种**基于栈的指令集架构**，另外一种指令集架构则是**基于寄存器的指令集架构**，Hotsport 是基于栈的指令集架构。

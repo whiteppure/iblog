@@ -9,10 +9,10 @@ slug: "pipeline-business"
 
 
 ## 流程图
-![管道流设计结合业务-01](/iblog/posts/annex/images/essays/管道流设计结合业务-01.jpg)
+![管道流设计结合业务-01](/posts/annex/images/essays/管道流设计结合业务-01.jpg)
 
 ## 代码实现
-![管道流设计结合业务-02](/iblog/posts/annex/images/essays/管道流设计结合业务-02.jpg)
+![管道流设计结合业务-02](/posts/annex/images/essays/管道流设计结合业务-02.jpg)
 
 完整代码：[https://gitee.com/gitee_pikaqiu/easy-pipeline](https://gitee.com/gitee_pikaqiu/easy-pipeline)
 ### pom
@@ -282,7 +282,7 @@ public class DefaultFilterSelector implements FilterSelector{
 ```
 
 ## 调用代码
-![管道流设计结合业务-03](/iblog/posts/annex/images/essays/管道流设计结合业务-03.jpg)
+![管道流设计结合业务-03](/posts/annex/images/essays/管道流设计结合业务-03.jpg)
 
 ### PipelineApplication
 ```java

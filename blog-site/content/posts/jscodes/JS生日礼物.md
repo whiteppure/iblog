@@ -120,5 +120,5 @@ slug: "js-birthday-gift"
 </html>
 ```
 ## 运行效果
-![Js-生日礼物-01.png](/iblog/posts/annex/images/readme/Js-生日礼物-01.png)
+![Js-生日礼物-01.png](/posts/annex/images/readme/Js-生日礼物-01.png)
 

@@ -9,7 +9,7 @@ slug: "rookie-java-container"
 ## 概述
 Java中的集合主要包括`Collection`和`Map`两种，`Collection`存储着对象的集合，而`Map`存储着键值对的映射表。
 
-![Java中的集合-01](/iblog/posts/annex/images/essays/Java中的集合-01.jpg)
+![Java中的集合-01](/posts/annex/images/essays/Java中的集合-01.jpg)
 
 ## 数组
 如果你看过`ArrayList`类源码，就知道`ArrayList`底层是通过数组来存储元素的，所以如果严格来说，数组也算集合的一种。
@@ -807,7 +807,7 @@ public class CopyOnWriteArraySetExample {
 `equals`和`hashCode`在`hashMap`中就像一个坐标一样，来定位`hashMap`中的值。
 
 ### HashMap结构
-![HashMap结构](/iblog/posts/annex/images/essays/HashMap结构.png)
+![HashMap结构](/posts/annex/images/essays/HashMap结构.png)
 
 在JDK1.7及之前结构为`数组+单向链表`，JDK1.8及之后结构为`数组 + 单向链表/红黑树`。
 在JDK1.8时，如果存储`Map`中数组元素对应的索引的每个链表超过8，就将单向链表转化为红黑树，当红黑树的节点少于6个的时候又开始使用链表。

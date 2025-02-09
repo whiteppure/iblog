@@ -35,18 +35,18 @@ slug: "java-garbage-collector"
 
 ### 按线程数分类
 - 串行垃圾回收器：在单核CPU的硬件情况下，该收集器会在工作时冻结所有应用程序线程，这使它在所有目的和用途上都无法在服务器环境中使用。
-  ![串行垃圾回收器](/iblog/posts/annex/images/essays/串行垃圾回收器.png)
+  ![串行垃圾回收器](/posts/annex/images/essays/串行垃圾回收器.png)
 - 并行垃圾回收器：在停止用户线程之后，多条GC线程并行进行垃圾回收。和串行回收相反，并行收集可以运用多个CPU同时执行垃圾回收，因此提升了应用的吞吐量。
-  ![并行垃圾回收器](/iblog/posts/annex/images/essays/并行垃圾回收器.png)
+  ![并行垃圾回收器](/posts/annex/images/essays/并行垃圾回收器.png)
 
 ### 按工作模式分类
 - 并发式垃圾回收器：不会出现STW现象，指多条垃圾收集线程同时进行工作，GC线程和用户线程同时运行，不会出现STW现象。
-  ![并发垃圾回收器](/iblog/posts/annex/images/essays/并发垃圾回收器.png)
+  ![并发垃圾回收器](/posts/annex/images/essays/并发垃圾回收器.png)
 - 独占式垃圾回收器：会出现STW现象，一旦运行，就停止应用程序中的所有用户线程，直到垃圾回收过程完全结束。
 
 ### 按处理方式分类
-- 压缩式垃圾回收器：压缩式垃圾回收器会在回收完成后，对存活对象进行压缩整理，消除回收后的碎片。所以在为对象分配内存的时候用[指针碰撞](https://whiteppure.github.io/iblog/posts/jvm/java-object/#创建对象的过程及步骤)；
-- 非压缩式垃圾回收器：非压缩式的垃圾回收器不进行整理这步操作。所以在为为对象分配内存的时候使用[空闲列表](https://whiteppure.github.io/iblog/posts/jvm/java-object/#创建对象的过程及步骤)；
+- 压缩式垃圾回收器：压缩式垃圾回收器会在回收完成后，对存活对象进行压缩整理，消除回收后的碎片。所以在为对象分配内存的时候用[指针碰撞](https://whiteppure.github.io(/posts/jvm/java-object/#创建对象的过程及步骤)；
+- 非压缩式垃圾回收器：非压缩式的垃圾回收器不进行整理这步操作。所以在为为对象分配内存的时候使用[空闲列表](https://whiteppure.github.io(/posts/jvm/java-object/#创建对象的过程及步骤)；
 
 ## 查看默认垃圾收集器
 JDK 默认垃圾收集器（使用 java -XX:+PrintCommandLineFlags -version 命令查看）：
@@ -75,7 +75,7 @@ public class MainTest {
 
 使用命令行指令：`jinfo -flag`
 
-![jinfo命令查看GC](/iblog/posts/annex/images/essays/jinfo命令查看GC.png)
+![jinfo命令查看GC](/posts/annex/images/essays/jinfo命令查看GC.png)
 
 ## 评估垃圾回收器性能指标
 - 吞吐量：运行用户代码的时间占总运行时间的比例（总运行时间 = 程序的运行时间 + 内存回收的时间）。
@@ -121,14 +121,14 @@ public class MainTest {
 - 并发回收器：`CMS`、`G1`、`ZGC`
 
 ### 垃圾回收器与垃圾分代
-![收集器与垃圾分代之间的关系](/iblog/posts/annex/images/essays/收集器与垃圾分代之间的关系.png)
+![收集器与垃圾分代之间的关系](/posts/annex/images/essays/收集器与垃圾分代之间的关系.png)
 
 - 新生代收集器：`Serial`、`ParNew`、`Parallel Scavenge`
 - 老年代收集器：`Serial old`、`Parallel old`、`CMS`
 - 整堆收集器：`G1`、`ZGC`
 
 ### 垃圾收集器的组合关系
-![垃圾回收器组合关系](/iblog/posts/annex/images/essays/垃圾回收器组合关系.png)
+![垃圾回收器组合关系](/posts/annex/images/essays/垃圾回收器组合关系.png)
 
 - 两个收集器间有连线，表明它们可以搭配使用
     - `Serial/Serial old`
@@ -153,10 +153,10 @@ public class MainTest {
 
 `Serial GC`(串行垃圾回收回器)是最基本、历史最悠久的垃圾收集器了。JDK1.3之前回收新生代唯一的选择。
 
-`Serial GC`作为[HotSpot中client模式](https://whiteppure.github.io/iblog/posts/jvm/jvm-execute-engine/#即使编译器分类)下的默认新生代垃圾收集器；
+`Serial GC`作为[HotSpot中client模式](https://whiteppure.github.io(/posts/jvm/jvm-execute-engine/#即使编译器分类)下的默认新生代垃圾收集器；
 `Serial GC`年轻代采用标记-复制算法，老年代采用标记-整理算法、串行回收和STW机制的方式执行内存回收。
 
-![serial-GC](/iblog/posts/annex/images/essays/serial-GC.png)
+![serial-GC](/posts/annex/images/essays/serial-GC.png)
 
 `Serial GC`是一个单线程的收集器，但它的“单线程”的意义并不仅仅说明它只会使用一个CPU或一条收集线程去完成垃圾收集工作，更重要的是在它进行垃圾收集时，必须暂停其他所有的工作线程，直到它收集结束。
 
@@ -176,14 +176,14 @@ public class MainTest {
 ### ParNew GC
 ParNew 收集器其实就是 Serial 收集器的多线程版本，除了使用多线程进行垃圾收集外，其余行为：控制参数、收集算法、回收策略等等和 Serial 收集器完全一样。
 
-![parnew-GC](/iblog/posts/annex/images/essays/parnew-GC.png)
+![parnew-GC](/posts/annex/images/essays/parnew-GC.png)
 
 它是许多运行在 Server 模式下的虚拟机的首要选择，除了 Serial 收集器外，只有它能与 CMS 收集器配合工作。
 
 ### Parallel Scavenge GC
 Parallel Scavenge 收集器也是使用标记-复制算法的多线程收集器，它看上去几乎和 ParNew 都一样。
 
-![parallel-scavenge-GC](/iblog/posts/annex/images/essays/parallel-scavenge-GC.png)
+![parallel-scavenge-GC](/posts/annex/images/essays/parallel-scavenge-GC.png)
 
 Parallel Scavenge 收集器关注点是吞吐量（高效率的利用 CPU）。CMS 等垃圾收集器的关注点更多的是用户线程的停顿时间（提高用户体验）。
 
@@ -192,13 +192,13 @@ Serial 收集器的老年代版本，它同样是一个单线程收集器。它�
 - 在 JDK1.5 以及以前的版本中与 Parallel Scavenge 收集器搭配使用；
 - 作为 CMS 收集器的后备方案；
 
-![serial-GC](/iblog/posts/annex/images/essays/serial-GC.png)
+![serial-GC](/posts/annex/images/essays/serial-GC.png)
 
 ### Parallel Old GC
 Parallel Scavenge 收集器的老年代版本。使用多线程和“标记-整理”算法。
 在注重吞吐量以及 CPU 资源的场合，都可以优先考虑 Parallel Scavenge 收集器和 Parallel Old 收集器。
 
-![parallel-scavenge-GC](/iblog/posts/annex/images/essays/parallel-scavenge-GC.png)
+![parallel-scavenge-GC](/posts/annex/images/essays/parallel-scavenge-GC.png)
 
 ### CMS
 CMS全称：Concurrent Mark Sweep，是一种以获取最短回收停顿时间为目标的收集器。它非常符合在注重用户体验的应用上使用。
@@ -206,7 +206,7 @@ CMS收集器是 HotSpot 虚拟机第一款真正意义上的并发收集器，�
 
 从名字中的Mark Sweep这两个词可以看出，CMS 收集器是一种 “标记-清除”算法实现的，以获取最短回收停顿时间为目标，采用“标记-清除”算法，分 4 大步进行垃圾收集，其中初始标记和重新标记会 STW，JDK 1.5 时引入，JDK9 被标记弃用，JDK14 被移除。
 
-![cms-GC](/iblog/posts/annex/images/essays/cms-GC.png)
+![cms-GC](/posts/annex/images/essays/cms-GC.png)
 
 - 初始标记，指的是寻找所有被 GCRoots 引用的对象，该阶段需要「Stop the World」。这个步骤仅仅只是标记一下 GC Roots 能直接关联到的对象，并不需要做整个引用的扫描，因此速度很快。
 - 并发标记，指的是对「初始标记阶段」标记的对象进行整个引用链的扫描，该阶段不需要「Stop the World」。 对整个引用链做扫描需要花费非常多的时间，因此需要通过垃圾回收线程与用户线程并发执行，降低垃圾回收的时间，所以叫做并发标记。
@@ -226,7 +226,7 @@ G1 (Garbage-First) 是一款面向服务器的垃圾收集器，主要针对配�
 
 1. 分代：
    将堆内存分为多个大小相等的区域（Region），每个区域都可以是 Eden 区、Survivor 区或者 Old 区。
-   ![g1分区](/iblog/posts/annex/images/essays/g1分区.png)<br/>
+   ![g1分区](/posts/annex/images/essays/g1分区.png)<br/>
    可以通过 -XX:G1HeapRegionSize=n 来设置 Region 的大小，可以设定为 1M、2M、4M、8M、16M、32M（不能超过）。<br/>
    G1 有专门分配大对象的 Region 叫 Humongous 区，而不是让大对象直接进入老年代的 Region 中。
    在 G1 中，大对象的判定规则就是一个大对象超过了一个 Region 大小的 50%，比如每个 Region 是 2M，只要一个对象超过了 1M，就会被放入 Humongous 中，而且一个大对象如果太大，可能会横跨多个 Region 来存放。
@@ -237,7 +237,7 @@ G1 (Garbage-First) 是一款面向服务器的垃圾收集器，主要针对配�
 5. 可预测的停顿：G1 也是基于「标记-清除」算法，因此在进行垃圾回收的时候，仍然需要「Stop the World」。不过，G1 在停顿时间上添加了预测机制，用户可以指定期望停顿时间。
 
 G1 中存在三种 GC 模式，分别是 Young GC、Mixed GC 和 Full GC。
-![g1垃圾收集过程](/iblog/posts/annex/images/essays/g1垃圾收集过程.png)
+![g1垃圾收集过程](/posts/annex/images/essays/g1垃圾收集过程.png)
 
 当 Eden 区的内存空间无法支持新对象的内存分配时，G1 会触发 Young GC。
 
@@ -250,7 +250,7 @@ Mixed GC 是指回收年轻代的 Region 以及一部分老年代中的 Region�
 可以借助 -XX:MaxGCPauseMillis 来设置期望的停顿时间（默认 200ms），G1 会根据这个值来计算出一个合理的 Young GC 的回收时间，然后根据这个时间来制定 Young GC 的回收计划。
 
 G1收集垃圾的过程：
-![g1-GC](/iblog/posts/annex/images/essays/g1-GC.png)
+![g1-GC](/posts/annex/images/essays/g1-GC.png)
 1. 初始标记 (Inital Marking) ：标记 GC Roots 能直接关联到的对象，并且修改 TAMS（Top at Mark Start）指针的值，让下一阶段用户线程并发运行时，能够正确的在 Reigin 中分配新对象。
    G1 为每一个 Reigin 都设计了两个名为 TAMS 的指针，新分配的对象必须位于这两个指针位置以上，位于这两个指针位置以上的对象默认被隐式标记为存活的，不会纳入回收范围；
 2. 并发标记 (Concurrent Marking) ：从 GC Roots 能直接关联到的对象开始遍历整个对象图。遍历完成后，还需要处理 SATB 记录中变动的对象。

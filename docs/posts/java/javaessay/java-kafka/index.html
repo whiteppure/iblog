@@ -22,19 +22,19 @@
 
 	
 
-    <link rel="shortcut icon" href="https://whiteppure.github.io/iblog/images/favicon.ico" />
+    <link rel="shortcut icon" href="https://whiteppure.github.io/images/favicon.ico" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/normalize.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/animate.min.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/zozo.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/zozo.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/remixicon.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/highlight.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/highlight.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/toc.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/search.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/img.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/toc.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/search.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/img.css" />
 
     
     
@@ -576,13 +576,13 @@
         <div class="nav_container animated fadeInDown">
     <div class="site_nav" id="site_nav">
         <ul><li class="">
-                <a href="https://whiteppure.github.io/iblog/">首页</a>
+                <a href="https://whiteppure.github.io/">首页</a>
             </li><li class="">
-                <a href="https://whiteppure.github.io/iblog/posts/">归档</a>
+                <a href="https://whiteppure.github.io/posts/">归档</a>
             </li><li class="">
-                <a href="https://whiteppure.github.io/iblog/tags/">标签</a>
+                <a href="https://whiteppure.github.io/tags/">标签</a>
             </li><li class="">
-                <a href="https://whiteppure.github.io/iblog/about/">关于</a>
+                <a href="https://whiteppure.github.io/about/">关于</a>
             </li>
         </ul>
     </div>
@@ -594,7 +594,7 @@
     <div class="site_title_container">
         <div class="site_title">
             <h1>
-                <a href="https://whiteppure.github.io/iblog/">
+                <a href="https://whiteppure.github.io/">
                     <span>脚踏实地</span>
                 </a>
             </h1>
@@ -613,7 +613,7 @@
                     </a>
                     
                 
-                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                <a href="https://whiteppure.github.io/index.xml" type="application/rss+xml" title="rss" target="_blank">
                     <i class="ri-rss-fill"></i>
                 </a>
                 
@@ -672,7 +672,7 @@
 <li>
 <p>点对点模型：消息发送者发送消息，消息代理将其放入消息队列中，消息接受者从队列中获取消息，消息读取后被移除消息队列。
 每个消息都被发送到一个特定的队列，接收者从队列中获取消息。队列保留着消息，直到它们被消费或超时。</p>
-<p><img alt="MQ详解-001" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-001.png"></p>
+<p><img alt="MQ详解-001" src="/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-001.png"></p>
 <p>虽然可能有多个客户端在队列中侦听消息，但只有一个可以读取到消息，之后消息将不存在，其他消费者将无法读取。
 也就是说消息队列只有唯一一个发送者和接受者，但是并不能说只有一个接收者。</p>
 <p>它的特点是每个消息只有一个消费者，即消息一旦被消费，消息就不在消息队列中；
@@ -681,7 +681,7 @@
 </li>
 <li>
 <p>发布订阅模型：发布者将消息发送到主题<code>Topic</code>中，多个订阅者订阅这个主题，订阅者不断的去轮询监听消息队列中的消息，那么就会在消息到达的同时接收消息。</p>
-<p><img alt="MQ详解-002" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-002.png"></p>
+<p><img alt="MQ详解-002" src="/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-002.png"></p>
 <p>它的特点是每个消息可以有多个消费者，消费完消息之后消息不会清除；
 发布者和订阅者之间有时间上的依赖性：针对某个主题的订阅者，它必须创建一个订阅之后，才能消费发布者的消息，而且为了消费消息，订阅者必须保持运行的状态。
 当然了缓和这种严格的时间相关性，JMS允许订阅者创建一个可持久化的订阅。这样即使订阅者没有运行，它也能接收到发布者的消息；</p>
@@ -766,7 +766,7 @@
 <h2 id="kafka">Kafka</h2>
 <p><code>Kafka</code>是一个分布式的基于发布订阅模式的消息队列，由<code>Apache</code>软件基金会开发。它主要用于处理大规模的实时数据流，适用于各种数据管道、流处理和日志收集场景。</p>
 <h3 id="基础架构">基础架构</h3>
-<p><img alt="MQ详解-003" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-003.png"></p>
+<p><img alt="MQ详解-003" src="/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-003.png"></p>
 <ul>
 <li><code>Broker</code>：<code>Broker</code>是<code>Kafka</code>集群中的服务器节点，一台<code>Kafka</code>服务器就是一个<code>Broker</code>。每个<code>Broker</code>负责存储和管理消息，处理生产者的写入请求和消费者的读取请求。<code>Kafka</code>集群可以通过增加更多的<code>Brokers</code>来扩展处理能力和存储容量，一个<code>Broker</code>可以容纳多个<code>Topic</code>。</li>
 <li><code>Topic</code>：<code>Topic</code>是<code>Kafka</code>中的消息分类标准。消息被发送到特定的主题，消费者从主题中读取消息。每个主题可以分为多个<code>Partition</code>，用来提高处理能力和扩展性。</li>
@@ -782,7 +782,7 @@
 <p><code>Kafka</code>中消息是以<code>Topic</code>进行分类的，<code>Producer</code>生产消息，<code>Consumer</code>消费消息，都是面向<code>Topic</code>的。<code>Topic</code>是逻辑上的概念，而<code>Partition</code>是物理上的概念，每个<code>Partition</code>对应于一个<code>log</code>文件，该<code>log</code>文件中存储的就是<code>Producer</code>生产的数据。</p>
 <p><code>Producer</code>生产的数据会被不断追加到该<code>log</code>文件末端，且每条数据都有自己的<code>offset</code>。<code>Consumer</code>组中的每个<code>Consumer</code>，都会实时记录自己消费到了哪个<code>offset</code>，以便出错恢复时，从上次的位置继续消费。</p>
 <h3 id="发布订阅工作流程">发布订阅工作流程</h3>
-<p><img alt="MQ详解-004" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-004.png"></p>
+<p><img alt="MQ详解-004" src="/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-004.png"></p>
 <ol>
 <li>生产者发布消息
 <ul>
@@ -820,7 +820,7 @@
 <h3 id="生产者">生产者</h3>
 <p>生产者是<code>Kafka</code>中负责将消息发送到<code>Topic</code>的客户端应用程序。它将消息发布到指定的<code>Topic</code>，<code>Kafka</code>中的消息是按<code>Topic</code>进行分类的。</p>
 <h4 id="生产者文件存储">生产者文件存储</h4>
-<p><img alt="MQ详解-005" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-005.png"></p>
+<p><img alt="MQ详解-005" src="/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-005.png"></p>
 <p><code>Kafka</code>中的消息存储在<code>Broker</code>服务器上的磁盘中，每个<code>Topic</code>被分为一个或多个<code>Partition</code>。
 每个<code>Partition</code>在磁盘上对应一个日志文件，生产者发布的消息被追加到该日志文件的末尾。
 由于生产者生产的消息会不断追加到<code>log</code>文件末尾，为防止<code>log</code>文件过大，导致数据定位效率低下，<code>Kafka</code>采取了分片和索引机制，将每个<code>Partition</code>分为多个<code>Segment</code>。
@@ -831,7 +831,7 @@
 <p>该日志数据文件的大小可以通过在Kafka Broker的config/server.properties配置文件的中的“log.segment.bytes”进行设置，默认为1G大小（1073741824字节），在顺序写入消息时如果超出该设定的阈值，将会创建一组新的日志数据和索引文件。</p>
 </blockquote>
 <p><code>Kafka</code>如何通过<code>index</code>文件快速找到<code>log</code>文件中的数据？</p>
-<p><img alt="MQ详解-006" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-006.png"></p>
+<p><img alt="MQ详解-006" src="/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-006.png"></p>
 <p>根据指定的偏移量，使用二分法查询定位出该偏移量对应的消息所在的分段索引文件和日志数据文件。
 然后通过二分查找法，继续查找出小于等于指定偏移量的最大偏移量，同时也得出了对应的<code>position</code>即实际物理位置。</p>
 <p>根据该物理位置在分段的日志数据文件中顺序扫描查找偏移量与指定偏移量相等的消息。
@@ -852,7 +852,7 @@
 <h4 id="生产者数据可靠性保证">生产者数据可靠性保证</h4>
 <p>为保证生产者发送的数据，能可靠的发送到指定的<code>Topic</code>，<code>Topic</code>的每个分区收到生产者发送的数据后，都需要向生产者发送<code>ACK</code>(<code>acknowledgement</code>确认收到)。
 如果生产者收到<code>ACK</code>，就会进行下一轮的发送，否则重新发送数据。</p>
-<p><img alt="MQ详解-008" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-008.png"></p>
+<p><img alt="MQ详解-008" src="/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-008.png"></p>
 <p><code>Kafka</code>确保消息在<code>Leader</code>副本和<code>Follower</code>副本中都得到确认。消息在<code>Leader</code>副本写入成功后，<code>Leader</code>会将消息复制到其他<code>Follower</code>副本。
 副本确认机制保证了即使某个副本出现故障，数据也不会丢失。<code>ACK</code>配置项决定了生产者需要等待多少个副本确认消息已写入才能认为请求成功。可以设置为以下值：</p>
 <ul>
@@ -892,7 +892,7 @@
 当和<code>Leader</code>保持同步的<code>Follower</code>集合。当<code>ISR</code>中的<code>Follower</code>完成数据的同步之后，就会给<code>Leader</code>发送<code>ACK</code>。
 如果<code>Follower</code>长时间未向<code>Leader</code>同步数据，则该<code>Follower</code>将被踢出<code>ISR</code>，该时间阈值由<code>replica.lag.time.max.ms</code>参数设定。<code>Leader</code>发生故障之后，就会从<code>ISR</code>中选举新的<code>Leader</code>。</p>
 <h4 id="生产者数据一致性保证">生产者数据一致性保证</h4>
-<p><img alt="MQ详解-009" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-009.png"></p>
+<p><img alt="MQ详解-009" src="/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-009.png"></p>
 <ul>
 <li><code>LEO</code>：<code>Log End offset</code>每个副本的最后一个<code>offset</code>；</li>
 <li><code>HW</code>：<code>High Watermark</code>高水位，指的是消费者能见到的最大的<code>offset</code>，<code>ISR</code>队列中最小的<code>LEO</code>；</li>
@@ -901,7 +901,7 @@
 当<code>Leader</code>发生故障之后，会从<code>ISR</code>中选出一个新的<code>Leader</code>，之后，为保证多个副本之间的数据一致性， 其余的<code>Follower</code>会先将各自的<code>log</code>文件高于<code>HW</code>的部分截掉，然后从新的<code>Leader</code>同步数据；如果少于<code>Leader</code>中的数据则会从<code>Leader</code>中进行同步。</p>
 <h4 id="生产者发送消息流程">生产者发送消息流程</h4>
 <p><code>Kafka</code>的生产者发送消息采用的是异步发送的方式。在消息发送的过程中，涉及到了两个线程<code>main</code>线程和<code>Sender</code>线程，以及一个线程共享变量即<code>RecordAccumulator</code>。</p>
-<p><img alt="MQ详解-010" src="/iblog/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-010.png"></p>
+<p><img alt="MQ详解-010" src="/posts/annex/images/essays/MQ%E8%AF%A6%E8%A7%A3-010.png"></p>
 <p>在生产者发送消息时，<code>main</code>线程将消息发送给<code>RecordAccumulator</code>，当数据积累到<code>batch.size</code>之后，<code>sender</code>线程才会不断从<code>RecordAccumulator</code>中拉取消息发送到<code>Kafka</code>的<code>Broker</code>；如果数据迟迟未达到<code>batch.size</code>，<code>sender</code>线程等待<code>linger.time</code>之后就会发送数据。</p>
 <h3 id="消费者">消费者</h3>
 <p><code>Kafka</code>消费者是用于从<code>Kafka</code>主题中读取消息的客户端应用程序。</p>
@@ -991,11 +991,11 @@
                                     <i class="ri-stack-line"></i>
                                     
                                         
-                                        <a href="https://whiteppure.github.io/iblog/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a>
+                                        <a href="https://whiteppure.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a>
                                     
-                                        <a href="https://whiteppure.github.io/iblog/tags/%E8%AF%A6%E8%A7%A3/">详解</a>
+                                        <a href="https://whiteppure.github.io/tags/%E8%AF%A6%E8%A7%A3/">详解</a>
                                     
-                                        <a href="https://whiteppure.github.io/iblog/tags/kafka/">Kafka</a>
+                                        <a href="https://whiteppure.github.io/tags/kafka/">Kafka</a>
                                     
                                     
                                 </span>
@@ -1011,7 +1011,7 @@
     <div id="vcomments"></div>
 </div>
 
-<link rel="stylesheet" href="https://whiteppure.github.io/iblog/css/comments.css" />
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
 
 <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
 
@@ -1120,20 +1120,20 @@
         <span>from 2021</span>
     </div>
 </footer>
-    <script src="https://whiteppure.github.io/iblog/js/jquery-3.5.1.min.js"></script>
-<link href="https://whiteppure.github.io/iblog/css/fancybox.min.css" rel="stylesheet">
-<script src="https://whiteppure.github.io/iblog/js/fancybox.min.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/darkmode.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/zozo.js"></script>
+    <script src="https://whiteppure.github.io/js/jquery-3.5.1.min.js"></script>
+<link href="https://whiteppure.github.io/css/fancybox.min.css" rel="stylesheet">
+<script src="https://whiteppure.github.io/js/fancybox.min.js"></script>
+<script src="https://whiteppure.github.io/js/darkmode.js"></script>
+<script src="https://whiteppure.github.io/js/zozo.js"></script>
 
-<script src="https://whiteppure.github.io/iblog/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/html2canvas.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/utils.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/html2md.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/htmlexport.js"></script>
+<script src="https://whiteppure.github.io/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
+<script src="https://whiteppure.github.io/js/html2canvas.js"></script>
+<script src="https://whiteppure.github.io/js/utils.js"></script>
+<script src="https://whiteppure.github.io/js/html2md.js"></script>
+<script src="https://whiteppure.github.io/js/htmlexport.js"></script>
 
-<script src="https://whiteppure.github.io/iblog/js/fastsearch.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/fuse.js"></script>
+<script src="https://whiteppure.github.io/js/fastsearch.js"></script>
+<script src="https://whiteppure.github.io/js/fuse.js"></script>
 
 <script>
     

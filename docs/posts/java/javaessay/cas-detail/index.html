@@ -22,19 +22,19 @@
 
 	
 
-    <link rel="shortcut icon" href="https://whiteppure.github.io/iblog/images/favicon.ico" />
+    <link rel="shortcut icon" href="https://whiteppure.github.io/images/favicon.ico" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/normalize.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/animate.min.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/zozo.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/zozo.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/remixicon.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/highlight.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/highlight.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/toc.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/search.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/iblog/css/img.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/toc.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/search.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://whiteppure.github.io/css/img.css" />
 
     
     
@@ -212,13 +212,13 @@
         <div class="nav_container animated fadeInDown">
     <div class="site_nav" id="site_nav">
         <ul><li class="">
-                <a href="https://whiteppure.github.io/iblog/">首页</a>
+                <a href="https://whiteppure.github.io/">首页</a>
             </li><li class="">
-                <a href="https://whiteppure.github.io/iblog/posts/">归档</a>
+                <a href="https://whiteppure.github.io/posts/">归档</a>
             </li><li class="">
-                <a href="https://whiteppure.github.io/iblog/tags/">标签</a>
+                <a href="https://whiteppure.github.io/tags/">标签</a>
             </li><li class="">
-                <a href="https://whiteppure.github.io/iblog/about/">关于</a>
+                <a href="https://whiteppure.github.io/about/">关于</a>
             </li>
         </ul>
     </div>
@@ -230,7 +230,7 @@
     <div class="site_title_container">
         <div class="site_title">
             <h1>
-                <a href="https://whiteppure.github.io/iblog/">
+                <a href="https://whiteppure.github.io/">
                     <span>脚踏实地</span>
                 </a>
             </h1>
@@ -249,7 +249,7 @@
                     </a>
                     
                 
-                <a href="https://whiteppure.github.io/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                <a href="https://whiteppure.github.io/index.xml" type="application/rss+xml" title="rss" target="_blank">
                     <i class="ri-rss-fill"></i>
                 </a>
                 
@@ -553,7 +553,7 @@ CAS操作是原子的，这意味着在多个线程同时执行CAS操作时，�
 <p>在多线程环境中，CAS就是比较当前线程工作内存中的值和主内存中的值，如果相同则执行规定操作，否则继续比较，直到主内存和当前线程工作内存中的值一致为止。
 每个CPU核心都有自己的缓存，用于存储频繁访问的数据。当一个线程在某个CPU核心上修改了共享变量的值时，其他CPU核心上缓存中的该变量会被标记为无效，这样其他线程再访问该变量时就会重新从主内存中获取最新值，从而保证了数据的一致性。
 CAS操作通过CPU提供的原子指令<code>cmpxchg</code>来比较和交换变量的值，它的原子性和线程安全性依赖于CPU的硬件支持和缓存一致性协议的保障。</p>
-<p><img alt="CPU多级缓存" src="/iblog/posts/annex/images/essays/CPU%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98.jpg"></p>
+<p><img alt="CPU多级缓存" src="/posts/annex/images/essays/CPU%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98.jpg"></p>
 <p>所以当执行CAS方法时，读取变量当前的值，并与预期值进行比较。如果变量的当前值等于预期值，则将其更新为新值。如果变量的当前值不等于预期值，则不执行更新操作。
 注意CAS操作是原子的，即整个过程不会被其他线程打断。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getAndAddInt</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">var1</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">var2</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">var4</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -644,9 +644,9 @@ CAS操作通过CPU提供的原子指令<code>cmpxchg</code>来比较和交换变
                                     <i class="ri-stack-line"></i>
                                     
                                         
-                                        <a href="https://whiteppure.github.io/iblog/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+                                        <a href="https://whiteppure.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
                                     
-                                        <a href="https://whiteppure.github.io/iblog/tags/%E8%AF%A6%E8%A7%A3/">详解</a>
+                                        <a href="https://whiteppure.github.io/tags/%E8%AF%A6%E8%A7%A3/">详解</a>
                                     
                                     
                                 </span>
@@ -662,7 +662,7 @@ CAS操作通过CPU提供的原子指令<code>cmpxchg</code>来比较和交换变
     <div id="vcomments"></div>
 </div>
 
-<link rel="stylesheet" href="https://whiteppure.github.io/iblog/css/comments.css" />
+<link rel="stylesheet" href="https://whiteppure.github.io/css/comments.css" />
 
 <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
 
@@ -771,20 +771,20 @@ CAS操作通过CPU提供的原子指令<code>cmpxchg</code>来比较和交换变
         <span>from 2021</span>
     </div>
 </footer>
-    <script src="https://whiteppure.github.io/iblog/js/jquery-3.5.1.min.js"></script>
-<link href="https://whiteppure.github.io/iblog/css/fancybox.min.css" rel="stylesheet">
-<script src="https://whiteppure.github.io/iblog/js/fancybox.min.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/darkmode.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/zozo.js"></script>
+    <script src="https://whiteppure.github.io/js/jquery-3.5.1.min.js"></script>
+<link href="https://whiteppure.github.io/css/fancybox.min.css" rel="stylesheet">
+<script src="https://whiteppure.github.io/js/fancybox.min.js"></script>
+<script src="https://whiteppure.github.io/js/darkmode.js"></script>
+<script src="https://whiteppure.github.io/js/zozo.js"></script>
 
-<script src="https://whiteppure.github.io/iblog/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/html2canvas.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/utils.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/html2md.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/htmlexport.js"></script>
+<script src="https://whiteppure.github.io/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
+<script src="https://whiteppure.github.io/js/html2canvas.js"></script>
+<script src="https://whiteppure.github.io/js/utils.js"></script>
+<script src="https://whiteppure.github.io/js/html2md.js"></script>
+<script src="https://whiteppure.github.io/js/htmlexport.js"></script>
 
-<script src="https://whiteppure.github.io/iblog/js/fastsearch.js"></script>
-<script src="https://whiteppure.github.io/iblog/js/fuse.js"></script>
+<script src="https://whiteppure.github.io/js/fastsearch.js"></script>
+<script src="https://whiteppure.github.io/js/fuse.js"></script>
 
 <script>
     

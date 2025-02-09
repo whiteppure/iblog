@@ -174,7 +174,7 @@ ObjectMonitor() {
 
 当多个线程同时访问一段同步代码时，首先会进入`_EntryList`队列中，当某个线程获取到对象的`monitor`后进入`_Owner`区域，并把`monitor`中的`_owner`变量设置为当前线程，同时`monitor`中的计数器`_count`加1，即获得对象锁。
 
-![synchronized原理](/iblog/posts/annex/images/essays/synchronized原理.gif)
+![synchronized原理](/posts/annex/images/essays/synchronized原理.gif)
 
 若此时持有`monitor`的线程调用`wait()`方法，将释放当前对象持有的`monitor`，`_owner`变量恢复为`null`，`_count`自减1，同时该线程进入`_WaitSet`集合中等待被唤醒。若当前线程执行完毕也将释放`monitor`并复位变量的值，以便其他线程进入获取`monitor`。
 

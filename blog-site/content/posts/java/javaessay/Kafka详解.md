@@ -12,7 +12,7 @@ JMS即`Java Message Service`是Java平台的消息传递标准，用于实现消
 - 点对点模型：消息发送者发送消息，消息代理将其放入消息队列中，消息接受者从队列中获取消息，消息读取后被移除消息队列。
   每个消息都被发送到一个特定的队列，接收者从队列中获取消息。队列保留着消息，直到它们被消费或超时。
 
-  ![MQ详解-001](/iblog/posts/annex/images/essays/MQ详解-001.png)
+  ![MQ详解-001](/posts/annex/images/essays/MQ详解-001.png)
 
   虽然可能有多个客户端在队列中侦听消息，但只有一个可以读取到消息，之后消息将不存在，其他消费者将无法读取。
   也就是说消息队列只有唯一一个发送者和接受者，但是并不能说只有一个接收者。
@@ -23,7 +23,7 @@ JMS即`Java Message Service`是Java平台的消息传递标准，用于实现消
 
 - 发布订阅模型：发布者将消息发送到主题`Topic`中，多个订阅者订阅这个主题，订阅者不断的去轮询监听消息队列中的消息，那么就会在消息到达的同时接收消息。
 
-  ![MQ详解-002](/iblog/posts/annex/images/essays/MQ详解-002.png)
+  ![MQ详解-002](/posts/annex/images/essays/MQ详解-002.png)
 
   它的特点是每个消息可以有多个消费者，消费完消息之后消息不会清除；
   发布者和订阅者之间有时间上的依赖性：针对某个主题的订阅者，它必须创建一个订阅之后，才能消费发布者的消息，而且为了消费消息，订阅者必须保持运行的状态。
@@ -61,7 +61,7 @@ MQ即`messagequeue`消息队列，是分布式系统的重要组件，主要解�
 `Kafka`是一个分布式的基于发布订阅模式的消息队列，由`Apache`软件基金会开发。它主要用于处理大规模的实时数据流，适用于各种数据管道、流处理和日志收集场景。
 
 ### 基础架构
-![MQ详解-003](/iblog/posts/annex/images/essays/MQ详解-003.png)
+![MQ详解-003](/posts/annex/images/essays/MQ详解-003.png)
 
 - `Broker`：`Broker`是`Kafka`集群中的服务器节点，一台`Kafka`服务器就是一个`Broker`。每个`Broker`负责存储和管理消息，处理生产者的写入请求和消费者的读取请求。`Kafka`集群可以通过增加更多的`Brokers`来扩展处理能力和存储容量，一个`Broker`可以容纳多个`Topic`。
 - `Topic`：`Topic`是`Kafka`中的消息分类标准。消息被发送到特定的主题，消费者从主题中读取消息。每个主题可以分为多个`Partition`，用来提高处理能力和扩展性。
@@ -80,7 +80,7 @@ MQ即`messagequeue`消息队列，是分布式系统的重要组件，主要解�
 `Producer`生产的数据会被不断追加到该`log`文件末端，且每条数据都有自己的`offset`。`Consumer`组中的每个`Consumer`，都会实时记录自己消费到了哪个`offset`，以便出错恢复时，从上次的位置继续消费。
 
 ### 发布订阅工作流程
-![MQ详解-004](/iblog/posts/annex/images/essays/MQ详解-004.png)
+![MQ详解-004](/posts/annex/images/essays/MQ详解-004.png)
 
 1. 生产者发布消息
     - 消息创建：生产者创建消息，并指定消息内容及相关元数据。
@@ -104,7 +104,7 @@ MQ即`messagequeue`消息队列，是分布式系统的重要组件，主要解�
 生产者是`Kafka`中负责将消息发送到`Topic`的客户端应用程序。它将消息发布到指定的`Topic`，`Kafka`中的消息是按`Topic`进行分类的。
 
 #### 生产者文件存储
-![MQ详解-005](/iblog/posts/annex/images/essays/MQ详解-005.png)
+![MQ详解-005](/posts/annex/images/essays/MQ详解-005.png)
 
 `Kafka`中的消息存储在`Broker`服务器上的磁盘中，每个`Topic`被分为一个或多个`Partition`。
 每个`Partition`在磁盘上对应一个日志文件，生产者发布的消息被追加到该日志文件的末尾。
@@ -117,7 +117,7 @@ MQ即`messagequeue`消息队列，是分布式系统的重要组件，主要解�
 
 `Kafka`如何通过`index`文件快速找到`log`文件中的数据？
 
-![MQ详解-006](/iblog/posts/annex/images/essays/MQ详解-006.png)
+![MQ详解-006](/posts/annex/images/essays/MQ详解-006.png)
 
 根据指定的偏移量，使用二分法查询定位出该偏移量对应的消息所在的分段索引文件和日志数据文件。
 然后通过二分查找法，继续查找出小于等于指定偏移量的最大偏移量，同时也得出了对应的`position`即实际物理位置。
@@ -144,7 +144,7 @@ MQ即`messagequeue`消息队列，是分布式系统的重要组件，主要解�
 为保证生产者发送的数据，能可靠的发送到指定的`Topic`，`Topic`的每个分区收到生产者发送的数据后，都需要向生产者发送`ACK`(`acknowledgement`确认收到)。
 如果生产者收到`ACK`，就会进行下一轮的发送，否则重新发送数据。
 
-![MQ详解-008](/iblog/posts/annex/images/essays/MQ详解-008.png)
+![MQ详解-008](/posts/annex/images/essays/MQ详解-008.png)
 
 `Kafka`确保消息在`Leader`副本和`Follower`副本中都得到确认。消息在`Leader`副本写入成功后，`Leader`会将消息复制到其他`Follower`副本。
 副本确认机制保证了即使某个副本出现故障，数据也不会丢失。`ACK`配置项决定了生产者需要等待多少个副本确认消息已写入才能认为请求成功。可以设置为以下值：
@@ -172,7 +172,7 @@ MQ即`messagequeue`消息队列，是分布式系统的重要组件，主要解�
 
 #### 生产者数据一致性保证
 
-![MQ详解-009](/iblog/posts/annex/images/essays/MQ详解-009.png)
+![MQ详解-009](/posts/annex/images/essays/MQ详解-009.png)
 
 - `LEO`：`Log End offset`每个副本的最后一个`offset`；
 - `HW`：`High Watermark`高水位，指的是消费者能见到的最大的`offset`，`ISR`队列中最小的`LEO`；
@@ -183,7 +183,7 @@ MQ即`messagequeue`消息队列，是分布式系统的重要组件，主要解�
 #### 生产者发送消息流程
 `Kafka`的生产者发送消息采用的是异步发送的方式。在消息发送的过程中，涉及到了两个线程`main`线程和`Sender`线程，以及一个线程共享变量即`RecordAccumulator`。
 
-![MQ详解-010](/iblog/posts/annex/images/essays/MQ详解-010.png)
+![MQ详解-010](/posts/annex/images/essays/MQ详解-010.png)
 
 在生产者发送消息时，`main`线程将消息发送给`RecordAccumulator`，当数据积累到`batch.size`之后，`sender`线程才会不断从`RecordAccumulator`中拉取消息发送到`Kafka`的`Broker`；如果数据迟迟未达到`batch.size`，`sender`线程等待`linger.time`之后就会发送数据。
 

@@ -12,14 +12,14 @@ slug: "springboot-nacos"
 
 启动`Nacos`将模式改为单机模式。
 
-![SpringBoot整合nacos](/iblog/posts/annex/images/spring/SpringBoot整合nacos-001.png)
+![SpringBoot整合nacos](/posts/annex/images/spring/SpringBoot整合nacos-001.png)
 
 启动成功
 
-![SpringBoot整合nacos](/iblog/posts/annex/images/spring/SpringBoot整合nacos-002.png)
+![SpringBoot整合nacos](/posts/annex/images/spring/SpringBoot整合nacos-002.png)
 
 ## Nacos相关配置
-![SpringBoot整合nacos](/iblog/posts/annex/images/spring/SpringBoot整合nacos-004.png)
+![SpringBoot整合nacos](/posts/annex/images/spring/SpringBoot整合nacos-004.png)
 
 ### demo-dev.yaml
 ```yaml
@@ -47,7 +47,7 @@ user:
   address: 测试地址
 ```
 
-![SpringBoot整合nacos](/iblog/posts/annex/images/spring/SpringBoot整合nacos-003.png)
+![SpringBoot整合nacos](/posts/annex/images/spring/SpringBoot整合nacos-003.png)
 
 
 ## 整合Nacos代码
@@ -185,9 +185,9 @@ public class DemoApplication {
 ```
 
 ### 测试结果
-![SpringBoot整合nacos](/iblog/posts/annex/images/spring/SpringBoot整合nacos-005.png)
+![SpringBoot整合nacos](/posts/annex/images/spring/SpringBoot整合nacos-005.png)
 
-![SpringBoot整合nacos](/iblog/posts/annex/images/spring/SpringBoot整合nacos-006.png)
+![SpringBoot整合nacos](/posts/annex/images/spring/SpringBoot整合nacos-006.png)
 
 ### 补充-刷新静态配置
 有时候一些老项目或者一些写法会遇到静态的配置，这时候可以利用Java的反射特性来刷新静态变量。

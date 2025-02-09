@@ -27,7 +27,7 @@ slug: "java-netty"
 `Netty`的事件循环机制经过优化，减少了线程和上下文切换的开销。管道机制将数据处理分解为多个阶段，使得网络应用的开发更加灵活和高效。
 
 ### 传统IO模型
-![传统IO模型](/iblog/posts/annex/images/essays/传统IO模型.png)
+![传统IO模型](/posts/annex/images/essays/传统IO模型.png)
 
 在阻塞IO模型中，线程在执行IO操作时会被阻塞，直到操作完成。例如，当一个线程发起读操作时，它会一直等待数据到达，无法处理其他任务。
 这种模型简单易理解，但在高并发环境下，可能会导致大量的线程阻塞和上下文切换，从而降低系统的性能。
@@ -43,14 +43,14 @@ slug: "java-netty"
 它基于IO复用模型，多个连接共用一个阻塞对象，应用程序只需要在一个阻塞对象等待，无需阻塞等待所有连接。 当某个连接有新的数据可以处理时，操作系统通知应用程序，线程从阻塞状态返回，开始进行业务处理。
 `Netty`主要基于主从`Reactor`多线程模型做了一定的改进。
 
-![Reactor模式](/iblog/posts/annex/images/essays/Reactor模式.png)
+![Reactor模式](/posts/annex/images/essays/Reactor模式.png)
 
 为了避免浪费创建了一个线程池，当客户端发起请求时，通过`DispatcherHandler`进行分发请求处理到线程池，线程池中在使用具体的线程进行事件处理。
 服务器端程序处理传入的多个请求，并将它们同步分派到相应的处理线程，因此`Reactor`模式也叫`Dispatcher`模式。
 `Reactor`模式使用IO复用监听事件，收到事件后，分发给某个线程，这点就是网络服务器高并发处理关键。
 
 #### 单Reactor单线程
-![单Reactor单线程](/iblog/posts/annex/images/essays/单Reactor单线程.png)
+![单Reactor单线程](/posts/annex/images/essays/单Reactor单线程.png)
 
 工作原理：
 - `Reactor`对象通过`Select`监控客户端请求事件，收到事件后通过`Dispatch`进行分发；
@@ -65,7 +65,7 @@ slug: "java-netty"
 单`Reactor`单线程模型适用于连接数目较少、负载不高的应用场景，例如小型网络服务或低并发的应用。在处理高并发、大流量的应用时，可能需要使用多 Reactor 或多线程模型，以更好地满足性能需求。
 
 #### 单Reactor多线程
-![单Reactor多线程](/iblog/posts/annex/images/essays/单Reactor多线程.png)
+![单Reactor多线程](/posts/annex/images/essays/单Reactor多线程.png)
 
 工作原理：
 - `Reactor`对象通过对`select`监听请求事件，收到请求事件后交给`Dispatch`进行转发；
@@ -81,7 +81,7 @@ slug: "java-netty"
 #### 主从Reactor多线程
 `Reactor`主线程可以对应多个`Reactor`子线程，即`MainRecator`可以关联多个`SubReactor`，从而解决了`Reactor` 在单线程中运行，高并发场景下容易成为性能瓶颈。
 
-![主从Reactor线程](/iblog/posts/annex/images/essays/主从Reactor线程.png)
+![主从Reactor线程](/posts/annex/images/essays/主从Reactor线程.png)
 
 工作原理：
 - `Reactor`主线程`MainReactor`对象通过`select`监听连接事件，收到事件后，通过`Acceptor`处理连接事件；
@@ -101,13 +101,13 @@ slug: "java-netty"
 ### Netty模型
 `Netty`的线程模型设计旨在高效处理大量并发连接，并最大限度地利用CPU资源。其核心思想是将IO操作和业务逻辑处理分开，通过线程池和事件循环机制实现异步处理。
 
-![Netty模型](/iblog/posts/annex/images/essays/Netty模型.png)
+![Netty模型](/posts/annex/images/essays/Netty模型.png)
 
 `Netty`的线程模型设计高效地支持大规模并发网络通信。核心包括两个主要类型的线程：
 - 主事件循环线程（`Boss Thread`）：主要负责监听和接受新的网络连接。`Netty`中的`ServerBootstrap`配置了一个或多个主事件循环线程，这些线程负责绑定网络端口并接收客户端的连接请求。当新的连接到达时，主线程会将这些连接注册到工作事件循环线程上进行进一步处理。
 - 工作事件循环线程（`Worker Thread`）：负责处理已经建立连接的IO操作，包括读取和写入数据。每个连接的IO操作由工作线程负责处理，这些线程通常以线程池的形式存在，可以并行处理多个连接的IO事件。`Netty`允许为工作线程配置多个线程组，从而能够高效地处理大量并发请求。
 
-![netty结构](/iblog/posts/annex/images/essays/netty结构.png)
+![netty结构](/posts/annex/images/essays/netty结构.png)
 
 工作流程：
 - `Netty`抽象出两组线程池 `BossGroup`专门负责接收客户端的连接，`WorkerGroup`专门负责网络的读写；`BossGroup`和`WorkerGroup`类型都是`NioEventLoopGroup`；
@@ -124,7 +124,7 @@ slug: "java-netty"
 - 每个`WorkerNioEventLoop`处理业务时，会使用`pipeline`，`pipeline`中包含了`channel`，即通过`pipeline`可以获取到对应通道，管道中维护了很多的处理器；
 
 ## Netty核心组件
-<img src="/iblog/posts/annex/images/essays/Netty核心组件.svg" alt=""/>
+<img src="(/posts/annex/images/essays/Netty核心组件.svg" alt=""/>
 
 - `Bootstrap/ServerBootstrap`: `Bootstrap` 用于客户端的启动配置，指定服务器地址、端口等参数。`ServerBootstrap` 用于服务端配置，处理客户端连接请求。这两个组件通过 `EventLoopGroup` 配置 IO 线程池，管理网络 IO 操作的线程资源。
 - `EventLoopGroup`: 这个组件管理着多个 `EventLoop` 实例，每个 `EventLoop` 负责处理网络 IO 操作。`EventLoopGroup` 通过线程池分配线程给 `EventLoop`，使得网络事件的处理更加高效。启动工具通过 `EventLoopGroup` 配置和管理这些线程池。

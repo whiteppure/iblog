@@ -21,7 +21,7 @@ IO，即`in`和`out`的缩写，也就是输入和输出，指应用程序和外
 在一个数据传输通道中，如果既要写入数据又要读取数据，则要分别提供两个流。
 
 ## 流的分类
-![JavaIO流分类](/iblog/posts/annex/images/essays/JavaIO流分类.png)
+![JavaIO流分类](/posts/annex/images/essays/JavaIO流分类.png)
 
 根据数据传输特性将流抽象为各种类，方便更直观的进行数据操作。主要的分类方式有以下3种：
 - 按数据流的方向：分为输入流、输出流；
@@ -546,9 +546,9 @@ public long getSerialVersionUID() {
 - 根据类名、接口名、成员方法及属性等来生成一个64位的哈希字段，比如：`private static final  long   serialVersionUID = xxxxL;`
 
 可通过编译器进行设置，让它帮忙提示：
-![idea检查serialVersionUID](/iblog/posts/annex/images/essays/idea检查serialVersionUID.png)
+![idea检查serialVersionUID](/posts/annex/images/essays/idea检查serialVersionUID.png)
 
-![idea自动生成serialVersionUID](/iblog/posts/annex/images/essays/idea自动生成serialVersionUID.png)
+![idea自动生成serialVersionUID](/posts/annex/images/essays/idea自动生成serialVersionUID.png)
 
 ### 自定义序列化和反序列化
 想要实现自定义序列化和反序列化，可以在被序列化的类中增加`writeObject`和`readObject`方法来实现。
@@ -701,7 +701,7 @@ void invokeWriteObject(Object obj, ObjectOutputStream out)
 ```java
 public class MainTest {
     public static void main(String[] args) throws Exception {
-        String path = "/Users/whitepure/github/iblog/blog-site/content/posts/rookie/singleton.txt";
+        String path = "/Users/whitepure/github(/blog-site/content/posts/rookie/singleton.txt";
 
         //Write Obj to file
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path));
@@ -886,7 +886,7 @@ IO复用模型，一个线程不断去轮询多个`socket`的状态，只有当`
 `Java NIO`实际上就是多路复用IO，通过`selector.select()`查询每个通道是否有到达事件，如果没有事件则一直阻塞在那里。
 因此这种方式会导致用户线程的阻塞，所以多路复用IO比较适合连接数比较多的情况。
 
-![IO多路复用模型](/iblog/posts/annex/images/essays/IO多路复用模型.png)
+![IO多路复用模型](/posts/annex/images/essays/IO多路复用模型.png)
 
 单线程可以处理多个通道，提高资源利用率，性能好。适用高并发服务应用开发，一个进程响应多个请求，但编程复杂度较高，需要处理选择器和事件。
 常用的实现方式包括`select`、`poll`和`epoll`。
@@ -986,9 +986,9 @@ NIO如何做到非阻塞的呢？当调用`read`方法时，系统底层已经�
 `Channel`的角色和传统IO中的`Stream`是差不多的。在NIO中，一个网络连接使用一个通道表示，所有的NIO的IO操作都是通过连接通道完成的。
 一个通道类似于传统IO中的两个流的结合体，既可以从通道读取数据，也可以向通道写入数据。
 
-![IO](/iblog/posts/annex/images/essays/IO与NIO-1.png)
+![IO](/posts/annex/images/essays/IO与NIO-1.png)
 
-![NIO](/iblog/posts/annex/images/essays/IO与NIO-2.png)
+![NIO](/posts/annex/images/essays/IO与NIO-2.png)
 
 通道的主要实现类：
 - `FileChannel`：用于读取、写入、映射和操作文件的通道。
@@ -1206,7 +1206,7 @@ public class BufferMarkResetExample {
 选择器的使命是完成IO的多路复用，其主要工作是通道的注册、监听、事件查询。
 一个通道代表一条连接通路，通过选择器可以同时监控多个通道的IO（输入输出）状况。选择器和通道的关系，是监控和被监控的关系。
 
-![selector示意图](/iblog/posts/annex/images/essays/selector示意图.png)
+![selector示意图](/posts/annex/images/essays/selector示意图.png)
 
 使用选择器，首先需要通过`Selector.open()`方法创建一个选择器对象。选择器允许单个线程管理多个通道的IO操作，实现了IO多路复用的机制。
 ```text

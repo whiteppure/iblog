@@ -14,7 +14,7 @@ slug: "java-elasticsearch"
 > `Elastic Stack`包括`Elasticsearch`、`Kibana`、`Beats`和`Logstash`，也称为 ELK。能够安全可靠地获取任何来源、任何格式的数据，然后实时地对数据进行搜索、分析和可视化。
 
 `Elasticsearch`是面向文档型数据库，一条数据在这里就是一个文档。`Elasticsearch`里存储文档数据和关系型数据库MySQL存储数据的概念进行一个类比，如图：
-![Elasticsearch详解-01](/iblog/posts/annex/images/essays/Elasticsearch详解-01.png)
+![Elasticsearch详解-01](/posts/annex/images/essays/Elasticsearch详解-01.png)
 
 `ES`里的`Index`可以看做一个库，而`Types`相当于表，`Documents`则相当于表的行。
 这里`Types`的概念已经被逐渐弱化，`Elasticsearch 6.X`中，一个`index`下已经只能包含一个`type`，`Elasticsearch 7.X`中，`Type`的概念已经被删除了。
@@ -33,7 +33,7 @@ slug: "java-elasticsearch"
 ### 搭建集群
 1. 创建`elasticsearch-cluster`文件夹，在内部复制三个`elasticsearch`服务。
 
-    ![Elasticsearch详解-02](/iblog/posts/annex/images/essays/Elasticsearch详解-02.png)
+    ![Elasticsearch详解-02](/posts/annex/images/essays/Elasticsearch详解-02.png)
 
 2. 修改节点配置`config/elasticsearch.yml`文件。
    - `node-1001`节点
@@ -111,7 +111,7 @@ slug: "java-elasticsearch"
      ```
 3. 启动集群，点击`bin\elasticsearch.bat`
 
-    ![Elasticsearch详解-03](/iblog/posts/annex/images/essays/Elasticsearch详解-03.png)
+    ![Elasticsearch详解-03](/posts/annex/images/essays/Elasticsearch详解-03.png)
 
 如果启动不起来，可能原因是分配内存不足，需要修改`config\jvm.options`文件中的内存属性。
 启动之后可使用[elasticsearch-head](https://github.com/mobz/elasticsearch-head),[ElasticHD](https://gitee.com/farmerx/ElasticHD)等`ES`可视化工具查看。
@@ -121,7 +121,7 @@ slug: "java-elasticsearch"
 其核心思想就是在多台机器上启动多个`ES`进程实例，组成了一个`ES`集群。
 `ES`分布式架构实际上就是对`index`进行拆分，将`index`拆分成多个分片，并将分片分别放到不同的`ES`上实现集群部署。
 
-![Elasticsearch详解-05](/iblog/posts/annex/images/essays/Elasticsearch详解-05.png)
+![Elasticsearch详解-05](/posts/annex/images/essays/Elasticsearch详解-05.png)
 
 分片是其核心架构的一个重要组成部分，分片的设计使得`Elasticsearch`能够水平扩展，处理大规模数据和高负载查询。
 分片是索引的子集，用于将数据分布到不同的节点上。每个分片都是一个完整的倒排索引，它独立处理存储和搜索任务。
@@ -170,7 +170,7 @@ shard = hash(routing) % number_of_primary_shards
 这也就是创建索引的时候主分片的数量永远也不会改变的原因，如果数量变化了，那么所有之前路由的值都会无效，文档也再也找不到了。
 
 ### 写数据流程
-![Elasticsearch详解-06](/iblog/posts/annex/images/essays/Elasticsearch详解-06.png)
+![Elasticsearch详解-06](/posts/annex/images/essays/Elasticsearch详解-06.png)
 
 1. 写请求接收：用户发起的写请求（如 `index`、`update`、`delete`）会发送到集群中的任意节点，称为协调节点。
 2. 请求路由：协调节点将写请求路由到正确的主分片，负责处理写操作。
@@ -306,7 +306,7 @@ Elasticsearch is a powerful search engine for full-text search.
 最新的数据更新会体现在最新的段中，而最新的段落盘之后`ES`才能进行搜索，所以磁盘性能极大影响了`ES`软件的搜索。
 `ES`的主要作用就是快速准确的获取想要的数据，所以降低处理数据的延迟就显得尤为重要。
 
-![Elasticsearch详解-04](/iblog/posts/annex/images/essays/Elasticsearch详解-04.png)
+![Elasticsearch详解-04](/posts/annex/images/essays/Elasticsearch详解-04.png)
 
 1. 当新文档被索引到`Elasticsearch`中时，它首先被写入到内存中的数据结构，然后被逐渐持久化到磁盘上的倒排索引中。
 并且追加到了`translog`事务日志中。(先写入索引中，再写入到日志中，目的防止数据丢失，类似数据库中的事务日志)

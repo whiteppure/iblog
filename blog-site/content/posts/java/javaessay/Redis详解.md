@@ -40,7 +40,7 @@ Redis可以存储键和不同类型的值之间的映射。键的类型只能为
 
 `String`的数据结构为简单动态字符串。是可以修改的字符串，内部结构实现上类似于Java的`ArrayList`，采用预分配冗余空间的方式来减少内存的频繁分配。
 
-![Redis详解-001](/iblog/posts/annex/images/essays/Redis详解-001.png)
+![Redis详解-001](/posts/annex/images/essays/Redis详解-001.png)
 
 内部为当前字符串实际分配的空间`capacity`一般要高于实际字符串长度`len`。当字符串长度小于1M时，扩容都是加倍现有的空间，如果超过`1M`，扩容时一次只会多扩`1M`的空间。需要注意的是字符串最大长度为`512M`。
 
@@ -58,7 +58,7 @@ Redis可以存储键和不同类型的值之间的映射。键的类型只能为
 `Redis`列表是简单的字符串列表，按照插入顺序排序。你可以添加一个元素到列表的头部或者尾部，单键多值。
 它的底层实际是个双向链表，对两端的操作性能很高，通过索引下标的操作中间的节点性能会较差。
 
-![Redis详解-002](/iblog/posts/annex/images/essays/Redis详解-002.png)
+![Redis详解-002](/posts/annex/images/essays/Redis详解-002.png)
 
 `List`的数据结构为快速链表`quickList`。首先在列表元素较少的情况下会使用一块连续的内存存储，这个结构是`ziplist`，也即是压缩列表。
 它将所有的元素紧挨着一起存储，分配的是一块连续的内存。当数据量比较多的时候才会改成`quicklist`。
@@ -126,10 +126,10 @@ Redis可以存储键和不同类型的值之间的映射。键的类型只能为
 Redis采用的是跳跃表。跳跃表效率堪比红黑树，实现远比红黑树简单。举例：对比有序链表和跳跃表，从链表中查询出51。
 - 有序链表：查找值为51的元素，需要从第一个元素开始依次查找、比较才能找到;共需要6次比较。
 
-   ![Redis详解-003](/iblog/posts/annex/images/essays/Redis详解-003.png)
+   ![Redis详解-003](/posts/annex/images/essays/Redis详解-003.png)
 - 跳跃表：从第2层开始，1节点比51节点小，向后比较；21节点比51节点小，继续向后比较，后面就是NULL了，所以从21节点向下到第1层；在第1层，41节点比51节点小，继续向后，61节点比51节点大，所以从41向下；在第0层，51节点为要查找的节点，节点被找到，共查找4次。
    
-   ![Redis详解-004](/iblog/posts/annex/images/essays/Redis详解-004.png)
+   ![Redis详解-004](/posts/annex/images/essays/Redis详解-004.png)
 
 可以看出跳跃表比有序链表效率要高。
 
@@ -150,7 +150,7 @@ Redis采用的是跳跃表。跳跃表效率堪比红黑树，实现远比红黑
 `Bitmaps`单独提供了一套命令，所以在`Redis`中使用`Bitmaps`和使用字符串的方法不太相同。
 可以把`Bitmaps`想象成一个以位为单位的数组，数组的每个单元只能存储0和1，数组的下标在`Bitmaps`中叫做偏移量。
 
-![Redis详解-009](/iblog/posts/annex/images/essays/Redis详解-009.png)
+![Redis详解-009](/posts/annex/images/essays/Redis详解-009.png)
 
 常用命令：
 - 设置`Bitmaps`中某个偏移量的值0或1，`offset`偏移量从0开始：`setbit <key><offset><value>`；
@@ -242,18 +242,18 @@ IO多路复用技术允许`Redis`在一个线程中高效地处理多个IO操作
 
 客户端将消息发送到一个或多个频道。
 
-![Redis详解-006](/iblog/posts/annex/images/essays/Redis详解-006.png)
+![Redis详解-006](/posts/annex/images/essays/Redis详解-006.png)
 
 `Redis`客户端可以订阅任意数量的频道。客户端订阅一个或多个频道，接收这些频道的消息。
 
-![Redis详解-005](/iblog/posts/annex/images/essays/Redis详解-005.png)
+![Redis详解-005](/posts/annex/images/essays/Redis详解-005.png)
 
 实现`Redis`发布订阅模式：
 1. 打开两个`Redis`客户端;
 2. 在其中一个客户端输入：`subscribe <channel>`，`channel`为订阅的频道名称：
-![Redis详解-008](/iblog/posts/annex/images/essays/Redis详解-008.png)
+![Redis详解-008](/posts/annex/images/essays/Redis详解-008.png)
 3. 在另外一个客户端输入：`publish <channel> <message>`，`channel`为订阅的频道名称，`message`为推送的消息，返回的1是订阅者数量：
-![Redis详解-007](/iblog/posts/annex/images/essays/Redis详解-007.png)
+![Redis详解-007](/posts/annex/images/essays/Redis详解-007.png)
 
 `Redis`中的发布订阅模式实现简单，支持低延迟的实时消息广播，并且通过模式匹配功能能够满足复杂的订阅需求。适用于实时聊天系统、实时通知和动态内容推送等场景。
 但是`Redis`发布订阅不支持消息持久化，导致消息丢失无法恢复，但是消息的可靠性较低，离线客户端可能会错过消息。大量的订阅和消息发布也可能对`Redis`的性能产生影响。
@@ -270,7 +270,7 @@ IO多路复用技术允许`Redis`在一个线程中高效地处理多个IO操作
 - `WATCH key [key ...]`：监视一个或多个键。如果在事务执行前被监视的键被修改，则事务会被打断。
 - `UNWATCH`：取消对所有键的监视。
 
-![Redis详解-014](/iblog/posts/annex/images/essays/Redis详解-014.png)
+![Redis详解-014](/posts/annex/images/essays/Redis详解-014.png)
 
 在事务开始之前，可以使用`WATCH`命令监视一个或多个键。如果这些键在事务执行期间被修改，事务会被打断。这样可以防止在事务执行过程中由于数据竞争导致的不一致性问题。
 
@@ -309,7 +309,7 @@ OK
 
 如果在组队过程中执行某个命令失败了，则认为组队失败整个队列都会被取消。
 
-![Redis详解-015](/iblog/posts/annex/images/essays/Redis详解-015.png)
+![Redis详解-015](/posts/annex/images/essays/Redis详解-015.png)
 
 ```shell
 127.0.0.1:6379> multi
@@ -324,7 +324,7 @@ QUEUED
 
 如果执行阶段某个命令出了错，则只有报错的命令不会被执行，而其他的命令都会执行且不会回滚。
 
-![Redis详解-016](/iblog/posts/annex/images/essays/Redis详解-016.png)
+![Redis详解-016](/posts/annex/images/essays/Redis详解-016.png)
 
 ```shell
 127.0.0.1:6379> multi 
@@ -386,7 +386,7 @@ QUEUED
 缓存穿透是指查询请求绕过缓存直接访问数据库，通常是因为请求中的数据在缓存中不存在。这个问题可能导致缓存失效，增加数据库负担，并影响系统性能。
 缓存穿透的原因通常是，用户请求的数据在缓存和数据库中都不存在，或者是请求的数据在缓存中未命中，直接查询数据库，并未将结果正确地缓存起来。
 
-![Redis详解-027](/iblog/posts/annex/images/essays/Redis详解-027.png)
+![Redis详解-027](/posts/annex/images/essays/Redis详解-027.png)
 
 解决方法：
 - 布隆过滤器：布隆过滤器是一种空间高效的数据结构，用于判断某个元素是否在集合中。它可以减少对数据库的访问次数，通过在缓存层使用布隆过滤器，来快速判断请求的数据是否可能存在于数据库中。
@@ -477,7 +477,7 @@ QUEUED
 缓存击穿 是指在缓存中某个热点数据的缓存失效时，多个请求同时访问数据库，导致数据库压力剧增的情况。
 这种问题通常发生在缓存数据过期或被删除时，如果请求大量集中在短时间内，可能会导致数据库负载急剧上升。
 
-![Redis详解-028](/iblog/posts/annex/images/essays/Redis详解-028.png)
+![Redis详解-028](/posts/annex/images/essays/Redis详解-028.png)
 
 解决方法：
 - 加锁机制：在缓存失效时，对数据的访问进行加锁，保证只有一个请求能够从数据库中加载数据并更新缓存。其他请求需要等待锁释放后，才能获取缓存中的数据。
@@ -570,7 +570,7 @@ QUEUED
 ### 缓存雪崩
 缓存雪崩 是指当大量缓存同时失效或遭遇问题时，造成大量请求同时涌入数据库，导致数据库负载过重，从而引发服务不可用的情况。这种情况常见于缓存失效时间集中或缓存服务宕机等场景。
 
-![Redis详解-029](/iblog/posts/annex/images/essays/Redis详解-029.png)
+![Redis详解-029](/posts/annex/images/essays/Redis详解-029.png)
 
 解决方法：
 - 缓存过期时间随机化：通过对缓存的过期时间进行随机化，避免所有缓存同时过期。根据业务需求设置合理的缓存过期时间。避免缓存过期时间设置过长或过短，导致缓存失效的集中现象。
@@ -674,7 +674,7 @@ Redis单机部署是最基础的使用方式，适用于对高可用性和扩展
 ### 主从复制
 主从复制，是指将一台`Redis`服务器的数据，复制到其他的`Redis`服务器。前者称为主节点，后者称为从节点，数据的复制是单向的，只能由主节点到从节点。主节点以写为主，从节点以读为主。
 
-![Redis详解-022](/iblog/posts/annex/images/essays/Redis详解-022.png)
+![Redis详解-022](/posts/annex/images/essays/Redis详解-022.png)
 
 `Redis`主从复制 通过将数据从主节点同步到一个或多个从节点来提高读性能和数据备份能力。其主要优点在于可以分担读操作负载，通过从节点处理读请求，从而减轻主节点的压力，并提供数据备份。
 如果主节点出现故障，可以将从节点提升为新的主节点，实现一定程度的容错和数据恢复。适用于读操作频繁的场景，或需要备份数据的环境。
@@ -686,7 +686,7 @@ Redis单机部署是最基础的使用方式，适用于对高可用性和扩展
 哨兵模式是`Redis`提供的一种高可用性解决方案，用于管理`Redis`实例的监控、故障转移和通知。
 它通过多个`Sentinel`节点来实现`Redis`系统的高可用性和故障恢复，来保证`Redis`服务的持续运行。
 
-![Redis详解-026](/iblog/posts/annex/images/essays/Redis详解-026.png)
+![Redis详解-026](/posts/annex/images/essays/Redis详解-026.png)
 
 `Sentinel`节点周期性地向`Redis`实例发送`ping`请求，检查其响应状态。如果检测到主节点或从节点的响应超时或不正常，`Sentinel`会将其标记为“下线”状态。
 当主节点被标记为故障，`Sentinel`节点会进行选举，从多个从节点中选择一个提升为新的主节点。
@@ -745,7 +745,7 @@ set k1 v1
 `Redis`的内存淘汰策略用于管理当 Redis 数据库达到最大内存限制时，决定如何处理额外的数据。淘汰策略默认，使用`noeviction`，意思是不再驱逐的，即等着内存被打满。
 `Redis`内存淘汰策略在`Redis 4.0`版本之前有6种策略，4.0增加了两种，主要新增了`LFU`算法。下图为`Redis 6.2.0`版本的配置文件：
 
-![Redis详解-012](/iblog/posts/annex/images/essays/Redis详解-012.png)
+![Redis详解-012](/posts/annex/images/essays/Redis详解-012.png)
 
 | 策略名称         | 描述                                           | 优点                                             | 缺点                                             | 使用场景                                            |
 |------------------|------------------------------------------------|--------------------------------------------------|--------------------------------------------------|-----------------------------------------------------|

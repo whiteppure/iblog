@@ -9,7 +9,7 @@ slug: "jvm-method-area"
 Java虚拟机定义了若干种程序运行期间会使用到的运行时数据区，其中有一些会随着虚拟机启动而创建，随着虚拟机退出而销毁。
 另外一些则是与线程一一对应的，这些与线程对应的数据区域会随着线程开始和结束而创建和销毁。
 
-![运行时数据区](/iblog/posts/annex/images/essays/运行时数据区.png)
+![运行时数据区](/posts/annex/images/essays/运行时数据区.png)
 
 运行时数据区域包括
 - 程序计数寄存器
@@ -25,7 +25,7 @@ Java虚拟机定义了若干种程序运行期间会使用到的运行时数据�
 尽管所有的方法区在逻辑上是属于堆的一部分，但一些简单的实现可能不会选择去进行垃圾收集，所以把方法区看作是一块独立于Java堆的内存空间。
 
 把方法区看作是一块独立于Java堆的内存空间。下图说明了栈、堆、方法区的交互关系
-![方法区定位](/iblog/posts/annex/images/essays/方法区定位.png)
+![方法区定位](/posts/annex/images/essays/方法区定位.png)
 
 - 方法区主要存放的是 class，而堆中主要存放的是实例化的对象。
 - 方法区与Java堆一样，是各个线程共享的内存区域。
@@ -42,10 +42,10 @@ Java虚拟机定义了若干种程序运行期间会使用到的运行时数据�
 ## JDK7与JDK8的方法区
 在HotSpot，JDK7及以前，习惯上把方法区，称为永久代。JDK8开始，使用元空间取代了永久代，JDK 1.8后，元空间存放在直接内存中。
 <div style="width: 45%;display: inline-block">
-    <img src="/iblog/posts/annex/images/essays/jvm1.8之前.png" alt="jvm1.8之前">
+    <img src="(/posts/annex/images/essays/jvm1.8之前.png" alt="jvm1.8之前">
 </div>
 <div style="width: 45%;display: inline-block">
-    <img src="/iblog/posts/annex/images/essays/jvm1.8.png" alt="jvm1.8">
+    <img src="(/posts/annex/images/essays/jvm1.8.png" alt="jvm1.8">
 </div>
 
 元空间的本质和永久代类似，都是对JVM规范中方法区的实现。不过元空间与永久代最大的区别在于，元空间不在虚拟机设置的内存中，而是使用本地内存。
@@ -76,7 +76,7 @@ Java虚拟机定义了若干种程序运行期间会使用到的运行时数据�
 ## 方法区的内部结构
 方法区用于存储已被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等。
 
-![方法区内部结构](/iblog/posts/annex/images/essays/方法区内部结构.png)
+![方法区内部结构](/posts/annex/images/essays/方法区内部结构.png)
 
 展示方法区内部结构，演示代码
 ```
@@ -294,11 +294,11 @@ public class MethodAreaDemo {
 |JDK1.7|有永久代，但已经逐步 “去永久代”，字符串常量池，静态变量移除，保存在堆中|
 |JDK1.8|无永久代，类型信息，字段，方法，常量保存在本地内存的元空间，但字符串常量池、静态变量仍然在堆中|
 
-![Jdk1.6方法区变化](/iblog/posts/annex/images/essays/Jdk1.6方法区变化.png)
+![Jdk1.6方法区变化](/posts/annex/images/essays/Jdk1.6方法区变化.png)
 
-![Jdk1.7方法区变化](/iblog/posts/annex/images/essays/Jdk1.7方法区变化.png)
+![Jdk1.7方法区变化](/posts/annex/images/essays/Jdk1.7方法区变化.png)
 
-![Jdk1.8方法区变化](/iblog/posts/annex/images/essays/Jdk1.8方法区变化.png)
+![Jdk1.8方法区变化](/posts/annex/images/essays/Jdk1.8方法区变化.png)
 
 **为什么永久代要被元空间替代？**
 

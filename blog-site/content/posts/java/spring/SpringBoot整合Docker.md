@@ -69,7 +69,7 @@ server:
 
 ## Dockerfile
 创建一个名字叫`Dockerfile`的文件，路径任意。
-![DockerFile](/iblog/posts/annex/images/application/dockerFile.jpg)
+![DockerFile](/posts/annex/images/application/dockerFile.jpg)
 ```text
 # 基础镜像
 FROM openjdk:8-jdk-alpine
@@ -126,7 +126,7 @@ ENTRYPOINT ["java","-Djava.security.egd=file:/dev/urandom","-jar","/app.jar"]
 </build>
 ```
 使用`maven`打包
-![docker打包](/iblog/posts/annex/images/application/docker打包.jpg)
+![docker打包](/posts/annex/images/application/docker打包.jpg)
 
 ## Docker镜像测试
 1. 前往 `Dockerfile` 目录，打开并命令行执行。
@@ -144,7 +144,7 @@ ENTRYPOINT ["java","-Djava.security.egd=file:/dev/urandom","-jar","/app.jar"]
     docker run -d -p 9090:8080 demo-docker
     ```
 4. 打开浏览器访问地址`http://localhost:9090/demo` 。
-    ![hellodocker](/iblog/posts/annex/images/application/hellodocker.jpg)
+    ![hellodocker](/posts/annex/images/application/hellodocker.jpg)
 
 如果要停止`Docker`镜像，首先获取镜像`id`，然后在用`stop`命令停止运行镜像。
 > docker ps -a: 显示所有的容器，包括未运行的

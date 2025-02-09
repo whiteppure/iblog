@@ -118,5 +118,5 @@ slug: "js-box-drag"
 ```
 
 ## 运行效果
-![Js滑块拖拽-01.png](/iblog/posts/annex/images/readme/Js滑块拖拽-01.png)
+![Js滑块拖拽-01.png](/posts/annex/images/readme/Js滑块拖拽-01.png)
 

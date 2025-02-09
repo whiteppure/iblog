@@ -164,5 +164,5 @@ slug: "js-paper-folding"
 </html>
 ```
 ## 运行效果
-![Js折纸导航栏](/iblog/posts/annex/images/readme/Js折纸导航栏-01.png)
+![Js折纸导航栏](/posts/annex/images/readme/Js折纸导航栏-01.png)
 

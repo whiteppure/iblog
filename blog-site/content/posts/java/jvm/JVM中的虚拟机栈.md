@@ -9,7 +9,7 @@ slug: "jvm-stack"
 Java虚拟机定义了若干种程序运行期间会使用到的运行时数据区，其中有一些会随着虚拟机启动而创建，随着虚拟机退出而销毁。
 另外一些则是与线程一一对应的，这些与线程对应的数据区域会随着线程开始和结束而创建和销毁。
 
-![运行时数据区](/iblog/posts/annex/images/essays/运行时数据区.png)
+![运行时数据区](/posts/annex/images/essays/运行时数据区.png)
 
 运行时数据区域包括
 - 程序计数寄存器
@@ -92,7 +92,7 @@ JVM直接对Java栈的操作只有两个，就是对栈帧的压栈和出栈，�
 
 执行引擎运行的所有字节码指令只针对当前栈帧进行操作。如果在该方法中调用了其他方法，对应的新的栈帧会被创建出来，放在栈的顶端，成为新的当前帧。
 
-![栈中存储内容](/iblog/posts/annex/images/essays/栈中存储内容.png)
+![栈中存储内容](/posts/annex/images/essays/栈中存储内容.png)
 
 代码演示
 ```
@@ -138,7 +138,7 @@ Java方法有两种返回函数的方式，一种是正常的函数返回，使�
 - 方法返回地址（或方法正常退出或者异常退出的定义）
 - 一些附加信息
 
-![栈桢的结构](/iblog/posts/annex/images/essays/栈桢的结构.png)
+![栈桢的结构](/posts/annex/images/essays/栈桢的结构.png)
 
 每个线程下的栈都是私有的，因此每个线程都有自己各自的栈，并且每个栈里面都有很多栈帧，栈帧的大小主要由局部变量表和操作数栈决定的。
 
@@ -150,9 +150,9 @@ Java方法有两种返回函数的方式，一种是正常的函数返回，使�
 局部变量表所需的容量大小是在编译期确定下来的，并保存在方法的Code属性的`maximum local variables`数据项中。
 在方法运行期间是不会改变局部变量表的大小的。
 
-![字节码介绍](/iblog/posts/annex/images/essays/字节码介绍.png)
+![字节码介绍](/posts/annex/images/essays/字节码介绍.png)
 
-![局部变量表](/iblog/posts/annex/images/essays/局部变量表.png)
+![局部变量表](/posts/annex/images/essays/局部变量表.png)
 
 方法嵌套调用的次数由栈的大小决定。一般来说，栈越大，方法嵌套调用次数越多。
 对一个函数而言，它的参数和局部变量越多，使得局部变量表膨胀，它的栈帧就越大，以满足方法调用所需传递的信息增大的需求。
@@ -174,7 +174,7 @@ JVM会为局部变量表中的每一个Slot都分配一个访问索引，通过�
 
 如果当前帧是由构造方法或者实例方法创建的，那么该对象引用this将会存放在index为0的slot处，其余的参数按照参数表顺序继续排列。
 
-![slot](/iblog/posts/annex/images/essays/slot.png)
+![slot](/posts/annex/images/essays/slot.png)
 
 #### Slot重复利用
 栈帧中的局部变量表中的槽位是可以重用的，如果一个局部变量过了其作用域，那么在其作用域之后申明的新的局部变就很有可能会复用过期局部变量的槽位，从而达到节省资源的目的。
@@ -190,7 +190,7 @@ public void test() {
     int c = a + 1;
 }
 ```
-![slot重复利用](/iblog/posts/annex/images/essays/slot重复利用.png)
+![slot重复利用](/posts/annex/images/essays/slot重复利用.png)
 
 #### 静态变量与局部变量
 变量的分类：
@@ -215,9 +215,9 @@ public void test() {
 操作数栈，在方法执行过程中，根据字节码指令，往栈中写入数据或提取数据，即入栈（push）和 出栈（pop）。
 某些字节码指令将值压入操作数栈，其余的字节码指令将操作数取出栈，使用它们后再把结果压入栈。比如：执行复制、交换、求和等操作。
 
-![操作数栈add](/iblog/posts/annex/images/essays/操作数栈add.png)
+![操作数栈add](/posts/annex/images/essays/操作数栈add.png)
 
-![操作数栈代码举例](/iblog/posts/annex/images/essays/操作数栈代码举例.png)
+![操作数栈代码举例](/posts/annex/images/essays/操作数栈代码举例.png)
 
 操作数栈，主要用于保存计算过程的中间结果，同时作为计算过程中变量临时的存储空间。
 操作数栈就是JVM执行引擎的一个工作区，当一个方法刚开始执行的时候，一个新的栈帧也会随之被创建出来，这个方法的操作数栈是空的。
@@ -236,9 +236,9 @@ public void test() {
 ### 动态链接
 每一个栈帧内部都包含一个指向运行时常量池中该栈帧所属方法的引用，包含这个引用的目的就是为了支持当前方法的代码能够实现动态链接（Dynamic Linking）。比如：invokedynamic指令。
 
-![动态链接](/iblog/posts/annex/images/essays/动态链接.png)
+![动态链接](/posts/annex/images/essays/动态链接.png)
 
-![常量池](/iblog/posts/annex/images/essays/常量池.png)
+![常量池](/posts/annex/images/essays/常量池.png)
 
 在Java源文件被编译到字节码文件中时，所有的变量和方法引用都作为符号引用（symbolic Reference）保存在class文件的常量池里。
 比如：描述一个方法调用了另外的其他方法时，就是通过**常量池**中指向方法的符号引用来表示的。那么动态链接的作用，就是为了将这些符号引用转换为调用方法的直接引用。
@@ -264,7 +264,7 @@ public void test() {
 
 方法执行过程中，抛出异常时的异常处理，存储在一个异常处理表，方便在发生异常的时候找到处理异常的代码。
 
-![异常表](/iblog/posts/annex/images/essays/异常表.png)
+![异常表](/posts/annex/images/essays/异常表.png)
 
 本质上方法的退出就是当前栈帧出栈的过程。此时，需要恢复上层方法的局部变量表、操作数栈、将返回值压入调用者栈帧的操作数栈、设置PC寄存器值等，让调用者方法继续执行下去。
 正常完成出口和异常完成出口的区别在于，通过异常完成出口退出的不会给他的上层调用者产生任何的返回值。
@@ -305,7 +305,7 @@ Java中任何一个普通的方法其实都具备虚函数的特征，它们相�
    - `invokespecial`：调用方法、私有及父类方法，解析阶段确定唯一方法版本；
    - `invokevirtual`：调用所有虚方法；
    - `invokeinterface`：调用接口方法；
-   ![虚拟机指令虚非虚方法](/iblog/posts/annex/images/essays/虚拟机指令虚非虚方法.png)
+   ![虚拟机指令虚非虚方法](/posts/annex/images/essays/虚拟机指令虚非虚方法.png)
 2. 动态调用指令
    - `invokedynamic`：动态解析出需要调用的方法，然后执行；
 
@@ -316,7 +316,7 @@ JVM字节码指令集一直比较稳定，一直到Java7中才增加了一个`in
 
 Java7中增加的动态语言类型支持的本质是对Java虚拟机规范的修改，而不是对Java语言规则的修改，这一块相对来讲比较复杂，增加了虚拟机中的方法调用，最直接的受益者就是运行在Java平台的动态语言的编译器。
 
-![虚拟机虚方法指令](/iblog/posts/annex/images/essays/虚拟机虚方法指令.png)
+![虚拟机虚方法指令](/posts/annex/images/essays/虚拟机虚方法指令.png)
 
 前四条指令固化在虚拟机内部，方法的调用执行不可人为干预，而`invokedynamic`指令则支持由用户确定方法版本。
 其中`invokestatic`指令和`invokespecial`指令调用的方法称为非虚方法，其余的（final修饰的除外）称为虚方法。
@@ -335,6 +335,6 @@ Java7中增加的动态语言类型支持的本质是对Java虚拟机规范的�
 每个类中都有一个虚方法表，表中存放着各个方法的实际入口。
 虚方法表会在类加载的链接阶段被创建并开始初始化，类的变量初始值准备完成之后，JVM会把该类的方法表也初始化完毕。
 
-![虚方法表](/iblog/posts/annex/images/essays/虚方法表.png)
+![虚方法表](/posts/annex/images/essays/虚方法表.png)
 
 如果类中重写了方法，那么调用的时候，就会直接在虚方法表中查找，否则将会直接连接到Object的方法中。

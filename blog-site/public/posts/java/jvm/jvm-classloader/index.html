@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh" >
-<head><script src="/iblog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=iblog/livereload" data-no-instant defer></script>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,19 +22,19 @@
 
 	
 
-    <link rel="shortcut icon" href="http://localhost:1313/iblog/images/favicon.ico" />
+    <link rel="shortcut icon" href="http://localhost:1313/images/favicon.ico" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/normalize.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/animate.min.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/zozo.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/zozo.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/remixicon.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/highlight.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/highlight.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/toc.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/search.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/iblog/css/img.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/toc.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/search.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/img.css" />
 
     
     
@@ -580,13 +580,13 @@
         <div class="nav_container animated fadeInDown">
     <div class="site_nav" id="site_nav">
         <ul><li class="">
-                <a href="http://localhost:1313/iblog/">首页</a>
+                <a href="http://localhost:1313/">首页</a>
             </li><li class="">
-                <a href="http://localhost:1313/iblog/posts/">归档</a>
+                <a href="http://localhost:1313/posts/">归档</a>
             </li><li class="">
-                <a href="http://localhost:1313/iblog/tags/">标签</a>
+                <a href="http://localhost:1313/tags/">标签</a>
             </li><li class="">
-                <a href="http://localhost:1313/iblog/about/">关于</a>
+                <a href="http://localhost:1313/about/">关于</a>
             </li>
         </ul>
     </div>
@@ -598,7 +598,7 @@
     <div class="site_title_container">
         <div class="site_title">
             <h1>
-                <a href="http://localhost:1313/iblog/">
+                <a href="http://localhost:1313/">
                     <span>脚踏实地</span>
                 </a>
             </h1>
@@ -617,7 +617,7 @@
                     </a>
                     
                 
-                <a href="http://localhost:1313/iblog/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                <a href="http://localhost:1313/index.xml" type="application/rss+xml" title="rss" target="_blank">
                     <i class="ri-rss-fill"></i>
                 </a>
                 
@@ -673,11 +673,11 @@
                     <div class="post_content markdown"><h2 id="类加载过程">类加载过程</h2>
 <p>在Java中，类加载器把一个class装入JVM中，要经过以下步骤： 加载、验证、准备、解析和初始化。其中验证，准备，解析统称为连接。
 这5个阶段一般是顺序发生的，但在动态绑定的情况下，解析阶段发生在初始化阶段之后。</p>
-<p><img alt="Jvm内存图" src="/iblog/posts/annex/images/essays/Jvm%E5%86%85%E5%AD%98%E5%9B%BE.png"></p>
+<p><img alt="Jvm内存图" src="/posts/annex/images/essays/Jvm%E5%86%85%E5%AD%98%E5%9B%BE.png"></p>
 <p>类加载器只负责class文件的加载，至于它是否可以运行，则由执行引擎(Execution Engine)决定。
 被加载的类信息存放于一块称为方法区的内存空间。除了类的信息外，方法区中还会存放运行时常量池信息，可能还包括字符串字面量和数字常量。</p>
 <p>类加载过程流程图：</p>
-<p><img alt="类加载过程" src="/iblog/posts/annex/images/essays/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B.png"></p>
+<p><img alt="类加载过程" src="/posts/annex/images/essays/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B.png"></p>
 <h3 id="加载">加载</h3>
 <p>加载阶段是类加载过程的第一个阶段。在这个阶段，JVM 的主要目的是将字节码从各个位置（网络、磁盘等）转化为二进制字节流加载到内存中，接着会为这个类在 JVM 的方法区创建一个对应的 Class 对象，这个 Class 对象就是这个类各种数据的访问入口。</p>
 <p>类的加载指的是将类的<code>.class</code>文件中的二进制数据读入到内存中，将其放在运行时数据区的方法区内，然后在堆区创建一个<code>java.lang.Class</code>对象，用来封装类在方法区内的数据结构。
@@ -942,7 +942,7 @@ JDK 自带的 BootstrapClassLoader， ExtClassLoader， AppClassLoader 负责加
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h2 id="双亲委派模型">双亲委派模型</h2>
-<p><img alt="双亲委派模型" src="/iblog/posts/annex/images/essays/%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B.png"></p>
+<p><img alt="双亲委派模型" src="/posts/annex/images/essays/%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B.png"></p>
 <p>ClassLoader 类使用委托模型来搜索类和资源，每个 ClassLoader 实例都有一个相关的父类加载器。需要查找类或资源时，ClassLoader 实例会在试图亲自查找类或资源之前，将搜索类或资源的任务委托给其父类加载器。
 这种层次关系称为<strong>类加载器的双亲委派模型。</strong> 我们把每一层上面的类加载器叫做当前层类加载器的父加载器，当然，它们之间的父子关系并不是通过继承关系来实现的，而是使用组合关系来复用父加载器中的代码。
 该模型在JDK1.2期间被引入并广泛应用于之后几乎所有的Java程序中，但它并不是一个<strong>强制性的约束模型</strong>，而是Java设计者们推荐给开发者的一种类的加载器实现方式。</p>
@@ -1040,9 +1040,9 @@ JDK 自带的 BootstrapClassLoader， ExtClassLoader， AppClassLoader 负责加
                                     <i class="ri-stack-line"></i>
                                     
                                         
-                                        <a href="http://localhost:1313/iblog/tags/java/">Java</a>
+                                        <a href="http://localhost:1313/tags/java/">Java</a>
                                     
-                                        <a href="http://localhost:1313/iblog/tags/jvm/">JVM</a>
+                                        <a href="http://localhost:1313/tags/jvm/">JVM</a>
                                     
                                     
                                 </span>
@@ -1058,7 +1058,7 @@ JDK 自带的 BootstrapClassLoader， ExtClassLoader， AppClassLoader 负责加
     <div id="vcomments"></div>
 </div>
 
-<link rel="stylesheet" href="http://localhost:1313/iblog/css/comments.css" />
+<link rel="stylesheet" href="http://localhost:1313/css/comments.css" />
 
 <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
 
@@ -1167,20 +1167,20 @@ JDK 自带的 BootstrapClassLoader， ExtClassLoader， AppClassLoader 负责加
         <span>from 2021</span>
     </div>
 </footer>
-    <script src="http://localhost:1313/iblog/js/jquery-3.5.1.min.js"></script>
-<link href="http://localhost:1313/iblog/css/fancybox.min.css" rel="stylesheet">
-<script src="http://localhost:1313/iblog/js/fancybox.min.js"></script>
-<script src="http://localhost:1313/iblog/js/darkmode.js"></script>
-<script src="http://localhost:1313/iblog/js/zozo.js"></script>
+    <script src="http://localhost:1313/js/jquery-3.5.1.min.js"></script>
+<link href="http://localhost:1313/css/fancybox.min.css" rel="stylesheet">
+<script src="http://localhost:1313/js/fancybox.min.js"></script>
+<script src="http://localhost:1313/js/darkmode.js"></script>
+<script src="http://localhost:1313/js/zozo.js"></script>
 
-<script src="http://localhost:1313/iblog/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
-<script src="http://localhost:1313/iblog/js/html2canvas.js"></script>
-<script src="http://localhost:1313/iblog/js/utils.js"></script>
-<script src="http://localhost:1313/iblog/js/html2md.js"></script>
-<script src="http://localhost:1313/iblog/js/htmlexport.js"></script>
+<script src="http://localhost:1313/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
+<script src="http://localhost:1313/js/html2canvas.js"></script>
+<script src="http://localhost:1313/js/utils.js"></script>
+<script src="http://localhost:1313/js/html2md.js"></script>
+<script src="http://localhost:1313/js/htmlexport.js"></script>
 
-<script src="http://localhost:1313/iblog/js/fastsearch.js"></script>
-<script src="http://localhost:1313/iblog/js/fuse.js"></script>
+<script src="http://localhost:1313/js/fastsearch.js"></script>
+<script src="http://localhost:1313/js/fuse.js"></script>
 
 <script>
     
@@ -1219,7 +1219,7 @@ JDK 自带的 BootstrapClassLoader， ExtClassLoader， AppClassLoader 负责加
 
     
     document.addEventListener('DOMContentLoaded', function() {
-        var links = document.querySelectorAll('.content');
+        var links = document.querySelectorAll('.content a');
         links.forEach(function(link) {
             link.setAttribute('target', '_blank');
         });

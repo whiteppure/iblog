@@ -245,5 +245,5 @@ slug: "js-loadding-lazy"
 ```
 
 ## 运行效果
-![Js-懒加载-01](/iblog/posts/annex/images/readme/Js-懒加载-01.png)
+![Js-懒加载-01](/posts/annex/images/readme/Js-懒加载-01.png)
 

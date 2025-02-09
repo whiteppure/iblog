@@ -349,5 +349,5 @@ slug: "js-love-heart"
 </html>
 ```
 ## 运行效果
-![Js表白神器-01](/iblog/posts/annex/images/readme/Js-表白神器-01.png)
+![Js表白神器-01](/posts/annex/images/readme/Js-表白神器-01.png)
 

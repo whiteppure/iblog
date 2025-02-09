@@ -103,7 +103,7 @@ flags: ACC_PUBLIC, ACC_STATIC, ACC_VOLATILE
 ```text
 openjdk8/hotspot/src/share/vm/interpreter/bytecodeInterpreter.cpp
 ```
-![volitile字节码](/iblog/posts/annex/images/essays/volitile字节码.png)
+![volitile字节码](/posts/annex/images/essays/volitile字节码.png)
 
 重点是`cache->is_volatile()`方法，调用栈如下：
 ```text
@@ -148,7 +148,7 @@ inline void OrderAccess::fence() {
 
 为了提高CPU处理器的执行速度，在处理器和内存之间增加了多级缓存来提升。但是由于引入了多级缓存，就存在缓存数据不一致问题。
 
-![CPU多级缓存](/iblog/posts/annex/images/essays/CPU多级缓存.jpg)
+![CPU多级缓存](/posts/annex/images/essays/CPU多级缓存.jpg)
 
 所以如果一个变量被`volatile`所修饰的话，在每次数据变化之后，其值都会被强制刷入主存。
 而其他处理器的缓存由于遵守了缓存一致性协议，也会把这个变量的值从主存加载到自己的缓存中。这就保证了一个`volatile`在并发编程中，其值在多个缓存中是可见的。

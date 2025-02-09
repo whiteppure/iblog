@@ -21,7 +21,7 @@ slug: "java-hashmap"
 `equals`和`hashCode`在`hashMap`中就像一个坐标一样，来定位`hashMap`中的值。
 
 ### HashMap结构
-![HashMap结构](/iblog/posts/annex/images/essays/HashMap结构.png)
+![HashMap结构](/posts/annex/images/essays/HashMap结构.png)
 
 在JDK1.7及之前结构为`数组+单向链表`，JDK1.8及之后结构为`数组 + 单向链表/红黑树`。
 在JDK1.8时，如果存储`Map`中数组元素对应的索引的每个链表超过8，就将单向链表转化为红黑树，当红黑树的节点少于6个的时候又开始使用链表。

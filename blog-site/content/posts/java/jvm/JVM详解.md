@@ -13,7 +13,7 @@ Java虚拟机有很多，HotSpot VM是目前市面上高性能虚拟机的代表
 
 JVM 大致可以划分为三个区域，分别是类加载子系统（`Class Loader`）、运行时数据区（`Runtime Data Areas`）和执行引擎（`Excution Engine`）。下图为 HotSport 虚拟机结构图
 
-![Jvm内存模型](/iblog/posts/annex/images/essays/Jvm内存模型.png)
+![Jvm内存模型](/posts/annex/images/essays/Jvm内存模型.png)
 
 - 类加载子系统：将class文件加载到内存中。具体分为三个步骤：装载，链接，初始化。
 - 运行时数据区：JVM 定义了 Java 程序运行期间需要使用到的内存区域，简单来说，这块内存区域存放了字节码信息以及程序执行过程的数据，垃圾收集器也会针对运行时数据区进行对象回收的工作。
@@ -24,9 +24,9 @@ JVM 大致可以划分为三个区域，分别是类加载子系统（`Class Loa
 一个类从被加载到虚拟机内存中开始，到卸载出内存为止，它的整个生命周期将会经历加载、验证、准备、卸载、解析、初始化、使用、卸载七个阶段，其中验证、准备、解析三个部分统称为连接。
 这几个阶段一般是顺序发生的，但在动态绑定的情况下，解析阶段发生在初始化阶段之后。
 
-![类加载过程-全](/iblog/posts/annex/images/essays/类加载过程-全.png)
+![类加载过程-全](/posts/annex/images/essays/类加载过程-全.png)
 
-![类加载过程](/iblog/posts/annex/images/essays/类加载过程.png)
+![类加载过程](/posts/annex/images/essays/类加载过程.png)
 
 类加载器只负责`class`文件的加载，至于它是否可以运行，则由执行引擎决定。
 被加载的类信息存放于一块称为方法区的内存空间。除了类的信息外，方法区中还会存放运行时常量池信息，可能还包括字符串字面量和数字常量。
@@ -166,7 +166,7 @@ JVM 启动的时候，并不会一次性加载所有的类，而是根据需要�
 在Java中，任意一个类都需要由加载它的类加载器和这个类本身一同确定其在Java虚拟机中的唯一性，即比较两个类是否相等，只有在这两个类是由同一个类加载器加载的前提之下才有意义，否则，即使这两个类来源于同一个class类文件，只要加载它的类加载器不相同，那么这两个类必定不相等(这里的相等包括代表类的Class对象的`equals`方法、`isAssignableFrom`方法、`isInstance`方法和`instanceof`关键字的结果)。
 
 #### 双亲委派模型
-![双亲委派模型](/iblog/posts/annex/images/essays/双亲委派模型.png)
+![双亲委派模型](/posts/annex/images/essays/双亲委派模型.png)
 
 `ClassLoader`类使用委托模型来搜索类和资源，每个 `ClassLoader`实例都有一个相关的父类加载器。需要查找类或资源时，`ClassLoader` 实例会在试图亲自查找类或资源之前，将搜索类或资源的任务委托给其父类加载器。
 这种层次关系称为**类加载器的双亲委派模型。** 我们把每一层上面的类加载器叫做当前层类加载器的父加载器，当然，它们之间的父子关系并不是通过继承关系来实现的，而是使用组合关系来复用父加载器中的代码。
@@ -205,7 +205,7 @@ JDK 自带的 `BootstrapClassLoader`，`ExtClassLoader`，`AppClassLoader` 负�
 ## Java内存区域划分
 Java 虚拟机在执行 Java 程序的过程中会把它管理的内存划分成若干个不同的数据区域。
 
-![运行时数据区](/iblog/posts/annex/images/essays/运行时数据区.png)
+![运行时数据区](/posts/annex/images/essays/运行时数据区.png)
 
 Java内存主要就是对运行时数据区域进行划分：
 - 程序计数寄存器
@@ -214,16 +214,16 @@ Java内存主要就是对运行时数据区域进行划分：
 - 堆
 - 方法区
 
-![hotspot-JVM内存详细划分](/iblog/posts/annex/images/essays/hotspot-JVM内存详细划分.png)
+![hotspot-JVM内存详细划分](/posts/annex/images/essays/hotspot-JVM内存详细划分.png)
 
 其中：方法区、堆、直接内存（非运行时数据区的一部分）为线程共享。程序计数寄存器、虚拟机栈、本地方法栈 为线程私有。
 
 JDK 1.8 和之前的版本略有不同，这里以 JDK 1.7 和 JDK 1.8 这两个版本为例介绍。
 <div style="width: 48%;display: inline-block">
-    <img src="/iblog/posts/annex/images/essays/jvm1.8之前.png" alt="jvm1.8之前">
+    <img src="(/posts/annex/images/essays/jvm1.8之前.png" alt="jvm1.8之前">
 </div>
 <div style="width: 48%;display: inline-block">
-    <img src="/iblog/posts/annex/images/essays/jvm1.8.png" alt="jvm1.8">
+    <img src="(/posts/annex/images/essays/jvm1.8.png" alt="jvm1.8">
 </div>
 
 ### 程序计数器
@@ -287,7 +287,7 @@ public class MainTest {
 
 ```
 通过PC寄存器，我们就可以知道当前程序执行到哪一步了。
-![PC寄存器保存指令示意](/iblog/posts/annex/images/essays/PC寄存器保存指令示意.png)
+![PC寄存器保存指令示意](/posts/annex/images/essays/PC寄存器保存指令示意.png)
 
 ### 虚拟机栈
 Java虚拟机栈（`Java Virtual Machine Stack`），早期也叫Java栈，每个线程在创建时都会创建一个虚拟机栈，其内部保存一个个的栈帧（`Stack Frame`），对应着一次次的Java方法调用。
@@ -298,7 +298,7 @@ Java虚拟机栈（`Java Virtual Machine Stack`），早期也叫Java栈，每�
 方法调用的数据需要通过栈进行传递，每一次方法调用都会有一个对应的栈帧被压入栈中，每一个方法调用结束后，都会有一个栈帧被弹出。
 栈由一个个栈帧组成，而每个栈帧中都拥有：局部变量表、操作数栈、动态链接、方法返回地址。和数据结构上的栈类似，两者都是先进后出的数据结构，只支持出栈和入栈两种操作。
 
-![栈桢的结构](/iblog/posts/annex/images/essays/栈桢的结构.png)
+![栈桢的结构](/posts/annex/images/essays/栈桢的结构.png)
 
 - 局部变量表：`Local Variables`，被称之为局部变量数组或本地变量表。定义为一个数字数组，主要用于存储方法参数和定义在方法体内的局部变量这些数据类型包括各类基本数据类型、对象引用（`reference`），以及`returnAddress`类型。
 - 操作数栈：主要作为方法调用的中转站使用，用于存放方法执行过程中产生的中间计算结果。另外，计算过程中产生的临时变量也会放在操作数栈中。
@@ -339,7 +339,7 @@ Java 8及之后，堆内存逻辑上分为三部分：新生区+养老区+元空
 - `Meta Space` 元空间；
 
 堆空间内部结构，JDK1.8之后永久代替换成了元空间，元空间使用的是本地内存。
-![堆内存结构](/iblog/posts/annex/images/essays/堆内存结构.png)
+![堆内存结构](/posts/annex/images/essays/堆内存结构.png)
 
 对象分配内存步骤：
 1. 新的对象先放伊甸园区，此区有大小限制，如果对象过大可能直接分配在老年代（元空间）。
@@ -370,7 +370,7 @@ MaxTenuringThreshold of 20 is invalid; must be between 0 and 15
 为避免多个线程操作同一地址，需要使用加锁等机制，进而影响分配速度，使用锁又会影响性能，`TLAB`应运而生。
 多线程同时分配内存时，使用`TLAB`可以避免一系列的非线程安全问题，同时还能够提升内存分配的吞吐量，因此我们可以将这种内存分配方式称之为快速分配策略。
 
-![TLAB](/iblog/posts/annex/images/essays/TLAB.png)
+![TLAB](/posts/annex/images/essays/TLAB.png)
 
 从内存模型而不是垃圾收集的角度，对`Eden`区域继续进行划分，JVM为每个线程分配了一个私有缓存区域，它包含在`Eden`空间内。
 默认情况下，`TLAB`空间的内存非常小，仅占有整个`Eden`空间的1%，当然我们可以通过选项`-XX:TLABWasteTargetPercent`设置`TLAB`空间所占用`Eden`空间的百分比大小。
@@ -378,7 +378,7 @@ MaxTenuringThreshold of 20 is invalid; must be between 0 and 15
 对象首先是通过`TLAB`开辟空间，如果不能放入，那么需要通过`Eden`来进行分配。尽管不是所有的对象实例都能够在`TLAB`中成功分配内存，但JVM确实是将`TLAB`作为内存分配的首选。
 可以通过选项`-XX:UseTLAB`设置是否开启`TLAB`空间，默认是开启的。一旦对象在`TLAB`空间分配内存失败时，JVM就会尝试着通过使用加锁机制确保数据操作的原子性，从而直接在`Eden`空间中分配内存。
 
-![TLAB分配过程.png](/iblog/posts/annex/images/essays/TLAB分配过程.png)
+![TLAB分配过程.png](/posts/annex/images/essays/TLAB分配过程.png)
 
 ### 方法区
 方法区属于是 JVM 运行时数据区域的一块逻辑区域，是各个线程共享的内存区域。
@@ -470,7 +470,7 @@ public class MainTest {
 这个方法实现简单，效率高，但是目前主流的虚拟机中并没有选择这个算法来管理内存，其最主要的原因是它很难解决对象之间循环引用的问题。
 当p的指针断开的时候，内部的引用形成一个循环，从而造成内存泄漏。
 
-![循环引用](/iblog/posts/annex/images/essays/循环引用.png)
+![循环引用](/posts/annex/images/essays/循环引用.png)
 
 虽然引用计数算法存在循环引用的问题，但是很多语言的资源回收选择，例如：因人工智能而更加火热的Python，它更是同时支持引用计数和垃圾收集机制；
 具体哪种最优是要看场景的，业界有大规模实践中仅保留引用计数机制，以提高吞吐量的尝试。
@@ -482,7 +482,7 @@ public class MainTest {
 #### 可达性分析算法
 可达性分析算法是以根对象集合`GCRoots`为起始点，从这些节点开始向下搜索，节点所走过的路径称为引用链，当一个对象到`GCRoots`没有任何引用链相连的话，则证明此对象是不可用的，需要被回收。
 
-![可达性分析算法](/iblog/posts/annex/images/essays/可达性分析算法.png)
+![可达性分析算法](/posts/annex/images/essays/可达性分析算法.png)
 
 相对于引用计数算法而言，可达性分析算法不仅同样具备实现简单和执行高效等特点，更重要的是，该算法可以有效地解决在引用计数算法中循环引用的问题，防止内存泄漏的发生。
 只要你无法与`GCRoot`建立直接或间接的连接，系统就会判定你为可回收对象。所谓根集合`GCRoots`就是一组必须活跃的引用，即有在栈中有指针指向堆中的地址，它们是程序运行时的起点，是一切引用链的源头。
@@ -498,7 +498,7 @@ public class MainTest {
 
 除了堆空间产生对象的一些结构外，比如：虚拟机栈、本地方法栈、方法区、字符串常量池等地方对堆空间的对象的引用，都可以作为`GCRoots`进行可达性分析。
 
-![对象集合GCroots](/iblog/posts/annex/images/essays/对象集合GCroots.png)
+![对象集合GCroots](/posts/annex/images/essays/对象集合GCroots.png)
 
 如何判定是否为`GCroot`?
 由于Root采用栈方式存放变量和指针，所以如果一个指针，保存了堆内存里面的对象，但是自己又不存放在堆内存里面，那它就是一个`GCroot`。代码演示：
@@ -546,7 +546,7 @@ STW事件和采用哪款GC无关，因为所有的GC都有这个事件。任何�
 这4种引用强度依次逐渐减弱。除强引用外，其他3种引用均可以在`java.lang.ref`包中找到它们的身影。
 强引用为JVM内部实现，其他三类引用类型全部继承自`Reference`父类。
 
-![强软弱虚](/iblog/posts/annex/images/essays/强软弱虚.jpg)
+![强软弱虚](/posts/annex/images/essays/强软弱虚.jpg)
 
 上述引用垃圾回收的前提条件是，对象都是可触及的(可达性分析结果为可达)，如果对象不可触及就直接被垃圾回收器回收了。
 
@@ -773,7 +773,7 @@ public class MainTest {
 - 标记：垃圾收集器从引用根节点（`GCRoots`）开始遍历，标记所有被引用的对象，一般是在对象的`Heade`r中记录为可达对象。
 - 清除：垃圾收集器对堆内存从头到尾进行线性的遍历，如果发现某个对象在其`Header`中没有标记为可达对象，则将其回收。
 
-![标记清除算法](/iblog/posts/annex/images/essays/标记清除算法.png)
+![标记清除算法](/posts/annex/images/essays/标记清除算法.png)
 
 标记的是可达对象，不是垃圾对象，清除回收的是垃圾对象，那么什么是清除？
 
@@ -789,7 +789,7 @@ public class MainTest {
 复制算法是在标记清除算法上演化而来的，为了解决标记清除算法的内存碎片问题，M.L.Minsky于1963年发表了著名的论文：“使用双存储区的Lisp语言垃圾收集器（`CA LISP Garbage Collector Algorithm Using Serial Secondary Storage`）”。
 M.L.Minsky在该论文中描述的算法被人们称为复制算法，它将可用内存按容量划分为大小相等的两块，每次只使用其中的一块，它也被M.L.Minsky成功地引入到了Lisp语言的一个实现版本中。
 
-![复制算法](/iblog/posts/annex/images/essays/复制算法.png)
+![复制算法](/posts/annex/images/essays/复制算法.png)
 
 将分配内存空间分为两块，每次只使用其中一块，在垃圾回收时将正在使用的内存中存活对象复制到未被使用的内存块中去，之后清除正在使用的内存块中的所有对象，交换两个内存的角色，最后完成垃圾回收。
 
@@ -808,7 +808,7 @@ M.L.Minsky在该论文中描述的算法被人们称为复制算法，它将可�
 标记清除算法的确可以应用在老年代中，但是该算法不仅执行效率低下，而且在执行完内存回收后还会产生内存碎片，所以JVM的设计者需要在此基础之上进行改进。
 1970年前后，`G.L.Steele、C.J.Chene`和`D.s.Wise`等研究者发布标记整理算法。在许多现代的垃圾收集器中，人们都使用了标记整理算法或其改进版本。
 
-![标记整理算法](/iblog/posts/annex/images/essays/标记整理算法.png)
+![标记整理算法](/posts/annex/images/essays/标记整理算法.png)
 
 标记整理算法，标记过程仍然与标记清除算法一样，但后续步骤不是直接对可回收对象进行清理，而是让所有存活的对象都向一端移动，再清理掉端边界以外的内存区域。
 
@@ -863,10 +863,10 @@ JDK 默认垃圾收集器（使用 `java -XX:+PrintCommandLineFlags -version` �
 对于交互较强的应用而言，这种垃圾收集器是不能接受的。一般在Java web应用程序中是不会采用串行垃圾收集器的。
 `Serial GC`(串行垃圾回收回器)是最基本、历史最悠久的垃圾收集器了。JDK1.3之前回收新生代唯一的选择。
 
-`Serial GC`作为[HotSpot中client模式](https://whiteppure.github.io/iblog/posts/jvm/jvm-execute-engine/#即使编译器分类)下的默认新生代垃圾收集器；
+`Serial GC`作为[HotSpot中client模式](https://whiteppure.github.io(/posts/jvm/jvm-execute-engine/#即使编译器分类)下的默认新生代垃圾收集器；
 `Serial GC`年轻代采用标记-复制算法，老年代采用标记-整理算法、串行回收和STW机制的方式执行内存回收。
 
-![serial-GC](/iblog/posts/annex/images/essays/serial-GC.png)
+![serial-GC](/posts/annex/images/essays/serial-GC.png)
 
 `Serial GC`是一个单线程的收集器，但它的“单线程”的意义并不仅仅说明它只会使用一个CPU或一条收集线程去完成垃圾收集工作，更重要的是在它进行垃圾收集时，必须暂停其他所有的工作线程，直到它收集结束。
 
@@ -885,14 +885,14 @@ JDK 默认垃圾收集器（使用 `java -XX:+PrintCommandLineFlags -version` �
 #### ParNew GC
 `ParNew` 收集器其实就是 `Serial` 收集器的多线程版本，除了使用多线程进行垃圾收集外，其余行为：控制参数、收集算法、回收策略等等和 `Serial` 收集器完全一样。
 
-![parnew-GC](/iblog/posts/annex/images/essays/parnew-GC.png)
+![parnew-GC](/posts/annex/images/essays/parnew-GC.png)
 
 它是许多运行在 `Server` 模式下的虚拟机的首要选择，除了 `Serial` 收集器外，只有它能与 `CMS` 收集器配合工作。
 
 #### Parallel Scavenge GC
 `Parallel Scavenge` 收集器也是使用标记-复制算法的多线程收集器，它看上去几乎和 ParNew 都一样。
 
-![parallel-scavenge-GC](/iblog/posts/annex/images/essays/parallel-scavenge-GC.png)
+![parallel-scavenge-GC](/posts/annex/images/essays/parallel-scavenge-GC.png)
 
 `Parallel Scavenge` 收集器关注点是吞吐量（高效率的利用 CPU）。`CMS` 等垃圾收集器的关注点更多的是用户线程的停顿时间（提高用户体验）。
 
@@ -901,13 +901,13 @@ JDK 默认垃圾收集器（使用 `java -XX:+PrintCommandLineFlags -version` �
 - 在 JDK1.5 以及以前的版本中与 `Parallel Scavenge` 收集器搭配使用；
 - 作为 `CMS` 收集器的后备方案；
 
-![serial-GC](/iblog/posts/annex/images/essays/serial-GC.png)
+![serial-GC](/posts/annex/images/essays/serial-GC.png)
 
 #### Parallel Old GC
 `Parallel Scavenge` 收集器的老年代版本。使用多线程和“标记-整理”算法。
 在注重吞吐量以及 CPU 资源的场合，都可以优先考虑 `Parallel Scavenge` 收集器和 `Parallel Old` 收集器。
 
-![parallel-scavenge-GC](/iblog/posts/annex/images/essays/parallel-scavenge-GC.png)
+![parallel-scavenge-GC](/posts/annex/images/essays/parallel-scavenge-GC.png)
 
 #### CMS
 `CMS`全称`Concurrent Mark Sweep`，是一种以获取最短回收停顿时间为目标的收集器。它非常符合在注重用户体验的应用上使用。
@@ -915,7 +915,7 @@ JDK 默认垃圾收集器（使用 `java -XX:+PrintCommandLineFlags -version` �
 
 从名字中的`Mark Sweep`这两个词可以看出，`CMS` 收集器是一种 “标记-清除”算法实现的，以获取最短回收停顿时间为目标，采用“标记-清除”算法，分 4 大步进行垃圾收集，其中初始标记和重新标记会 STW，JDK 1.5 时引入，JDK9 被标记弃用，JDK14 被移除。
 
-![cms-GC](/iblog/posts/annex/images/essays/cms-GC.png)
+![cms-GC](/posts/annex/images/essays/cms-GC.png)
 
 - 初始标记，指的是寻找所有被 `GCRoots` 引用的对象，该阶段需要`Stop the World`。这个步骤仅仅只是标记一下 `GCRoots` 能直接关联到的对象，并不需要做整个引用的扫描，因此速度很快。
 - 并发标记，指的是对初始标记阶段标记的对象进行整个引用链的扫描，该阶段不需要`Stop the World`。 对整个引用链做扫描需要花费非常多的时间，因此需要通过垃圾回收线程与用户线程并发执行，降低垃圾回收的时间，所以叫做并发标记。
@@ -935,7 +935,7 @@ JDK 默认垃圾收集器（使用 `java -XX:+PrintCommandLineFlags -version` �
 
 1. 分代：
    将堆内存分为多个大小相等的区域（`Region`），每个区域都可以是 `Eden` 区、`Survivor` 区或者 `Old` 区。
-   ![g1分区](/iblog/posts/annex/images/essays/g1分区.png)<br/>
+   ![g1分区](/posts/annex/images/essays/g1分区.png)<br/>
    可以通过 `-XX:G1HeapRegionSize=n` 来设置 `Region` 的大小，可以设定为 1M、2M、4M、8M、16M、32M（不能超过）。<br/>
    `G1`有专门分配大对象的 `Region` 叫 `Humongous` 区，而不是让大对象直接进入老年代的 `Region` 中。
    在 `G1`中，大对象的判定规则就是一个大对象超过了一个 `Region` 大小的 50%，比如每个 `Region` 是 2M，只要一个对象超过了 1M，就会被放入 `Humongous` 中，而且一个大对象如果太大，可能会横跨多个 `Region` 来存放。
@@ -946,7 +946,7 @@ JDK 默认垃圾收集器（使用 `java -XX:+PrintCommandLineFlags -version` �
 5. 可预测的停顿：`G1`也是基于「标记-清除」算法，因此在进行垃圾回收的时候，仍然需要`Stop the World`。不过，`G1`在停顿时间上添加了预测机制，用户可以指定期望停顿时间。
 
 `G1`中存在三种 GC 模式，分别是 `Young GC、Mixed GC` 和 `Full GC`。
-![g1垃圾收集过程](/iblog/posts/annex/images/essays/g1垃圾收集过程.png)
+![g1垃圾收集过程](/posts/annex/images/essays/g1垃圾收集过程.png)
 
 当 `Eden` 区的内存空间无法支持新对象的内存分配时，`G1`会触发 `Young GC`。
 当需要分配对象到 `Humongous` 区域或者堆内存的空间占比超过 `-XX:G1HeapWastePercent` 设置的 `InitiatingHeapOccupancyPercent` 值时，`G1`会触发一次 `concurrent marking`，它的作用就是计算老年代中有多少空间需要被回收，当发现垃圾的占比达到 `-XX:G1HeapWastePercent` 中所设置的 `G1HeapWastePercent` 比例时，在下次 `Young GC` 后会触发一次 `Mixed GC`。
@@ -959,7 +959,7 @@ JDK 默认垃圾收集器（使用 `java -XX:+PrintCommandLineFlags -version` �
 可以借助`-XX:MaxGCPauseMillis`来设置期望的停顿时间（默认 200ms），`G1`会根据这个值来计算出一个合理的 `Young GC` 的回收时间，然后根据这个时间来制定`Young GC` 的回收计划。
 
 G1收集垃圾的过程：
-![g1-GC](/iblog/posts/annex/images/essays/g1-GC.png)
+![g1-GC](/posts/annex/images/essays/g1-GC.png)
 1. 初始标记 (`Inital Marking`) ：标记 `GCRoots` 能直接关联到的对象，并且修改 `TAMS`（Top at Mark Start）指针的值，让下一阶段用户线程并发运行时，能够正确的在 `Reigin` 中分配新对象。
 `G1`为每一个 `Reigin` 都设计了两个名为 `TAMS` 的指针，新分配的对象必须位于这两个指针位置以上，位于这两个指针位置以上的对象默认被隐式标记为存活的，不会纳入回收范围；
 2. 并发标记 (`Concurrent Marking`) ：从 `GCRoots` 能直接关联到的对象开始遍历整个对象图。遍历完成后，还需要处理 `SATB` 记录中变动的对象。

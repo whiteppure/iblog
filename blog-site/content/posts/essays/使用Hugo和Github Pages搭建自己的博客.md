@@ -66,7 +66,7 @@ Hexo：
 需要注意的是，`Github Pages`需要在跟路径下创建一个`docs`文件夹，这个文件夹就是你的网站页面，我的是这样，`docs`里面保证根目录有一个`index.html`文件即可。
 一般我都是在本地通过`hugo -d .\docs\`命令生成静态页面到`docs`文件夹下，然后将`docs`文件夹推送到`GitHub`。
 
-![搭建自己的博客-01.png](/iblog/posts/annex/images/essays/搭建自己的博客-01.png)
+![搭建自己的博客-01.png](/posts/annex/images/essays/搭建自己的博客-01.png)
 
 一些博客其他功能参考链接：
 - `Hugo`给文章添加目录: https://www.ariesme.com/posts/2019/add_toc_for_hugo

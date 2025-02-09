@@ -277,7 +277,7 @@ window.onload = function(){
 ```
 
 ## 运行效果
-![Js五子棋-01](/iblog/posts/annex/images/readme/Js五子棋-01.png)
+![Js五子棋-01](/posts/annex/images/readme/Js五子棋-01.png)
 
 
 

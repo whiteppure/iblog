@@ -7,7 +7,7 @@ slug: "rookie-exception"
 ---
 
 ## 异常类型
-![Java异常分类](/iblog/posts/annex/images/essays/Java异常分类.png)
+![Java异常分类](/posts/annex/images/essays/Java异常分类.png)
 
 `Throwable`可以用来表示任何可以作为异常抛出的类，分为两种：`Error` 和 `Exception`。
 其中`Error`用来表示Java程序无法处理的错误，这类错误一般与硬件有关，与程序本身无关，通常由系统进行处理，程序本身无法捕获和处理，是不可控制的。

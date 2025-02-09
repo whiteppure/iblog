@@ -7,7 +7,7 @@ slug: "vue2-note"
 ---
 
 ## 参考资料
-- 代码中的依赖库：[Vue2.x-lib.zip](/iblog/posts/annex/zip/vue2.x-lib.zip)
+- 代码中的依赖库：[Vue2.x-lib.zip](/posts/annex/zip/vue2.x-lib.zip)
 - Vue官方文档：[https://cn.vuejs.org/v2/guide](https://cn.vuejs.org/v2/guide)
 - Vue参考视频资料：[https://www.bilibili.com/video/av50680998](https://www.bilibili.com/video/av50680998)
 - Vue菜鸟教程文档：[https://www.runoob.com/vue2/vue-tutorial.html](https://www.runoob.com/vue2/vue-tutorial.html)
