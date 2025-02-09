@@ -773,8 +773,8 @@
 </ul>
 <h3 id="按处理方式分类">按处理方式分类</h3>
 <ul>
-<li>压缩式垃圾回收器：压缩式垃圾回收器会在回收完成后，对存活对象进行压缩整理，消除回收后的碎片。所以在为对象分配内存的时候用[指针碰撞](<a href="https://whiteppure.github.io">https://whiteppure.github.io</a>(/posts/jvm/java-object/#创建对象的过程及步骤)；</li>
-<li>非压缩式垃圾回收器：非压缩式的垃圾回收器不进行整理这步操作。所以在为为对象分配内存的时候使用[空闲列表](<a href="https://whiteppure.github.io">https://whiteppure.github.io</a>(/posts/jvm/java-object/#创建对象的过程及步骤)；</li>
+<li>压缩式垃圾回收器：压缩式垃圾回收器会在回收完成后，对存活对象进行压缩整理，消除回收后的碎片。所以在为对象分配内存的时候用<a href="/posts/jvm/java-object/#%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%BF%87%E7%A8%8B%E5%8F%8A%E6%AD%A5%E9%AA%A4">指针碰撞</a>；</li>
+<li>非压缩式垃圾回收器：非压缩式的垃圾回收器不进行整理这步操作。所以在为为对象分配内存的时候使用<a href="/posts/jvm/java-object/#%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%BF%87%E7%A8%8B%E5%8F%8A%E6%AD%A5%E9%AA%A4">空闲列表</a>；</li>
 </ul>
 <h2 id="查看默认垃圾收集器">查看默认垃圾收集器</h2>
 <p>JDK 默认垃圾收集器（使用 java -XX:+PrintCommandLineFlags -version 命令查看）：</p>
@@ -870,7 +870,7 @@
 <p><code>Serial GC</code>由于弊端较大，只有放在单核CPU上才能充分发挥其作用，由于现在都是多核CPU已经不用串行收集器了，所以以下内容了解即可。
 对于交互较强的应用而言，这种垃圾收集器是不能接受的。一般在Java web应用程序中是不会采用串行垃圾收集器的。</p>
 <p><code>Serial GC</code>(串行垃圾回收回器)是最基本、历史最悠久的垃圾收集器了。JDK1.3之前回收新生代唯一的选择。</p>
-<p><code>Serial GC</code>作为[HotSpot中client模式](<a href="https://whiteppure.github.io">https://whiteppure.github.io</a>(/posts/jvm/jvm-execute-engine/#即使编译器分类)下的默认新生代垃圾收集器；
+<p><code>Serial GC</code>作为<a href="/posts/jvm/jvm-execute-engine/#%E5%8D%B3%E4%BD%BF%E7%BC%96%E8%AF%91%E5%99%A8%E5%88%86%E7%B1%BB">HotSpot中client模式</a>下的默认新生代垃圾收集器；
 <code>Serial GC</code>年轻代采用标记-复制算法，老年代采用标记-整理算法、串行回收和STW机制的方式执行内存回收。</p>
 <p><img alt="serial-GC" src="/posts/annex/images/essays/serial-GC.png"></p>
 <p><code>Serial GC</code>是一个单线程的收集器，但它的“单线程”的意义并不仅仅说明它只会使用一个CPU或一条收集线程去完成垃圾收集工作，更重要的是在它进行垃圾收集时，必须暂停其他所有的工作线程，直到它收集结束。</p>

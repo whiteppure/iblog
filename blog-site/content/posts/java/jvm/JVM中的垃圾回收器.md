@@ -45,8 +45,8 @@ slug: "java-garbage-collector"
 - 独占式垃圾回收器：会出现STW现象，一旦运行，就停止应用程序中的所有用户线程，直到垃圾回收过程完全结束。
 
 ### 按处理方式分类
-- 压缩式垃圾回收器：压缩式垃圾回收器会在回收完成后，对存活对象进行压缩整理，消除回收后的碎片。所以在为对象分配内存的时候用[指针碰撞](https://whiteppure.github.io(/posts/jvm/java-object/#创建对象的过程及步骤)；
-- 非压缩式垃圾回收器：非压缩式的垃圾回收器不进行整理这步操作。所以在为为对象分配内存的时候使用[空闲列表](https://whiteppure.github.io(/posts/jvm/java-object/#创建对象的过程及步骤)；
+- 压缩式垃圾回收器：压缩式垃圾回收器会在回收完成后，对存活对象进行压缩整理，消除回收后的碎片。所以在为对象分配内存的时候用[指针碰撞](/posts/jvm/java-object/#创建对象的过程及步骤)；
+- 非压缩式垃圾回收器：非压缩式的垃圾回收器不进行整理这步操作。所以在为为对象分配内存的时候使用[空闲列表](/posts/jvm/java-object/#创建对象的过程及步骤)；
 
 ## 查看默认垃圾收集器
 JDK 默认垃圾收集器（使用 java -XX:+PrintCommandLineFlags -version 命令查看）：
@@ -153,7 +153,7 @@ public class MainTest {
 
 `Serial GC`(串行垃圾回收回器)是最基本、历史最悠久的垃圾收集器了。JDK1.3之前回收新生代唯一的选择。
 
-`Serial GC`作为[HotSpot中client模式](https://whiteppure.github.io(/posts/jvm/jvm-execute-engine/#即使编译器分类)下的默认新生代垃圾收集器；
+`Serial GC`作为[HotSpot中client模式](/posts/jvm/jvm-execute-engine/#即使编译器分类)下的默认新生代垃圾收集器；
 `Serial GC`年轻代采用标记-复制算法，老年代采用标记-整理算法、串行回收和STW机制的方式执行内存回收。
 
 ![serial-GC](/posts/annex/images/essays/serial-GC.png)

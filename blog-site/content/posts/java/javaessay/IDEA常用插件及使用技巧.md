@@ -127,7 +127,7 @@ Maven是个很好用的依赖管理工具，但是再好的东西也不是完美
 ![idea常用配置](/posts/annex/images/essays/idea常用配置-20.jpg)
 
 ### IDEA快捷键及设置
-> 本人IDEA设置(windows版)供参考 [下载](https://whiteppure.github.io(/posts/annex/zip/idea-settings.zip)
+> 本人IDEA设置(windows版)供参考 [下载](/posts/annex/zip/idea-settings.zip)
 
 IDEA Windows版本常用快捷键如下：
 

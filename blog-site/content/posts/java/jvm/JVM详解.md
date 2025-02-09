@@ -863,7 +863,7 @@ JDK 默认垃圾收集器（使用 `java -XX:+PrintCommandLineFlags -version` �
 对于交互较强的应用而言，这种垃圾收集器是不能接受的。一般在Java web应用程序中是不会采用串行垃圾收集器的。
 `Serial GC`(串行垃圾回收回器)是最基本、历史最悠久的垃圾收集器了。JDK1.3之前回收新生代唯一的选择。
 
-`Serial GC`作为[HotSpot中client模式](https://whiteppure.github.io(/posts/jvm/jvm-execute-engine/#即使编译器分类)下的默认新生代垃圾收集器；
+`Serial GC`作为[HotSpot中client模式](/posts/jvm/jvm-execute-engine/#即使编译器分类)下的默认新生代垃圾收集器；
 `Serial GC`年轻代采用标记-复制算法，老年代采用标记-整理算法、串行回收和STW机制的方式执行内存回收。
 
 ![serial-GC](/posts/annex/images/essays/serial-GC.png)
