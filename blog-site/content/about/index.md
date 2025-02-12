@@ -1,7 +1,6 @@
 ---
 title: "关于"
 date: 2021-02-20
-hidden: true
 draft: false
 ---
 
