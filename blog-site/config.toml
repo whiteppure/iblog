@@ -1,4 +1,5 @@
 baseURL = "https://blog.lijizhi.website/"
+enableRobotsTXT = true              # 确保Hugo生成正确指令
 languageCode = "zh"
 defaultContentLanguage = "zh"
 title = "脚踏实地"                         # site title  # 网站标题
@@ -122,6 +123,10 @@ unsafe = true
 home = ["HTML", "RSS", "JSON"]
 
 [sitemap]
-changefreq = "weekly"
-priority = 0.5
 filename = "sitemap.xml"
+priority = 0.8
+excludes = [
+    "/drafts/*",
+    "/vendor/*",
+    "/node_modules/*"
+]
