@@ -1,9 +1,9 @@
 ---
-title: "使用Hugo和Github Pages搭建自己的博客"
+title: "Hugo和Github Pages搭建博客"
 date: 2024-04-15
 draft: false
-tags: ["随笔"]
-slug: "build-blog"
+tags: ["随笔","GitHub"]
+slug: "github-build-blog"
 ---
 
 ## 搭建博客框架及对比

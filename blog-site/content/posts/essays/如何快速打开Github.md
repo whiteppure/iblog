@@ -2,7 +2,7 @@
 title: "如何快速打开Github"
 date: 2024-03-21
 draft: false
-tags: ["随笔"]
+tags: ["GitHub","随笔"]
 slug: "accelerate-access-github"
 ---
 
