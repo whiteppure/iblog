@@ -121,7 +121,7 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e5%a6%82%e4%bd%95%e5%a4%8d%e5%88%b6%e5%af%b9%e8%b1%a1postsjavajavainterviewjavabase-interview-01">
+                <a class="nav-link text-left" href="#%e5%a6%82%e4%bd%95%e5%a4%8d%e5%88%b6%e5%af%b9%e8%b1%a1postsjavajavainterviewjava-object-replication">
                     如何复制对象
                 </a>
             </li>
@@ -149,7 +149,7 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#string%e7%b1%bb%e4%b8%ba%e4%bb%80%e4%b9%88%e8%ae%be%e8%ae%a1%e6%88%90%e4%b8%8d%e5%8f%af%e5%8f%98%e7%9a%84">
+                <a class="nav-link text-left" href="#string%e7%b1%bb%e4%b8%ba%e4%bb%80%e4%b9%88%e8%ae%be%e8%ae%a1%e6%88%90%e4%b8%8d%e5%8f%af%e5%8f%98%e7%9a%84postsjavajavainterviewjava-string-final">
                     String类为什么设计成不可变的
                 </a>
             </li>
@@ -177,8 +177,8 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#string%e7%b1%bb%e5%88%b0%e5%ba%95%e6%9c%89%e6%b2%a1%e6%9c%89%e9%95%bf%e5%ba%a6%e9%99%90%e5%88%b6">
-                    String类到底有没有长度限制
+                <a class="nav-link text-left" href="#string%e7%b1%bb%e5%9e%8b%e5%8f%98%e9%87%8f%e6%9c%89%e6%b2%a1%e6%9c%89%e9%95%bf%e5%ba%a6%e9%99%90%e5%88%b6">
+                    String类型变量有没有长度限制
                 </a>
             </li>
             
@@ -5672,19 +5672,9 @@
 <p>本人时间精力有限，如有遗漏或错误，欢迎在评论留言补充，我会及时的完善修正。 目录如下：</p>
 <h1 id="java基础">Java基础</h1>
 <h2 id="基础汇总">基础汇总</h2>
-<h3 id="如何复制对象postsjavajavainterviewjavabase-interview-01"><a href="/posts/java/javainterview/javabase-interview-01/">如何复制对象</a></h3>
-<h3 id="string类为什么设计成不可变的">String类为什么设计成不可变的</h3>
-<p>面试问这个问题，可以从<code>String</code>类的优点这个思路回答。</p>
-<ol>
-<li>字符串不可变的根本原因我认为应是出于对数据的安全性考虑。<code>String</code>经常作为参数，<code>String</code>不可变性可以保证参数不可变。
-实际项目中会用到，比如数据库连接串、账号、密码等字符串，只有不可变的连接串、用户名和密码才能保证安全性。</li>
-<li>线程安全。字符串在Java中的使用频率可谓高之又高，那在高并发的情况下不可变性也使得对字符串的读写操作不用考虑多线程竞争的情况。
-不可变的字符串在多线程环境中是安全的。由于<code>String</code>对象一旦创建就不能被修改，因此多个线程可以安全地共享相同的<code>String</code>实例，而不需要担心数据被修改。</li>
-<li><code>String</code>常量池的需要。字符串常量池的基础就是字符串的不可变性，如果字符串是可变的，那想一想，常量池就没必要存在了。
-如果一个<code>String</code> 对象已经被创建过了，那么就会从<code>String</code>常量池中取得引用。只有<code>String</code>是不可变的，才可能使用<code>String</code>常量池。</li>
-<li>可以缓存<code>hash</code>值。因为<code>String</code>的<code>hash</code>值经常被使用，像<code>Set</code>、<code>Map</code>结构中的<code>key</code>值也需要用到<code>HashCode</code>来保证唯一性和一致性，因此不可变的<code>HashCode</code>才是安全可靠的。</li>
-</ol>
-<h3 id="string类到底有没有长度限制">String类到底有没有长度限制</h3>
+<h3 id="如何复制对象postsjavajavainterviewjava-object-replication"><a href="/posts/java/javainterview/java-object-replication">如何复制对象</a></h3>
+<h3 id="string类为什么设计成不可变的postsjavajavainterviewjava-string-final"><a href="/posts/java/javainterview//java-string-final">String类为什么设计成不可变的</a></h3>
+<h3 id="string类型变量有没有长度限制">String类型变量有没有长度限制</h3>
 <p><code>String</code>类是有长度限制的。Java中的<code>String</code>内部是用一个字符数组<code>char[]</code>存储字符数据的，数组的最大长度限制由Java虚拟机规范决定。
 理论上，Java数组的最大长度是<code>Integer.MAX_VALUE(2^31 - 1)</code>，即2147483647，但在实际操作中，能分配的最大数组长度受可用内存限制。</p>
 <p>但是并不是这样，字符串字面量的长度不能超过65535字符，如果字符串字面量长度超过这个限制，编译器会抛出错误。</p>

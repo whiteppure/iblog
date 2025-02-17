@@ -1,9 +1,9 @@
 ---
-title: "Java面试考点-如何复制对象"
+title: "Java对象复制：深拷贝 vs 浅拷贝"
 date: 2025-02-16
 draft: false
-tags: ["面试","Java"]
-slug: "javabase-interview-01"
+tags: ["面试","Java","随笔"]
+slug: "java-object-replication"
 ---
 
 
