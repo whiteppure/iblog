@@ -17,51 +17,8 @@ top: true
 
 ## 基础汇总
 ### [如何复制对象](/posts/java/javainterview/java-object-replication)
-### [String类为什么设计成不可变的](/posts/java/javainterview//java-string-final)
-### String类型变量有没有长度限制
-`String`类是有长度限制的。Java中的`String`内部是用一个字符数组`char[]`存储字符数据的，数组的最大长度限制由Java虚拟机规范决定。
-理论上，Java数组的最大长度是`Integer.MAX_VALUE(2^31 - 1)`，即2147483647，但在实际操作中，能分配的最大数组长度受可用内存限制。
-
-但是并不是这样，字符串字面量的长度不能超过65535字符，如果字符串字面量长度超过这个限制，编译器会抛出错误。
-```java
-private void checkStringConstant(DiagnosticPosition var1, Object var2) {
-    if (this.nerrs == 0 && var2 != null && var2 instanceof String && ((String)var2).length() >= 65535) {
-        this.log.error(var1, "limit.string", new Object[0]);
-        ++this.nerrs;
-    }
-}
-```
-
-还有一点，`Stirng`长度之所以会受限制，是因JVM规范对常量池有所限制。
-[CONSTANT_Utf8_info](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.4.7)是一个`CONSTANT_Utf8`类型的常量池数据项，它存储的是一个常量字符串。
-常量池中的所有字面量几乎都是通过`CONSTANT_Utf8_info`描述的，`CONSTANT_Utf8_info`的定义如下：
-```
-ONSTANT_Utf8_info {
-    u1 tag;
-    u2 length;
-    u1 bytes[length];
-}
-```
-- `tag`：`CONSTANT_Utf8_info`结构的标记项值为`CONSTANT_Utf8(1)`；
-- `length`：`length`项的值表示字节数组中的字节数，而不是结果字符串的长度，其类型为`u2`；
-- `bytes[]`：字节数组包含字符串的字节数；
-
-到了这里长度终于出来了，那就是`length`。通过查阅《JVM规范》发现`u2`表示两个字节的无符号数，那么1个字节有8位，2个字节就有16位。
-16位无符号数可表示的最大值位`2^16 - 1 = 65535`。也就是说，`Class`文件中常量池的格式规定了，每个字符串常量的最大长度为65535字节。
-
-所以对`String`的长度限制主要有两点：
-1. `Class`文件中常量池的格式规定了，每个字符串常量的最大长度为65535字节；
-2. `checkStringConstant`方法，规定字符串字面量的长度不能超过65535字符，即最大65534个字符；
-
-所以一个字符串字面量最多可以包含65534个字符，但它的存储空间（字节数）并不会超过65535字节。
-
-所以`String`类长度限制是多少？
-- 在编译期间，长度不能超过65535个字符，即最大65534个字符，但65534个字符存储空间不会超过65535字节；
-- 在运行期，`String`对象的长度理论上可以达到`Integer.MAX_VALUE (2^31 - 1)`个字符，即 2,147,483,647 个字符，大概4G。
-  在实际应用中，字符串的最大长度受限于可用内存和JVM配置；
-
-在程序开发中，如果用`String`变量接收`Base64`图片或音频视频，需要注意不要超过程序运行时字符串的最大阈值。
-
+### [String类为什么设计成不可变的](/posts/java/javainterview/java-string-final)
+### [String类型变量有没有长度限制](/posts/java/javainterview/java-string-howlong)
 ### 简述反射以及它的应用场景
 在Java程序运行状态中，对于任意一个实体类，都能够知道这个类的所有属性和方法，对于任意一个对象，都能够调用它的任意方法和属性，以及使用该信息来创建、操作和销毁对象。
 这种动态获取信息以及动态调用对象方法的功能称为Java语言的反射机制。

@@ -275,7 +275,8 @@
 </span></span><span class="line"><span class="cl">    u2 length; // 字节数组中的字节数，类型为u2
 </span></span><span class="line"><span class="cl">    u1 bytes[length]; // 字节数组包含字符串的字节数
 </span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><p>其中，u2表示两个字节的无符号数，最大可表示的值为<code>2^16 - 1 = 65535</code>。因此，每个字符串常量的最大长度为65535字节。 注意：每个汉字通常占3个字节，所以实际能容纳的字符数可能会少于65534个。</p>
+</span></span></code></pre></div><p>其中，<code>u2</code>表示两个字节的无符号数，那么1个字节有8位，2个字节就有16位，最大可表示的值为<code>2^16 - 1 = 65535</code>。
+因此，每个字符串常量的最大长度为65535字节。 注意：每个汉字通常占3个字节，所以实际能容纳的字符数可能会少于65534个。</p>
 <h2 id="运行期">运行期</h2>
 <p>当程序运行时，字符串的长度理论上可以长的离谱。Java中的<code>String</code>内部是用一个字符数组<code>char[]</code>存储字符数据的，理论上，Java数组的最大长度是<code>Integer.MAX_VALUE(2^31 - 1)</code>，即2147483647（21亿）。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">char</span><span class="o">[]</span><span class="w"> </span><span class="n">hugeArray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">char</span><span class="o">[</span><span class="n">Integer</span><span class="p">.</span><span class="na">MAX_VALUE</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="c1">// 理论最大值</span><span class="w">
@@ -310,14 +311,14 @@
 <h2 id="总结">总结</h2>
 <ul>
 <li>编译期：硬编码字符串的最大长度为65534个字符，超过这个限制会导致编译错误。</li>
-<li>运行期：理论上可以达到Integer.MAX_VALUE（21亿），但在实际应用中受限于系统内存和JVM配置。</li>
+<li>运行期：理论上可以达到<code>Integer.MAX_VALUE</code>（21亿），但在实际应用中受限于系统内存和JVM配置。</li>
 </ul>
 <p>记住两个关键数字：</p>
 <ol>
 <li>65534：代码中直接写字符串的最大字符数。</li>
 <li>21亿：程序运行时字符串的理论最大长度（但别真这么干！）</li>
 </ol>
-<p>合理管理字符串长度，给内存留出足够的空间，才能写出高效稳定的程序。</p>
+<p>合理管理字符串长度，给内存留出足够的空间，就像吃饭八分饱，字符串长度也要留余地，给内存呼吸的空间才是好程序！</p>
 </div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">

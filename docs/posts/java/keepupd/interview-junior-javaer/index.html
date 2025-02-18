@@ -177,7 +177,7 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#string%e7%b1%bb%e5%9e%8b%e5%8f%98%e9%87%8f%e6%9c%89%e6%b2%a1%e6%9c%89%e9%95%bf%e5%ba%a6%e9%99%90%e5%88%b6">
+                <a class="nav-link text-left" href="#string%e7%b1%bb%e5%9e%8b%e5%8f%98%e9%87%8f%e6%9c%89%e6%b2%a1%e6%9c%89%e9%95%bf%e5%ba%a6%e9%99%90%e5%88%b6postsjavajavainterviewjava-string-howlong">
                     String类型变量有没有长度限制
                 </a>
             </li>
@@ -5673,45 +5673,8 @@
 <h1 id="java基础">Java基础</h1>
 <h2 id="基础汇总">基础汇总</h2>
 <h3 id="如何复制对象postsjavajavainterviewjava-object-replication"><a href="/posts/java/javainterview/java-object-replication">如何复制对象</a></h3>
-<h3 id="string类为什么设计成不可变的postsjavajavainterviewjava-string-final"><a href="/posts/java/javainterview//java-string-final">String类为什么设计成不可变的</a></h3>
-<h3 id="string类型变量有没有长度限制">String类型变量有没有长度限制</h3>
-<p><code>String</code>类是有长度限制的。Java中的<code>String</code>内部是用一个字符数组<code>char[]</code>存储字符数据的，数组的最大长度限制由Java虚拟机规范决定。
-理论上，Java数组的最大长度是<code>Integer.MAX_VALUE(2^31 - 1)</code>，即2147483647，但在实际操作中，能分配的最大数组长度受可用内存限制。</p>
-<p>但是并不是这样，字符串字面量的长度不能超过65535字符，如果字符串字面量长度超过这个限制，编译器会抛出错误。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkStringConstant</span><span class="p">(</span><span class="n">DiagnosticPosition</span><span class="w"> </span><span class="n">var1</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">var2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">nerrs</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">var2</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">var2</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">((</span><span class="n">String</span><span class="p">)</span><span class="n">var2</span><span class="p">).</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">65535</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">log</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="n">var1</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;limit.string&#34;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="o">++</span><span class="k">this</span><span class="p">.</span><span class="na">nerrs</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>还有一点，<code>Stirng</code>长度之所以会受限制，是因JVM规范对常量池有所限制。
-<a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.4.7">CONSTANT_Utf8_info</a>是一个<code>CONSTANT_Utf8</code>类型的常量池数据项，它存储的是一个常量字符串。
-常量池中的所有字面量几乎都是通过<code>CONSTANT_Utf8_info</code>描述的，<code>CONSTANT_Utf8_info</code>的定义如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ONSTANT_Utf8_info {
-</span></span><span class="line"><span class="cl">    u1 tag;
-</span></span><span class="line"><span class="cl">    u2 length;
-</span></span><span class="line"><span class="cl">    u1 bytes[length];
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></div><ul>
-<li><code>tag</code>：<code>CONSTANT_Utf8_info</code>结构的标记项值为<code>CONSTANT_Utf8(1)</code>；</li>
-<li><code>length</code>：<code>length</code>项的值表示字节数组中的字节数，而不是结果字符串的长度，其类型为<code>u2</code>；</li>
-<li><code>bytes[]</code>：字节数组包含字符串的字节数；</li>
-</ul>
-<p>到了这里长度终于出来了，那就是<code>length</code>。通过查阅《JVM规范》发现<code>u2</code>表示两个字节的无符号数，那么1个字节有8位，2个字节就有16位。
-16位无符号数可表示的最大值位<code>2^16 - 1 = 65535</code>。也就是说，<code>Class</code>文件中常量池的格式规定了，每个字符串常量的最大长度为65535字节。</p>
-<p>所以对<code>String</code>的长度限制主要有两点：</p>
-<ol>
-<li><code>Class</code>文件中常量池的格式规定了，每个字符串常量的最大长度为65535字节；</li>
-<li><code>checkStringConstant</code>方法，规定字符串字面量的长度不能超过65535字符，即最大65534个字符；</li>
-</ol>
-<p>所以一个字符串字面量最多可以包含65534个字符，但它的存储空间（字节数）并不会超过65535字节。</p>
-<p>所以<code>String</code>类长度限制是多少？</p>
-<ul>
-<li>在编译期间，长度不能超过65535个字符，即最大65534个字符，但65534个字符存储空间不会超过65535字节；</li>
-<li>在运行期，<code>String</code>对象的长度理论上可以达到<code>Integer.MAX_VALUE (2^31 - 1)</code>个字符，即 2,147,483,647 个字符，大概4G。
-在实际应用中，字符串的最大长度受限于可用内存和JVM配置；</li>
-</ul>
-<p>在程序开发中，如果用<code>String</code>变量接收<code>Base64</code>图片或音频视频，需要注意不要超过程序运行时字符串的最大阈值。</p>
+<h3 id="string类为什么设计成不可变的postsjavajavainterviewjava-string-final"><a href="/posts/java/javainterview/java-string-final">String类为什么设计成不可变的</a></h3>
+<h3 id="string类型变量有没有长度限制postsjavajavainterviewjava-string-howlong"><a href="/posts/java/javainterview/java-string-howlong">String类型变量有没有长度限制</a></h3>
 <h3 id="简述反射以及它的应用场景">简述反射以及它的应用场景</h3>
 <p>在Java程序运行状态中，对于任意一个实体类，都能够知道这个类的所有属性和方法，对于任意一个对象，都能够调用它的任意方法和属性，以及使用该信息来创建、操作和销毁对象。
 这种动态获取信息以及动态调用对象方法的功能称为Java语言的反射机制。</p>

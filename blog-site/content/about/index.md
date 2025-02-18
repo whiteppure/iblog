@@ -12,7 +12,7 @@ draft: false
 
 如果你想了解更多关于我的信息，或者有任何问题想要交流，欢迎扫描下方二维码添加我的微信。期待与你一起讨论技术问题，共同进步。
 <div style="text-align: center;">
-    <img src="/posts/annex/images/essays/self微信.png" alt="我的微信" style="max-width: 45%; height: auto;">
+    <img src="/posts/annex/images/essays/self微信.png" alt="我的微信" style="max-width: 33%; height: auto;">
 </div>
 
 此外，我会不定期在我的公众号上发布一些技术文章和个人随笔，欢迎大家关注。希望这里能成为我们相互学习、共同成长的一个小站。
