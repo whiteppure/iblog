@@ -16,20 +16,10 @@ top: true
 # Java基础
 
 ## 基础汇总
-### [如何复制对象](/posts/java/javainterview/java-object-replication)
-### [String类为什么设计成不可变的](/posts/java/javainterview/java-string-final)
-### [String类型变量有没有长度限制](/posts/java/javainterview/java-string-howlong)
-### 简述反射以及它的应用场景
-在Java程序运行状态中，对于任意一个实体类，都能够知道这个类的所有属性和方法，对于任意一个对象，都能够调用它的任意方法和属性，以及使用该信息来创建、操作和销毁对象。
-这种动态获取信息以及动态调用对象方法的功能称为Java语言的反射机制。
-
-把Java程序比喻成一个复杂的机器，但是每个零件都是封装在盒子里面的，你无法直接看到里面的具体构造。
-反射就像是你用一种特殊的工具，可以打开这些盒子并查看里面的零件，甚至可以重新组装它们或者在需要的时候加入新的零件。
-这种能力让你在机器运行时能够动态地调整和改进它的组件，但是打开和处理每个盒子都需要额外的时间和努力，因此使用反射可能会带来一些性能上的成本。
-
-Java反射在许多场景中都有广泛的应用，主要包括以下方面：
-- 最常见的是搭配注解使用，获取运行时的方法参数、注解值。在许多框架中有对应的示例，比如Spring的`@Autowired`、`@Value`等注解；
-- 动态代理也是基于反射来实现的。在运行时生成代理类，通过反射，可以动态地创建代理类，并在运行时将方法调用转发给目标对象；
+### [如何复制对象](/posts/java/javasmallclass/java-object-replication)
+### [String类为什么设计成不可变的](/posts/java/javasmallclass/java-string-final)
+### [String类型变量有没有长度限制](/posts/java/javasmallclass/java-string-howlong)
+### [简述反射以及它的应用场景](/posts/java/javasmallclass/java-reflection-scene)
 
 ### 简述Java中的泛型是如何实现的
 Java中的泛型通过一种称为类型擦除的机制实现。声明了泛型的`.java`源代码，在编译生成`.class`文件之后，泛型相关的信息就消失了。
