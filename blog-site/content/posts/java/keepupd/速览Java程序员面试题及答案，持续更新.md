@@ -20,7 +20,6 @@ top: true
 ### [String类为什么设计成不可变的](/posts/java/javasmallclass/java-string-final)
 ### [String类型变量有没有长度限制](/posts/java/javasmallclass/java-string-howlong)
 ### [简述反射以及它的应用场景](/posts/java/javasmallclass/java-reflection-scene)
-
 ### 简述Java中的泛型是如何实现的
 Java中的泛型通过一种称为类型擦除的机制实现。声明了泛型的`.java`源代码，在编译生成`.class`文件之后，泛型相关的信息就消失了。
 可以认为源代码中泛型相关的信息，就是提供给编译器用的，泛型信息对Java编译器可以见，而对Java虚拟机不可见。

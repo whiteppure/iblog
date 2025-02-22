@@ -424,25 +424,54 @@ Java泛型也是一种语法糖，在编译阶段完成类型的转换的工作�
 </span></span></code></pre></div><h2 id="类型擦除">类型擦除</h2>
 <p>Java中的泛型通过一种称为类型擦除的机制实现。声明了泛型的<code>.java</code>源代码，在编译生成<code>.class</code>文件之后，泛型相关的信息就消失了。
 可以认为，源代码中泛型相关的信息，就是提供给编译器用的，泛型信息对Java编译器可以见，而对Java虚拟机不可见。</p>
-<p>关于如何实现泛型，Java官方文档中有对应的解释，<a href="https://docs.oracle.com/javase/tutorial/java/generics/erasure.html">原文</a>如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">Generics were introduced to the Java language to provide tighter type checks at compile time and to support generic programming. To implement generics, the Java compiler applies type erasure to:
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">- Replace all type parameters in generic types with their bounds or Object if the type parameters are unbounded. The produced bytecode, therefore, contains only ordinary classes, interfaces, and methods.
-</span></span><span class="line"><span class="cl">- Insert type casts if necessary to preserve type safety.
-</span></span><span class="line"><span class="cl">- Generate bridge methods to preserve polymorphism in extended generic types.
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">Type erasure ensures that no new classes are created for parameterized types; consequently, generics incur no runtime overhead.
-</span></span></code></pre></div><p>以下是实现类型擦除的步骤：</p>
+<p>根据Java<a href="https://docs.oracle.com/javase/tutorial/java/generics/erasure.html">官方文档</a>的解释，为了实现泛型，Java编译器应用了以下步骤：</p>
 <ol>
-<li>当你写泛型代码时，Java编译器会在编译阶段进行类型检查，确保你使用的类型是正确的。例如，如果你声明一个<code>List&lt;String&gt;</code>，编译器会确保你只能向这个列表添加字符串；</li>
-<li>一旦编译完成，所有的泛型类型信息都会被移除，这个过程叫做“类型擦除”。在类型擦除过程中：
+<li><strong>类型检查</strong>：当你写泛型代码时，Java编译器会在编译阶段进行类型检查，确保你使用的类型是正确的。例如，如果你声明一个<code>List&lt;String&gt;</code>，编译器会确保你只能向这个列表添加字符串；
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 泛型盒子（智能分类）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Box</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">safeBox</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Box</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">safeBox</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">123</span><span class="p">);</span><span class="w">         </span><span class="c1">// 编译直接报错🚫</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">String</span><span class="w"> </span><span class="n">book</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">safeBox</span><span class="p">.</span><span class="na">get</span><span class="p">();</span><span class="w"> </span><span class="c1">// 直接使用，无需强制转换</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li><strong>类型擦除</strong>：一旦编译完成，所有的泛型类型信息都会被移除，这个过程叫做“类型擦除”。在类型擦除过程中：
 <ul>
-<li>泛型类型参数被替换：所有的泛型类型参数会被替换为它们的上界（如果没有指定上界，就替换为<code>Object</code>）。</li>
-<li>插入必要的类型转换：在必要的地方，编译器会插入类型转换，以确保类型安全。</li>
-</ul>
+<li>泛型类型参数被替换：所有的泛型类型参数会被替换为它们的上界（如果没有指定上界，就替换为<code>Object</code>）；
+<table>
+<thead>
+<tr>
+<th>代码中的泛型</th>
+<th>擦除后</th>
+<th>替换规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>List&lt;T&gt;</code></td>
+<td><code>List</code></td>
+<td><code>T → Object</code></td>
+</tr>
+<tr>
+<td><code>List&lt;? extends Cat&gt;</code></td>
+<td><code>List&lt;Cat&gt;</code></td>
+<td><code>保留最近的父类</code></td>
+</tr>
+<tr>
+<td><code>Map&lt;K,V&gt;</code></td>
+<td><code>Map</code></td>
+<td>K/V → Object</td>
+</tr>
+</tbody>
+</table>
 </li>
-<li>当泛型类被继承，并且子类使用具体类型时，编译器会生成桥接方法来保证子类的方法正确覆盖父类的方法。桥接方法是编译器自动生成的，用来保证多态性和类型一致性；
-<br><br>假设有一个父类和一个子类：
+<li>插入必要的类型转换：在必要的地方插入类型转换来保持类型安全；</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 你写的代码</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">names</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 编译器暗中添加的类型转换</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="p">)</span><span class="n">names</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">0</span><span class="p">);</span><span class="w"> </span><span class="c1">// 自动插入类型转换</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li><strong>桥接方法</strong>：当泛型类被继承时，编译器会建造特殊通道，编译器会生成桥接方法来保证子类的方法正确覆盖父类的方法：
+<br>假设有一个父类和一个子类：
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Parent</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">getValue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
