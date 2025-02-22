@@ -20,58 +20,7 @@ top: true
 ### [String类为什么设计成不可变的](/posts/java/javasmallclass/java-string-final)
 ### [String类型变量有没有长度限制](/posts/java/javasmallclass/java-string-howlong)
 ### [简述反射以及它的应用场景](/posts/java/javasmallclass/java-reflection-scene)
-### 简述Java中的泛型是如何实现的
-Java中的泛型通过一种称为类型擦除的机制实现。声明了泛型的`.java`源代码，在编译生成`.class`文件之后，泛型相关的信息就消失了。
-可以认为源代码中泛型相关的信息，就是提供给编译器用的，泛型信息对Java编译器可以见，而对Java虚拟机不可见。
-
-关于如何实现泛型，Java官方文档中有对应的解释，[原文](https://docs.oracle.com/javase/tutorial/java/generics/erasure.html)如下：
-```text
-Generics were introduced to the Java language to provide tighter type checks at compile time and to support generic programming. To implement generics, the Java compiler applies type erasure to:
-
-- Replace all type parameters in generic types with their bounds or Object if the type parameters are unbounded. The produced bytecode, therefore, contains only ordinary classes, interfaces, and methods.
-- Insert type casts if necessary to preserve type safety.
-- Generate bridge methods to preserve polymorphism in extended generic types.
-
-Type erasure ensures that no new classes are created for parameterized types; consequently, generics incur no runtime overhead.
-```
-
-以下是实现类型擦除的步骤：
-1. 当你写泛型代码时，Java编译器会在编译阶段进行类型检查，确保你使用的类型是正确的。例如，如果你声明一个`List<String>`，编译器会确保你只能向这个列表添加字符串；
-2. 一旦编译完成，所有的泛型类型信息都会被移除，这个过程叫做“类型擦除”。在类型擦除过程中：
-   - 泛型类型参数被替换：所有的泛型类型参数会被替换为它们的上界（如果没有指定上界，就替换为`Object`）。
-   - 插入必要的类型转换：在必要的地方，编译器会插入类型转换，以确保类型安全。
-3. 当泛型类被继承，并且子类使用具体类型时，编译器会生成桥接方法来保证子类的方法正确覆盖父类的方法。桥接方法是编译器自动生成的，用来保证多态性和类型一致性；
-   <br><br>假设有一个父类和一个子类：
-    ```java
-    class Parent<T> {
-        public T getValue() {
-            return null;
-        }
-    }
-    
-    class Child extends Parent<String> {
-        @Override
-        public String getValue() {
-            return "child value";
-        }
-    }
-    ```
-    编译后，`Child`类中会有一个桥方法：
-    ```java
-    class Child extends Parent<String> {
-        @Override
-        public String getValue() {
-            return "child value";
-        }
-    
-        // 生成的桥方法
-        @Override
-        public Object getValue() {
-            return getValue(); // 调用实际的getValue方法
-        }
-    }
-    ```
-
+### [简述Java中的泛型是如何实现的](/posts/java/javasmallclass/java-generics-impl)
 ### new Integer(12)与int b=12是否相等
 这道题考察的是Integer缓存池。`Integer`缓存池的大小默认为`-128~127`。
 所以`Integer`、`int `在 `-127~128`之间是不会创建新的对象的，即
