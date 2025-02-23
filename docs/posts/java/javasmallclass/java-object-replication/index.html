@@ -334,17 +334,8 @@
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">graph TD
-</span></span><span class="line"><span class="cl">    A[需要对象复制] --&gt; B{是否修改共享数据?}
-</span></span><span class="line"><span class="cl">    B --&gt;|是| C[必须深拷贝]
-</span></span><span class="line"><span class="cl">    B --&gt;|否| D[考虑浅拷贝]
-</span></span><span class="line"><span class="cl">    C --&gt; E{性能要求}
-</span></span><span class="line"><span class="cl">    E --&gt;|高| F[手动实现+对象池]
-</span></span><span class="line"><span class="cl">    E --&gt;|低| G[序列化方案]
-</span></span><span class="line"><span class="cl">    D --&gt; H{字段复杂度}
-</span></span><span class="line"><span class="cl">    H --&gt;|简单| I[BeanUtils]
-</span></span><span class="line"><span class="cl">    H --&gt;|复杂| J[MapStruct]
-</span></span></code></pre></div><h2 id="浅拷贝">浅拷贝</h2>
+<p><img alt="Java对象复制" src="/posts/annex/images/essays/Java%E5%AF%B9%E8%B1%A1%E5%A4%8D%E5%88%B6.png"></p>
+<h2 id="浅拷贝">浅拷贝</h2>
 <ul>
 <li><strong>特点</strong>：复制对象及基本类型字段，引用类型字段共享内存地址</li>
 <li><strong>结果</strong>：修改原对象或副本的引用字段会互相影响</li>
@@ -471,7 +462,7 @@
                                     <i class="ri-stack-line"></i>
                                     
                                         
-                                        <a href="https://blog.lijizhi.website/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+                                        <a href="https://blog.lijizhi.website/tags/java%E5%B0%8F%E8%AF%BE%E5%A0%82/">Java小课堂</a>
                                     
                                         <a href="https://blog.lijizhi.website/tags/java/">Java</a>
                                     
@@ -615,6 +606,7 @@
 <script src="https://blog.lijizhi.website/js/fastsearch.js"></script>
 <script src="https://blog.lijizhi.website/js/fuse.js"></script>
 
+
 <script>
     
     
@@ -649,15 +641,10 @@
     
     
     
+</script>
 
-    
-    document.addEventListener('DOMContentLoaded', function() {
-        var links = document.querySelectorAll('.content a');
-        links.forEach(function(link) {
-            link.setAttribute('target', '_blank');
-        });
-    });
 
+<script>
     
     document.addEventListener("DOMContentLoaded", function () {
         const uvE = document.getElementById('busuanzi_value_site_uv');
@@ -686,8 +673,19 @@
         uvObs.observe(uvE, config);
         pvObs.observe(pvE, config);
     });
-
 </script>
+
+
+<script>
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('.content a');
+        links.forEach(function(link) {
+            link.setAttribute('target', '_blank');
+        });
+    });
+</script>
+
 
 
 

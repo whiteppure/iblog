@@ -2,7 +2,7 @@
 title: "为什么Java的String一出生就「不可变」"
 date: 2025-02-17
 draft: false
-tags: ["面试","Java","随笔"]
+tags: ["Java小课堂","Java","随笔"]
 slug: "java-string-final"
 ---
 

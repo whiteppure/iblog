@@ -2,7 +2,7 @@
 title: "Java字符串到底能有多长"
 date: 2025-02-18
 draft: false
-tags: ["面试","Java","随笔"]
+tags: ["Java小课堂","Java","随笔"]
 slug: "java-string-howlong"
 ---
 

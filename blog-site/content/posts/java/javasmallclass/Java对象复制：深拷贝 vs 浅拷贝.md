@@ -2,7 +2,7 @@
 title: "Java对象复制：深拷贝 vs 浅拷贝"
 date: 2025-02-16
 draft: false
-tags: ["面试","Java","随笔"]
+tags: ["Java小课堂","Java","随笔"]
 slug: "java-object-replication"
 ---
 
@@ -22,19 +22,8 @@ slug: "java-object-replication"
 | **MapStruct框架**  | 可配置深浅拷贝  | 编译期生成映射代码                    | 🚀 接近手写代码的性能<br>🎛️ 支持自定义转换规则 | 📚 需要学习注解配置<br>🔄 需重新编译生效 | 复杂对象的结构化转换      |
 | **序列化方案**     | 强制深拷贝      | 通过序列化机制实现完全隔离            | 🔒 绝对数据安全<br>🔗 自动处理循环引用 | ⏳ 性能开销大<br>❗ 必须实现Serializable | 缓存隔离/线程安全数据传递 |
 
+![Java对象复制](/posts/annex/images/essays/Java对象复制.png)
 
-```mermaid
-graph TD
-    A[需要对象复制] --> B{是否修改共享数据?}
-    B -->|是| C[必须深拷贝]
-    B -->|否| D[考虑浅拷贝]
-    C --> E{性能要求}
-    E -->|高| F[手动实现+对象池]
-    E -->|低| G[序列化方案]
-    D --> H{字段复杂度}
-    H -->|简单| I[BeanUtils]
-    H -->|复杂| J[MapStruct]
- ```
 ## 浅拷贝
 - **特点**：复制对象及基本类型字段，引用类型字段共享内存地址
 - **结果**：修改原对象或副本的引用字段会互相影响

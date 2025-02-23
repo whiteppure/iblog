@@ -133,6 +133,41 @@
 
 <div class="post animated fadeInDown">
     <div class="post_title">
+        <h2><a href='/posts/java/javasmallclass/java-new-string-object/'>深度解析new String(“abc”)的对象创建机制</a></h2>
+    </div>
+    
+    <div class="list">
+        <div class="post_content markdown">
+            <p>核心结论 创建对象数：2 个（当字符串常量池不存在 &ldquo;abc&rdquo; 时）。 第一个对象是&quot;abc&quot;，它属于字符串字面量，因此编译时期会在字符串常量池中创建一个字符......</p>
+        </div>
+    </div>
+    
+    <div class="post_footer">
+        <div class="meta">
+            <div class="info">
+                <span class="field">
+                    <i class="ri-map-pin-time-line"></i>
+                    <span class="date">2025.02.23</span>
+                </span>
+                
+                <span class="field tags">
+                    <i class="ri-stack-line"></i>
+                    
+                    <a href="http://localhost:1313/tags/java%E5%B0%8F%E8%AF%BE%E5%A0%82/">Java小课堂</a>
+                    
+                    <a href="http://localhost:1313/tags/java/">Java</a>
+                    
+                    <a href="http://localhost:1313/tags/%E9%9A%8F%E7%AC%94/">随笔</a>
+                    
+                </span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="post animated fadeInDown">
+    <div class="post_title">
         <h2><a href='/posts/java/javasmallclass/java-generics-impl/'>Java编译器的「消失魔术」</a></h2>
     </div>
     
@@ -153,7 +188,7 @@
                 <span class="field tags">
                     <i class="ri-stack-line"></i>
                     
-                    <a href="http://localhost:1313/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+                    <a href="http://localhost:1313/tags/java%E5%B0%8F%E8%AF%BE%E5%A0%82/">Java小课堂</a>
                     
                     <a href="http://localhost:1313/tags/java/">Java</a>
                     
@@ -188,7 +223,7 @@
                 <span class="field tags">
                     <i class="ri-stack-line"></i>
                     
-                    <a href="http://localhost:1313/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+                    <a href="http://localhost:1313/tags/java%E5%B0%8F%E8%AF%BE%E5%A0%82/">Java小课堂</a>
                     
                     <a href="http://localhost:1313/tags/java/">Java</a>
                     
@@ -254,7 +289,7 @@
                 <span class="field tags">
                     <i class="ri-stack-line"></i>
                     
-                    <a href="http://localhost:1313/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+                    <a href="http://localhost:1313/tags/java%E5%B0%8F%E8%AF%BE%E5%A0%82/">Java小课堂</a>
                     
                     <a href="http://localhost:1313/tags/java/">Java</a>
                     
@@ -289,7 +324,7 @@
                 <span class="field tags">
                     <i class="ri-stack-line"></i>
                     
-                    <a href="http://localhost:1313/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+                    <a href="http://localhost:1313/tags/java%E5%B0%8F%E8%AF%BE%E5%A0%82/">Java小课堂</a>
                     
                     <a href="http://localhost:1313/tags/java/">Java</a>
                     
@@ -324,7 +359,7 @@
                 <span class="field tags">
                     <i class="ri-stack-line"></i>
                     
-                    <a href="http://localhost:1313/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+                    <a href="http://localhost:1313/tags/java%E5%B0%8F%E8%AF%BE%E5%A0%82/">Java小课堂</a>
                     
                     <a href="http://localhost:1313/tags/java/">Java</a>
                     
@@ -599,39 +634,6 @@
     </div>
 </div>
 
-<div class="post animated fadeInDown">
-    <div class="post_title">
-        <h2><a href='/posts/ideology/other-code-10/'>代码之外-志闲少欲</a></h2>
-    </div>
-    
-    <div class="list">
-        <div class="post_content markdown">
-            <p>“志”的意思是志向，“心之所之为志”，心里向往的目标为“志”，你的志向是什么？相信没有人从小的志向就是赚钱或者买房子、车子。 在不谈物质的情况下，人们还是喜欢追求......</p>
-        </div>
-    </div>
-    
-    <div class="post_footer">
-        <div class="meta">
-            <div class="info">
-                <span class="field">
-                    <i class="ri-map-pin-time-line"></i>
-                    <span class="date">2024.10.19</span>
-                </span>
-                
-                <span class="field tags">
-                    <i class="ri-stack-line"></i>
-                    
-                    <a href="http://localhost:1313/tags/%E5%8F%8D%E6%80%9D%E4%B8%8E%E6%84%9F%E6%82%9F/">反思与感悟</a>
-                    
-                    <a href="http://localhost:1313/tags/%E4%BB%A3%E7%A0%81%E4%B9%8B%E5%A4%96/">代码之外</a>
-                    
-                </span>
-                
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="pagination">
     
     
@@ -695,6 +697,7 @@
 <script src="http://localhost:1313/js/fastsearch.js"></script>
 <script src="http://localhost:1313/js/fuse.js"></script>
 
+
 <script>
     
     
@@ -729,15 +732,10 @@
     
     
     
+</script>
 
-    
-    document.addEventListener('DOMContentLoaded', function() {
-        var links = document.querySelectorAll('.content a');
-        links.forEach(function(link) {
-            link.setAttribute('target', '_blank');
-        });
-    });
 
+<script>
     
     document.addEventListener("DOMContentLoaded", function () {
         const uvE = document.getElementById('busuanzi_value_site_uv');
@@ -766,8 +764,19 @@
         uvObs.observe(uvE, config);
         pvObs.observe(pvE, config);
     });
-
 </script>
+
+
+<script>
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('.content a');
+        links.forEach(function(link) {
+            link.setAttribute('target', '_blank');
+        });
+    });
+</script>
+
 
 
 

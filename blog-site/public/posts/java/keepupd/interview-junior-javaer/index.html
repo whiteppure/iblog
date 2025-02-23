@@ -233,7 +233,7 @@
             
             
             <li class="nav-item">
-                <a class="nav-link text-left" href="#%e7%ae%80%e8%bf%b0java%e4%b8%ad%e7%9a%84%e6%b3%9b%e5%9e%8b%e6%98%af%e5%a6%82%e4%bd%95%e5%ae%9e%e7%8e%b0%e7%9a%84">
+                <a class="nav-link text-left" href="#%e7%ae%80%e8%bf%b0java%e4%b8%ad%e7%9a%84%e6%b3%9b%e5%9e%8b%e6%98%af%e5%a6%82%e4%bd%95%e5%ae%9e%e7%8e%b0%e7%9a%84postsjavajavasmallclassjava-generics-impl">
                     简述Java中的泛型是如何实现的
                 </a>
             </li>
@@ -5676,55 +5676,7 @@
 <h3 id="string类为什么设计成不可变的postsjavajavasmallclassjava-string-final"><a href="/posts/java/javasmallclass/java-string-final">String类为什么设计成不可变的</a></h3>
 <h3 id="string类型变量有没有长度限制postsjavajavasmallclassjava-string-howlong"><a href="/posts/java/javasmallclass/java-string-howlong">String类型变量有没有长度限制</a></h3>
 <h3 id="简述反射以及它的应用场景postsjavajavasmallclassjava-reflection-scene"><a href="/posts/java/javasmallclass/java-reflection-scene">简述反射以及它的应用场景</a></h3>
-<h3 id="简述java中的泛型是如何实现的">简述Java中的泛型是如何实现的</h3>
-<p>Java中的泛型通过一种称为类型擦除的机制实现。声明了泛型的<code>.java</code>源代码，在编译生成<code>.class</code>文件之后，泛型相关的信息就消失了。
-可以认为源代码中泛型相关的信息，就是提供给编译器用的，泛型信息对Java编译器可以见，而对Java虚拟机不可见。</p>
-<p>关于如何实现泛型，Java官方文档中有对应的解释，<a href="https://docs.oracle.com/javase/tutorial/java/generics/erasure.html">原文</a>如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">Generics were introduced to the Java language to provide tighter type checks at compile time and to support generic programming. To implement generics, the Java compiler applies type erasure to:
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">- Replace all type parameters in generic types with their bounds or Object if the type parameters are unbounded. The produced bytecode, therefore, contains only ordinary classes, interfaces, and methods.
-</span></span><span class="line"><span class="cl">- Insert type casts if necessary to preserve type safety.
-</span></span><span class="line"><span class="cl">- Generate bridge methods to preserve polymorphism in extended generic types.
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">Type erasure ensures that no new classes are created for parameterized types; consequently, generics incur no runtime overhead.
-</span></span></code></pre></div><p>以下是实现类型擦除的步骤：</p>
-<ol>
-<li>当你写泛型代码时，Java编译器会在编译阶段进行类型检查，确保你使用的类型是正确的。例如，如果你声明一个<code>List&lt;String&gt;</code>，编译器会确保你只能向这个列表添加字符串；</li>
-<li>一旦编译完成，所有的泛型类型信息都会被移除，这个过程叫做“类型擦除”。在类型擦除过程中：
-<ul>
-<li>泛型类型参数被替换：所有的泛型类型参数会被替换为它们的上界（如果没有指定上界，就替换为<code>Object</code>）。</li>
-<li>插入必要的类型转换：在必要的地方，编译器会插入类型转换，以确保类型安全。</li>
-</ul>
-</li>
-<li>当泛型类被继承，并且子类使用具体类型时，编译器会生成桥接方法来保证子类的方法正确覆盖父类的方法。桥接方法是编译器自动生成的，用来保证多态性和类型一致性；
-<br><br>假设有一个父类和一个子类：
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Parent</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">getValue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">Child</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Parent</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getValue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;child value&#34;</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div>编译后，<code>Child</code>类中会有一个桥方法：
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Child</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Parent</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getValue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;child value&#34;</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 生成的桥方法</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">getValue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">getValue</span><span class="p">();</span><span class="w"> </span><span class="c1">// 调用实际的getValue方法</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div></li>
-</ol>
+<h3 id="简述java中的泛型是如何实现的postsjavajavasmallclassjava-generics-impl"><a href="/posts/java/javasmallclass/java-generics-impl">简述Java中的泛型是如何实现的</a></h3>
 <h3 id="new-integer12与int-b12是否相等">new Integer(12)与int b=12是否相等</h3>
 <p>这道题考察的是Integer缓存池。<code>Integer</code>缓存池的大小默认为<code>-128~127</code>。
 所以<code>Integer</code>、<code>int </code>在 <code>-127~128</code>之间是不会创建新的对象的，即</p>
@@ -6129,6 +6081,7 @@
 <script src="http://localhost:1313/js/fastsearch.js"></script>
 <script src="http://localhost:1313/js/fuse.js"></script>
 
+
 <script>
     
     
@@ -6163,15 +6116,10 @@
     
     
     
+</script>
 
-    
-    document.addEventListener('DOMContentLoaded', function() {
-        var links = document.querySelectorAll('.content a');
-        links.forEach(function(link) {
-            link.setAttribute('target', '_blank');
-        });
-    });
 
+<script>
     
     document.addEventListener("DOMContentLoaded", function () {
         const uvE = document.getElementById('busuanzi_value_site_uv');
@@ -6200,8 +6148,19 @@
         uvObs.observe(uvE, config);
         pvObs.observe(pvE, config);
     });
-
 </script>
+
+
+<script>
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('.content a');
+        links.forEach(function(link) {
+            link.setAttribute('target', '_blank');
+        });
+    });
+</script>
+
 
 
 

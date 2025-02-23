@@ -2,7 +2,7 @@
 title: "Java世界的「X光透视机」"
 date: 2025-02-20
 draft: false
-tags: ["面试","Java","随笔"]
+tags: ["Java小课堂","Java","随笔"]
 slug: "java-reflection-scene"
 ---
 

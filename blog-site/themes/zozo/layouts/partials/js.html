@@ -13,6 +13,7 @@
 <script src="{{ "js/fastsearch.js" | absURL }}"></script>
 <script src="{{ "js/fuse.js" | absURL }}"></script>
 
+<!-- dark mode -->
 <script>
     <!-- 手动控制夜间模式  -->
     // new Darkmode({
@@ -47,15 +48,10 @@
     // }
     // 自动调用夜间模式
     // addDarkmodeWidget();
+</script>
 
-    // 给文章内所有超链接 加上 target="_blank"
-    document.addEventListener('DOMContentLoaded', function() {
-        var links = document.querySelectorAll('.content a');
-        links.forEach(function(link) {
-            link.setAttribute('target', '_blank');
-        });
-    });
-
+<!-- busuanzi uv pv -->
+<script>
     // 卜算子 uv pv
     document.addEventListener("DOMContentLoaded", function () {
         const uvE = document.getElementById('busuanzi_value_site_uv');
@@ -84,8 +80,19 @@
         uvObs.observe(uvE, config);
         pvObs.observe(pvE, config);
     });
-
 </script>
+
+<!-- other script -->
+<script>
+    // 给文章内所有超链接 加上 target="_blank"
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('.content a');
+        links.forEach(function(link) {
+            link.setAttribute('target', '_blank');
+        });
+    });
+</script>
+
 
 <!-- 数学公式 -->
 {{ if .Site.Params.enableMathJax }}

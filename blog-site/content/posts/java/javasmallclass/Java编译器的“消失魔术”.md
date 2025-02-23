@@ -2,7 +2,7 @@
 title: "Java编译器的「消失魔术」"
 date: 2025-02-22
 draft: false
-tags: ["面试","Java","随笔"]
+tags: ["Java小课堂","Java","随笔"]
 slug: "java-generics-impl"
 ---
 
