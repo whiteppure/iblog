@@ -21,15 +21,8 @@ top: true
 - [简述反射以及它的应用场景](/posts/java/javasmallclass/java-reflection-scene)
 - [简述Java中的泛型是如何实现的](/posts/java/javasmallclass/java-generics-impl)
 - [new String("abc")会产生几个对象](/posts/java/javasmallclass/java-new-string-object)
-- new Integer(12)与int b=12是否相等
+- [new Integer(12)与int b=12是否相等](/posts/java/javasmallclass/java-int-equals-new-integer/)
 
-[//]: # (这道题考察的是Integer缓存池。`Integer`缓存池的大小默认为`-128~127`。)
-[//]: # (所以`Integer`、`int `在 `-127~128`之间是不会创建新的对象的，即)
-[//]: # (```)
-[//]: # ( Integer a = new Integer&#40;12&#41;;)
-[//]: # ( int b = 12;)
-[//]: # ( System.out.println&#40;a==b&#41;;//true)
-[//]: # (```)
 
 ## 2.多线程
 - 说说你对并发编程的理解
