@@ -376,15 +376,16 @@
 </ol>
 <p>内存优化技巧：</p>
 <ul>
-<li><code>Integer.valueOf(int)</code>：利用了Java的整数缓存机制（默认范围是-128到127），可以减少不必要的对象创建。</li>
-<li><code>new Integer(int)</code>：每次都会创建一个新的对象，增加内存开销。</li>
-</ul>
+<li><code>Integer.valueOf(int)</code>：利用了Java的整数缓存机制（默认范围是-128到127），可以减少不必要的对象创建。
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 推荐写法（利用缓存）</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Integer</span><span class="w"> </span><span class="n">pageSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">50</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 不推荐写法（创建多余对象）</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li><code>new Integer(int)</code>：每次都会创建一个新的对象，增加内存开销。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 不推荐写法（创建多余对象）</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Integer</span><span class="w"> </span><span class="n">pageCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Integer</span><span class="p">(</span><span class="n">50</span><span class="p">);</span><span class="w">
-</span></span></span></code></pre></div><p>注意事项：</p>
+</span></span></span></code></pre></div></li>
+</ul>
+<p>注意事项：</p>
 <ol>
 <li>使用<code>equals()</code>可以确保比较的是值而不是引用。
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Integer</span><span class="p">(</span><span class="n">12</span><span class="p">).</span><span class="na">equals</span><span class="p">(</span><span class="n">12</span><span class="p">));</span><span class="w"> </span><span class="c1">// 输出 true</span><span class="w">
