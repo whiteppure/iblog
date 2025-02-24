@@ -562,10 +562,10 @@
 <h2 id="jdk7与jdk8的方法区">JDK7与JDK8的方法区</h2>
 <p>在HotSpot，JDK7及以前，习惯上把方法区，称为永久代。JDK8开始，使用元空间取代了永久代，JDK 1.8后，元空间存放在直接内存中。</p>
 <div style="width: 45%;display: inline-block">
-    <img src="(/posts/annex/images/essays/jvm1.8之前.png" alt="jvm1.8之前">
+    <img src="/posts/annex/images/essays/jvm1.8之前.png" alt="jvm1.8之前">
 </div>
 <div style="width: 45%;display: inline-block">
-    <img src="(/posts/annex/images/essays/jvm1.8.png" alt="jvm1.8">
+    <img src="/posts/annex/images/essays/jvm1.8.png" alt="jvm1.8">
 </div>
 <p>元空间的本质和永久代类似，都是对JVM规范中方法区的实现。不过元空间与永久代最大的区别在于，元空间不在虚拟机设置的内存中，而是使用本地内存。
 永久代、元空间二者并不只是名字变了，内部结构也调整了。根据《Java虚拟机规范》的规定，如果方法区无法满足新的内存分配需求时，将抛出OOM异常。</p>

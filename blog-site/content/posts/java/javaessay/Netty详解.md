@@ -124,7 +124,7 @@ slug: "java-netty"
 - 每个`WorkerNioEventLoop`处理业务时，会使用`pipeline`，`pipeline`中包含了`channel`，即通过`pipeline`可以获取到对应通道，管道中维护了很多的处理器；
 
 ## Netty核心组件
-<img src="(/posts/annex/images/essays/Netty核心组件.svg" alt=""/>
+<img src="/posts/annex/images/essays/Netty核心组件.svg" alt=""/>
 
 - `Bootstrap/ServerBootstrap`: `Bootstrap` 用于客户端的启动配置，指定服务器地址、端口等参数。`ServerBootstrap` 用于服务端配置，处理客户端连接请求。这两个组件通过 `EventLoopGroup` 配置 IO 线程池，管理网络 IO 操作的线程资源。
 - `EventLoopGroup`: 这个组件管理着多个 `EventLoop` 实例，每个 `EventLoop` 负责处理网络 IO 操作。`EventLoopGroup` 通过线程池分配线程给 `EventLoop`，使得网络事件的处理更加高效。启动工具通过 `EventLoopGroup` 配置和管理这些线程池。

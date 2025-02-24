@@ -220,10 +220,10 @@ Java内存主要就是对运行时数据区域进行划分：
 
 JDK 1.8 和之前的版本略有不同，这里以 JDK 1.7 和 JDK 1.8 这两个版本为例介绍。
 <div style="width: 48%;display: inline-block">
-    <img src="(/posts/annex/images/essays/jvm1.8之前.png" alt="jvm1.8之前">
+    <img src="/posts/annex/images/essays/jvm1.8之前.png" alt="jvm1.8之前">
 </div>
 <div style="width: 48%;display: inline-block">
-    <img src="(/posts/annex/images/essays/jvm1.8.png" alt="jvm1.8">
+    <img src="/posts/annex/images/essays/jvm1.8.png" alt="jvm1.8">
 </div>
 
 ### 程序计数器

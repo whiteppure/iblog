@@ -42,10 +42,10 @@ Java虚拟机定义了若干种程序运行期间会使用到的运行时数据�
 ## JDK7与JDK8的方法区
 在HotSpot，JDK7及以前，习惯上把方法区，称为永久代。JDK8开始，使用元空间取代了永久代，JDK 1.8后，元空间存放在直接内存中。
 <div style="width: 45%;display: inline-block">
-    <img src="(/posts/annex/images/essays/jvm1.8之前.png" alt="jvm1.8之前">
+    <img src="/posts/annex/images/essays/jvm1.8之前.png" alt="jvm1.8之前">
 </div>
 <div style="width: 45%;display: inline-block">
-    <img src="(/posts/annex/images/essays/jvm1.8.png" alt="jvm1.8">
+    <img src="/posts/annex/images/essays/jvm1.8.png" alt="jvm1.8">
 </div>
 
 元空间的本质和永久代类似，都是对JVM规范中方法区的实现。不过元空间与永久代最大的区别在于，元空间不在虚拟机设置的内存中，而是使用本地内存。

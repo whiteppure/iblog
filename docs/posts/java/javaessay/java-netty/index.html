@@ -1038,7 +1038,7 @@
 <li>每个<code>WorkerNioEventLoop</code>处理业务时，会使用<code>pipeline</code>，<code>pipeline</code>中包含了<code>channel</code>，即通过<code>pipeline</code>可以获取到对应通道，管道中维护了很多的处理器；</li>
 </ul>
 <h2 id="netty核心组件">Netty核心组件</h2>
-<img src="(/posts/annex/images/essays/Netty核心组件.svg" alt=""/>
+<img src="/posts/annex/images/essays/Netty核心组件.svg" alt=""/>
 <ul>
 <li><code>Bootstrap/ServerBootstrap</code>: <code>Bootstrap</code> 用于客户端的启动配置，指定服务器地址、端口等参数。<code>ServerBootstrap</code> 用于服务端配置，处理客户端连接请求。这两个组件通过 <code>EventLoopGroup</code> 配置 IO 线程池，管理网络 IO 操作的线程资源。</li>
 <li><code>EventLoopGroup</code>: 这个组件管理着多个 <code>EventLoop</code> 实例，每个 <code>EventLoop</code> 负责处理网络 IO 操作。<code>EventLoopGroup</code> 通过线程池分配线程给 <code>EventLoop</code>，使得网络事件的处理更加高效。启动工具通过 <code>EventLoopGroup</code> 配置和管理这些线程池。</li>
