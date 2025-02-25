@@ -57,14 +57,16 @@
                     <div class="post_content markdown">{{ .Content }}</div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">
-                            <!--标签 文章分类 -->
+<!--                            标签 文章分类 -->
                             <div id="post_footer_info" class="info">
                                 <span class="field tags">
                                     <i class="ri-stack-line"></i>
                                     {{ with .Params.tags }}
                                         {{ range . }}
                                         <a href="{{ "tags" | absURL }}/{{ . | urlize }}/">{{ . }}</a>
-                                    {{ end }}
+                                        {{ end }}
+                                    {{ else }}
+                                        <a href="{{ "tags" | absURL }}/">暂无标签</a>
                                     {{ end }}
                                 </span>
                             </div>
