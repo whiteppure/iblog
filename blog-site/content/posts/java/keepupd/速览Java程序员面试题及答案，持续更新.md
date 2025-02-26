@@ -25,7 +25,7 @@ top: true
 
 
 ## 2.多线程
-- 说说你对并发编程的理解
+- [说说你对并发编程的理解](/posts/java/javasmallclass/java-concurrent-understand/)
 - 简述线程池工作原理
 - 简述线程池中线程复用的原理
 - 简述synchronized作用及原理
