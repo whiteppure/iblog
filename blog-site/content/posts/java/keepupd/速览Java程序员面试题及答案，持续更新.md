@@ -1,5 +1,5 @@
 ---
-title: "速览Java程序员面试题及答案，持续更新..."
+title: "Java面试全栈突击指南，持续更新..."
 date: 2024-06-17
 draft: false
 tags: ["面试","Java","持续更新"]
@@ -7,14 +7,39 @@ slug: "interview-junior-javaer"
 top: true
 ---
 
-为方便面试，不至于在网上像一个无头苍蝇乱翻，整理了一系列关于面试的资料。本系列文章几乎涵盖了Java所有的知识点，包括：Java基础、网络与安全、常见框架、分布式服务治理、数据库、算法与数据结构、开发中遇到的一些问题以及一些架构设计方案。 如果全都理解并吸收，相信你能轻松吊打绝大多数面试官。
+为帮助开发者跳出零散资料搜索的泥潭，我系统梳理了这份覆盖Java全栈技术+面试技巧的求生手册。不同于零散的面试题集，本资料以「技术深度×实战场景×沟通艺术」为核心理念，助你在求职战场脱颖而出。
+如果全都理解并吸收，相信你能轻松吊打绝大多数面试官。
 
-本系列中的面试题更偏向于底层，为方便阅读，在此只简短概述面试题的答案，不做详细解析。 我承诺本资料完全公开免费，资料中的面试题，大多为原创，但也有小部分参考于网络，我将尽可能的把问题和答案概括的通俗易懂。
+**📚 资料亮点**  
+✅ **全网硬核**：从JVM字节码到分布式事务，拆解20+底层原理  
+✅ **HR面降维打击**：离职原因/职业规划/薪资谈判应答模板  
+✅ **实战方案库**：秒杀/短链/IM等架构设计蓝图
 
-本人时间精力有限，如有遗漏或错误，欢迎在评论留言补充，我会及时的完善修正。 目录如下：
+本人时间精力有限，如有遗漏或错误，欢迎[联系我](/about/)或在评论留言补充，我会及时的完善修正。
 
-# 一、Java基础篇
-## 1.综合汇总
+**🎁 限时福利**
+- ✨ 关注【码上悟道】免费领**1v1简历诊断（每日前3名）**
+- 💼 花费【19.9元】一杯奶茶的钱，即可**体验简历优化服务（每日1名）**
+
+⏰ 每日名额有限 [联系本人](/about/)，备注【简历诊断】或【简历优化】。
+
+
+# 面试软实力
+- [自我介绍](/posts/java/javaemp/interview-questions-and-answers/)
+- [你为什么要从上一家公司离职](/posts/java/javaemp/interview-questions-and-answers/)
+- [你的优点是什么](/posts/java/javaemp/interview-questions-and-answers/)
+- [你有什么缺点吗](/posts/java/javaemp/interview-questions-and-answers/)
+- [你有对象吗](/posts/java/javaemp/interview-questions-and-answers/)
+- [你的职业规划是什么样的](/posts/java/javaemp/interview-questions-and-answers/)
+- [你的期望薪资是多少](/posts/java/javaemp/interview-questions-and-answers/)
+- [你能否接受加班](/posts/java/javaemp/interview-questions-and-answers/)
+- [为什么选择我们公司](/posts/java/javaemp/interview-questions-and-answers/)
+- [还有什么想问的吗](/posts/java/javaemp/interview-questions-and-answers/)
+
+
+# 面试硬实力
+## 一、Java基础篇
+### 1.综合汇总
 - [如何复制对象](/posts/java/javasmallclass/java-object-replication)
 - [String类为什么设计成不可变的](/posts/java/javasmallclass/java-string-final)
 - [String类型变量有没有长度限制](/posts/java/javasmallclass/java-string-howlong)
@@ -24,9 +49,9 @@ top: true
 - [new Integer(12)与int b=12是否相等](/posts/java/javasmallclass/java-int-equals-new-integer/)
 
 
-## 2.多线程
+### 2.多线程
 - [说说你对并发编程的理解](/posts/java/javasmallclass/java-concurrent-understand/)
-- 简述线程池工作原理
+- [简述线程池工作原理](/posts/java/javasmallclass/java-threading-pool-principle)
 - 简述线程池中线程复用的原理
 - 简述synchronized作用及原理
 - 简述synchronized锁升级过程
@@ -39,7 +64,7 @@ top: true
 - 什么是乐观锁和悲观锁
 
 
-## 3.集合
+### 3.集合
 - HashMap底层是如何实现的
 - HashMap底层为什么要用红黑树
 - HashMap为什么不一开始就用红黑树代替链表
@@ -58,7 +83,7 @@ top: true
 - CopyOnWriteArrayList的原理是什么
 
 
-## 4.IO与序列化
+### 4.IO与序列化
 - 如何序列化
 - serialVersionUID作用
 - 如何自定义的序列化和反序列化策略
@@ -69,7 +94,7 @@ top: true
 - 简述Direct-Buffer和Heap-Buffer的区别
 
 
-## 5.设计模式
+### 5.设计模式
 - 为什么要用设计模式
 - 谈谈你对设计模式的理解
 - 平时开发过程中怎样使用设计模式
@@ -79,7 +104,7 @@ top: true
 - 简述职责链设计模式
 
 
-## 6.数据结构与算法
+### 6.数据结构与算法
 - 手写一个负载算法
 - 手写一个限流算法
 - 排序算法知道几种
@@ -94,7 +119,7 @@ top: true
 
 
 
-## 7.JVM
+### 7.JVM
 - 简述JVM内存区域划分
 - 简述对象实例化过程
 - 简述对象的组成
@@ -113,7 +138,7 @@ top: true
 - 简述逃逸分析及其对性能影响
 
 
-## 8.网络与安全
+### 8.网络与安全
 - 计算机网络为什么要分层
 - TCP为什么要握手三次挥手四次
 - TCP如何实现可靠传输
@@ -131,9 +156,9 @@ top: true
 - 简述放火墙的工作原理
 
 
-# 二、框架篇
+## 二、框架篇
 
-## 1.Redis
+### 1.Redis
 - 缓存击穿、缓存穿透、缓存雪崩解决方案
 - 为什么要使用Redis
 - Redis为什么这么快
@@ -151,7 +176,7 @@ top: true
 - 简述Redis的LRU实现原理
 
 
-## 2.Kafka
+### 2.Kafka
 - 为什么要使用Kafka
 - 简述Kafka架构设计
 - 简述Kafka发布订阅工作流程
@@ -168,7 +193,7 @@ top: true
 - 简述Kafka分区选举策略
 
 
-## 3.Elasticsearch
+### 3.Elasticsearch
 - 为什么要使用Elasticsearch
 - 简述搜索流程
 - 简述索引文档的流程
@@ -182,7 +207,7 @@ top: true
 - 数据量很大的情况下，如何提高查询效率
 
 
-## 4.Netty
+### 4.Netty
 - 为什么要使用Netty
 - Netty高性能体现在哪里
 - TCP粘包、拆包怎么解决
@@ -195,7 +220,7 @@ top: true
 - 如何选择序列化协议
 
 
-## 5.Spring
+### 5.Spring
 - 说说对Spring的理解
 - 简述Bean生命周期
 - 简述@Autowired自动装配原理
@@ -207,7 +232,7 @@ top: true
 - 当@Transactional遇到锁需要注意什么
 
 
-# 三、分布式
+## 三、分布式
 - 为什么要用微服务
 - 怎么从单体架构迁移到微服务架构
 - 服务治理治的是什么
@@ -222,7 +247,7 @@ top: true
 - 分布式系统中如何实现全局唯一ID
 
 
-# 四、数据库
+## 四、数据库
 - 简述MySQL索引数据结构
 - 简述MySQL索引的实现
 - 简述MySQL索引设计原则
@@ -238,16 +263,16 @@ top: true
 - 说说怎么优化慢SQL
 
 
-# 五、实际问题
+## 五、实际问题
 - 线上遇到接口很慢怎么处理
 - 线上CPU突然飚高怎么处理
 - 死锁了怎么办
 - 内存泄漏怎么排查怎么处理
 - 内存溢出了怎么处理
-- 如何处理数据量较大的情况
+- 百万级的读写业务如何处理
 
 
-# 六、架构设计
+## 六、架构设计
 - 设计一个二级缓存
 - 设计一个流程引擎
 - 设计一个分布式ID生成系统

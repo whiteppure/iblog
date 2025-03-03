@@ -30,7 +30,7 @@ CONSTANT_Utf8_info {
 因此，每个字符串常量的最大长度为65535字节。 注意：每个汉字通常占3个字节，所以实际能容纳的字符数可能会少于65534个。
 
 ## 运行期
-当程序运行时，字符串的长度理论上可以长的离谱。Java中的`String`内部是用一个字符数组`char[]`存储字符数据的，理论上，Java数组的最大长度是`Integer.MAX_VALUE(2^31 - 1)`，即2147483647（21亿）。
+当程序运行时，字符串的长度理论上可以长得离谱。Java中的`String`内部是用一个字符数组`char[]`存储字符数据的，理论上，Java数组的最大长度是`Integer.MAX_VALUE(2^31 - 1)`，即2147483647（21亿）。
 ```java
 char[] hugeArray = new char[Integer.MAX_VALUE]; // 理论最大值
 String giantStr = new String(hugeArray);

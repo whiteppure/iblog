@@ -300,8 +300,7 @@
 </span></span><span class="line"><span class="cl">    临时雇佣帮厨处理积压订单;
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div></li>
-<li>客满时的智慧应对。如果任务队列满了且正在运行的线程数等于<code>maximumPoolSize</code>，那么线程池会启动饱和拒绝策略来执行。具体处理方案如下：</li>
-</ol>
+<li>客满时的智慧应对。如果任务队列满了且正在运行的线程数等于<code>maximumPoolSize</code>，那么线程池会启动饱和拒绝策略来执行。具体处理方案如下：
 <table>
 <thead>
 <tr>
@@ -328,7 +327,7 @@
 </tr>
 </tbody>
 </table>
-<ol start="5">
+</li>
 <li>闲时精简团队。随着时间的推移，业务量越来越少，线程池中出现了空闲线程。当一个线程无事可做超过一定的时间时，线程池会进行判断，如果当前运行的线程数大于<code>corePoolSize</code>，那么这个线程就被停掉，所以线程池的所有任务完成后它最终会收缩到<code>corePoolSize</code>的大小。
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">// 营业低谷时段
 </span></span><span class="line"><span class="cl">while (空闲厨师 &gt; 5) {
@@ -367,7 +366,7 @@
 </table>
 <h2 id="默认线程池的致命陷阱">默认线程池的致命陷阱</h2>
 <p>在实际开发中用哪个线程池？<code>Executors</code>类中已经给你提供了，为什么不用？</p>
-<p>《Java开发手册》明令禁止使用Executors工具类创建线程池，原因如下：</p>
+<p>《阿里巴巴开发手册》明令禁止使用Executors工具类创建线程池，原因如下：</p>
 <p><img alt="程序世界的智能调度专家" src="/posts/annex/images/essays/%E7%A8%8B%E5%BA%8F%E4%B8%96%E7%95%8C%E7%9A%84%E6%99%BA%E8%83%BD%E8%B0%83%E5%BA%A6%E4%B8%93%E5%AE%B6.png"></p>
 <blockquote>
 <p>摘自<a href="https://developer.aliyun.com/topic/download?spm=a2c6h.15028928.J_5293118740.2&id=805">《阿里巴巴开发手册》</a>
@@ -606,7 +605,7 @@
             for (let mutation of mutationsList) {
                 if (mutation.type === 'childList') {
                     uvObs.disconnect();
-                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 37030;
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 57030;
                     break;
                 }
             }

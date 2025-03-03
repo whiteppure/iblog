@@ -287,7 +287,7 @@
 </span></span></code></pre></div><p>其中，<code>u2</code>表示两个字节的无符号数，那么1个字节有8位，2个字节就有16位，最大可表示的值为<code>2^16 - 1 = 65535</code>。
 因此，每个字符串常量的最大长度为65535字节。 注意：每个汉字通常占3个字节，所以实际能容纳的字符数可能会少于65534个。</p>
 <h2 id="运行期">运行期</h2>
-<p>当程序运行时，字符串的长度理论上可以长的离谱。Java中的<code>String</code>内部是用一个字符数组<code>char[]</code>存储字符数据的，理论上，Java数组的最大长度是<code>Integer.MAX_VALUE(2^31 - 1)</code>，即2147483647（21亿）。</p>
+<p>当程序运行时，字符串的长度理论上可以长得离谱。Java中的<code>String</code>内部是用一个字符数组<code>char[]</code>存储字符数据的，理论上，Java数组的最大长度是<code>Integer.MAX_VALUE(2^31 - 1)</code>，即2147483647（21亿）。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">char</span><span class="o">[]</span><span class="w"> </span><span class="n">hugeArray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">char</span><span class="o">[</span><span class="n">Integer</span><span class="p">.</span><span class="na">MAX_VALUE</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="c1">// 理论最大值</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">String</span><span class="w"> </span><span class="n">giantStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">hugeArray</span><span class="p">);</span><span class="w">
 </span></span></span></code></pre></div><p>这相当于：</p>
@@ -454,7 +454,7 @@
             for (let mutation of mutationsList) {
                 if (mutation.type === 'childList') {
                     uvObs.disconnect();
-                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 37030;
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 57030;
                     break;
                 }
             }
