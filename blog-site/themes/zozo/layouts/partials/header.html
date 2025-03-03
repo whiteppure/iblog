@@ -65,8 +65,17 @@
                     {{ $allPages := len (where .Site.RegularPages "Draft" "!=" true) }}
                     <span class="date">总文章数 {{ $allPages }} 篇</span>
                 </div>
+                <div class="post_title post_detail_title">
+                    {{ $days := 0 }}
+                    {{ with .Site.Params.blogStartDate }}
+                    {{ $startDate := . | time.AsTime }}
+                    {{ $days = div (now.Sub $startDate).Hours 24 | math.Floor }}
+                    {{ else }}
+                    {{ warnf "未检测到 blogStartDate 参数，请在配置文件中设置 params.blogStartDate" }}
+                    {{ end }}
+                    <span class="date">博客已运行 {{ $days }} 天</span>
+                </div>
             </div>
-
 
         </div>
     </div>
