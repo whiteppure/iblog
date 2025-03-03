@@ -1,6 +1,6 @@
 ---
 title: "Java面试全栈突击指南 | 持续更新"
-date: 2024-06-17
+date: 2025-02-17
 draft: false
 tags: ["面试","Java","持续更新"]
 slug: "interview-junior-javaer"
@@ -47,7 +47,7 @@ keywords:
 
 
 # 面试硬实力
-## 一、Java基础篇
+## 一、基础篇
 ### 1.综合汇总
 - [如何复制对象](/posts/java/javasmallclass/java-object-replication)
 - [String类为什么设计成不可变的](/posts/java/javasmallclass/java-string-final)
