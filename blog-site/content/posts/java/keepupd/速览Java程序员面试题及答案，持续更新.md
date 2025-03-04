@@ -27,8 +27,8 @@ keywords:
 本人时间精力有限，如有遗漏或错误，欢迎[联系我](/about/)或在评论留言补充，我会及时的完善修正。
 
 **🎁 限时福利**
-- ✨ 关注【码上悟道】免费领**1v1简历诊断（每日3名）**
-- 💼 花费【19.9元】一杯奶茶的钱，即可**体验简历优化服务（每日1名）**
+- ✨ 关注公众号【码上悟道】免费领**1v1简历诊断（每日前10名）**
+- 💼 花费【19.9元】一杯奶茶的钱，即可**体验简历优化服务（每日1名）**，改到你满意为止
 
 ⏰ 每日名额有限 [联系本人](/about/)，备注【简历诊断】或【简历优化】。
 
@@ -61,7 +61,6 @@ keywords:
 ### 2.多线程
 - [说说你对并发编程的理解](/posts/java/javasmallclass/java-concurrent-understand/)
 - [简述线程池工作原理](/posts/java/javasmallclass/java-threading-pool-principle)
-- 简述线程池中线程复用的原理
 - 简述synchronized作用及原理
 - 简述synchronized锁升级过程
 - 简述volatile作用及原理
