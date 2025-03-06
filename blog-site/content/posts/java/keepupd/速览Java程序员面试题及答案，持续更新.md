@@ -20,17 +20,16 @@ keywords:
 如果全都理解并吸收，相信你能轻松吊打绝大多数面试官。
 
 **📚 资料亮点**  
-✅ **全网硬核**：从JVM字节码到分布式事务，拆解20+底层原理  
-✅ **HR面降维打击**：离职原因/职业规划/薪资谈判应答模板  
-✅ **实战方案库**：秒杀/短链/IM等架构设计蓝图
+- 全网硬核：从JVM字节码到分布式事务，拆解20+底层原理  
+- HR面降维打击：离职原因/职业规划/薪资谈判应答模板
+- 实战方案库：秒杀/短链/IM等架构设计蓝图
 
-本人时间精力有限，如有遗漏或错误，欢迎[联系我](/about/)或在评论留言补充，我会及时的完善修正。
 
 **🎁 限时福利**
-- ✨ 关注公众号【码上悟道】免费领**1v1简历诊断（每日前10名）**
-- 💼 花费【19.9元】一杯奶茶的钱，即可**体验简历优化服务（每日1名）**，改到你满意为止
+- ✨ 关注公众号【码上悟道】免费领**1v1人工简历诊断（每日前10名）**
+- 💼 花费【9.9元】，即可**体验简历优化服务（每日1名）**，改到你满意为止
 
-⏰ 每日名额有限 [联系本人](/about/)，备注【简历诊断】或【简历优化】。
+本人时间精力有限，如有遗漏或错误，欢迎[联系我](/about/)或在评论留言补充，我会及时的完善修正。
 
 
 # 面试软实力
@@ -52,21 +51,20 @@ keywords:
 - [如何复制对象](/posts/java/javasmallclass/java-object-replication)
 - [String类为什么设计成不可变的](/posts/java/javasmallclass/java-string-final)
 - [String类型变量有没有长度限制](/posts/java/javasmallclass/java-string-howlong)
-- [简述反射以及它的应用场景](/posts/java/javasmallclass/java-reflection-scene)
-- [简述Java中的泛型是如何实现的](/posts/java/javasmallclass/java-generics-impl)
+- [说说反射以及它的应用场景](/posts/java/javasmallclass/java-reflection-scene)
+- [说说Java中的泛型是如何实现的](/posts/java/javasmallclass/java-generics-impl)
 - [new String("abc")会产生几个对象](/posts/java/javasmallclass/java-new-string-object)
 - [new Integer(12)与int b=12是否相等](/posts/java/javasmallclass/java-int-equals-new-integer/)
 
 
 ### 2.多线程
 - [说说你对并发编程的理解](/posts/java/javasmallclass/java-concurrent-understand/)
-- [简述线程池工作原理](/posts/java/javasmallclass/java-threading-pool-principle)
-- 简述synchronized作用及原理
-- 简述synchronized锁升级过程
-- 简述volatile作用及原理
-- AQS知道吗
-- CAS知道吗
-- 简述ThreadLocal原理及使用场景
+- [线程池工作原理](/posts/java/javasmallclass/java-threading-pool-principle)
+- [synchronized作用、原理以及锁升级机制](/posts/java/javakeyword/java-keyword-synchronized/)
+- [volatile作用及原理](/posts/java/javakeyword/java-keyword-volatile/)
+- [说说CAS](/posts/java/javaessay/cas-detail/)
+- [说说AQS](/posts/java/javasmallclass/java-concurrent-understand-aqs/)
+- ThreadLocal原理及使用场景
 - 如何避免ThreadLocal内存泄漏
 - 谈谈你对线程安全的理解
 - 什么是乐观锁和悲观锁

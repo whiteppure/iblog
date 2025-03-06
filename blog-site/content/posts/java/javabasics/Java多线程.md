@@ -2989,7 +2989,7 @@ AQS是指`java.util.concurrent.locks`包下的一个抽象类`AbstractQueuedSync
 
 ![JUC.locks包UML](/posts/annex/images/essays/JUC.locks包UML.png)
 
-AQS是用来构建锁或其它同步器组件的重要基础框架，以及是整个JUC体系的基石，它用于实现依赖先进先出队列的阻塞锁和相关的同步器。
+AQS是用来构建锁或其它同步器组件的重要基础框架，它是整个JUC体系的基石，用于实现依赖先进先出队列的阻塞锁和相关的同步器。
 AQS提供了一个框架，用于创建在等待队列中具有独占或共享模式的同步器。
 
 ![AQS](/posts/annex/images/essays/AQS.png)
