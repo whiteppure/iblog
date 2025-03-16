@@ -10,14 +10,15 @@ keywords:
   - "Java HR面试技巧"
   - "技术简历优化"
   - "薪资谈判话术"
-  - "Java面试常见问题"
+  - "Java面试题汇总"
   - "简历诊断服务"
+  - "免费"
 ---
 
 
 
 为帮助开发者跳出零散资料搜索的泥潭，我系统梳理了这份覆盖Java全栈技术+面试技巧的求生手册。不同于零散的面试题集，本资料以「技术深度×实战场景×沟通艺术」为核心理念，助你在求职战场脱颖而出。
-如果全都理解并吸收，相信你能轻松吊打绝大多数面试官，最主要的是**免费！免费！**
+如果全都理解并吸收，相信你能轻松吊打绝大多数面试官，最主要的是**免费！免费！免费！**
 
 **📚 资料亮点**  
 - 全网硬核：从JVM字节码到分布式事务，拆解20+底层原理  
@@ -47,26 +48,28 @@ keywords:
 
 # 硬实力
 ## 一、基础篇
-### 1.数据类型
-- [String类为什么设计成不可变的](/posts/java/javasmallclass/java-string-final)
+### 1.[数据类型](/posts/java/javabasics/rookie-datatype/)与[运算](/posts/java/javabasics/rookie-operation/)
+- [String类为什么设计为不可变](/posts/java/javasmallclass/java-string-final)
 - [String类型变量有没有长度限制](/posts/java/javasmallclass/java-string-howlong)
 - [new String("abc")会产生几个对象](/posts/java/javasmallclass/java-new-string-object)
+- 字符串拼接方式有哪些
 - [new Integer(12)与int b=12是否相等](/posts/java/javasmallclass/java-int-equals-new-integer/)
+- 如何安全比较两个浮点数是否相等
 
 
-### 2.多线程
+### 2.[多线程](/posts/java/javabasics/rookie-multi-thread/)
 - [说说你对并发编程的理解](/posts/java/javasmallclass/java-concurrent-understand/)
+- 谈谈你对线程安全的理解
 - [线程池工作原理](/posts/java/javasmallclass/java-threading-pool-principle)
 - [synchronized作用、原理以及锁升级机制](/posts/java/javakeyword/java-keyword-synchronized/)
 - [volatile作用及原理](/posts/java/javakeyword/java-keyword-volatile/)
-- [说说CAS](/posts/java/javaessay/cas-detail/)
-- [说说AQS](/posts/java/javasmallclass/java-concurrent-understand-aqs/)
-- [ThreadLocal原理、使用场景、内存泄露](/posts/java/javasmallclass/java-concurrent-understand-threadlocal)
-- 谈谈你对线程安全的理解
-- 什么是乐观锁和悲观锁
+- [CAS是什么](/posts/java/javaessay/cas-detail/)
+- [AQS知道吗](/posts/java/javasmallclass/java-concurrent-understand-aqs/)
+- [说说ThreadLocal原理及使用场景](/posts/java/javasmallclass/java-concurrent-understand-threadlocal)
+- 多线程中锁的种类有哪些
 
 
-### 3.集合
+### 3.[集合](/posts/java/javabasics/rookie-java-container/)
 - HashMap底层是如何实现的
 - HashMap底层为什么要用红黑树
 - HashMap为什么不一开始就用红黑树代替链表
@@ -74,34 +77,53 @@ keywords:
 - HashMap为什么负载因子默认是0.75
 - HashMap如果指定容量大小为10，实际大小是多少
 - HashMap初始化容量设置多少合适
-- HashMap的怎么扩容
-- ArrayList怎么扩容
+- HashMap扩容原理
+- ArrayList扩容原理
 - ArrayList如何安全删除
 - 什么是fail-fast和fail-safe
 - ArrayList与LinkedList区别是什么
 - HashSet如何保证数据不重复
 - 什么时候需要重写equals与hashCode
 - ConcurrentHashMap是如何实现高并发的
-- CopyOnWriteArrayList的原理是什么
+- CopyOnWriteArrayList实现原理是什么
 
 
-### 4.IO与序列化
+### 4.[IO与序列化](/posts/java/javabasics/rookie-io/)
 - [如何复制对象](/posts/java/javasmallclass/java-object-replication)
-- 如何序列化
+- 序列化方式及原理
 - serialVersionUID作用
 - 如何自定义的序列化和反序列化策略
 - 为什么序列化可以破坏单例了
 - NIO、BIO、AIO分别是什么
 - IO复用模型及NIO实现原理
-- 什么是零拷贝
 - 简述Direct-Buffer和Heap-Buffer的区别
 
-### 5.反射与泛型
+
+### 5.[反射](/posts/java/javabasics/rookie-reflect/)
 - [说说反射以及它的应用场景](/posts/java/javasmallclass/java-reflection-scene)
+- 如何通过反射实现动态代理
+- 为什么Spring选择CGLIB而非JDK动态代理实现AOP？反射在此起什么作用
+
+
+### 6.[泛型](/posts/java/javabasics/rookie-generics/)
 - [说说Java中的泛型是如何实现的](/posts/java/javasmallclass/java-generics-impl)
 
 
-### 6.JVM
+### 7.[异常](/posts/java/javabasics/rookie-exception)
+
+
+### 8.关键字
+- [enum关键字](/posts/java/javabasics/rookie-enum/)
+- [this关键字](/posts/java/javakeyword/java-keyword-this/)
+- [static关键字](/posts/java/javakeyword/java-keyword-static/)
+- [transient关键字](/posts/java/javakeyword/java-keyword-transient/)
+- [volatile关键字](/posts/java/javakeyword/java-keyword-volatile/)
+- [synchronized关键字](/posts/java/javakeyword/java-keyword-synchronized/)
+- [strictfp关键字](/posts/java/javakeyword/java-keyword-strictfp/)
+
+
+## 二、进阶篇
+### 1.JVM
 - 简述JVM内存区域划分
 - 简述对象实例化过程
 - 简述对象的组成
@@ -119,7 +141,7 @@ keywords:
 - 你平时怎么对JVM参数调优
 - 简述逃逸分析及其对性能影响
 
-### 7.设计模式
+### 2.设计模式
 - 为什么要用设计模式
 - 谈谈你对设计模式的理解
 - 平时开发过程中怎样使用设计模式
@@ -128,8 +150,7 @@ keywords:
 - 简述策略设计模式
 - 简述职责链设计模式
 
-
-### 8.数据结构与算法
+### 3.数据结构与算法
 - 手写一个负载算法
 - 手写一个限流算法
 - 排序算法知道几种
@@ -143,7 +164,7 @@ keywords:
 - 简述跳表及应用场景
 
 
-### 9.网络与安全
+### 4.网络与安全
 - 计算机网络为什么要分层
 - TCP为什么要握手三次挥手四次
 - TCP如何实现可靠传输
@@ -161,8 +182,7 @@ keywords:
 - 简述放火墙的工作原理
 
 
-## 二、框架篇
-
+## 三、框架篇
 ### 1.Redis
 - 缓存击穿、缓存穿透、缓存雪崩解决方案
 - 为什么要使用Redis
@@ -237,7 +257,7 @@ keywords:
 - 当@Transactional遇到锁需要注意什么
 
 
-## 三、分布式
+## 四、分布式
 - 为什么要用微服务
 - 怎么从单体架构迁移到微服务架构
 - 服务治理治的是什么
@@ -252,7 +272,7 @@ keywords:
 - 分布式系统中如何实现全局唯一ID
 
 
-## 四、数据库
+## 五、数据库
 - 简述MySQL索引数据结构
 - 简述MySQL索引的实现
 - 简述MySQL索引设计原则
@@ -268,7 +288,7 @@ keywords:
 - 说说怎么优化慢SQL
 
 
-## 五、实际问题
+## 六、实际问题
 - 线上遇到接口很慢怎么处理
 - 线上CPU突然飚高怎么处理
 - 死锁了怎么办
@@ -277,7 +297,7 @@ keywords:
 - 百万级的读写业务如何处理
 
 
-## 六、架构设计
+## 七、架构设计
 - 设计一个二级缓存
 - 设计一个流程引擎
 - 设计一个分布式ID生成系统
