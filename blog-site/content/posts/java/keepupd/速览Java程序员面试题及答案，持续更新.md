@@ -59,7 +59,6 @@ keywords:
 
 ### 2.[多线程](/posts/java/javabasics/rookie-multi-thread/)
 - [说说你对并发编程的理解](/posts/java/javasmallclass/java-concurrent-understand/)
-- 谈谈你对线程安全的理解
 - [线程池工作原理](/posts/java/javasmallclass/java-threading-pool-principle)
 - [synchronized作用、原理以及锁升级机制](/posts/java/javakeyword/java-keyword-synchronized/)
 - [volatile作用及原理](/posts/java/javakeyword/java-keyword-volatile/)
@@ -99,20 +98,15 @@ keywords:
 - 简述Direct-Buffer和Heap-Buffer的区别
 
 
-### 5.[反射](/posts/java/javabasics/rookie-reflect/)
+### 5.[反射](/posts/java/javabasics/rookie-reflect/)、[泛型](/posts/java/javabasics/rookie-generics/)与[异常](/posts/java/javabasics/rookie-exception)
 - [说说反射以及它的应用场景](/posts/java/javasmallclass/java-reflection-scene)
 - 如何通过反射实现动态代理
-- 为什么Spring选择CGLIB而非JDK动态代理实现AOP？反射在此起什么作用
-
-
-### 6.[泛型](/posts/java/javabasics/rookie-generics/)
+- 为什么Spring选择CGLIB而非JDK动态代理实现AOP
 - [说说Java中的泛型是如何实现的](/posts/java/javasmallclass/java-generics-impl)
 
 
-### 7.[异常](/posts/java/javabasics/rookie-exception)
 
-
-### 8.关键字
+### 6.关键字
 - [enum关键字](/posts/java/javabasics/rookie-enum/)
 - [this关键字](/posts/java/javakeyword/java-keyword-this/)
 - [static关键字](/posts/java/javakeyword/java-keyword-static/)
