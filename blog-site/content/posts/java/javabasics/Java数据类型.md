@@ -943,7 +943,7 @@ public class MainTest {
     String str9 = StringUtils.join(new String[]{str, "456", "789"});
     ```
 
-如果在处理大量字符串的时候就需要注意性能和耗时，以下是耗时比较(短->长)：`StringBuilder`<`StringBuffer`<`concat`<`+`<`StringUtils.join` 。
+如果在处理大量字符串的时候就需要注意性能和耗时，以下是耗时比较(短->长)：`StringBuilder`<`StringBuffer`<`StringUtils.join`<`concat`<`+`。
 
 #### “+”拼接原理
 拼接字符串最简单的方式就是直接使用符号"+"来拼接，其实“+”是Java提供的一个语法糖。

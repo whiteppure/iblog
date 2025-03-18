@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="zh" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="google-site-verification" content="tVxoyWMeaEzEUV0EzY1STfJXZWaZ8WM-i-a8AWBri0o" />
+    <meta name="msvalidate.01" content="48159A4EAF3C3F448369E581664B1A21" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="whitepure" />
+	
+	
+	
+	<title>字符串拼接暗战 ｜ 脚踏实地</title>
+	
+    
+    
+    <meta name="description" content="五大拼接方案的技术对比 先说结论，如果在处理大量字符串的时候就需要注意性能和耗时，以下是耗时比较(短-&amp;gt;长)：StringBuilder&amp;lt;String" />
+    
+
+    
+    
+    <meta name="keywords" content="whitepure博客, whiteppure, whitepure, Java, 博客, 技术博客" />
+    
+
+	
+
+    <link rel="shortcut icon" href="https://blog.lijizhi.website/images/favicon.ico" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://blog.lijizhi.website/css/normalize.css" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://blog.lijizhi.website/css/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://blog.lijizhi.website/css/zozo.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://blog.lijizhi.website/css/remixicon.css" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://blog.lijizhi.website/css/highlight.css" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://blog.lijizhi.website/css/toc.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://blog.lijizhi.website/css/search.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://blog.lijizhi.website/css/img.css" />
+
+    
+    
+</head>
+
+<body>
+    <div class="post-password">
+        
+    </div>
+
+    
+    
+    
+
+
+
+
+
+
+
+
+
+<div id="post_content_toc" class="toc">
+    <div class="page-header"><strong></strong></div>
+    <div id="page-scrollspy" class="toc-nav">
+
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%ba%94%e5%a4%a7%e6%8b%bc%e6%8e%a5%e6%96%b9%e6%a1%88%e7%9a%84%e6%8a%80%e6%9c%af%e5%af%b9%e6%af%94">
+                    五大拼接方案的技术对比
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%96%b9%e6%a1%88%e4%b8%80%e5%8e%9f%e7%94%9fconcat%e6%96%b9%e6%b3%95">
+                    方案一：原生concat方法
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%96%b9%e6%a1%88%e4%ba%8c%e8%bf%90%e7%ae%97%e7%ac%a6%e8%bf%9e%e6%8e%a5%e5%ad%97%e7%ac%a6%e4%b8%b2">
+                    方案二：运算符&#34;&#43;“连接字符串
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%96%b9%e6%a1%88%e4%b8%89stringbuilderstringbuffer%e8%bf%9e%e6%8e%a5%e5%ad%97%e7%ac%a6%e4%b8%b2">
+                    方案三：StringBuilder/StringBuffer连接字符串
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%96%b9%e6%a1%88%e5%9b%9bstringutilsjoin%e8%bf%9e%e6%8e%a5%e5%ad%97%e7%ac%a6%e4%b8%b2">
+                    方案四：StringUtils.join连接字符串
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%96%b9%e6%a1%88%e4%ba%94%e7%ac%ac%e4%b8%89%e6%96%b9%e5%b7%a5%e5%85%b7%e6%89%a9%e5%b1%95">
+                    方案五：第三方工具扩展
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%ba%95%e5%b1%82%e6%9c%ba%e5%88%b6%e6%b7%b1%e5%ba%a6%e8%a7%a3%e5%af%86">
+                    底层机制深度解密
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%b7%b1%e5%85%a5%e8%a7%a3%e6%9e%90%e6%8b%bc%e6%8e%a5%e5%8e%9f%e7%90%86">
+                    深入解析“&#43;”拼接原理
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#stringbuffer%e4%b8%8estringbuilder%e6%b7%b1%e5%ba%a6%e8%a7%a3%e5%af%86">
+                    StringBuffer与StringBuilder深度解密
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+
+    </div>
+</div>
+
+
+
+    
+
+    
+    <div class="main animate__animated animate__fadeInDown" id="main_content">
+        <div class="nav_container animated fadeInDown">
+    <div class="site_nav" id="site_nav">
+        <ul><li class="">
+                <a href="https://blog.lijizhi.website/">首页</a>
+            </li><li class="">
+                <a href="https://blog.lijizhi.website/posts/">归档</a>
+            </li><li class="">
+                <a href="https://blog.lijizhi.website/tags/">标签</a>
+            </li><li class="">
+                <a href="https://blog.lijizhi.website/about/">关于</a>
+            </li>
+        </ul>
+    </div>
+    <div class="menu_icon">
+        <a id="menu_icon"><i class="ri-menu-line"></i></a>
+    </div>
+</div>
+        <div id="post_header" class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://blog.lijizhi.website/">
+                    <span>脚踏实地</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">
+                
+            </p>
+
+            
+            <div class="my_socials">
+                
+                    
+                    <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                        <i class="ri-github-fill"></i>
+                    </a>
+                    
+                
+                <a href="https://blog.lijizhi.website/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
+                
+                <span id="sys_function" class="sys_function display_none">
+                    <a id="export_pdf"  title="导出pdf" style="border: none; cursor: pointer; margin-left: 10px">
+                        <svg t="1688701481347" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3517" width="16" height="16"><path d="M425.610455 85.814544H149.05897A42.303635 42.303635 0 0 0 106.6274 128.075535V896.492068c0 23.326702 18.976933 42.26099 42.43157 42.26099h682.743143a42.559504 42.559504 0 0 0 42.431569-42.559504v-384.016365a42.644793 42.644793 0 0 1 85.289587 0v384.016365A127.849091 127.849091 0 0 1 831.802113 1024H149.05897A127.635867 127.635867 0 0 1 21.337813 896.449423V128.03289A127.593222 127.593222 0 0 1 149.101614 0.524957h276.466196a42.644793 42.644793 0 0 1 0 85.289587z m564.062683 158.08425l-170.579174 170.579173a42.644793 42.644793 0 1 1-60.299738-60.299738L856.578738 256.393718H618.364922a42.644793 42.644793 0 1 1 0-85.289587h238.213816l-97.784512-97.784511A42.644793 42.644793 0 1 1 819.093964 13.019882l170.579174 170.579174a42.644793 42.644793 0 0 1 0 60.299738zM149.272194 597.552066a42.644793 42.644793 0 0 1 42.644793-42.644794h51.514911c59.190973 0 107.891327 23.284057 107.976617 97.102195 0 71.003581-49.46796 102.347504-106.185536 102.347504h-31.343923v66.781747a32.282109 32.282109 0 0 1-64.606862 0V597.552066z m92.709781 100.215264c31.429213 0 46.568114-16.46089 46.568114-45.757863 0-30.064579-17.313786-40.512554-48.359196-40.512554h-26.311837v86.270417h28.145563z m232.414124-142.860058c81.878003 0 136.036891 43.710913 136.036891 147.67892S556.231457 853.420826 477.935617 853.420826h-38.16709a42.644793 42.644793 0 0 1-42.644794-42.644793v-213.223967a42.644793 42.644793 0 0 1 42.644794-42.644794h34.542282z m-4.008611 240.729859c43.32711 0 73.988717-22.047358 73.988717-93.050939 0-71.046226-30.704251-90.705476-73.988717-90.705476h-8.699538v183.79906h8.699538zM692.481573 853.420826a32.282109 32.282109 0 0 1-32.282109-32.282108V597.552066a42.644793 42.644793 0 0 1 42.644793-42.644794h99.063855a29.680776 29.680776 0 1 1 0 59.404197h-77.144431v65.374469h61.749661a29.894 29.894 0 1 1 0 59.788h-61.749661v81.66478a32.282109 32.282109 0 0 1-32.282108 32.282108z" fill="#5f5f5f" p-id="3518"></path></svg>
+                    </a>
+                    <a id="export_pic" title="导出图片" style="border: none; cursor: pointer; margin-left: 10px">
+                        <svg t="1689071509720" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4564" width="16" height="16"><path d="M909.132886 0.037506h-184.960611a33.909445 33.909445 0 0 0-32.368107 33.909445 33.909445 33.909445 0 0 0 33.909445 33.395666h158.244078l-200.373995 199.346437a33.395666 33.395666 0 0 0 0 47.781491 31.854327 31.854327 0 0 0 23.633856 9.76181 33.909445 33.909445 0 0 0 24.147635-9.76181l198.832657-199.346437V272.340628a33.909445 33.909445 0 0 0 69.874009 0V88.921355A88.37007 88.37007 0 0 0 909.132886 0.037506zM216.558153 347.866211a107.37991 107.37991 0 1 0 107.37991-107.379911 107.89369 107.89369 0 0 0-107.37991 107.379911z m154.133843 0a51.377948 51.377948 0 0 1-97.618101 0 51.377948 51.377948 0 1 1 97.618101 0z" p-id="4565" fill="#424242"></path><path d="M963.079731 437.777619a34.423225 34.423225 0 0 0-33.909446 33.909445v265.110209a1811.07265 1811.07265 0 0 0-137.692899-193.181082 106.352351 106.352351 0 0 0-78.60826-36.478343 123.820854 123.820854 0 0 0-82.204716 35.964563l-3.596456 3.082677-188.557068 176.74014c-11.816928-13.358266-47.781491-51.377948-82.204716-87.856291a83.232275 83.232275 0 0 0-85.801172-21.578738 105.324792 105.324792 0 0 0-38.019681 19.52362l-141.289356 121.765736V89.948914a22.092517 22.092517 0 0 1 22.606297-22.606297h417.702713a33.395666 33.395666 0 0 0 33.395666-33.909445 33.395666 33.395666 0 0 0-33.395666-33.395666H113.802258A89.911408 89.911408 0 0 0 23.89085 89.948914v844.139678a89.911408 89.911408 0 0 0 89.911408 89.911408h793.27551a89.911408 89.911408 0 0 0 89.397629-89.911408v-462.401528a33.909445 33.909445 0 0 0-33.395666-33.909445z m-33.909446 496.310973a22.606297 22.606297 0 0 1-22.092517 22.606297H113.802258a22.606297 22.606297 0 0 1-22.606297-22.606297v-88.37007l183.933052-160.812976a43.157476 43.157476 0 0 1 15.413385-7.192912 15.927164 15.927164 0 0 1 17.982281 5.137794c37.505902 36.478343 78.60826 83.232275 82.718496 87.856291a61.653537 61.653537 0 0 0 42.643696 22.092517 62.681096 62.681096 0 0 0 51.377948-20.037399c8.220472-8.220472 134.610223-125.875971 194.208641-181.877935a57.029522 57.029522 0 0 1 34.423225-16.440943 45.212594 45.212594 0 0 1 29.79921 15.927164 2954.231982 2954.231982 0 0 1 186.501949 256.889738z" p-id="4566" fill="#424242"></path></svg>
+                    </a>
+                    <a id="export_markdown" title="导出markdown" style="border: none; cursor: pointer; margin-left: 10px">
+                        <svg t="1689071035200" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="13570" width="16" height="16"><path d="M178.073367 843.957262V461.158929h107.121045l107.121045 140.734874 107.125433-140.734874h107.116657v382.798333h-107.116657v-219.54307l-107.125433 140.730486-107.116657-140.730486v219.54307zM737.783131 892.148786l-131.221196-209.156132h87.479334V461.158929h87.479335v221.833725h87.483722z" p-id="13571" fill="#424242"></path><path d="M911.9958 217.142709c10.672172 10.663395 19.812851 25.144549 27.430816 43.430297 7.617965 18.285748 11.431335 35.044392 11.431336 50.28471V969.140255c0 15.235929-5.336086 28.18998-15.999481 38.853375-10.667783 10.667783-23.621834 16.003869-38.857763 16.003869H127.994904c-15.240317 0-28.18998-5.336086-38.857763-16.003869-10.663395-10.663395-15.999481-23.617446-15.999481-38.853375V54.852856c0-15.240317 5.331698-28.18998 15.999481-38.857763C99.804925 5.336086 112.758975 0 127.999292 0h512.000944c15.235929 0 31.998962 3.808982 50.28471 11.426947 18.285748 7.622353 32.762514 16.763033 43.430297 27.426428zM658.290372 77.715526v214.856442h214.856442c-3.808982-11.049559-7.99974-18.856218-12.572275-23.43314l-178.855415-178.851027c-4.572534-4.572534-12.383581-8.763292-23.43314-12.572275z m219.428976 873.143369V365.71496h-237.714724c-15.240317 0-28.18998-5.336086-38.857763-15.999481-10.663395-10.667783-15.999481-23.621834-15.999481-38.857763V73.142992H146.28504v877.715903z" p-id="13572" fill="#424242"></path></svg>
+                    </a>
+                    <a id="export_doc" title="导出文档" style="border: none; cursor: pointer; margin-left: 10px">
+                        <svg t="1689246982401" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6825" width="16" height="16"><path d="M270.76864 608.32h180.8a31.68 31.68 0 0 0 0-62.976H270.76864a31.68 31.68 0 0 0 0 62.976zM271.34464 458.56h457.92a33.472 33.472 0 0 0 31.552-34.752 33.28 33.28 0 0 0-31.552-34.624H271.34464a34.816 34.816 0 0 0 0 69.376zM271.34464 293.504h457.92a33.344 33.344 0 0 0 31.552-34.688 33.216 33.216 0 0 0-31.552-34.624H271.34464a33.28 33.28 0 0 0-31.616 34.624 33.28 33.28 0 0 0 31.616 34.688z" p-id="6826" fill="#424242"></path><path d="M869.87264 0H153.77664A70.4 70.4 0 0 0 84.65664 70.912V953.6A69.952 69.952 0 0 0 153.77664 1024h370.048a32 32 0 0 0 0-63.68H147.12064V64h729.6v468.672a31.296 31.296 0 1 0 62.528 0V70.912A70.4 70.4 0 0 0 869.87264 0z" p-id="6827" fill="#424242"></path><path d="M482.16064 730.624h337.664L715.82464 625.216a28.864 28.864 0 0 1-7.936-28.736 29.184 29.184 0 0 1 20.608-21.184 29.632 29.632 0 0 1 29.12 8.128l174.784 177.216-174.784 176.96a29.184 29.184 0 0 1-49.728-13.312 29.248 29.248 0 0 1 8-28.8l103.936-105.344H482.16064a29.696 29.696 0 0 1-29.504-29.76 29.632 29.632 0 0 1 29.504-29.76z" p-id="6828" fill="#424242"></path></svg>
+                    </a>
+                </span>
+                <a  id="icon_more" title="更多" >
+                    <svg t="1688715321313" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5356" width="16" height="16"><path d="M483.555556 199.111111m-85.333334 0a85.333333 85.333333 0 1 0 170.666667 0 85.333333 85.333333 0 1 0-170.666667 0Z" fill="#424242" p-id="5357"></path><path d="M483.555556 540.444444m-85.333334 0a85.333333 85.333333 0 1 0 170.666667 0 85.333333 85.333333 0 1 0-170.666667 0Z" fill="#424242" p-id="5358"></path><path d="M483.555556 881.777778m-85.333334 0a85.333333 85.333333 0 1 0 170.666667 0 85.333333 85.333333 0 1 0-170.666667 0Z" fill="#424242" p-id="5359"></path></svg>
+                </a>
+                <a  id="icon_less" class="display_none">
+                    <svg t="1688723160472" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15872" width="16" height="16"><path d="M300.105143 592.676571h423.789714a80.676571 80.676571 0 1 0 0-161.353142H300.105143a80.676571 80.676571 0 0 0 0 161.353142z" fill="#8a8a8a" p-id="15873"></path></svg>
+                </a>
+                
+            </div>
+
+            
+            <div class="post">
+                <div class="post_title post_detail_title">
+                    <span class="date" id="busuanzi_container_site_pv">访问量 <span id="busuanzi_value_site_pv">...</span> 次</span>
+                </div>
+                <div class="post_title post_detail_title">
+                    <span class="date" id="busuanzi_container_site_uv">访客数 <span id="busuanzi_value_site_uv">...</span> 人</span>
+                </div>
+            </div>
+            
+
+            <div class="post">
+                <div class="post_title post_detail_title">
+                    
+                    <span class="date">总文章数 180 篇</span>
+                </div>
+                <div class="post_title post_detail_title">
+                    
+                    
+                    
+                    
+                    
+                    <span class="date">博客已运行 1881 天</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+        <div class="content">
+            <div class="post_page">
+                <div class="post animate__animated animate__fadeInDown">
+                    <div class="post_title post_detail_title">
+                        <h2 id="post_single_title">字符串拼接暗战</h2>
+                        <span id="post_page_title_date" class="date">2025.03.18</span>
+
+
+
+
+
+                    </div>
+                    <div class="post_content markdown"><h2 id="五大拼接方案的技术对比">五大拼接方案的技术对比</h2>
+<p>先说结论，如果在处理大量字符串的时候就需要注意性能和耗时，以下是耗时比较(短-&gt;长)：<code>StringBuilder</code>&lt;<code>StringBuffer</code>&lt;<code>StringUtils.join</code>&lt;<code>concat</code>&lt;<code>+</code>。</p>
+<table>
+<thead>
+<tr>
+<th>方法名称</th>
+<th>特点</th>
+<th>适用场景</th>
+<th>注意事项</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>StringBuilder</code></td>
+<td>非线程安全/动态扩容/内存预分配</td>
+<td>循环体/高频拼接/超大文本处理</td>
+<td>多线程场景禁用</td>
+</tr>
+<tr>
+<td><code>StringBuffer</code></td>
+<td>线程安全/同步锁/性能损耗</td>
+<td>多线程并发拼接</td>
+<td>非并发场景性能浪费</td>
+</tr>
+<tr>
+<td><code>String.concat()</code></td>
+<td>原生方法/仅限两个字符串连接</td>
+<td>简单双字符串合并</td>
+<td>连续调用产生中间对象</td>
+</tr>
+<tr>
+<td><code>+</code>操作符</td>
+<td>语法糖/编译优化</td>
+<td>静态拼接/少量动态拼接</td>
+<td>循环内使用触发性能灾难</td>
+</tr>
+<tr>
+<td><code>StringUtils.join</code></td>
+<td>空值处理/依赖第三方库</td>
+<td>复杂集合拼接/已有项目集成</td>
+<td>引入额外Jar包依赖</td>
+</tr>
+</tbody>
+</table>
+<p>因为<code>String</code>类是不可变的，所以所谓字符串拼接，本质都是重新生成一个新的字符串。以下是字符串的几种拼接的方式详细说明。</p>
+<h3 id="方案一原生concat方法">方案一：原生concat方法</h3>
+<p>使用<code>concat</code>方法连接字符串：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">String</span><span class="w"> </span><span class="n">str2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;123&#34;</span><span class="p">.</span><span class="na">concat</span><span class="p">(</span><span class="s">&#34;456&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">str2</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><p>作为<code>String</code>类自带的拼接方法，<code>concat()</code>直接操作JVM底层字符数组实现两个字符串的合并。
+其源码通过数组拷贝完成操作：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">concat</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">otherLen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">str</span><span class="p">.</span><span class="na">length</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">otherLen</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">buf</span><span class="o">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arrays</span><span class="p">.</span><span class="na">copyOf</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">otherLen</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">str</span><span class="p">.</span><span class="na">getChars</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="n">len</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>该方法适用于简单双字符串合并场景，但连续调用会产生中间对象，需谨慎处理高频拼接操作。</p>
+<h3 id="方案二运算符连接字符串">方案二：运算符&quot;+&ldquo;连接字符串</h3>
+<p>+运算符的语法糖特性使其在编译阶段触发智能优化。对于静态字符串拼接：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">String</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;Java&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;实战&#34;</span><span class="p">;</span><span class="w">  </span><span class="c1">// 编译优化为&#34;Java实战&#34;</span><span class="w">
+</span></span></span></code></pre></div><p>编译器直接合并字符串常量。但当存在变量时：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">String</span><span class="w"> </span><span class="n">s1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;Java&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">String</span><span class="w"> </span><span class="n">s2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;实战&#34;</span><span class="p">;</span><span class="w">  </span><span class="c1">// 转换为StringBuilder操作</span><span class="w">
+</span></span></span></code></pre></div><p>此时编译器自动生成<code>StringBuilder</code>处理流程，但循环场景下会产生重复对象。</p>
+<h3 id="方案三stringbuilderstringbuffer连接字符串">方案三：StringBuilder/StringBuffer连接字符串</h3>
+<p><code>StringBuilder</code>（非线程安全）与<code>StringBuffer</code>（线程安全）采用动态数组策略，初始容量16并支持自动扩容（新容量=原容量*2+2）。两者的核心差异体现在同步机制。</p>
+<p><code>StringBuffer</code>关键方法实现：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">synchronized</span><span class="w"> </span><span class="n">StringBuffer</span><span class="w"> </span><span class="nf">append</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">toStringCache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">super</span><span class="p">.</span><span class="na">append</span><span class="p">(</span><span class="n">str</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>StringBuilder</code>则无同步锁机制，这使得单线程场景下其性能比<code>StringBuffer</code>提升约15%-20%。</p>
+<h3 id="方案四stringutilsjoin连接字符串">方案四：StringUtils.join连接字符串</h3>
+<p>Java8引入的<code>String.join</code>方法统一了集合与数组的拼接处理：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">arr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s">&#34;A&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;B&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;C&#34;</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arrays</span><span class="p">.</span><span class="na">asList</span><span class="p">(</span><span class="n">arr</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">String</span><span class="w"> </span><span class="n">s3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">join</span><span class="p">(</span><span class="s">&#34;|&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">arr</span><span class="p">);</span><span class="w">    </span><span class="c1">// A|B|C</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">String</span><span class="w"> </span><span class="n">s4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">join</span><span class="p">(</span><span class="s">&#34;-&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">list</span><span class="p">);</span><span class="w">   </span><span class="c1">// A-B-C</span><span class="w">
+</span></span></span></code></pre></div><p>该方法内部使用StringJoiner实现，适合处理预定义分隔符的集合拼接场景。</p>
+<h3 id="方案五第三方工具扩展">方案五：第三方工具扩展</h3>
+<p>例如，<code>apache.commons</code>。<code>StringUtils</code>是Apache Common Lang库中的一个工具类，提供了许多字符串处理的方法，包括<code>join</code>方法，用于将数组或集合以指定的分隔符拼接起来。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// Java8提供的String.join方法和`apache.commons`方法相似.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 主要作用是将数组或集合以某拼接符拼接到一起形成新的字符串</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">String</span><span class="w"> </span><span class="n">str9</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">StringUtils</span><span class="p">.</span><span class="na">join</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="o">[]</span><span class="p">{</span><span class="n">str</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;456&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;789&#34;</span><span class="p">});</span><span class="w">
+</span></span></span></code></pre></div><p>该工具类具备空值处理能力，但需要引入外部依赖包。</p>
+<h2 id="底层机制深度解密">底层机制深度解密</h2>
+<h3 id="深入解析拼接原理">深入解析“+”拼接原理</h3>
+<p>拼接字符串最简单的方式就是直接使用符号&rdquo;+&ldquo;来拼接，其实“+”是Java提供的一个语法糖。
+语法糖，也译为糖衣语法，是由英国计算机科学家彼得·兰丁发明的一个术语，指计算机语言中添加的某种语法，这种语法对语言的功能没有影响，但是更方便程序员使用。
+语法糖让程序更加简洁，有更高的可读性。</p>
+<p>为了探究“+”拼接的原理，用<code>javap -verbose</code>命令进行反编译看一下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">str1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;123&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">str2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;456&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">str3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">str1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">str2</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">str3</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">// ...
+</span></span><span class="line"><span class="cl">  public static void main(java.lang.String[]);
+</span></span><span class="line"><span class="cl">    descriptor: ([Ljava/lang/String;)V
+</span></span><span class="line"><span class="cl">    flags: ACC_PUBLIC, ACC_STATIC
+</span></span><span class="line"><span class="cl">    Code:
+</span></span><span class="line"><span class="cl">      stack=2, locals=4, args_size=1
+</span></span><span class="line"><span class="cl">         0: ldc           #2                  // String 123
+</span></span><span class="line"><span class="cl">         2: astore_1
+</span></span><span class="line"><span class="cl">         3: ldc           #3                  // String 456
+</span></span><span class="line"><span class="cl">         5: astore_2
+</span></span><span class="line"><span class="cl">         6: new           #4                  // class java/lang/StringBuilder
+</span></span><span class="line"><span class="cl">         9: dup
+</span></span><span class="line"><span class="cl">        10: invokespecial #5                  // Method java/lang/StringBuilder.&#34;&lt;init&gt;&#34;:()V
+</span></span><span class="line"><span class="cl">        13: aload_1
+</span></span><span class="line"><span class="cl">        14: invokevirtual #6                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+</span></span><span class="line"><span class="cl">        17: aload_2
+</span></span><span class="line"><span class="cl">        18: invokevirtual #6                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+</span></span><span class="line"><span class="cl">        21: invokevirtual #7                  // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+</span></span><span class="line"><span class="cl">        24: astore_3
+</span></span><span class="line"><span class="cl">        25: getstatic     #8                  // Field java/lang/System.out:Ljava/io/PrintStream;
+</span></span><span class="line"><span class="cl">        28: aload_3
+</span></span><span class="line"><span class="cl">        29: invokevirtual #9                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+</span></span><span class="line"><span class="cl">        32: return
+</span></span><span class="line"><span class="cl">      // ...
+</span></span></code></pre></div><p>可以看到在字符串拼接过程中，是将<code>String</code>转成了<code>StringBuilder</code>后，使用<code>append</code>方法进行拼接字符串处理的，最后在去调用<code>StringBuilder</code>的<code>toString</code>方法进行返回。
+在JDK5之后，使用的是<code>StringBuilder</code>，在JDK5之前使用的是<code>StringBuffer</code>。</p>
+<p>知道了“+”底层之后，如果在循环中，使用“+”拼接字符串，会创建大量的<code>StringBuilder</code>对象，造成内存的浪费。
+所以对于大量字符串拼接操作，推荐使用<code>StringBuilder</code>或<code>StringBuffer</code>以提高性能。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 不推荐</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">StringConcatExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">10000</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">result</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="na">length</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 推荐</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">StringBuilderExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">StringBuilder</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StringBuilder</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">10000</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">result</span><span class="p">.</span><span class="na">append</span><span class="p">(</span><span class="n">i</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="na">length</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="stringbuffer与stringbuilder深度解密">StringBuffer与StringBuilder深度解密</h3>
+<p><code>Stringbuilder</code>和<code>StringBuffer</code>是字符串拼接的两种实现类，它们有相同的父类：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">abstract</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AbstractStringBuilder</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Appendable</span><span class="p">,</span><span class="w"> </span><span class="n">CharSequence</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * The value is used for character storage.
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">char</span><span class="o">[]</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * The count is the number of characters used.
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">count</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// ...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>StringBuffer</code>和<code>StringBuilder</code>是 Java 提供的用于处理字符串的类，二者的主要区别在于线程安全性和性能方面。拿<code>append</code>方法举例：</p>
+<ul>
+<li><code>StringBuilder.append</code>方法
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">StringBuilder</span><span class="w"> </span><span class="nf">append</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">.</span><span class="na">append</span><span class="p">(</span><span class="n">str</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+<li><code>StringBuffer.append</code>方法
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w">  </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kd">synchronized</span><span class="w"> </span><span class="n">StringBuffer</span><span class="w"> </span><span class="nf">append</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">toStringCache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="kd">super</span><span class="p">.</span><span class="na">append</span><span class="p">(</span><span class="n">str</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
+</ul>
+<p>由此可以看出<code>StringBuilder</code>和<code>StringBuffer</code>原理是相似的，最大的区别就是<code>StringBuffer</code>是线程安全的，原因是用了<code>synchronized</code>修饰。
+<code>StringBuffer</code>是线程安全的，因为它的方法都是同步的，这意味着它是安全的，可以在多线程环境中使用。
+由于其线程安全性，每个方法调用都有同步开销，所以<code>StringBuffer</code>的性能比<code>StringBuilder</code>稍慢。</p>
+<p>与<code>String</code>类不同的是，<code>StringBuffer</code>和<code>StringBuilder</code>类的对象能够被多次的修改，并且不产生新的未使用对象。
+如果你需要一个可修改的字符串，应该使用<code>StringBuffer</code>或者<code>StringBuilder</code>，但是会有大量时间浪费在垃圾回收上，因为每次试图修改都有新的<code>String</code>对象被创建出来。</p>
+<p>通过<code>StringBuilder</code>的<code>append()</code>方式添加字符串的效率，要远远高于<code>String</code>的字符串拼接方法。
+在实际开发中还可以进行优化，<code>StringBuilder</code>的空参构造器，默认的字符串容量是16，如果需要存放的数据过多，容量就会进行扩容，我们可以设置默认初始化更大的长度，来减少扩容的次数。
+如果我们能够确定，前前后后需要添加的字符串不高于某个限定值，那么建议使用构造器创建一个阈值的长度。</p>
+</div>
+                    <div id="post_footer" class="post_footer">
+                        <div class="meta">
+
+                            <div id="post_footer_info" class="info">
+                                <span class="field tags">
+                                    <i class="ri-stack-line"></i>
+                                    
+                                        
+                                        <a href="https://blog.lijizhi.website/tags/java%E5%B0%8F%E8%AF%BE%E5%A0%82/">Java小课堂</a>
+                                        
+                                        <a href="https://blog.lijizhi.website/tags/java/">Java</a>
+                                        
+                                        <a href="https://blog.lijizhi.website/tags/%E9%9A%8F%E7%AC%94/">随笔</a>
+                                        
+                                    
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div id="doc_comments" class="doc_comments"></div>
+                
+            </div>
+        </div>
+    </div>
+    
+<a id="search-btn" style="display: inline-block;" href="javascript:void(0);">
+    <span class="ri-search-line"></span>
+</a>
+<div id="fastSearch">
+    <input id="searchInput" tabindex="0" autocomplete="off">
+    <ul id="searchResults"></ul>
+</div>
+<div class="side_nav">
+    
+    <a id="top_to_back" href="#" class="top_to_back">
+        <svg t="1688614744062" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2152" width="16" height="16"><path d="M966.4 323.2c-9.6-9.6-25.6-9.6-35.2 0l-416 416-425.6-416c-9.6-9.6-25.6-9.6-35.2 0-9.6 9.6-9.6 25.6 0 35.2l441.6 432c9.6 9.6 25.6 9.6 35.2 0l435.2-432C976 345.6 976 332.8 966.4 323.2z" p-id="2153" fill="#424242"></path></svg>    </a>
+    
+    <div>
+        <a id="content_display" class="content_display">
+            <svg t="1688606941910" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="57753" width="18" height="18"><path d="M192 448c10.9 0 21.8-4.2 30.2-12.5L497 160.8c5.4-5.4 11.8-6.2 15.1-6.2 3.3 0 9.6 0.8 15.1 6.2l274.7 274.7c16.7 16.7 43.7 16.7 60.3 0 16.7-16.7 16.7-43.7 0-60.3L587.4 100.4c-41.6-41.6-109.3-41.6-150.9 0L161.8 375.2c-16.7 16.7-16.7 43.7 0 60.3 8.4 8.3 19.3 12.5 30.2 12.5zM801.8 588.5L527.1 863.2c-5.4 5.4-11.8 6.2-15.1 6.2-3.3 0-9.7-0.8-15.1-6.2L222.2 588.5c-16.7-16.7-43.7-16.7-60.3 0-16.7 16.7-16.7 43.7 0 60.3l274.8 274.8c20.8 20.8 48.1 31.2 75.4 31.2 27.3 0 54.6-10.4 75.4-31.2l274.7-274.8c16.7-16.7 16.7-43.7 0-60.3-16.7-16.7-43.7-16.7-60.4 0z" fill="#424242" p-id="57754"></path></svg>
+        </a>
+        <a id="content_hidden" class="content_hidden">
+            <svg t="1688603143752" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15592" width="18" height="18"><path d="M479.004101 645.938677L165.25229 958.480465a37.510709 37.510709 0 0 0 0 54.059551 36.47863 36.47863 0 0 0 53.063061 0l293.679668-292.576411 293.715256 292.576411a36.443042 36.443042 0 0 0 53.063061 0 37.510709 37.510709 0 0 0 0-54.059551l-313.751811-312.541788c-21.210989-22.349834-36.514219-24.698702-66.017424 0z m66.053013-267.877709l312.577377-312.541789a37.510709 37.510709 0 0 0 0-54.059551 36.443042 36.443042 0 0 0-53.063061 0l-292.505234 292.576411L219.560963 11.459628a36.47863 36.47863 0 0 0-53.063061 0 37.510709 37.510709 0 0 0 0 54.059551l312.577377 312.541789a46.58588 46.58588 0 0 0 65.981835-0.035589z" p-id="15593" fill="#424242"></path></svg>
+        </a>
+    </div>
+    
+    <a id="back_to_top" href="#" class="back_to_top">
+        <svg t="1688628374733" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3166" width="16" height="16"><path d="M966.4 668.8l-435.2-432c-9.6-9.6-25.6-9.6-35.2 0l-441.6 432c-9.6 9.6-9.6 25.6 0 35.2 9.6 9.6 25.6 9.6 35.2 0l425.6-416 416 416c9.6 9.6 25.6 9.6 35.2 0S976 678.4 966.4 668.8z" p-id="3167" fill="#424242"></path></svg>
+    </a>
+</div>
+    <footer class="footer">
+    <div id="footer_powered_by" class="powered_by">
+        <a href="https://varkai.com">Designed by VarKai,</a>
+        <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+    </div>
+
+    <div id="footer_slogan" class="footer_slogan">
+        <span>from 2020</span>
+    </div>
+</footer>
+    <script src="https://blog.lijizhi.website/js/jquery-3.5.1.min.js"></script>
+<link href="https://blog.lijizhi.website/css/fancybox.min.css" rel="stylesheet">
+<script src="https://blog.lijizhi.website/js/fancybox.min.js"></script>
+<script src="https://blog.lijizhi.website/js/darkmode.js"></script>
+<script src="https://blog.lijizhi.website/js/zozo.js"></script>
+
+<script src="https://blog.lijizhi.website/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
+<script src="https://blog.lijizhi.website/js/html2canvas.js"></script>
+<script src="https://blog.lijizhi.website/js/utils.js"></script>
+<script src="https://blog.lijizhi.website/js/html2md.js"></script>
+<script src="https://blog.lijizhi.website/js/htmlexport.js"></script>
+
+<script src="https://blog.lijizhi.website/js/fastsearch.js"></script>
+<script src="https://blog.lijizhi.website/js/fuse.js"></script>
+
+
+<script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</script>
+
+
+<script>
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        const uvE = document.getElementById('busuanzi_value_site_uv');
+        const pvE = document.getElementById('busuanzi_value_site_pv');
+        const uvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    uvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 57030;
+                    break;
+                }
+            }
+        });
+        const pvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    pvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 203040;
+                    break;
+                }
+            }
+        });
+        const config = {
+            childList: true
+        };
+        uvObs.observe(uvE, config);
+        pvObs.observe(pvE, config);
+    });
+</script>
+
+
+<script>
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('.content a');
+        links.forEach(function(link) {
+            link.setAttribute('target', '_blank');
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
