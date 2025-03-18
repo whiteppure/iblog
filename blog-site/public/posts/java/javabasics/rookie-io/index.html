@@ -876,7 +876,7 @@
             <div class="post">
                 <div class="post_title post_detail_title">
                     
-                    <span class="date">总文章数 181 篇</span>
+                    <span class="date">总文章数 180 篇</span>
                 </div>
                 <div class="post_title post_detail_title">
                     
@@ -1438,7 +1438,7 @@ and can thus result in unexpectedInvalidClassExceptions during deserialization.<
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">writeObject</span><span class="p">(</span><span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">ObjectOutputStream</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">IOException</span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Write out element count, and any hidden stuff</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">expectedModCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">modCount</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">s</span><span class="p">.</span><span class="na">defaultWriteObject</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">s</span><span class="p">.</span><span class="n">defaultWriteObject</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Write out size as capacity for behavioural compatibility with clone()</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">s</span><span class="p">.</span><span class="na">writeInt</span><span class="p">(</span><span class="n">size</span><span class="p">);</span><span class="w">

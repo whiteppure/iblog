@@ -1,6 +1,6 @@
 ---
-title: "Java面试全栈突击指南 | 持续更新"
-date: 2025-02-17
+title: "Java开发者系统化进阶指南 | 持续更新"
+date: 2024-06-17
 draft: false
 tags: ["面试","Java","持续更新"]
 slug: "interview-junior-javaer"
@@ -17,23 +17,17 @@ keywords:
 
 
 
-为帮助开发者跳出零散资料搜索的泥潭，我系统梳理了这份覆盖Java全栈技术+面试技巧的求生手册。不同于零散的面试题集，本资料以「技术深度×实战场景×沟通艺术」为核心理念，助你在求职战场脱颖而出。
+为帮助开发者跳出零散资料搜索的泥潭，我系统整理了这份覆盖Java全栈技术+面试技巧的求生手册。不同于零散的面试题集，本资料以「技术深度×实战场景×沟通艺术」为核心理念，助你在求职战场脱颖而出。
 如果全都理解并吸收，相信你能轻松吊打绝大多数面试官，最主要的是**免费！免费！免费！**
 
-**📚 资料亮点**  
-- 全网硬核：从JVM字节码到分布式事务，拆解20+底层原理  
-- HR面降维打击：离职原因/职业规划/薪资谈判应答模板
-- 实战方案库：秒杀/短链/IM等架构设计蓝图
-
-
 **🎁 限时福利**
-- ✨ 关注公众号【码上悟道】**免费领1v1人工简历诊断**（每日前10名）
-- 💼 **【9.9】即可体验简历优化服务**（每日1名），改到你满意为止！
+- ✨ 关注公众号【码上悟道】免费领1v1人工简历诊断（每日前10名）；
+- 💼 【19.9元】即可体验简历优化服务（每日1名），改到你满意为止！
 
 本人时间精力有限，如有遗漏或错误，欢迎[联系我](/about/)或在评论留言补充，我会及时的完善修正。
 
 
-# 软实力
+# 一、面试沟通指南
 - [自我介绍](/posts/java/javaemp/interview-questions-and-answers/)
 - [你为什么要从上一家公司离职](/posts/java/javaemp/interview-questions-and-answers/)
 - [你的优点是什么](/posts/java/javaemp/interview-questions-and-answers/)
@@ -46,18 +40,58 @@ keywords:
 - [还有什么想问的吗](/posts/java/javaemp/interview-questions-and-answers/)
 
 
-# 硬实力
-## 一、基础篇
-### 1.[数据类型](/posts/java/javabasics/rookie-datatype/)与[运算](/posts/java/javabasics/rookie-operation/)
+# 二、核心技术解析
+## 1.综合基础
+- [Java数据类型篇](/posts/java/javabasics/rookie-datatype/)
+- [Java运算篇](/posts/java/javabasics/rookie-operation/)
+- [Java多线程篇](/posts/java/javabasics/rookie-multi-thread/)
+- [Java集合篇](/posts/java/javabasics/rookie-java-container/)
+- [JavaIO篇](/posts/java/javabasics/rookie-io/)
+- [Java反射篇](/posts/java/javabasics/rookie-reflect/)
+- [Java泛型篇](/posts/java/javabasics/rookie-generics/)
+- [Java枚举篇](/posts/java/javabasics/rookie-enum/)
+- [Java异常篇](/posts/java/javabasics/rookie-exception)
+- Java内部类篇
+- [JavaObject方法篇](/posts/java/javabasics/rookie-objectclass-methods)
+
+## 2.关键字详解
+- [this关键字](/posts/java/javakeyword/java-keyword-this/)
+- [static关键字](/posts/java/javakeyword/java-keyword-static/)
+- [transient关键字](/posts/java/javakeyword/java-keyword-transient/)
+- [volatile关键字](/posts/java/javakeyword/java-keyword-volatile/)
+- [synchronized关键字](/posts/java/javakeyword/java-keyword-synchronized/)
+- [strictfp关键字](/posts/java/javakeyword/java-keyword-strictfp/)
+
+## 3.进阶知识点
+- [Java面向对象篇](/posts/java/javabasics/rookie-object-oriented)
+- [JVM篇](/posts/java/jvm/java-jvm-detail)
+- [数据结构篇](/posts/java/javaessay/java-data-structures/)
+- [算法篇](/posts/java/javaessay/java-algorithms/)
+- [网络篇](/posts/java/javaessay/net-program-java/)
+
+## 4.技术框架解析
+- [Spring篇](/posts/java/spring/java-spring/)
+- [SpringBoot篇](/posts/java/spring/java-springboot/)
+- [Redis篇](/posts/java/javaessay/java-redis/)
+- [Kafka篇](/posts/java/javaessay/java-kafka/)
+- [ElasticSearch篇](/posts/java/javaessay/java-elasticsearch/)
+- [Netty篇](/posts/java/javaessay/java-netty/)
+- [MySQL篇](/posts/java/javaessay/java-mysql/)
+- [微服务治理篇](/posts/java/javaessay/small-service/)
+- [分布式事务篇](/posts/java/javaessay/distributed-transaction/)
+- [分布式锁篇](/posts/java/javaessay/distributed-lock/)
+- [分布式ID篇](/posts/java/javaessay/distributed-id/)
+
+
+# 三、高频面试题精解
+## 1.基础
 - [String类为什么设计为不可变](/posts/java/javasmallclass/java-string-final)
 - [String类型变量有没有长度限制](/posts/java/javasmallclass/java-string-howlong)
 - [new String("abc")会产生几个对象](/posts/java/javasmallclass/java-new-string-object)
-- 字符串拼接方式有哪些
+- [字符串拼接方式有哪些](/posts/java/javasmallclass/java-string-join)
 - [new Integer(12)与int b=12是否相等](/posts/java/javasmallclass/java-int-equals-new-integer/)
 - 如何安全比较两个浮点数是否相等
-
-
-### 2.[多线程](/posts/java/javabasics/rookie-multi-thread/)
+---
 - [说说你对并发编程的理解](/posts/java/javasmallclass/java-concurrent-understand/)
 - [线程池工作原理](/posts/java/javasmallclass/java-threading-pool-principle)
 - [synchronized作用、原理以及锁升级机制](/posts/java/javakeyword/java-keyword-synchronized/)
@@ -66,9 +100,7 @@ keywords:
 - [AQS知道吗](/posts/java/javasmallclass/java-concurrent-understand-aqs/)
 - [说说ThreadLocal原理及使用场景](/posts/java/javasmallclass/java-concurrent-understand-threadlocal)
 - 多线程中锁的种类有哪些
-
-
-### 3.[集合](/posts/java/javabasics/rookie-java-container/)
+---
 - HashMap底层是如何实现的
 - HashMap底层为什么要用红黑树
 - HashMap为什么不一开始就用红黑树代替链表
@@ -85,9 +117,7 @@ keywords:
 - 什么时候需要重写equals与hashCode
 - ConcurrentHashMap是如何实现高并发的
 - CopyOnWriteArrayList实现原理是什么
-
-
-### 4.[IO与序列化](/posts/java/javabasics/rookie-io/)
+---
 - [如何复制对象](/posts/java/javasmallclass/java-object-replication)
 - 序列化方式及原理
 - serialVersionUID作用
@@ -96,28 +126,14 @@ keywords:
 - NIO、BIO、AIO分别是什么
 - IO复用模型及NIO实现原理
 - 简述Direct-Buffer和Heap-Buffer的区别
-
-
-### 5.[反射](/posts/java/javabasics/rookie-reflect/)、[泛型](/posts/java/javabasics/rookie-generics/)与[异常](/posts/java/javabasics/rookie-exception)
+---
 - [说说反射以及它的应用场景](/posts/java/javasmallclass/java-reflection-scene)
 - 如何通过反射实现动态代理
 - 为什么Spring选择CGLIB而非JDK动态代理实现AOP
 - [说说Java中的泛型是如何实现的](/posts/java/javasmallclass/java-generics-impl)
 
 
-
-### 6.关键字
-- [enum关键字](/posts/java/javabasics/rookie-enum/)
-- [this关键字](/posts/java/javakeyword/java-keyword-this/)
-- [static关键字](/posts/java/javakeyword/java-keyword-static/)
-- [transient关键字](/posts/java/javakeyword/java-keyword-transient/)
-- [volatile关键字](/posts/java/javakeyword/java-keyword-volatile/)
-- [synchronized关键字](/posts/java/javakeyword/java-keyword-synchronized/)
-- [strictfp关键字](/posts/java/javakeyword/java-keyword-strictfp/)
-
-
-## 二、进阶篇
-### 1.JVM
+## 2.进阶
 - 简述JVM内存区域划分
 - 简述对象实例化过程
 - 简述对象的组成
@@ -134,8 +150,7 @@ keywords:
 - 频繁FullGC如何处理
 - 你平时怎么对JVM参数调优
 - 简述逃逸分析及其对性能影响
-
-### 2.设计模式
+---
 - 为什么要用设计模式
 - 谈谈你对设计模式的理解
 - 平时开发过程中怎样使用设计模式
@@ -143,8 +158,7 @@ keywords:
 - 简述模板设计模式
 - 简述策略设计模式
 - 简述职责链设计模式
-
-### 3.数据结构与算法
+---
 - 手写一个负载算法
 - 手写一个限流算法
 - 排序算法知道几种
@@ -156,9 +170,7 @@ keywords:
 - 用两个栈实现一个队列
 - 简述B树及其应用场景
 - 简述跳表及应用场景
-
-
-### 4.网络与安全
+---
 - 计算机网络为什么要分层
 - TCP为什么要握手三次挥手四次
 - TCP如何实现可靠传输
@@ -175,9 +187,7 @@ keywords:
 - 如何防范XSS攻击
 - 简述放火墙的工作原理
 
-
-## 三、框架篇
-### 1.Redis
+## 3.框架
 - 缓存击穿、缓存穿透、缓存雪崩解决方案
 - 为什么要使用Redis
 - Redis为什么这么快
@@ -193,9 +203,7 @@ keywords:
 - 怎么处理Redis中的大Key
 - Redis双写一致性问题
 - 简述Redis的LRU实现原理
-
-
-### 2.Kafka
+---
 - 为什么要使用Kafka
 - 简述Kafka架构设计
 - 简述Kafka发布订阅工作流程
@@ -210,9 +218,7 @@ keywords:
 - 如何解决重复消费和漏消费
 - Kafka消息积压怎么处理
 - 简述Kafka分区选举策略
-
-
-### 3.Elasticsearch
+---
 - 为什么要使用Elasticsearch
 - 简述搜索流程
 - 简述索引文档的流程
@@ -224,9 +230,7 @@ keywords:
 - ES如何实现高可用
 - ES的深度分页与滚动搜索
 - 数据量很大的情况下，如何提高查询效率
-
-
-### 4.Netty
+---
 - 为什么要使用Netty
 - Netty高性能体现在哪里
 - TCP粘包、拆包怎么解决
@@ -237,9 +241,7 @@ keywords:
 - Netty的长连接、心跳机制了解吗
 - 简述Netty对象池技术
 - 如何选择序列化协议
-
-
-### 5.Spring
+---
 - 说说对Spring的理解
 - 简述Bean生命周期
 - 简述@Autowired自动装配原理
@@ -249,9 +251,7 @@ keywords:
 - 简述Spring事务实现方式及原理
 - 使用@Transactional需要注意什么
 - 当@Transactional遇到锁需要注意什么
-
-
-## 四、分布式
+---
 - 为什么要用微服务
 - 怎么从单体架构迁移到微服务架构
 - 服务治理治的是什么
@@ -264,9 +264,7 @@ keywords:
 - Sentinel工作原理
 - 简述分布式锁
 - 分布式系统中如何实现全局唯一ID
-
-
-## 五、数据库
+---
 - 简述MySQL索引数据结构
 - 简述MySQL索引的实现
 - 简述MySQL索引设计原则
@@ -282,7 +280,7 @@ keywords:
 - 说说怎么优化慢SQL
 
 
-## 六、实际问题
+# 四、疑难排查实录
 - 线上遇到接口很慢怎么处理
 - 线上CPU突然飚高怎么处理
 - 死锁了怎么办
@@ -291,7 +289,7 @@ keywords:
 - 百万级的读写业务如何处理
 
 
-## 七、架构设计
+# 五、架构组件设计
 - 设计一个二级缓存
 - 设计一个流程引擎
 - 设计一个分布式ID生成系统
