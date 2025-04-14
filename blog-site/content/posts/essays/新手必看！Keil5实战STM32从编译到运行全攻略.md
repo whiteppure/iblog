@@ -83,12 +83,6 @@ slug: "keil-stm32-strategy"
 点击烧录，等待烧录完成即可。<br>
 ![keil5stm32入门](/posts/annex/images/essays/keil5stm32入门-027.png)
 
-## 运行调试
-点击运行按钮。
-
-全速运行。
-
-
 ## 其他资料
 - STM32入门资料：[https://jiangxiekeji.com](https://jiangxiekeji.com/)
 
