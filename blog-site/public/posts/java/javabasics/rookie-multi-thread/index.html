@@ -2448,7 +2448,7 @@
                     
                     
                     
-                    <span class="date">博客已运行 1995 天</span>
+                    <span class="date">博客已运行 1996 天</span>
                 </div>
             </div>
 
@@ -2873,7 +2873,7 @@
 <p>使用<code>Executors.newCachedThreadPool()</code>创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收则新建线程。
 <code>newCachedThreadPool</code>将<code>corePoolSize</code>设置为0，将<code>maximumPoolSize</code>设置为<code>Integer.MAX_VALUE</code>，使用的 <code>SynchronousQueue</code>，也就是说来了任务就创建线程运行，当线程空闲超过60秒，就销毁线程。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">ExecutorService</span><span class="w"> </span><span class="nf">newCachedThreadPool</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">0</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">MAX_VALUE</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nf">ThreadPoolExecutor</span><span class="p">(</span><span class="n">0</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">MAX_VALUE</span><span class="p">,</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">                                  </span><span class="n">60L</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">,</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">                                  </span><span class="k">new</span><span class="w"> </span><span class="n">SynchronousQueue</span><span class="o">&lt;</span><span class="n">Runnable</span><span class="o">&gt;</span><span class="p">());</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
