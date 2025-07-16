@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="zh" >
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="google-site-verification" content="tVxoyWMeaEzEUV0EzY1STfJXZWaZ8WM-i-a8AWBri0o" />
+    <meta name="msvalidate.01" content="48159A4EAF3C3F448369E581664B1A21" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="whitepure" />
+	
+	
+	
+	<title>软考高级架构师-计算机系统基础 ｜ 脚踏实地</title>
+	
+    
+    
+    <meta name="description" content="选择题为主，一般在3-5分浮动。 计算机系统组成 计算机系统组成： 硬件：中央处理器、存储器、输入设备、输出设备、总线 软件：系统软件、应用软件 硬件组成如下： 中央处理器" />
+    
+
+    
+    
+    <meta name="keywords" content="whitepure博客, whiteppure, whitepure, Java, 博客, 技术博客" />
+    
+
+	
+
+    <link rel="shortcut icon" href="http://localhost:1313/images/favicon.ico" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/normalize.css" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/zozo.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/remixicon.css" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/highlight.css" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/toc.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/search.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/img.css" />
+
+    
+    
+</head>
+
+<body>
+    <div class="post-password">
+        
+    </div>
+
+    
+    
+    
+
+
+
+
+
+
+
+
+
+<div id="post_content_toc" class="toc">
+    <div class="page-header"><strong></strong></div>
+    <div id="page-scrollspy" class="toc-nav">
+
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%b3%bb%e7%bb%9f%e7%bb%84%e6%88%90">
+                    计算机系统组成
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%ad%98%e5%82%a8%e7%b3%bb%e7%bb%9f">
+                    存储系统
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%80%bb%e7%ba%bf">
+                    总线
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%95%b0%e6%8d%ae%e4%bc%a0%e8%be%93%e6%8e%a7%e5%88%b6%e6%96%b9%e5%bc%8f">
+                    数据传输控制方式
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%a4%84%e7%90%86%e5%99%a8%e4%bd%93%e7%b3%bb%e7%bb%93%e6%9e%84">
+                    处理器体系结构
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e9%87%8d%e7%82%b9">
+                    操作系统（重点）
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e8%bf%9b%e7%a8%8b%e7%ae%a1%e7%90%86">
+                    进程管理
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e5%ad%98%e5%82%a8%e7%ae%a1%e7%90%86">
+                    存储管理
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e7%a3%81%e7%9b%98%e7%ae%a1%e7%90%86">
+                    磁盘管理
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f">
+                    文件系统
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e7%b4%a2%e5%bc%95%e6%96%87%e4%bb%b6">
+                    索引文件
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e4%bd%8d%e7%a4%ba%e5%9b%be">
+                    位示图
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e7%b3%bb%e7%bb%9f%e9%85%8d%e7%bd%ae%e4%b8%8e%e6%80%a7%e8%83%bd%e8%af%84%e4%bb%b7">
+                    系统配置与性能评价
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%80%a7%e8%83%bd%e6%8c%87%e6%a0%87">
+                    性能指标
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%80%a7%e8%83%bd%e8%ae%be%e8%ae%a1">
+                    性能设计
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+        <ul class="nav">
+            
+            
+            <li class="nav-item">
+                <a class="nav-link text-left" href="#%e6%80%a7%e8%83%bd%e8%af%84%e4%bc%b0">
+                    性能评估
+                </a>
+            </li>
+            
+            
+        </ul>
+        
+        </ul>
+        
+        </ul>
+        
+        
+        
+        
+
+    </div>
+</div>
+
+
+
+    
+
+    
+    <div class="main animate__animated animate__fadeInDown" id="main_content">
+        <div class="nav_container animated fadeInDown">
+    <div class="site_nav" id="site_nav">
+        <ul><li class="">
+                <a href="http://localhost:1313/">首页</a>
+            </li><li class="">
+                <a href="http://localhost:1313/posts/">归档</a>
+            </li><li class="">
+                <a href="http://localhost:1313/tags/">标签</a>
+            </li><li class="">
+                <a href="http://localhost:1313/about/">关于</a>
+            </li>
+        </ul>
+    </div>
+    <div class="menu_icon">
+        <a id="menu_icon"><i class="ri-menu-line"></i></a>
+    </div>
+</div>
+        <div id="post_header" class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="http://localhost:1313/">
+                    <span>脚踏实地</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title">
+                
+            </p>
+
+            
+            <div class="my_socials">
+                
+                    
+                    <a href="https://github.com/whiteppure/" title="github" target="_blank">
+                        <i class="ri-github-fill"></i>
+                    </a>
+                    
+                
+                <a href="http://localhost:1313/index.xml" type="application/rss+xml" title="rss" target="_blank">
+                    <i class="ri-rss-fill"></i>
+                </a>
+                
+                
+                <span id="sys_function" class="sys_function display_none">
+                    <a id="export_pdf"  title="导出pdf" style="border: none; cursor: pointer; margin-left: 10px">
+                        <svg t="1688701481347" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3517" width="16" height="16"><path d="M425.610455 85.814544H149.05897A42.303635 42.303635 0 0 0 106.6274 128.075535V896.492068c0 23.326702 18.976933 42.26099 42.43157 42.26099h682.743143a42.559504 42.559504 0 0 0 42.431569-42.559504v-384.016365a42.644793 42.644793 0 0 1 85.289587 0v384.016365A127.849091 127.849091 0 0 1 831.802113 1024H149.05897A127.635867 127.635867 0 0 1 21.337813 896.449423V128.03289A127.593222 127.593222 0 0 1 149.101614 0.524957h276.466196a42.644793 42.644793 0 0 1 0 85.289587z m564.062683 158.08425l-170.579174 170.579173a42.644793 42.644793 0 1 1-60.299738-60.299738L856.578738 256.393718H618.364922a42.644793 42.644793 0 1 1 0-85.289587h238.213816l-97.784512-97.784511A42.644793 42.644793 0 1 1 819.093964 13.019882l170.579174 170.579174a42.644793 42.644793 0 0 1 0 60.299738zM149.272194 597.552066a42.644793 42.644793 0 0 1 42.644793-42.644794h51.514911c59.190973 0 107.891327 23.284057 107.976617 97.102195 0 71.003581-49.46796 102.347504-106.185536 102.347504h-31.343923v66.781747a32.282109 32.282109 0 0 1-64.606862 0V597.552066z m92.709781 100.215264c31.429213 0 46.568114-16.46089 46.568114-45.757863 0-30.064579-17.313786-40.512554-48.359196-40.512554h-26.311837v86.270417h28.145563z m232.414124-142.860058c81.878003 0 136.036891 43.710913 136.036891 147.67892S556.231457 853.420826 477.935617 853.420826h-38.16709a42.644793 42.644793 0 0 1-42.644794-42.644793v-213.223967a42.644793 42.644793 0 0 1 42.644794-42.644794h34.542282z m-4.008611 240.729859c43.32711 0 73.988717-22.047358 73.988717-93.050939 0-71.046226-30.704251-90.705476-73.988717-90.705476h-8.699538v183.79906h8.699538zM692.481573 853.420826a32.282109 32.282109 0 0 1-32.282109-32.282108V597.552066a42.644793 42.644793 0 0 1 42.644793-42.644794h99.063855a29.680776 29.680776 0 1 1 0 59.404197h-77.144431v65.374469h61.749661a29.894 29.894 0 1 1 0 59.788h-61.749661v81.66478a32.282109 32.282109 0 0 1-32.282108 32.282108z" fill="#5f5f5f" p-id="3518"></path></svg>
+                    </a>
+                    <a id="export_pic" title="导出图片" style="border: none; cursor: pointer; margin-left: 10px">
+                        <svg t="1689071509720" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4564" width="16" height="16"><path d="M909.132886 0.037506h-184.960611a33.909445 33.909445 0 0 0-32.368107 33.909445 33.909445 33.909445 0 0 0 33.909445 33.395666h158.244078l-200.373995 199.346437a33.395666 33.395666 0 0 0 0 47.781491 31.854327 31.854327 0 0 0 23.633856 9.76181 33.909445 33.909445 0 0 0 24.147635-9.76181l198.832657-199.346437V272.340628a33.909445 33.909445 0 0 0 69.874009 0V88.921355A88.37007 88.37007 0 0 0 909.132886 0.037506zM216.558153 347.866211a107.37991 107.37991 0 1 0 107.37991-107.379911 107.89369 107.89369 0 0 0-107.37991 107.379911z m154.133843 0a51.377948 51.377948 0 0 1-97.618101 0 51.377948 51.377948 0 1 1 97.618101 0z" p-id="4565" fill="#424242"></path><path d="M963.079731 437.777619a34.423225 34.423225 0 0 0-33.909446 33.909445v265.110209a1811.07265 1811.07265 0 0 0-137.692899-193.181082 106.352351 106.352351 0 0 0-78.60826-36.478343 123.820854 123.820854 0 0 0-82.204716 35.964563l-3.596456 3.082677-188.557068 176.74014c-11.816928-13.358266-47.781491-51.377948-82.204716-87.856291a83.232275 83.232275 0 0 0-85.801172-21.578738 105.324792 105.324792 0 0 0-38.019681 19.52362l-141.289356 121.765736V89.948914a22.092517 22.092517 0 0 1 22.606297-22.606297h417.702713a33.395666 33.395666 0 0 0 33.395666-33.909445 33.395666 33.395666 0 0 0-33.395666-33.395666H113.802258A89.911408 89.911408 0 0 0 23.89085 89.948914v844.139678a89.911408 89.911408 0 0 0 89.911408 89.911408h793.27551a89.911408 89.911408 0 0 0 89.397629-89.911408v-462.401528a33.909445 33.909445 0 0 0-33.395666-33.909445z m-33.909446 496.310973a22.606297 22.606297 0 0 1-22.092517 22.606297H113.802258a22.606297 22.606297 0 0 1-22.606297-22.606297v-88.37007l183.933052-160.812976a43.157476 43.157476 0 0 1 15.413385-7.192912 15.927164 15.927164 0 0 1 17.982281 5.137794c37.505902 36.478343 78.60826 83.232275 82.718496 87.856291a61.653537 61.653537 0 0 0 42.643696 22.092517 62.681096 62.681096 0 0 0 51.377948-20.037399c8.220472-8.220472 134.610223-125.875971 194.208641-181.877935a57.029522 57.029522 0 0 1 34.423225-16.440943 45.212594 45.212594 0 0 1 29.79921 15.927164 2954.231982 2954.231982 0 0 1 186.501949 256.889738z" p-id="4566" fill="#424242"></path></svg>
+                    </a>
+                    <a id="export_markdown" title="导出markdown" style="border: none; cursor: pointer; margin-left: 10px">
+                        <svg t="1689071035200" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="13570" width="16" height="16"><path d="M178.073367 843.957262V461.158929h107.121045l107.121045 140.734874 107.125433-140.734874h107.116657v382.798333h-107.116657v-219.54307l-107.125433 140.730486-107.116657-140.730486v219.54307zM737.783131 892.148786l-131.221196-209.156132h87.479334V461.158929h87.479335v221.833725h87.483722z" p-id="13571" fill="#424242"></path><path d="M911.9958 217.142709c10.672172 10.663395 19.812851 25.144549 27.430816 43.430297 7.617965 18.285748 11.431335 35.044392 11.431336 50.28471V969.140255c0 15.235929-5.336086 28.18998-15.999481 38.853375-10.667783 10.667783-23.621834 16.003869-38.857763 16.003869H127.994904c-15.240317 0-28.18998-5.336086-38.857763-16.003869-10.663395-10.663395-15.999481-23.617446-15.999481-38.853375V54.852856c0-15.240317 5.331698-28.18998 15.999481-38.857763C99.804925 5.336086 112.758975 0 127.999292 0h512.000944c15.235929 0 31.998962 3.808982 50.28471 11.426947 18.285748 7.622353 32.762514 16.763033 43.430297 27.426428zM658.290372 77.715526v214.856442h214.856442c-3.808982-11.049559-7.99974-18.856218-12.572275-23.43314l-178.855415-178.851027c-4.572534-4.572534-12.383581-8.763292-23.43314-12.572275z m219.428976 873.143369V365.71496h-237.714724c-15.240317 0-28.18998-5.336086-38.857763-15.999481-10.663395-10.667783-15.999481-23.621834-15.999481-38.857763V73.142992H146.28504v877.715903z" p-id="13572" fill="#424242"></path></svg>
+                    </a>
+                    <a id="export_doc" title="导出文档" style="border: none; cursor: pointer; margin-left: 10px">
+                        <svg t="1689246982401" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6825" width="16" height="16"><path d="M270.76864 608.32h180.8a31.68 31.68 0 0 0 0-62.976H270.76864a31.68 31.68 0 0 0 0 62.976zM271.34464 458.56h457.92a33.472 33.472 0 0 0 31.552-34.752 33.28 33.28 0 0 0-31.552-34.624H271.34464a34.816 34.816 0 0 0 0 69.376zM271.34464 293.504h457.92a33.344 33.344 0 0 0 31.552-34.688 33.216 33.216 0 0 0-31.552-34.624H271.34464a33.28 33.28 0 0 0-31.616 34.624 33.28 33.28 0 0 0 31.616 34.688z" p-id="6826" fill="#424242"></path><path d="M869.87264 0H153.77664A70.4 70.4 0 0 0 84.65664 70.912V953.6A69.952 69.952 0 0 0 153.77664 1024h370.048a32 32 0 0 0 0-63.68H147.12064V64h729.6v468.672a31.296 31.296 0 1 0 62.528 0V70.912A70.4 70.4 0 0 0 869.87264 0z" p-id="6827" fill="#424242"></path><path d="M482.16064 730.624h337.664L715.82464 625.216a28.864 28.864 0 0 1-7.936-28.736 29.184 29.184 0 0 1 20.608-21.184 29.632 29.632 0 0 1 29.12 8.128l174.784 177.216-174.784 176.96a29.184 29.184 0 0 1-49.728-13.312 29.248 29.248 0 0 1 8-28.8l103.936-105.344H482.16064a29.696 29.696 0 0 1-29.504-29.76 29.632 29.632 0 0 1 29.504-29.76z" p-id="6828" fill="#424242"></path></svg>
+                    </a>
+                </span>
+                <a  id="icon_more" title="更多" >
+                    <svg t="1688715321313" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5356" width="16" height="16"><path d="M483.555556 199.111111m-85.333334 0a85.333333 85.333333 0 1 0 170.666667 0 85.333333 85.333333 0 1 0-170.666667 0Z" fill="#424242" p-id="5357"></path><path d="M483.555556 540.444444m-85.333334 0a85.333333 85.333333 0 1 0 170.666667 0 85.333333 85.333333 0 1 0-170.666667 0Z" fill="#424242" p-id="5358"></path><path d="M483.555556 881.777778m-85.333334 0a85.333333 85.333333 0 1 0 170.666667 0 85.333333 85.333333 0 1 0-170.666667 0Z" fill="#424242" p-id="5359"></path></svg>
+                </a>
+                <a  id="icon_less" class="display_none">
+                    <svg t="1688723160472" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15872" width="16" height="16"><path d="M300.105143 592.676571h423.789714a80.676571 80.676571 0 1 0 0-161.353142H300.105143a80.676571 80.676571 0 0 0 0 161.353142z" fill="#8a8a8a" p-id="15873"></path></svg>
+                </a>
+                
+            </div>
+
+            
+            <div class="post">
+                <div class="post_title post_detail_title">
+                    <span class="date" id="busuanzi_container_site_pv">访问量 <span id="busuanzi_value_site_pv">...</span> 次</span>
+                </div>
+                <div class="post_title post_detail_title">
+                    <span class="date" id="busuanzi_container_site_uv">访客数 <span id="busuanzi_value_site_uv">...</span> 人</span>
+                </div>
+            </div>
+            
+
+            <div class="post">
+                <div class="post_title post_detail_title">
+                    
+                    <span class="date">总文章数 187 篇</span>
+                </div>
+                <div class="post_title post_detail_title">
+                    
+                    
+                    
+                    
+                    
+                    <span class="date">博客已运行 2001 天</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+        <div class="content">
+            <div class="post_page">
+                <div class="post animate__animated animate__fadeInDown">
+                    <div class="post_title post_detail_title">
+                        <h2 id="post_single_title">软考高级架构师-计算机系统基础</h2>
+                        <span id="post_page_title_date" class="date">2025.07.16</span>
+
+
+
+
+
+                    </div>
+                    <div class="post_content markdown"><p>选择题为主，一般在3-5分浮动。</p>
+<h2 id="计算机系统组成">计算机系统组成</h2>
+<p>计算机系统组成：
+<img alt="软考" src="/posts/annex/images/essays/%E8%BD%AF%E8%80%83-116.png"></p>
+<ol>
+<li>硬件：中央处理器、存储器、输入设备、输出设备、总线</li>
+<li>软件：系统软件、应用软件</li>
+</ol>
+<p>硬件组成如下：<br>
+<img alt="软考" src="/posts/annex/images/essays/%E8%BD%AF%E8%80%83-117.png"></p>
+<ul>
+<li>中央处理器：由运算器、控制器、寄存器组成，功能为执行程序指令、进行算术运算和逻辑运算（比较、判断等）、控制协调其他硬件部件的工作。</li>
+<li>存储器：主要类型有主存储器（内存）、辅助存储器组成（硬盘），用于存储程序（指令）和数据（包括输入、输出和中间结果）。</li>
+<li>输入设备：例如键盘、鼠标、触摸屏、扫描仪、麦克风、摄像头、游戏手柄、传感器等。</li>
+<li>输出设备：例如键盘、鼠标、触摸屏、扫描仪、麦克风、摄像头、游戏手柄、传感器等。</li>
+<li>总线：主要类型有数据总线、地址总线、控制总线，计算机内部各部件之间以及计算机与外部设备之间传输数据、地址和控制信号的公共通信通道。可以想象成连接各城市（硬件部件）的高速公路网。</li>
+</ul>
+<h3 id="存储系统">存储系统</h3>
+<p>计算机存储系统的关键组成部分及其层次结构：<br>
+<img alt="软考" src="/posts/annex/images/essays/%E8%BD%AF%E8%80%83-118.png"></p>
+<ul>
+<li>CPU寄存器：直接集成在CPU内部，访问速度最快，容量最小。存储CPU当前正在执行的指令所直接操作的数据和中间结果。访问速度极致、成本极高</li>
+<li>CPU高速缓存（Cache Memory - L1, L2, L3)：在CPU芯片内部（L1, L2）或紧邻CPU（L3）。访问速度极快，容量小。作为CPU和主内存之间的高速缓冲区。存储CPU近期最可能再次访问的主内存数据和指令副本。</li>
+<li>主存储器：在主板的内存插槽上。访问速度快，容量较大。存储当前正在运行的操作系统、应用程序和它们正在处理的数据。CPU直接从这里读取指令和读写数据。辅助存储器中的数据必须加载到主存才能被CPU处理。</li>
+<li>辅助存储器：通过接口（SATA, NVMe, USB等）连接到主板。访问速度慢，容量非常大。长期、持久化存储操作系统、应用程序、用户文件（文档、图片、视频等）、数据库等所有不需要立即运行的数据。即使计算机断电，数据也不会丢失。</li>
+</ul>
+<p><strong>距离CPU越远，访问速度越慢，容量越大，成本越低；越近访问越快，容量越小，成本越高。</strong></p>
+<p>存储层次结构 (Memory Hierarchy)，其核心思想是利用局部性原理：</p>
+<ul>
+<li>时间局部性 (Temporal Locality): 最近访问过的数据项很可能在不久的将来再次被访问。典型情况是程序中存在循环操作。</li>
+<li>空间局部性 (Spatial Locality): 访问某个数据项时，其附近的数据项也很可能很快被访问。典型情况是顺序执行。</li>
+</ul>
+<p>层次结构通过将频繁访问的数据保持在更高层（更快更小），而将不频繁访问的数据移到底层（更大更慢），从而在整体上实现接近最高层的速度和接近最底层的容量。</p>
+<h3 id="总线">总线</h3>
+<p>总线是一组能为多个部件分时共享的信息传送线，用来连接多个部件并为之提供信息交换通路。<strong>【总线通常是半双工的】</strong></p>
+<ul>
+<li>半双工：同一时间只能单向传输：通信双方均可发送或接收数据，但不能同时进行（类似对讲机）。</li>
+<li>全双工：通信双方可同时发送和接收数据（类似电话通话）。</li>
+</ul>
+<p>特点：</p>
+<ul>
+<li>挂接在总线上的多个部件只能分时向总线发送数据，但可同时从总线接收数据。</li>
+<li>通过总线复用方式可以减少总线中信号线的数量，以较少的信号线传输更多的信息。</li>
+</ul>
+<p>总线通常分为以下几类。</p>
+<ol>
+<li>芯片内总线。用于集成电路芯片内部各部分的连接元件级总线。用于一块电路板内各元器件的连接。</li>
+<li>系统总线，又称内总线。用于计算机各组成部分（CPU、内存和接口等）的连接。</li>
+<li>外总线，又称通信总线。用于计算机与外设或计算机与计算机之间的连接或通信。</li>
+</ol>
+<ul>
+<li>从功能上将总线划分为<strong>数据总线</strong>、<strong>地址总线</strong>和<strong>控制总线</strong>。</li>
+<li>从数据传输的方式将总线划分为<strong>并行总线</strong>和<strong>串行总线</strong>。
+<ul>
+<li><strong>并行总线</strong>：将数据字节的各位用多条数据线同时进行传送。<strong>【短距离】</strong></li>
+<li><strong>串行总线</strong>：数据是一位一位地进行传输的，在传输中每一位数据都占据一个固定的时间长度。【<strong>长距离</strong>，传输<strong>波特率可调整</strong>，正确性依赖于<strong>校验码</strong>，<strong>数据传输方式可以使用多种</strong>】</li>
+</ul>
+</li>
+</ul>
+<p>总线的工作流程（以内存读取为例）：</p>
+<ol>
+<li>地址阶段：CPU通过地址总线发送目标内存地址。</li>
+<li>控制阶段：控制总线发出“读”信号 + 时钟同步。</li>
+<li>数据阶段：内存通过数据总线将数据传回CPU。</li>
+<li>应答阶段：控制总线确认传输完成（成功/失败）。</li>
+</ol>
+<h3 id="数据传输控制方式">数据传输控制方式</h3>
+<p>数据传输控制方式是计算机系统中协调CPU与外部设备（I/O设备）之间数据流动的机制，核心目标是平衡效率与CPU资源占用。</p>
+<ol>
+<li>程序控制（查询）方式：分为无条件传送和程序查询方式两种。方法简单，硬件开销小，但I/O能力不高，严重影响CPU的利用率。适用于低速设备（如键盘、早期打印机）</li>
+<li>程序中断方式：与程序控制方式相比，中断方式因为CPU无需等待而提高了传输请求的响应速度。【CPU与I/O传输可并行】 适用于中低速设备（鼠标、串口通信）</li>
+<li>DMA方式：DMA方式是为了在<strong>主存与外设</strong>之间实现高速、批量数据交换而设置的。DMA方式比程序控制方式与中断方式都高效。【CPU与I/O传输可并行】 适用于高速设备（硬盘、SSD、网卡、显卡显存交换）。</li>
+<li>通道方式：本质是协处理器，比DMA更智能化（可执行复杂指令序列）。通道自主执行I/O任务链，可同时控制多台设备，但硬件极度复杂。</li>
+</ol>
+<h3 id="处理器体系结构">处理器体系结构</h3>
+<ol>
+<li>冯·诺依曼结构：冯·诺依曼结构也称普林斯顿结构，是一种将<strong>程序指令存储器和数据存储器合并在一起</strong>的存储器结构。
+<ul>
+<li>特点：指令与数据存储器合并在一起。指令与数据都通过相同的数据总线传输。</li>
+<li>应用：一般用于PC处理器，如i3、i5、i7处理器。注：常规计算机属于冯·诺依曼结构。</li>
+</ul>
+</li>
+<li>哈佛结构：哈佛结构是一种并行体系结构，它的主要特点是将<strong>程序和数据存储在不同的存储空间</strong>中，即程序存储器和数据存储器是两个独立的存储器，每个存储器独立编址、独立访问。
+<ul>
+<li>特点：指令与数据分开存储，可以<strong>并行</strong>读取，有较高的数据吞吐率。有4条总线：指令和数据的数据总线与地址总线。</li>
+<li>应用：一般用于嵌入式系统处理器。注：DSP芯片属于哈佛结构。</li>
+</ul>
+</li>
+</ol>
+<h2 id="操作系统重点">操作系统（重点）</h2>
+<h3 id="进程管理">进程管理</h3>
+<h3 id="存储管理">存储管理</h3>
+<h3 id="磁盘管理">磁盘管理</h3>
+<h2 id="文件系统">文件系统</h2>
+<h3 id="索引文件">索引文件</h3>
+<h3 id="位示图">位示图</h3>
+<h2 id="系统配置与性能评价">系统配置与性能评价</h2>
+<h3 id="性能指标">性能指标</h3>
+<h3 id="性能设计">性能设计</h3>
+<h3 id="性能评估">性能评估</h3>
+</div>
+                    <div id="post_footer" class="post_footer">
+                        <div class="meta">
+
+                            <div id="post_footer_info" class="info">
+                                <span class="field tags">
+                                    <i class="ri-stack-line"></i>
+                                    
+                                        
+                                        <a href="http://localhost:1313/tags/%E8%80%83%E8%AF%95/">考试</a>
+                                        
+                                    
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div id="doc_comments" class="doc_comments"></div>
+                
+            </div>
+        </div>
+    </div>
+    
+<a id="search-btn" style="display: inline-block;" href="javascript:void(0);">
+    <span class="ri-search-line"></span>
+</a>
+<div id="fastSearch">
+    <input id="searchInput" tabindex="0" autocomplete="off">
+    <ul id="searchResults"></ul>
+</div>
+<div class="side_nav">
+    
+    <a id="top_to_back" href="#" class="top_to_back">
+        <svg t="1688614744062" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2152" width="16" height="16"><path d="M966.4 323.2c-9.6-9.6-25.6-9.6-35.2 0l-416 416-425.6-416c-9.6-9.6-25.6-9.6-35.2 0-9.6 9.6-9.6 25.6 0 35.2l441.6 432c9.6 9.6 25.6 9.6 35.2 0l435.2-432C976 345.6 976 332.8 966.4 323.2z" p-id="2153" fill="#424242"></path></svg>    </a>
+    
+    <div>
+        <a id="content_display" class="content_display">
+            <svg t="1688606941910" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="57753" width="18" height="18"><path d="M192 448c10.9 0 21.8-4.2 30.2-12.5L497 160.8c5.4-5.4 11.8-6.2 15.1-6.2 3.3 0 9.6 0.8 15.1 6.2l274.7 274.7c16.7 16.7 43.7 16.7 60.3 0 16.7-16.7 16.7-43.7 0-60.3L587.4 100.4c-41.6-41.6-109.3-41.6-150.9 0L161.8 375.2c-16.7 16.7-16.7 43.7 0 60.3 8.4 8.3 19.3 12.5 30.2 12.5zM801.8 588.5L527.1 863.2c-5.4 5.4-11.8 6.2-15.1 6.2-3.3 0-9.7-0.8-15.1-6.2L222.2 588.5c-16.7-16.7-43.7-16.7-60.3 0-16.7 16.7-16.7 43.7 0 60.3l274.8 274.8c20.8 20.8 48.1 31.2 75.4 31.2 27.3 0 54.6-10.4 75.4-31.2l274.7-274.8c16.7-16.7 16.7-43.7 0-60.3-16.7-16.7-43.7-16.7-60.4 0z" fill="#424242" p-id="57754"></path></svg>
+        </a>
+        <a id="content_hidden" class="content_hidden">
+            <svg t="1688603143752" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15592" width="18" height="18"><path d="M479.004101 645.938677L165.25229 958.480465a37.510709 37.510709 0 0 0 0 54.059551 36.47863 36.47863 0 0 0 53.063061 0l293.679668-292.576411 293.715256 292.576411a36.443042 36.443042 0 0 0 53.063061 0 37.510709 37.510709 0 0 0 0-54.059551l-313.751811-312.541788c-21.210989-22.349834-36.514219-24.698702-66.017424 0z m66.053013-267.877709l312.577377-312.541789a37.510709 37.510709 0 0 0 0-54.059551 36.443042 36.443042 0 0 0-53.063061 0l-292.505234 292.576411L219.560963 11.459628a36.47863 36.47863 0 0 0-53.063061 0 37.510709 37.510709 0 0 0 0 54.059551l312.577377 312.541789a46.58588 46.58588 0 0 0 65.981835-0.035589z" p-id="15593" fill="#424242"></path></svg>
+        </a>
+    </div>
+    
+    <a id="back_to_top" href="#" class="back_to_top">
+        <svg t="1688628374733" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3166" width="16" height="16"><path d="M966.4 668.8l-435.2-432c-9.6-9.6-25.6-9.6-35.2 0l-441.6 432c-9.6 9.6-9.6 25.6 0 35.2 9.6 9.6 25.6 9.6 35.2 0l425.6-416 416 416c9.6 9.6 25.6 9.6 35.2 0S976 678.4 966.4 668.8z" p-id="3167" fill="#424242"></path></svg>
+    </a>
+</div>
+    <footer class="footer">
+    <div id="footer_powered_by" class="powered_by">
+        <a href="https://varkai.com">Designed by VarKai,</a>
+        <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+    </div>
+
+    <div id="footer_slogan" class="footer_slogan">
+        <span>from 2020</span>
+    </div>
+</footer>
+    <script src="http://localhost:1313/js/jquery-3.5.1.min.js"></script>
+<link href="http://localhost:1313/css/fancybox.min.css" rel="stylesheet">
+<script src="http://localhost:1313/js/fancybox.min.js"></script>
+<script src="http://localhost:1313/js/darkmode.js"></script>
+<script src="http://localhost:1313/js/zozo.js"></script>
+
+<script src="http://localhost:1313/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
+<script src="http://localhost:1313/js/html2canvas.js"></script>
+<script src="http://localhost:1313/js/utils.js"></script>
+<script src="http://localhost:1313/js/html2md.js"></script>
+<script src="http://localhost:1313/js/htmlexport.js"></script>
+
+<script src="http://localhost:1313/js/fastsearch.js"></script>
+<script src="http://localhost:1313/js/fuse.js"></script>
+
+
+<script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</script>
+
+
+<script>
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        const uvE = document.getElementById('busuanzi_value_site_uv');
+        const pvE = document.getElementById('busuanzi_value_site_pv');
+        const uvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    uvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 57030;
+                    break;
+                }
+            }
+        });
+        const pvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    pvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 203040;
+                    break;
+                }
+            }
+        });
+        const config = {
+            childList: true
+        };
+        uvObs.observe(uvE, config);
+        pvObs.observe(pvE, config);
+    });
+</script>
+
+
+<script>
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('.content a');
+        links.forEach(function(link) {
+            link.setAttribute('target', '_blank');
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
