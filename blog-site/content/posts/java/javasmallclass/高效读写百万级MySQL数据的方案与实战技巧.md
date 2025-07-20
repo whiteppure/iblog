@@ -1,5 +1,5 @@
 ---
-title: "高效读取写入百万级MySQL数据的方案与实战技巧"
+title: "高效读写百万级MySQL数据的方案与实战技巧"
 date: 2025-03-23
 draft: true
 tags: ["Java小课堂","Java","随笔"]
