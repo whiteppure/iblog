@@ -19,7 +19,7 @@ draft: false
 
 我会不定期在我的公众号上发布一些技术文章和个人随笔，欢迎大家关注。希望这个平台能成为我们相互学习、共同成长的空间。
 <div style="text-align: center;">
-    <img src="/posts/annex/images/essays/来点Java.png" alt="我的微信" style="max-width: 50%; height: auto;">
+    <img src="/posts/annex/images/essays/公众号二维码.jpg" alt="公众号" style="max-width: 50%; height: auto;">
 </div>
 
 ## 关于博客
