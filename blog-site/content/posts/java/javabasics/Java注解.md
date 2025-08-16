@@ -14,7 +14,7 @@ Java注解（Annotation）是JDK 5引入的**元数据机制**，用于为代码
 注解示例：
 ```java
 @Override
-public String toString() { 
+public String toString() {
     return "This is an override";
 }
 ```
