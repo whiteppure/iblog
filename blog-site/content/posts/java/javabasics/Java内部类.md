@@ -1,13 +1,70 @@
 ---
-title: "Java内部类和代码块"
+title: "Java内部类"
 date: 2025-08-20
 draft: false
 tags: ["Java", "Java基础"]
-slug: "rookie-inner-class-code-block"
+slug: "rookie-inner-class"
 ---
 
 
-你是否曾写过Lambda表达式，那你有没有思考过，Lambda表达式属于内部类还是代码块？
+
+## 概述
+内部类顾名思义是定义在另一个类内部的类，与之相对，包含内部类的类称为外部类。
+内部类允许你将逻辑上相关的类组织在一起，并可以访问外部类的所有成员，从而提供了一种更彻底的封装方式。
+
+内部类优点：
+1. 直接访问外部类成员（包括私有字段），实现紧密数据交互。
+2. 增强封装性，将仅服务于外部类的逻辑隐藏内部，减少代码暴露。
+3. 简化回调机制（如事件监听），避免创建大量独立类文件。
+4. 灵活组织代码，如迭代器、构建器模式等可内聚实现。
+
+内部类缺点：
+1. 内存泄漏风险：非静态内部类隐式持有外部类引用，若被长生命周期对象引用，会导致外部类无法回收。
+2. 增加复杂度：多层嵌套降低可读性，反射/序列化更困难。
+3. 限制性：局部和匿名内部类只能访问`final`的局部变量。
+
+内部类与修饰符：
+
+| 类型  |   可用修饰符|   说明|
+|-----|---|---|
+| 成员内部类 |   `public`, `protected`, `private`, `abstract`, `final`|   可以定义在类的成员位置，可以访问外部类的所有成员，不能有静态成员（除静态常量外）|
+| 静态内部类 |   `public`, `protected`, `private`, `static`, `abstract`, `final`|   使用`static`修饰，不持有外部类引用，只能访问外部类的静态成员|
+| 局部内部类 |   `abstract`, `final`|   定义在方法或代码块内，不能使用访问修饰符，可以访问`final`的局部变量|
+| 匿名内部类 |   无显式修饰符|   没有类名，隐式`final`，不能使用任何显式修饰符，用于一次性实现接口或继承类|
+
+
+## 内部类与内存泄漏
+
+## 静态内部类
+## 成员内部类
+
+## 局部内部类
+## 匿名内部类
+匿名内部类是一种没有名字的内部类。它被设计用于**只需使用一次的场景**：你需要定义一个类并立即创建它的一个实例，而这个类不需要有名字。
+它的核心目的就是**简洁和即时，避免了为仅使用一次的类单独命名的麻烦**，可以理解为匿名内部类是没有名字的局部内部类。
+
+它融合了类的继承/实现和实例的创建，经常用它来创建线程。
+```java
+public class Demo {
+    public static void main(String[] args) {
+        // 将定义类和创建实例合二为一
+        Thread thread = new Thread(new Runnable() { // 这里是匿名内部类
+            @Override
+            public void run() { // 在此直接实现 run 方法
+                System.out.println("线程运行了！（来自匿名内部类）");
+            }
+        }); // 注意这里的括号和分号
+        thread.start();
+    }
+}
+```
+
+匿名内部类特点：
+1. 它可以访问外部类的所有成员，包括 `private` 成员。
+2. 如果匿名内部类定义在方法里，它还可以访问所在方法的 `final`的局部变量。这是因为它的生命周期可能比方法更长，Java通过复制的方式来保证数据一致性。
+3. 生成`.class`文件：编译后，编译器会为每个匿名内部类生成一个独立的`.class`文件，命名格式通常为`外部类名$数字.class`如 `Demo$1.class`。
+
+Lambda表达式与匿名内部类有着密切的“血缘关系”，那你有没有思考过，Lambda表达式是否属于内部类？
 ```java
 // 传统匿名内部类方式
 Thread thread = new Thread(new Runnable() {
@@ -24,200 +81,8 @@ Thread lambdaThread = new Thread(
         }
 );
 ```
-其实Lambda表达式既不属于内部类，也不属于代码块。它是一种独立的、全新的语法结构，用于表示一个函数式接口的实例。
+其实Lambda表达式既不属于内部类，它是一种独立的、全新的语法结构，用于表示一个函数式接口的实例。
+Lambda表达式其本质上是一个函数，不会生成单独的`.class`文件，由JVM在运行时动态生成，而匿名内部类一个类，会生成`.class`文件。
 
-但Lambda表达式与内部类（尤其是匿名内部类）有着密切的“血缘关系”，并且在视觉上看起来像是一个“代码块”。
-因为它的实现和设计思想，就是Java两个最基础、最强大的古老特性：内部类与代码块。
-
-## 内部类
-### 成员内部类
-### 静态内部类
-### 局部内部类
-### 匿名内部类
-
-
-
-## 代码块概述
-**在 Java 中，代码块是由大括号 {} 包围的语句集合，必须是类、接口、方法或构造器的一部分，它是一个独立的执行单元。**
-
-代码块也属于类中的成员，和属性，方法一样，是类的一部分，只不过相比方法来看，代码块只有"方法体"。
-它没有签名（无名、无参、无返回值），不能被显式调用，其执行完全由 JVM 根据类型隐式触发。
-
-代码块定义格式如下：
-```text
-[修饰符] {
-        //方法体语句。（代码）
-}
-```
-
-代码块定义位置注意事项：
-1. 对于作为类成员的代码块，唯一可用的修饰符是 static，用于区分静态与实例初始化，严禁使用 public、private 等访问修饰符。
-2. 在一个类中，每种类型的代码块都可以定义多个，没有硬性数量限制。它们会按照在代码中出现的顺序依次执行。
-3. 代码块必须有一个明确的、语法允许的“宿主”（类、接口或方法/构造器），它不能独立存在，也不能在不允许的位置存在。
-4. 静态代码块和实例代码块是类的成员，必须直接定义在类体内部，与字段、方法等成员同级。
-静态代码块可定义于普通类、抽象类以及（自 Java 8 起的）接口中，而实例代码块因涉及实例初始化，不能定义在接口内。局部代码块则必须定义在方法、构造器或其他代码块的内部。
-
-### 代码块的修饰符
-代码块定义格式如下：
-```text
-[修饰符] {
-        //方法体语句。（代码）
-}
-```
-**需要注意，代码块前的修饰符，有且只能加 static，不能为代码块使用任何其他修饰符。**
-
-question1：为什么不能用 public, private 等访问修饰符？
-- 访问修饰符（public, private, protected）的作用是控制其他类能否访问该成员。
-但是，你如何“访问”一个代码块？
-代码块不是方法，没有名字，不能被调用。它的执行是由 JVM 在后台自动触发的。因此，谈论一个代码块是 public（公开可访问）还是 private（私有）是完全没有意义的。你无法从 ClassB 中“调用” ClassA 的静态块或实例块。它们的执行是内部机制，与外部访问无关。
-
-question2：为什么不能用 final, synchronized 等？
-- final: 用于表示不可变。代码块是一次性执行的逻辑，不存在“不可变”的概念。
-- synchronized: 用于实现同步，控制多线程访问。虽然从技术上来说，也许可以设计成允许给静态块加 synchronized 来保证类加载的线程安全，但 JVM 已经保证了类加载过程本身就是线程安全的，所以不需要开发者额外指定。
-而对于实例块，其逻辑完全可以移到 synchronized 方法或块中，没有必要修饰整个初始化块。
-
-所以，static 对于代码块来说，与其说是一个“修饰符”，不如说是一个关键字标签，可以将代码块分为非静态代码块（无static修饰）和静态代码块（添加了static修饰符）。
-
-### 局部代码块
-- https://developer.aliyun.com/article/1182863
-
-### 实例代码块
-### 静态代码块
-
-### 实际开发中的代码块
-1. 经典使用场景，当多个构造器中有重复的代码片段时，我们就可以将这些重复的相同代码提取出来，放在一个非静态代码块中，这样每次创建一个该类对象，都会隐式地调用一次代码块，就不用你在每个构造器中都写一遍了，大大提高了代码的复用性。
-    ```java
-    public class Player {
-        private String name;
-        private int level;
-        private String guild;
-        private long createdAt; // 创建时间戳
-    
-        // 构造器1: 只提供名字，其他用默认值
-        public Player(String name) {
-            this.name = name;
-            this.level = 1;
-            this.guild = "None";
-            // 重复的代码：记录创建时间
-            this.createdAt = System.currentTimeMillis();
-            System.out.println("A new player is born!");
-        }
-    
-        // 构造器2: 提供名字和公会
-        public Player(String name, String guild) {
-            this.name = name;
-            this.level = 1;
-            this.guild = guild;
-            // 重复的代码：记录创建时间
-            this.createdAt = System.currentTimeMillis();
-            System.out.println("A new player is born!");
-        }
-    
-        // 构造器3: 提供所有信息
-        public Player(String name, int level, String guild) {
-            this.name = name;
-            this.level = level;
-            this.guild = guild;
-            // 重复的代码：记录创建时间
-            this.createdAt = System.currentTimeMillis();
-            System.out.println("A new player is born!");
-        }
-    }
-    ```
-    优化后，使用实例代码块提取重复逻辑。
-    ```java
-    public class Player {
-        private String name;
-        private int level;
-        private String guild;
-        private long createdAt;
-    
-        // 【实例代码块】：提取所有构造器的公共初始化代码
-        {
-            this.createdAt = System.currentTimeMillis();
-            System.out.println("A new player is born!");
-        }
-    
-        // 构造器1
-        public Player(String name) {
-            this.name = name;
-            this.level = 1;
-            this.guild = "None";
-            // 公共代码已由实例代码块执行，此处无需再写
-        }
-    
-        // 构造器2
-        public Player(String name, String guild) {
-            this.name = name;
-            this.level = 1;
-            this.guild = guild;
-        }
-    
-        // 构造器3
-        public Player(String name, int level, String guild) {
-            this.name = name;
-            this.level = level;
-            this.guild = guild;
-        }
-    }
-    ```
-2. 如果你的初始化逻辑可能抛出受检异常（Checked Exception），而你又不想在每一个构造器的签名上都声明 throws，实例代码块提供了一个集中处理的地方。
-    ```java
-    public class ConfigurationLoader {
-        private Properties config;
-    
-        // 实例代码块处理可能抛出异常的复杂初始化
-        {
-            config = new Properties();
-            try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
-                if (input == null) {
-                    throw new RuntimeException("Config file not found!"); // 转为运行时异常
-                }
-                config.load(input);
-            } catch (IOException e) { // 捕获受检异常
-                // 将其封装成运行时异常再抛出，这样构造器签名就不用声明throws
-                throw new RuntimeException("Failed to load configuration", e);
-            }
-        }
-    
-        // 所有构造器都无需关心配置加载的异常
-        public ConfigurationLoader() {
-        }
-        public ConfigurationLoader(String otherParam) {
-            // config已经被成功加载或已抛出异常
-        }
-    
-        public String getProperty(String key) {
-            return config.getProperty(key);
-        }
-    }
-    ```
-3. 匿名内部类不能直接访问非 final 的局部变量，使用实例代码块作为一个“桥梁”，将外部方法的非 final 参数“捕获”并复制到 final 变量中，从而让内部类可以访问。
-    ```java
-    public class Button {
-        private String title;
-    
-        public void addActionListener(final String userRole) { // 假设userRole不是final
-            final String finalUserRole; // 定义一个final变量
-    
-            // 使用实例代码块将参数值赋给final变量
-            {
-                finalUserRole = userRole.toUpperCase(); // 甚至可以做一些处理
-            }
-    
-            // 现在匿名内部类可以安全地访问finalUserRole了
-            this.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // 直接访问userRole会编译错误（如果它不是final）
-                    // 但访问finalUserRole是完全合法的
-                    System.out.println("Button clicked by: " + finalUserRole);
-                }
-            });
-        }
-    }
-    ```
-
-## 初始化顺序
-## 封装的艺术
+Lambda 表达式可以看作是匿名内部类的一种语法糖和优化，但仅限于函数式接口的场景。当你需要实现一个函数式接口时，应优先使用 Lambda 表达式，因为它更简洁、高效。
 
