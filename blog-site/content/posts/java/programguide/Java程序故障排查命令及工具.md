@@ -1,5 +1,5 @@
 ---
-title: "Java程序的故障排查"
+title: "Java程序故障排查命令及工具"
 date: 2021-09-08
 draft: false
 tags: ["编程指南","Java"]
