@@ -14,7 +14,7 @@
 	
     
     
-    <meta name="description" content="为什么要写整洁的代码 内容节选自《代码整洁之道》，有改动。 为什么我们需要写整洁的代码？在回答这个问题之前，也许我们应该先思考一下为什么代码会变得糟糕。 是因为想要快" />
+    <meta name="description" content="本文内容借鉴了《代码整洁之道》中的一些宝贵思想，并尝试结合个人在开发实践中的些许体会，进行初步的融汇与分享。 为什么要写整洁的代码 为什么要写整洁的代码？我想引用《" />
     
 
     
@@ -404,7 +404,7 @@
                     
                     
                     
-                    <span class="date">博客已运行 2039 天</span>
+                    <span class="date">博客已运行 2055 天</span>
                 </div>
             </div>
 
@@ -423,32 +423,24 @@
 
 
                     </div>
-                    <div class="post_content markdown"><h2 id="为什么要写整洁的代码">为什么要写整洁的代码</h2>
-<p>内容节选自《代码整洁之道》，有改动。</p>
-<p>为什么我们需要写整洁的代码？在回答这个问题之前，也许我们应该先思考一下为什么代码会变得糟糕。
-是因为想要快速完成任务吗？还是时间不够？可能是你觉得需要完成的工作太多，或者担心如果花时间整理代码，老板会不满。也许你只是急于结束当前的工作，赶紧投入到其他任务中。这些情况都很常见。</p>
-<p>每一个程序员都可能曾经被别人的糟糕代码困扰过。如果你有几年的编程经验，你可能已经因为这种代码浪费了大量时间。项目初期进展迅速，但随着时间的推移，进展却变得缓慢。每次代码的修改都可能影响到其他部分，逐渐积累的混乱使得每次改动都变得困难。这种混乱不断增加，最终导致团队生产力急剧下降。</p>
+                    <div class="post_content markdown"><blockquote>
+<p>本文内容借鉴了《代码整洁之道》中的一些宝贵思想，并尝试结合个人在开发实践中的些许体会，进行初步的融汇与分享。</p>
+</blockquote>
+<h2 id="为什么要写整洁的代码">为什么要写整洁的代码</h2>
+<p>为什么要写整洁的代码？我想引用《代码整洁之道》这本书来回答。</p>
+<p>在回答这个问题之前，也许我们应该先思考一下为什么代码会变得糟糕。是因为想要快速完成任务吗？还是时间不够？可能是你觉得需要完成的工作太多，或者担心如果花时间整理代码，老板会不满。也许你只是急于结束当前的工作，赶紧投入到其他任务中。这些情况都很常见。</p>
+<p><strong>每一个程序员都可能曾经被别人的糟糕代码困扰过。</strong> 如果你有几年的编程经验，你可能已经因为这种代码浪费了大量时间。项目初期进展迅速，但随着时间的推移，进展却变得缓慢。每次代码的修改都可能影响到其他部分，逐渐积累的混乱使得每次改动都变得困难。这种混乱不断增加，最终导致团队生产力急剧下降。</p>
 <p>生产力下降时，管理层往往会采取增加人手的办法，希望能够提高效率。然而，新加入的成员往往对系统不熟悉，他们不了解设计的意图，可能会无意中制造更多混乱。结果是生产力进一步下降，管理层不得不批准全新的设计方案。</p>
-<p>于是，新团队组建起来了。大家希望能重新开始，设计出一个完美的系统。然而，这个过程可能会持续很久。到最后，原本的新团队成员也可能已经离开，留下来的可能又要重新设计系统，因为这个系统也许变得过于糟糕了。
-经历过这种情况的人都知道，保持代码整洁不仅关乎效率，更关乎生存。</p>
-<p>有时我们抱怨需求变化背离了初期设计。哀叹进度太紧张，没法好好干活。我们把问题归咎于那些愚蠢的经理，苛刻的用户，没用的营销方式。然而真正的问题往往在于我们自己。
-管理层和营销人员依赖我们提供准确的信息和合理的承诺，即便他们可能不会明确要求，我们也应该主动沟通。
-用户依赖我们来验证需求是否被正确实现，项目经理希望我们能按时完成任务。我们与项目的规划息息相关，对失败负有重大责任，尤其是当失败与糟糕的代码有关时尤为突出。
-也许你会说：“如果不听经理的，我可能会被解雇。”但多数经理希望得到真实的反馈，即便他们看起来不喜欢。大多数经理也希望有高质量的代码，即使他们有时过于关注进度。我们应该以同样的热情维护代码的质量。</p>
-<p>如果你是位医生，病人请求你在给他做手术前别洗手，因为那会花太多时间，你会照办吗？显然不会。本该是病人说了算，但医生却绝对应该拒绝遵从，这是为什么？
-因为医生比病人更了解疾病和感染的风险，医生如果按病人说的办，就是一种不专业的态度，更别说是犯罪了。同理，程序员遵从不了解混乱风险的经理的意愿，也是不专业的做法，我们应该加强这方面的意识。</p>
-<p>程序员经常面临着一种基础价值谜题。有那么几年经验的开发者都知道，之前的混乱拖了自己的后腿，但开发者们背负期限的压力，只好制造混乱。
-但是制造混乱对于完工没有任何帮助，混乱只会立刻拖慢你，叫你错过最后的期限。赶上期限的唯一方法就是始终尽可能保持代码整洁。
-如果你不明白整洁对于代码有何意义，尝试去写整洁代码就会毫无所益。</p>
+<p>于是，新团队组建起来了。大家希望能重新开始，设计出一个完美的系统。然而，这个过程可能会持续很久。到最后，原本的新团队成员也可能已经离开，留下来的可能又要重新设计系统，因为这个系统也许变得过于糟糕了。经历过这种情况的人都知道，保持代码整洁不仅关乎效率，更关乎生存。</p>
+<p>有时我们抱怨需求变化背离了初期设计。哀叹进度太紧张，没法好好干活。我们把问题归咎于那些愚蠢的经理，苛刻的用户，没用的营销方式。然而真正的问题往往在于我们自己。管理层和营销人员依赖我们提供准确的信息和合理的承诺，即便他们可能不会明确要求，我们也应该主动沟通。用户依赖我们来验证需求是否被正确实现，项目经理希望我们能按时完成任务。我们与项目的规划息息相关，对失败负有重大责任，尤其是当失败与糟糕的代码有关时尤为突出。也许你会说：“如果不听经理的，我可能会被解雇。”但多数经理希望得到真实的反馈，即便他们看起来不喜欢。大多数经理也希望有高质量的代码，即使他们有时过于关注进度。我们应该以同样的热情维护代码的质量。</p>
+<p><strong>如果你是位医生，病人请求你在给他做手术前别洗手，因为那会花太多时间，你会照办吗？显然不会。</strong> 本该是病人说了算，但医生却绝对应该拒绝遵从，这是为什么？因为医生比病人更了解疾病和感染的风险，医生如果按病人说的办，就是一种不专业的态度，更别说是犯罪了。同理，程序员遵从不了解混乱风险的经理的意愿，也是不专业的做法，我们应该加强这方面的意识。</p>
+<p>程序员经常面临着一种基础价值谜题。<strong>有那么几年经验的开发者都知道，之前的混乱拖了自己的后腿，但开发者们背负期限的压力，只好制造混乱。</strong> 但是制造混乱对于完工没有任何帮助，混乱只会立刻拖慢你，叫你错过最后的期限。<strong>赶上期限的唯一方法就是始终尽可能保持代码整洁。如果你不明白整洁对于代码有何意义，尝试去写整洁代码就会毫无所益。</strong></p>
 <h2 id="什么是整洁的代码">什么是整洁的代码</h2>
-<p>每个人对于整洁的代码理解肯定不同，在我看来，在满足业务场景的情况下，可读性强、运行效率高、细节处理好、易扩展的代码就是整洁代码。抛开具体的业务场景不谈，只谈所谓的&quot;整洁代码&quot;就是耍流氓。
-整洁的代码总是看起来总是像为某位特别在意它的人写的，几乎没有改进的余地。</p>
-<p>代码的作用是为了解决人们的某种需求，什么语言不重要，但是总有人非要争个高低，问题解决了才重要。
-在规定的业务场景下，写出能解决用户需求的代码就是程序员的日常工作，而需求并不是一成不变的，需求会变代码也会改变，所以我们就需要在这个特定的业务场景中，尽量把代码变得灵活起来，之后增加需求或者修改需求时，会变的容易一些。</p>
+<p>每个人对于整洁的代码理解肯定不同，在我看来，<strong>在满足业务场景的情况下，可读性强、运行效率高、细节处理好、易扩展的代码就是整洁代码。抛开具体的业务场景不谈，只谈所谓的&quot;整洁代码&quot;就是耍流氓。</strong> 整洁的代码总是看起来总是像为某位特别在意它的人写的，几乎没有改进的余地。</p>
+<p>代码的作用是为了解决人们的某种需求，什么语言不重要，但总有人非要争个高低，问题解决了才重要。在规定的业务场景下，写出能解决用户需求的代码就是程序员的日常工作，而需求并不是一成不变的，需求会变代码也会改变，所以<strong>我们需要在这个特定的业务场景中，尽量把代码变得灵活起来</strong>，之后增加需求或者修改需求时，会变的容易一些。</p>
 <p>具体来说，方法的命名、可读性、注释等，这些都能体现。毕竟开发的时候一般都是团队一起来开发，代码不止你自己看，还需要别人看，说简单一些就是让别人好接手你的代码，即代码的可维护性。</p>
 <h3 id="可读性">可读性</h3>
-<p>在一个产品的周期中，开发其实只占了一小段时间，绝大多数时间都在维护代码。代码写出来首先是给人看的，其次是给电脑看，所以代码的可读性至关重要。
-所以如果非要在代码的可读性和运行效率之间选择一个，非可读性莫属。一般来说，要权衡代码的可读性和运行效率，如果差距太大，要看实际的业务场景来决定，毕竟写程序的最终目的是为了解决用户的某些问题。</p>
+<p><strong>在一个产品的周期中，开发其实只占了一小段时间，绝大多数时间都在维护代码。代码写出来首先是给人看的，其次是给电脑看，所以代码的可读性至关重要。</strong> 所以如果非要在代码的可读性和运行效率之间选择一个，非可读性莫属。一般来说，要权衡代码的可读性和运行效率，如果差距太大，要看实际的业务场景来决定，毕竟写程序的最终目的是为了解决用户的某些问题。</p>
 <p>可读性通常表现在代码易于理解，在Java语言中有如下体现：</p>
 <ul>
 <li>容易理解整个应用程序的执行流程；</li>
@@ -460,67 +452,90 @@
 <p>如果一个方法的行数过多也会影响代码的可读性，一般控制在80行左右。过多无用的注释、API，只会加重使用者的认知负担，过多无用的信息读起来只会浪费时间，所以要尽量保持API的精简，代码注释的合理，保持规范的命名，使注释看起来没那么臃肿。要知道代码有人维护，可注释没有人维护。</p>
 <p>代码的依赖性导致了代码变化的放大和高认知负荷，模糊性造成了未知的不可知性，导致了认知负荷，从而使得代码更加难以理解不能很好的维护，所以整洁的代码总是复杂性低的。</p>
 <h3 id="运行效率">运行效率</h3>
-<p>运行效率即代码的运行效率，包括运行所占用的时间和空间。如果数据量不是很大（单表在300w左右）可能几乎不用考虑这个问题。
-空间就更不用说了，现在大多数公司都是用空间来换时间的，即通过增加服务器的配置或数量来提高程序运算速度，所以很多人并不关心程序运行的效率。</p>
-<p>当然我也不是很关心软件的运行效率，因为软件的运行效率主要还是取决与硬件的发展水平，现在硬件发展比软件发展快了一个档次，不然现在也不能一下子涌起那么多的软件公司。
-但是如果业务量非常大，电脑的运行效率也是有限的，当服务器达到一定数量后，企业就会考虑成本，毕竟不能一直毫无节制的增加下去，这时候就需要考虑程序的运行效率了。
-作为一个好的程序员，不得不具备这项技能。</p>
-<p>怎样提高程序的运行效率，有没有想过？程序是算法和数据结构组成的，数据结构决定一个程序的空间复杂度，算法则决定一个程序的时间复杂度。
-想要程序跑的更快，空间占用更少，可以从这两个维度来进行探索。</p>
-<p>一个好的算法离不开一个好的想法，这对于一个程序来说是至关重要的，因为它是决定程序运行速度的关键原因。
-可能很多人都有一个误区，就是代码越少执行效率就越高，在改进算法的时候会通过删减代码来进行。
-但事实并不是这样，举个例子，匹配字符串，在数据量很大的情况下，暴力匹配的方式无论你怎么改，都会比那些运用了好的算法的程序慢。</p>
+<p>运行效率即代码的运行效率，包括运行所占用的时间和空间。如果数据量不是很大（单表在300w左右）可能几乎不用考虑这个问题。空间就更不用说了，现在大多数公司都是用空间来换时间的，即通过增加服务器的配置或数量来提高程序运算速度，所以很多人并不关心程序运行的效率。</p>
+<p>当然我也不是很关心软件的运行效率，因为软件的运行效率主要还是取决与硬件的发展水平，现在硬件发展比软件发展快了一个档次，不然现在也不能一下子涌起那么多的软件公司。但是如果业务量非常大，电脑的运行效率也是有限的，当服务器达到一定数量后，企业就会考虑成本，毕竟不能一直毫无节制的增加下去，这时候就需要考虑程序的运行效率了。作为一个好的程序员，不得不具备这项技能。</p>
+<p>怎样提高程序的运行效率？程序是算法和数据结构组成的，数据结构决定一个程序的空间复杂度，算法则决定一个程序的时间复杂度。想要程序跑的更快，空间占用更少，可以从这两个维度来进行探索。</p>
+<p>一个好的算法离不开一个好的想法，这对于一个程序来说是至关重要的，因为它是决定程序运行速度的关键原因。<strong>可能很多人都有一个误区，就是代码越少执行效率就越高，</strong> 在改进算法的时候会通过删减代码来进行。但事实并不是这样，举个例子，匹配字符串，在数据量很大的情况下，暴力匹配的方式无论你怎么改，都会比那些运用了好的算法的程序慢。</p>
 <p>不整洁的代码是混乱的，代码混乱到一定程度就会对程序的运行速度产生影响。所以，代码的整洁程度一定程度上影响了代码的运行速度。</p>
 <h3 id="扩展性">扩展性</h3>
-<p>整洁的代码除了是可读性强、运行效率高还有最重要的一点是它是容易扩展的，扩展性可理解为易于修改的代码。
-程序的扩展性代表了维护该程序程度的难易，当然可读性也是，二者都很重要。
-在所有的设计模式中，几乎所有的设计模式都是为了符合开闭原则，即保持程序的扩展性，这足以体现开闭原则在设计模式中的重要程度。</p>
-<p>代码都是为了一定的需求服务的，但是这些需求并不是一成不变的，当需求变更了，如果我们代码的扩展性很好，我们可能只需要简单的添加或者删除模块就行了。
-如果扩展性不好，可能所有代码都需要重写，那就是一场灾难了，所以提高代码的扩展性是很重要的。</p>
+<p>整洁的代码除了是可读性强、运行效率高还有最重要的一点是它是容易扩展的，扩展性可理解为易于修改的代码。程序的扩展性代表了维护该程序程度的难易，当然可读性也是，二者都很重要。<strong>在所有的设计模式中，几乎所有的设计模式都是为了符合开闭原则，即保持程序的扩展性，</strong> 这足以体现开闭原则在设计模式中的重要程度。</p>
+<p>代码都是为了一定的需求服务的，但是这些需求并不是一成不变的，当需求变更了，如果我们代码的扩展性很好，我们可能只需要简单的添加或者删除模块就行了。如果扩展性不好，可能所有代码都需要重写，那就是一场灾难了，所以提高代码的扩展性是很重要的。</p>
 <p>衡量代码扩展性可以从高内聚，低耦合这两个方面来衡量。</p>
 <ul>
 <li>高内聚：指的是一个软件单位内部的关联紧密程度；相关的功能应集中在同一模块中，有关联的事务应该放在一起。</li>
 <li>低耦合：指两个或多个软件单位之间的关联紧密程度；软件单元之间应尽可能减少依赖，减少相互影响。</li>
 </ul>
 <h2 id="怎么写整洁的代码">怎么写整洁的代码</h2>
-<p>好的代码是不断的迭代出来的，没有人能一下子写完整，需求会变代码也会改变。
-第一次迭代可能写的代码很糟糕，这时一定要再次回头去看之前的代码去优化，让代码变得易于维护。</p>
+<p><strong>好的代码是不断的迭代出来的，没有人能一下子写完整，需求会变代码也会改变。第一次迭代可能写的代码很糟糕，这时一定要再次回头去看之前的代码去优化，让代码变得易于维护。</strong></p>
 <p>如何写出整洁的代码，那就看你怎么理解整洁的代码，理解的不一样写出来的肯定就不一样。下面是我的几点建议。</p>
 <h3 id="注释命名">注释&amp;命名</h3>
-<p>注释只是二手的信息，它和代码所传达的信息并不等价。所以不要写没有意义的注释(冗余注释，废弃注释，等一些没有意义的信息和不恰当的信息)，要知道代码有人维护，可注释没有人维护，最好的办法就是规范变量、方法的命名，做到见名知意。
-如果你的方法命名足够明确就可以不用写注释了，当然一段好的注释一定是包含代码中没有体现的信息。</p>
-<p>如果要编写一条注释，就花时间尽量保证写出最好的注释，不要画蛇添足，要保持注释的简洁。比如，无用的代码直接删掉，不要注释它，不用担心会丢，版本服务会有记录能找回。
-编写注释和迭代代码是一样的道理，但是一般注释是没有人来维护的，因为它不会影响程序的正常运行。</p>
+<p><strong>注释只是二手的信息，它和代码所传达的信息并不等价。</strong> 所以不要写没有意义的注释(冗余注释，废弃注释，等一些没有意义的信息和不恰当的信息)，要知道代码有人维护，可注释没有人维护，最好的办法就是规范变量、方法的命名，做到见名知意。如果你的方法命名足够明确就可以不用写注释了，当然一段好的注释一定是包含代码中没有体现的信息。</p>
+<p>如果要编写一条注释，就花时间尽量保证写出最好的注释，不要画蛇添足，要保持注释的简洁。比如，无用的代码直接删掉，不要注释它，不用担心会丢，版本服务会有记录能找回。编写注释和迭代代码是一样的道理，但是一般注释是没有人来维护的，因为它不会影响程序的正常运行。</p>
 <p>同样的，命名也不会影响程序的正常运行。注释和命名是不会影响程序的执行的，但是这两个因素是会影响到开发者编写代码的。它们会导致开发者的认知负荷增加，从而降低编写代码的效率。</p>
-<p>好的代码本身就是注释，我们要尽量规范和美化自己的代码来减少不必要的注释。
-如果编程语言足够有表达力，就不需要注释，尽量通过代码来阐述，所以编程语言的表达力很大程度上就取决于方法的命名。</p>
-<p>那什么是好的命名呢？说实话这也是我写程序一直头疼的原因，总觉得命名不够好。
-在网络上看到一种方法觉得很不错，把你的变量名拎出来，问别人，你看到这个名字会想到什么，他说的和你想的一致就用，否则就改。改到基本上不懂程序的人都能大概看懂你写的是什么，那大概就是好的命名了。
-当然这种方法并不实际，我命名通常用的就是翻译，用这个词语的英文，如果太长就用简称。</p>
-<p>程序的命名我认为是约定俗成的，最开始的的开发者们，他们一定会遇到这个问题的，久而久之就会建立一套规则将这些命名进行统一。
-到了现在一定是有很多成熟的命名规则的，所以我们可以踩着前辈们的肩膀前行。</p>
-<p>虽然是约定俗成的，但是事物的发展一定不是一成不变的，我并不知道在我写下这么多文字后是否适用于未来。
-或许只有思想会适用，而那些具体的方法是一定不会适用的，但是现在我们需要具体的解决方案，或许我能给你提点建议，如果能帮到你我会很高兴的。</p>
+<p>好的代码本身就是注释，我们要尽量规范和美化自己的代码来减少不必要的注释。如果编程语言足够有表达力，就不需要注释，尽量通过代码来阐述。编程语言的表达力很大程度上就取决于方法的命名。</p>
+<p>那什么是好的命名呢？说实话这也是我写程序一直头疼的原因，总觉得命名不够好。在网络上看到一种方法觉得很不错，把你的变量名拎出来，问别人，你看到这个名字会想到什么，他说的和你想的一致就用，否则就改。改到基本上不懂程序的人都能大概看懂你写的是什么，那大概就是好的命名了。当然这种方法并不实际，我命名通常用的就是翻译，用这个词语的英文，如果太长就用简称。</p>
+<p>程序的命名我认为是约定俗成的，最开始的的开发者们，他们一定会遇到这个问题的，久而久之就会建立一套规则将这些命名进行统一。到了现在一定是有很多成熟的命名规则的，所以我们可以踩着前辈们的肩膀前行。</p>
+<p>虽然是约定俗成的，但是事物的发展一定不是一成不变的，我并不知道在我写下这么多文字后是否适用于未来。或许只有思想会适用，而那些具体的方法是一定不会适用的，但是现在我们需要具体的解决方案，或许我能给你提点建议，如果能帮到你我会很高兴的。</p>
 <p>注释建议：</p>
 <ul>
-<li>尽量保持代码的简洁，能不用注释尽量不用注释，切记注释应该展示代码中没有展示的信息；</li>
-<li>注释代码，那么应该在注释代码的上方详细的说明，而不是简单的注释，如果代码没有用那么应该删除；</li>
+<li>尽量保持代码的简洁，能不用注释尽量不用注释，<strong>注释应该展示代码中没有展示的信息</strong>；</li>
+<li><strong>注释代码，那么应该在注释代码的上方详细的说明</strong>，而不是简单的注释，如果代码没有用那么应该删除；</li>
 <li>注释也要随着程序的修改而不断更新，一个误导的注释往往比没有注释更糟；</li>
 </ul>
 <p>命名建议：</p>
 <ul>
 <li>命名尽量不要使用缩写，因为意义不明确，除非缩写是外界公认的，比如：<code>EN</code>，<code>CH</code>；</li>
-<li>在Java中较为适用的是驼峰命名法，如: <code>helloWord</code>，<code>HelloWord</code>，但是这种方法如果命名过长也不能很直观的展示信息，所以尽量不要起太长的名字，否则什么方法都不管用。
-如果一个方法的名字过长，那么很可能这个方法不止做了一件事，这时候我们需要将它拆分；</li>
+<li>在Java中较为适用的是驼峰命名法，如: <code>helloWord</code>，<code>HelloWord</code>，但是这种方法如果命名过长也不能很直观的展示信息，所以尽量不要起太长的名字，否则什么方法都不管用。如果一个方法的名字过长，那么很可能这个方法不止做了一件事，这时候我们需要将它拆分；</li>
 <li>接口和类的名称首字母应该大写，如<code>MyClass</code>/<code>MyInterface</code>；方法的名称首字母小写，如<code>myMethod</code>，常量的命名全部大写，同时用蛇形命名法，单词的分割用下划线隔开，如<code>MY _CONSTANT</code>；</li>
 <li>方法的命名用动词，类的命名用名词，属性的命名用名词，接口的命名用形容词或动词，抽象类的命名应以<code>Abstract</code>/<code>Base</code>为前缀，实现类命名要以<code>impl</code>结尾，异常类以<code>Exception</code>结尾；</li>
 </ul>
 <h3 id="方法类">方法&amp;类</h3>
-<p>最好的方法入参参数数量是0个，其次是1个，最多建议不超过3个，大于三个建议封装成对象，这样做的好处是方便扩展管理。
-在一个方法中声明变量应该放在方法的最前面，还应该降低方法的复杂度，避免出现<code>if-else</code>多层嵌套的情况，如果一个方法过于复杂可将该方法进行拆分。
-还应当注意方法中异常块的处理，一般情况下是不会写的，因为有全局异常处理，如果非要写那么可能代码看起来不是那么简洁清晰，要注意方法的封装。
-当我们写方法返回值的时候，如果返回值类型是数组或集合，我们应该避免返回<code>null</code>，否则调用方就有可能出现空指针，这样可以避免不必要的空指针判断。</p>
-<p>或许我应该更加细致的整理出来：</p>
+<p>最好的方法入参参数数量是0个，其次是1个，最多建议不超过3个，大于三个建议封装成对象，这样做的好处是方便扩展管理。</p>
+<p>在一个方法中声明变量应该放在方法的最前面，还应该降低方法的复杂度，避免出现<code>if-else</code>多层嵌套的情况，如果一个方法过于复杂可将该方法进行拆分。还应当注意方法中异常块的处理，一般情况下是不会写的，因为有全局异常处理，如果非要写那么可能代码看起来不是那么简洁清晰，要注意方法的封装。当我们写方法返回值的时候，如果返回值类型是数组或集合，我们应该避免返回<code>null</code>，否则调用方就有可能出现空指针，这样可以避免不必要的空指针判断。</p>
+<p><strong>❌ 糟糕的代码（深度嵌套，难以阅读和维护）：</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">calculateShippingCost</span><span class="p">(</span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">cost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">order</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">order</span><span class="p">.</span><span class="na">getCountry</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="s">&#34;US&#34;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">order</span><span class="p">.</span><span class="na">getTotalWeight</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">10</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">cost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">15</span><span class="p">.</span><span class="na">00</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">cost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">10</span><span class="p">.</span><span class="na">00</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">order</span><span class="p">.</span><span class="na">getCountry</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="s">&#34;CN&#34;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">order</span><span class="p">.</span><span class="na">getTotalWeight</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">5</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">cost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">25</span><span class="p">.</span><span class="na">00</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">cost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">20</span><span class="p">.</span><span class="na">00</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 默认国际运费</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">cost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">30</span><span class="p">.</span><span class="na">00</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InvalidOrderException</span><span class="p">(</span><span class="s">&#34;Order cannot be null.&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">cost</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><strong>✅ 整洁的代码（使用卫语句提前返回，结构扁平清晰）：</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">calculateShippingCost</span><span class="p">(</span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 卫语句：优先检查并处理非法情况</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">order</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InvalidOrderException</span><span class="p">(</span><span class="s">&#34;Order cannot be null.&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 卫语句：提前返回明确的情况</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">order</span><span class="p">.</span><span class="na">getCountry</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="s">&#34;US&#34;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="na">getTotalWeight</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">10</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">15</span><span class="p">.</span><span class="na">00</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">10</span><span class="p">.</span><span class="na">00</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">order</span><span class="p">.</span><span class="na">getCountry</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="s">&#34;CN&#34;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="na">getTotalWeight</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">5</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">25</span><span class="p">.</span><span class="na">00</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">20</span><span class="p">.</span><span class="na">00</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 默认情况放在最后</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">30</span><span class="p">.</span><span class="na">00</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>或许我应该更加细致的整理出来：</p>
 <ul>
 <li>减少方法的入参数量，控制在三个以内，超过三个封装成对象；</li>
 <li>使用卫语句、策略模式、职责链模式来减少<code>if-else</code>多层嵌套和不必要的<code>else</code>；用三元运算符代替简单<code>if-else</code>（根据不同的情境使用，可能会影响代码的可读性）；</li>
@@ -528,20 +543,90 @@
 <li>复杂的条件表达式、循环语句、代码块、<code>Lambda</code>匿名内部类，都可以单独将其封装成方法；如果是方法内部调用的方法，该方法的返回值应尽量用基础类型。并不是方法越多越好，方法之间的互相调用也会影响性能，增加复杂度，请根据实际情况拆分；</li>
 <li>方法的返回值如果是集合或者数组，不要返回<code>null</code>，尽量返回空值，这样可以避免空指针的判断，从而精简代码；</li>
 </ul>
-<p>除了上述的几点以外，在写方法时还要遵循单一职责原则，即每个方法只做一件事。好处是方便管理，代码可读性会提高，复杂度降低 易于维护。
-还要遵循开闭原则，这会使你的代码更加灵活。当然这些代码肯定不是一次就写出来的，好的代码需要迭代、需要打磨。在你写完几个方法之后，可能会发现重复的地方，这时候就需要将他们抽象出来。</p>
-<p>许许多多的方法组成了类，当不同类之间的方法相互调用的时候，就会存在多个类之间的联系，所以在编写类的时候要注意类之间的依赖关系，使它们别那么耦合，一般会遵循迪米特法则。</p>
-<p>类中的属性存在使类中的元素更加丰富，一般情况下属性在类中都是私有的，会对外提供<code>set</code>、<code>get</code>方法供外部调用修改。
-这样做的好处是方便控制外部调用，假如你想公共处理某个属性给它加个前缀，就可以通过调用该类中涉及到该属性的方法进行修改，如果你直接修改属性那么改起来会很麻烦。
-类中的属性极少数情况是公共的，比如定义一个常量类，公共的资源属性。多数情况下是受保护的，这种情况一般是用来给子类使用的，当然同一个包下也能访问得到。</p>
+<p>除了上述的几点以外，<strong>在写方法时还要遵循单一职责原则，即每个方法只做一件事。</strong> 好处是方便管理，代码可读性会提高，复杂度降低 易于维护。还要遵循开闭原则，这会使你的代码更加灵活。当然这些代码肯定不是一次就写出来的，好的代码需要迭代、需要打磨。在你写完几个方法之后，可能会发现重复的地方，这时候就需要将他们抽象出来。</p>
+<p><strong>❌ 糟糕的代码（一个冗长的方法做了所有事）：</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processOrder</span><span class="p">(</span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 1. 验证订单</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">order</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="na">getItems</span><span class="p">().</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InvalidOrderException</span><span class="p">(</span><span class="s">&#34;Order is invalid.&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Item</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="na">getItems</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="na">getStock</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="na">getQuantity</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InsufficientStockException</span><span class="p">(</span><span class="s">&#34;Insufficient stock for item: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="na">getName</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// ... 其他验证逻辑（长达10行）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 2. 计算总价（包括折扣、税费等）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">subtotal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Item</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="na">getItems</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">subtotal</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="na">getPrice</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="na">getQuantity</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">discount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">calculateDiscount</span><span class="p">(</span><span class="n">order</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">tax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">calculateTax</span><span class="p">(</span><span class="n">subtotal</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">discount</span><span class="p">,</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="na">getCountry</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subtotal</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">discount</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">tax</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">order</span><span class="p">.</span><span class="na">setTotal</span><span class="p">(</span><span class="n">total</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// ... 其他计算逻辑（长达15行）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 3. 库存扣减</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Item</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="na">getItems</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">newStock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="na">getStock</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="na">getQuantity</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">item</span><span class="p">.</span><span class="na">setStock</span><span class="p">(</span><span class="n">newStock</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">inventoryRepository</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">item</span><span class="p">);</span><span class="w"> </span><span class="c1">// 数据库操作</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// ... 其他库存逻辑（长达5行）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 4. 保存订单、发送邮件等...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">orderRepository</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">order</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">emailService</span><span class="p">.</span><span class="na">sendConfirmationEmail</span><span class="p">(</span><span class="n">order</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// ... (其他逻辑)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><strong>✅ 整洁的代码（拆分为多个单一职责的方法）：</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processOrder</span><span class="p">(</span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">validateOrder</span><span class="p">(</span><span class="n">order</span><span class="p">);</span><span class="w">       </span><span class="c1">// 只负责验证</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">calculateOrderTotals</span><span class="p">(</span><span class="n">order</span><span class="p">);</span><span class="w"> </span><span class="c1">// 只负责计算</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">updateInventory</span><span class="p">(</span><span class="n">order</span><span class="p">);</span><span class="w">     </span><span class="c1">// 只负责更新库存</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">completeOrder</span><span class="p">(</span><span class="n">order</span><span class="p">);</span><span class="w">       </span><span class="c1">// 只负责持久化和通知</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// --- 每个小方法只做一件事 ---</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">validateOrder</span><span class="p">(</span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">order</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="na">getItems</span><span class="p">().</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InvalidOrderException</span><span class="p">(</span><span class="s">&#34;Order is invalid.&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Item</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="na">getItems</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="na">getStock</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="na">getQuantity</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InsufficientStockException</span><span class="p">(</span><span class="s">&#34;Insufficient stock for item: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="na">getName</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// ... 其他验证逻辑</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">calculateOrderTotals</span><span class="p">(</span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">subtotal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">calculateSubtotal</span><span class="p">(</span><span class="n">order</span><span class="p">.</span><span class="na">getItems</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">discount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">calculateDiscount</span><span class="p">(</span><span class="n">order</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">tax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">calculateTax</span><span class="p">(</span><span class="n">subtotal</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">discount</span><span class="p">,</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="na">getCountry</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">order</span><span class="p">.</span><span class="na">setTotal</span><span class="p">(</span><span class="n">subtotal</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">discount</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">tax</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">updateInventory</span><span class="p">(</span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Item</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="na">getItems</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">item</span><span class="p">.</span><span class="na">setStock</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="na">getStock</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="na">getQuantity</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">inventoryRepository</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">item</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">completeOrder</span><span class="p">(</span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">orderRepository</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">order</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">emailService</span><span class="p">.</span><span class="na">sendConfirmationEmail</span><span class="p">(</span><span class="n">order</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// ... 其他更细粒度的计算 helper methods (calculateSubtotal, etc.)</span><span class="w">
+</span></span></span></code></pre></div><p>许许多多的方法组成了类，当不同类之间的方法相互调用的时候，就会存在多个类之间的联系，所以在编写类的时候要注意类之间的依赖关系，使它们别那么耦合，一般会遵循迪米特法则。</p>
+<p>类中的属性存在使类中的元素更加丰富，一般情况下属性在类中都是私有的，会对外提供<code>set</code>、<code>get</code>方法供外部调用修改。这样做的好处是方便控制外部调用，假如你想公共处理某个属性给它加个前缀，就可以通过调用该类中涉及到该属性的方法进行修改，如果你直接修改属性那么改起来会很麻烦。类中的属性极少数情况是公共的，比如定义一个常量类，公共的资源属性。多数情况下是受保护的，这种情况一般是用来给子类使用的，当然同一个包下也能访问得到。</p>
 <h3 id="代码结构">代码结构</h3>
-<p>高内聚低耦合，这是我们写代码应该遵循的标准。内聚代表着职责的专一，这是整洁的一个很重要准则。从大的方面来说，系统的使用与构造需要明确区分开，才不会将整个结构混杂在一起。
-与此同时，决定系统的数据流走向也是决定了整个系统的层级划分，不同的层级也需要明确的区分开来。</p>
+<p>高内聚低耦合，这是我们写代码应该遵循的标准。内聚代表着职责的专一，这是整洁的一个很重要准则。从大的方面来说，系统的使用与构造需要明确区分开，才不会将整个结构混杂在一起。与此同时，决定系统的数据流走向也是决定了整个系统的层级划分，不同的层级也需要明确的区分开来。</p>
 <p>那么应该怎么划分代码的结构？最简单的应该是同类型的、相关联的表需要放在一个类中或一个包中，写一些方法对外提供API，供其他方法调用，而不是跨层调用。</p>
-<p>一个好的结构使代码看上去更加清晰，更加容易维护，其实它更像是对系统架构的拆分。
-最常见的系统分层应该是MVC结构，即模型层、视图层、控制层，通常情况我们将控制层又分为业务层（<code>service</code>）和持久层（<code>dao</code>）。
-划分的目的是规划软件系统的逻辑结构便于开发维护，但是随着微服务的演变和不同研发的编码习惯，往往导致了代码分层不彻底导致引入了“坏味道”。
-划分代码我认为最重要的作用是使结构单一，减少代码之间的依赖性，降低耦合度，从而提高代码的可维护性。</p>
+<p>一个好的结构使代码看上去更加清晰，更加容易维护，其实它更像是对系统架构的拆分。最常见的系统分层应该是MVC结构，即模型层、视图层、控制层，通常情况我们将控制层又分为业务层（<code>service</code>）和持久层（<code>dao</code>）。划分的目的是规划软件系统的逻辑结构便于开发维护，但是随着微服务的演变和不同研发的编码习惯，往往导致了代码分层不彻底导致引入了“坏味道”。划分代码我认为最重要的作用是使结构单一，减少代码之间的依赖性，降低耦合度，从而提高代码的可维护性。</p>
 </div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">
