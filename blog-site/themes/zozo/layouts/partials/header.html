@@ -21,7 +21,7 @@
                     </a>
                     {{ end }}
                 {{ end }}
-                <a href="{{ .Site.RSSLink }}" type="application/rss+xml" title="rss" target="_blank">
+                <a href="{{ with .OutputFormats.Get "RSS" }}{{ .Permalink }}{{ end }}" type="application/rss+xml" title="rss" target="_blank">
                     <i class="ri-rss-fill"></i>
                 </a>
                 <!-- 功能链接图标 -->
