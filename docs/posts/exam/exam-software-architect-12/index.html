@@ -820,7 +820,7 @@
             <div class="post">
                 <div class="post_title post_detail_title">
                     
-                    <span class="date">总文章数 194 篇</span>
+                    <span class="date">总文章数 195 篇</span>
                 </div>
                 <div class="post_title post_detail_title">
                     
@@ -828,7 +828,7 @@
                     
                     
                     
-                    <span class="date">博客已运行 2061 天</span>
+                    <span class="date">博客已运行 2064 天</span>
                 </div>
             </div>
 
@@ -1692,8 +1692,7 @@ R1 和 R2 的交集属性是 {学号}。根据函数依赖，学号 → 姓名�
 <p><img alt="软考" src="/posts/annex/images/essays/%E8%BD%AF%E8%80%83-159.png"></p>
 <p>集中式数据库优化：</p>
 <ol>
-<li>硬件系统优化</li>
-</ol>
+<li>硬件系统优化
 <ul>
 <li><strong>CPU</strong>：升级更多核心、更高主频的CPU处理高并发计算任务</li>
 <li><strong>内存</strong>：扩大内存容量，使热数据和索引常驻内存，减少磁盘I/O</li>
@@ -1705,9 +1704,8 @@ R1 和 R2 的交集属性是 {学号}。根据函数依赖，学号 → 姓名�
 </li>
 <li><strong>网络</strong>：确保足够带宽和低延迟，避免成为瓶颈</li>
 </ul>
-<ol start="2">
-<li>系统软件优化</li>
-</ol>
+</li>
+<li>系统软件优化
 <ul>
 <li><strong>参数调优</strong>：调整OS和数据库参数，优化资源分配
 <ul>
@@ -1716,23 +1714,20 @@ R1 和 R2 的交集属性是 {学号}。根据函数依赖，学号 → 姓名�
 </ul>
 </li>
 </ul>
-<ol start="3">
-<li>数据库设计优化</li>
-</ol>
+</li>
+<li>数据库设计优化
 <ul>
 <li><strong>表的规划</strong>：遵循范式设计，必要时反规范化(增加冗余字段)</li>
 <li><strong>物化视图</strong>：将复杂查询结果预先计算并物理存储，用空间换时间</li>
 </ul>
-<ol start="4">
-<li>索引优化</li>
-</ol>
+</li>
+<li>索引优化
 <ul>
 <li><strong>常查询-建索引</strong>：为WHERE/JOIN/ORDER BY频繁使用的列创建索引</li>
 <li><strong>常修改-避免索引</strong>：写多读少的列避免过多索引，减少维护开销</li>
 </ul>
-<ol start="5">
-<li>应用软件(SQL)优化</li>
-</ol>
+</li>
+<li>应用软件(SQL)优化
 <ul>
 <li><strong>以不相干子查询替代相干子查询</strong>：重写SQL减少子查询执行次数</li>
 <li><strong>只检索需要的列</strong>：避免SELECT *，减少网络传输和数据处理</li>
@@ -1740,38 +1735,37 @@ R1 和 R2 的交集属性是 {学号}。根据函数依赖，学号 → 姓名�
 <li><strong>经常提交COMMIT</strong>：及时释放锁，提高并发性能</li>
 <li><strong>减少多表查询</strong>：优化复杂JOIN，考虑业务层处理或冗余字段</li>
 </ul>
+</li>
+</ol>
 <p>分布式数据库优化：</p>
 <ol>
-<li>通信代价</li>
-</ol>
+<li>通信代价
 <ul>
 <li><strong>核心目标</strong>：减少节点间网络传输数据量</li>
 </ul>
-<ol start="2">
-<li>全局查询树的变换</li>
-</ol>
+</li>
+<li>全局查询树的变换
 <ul>
 <li><strong>优化思路</strong>：选择跨节点执行成本最低的查询计划</li>
 </ul>
-<ol start="3">
-<li>多副本策略</li>
-</ol>
+</li>
+<li>多副本策略
 <ul>
 <li><strong>优化思路</strong>：数据冗余存储，读操作访问最近副本，提升读性能</li>
 </ul>
-<ol start="4">
-<li>查询树的分解</li>
-</ol>
+</li>
+<li>查询树的分解
 <ul>
 <li><strong>优化思路</strong>：将查询分解为可并行执行的子查询，提高并行度</li>
 </ul>
-<ol start="5">
-<li>半连接与直接连接</li>
-</ol>
+</li>
+<li>半连接与直接连接
 <ul>
 <li><strong>半连接</strong>：先过滤后传输，减少连接操作中的网络传输</li>
 <li><strong>直接连接</strong>：同一节点上的表直接连接，避免跨网络传输</li>
 </ul>
+</li>
+</ol>
 </div>
                     <div id="post_footer" class="post_footer">
                         <div class="meta">
