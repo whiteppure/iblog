@@ -163,7 +163,7 @@ $(document).ready((function (_this) {
 // 监听点击图像
 document.addEventListener('DOMContentLoaded', (event) => {
   var modal = document.createElement('div');
-  modal.setAttribute('id', 'myModal');
+  modal.setAttribute('id', 'imgModal');
   modal.setAttribute('class', 'modal');
   document.body.appendChild(modal);
 
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   var currentIndex = -1;
 
   images.forEach((img, index) => {
-    img.style.cursor = 'pointer';
+    img.classList.add('clickable-image');
     img.onclick = function() {
       modal.style.display = 'flex';
       modalImg.src = this.src;

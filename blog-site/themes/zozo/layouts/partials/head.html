@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<!-- cdn加速配置 -->
+{{ $base := .Site.BaseURL }}
+{{ if .Site.Params.enableCDN }}
+{{ $base = printf "https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/" }}
+{{ end }}
+
 <html {{ with .Site.LanguageCode }}lang="{{ . }}" {{ end }}>
 <head>
     <meta charset="utf-8" />
@@ -37,20 +43,15 @@
 
     <link rel="shortcut icon" href="{{ "images/favicon.ico" | absURL }}" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ .Site.BaseURL }}css/normalize.css" />
-<!--    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" />-->
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ "css/animate.min.css" | absURL }}" />
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ "css/zozo.css" |absURL }}" />
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ "css/remixicon.css" |absURL }}" />
-<!--	<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />-->
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ "css/highlight.css" | absURL }}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ $base }}css/normalize.css" />
+    <!--    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" />-->
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ $base }}css/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ $base }}css/zozo.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ $base }}css/remixicon.css" />
+    <!--	<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />-->
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ $base }}css/highlight.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ "css/toc.css" | absURL }}" />
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ "css/search.css" | absURL }}" />
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ "css/img.css" | absURL }}" />
-
-    <!-- custom css -->
-    {{ range .Site.Params.customCSS }}
-    <link rel="stylesheet" href="{{ "css/" | absURL }}{{ . }}" />
-    {{ end }}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ $base }}css/toc.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ $base }}css/search.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ $base }}css/img.css" />
 </head>

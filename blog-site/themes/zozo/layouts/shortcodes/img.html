@@ -1,7 +1,27 @@
 {{ $path := .Get "src" }}
+{{ $alt := .Get "alt" }}
 {{ $caption := .Get "title" }}
+{{ $class := .Get "class" }}
+{{ $style := .Get "style" }}
+
+{{/* 确定最终的图片路径 */}}
+{{ $finalPath := $path | absURL }}
+{{ if $.Site.Params.enableCDN }}
+{{ if hasPrefix $path "/" }}
+{{ $finalPath = printf "https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs%s" $path }}
+{{ else }}
+{{ $finalPath = printf "https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/%s" $path }}
+{{ end }}
+{{ end }}
+
+{{/* 如果没有提供 alt 文本，尝试使用 caption */}}
+{{ if not $alt }}
+{{ $alt = $caption }}
+{{ end }}
+
 <div class="fancybox">
-    <a data-fancybox="gallery" href="{{ $path | absURL }}" data-caption="{{ $caption }}">
-        <img src="{{ $path | absURL }}" />
-    </a>
+    <img src="{{ $finalPath }}"
+         alt="{{ $alt }}"
+         {{ with $class }}class="{{ . }}"{{ end }}
+         {{ with $style }}style="{{ . }}"{{ end }} />
 </div>

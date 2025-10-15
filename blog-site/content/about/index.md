@@ -60,58 +60,58 @@ draft: false
 
 <div class="img-container">
   <div class="img-item">
-    <img src="/posts/annex/images/me/香薰.jpg" alt="香薰" style="width: 100%; height: auto; border-radius: 8px;">
+    {{<img src="/posts/annex/images/me/香薰.jpg" alt="香薰" style="width: 100%; height: auto; border-radius: 8px;">}}
   </div>
   <div class="img-item">
-    <img src="/posts/annex/images/me/日常做菜-1.jpg" alt="日常做菜" style="width: 100%; height: auto; border-radius: 8px;">
+    {{<img src="/posts/annex/images/me/日常做菜-1.jpg" alt="日常做菜" style="width: 100%; height: auto; border-radius: 8px;">}}
   </div>
   <div class="img-item">
-    <img src="/posts/annex/images/me/日常做菜-2.jpg" alt="日常做菜" style="width: 100%; height: auto; border-radius: 8px;">
+    {{<img src="/posts/annex/images/me/日常做菜-2.jpg" alt="日常做菜" style="width: 100%; height: auto; border-radius: 8px;">}}
   </div>
   <div class="img-item">
-    <img src="/posts/annex/images/me/乌龟.jpg" alt="乌龟" style="width: 100%; height: auto; border-radius: 8px;">
+    {{<img src="/posts/annex/images/me/乌龟.jpg" alt="乌龟" style="width: 100%; height: auto; border-radius: 8px;">}}
   </div>
   <div class="img-item">
-    <img src="/posts/annex/images/me/小狗.jpg" alt="小狗" style="width: 100%; height: auto; border-radius: 8px;">
+    {{<img src="/posts/annex/images/me/小狗.jpg" alt="小狗" style="width: 100%; height: auto; border-radius: 8px;">}}
   </div>
   <div class="img-item">
-    <img src="/posts/annex/images/me/猫咪.jpg" alt="猫咪" style="width: 100%; height: auto; border-radius: 8px;">
+    {{<img src="/posts/annex/images/me/猫咪.jpg" alt="猫咪" style="width: 100%; height: auto; border-radius: 8px;">}}
   </div>
   <div class="img-item">
-    <img src="/posts/annex/images/me/蚂蚱.jpg" alt="蚂蚱" style="width: 100%; height: auto; border-radius: 8px;">
+    {{<img src="/posts/annex/images/me/蚂蚱.jpg" alt="蚂蚱" style="width: 100%; height: auto; border-radius: 8px;">}}
   </div>
   <div class="img-item">
-    <img src="/posts/annex/images/me/我-1.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">
+    {{<img src="/posts/annex/images/me/我-1.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">}}
   </div>
   <div class="img-item">
-    <img src="/posts/annex/images/me/我-2.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">
+    {{<img src="/posts/annex/images/me/我-2.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">}}
   </div>
   <div class="img-item">
-    <img src="/posts/annex/images/me/走过的城市.png" alt="走过的城市" style="width: 100%; height: auto; border-radius: 8px;">
+    {{<img src="/posts/annex/images/me/走过的城市.png" alt="走过的城市" style="width: 100%; height: auto; border-radius: 8px;">}}
   </div>
   <div class="img-item">
-    <img src="/posts/annex/images/me/风景-1.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">
+    {{<img src="/posts/annex/images/me/风景-1.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">}}
   </div>
    <div class="img-item">
-    <img src="/posts/annex/images/me/风景-2.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">
+    {{<img src="/posts/annex/images/me/风景-2.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">}}
   </div>
   <div class="img-item">
-    <img src="/posts/annex/images/me/风景-3.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">
+    {{<img src="/posts/annex/images/me/风景-3.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">}}
   </div>
   <div class="img-item">
-    <img src="/posts/annex/images/me/风景-4.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">
+    {{<img src="/posts/annex/images/me/风景-4.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">}}
   </div>
   <div class="img-item">
-    <img src="/posts/annex/images/me/风景-5.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">
+    {{<img src="/posts/annex/images/me/风景-5.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">}}
   </div>
   <div class="img-item">
-    <img src="/posts/annex/images/me/风景-6.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">
+    {{<img src="/posts/annex/images/me/风景-6.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">}}
   </div>
   <div class="img-item">
-    <img src="/posts/annex/images/me/风景-7.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">
+    {{<img src="/posts/annex/images/me/风景-7.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">}}
   </div>
   <div class="img-item">
-    <img src="/posts/annex/images/me/风景-8.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">
+    {{<img src="/posts/annex/images/me/风景-8.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">}}
   </div>
 </div>
 
@@ -121,9 +121,7 @@ draft: false
 因为工作圈子比较固定，认识新朋友的机会不多，如果能遇到一个频率相近、聊得来的人，那最好了。
 如果你也认同简单真诚的相处方式，欢迎向我打招呼。
 
-<div style="text-align: center;">
-    <img src="/posts/annex/images/me/我的微信.png" alt="我的微信" style="max-width: 33%; height: auto;">
-</div>
+{{<img src="/posts/annex/images/me/我的微信.png" alt="我的微信" style="max-width: 25%; height: auto;">}}
 
 ## 专业技能
 截止2025年，我是一名5年经验的软件工程师，擅长使用设计模式，具备良好独立开发、排故以及一定组织能力。曾带领10人团队，完成50万用户量级电商系统架构优化，负责过银行验印、票交、账户系统开发维护等，现主导军工某控制系统的架构优化与维护。
@@ -133,14 +131,12 @@ draft: false
 
 如果您有任何问题想要交流，或者需要简历方面的建议，欢迎联系我。
 
-<div style="text-align: center;">
-    <img src="/posts/annex/images/me/我的微信.png" alt="我的微信" style="max-width: 33%; height: auto;">
-</div>
+{{<img src="/posts/annex/images/me/我的微信.png" alt="我的微信" style="max-width: 25%; height: auto;">}}
+
 
 我会不定期在我的公众号上发布一些技术文章和个人随笔，欢迎大家关注。希望这个平台能成为我们相互学习、共同成长的空间。
-<div style="text-align: center;">
-    <img src="/posts/annex/images/me/公众号二维码.jpg" alt="公众号" style="max-width: 50%; height: auto;">
-</div>
+{{<img src="/posts/annex/images/me/公众号二维码.jpg" alt="公众号" style="max-width: 50%; height: auto;">}}
+
 
 ## 我的博客
 我从2020年就开始写博客了，初衷很简单，就是为了记录学习过程中的心得和体会。一开始，我在一些现成的平台上发布内容，但很快就发现这些平台不够灵活，无法完全满足我的需求。于是，我决定自己动手搭建一个博客。
@@ -150,5 +146,4 @@ draft: false
 如果你也对搭建自己的博客感兴趣，可以参考我之前写的文章[这篇文章](/posts/essays/build-blog/)，里面详细记录了我的搭建过程和一些心得体会。
 
 目前，博客的内容主要围绕技术展开，特别是后端开发相关的知识点。未来，我计划增加一些生活感悟和个人成长方面的内容，希望能让博客变得更加丰富多彩，成为一个我们共同学习和成长的地方。
-
 

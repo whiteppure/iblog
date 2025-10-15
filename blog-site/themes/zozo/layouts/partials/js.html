@@ -1,17 +1,22 @@
-<script src="{{ "js/jquery-3.5.1.min.js" | absURL }}"></script>
-<link href="{{ "css/fancybox.min.css" | absURL }}" rel="stylesheet">
-<script src="{{ "js/fancybox.min.js" | absURL }}"></script>
-<script src="{{ "js/darkmode.js" | absURL }}"></script>
-<script src="{{ "js/zozo.js" | absURL }}"></script>
-<!--<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>-->
-<script src="{{ "js/busuanzi_2.3_busuanzi.pure.mini.js" | absURL }}"></script>
-<script src="{{ "js/html2canvas.js" | absURL }}"></script>
-<script src="{{ "js/utils.js" | absURL }}"></script>
-<script src="{{ "js/html2md.js" | absURL }}"></script>
-<script src="{{ "js/htmlexport.js" | absURL }}"></script>
+<!-- cdn加速配置 -->
+{{ $base := .Site.BaseURL }}
+{{ if .Site.Params.enableCDN }}
+{{ $base = printf "https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/" }}
+{{ end }}
 
-<script src="{{ "js/fastsearch.js" | absURL }}"></script>
-<script src="{{ "js/fuse.js" | absURL }}"></script>
+<!-- JS 资源 -->
+<script src="{{ $base }}js/jquery-3.5.1.min.js"></script>
+<script src="{{ $base }}js/fancybox.min.js"></script>
+<script src="{{ $base }}js/darkmode.js"></script>
+<script src="{{ $base }}js/zozo.js"></script>
+<!--<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>-->
+<script src="{{ $base }}js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
+<script src="{{ $base }}js/html2canvas.js"></script>
+<script src="{{ $base }}js/utils.js"></script>
+<script src="{{ $base }}js/html2md.js"></script>
+<script src="{{ $base }}js/htmlexport.js"></script>
+<script src="{{ $base }}js/fastsearch.js"></script>
+<script src="{{ $base }}js/fuse.js"></script>
 
 <!-- dark mode -->
 <script>
