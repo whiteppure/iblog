@@ -121,7 +121,9 @@ draft: false
 因为工作圈子比较固定，认识新朋友的机会不多，如果能遇到一个频率相近、聊得来的人，那最好了。
 如果你也认同简单真诚的相处方式，欢迎向我打招呼。
 
-{{<img src="/posts/annex/images/me/我的微信.png" alt="我的微信" style="max-width: 25%; height: auto;">}}
+<div style="text-align: center">
+    <img src="/posts/annex/images/me/我的微信.png" alt="我的微信" style="max-width: 50%; height: auto;">
+</div>
 
 ## 专业技能
 截止2025年，我是一名5年经验的软件工程师，擅长使用设计模式，具备良好独立开发、排故以及一定组织能力。曾带领10人团队，完成50万用户量级电商系统架构优化，负责过银行验印、票交、账户系统开发维护等，现主导军工某控制系统的架构优化与维护。
@@ -131,12 +133,15 @@ draft: false
 
 如果您有任何问题想要交流，或者需要简历方面的建议，欢迎联系我。
 
-{{<img src="/posts/annex/images/me/我的微信.png" alt="我的微信" style="max-width: 25%; height: auto;">}}
-
+<div style="text-align: center">
+    <img src="/posts/annex/images/me/我的微信.png" alt="我的微信" style="max-width: 50%; height: auto;">
+</div>
 
 我会不定期在我的公众号上发布一些技术文章和个人随笔，欢迎大家关注。希望这个平台能成为我们相互学习、共同成长的空间。
-{{<img src="/posts/annex/images/me/公众号二维码.jpg" alt="公众号" style="max-width: 50%; height: auto;">}}
 
+<div style="text-align: center">
+    <img src="/posts/annex/images/me/公众号二维码.jpg" alt="公众号" style="max-width: 50%; height: auto;">
+</div>
 
 ## 我的博客
 我从2020年就开始写博客了，初衷很简单，就是为了记录学习过程中的心得和体会。一开始，我在一些现成的平台上发布内容，但很快就发现这些平台不够灵活，无法完全满足我的需求。于是，我决定自己动手搭建一个博客。
