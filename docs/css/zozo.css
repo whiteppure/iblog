@@ -749,6 +749,7 @@ a.back_to_top:hover span {
   color: #555555;
 }
 
+/* 自适应 适配移动端 */
 @media print, screen and (max-width: 750px) {
   .content .post_content {
     font-size: 30px;
@@ -778,21 +779,17 @@ a.back_to_top:hover span {
   }
   /* 归档 文章标题 */
   .list_with_title .listing .listing_post a {
-    font-size: 20px;
+    font-size: 25px;
   }
   .list_with_title .listing .listing_post .post_time{
-    font-size: 18px;
+    font-size: 20px;
   }
   /* 归档 标题 */
   .list_with_title .listing_title{
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
 
-  .post_footer{
-    display: none;
-  }
-
-  #post_header{
+  .post_footer,#post_header{
     display: none;
   }
   .menu_icon{
@@ -846,6 +843,11 @@ a.back_to_top:hover span {
   }
   #vcomments{
     font-size: 30px;
+  }
+
+  /* 底部隐藏 */
+  #footer_powered_by, #footer_slogan{
+    display: none;
   }
 
 }
@@ -912,6 +914,12 @@ a.back_to_top:hover span {
   }
 }
 
+@media (min-width: 1000px) and (max-width: 1350px) {
+  #page-scrollspy{
+    display: none;
+  }
+}
+
 /*1800以上*/
 @media screen and (min-width: 1800px) {
   .content{
@@ -928,13 +936,6 @@ a.back_to_top:hover span {
     width: 95%;
   }
 }
-
-@media (min-width: 1000px) and (max-width: 1350px) {
-  #page-scrollspy{
-    display: none;
-  }
-}
-
 
 /*animation starts*/
 @-webkit-keyframes fadeInDown {
