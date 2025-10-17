@@ -20,7 +20,7 @@
 	
     
     
-    <meta name="description" content="搭建博客框架及对比 在众多的博客框架中，Hugo、Jekyll和Hexo因其出色的性能和易用性而备受推崇。 特点 Hugo Jekyll Hexo 速度 极高 中等 较高 易用性 高 中等 高（熟悉JavaS" />
+    <meta name="description" content="搭建博客框架及对比 在众多的博客框架中，Hugo、Jekyll和Hexo因其出色的性能和易用性而备受推崇。 特点 Hugo Jekyll Hexo 速度 极高，适合频繁更新内容的用户 中等，适合定期" />
     
 
     
@@ -239,7 +239,7 @@
                     
                     
                     
-                    <span class="date">博客已运行 2092 天</span>
+                    <span class="date">博客已运行 2094 天</span>
                 </div>
             </div>
 
@@ -271,61 +271,49 @@
 </thead>
 <tbody>
 <tr>
-<td>速度</td>
-<td>极高</td>
-<td>中等</td>
-<td>较高</td>
+<td><strong>速度</strong></td>
+<td>极高，适合频繁更新内容的用户</td>
+<td>中等，适合定期更新内容的用户</td>
+<td>较高，满足大部分用户需求</td>
 </tr>
 <tr>
-<td>易用性</td>
-<td>高</td>
-<td>中等</td>
-<td>高（熟悉JavaScript者）</td>
+<td><strong>易用性</strong></td>
+<td>高，简洁界面与 Markdown 支持，学习成本低</td>
+<td>中等，需一定的 Ruby 语言基础，有一定学习曲线</td>
+<td>高，适合熟悉 JavaScript 的用户</td>
 </tr>
 <tr>
-<td>社区</td>
-<td>中等</td>
-<td>大</td>
-<td>活跃</td>
+<td><strong>社区</strong></td>
+<td>中等规模，足以应对常见问题</td>
+<td>庞大社区，丰富的插件生态</td>
+<td>活跃社区，插件和主题持续更新</td>
 </tr>
 <tr>
-<td>语言</td>
+<td><strong>语言</strong></td>
 <td>Go</td>
 <td>Ruby</td>
 <td>Node.js</td>
 </tr>
 <tr>
-<td>部署</td>
-<td>简单</td>
-<td>简单（与GitHub Pages集成）</td>
-<td>简单</td>
+<td><strong>部署</strong></td>
+<td>简单，支持多种平台</td>
+<td>简单，与 GitHub Pages 深度集成</td>
+<td>简单，适合 Node.js 环境</td>
 </tr>
 <tr>
-<td>插件/主题</td>
-<td>丰富</td>
-<td>非常丰富</td>
-<td>丰富</td>
+<td><strong>插件/主题</strong></td>
+<td>丰富，满足基本需求</td>
+<td>非常丰富，生态成熟</td>
+<td>丰富，适合个性化需求</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>内容频繁更新、追求极速生成的场景</td>
+<td>与 GitHub Pages 搭配、依赖成熟插件生态的场景</td>
+<td>熟悉 JavaScript、需要灵活定制的场景</td>
 </tr>
 </tbody>
 </table>
-<p>Hugo：</p>
-<ul>
-<li>速度：极快的生成速度，适合需要频繁更新内容的用户。</li>
-<li>易用性：简洁的界面和<code>Markdown</code>支持，降低了学习成本。</li>
-<li>社区：虽不如<code>Jekyll</code>庞大，但足够应对常见问题。</li>
-</ul>
-<p>Jekyll：</p>
-<ul>
-<li>速度：中等速度，适合定期更新内容的用户。</li>
-<li>易用性：<code>Ruby</code>语言基础，需要一定的学习曲线。</li>
-<li>社区：庞大的社区支持，丰富的插件生态。</li>
-</ul>
-<p>Hexo：</p>
-<ul>
-<li>速度：较快的生成速度，满足大部分用户需求。</li>
-<li>易用性：<code>Node.js</code>环境，适合熟悉<code>JavaScript</code>的用户。</li>
-<li>社区：活跃的社区，不断更新的插件和主题。</li>
-</ul>
 <h2 id="使用hugo搭建博客">使用Hugo搭建博客</h2>
 <p>这里选择了<code>Hugo</code>作为我的博客框架。它的极速和简约风格符合我的需求，让我能够专注于内容的创作。虽然<code>Jekyll</code>和<code>Hexo</code>也有各自的优点，但<code>Hugo</code>更符合我的个人喜好。</p>
 <p><code>Hugo</code>是一个使用<code>Go</code>语言编写的快速、简单和灵活的静态网站生成器。
@@ -342,7 +330,9 @@
 <p>安装好<code>Hugo</code>之后，就可以根据自己的喜好选择一个主题。可以访问<a href="https://www.gohugo.org/theme/">Hugo Themes</a>浏览各种主题。
 每个主题下都有详细说明和示例，帮助你快速上手，这里以我的博客所选择的主题<a href="https://github.com/varkai/hugo-theme-zozo">zozo</a>为例。</p>
 <ol>
-<li>进入<code>hugo</code>的站点目录运行下面的命令 <code>git clone https://github.com/varkai/hugo-theme-zozo themes/zozo</code>；</li>
+<li>进入<code>hugo</code>的站点目录运行下面的命令
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">varkai</span><span class="o">/</span><span class="n">hugo</span><span class="o">-</span><span class="n">theme</span><span class="o">-</span><span class="n">zozo</span> <span class="n">themes</span><span class="o">/</span><span class="n">zozo</span><span class="err">`</span>
+</span></span></code></pre></div></li>
 <li>进行博客配置，<code>config.toml</code>是网站的配置文件，主题提供了一个示例配置文件<a href="https://github.com/varkai/hugo-theme-zozo/blob/master/exampleSite/config.toml">config.toml</a>。配置文件中对大部分配置都有详细的注释说明，复制该文件到站点目录下，根据自己的情况修改即可；</li>
 <li>在命令行窗口，使用命令<code>hugo server</code>运行博客，在浏览器地址栏输入<code>localhost:1313</code>来访问站点；</li>
 </ol>
@@ -353,7 +343,29 @@
 <p>如果在本地已经构建起来博客，就可以向<code>GitHub</code>推送，推送完成之后就可以通过<code>username.github.io</code>就可以访问得到你的博客了，这就完成了博客的部署。</p>
 <p>需要注意的是，<code>Github Pages</code>需要在跟路径下创建一个<code>docs</code>文件夹，这个文件夹就是你的网站页面，我的是这样，<code>docs</code>里面保证根目录有一个<code>index.html</code>文件即可。
 一般我都是在本地通过<code>hugo -d .\docs\</code>命令生成静态页面到<code>docs</code>文件夹下，然后将<code>docs</code>文件夹推送到<code>GitHub</code>。</p>
-<p><img alt="搭建自己的博客-01.png" src="/posts/annex/images/essays/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2-01.png"></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="fancybox">
+    <img src="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/posts/annex/images/essays/%e6%90%ad%e5%bb%ba%e8%87%aa%e5%b7%b1%e7%9a%84%e5%8d%9a%e5%ae%a2-01.png"
+         alt="搭建自己的博客"
+         
+          />
+</div>
 <p>一些博客其他功能参考链接：</p>
 <ul>
 <li><code>Hugo</code>给文章添加目录: <a href="https://www.ariesme.com/posts/2019/add_toc_for_hugo">https://www.ariesme.com/posts/2019/add_toc_for_hugo</a></li>

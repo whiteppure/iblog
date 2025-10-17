@@ -21,7 +21,7 @@ draft: false
 这个习惯还是从之前做程序员时保留下来的，直到现在也让我受益。
 习惯做总结、写点小文章，有自己的博客网站，也喜欢小猫小狗，最近养了几盆盆栽，照料它们的过程让我觉得安心。
 
-我始终相信工作和生活需要平衡。空闲时我会下厨做几个家常菜，也喜欢约朋友去KTV唱唱歌、解解压。
+我始终相信工作和生活需要平衡。空闲时我会下厨做几个家常菜，也偶尔约朋友去唱唱歌、解解压。
 过去几年借着假期和出差的机会，也走过国内四十多个城市，不算资深的旅人，也算是个“有故事的路人甲”。
 
 <style>
@@ -122,7 +122,7 @@ draft: false
 如果你也认同简单真诚的相处方式，欢迎向我打招呼。
 
 <div style="text-align: center">
-    <img src="/posts/annex/images/me/我的微信.png" alt="我的微信" style="max-width: 50%; height: auto;">
+    {{<img src="/posts/annex/images/me/我的微信.jpg" alt="我的微信" style="max-width: 50%; height: auto;">}}
 </div>
 
 ## 专业技能
@@ -134,13 +134,13 @@ draft: false
 如果您有任何问题想要交流，或者需要简历方面的建议，欢迎联系我。
 
 <div style="text-align: center">
-    <img src="/posts/annex/images/me/我的微信.png" alt="我的微信" style="max-width: 50%; height: auto;">
+    {{<img src="/posts/annex/images/me/我的微信.jpg" alt="我的微信" style="max-width: 50%; height: auto;">}}
 </div>
 
 我会不定期在我的公众号上发布一些技术文章和个人随笔，欢迎大家关注。希望这个平台能成为我们相互学习、共同成长的空间。
 
 <div style="text-align: center">
-    <img src="/posts/annex/images/me/公众号二维码.jpg" alt="公众号" style="max-width: 50%; height: auto;">
+    {{<img src="/posts/annex/images/me/公众号二维码.jpg" alt="公众号" style="max-width: 50%; height: auto;">}}
 </div>
 
 ## 我的博客
@@ -148,7 +148,7 @@ draft: false
 
 最初，我选择了[Halo](https://gitee.com/halo-dev/halo)并在自己的服务器上部署，但由于经济原因，最终没有续费。后来，我发现[GitHub Pages](https://docs.github.com/zh/pages/getting-started-with-github-pages)加上[Hugo](https://gohugo.io)静态站点生成器是个非常棒的选择。这个组合不仅免费，还提供了很高的灵活性。现在，我的博客使用的是[zozo](https://github.com/varkai/hugo-theme-zozo)主题。
 
-如果你也对搭建自己的博客感兴趣，可以参考我之前写的文章[这篇文章](/posts/essays/build-blog/)，里面详细记录了我的搭建过程和一些心得体会。
+如果你也对搭建自己的博客感兴趣，可以参考我之前写的文章[这篇文章](/posts/essays/github-build-blog/)，里面详细记录了我的搭建过程和一些心得体会。
 
 目前，博客的内容主要围绕技术展开，特别是后端开发相关的知识点。未来，我计划增加一些生活感悟和个人成长方面的内容，希望能让博客变得更加丰富多彩，成为一个我们共同学习和成长的地方。
 
