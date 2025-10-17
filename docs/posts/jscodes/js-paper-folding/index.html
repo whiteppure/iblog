@@ -30,7 +30,7 @@
 
 	
 
-    <link rel="shortcut icon" href="https://blog.lijizhi.website/images/favicon.ico" />
+    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/images/favicon.ico" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/css/normalize.css" />
     
@@ -196,10 +196,10 @@
             
             <div class="post">
                 <div class="post_title post_detail_title">
-                    <span class="date" id="busuanzi_container_site_pv">访问量 <span id="busuanzi_value_site_pv">...</span> 次</span>
+                    <span class="date" id="busuanzi_container_site_pv">总访问量 <span id="busuanzi_site_pv">...</span> 次</span>
                 </div>
                 <div class="post_title post_detail_title">
-                    <span class="date" id="busuanzi_container_site_uv">访客数 <span id="busuanzi_value_site_uv">...</span> 人</span>
+                    <span class="date" id="busuanzi_container_site_uv">总访客数 <span id="busuanzi_site_uv">...</span> 人</span>
                 </div>
             </div>
             
@@ -466,7 +466,8 @@
 <script src="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/js/darkmode.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/js/zozo.js"></script>
 
-<script src="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/js/busuanzi_2.3_busuanzi.pure.mini.js"></script>
+
+<script src="//cdn.busuanzi.cc/busuanzi/3.6.9/busuanzi.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/js/html2canvas.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/js/utils.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/js/html2md.js"></script>
@@ -515,8 +516,8 @@
 <script>
     
     document.addEventListener("DOMContentLoaded", function () {
-        const uvE = document.getElementById('busuanzi_value_site_uv');
-        const pvE = document.getElementById('busuanzi_value_site_pv');
+        const uvE = document.getElementById('busuanzi_site_pv');
+        const pvE = document.getElementById('busuanzi_site_uv');
         const uvObs = new MutationObserver((mutationsList) => {
             for (let mutation of mutationsList) {
                 if (mutation.type === 'childList') {
