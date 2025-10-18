@@ -39,7 +39,7 @@ slug: "github-build-blog"
 每个主题下都有详细说明和示例，帮助你快速上手，这里以我的博客所选择的主题[zozo](https://github.com/varkai/hugo-theme-zozo)为例。
 1. 进入`hugo`的站点目录运行下面的命令
     ```git
-    git clone https://github.com/varkai/hugo-theme-zozo themes/zozo`
+    git clone https://github.com/varkai/hugo-theme-zozo themes/zozo
     ```
 2. 进行博客配置，`config.toml`是网站的配置文件，主题提供了一个示例配置文件[config.toml](https://github.com/varkai/hugo-theme-zozo/blob/master/exampleSite/config.toml)。配置文件中对大部分配置都有详细的注释说明，复制该文件到站点目录下，根据自己的情况修改即可；
 3. 在命令行窗口，使用命令`hugo server`运行博客，在浏览器地址栏输入`localhost:1313`来访问站点；
