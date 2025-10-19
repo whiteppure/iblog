@@ -162,74 +162,179 @@ $(document).ready((function (_this) {
 
 // 监听点击图像
 document.addEventListener('DOMContentLoaded', (event) => {
-  var modal = document.createElement('div');
-  modal.setAttribute('id', 'imgModal');
-  modal.setAttribute('class', 'modal');
-  document.body.appendChild(modal);
+    // 创建模态框
+    var modal = document.createElement('div');
+    modal.setAttribute('id', 'imgModal');
+    modal.setAttribute('class', 'modal');
+    document.body.appendChild(modal);
 
-  var modalImg = document.createElement('img');
-  modalImg.setAttribute('class', 'modal-content');
-  modalImg.setAttribute('id', 'img01');
-  modal.appendChild(modalImg);
+    // 创建图片容器
+    var modalContentContainer = document.createElement('div');
+    modalContentContainer.setAttribute('class', 'modal-content-container');
+    modal.appendChild(modalContentContainer);
 
-  var span = document.createElement('span');
-  span.setAttribute('class', 'close');
-  span.innerHTML = '&times;';
-  modal.appendChild(span);
+    // 创建图片元素
+    var modalImg = document.createElement('img');
+    modalImg.setAttribute('class', 'modal-content active');
+    modalImg.setAttribute('id', 'img01');
+    modalContentContainer.appendChild(modalImg);
 
-  var prev = document.createElement('span');
-  prev.setAttribute('class', 'prev');
-  prev.innerHTML = '&#10094;';
-  modal.appendChild(prev);
+    // 创建关闭按钮
+    var span = document.createElement('span');
+    span.setAttribute('class', 'close');
+    span.innerHTML = '&times;';
+    modal.appendChild(span);
 
-  var next = document.createElement('span');
-  next.setAttribute('class', 'next');
-  next.innerHTML = '&#10095;';
-  modal.appendChild(next);
+    // 创建上一张按钮
+    var prev = document.createElement('span');
+    prev.setAttribute('class', 'prev');
+    prev.innerHTML = '&#10094;';
+    modal.appendChild(prev);
 
-  var images = document.querySelectorAll('img');
-  var currentIndex = -1;
+    // 创建下一张按钮
+    var next = document.createElement('span');
+    next.setAttribute('class', 'next');
+    next.innerHTML = '&#10095;';
+    modal.appendChild(next);
 
-  images.forEach((img, index) => {
-    img.classList.add('clickable-image');
-    img.onclick = function() {
-      modal.style.display = 'flex';
-      modalImg.src = this.src;
-      currentIndex = index;
+    // 添加图片计数器
+    var counter = document.createElement('div');
+    counter.setAttribute('class', 'image-counter');
+    modal.appendChild(counter);
+
+    var images = document.querySelectorAll('img');
+    var currentIndex = -1;
+
+    // 触摸事件变量
+    let startX = 0;
+    let endX = 0;
+    const swipeThreshold = 50; // 滑动阈值
+
+    // 防止快速连续点击
+    let isAnimating = false;
+
+    // 添加点击事件
+    images.forEach((img, index) => {
+        img.classList.add('clickable-image');
+        img.onclick = function() {
+            modal.classList.add('show');
+            modalImg.src = this.src;
+            currentIndex = index;
+            updateCounter();
+        }
+    });
+
+    // 关闭模态框
+    span.onclick = function() {
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
     }
-  });
 
-  span.onclick = function() {
-    modal.style.display = 'none';
-  }
-
-  prev.onclick = function() {
-    currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
-    modalImg.src = images[currentIndex].src;
-  }
-
-  next.onclick = function() {
-    currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
-    modalImg.src = images[currentIndex].src;
-  }
-
-  modal.onclick = function(event) {
-    if (event.target === modal) {
-      modal.style.display = 'none';
+    // 上一张图片
+    prev.onclick = function() {
+        if (!isAnimating) {
+            navigate(-1);
+        }
     }
-  }
 
-  document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-      modal.style.display = 'none';
+    // 下一张图片
+    next.onclick = function() {
+        if (!isAnimating) {
+            navigate(1);
+        }
     }
-    if (event.key === 'ArrowLeft') {
-      prev.click();
+
+    // 导航函数
+    function navigate(direction) {
+        if (isAnimating) return;
+
+        isAnimating = true;
+
+        // 添加滑动动画类
+        if (direction > 0) {
+            modalImg.classList.add('slide-right');
+        } else {
+            modalImg.classList.add('slide-left');
+        }
+
+        // 等待动画完成
+        setTimeout(() => {
+            // 更新索引和图片
+            currentIndex = (currentIndex + direction + images.length) % images.length;
+            modalImg.src = images[currentIndex].src;
+            updateCounter();
+
+            // 移除滑动类并添加活动类
+            modalImg.classList.remove('slide-left', 'slide-right');
+            modalImg.classList.add('active');
+
+            // 允许下一次动画
+            setTimeout(() => {
+                isAnimating = false;
+            }, 50);
+        }, 400);
     }
-    if (event.key === 'ArrowRight') {
-      next.click();
+
+    // 更新计数器
+    function updateCounter() {
+        counter.textContent = `${currentIndex + 1} / ${images.length}`;
     }
-  });
+
+    // 点击模态框背景关闭
+    modal.onclick = function(event) {
+        if (event.target === modal) {
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+    }
+
+    // 键盘导航
+    document.addEventListener('keydown', function(event) {
+        if (modal.classList.contains('show')) {
+            if (event.key === 'Escape') {
+                modal.classList.remove('show');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 300);
+            }
+            if (event.key === 'ArrowLeft' && !isAnimating) {
+                navigate(-1);
+            }
+            if (event.key === 'ArrowRight' && !isAnimating) {
+                navigate(1);
+            }
+        }
+    });
+
+    // 触摸事件处理 - 移动端滑动支持
+    modal.addEventListener('touchstart', function(e) {
+        startX = e.touches[0].clientX;
+    }, false);
+
+    modal.addEventListener('touchmove', function(e) {
+        endX = e.touches[0].clientX;
+    }, false);
+
+    modal.addEventListener('touchend', function() {
+        if (isAnimating) return;
+
+        const diffX = startX - endX;
+
+        // 如果滑动距离超过阈值，则切换图片
+        if (Math.abs(diffX) > swipeThreshold) {
+            if (diffX > 0) {
+                // 向左滑动，下一张
+                navigate(1);
+            } else {
+                // 向右滑动，上一张
+                navigate(-1);
+            }
+        }
+    }, false);
 });
 
 
