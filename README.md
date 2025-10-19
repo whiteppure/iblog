@@ -4,6 +4,8 @@
 [//]: # (刷新cdn)
 https://purge.jsdelivr.net/gh/whiteppure/iblog/main/docs/css/zozo.css
 https://purge.jsdelivr.net/gh/whiteppure/iblog/main/docs/css/toc.css
+https://purge.jsdelivr.net/gh/whiteppure/iblog/main/docs/css/img.css
+https://purge.jsdelivr.net/gh/whiteppure/iblog/main/docs/js/zozo.js
 
 ## Hugo 常用命令 win
 1. 手动删除缓存文件
