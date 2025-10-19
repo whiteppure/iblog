@@ -223,20 +223,13 @@ slug: "js-snow"
 </html>
 ```
 
-## 图片
-![Js雪花飘落](/posts/annex/images/readme/Js雪花飘落-con-bg.png)
-
-![Js雪花飘落](/posts/annex/images/readme/Js雪花飘落-header-bg.png)
-
-![Js雪花飘落](/posts/annex/images/readme/Js雪花飘落-ice.png)
-
-![Js雪花飘落](/posts/annex/images/readme/Js雪花飘落-snow.png)
-
-![Js雪花飘落](/posts/annex/images/readme/Js雪花飘落-snow-bg.png)
-
-![Js雪花飘落](/posts/annex/images/readme/Js雪花飘落-tree.png)
-
+## 图片素材
+{{<img src="/posts/annex/images/readme/Js雪花飘落-con-bg.png">}}
+{{<img src="/posts/annex/images/readme/Js雪花飘落-header-bg.png">}}
+{{<img src="/posts/annex/images/readme/Js雪花飘落-ice.png">}}
+{{<img src="/posts/annex/images/readme/Js雪花飘落-snow.png">}}
+{{<img src="/posts/annex/images/readme/Js雪花飘落-tree.png">}}
 
 ## 运行效果
-![Js雪花飘落](/posts/annex/images/readme/Js-雪花飘落-01.png)
+{{<img src="/posts/annex/images/readme/Js-雪花飘落-01.png">}}
 
