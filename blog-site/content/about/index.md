@@ -2,8 +2,16 @@
 title: "关于我"
 date: 2025-10-15
 draft: false
+description: "现居北京的软件工程师，记录技术心得与生活思考。擅长Java、Python开发，热爱生活，乐于分享。"
+keywords:
+  - "技术博客"
+  - "技术分享"
+  - "个人随笔"
+  - "生活分享"
+  - "简历诊断服务"
+  - "技术问题交流"
+  - "自我介绍"
 ---
-
 
 
 ## 关于感情
@@ -15,105 +23,35 @@ draft: false
 
 朋友眼中，我是一个性格温和、情绪稳定的人，虽稍显内敛，但相处起来轻松自然。
 或许是因为工作的缘故，我做事习惯有规划、有始有终，也带点韧劲，答应的事会认真负责到底。
-不过私下里我并不刻板，觉得生活需要乐趣，也喜欢偶尔幽默一下。
+不过私下里我觉得我并不刻板，生活也需要乐趣，也喜欢偶尔幽默一下。
 
-我的生活节奏挺简单的。下班后，会花点时间看看书或视频教程、学点新东西。
+我的生活节奏挺简单的。下班后，偶尔会花点时间看看书或视频教程、学点新东西。
 这个习惯还是从之前做程序员时保留下来的，直到现在也让我受益。
 习惯做总结、写点小文章，有自己的博客网站，也喜欢小猫小狗，最近养了几盆盆栽，照料它们的过程让我觉得安心。
 
 我始终相信工作和生活需要平衡。空闲时我会下厨做几个家常菜，也偶尔约朋友去唱唱歌、解解压。
 过去几年借着假期和出差的机会，也走过国内四十多个城市，不算资深的旅人，也算是个“有故事的路人甲”。
 
-<style>
-    .img-item {
-        border-radius: 12px;
-        overflow: hidden;
-        flex: 1 1 200px; 
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
-        transition: transform 0.3s ease, box-shadow 0.3s ease; 
-        background-color: #fff;
-        grid-row-end: span 18;
-        margin: 0 3px 3px 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        max-width: 200px;
-        max-height: 200px;
-    }
-    .img-item img {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        object-fit: cover;
-    }
-
-    .img-container{
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
-        justify-content: center;
-        margin-bottom: 15px;
-    }
-
-</style>
-
-<div class="img-container">
-  <div class="img-item">
-    {{<img src="/posts/annex/images/me/香薰.jpg" alt="香薰" style="width: 100%; height: auto; border-radius: 8px;">}}
-  </div>
-  <div class="img-item">
-    {{<img src="/posts/annex/images/me/日常做菜-1.jpg" alt="日常做菜" style="width: 100%; height: auto; border-radius: 8px;">}}
-  </div>
-  <div class="img-item">
-    {{<img src="/posts/annex/images/me/日常做菜-2.jpg" alt="日常做菜" style="width: 100%; height: auto; border-radius: 8px;">}}
-  </div>
-  <div class="img-item">
-    {{<img src="/posts/annex/images/me/乌龟.jpg" alt="乌龟" style="width: 100%; height: auto; border-radius: 8px;">}}
-  </div>
-  <div class="img-item">
-    {{<img src="/posts/annex/images/me/小狗.jpg" alt="小狗" style="width: 100%; height: auto; border-radius: 8px;">}}
-  </div>
-  <div class="img-item">
-    {{<img src="/posts/annex/images/me/猫咪.jpg" alt="猫咪" style="width: 100%; height: auto; border-radius: 8px;">}}
-  </div>
-  <div class="img-item">
-    {{<img src="/posts/annex/images/me/蚂蚱.jpg" alt="蚂蚱" style="width: 100%; height: auto; border-radius: 8px;">}}
-  </div>
-  <div class="img-item">
-    {{<img src="/posts/annex/images/me/我-1.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">}}
-  </div>
-  <div class="img-item">
-    {{<img src="/posts/annex/images/me/我-2.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">}}
-  </div>
-  <div class="img-item">
-    {{<img src="/posts/annex/images/me/走过的城市.png" alt="走过的城市" style="width: 100%; height: auto; border-radius: 8px;">}}
-  </div>
-  <div class="img-item">
-    {{<img src="/posts/annex/images/me/风景-1.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">}}
-  </div>
-   <div class="img-item">
-    {{<img src="/posts/annex/images/me/风景-2.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">}}
-  </div>
-  <div class="img-item">
-    {{<img src="/posts/annex/images/me/风景-3.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">}}
-  </div>
-  <div class="img-item">
-    {{<img src="/posts/annex/images/me/风景-4.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">}}
-  </div>
-  <div class="img-item">
-    {{<img src="/posts/annex/images/me/风景-5.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">}}
-  </div>
-  <div class="img-item">
-    {{<img src="/posts/annex/images/me/风景-6.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">}}
-  </div>
-  <div class="img-item">
-    {{<img src="/posts/annex/images/me/风景-7.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">}}
-  </div>
-  <div class="img-item">
-    {{<img src="/posts/annex/images/me/风景-8.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;">}}
-  </div>
-</div>
+{{< img-container >}}
+{{< img-item src="/posts/annex/images/me/香薰.jpg" alt="香薰" style="width: 100%; height: auto; border-radius: 8px;" >}}
+{{< img-item src="/posts/annex/images/me/日常做菜-1.jpg" alt="日常做菜" style="width: 100%; height: auto; border-radius: 8px;" >}}
+{{< img-item src="/posts/annex/images/me/日常做菜-2.jpg" alt="日常做菜" style="width: 100%; height: auto; border-radius: 8px;" >}}
+{{< img-item src="/posts/annex/images/me/乌龟.jpg" alt="乌龟" style="width: 100%; height: auto; border-radius: 8px;" >}}
+{{< img-item src="/posts/annex/images/me/小狗.jpg" alt="小狗" style="width: 100%; height: auto; border-radius: 8px;" >}}
+{{< img-item src="/posts/annex/images/me/猫咪.jpg" alt="猫咪" style="width: 100%; height: auto; border-radius: 8px;" >}}
+{{< img-item src="/posts/annex/images/me/蚂蚱.jpg" alt="蚂蚱" style="width: 100%; height: auto; border-radius: 8px;" >}}
+{{< img-item src="/posts/annex/images/me/我-1.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;" >}}
+{{< img-item src="/posts/annex/images/me/我-2.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;" >}}
+{{< img-item src="/posts/annex/images/me/走过的城市.png" alt="走过的城市" style="width: 100%; height: auto; border-radius: 8px;" >}}
+{{< img-item src="/posts/annex/images/me/风景-1.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;" >}}
+{{< img-item src="/posts/annex/images/me/风景-2.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;" >}}
+{{< img-item src="/posts/annex/images/me/风景-3.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;" >}}
+{{< img-item src="/posts/annex/images/me/风景-4.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;" >}}
+{{< img-item src="/posts/annex/images/me/风景-5.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;" >}}
+{{< img-item src="/posts/annex/images/me/风景-6.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;" >}}
+{{< img-item src="/posts/annex/images/me/风景-7.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;" >}}
+{{< img-item src="/posts/annex/images/me/风景-8.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;" >}}
+{{< /img-container >}}
 
 目前是单身，关于感情，我向往的是一种“相处不累”的关系。我们可以彼此信任、互相支持，在一起时轻松自在，能做最真实的自己。
 我认为，踏实、理解与真诚，是一段关系中最珍贵的底色。
@@ -121,27 +59,22 @@ draft: false
 因为工作圈子比较固定，认识新朋友的机会不多，如果能遇到一个频率相近、聊得来的人，那最好了。
 如果你也认同简单真诚的相处方式，欢迎向我打招呼。
 
-<div style="text-align: center">
-    {{<img src="/posts/annex/images/me/我的微信.jpg" alt="我的微信" style="max-width: 50%; height: auto;">}}
-</div>
+{{<img src="/posts/annex/images/me/我的微信.jpg" alt="我的微信" style="max-width: 50%; height: auto;">}}
 
 ## 专业技能
-截止2025年，我是一名5年经验的软件工程师，擅长使用设计模式，具备良好独立开发、排故以及一定组织能力。曾带领10人团队，完成50万用户量级电商系统架构优化，负责过银行验印、票交、账户系统开发维护等，现主导军工某控制系统的架构优化与维护。
+截止2025年，我是一名5年经验的软件工程师，擅长使用设计模式，具备良好独立开发、排故以及一定组织能力。曾带领10人团队，完成50万用户量级电商系统架构优化，负责过银行验印、票交、账户系统开发维护等，现负责军工某控制系统的架构优化与维护。
 在前后端分布式微服务、框架设计、旧项目二开以及原生Android项目开发等方面拥有大量实战经验，能灵活应对各种情况。
 擅长Java、Python等，常用技术栈有`Vue`、`SpringCloud`、`Netty`、`PyQt`等。
 能查阅各种开发技术手册，熟练编写shell、bat脚本，具备较强的解决问题能力。
 
 如果您有任何问题想要交流，或者需要简历方面的建议，欢迎联系我。
 
-<div style="text-align: center">
-    {{<img src="/posts/annex/images/me/我的微信.jpg" alt="我的微信" style="max-width: 50%; height: auto;">}}
-</div>
+{{<img src="/posts/annex/images/me/我的微信.jpg" alt="我的微信" style="max-width: 50%; height: auto;">}}
 
 我会不定期在我的公众号上发布一些技术文章和个人随笔，欢迎大家关注。希望这个平台能成为我们相互学习、共同成长的空间。
 
-<div style="text-align: center">
-    {{<img src="/posts/annex/images/me/公众号二维码.jpg" alt="公众号" style="max-width: 50%; height: auto;">}}
-</div>
+
+{{<img src="/posts/annex/images/me/公众号二维码.jpg" alt="公众号" style="max-width: 50%; height: auto;">}}
 
 ## 我的博客
 我从2020年就开始写博客了，初衷很简单，就是为了记录学习过程中的心得和体会。一开始，我在一些现成的平台上发布内容，但很快就发现这些平台不够灵活，无法完全满足我的需求。于是，我决定自己动手搭建一个博客。
