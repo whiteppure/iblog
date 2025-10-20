@@ -202,16 +202,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
     counter.setAttribute('class', 'image-counter');
     modal.appendChild(counter);
 
-    var images = document.querySelectorAll('img');
+    // 只选择页面中的原始图片，排除模态框内的图片
+    var images = Array.from(document.querySelectorAll('img')).filter(img => {
+        return !img.classList.contains('modal-content') && !img.classList.contains('clickable-image');
+    });
+
     var currentIndex = -1;
 
     // 触摸事件变量
     let startX = 0;
     let endX = 0;
     const swipeThreshold = 50; // 滑动阈值
-
-    // 防止快速连续点击
-    let isAnimating = false;
 
     // 添加点击事件
     images.forEach((img, index) => {
@@ -234,52 +235,36 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // 上一张图片
     prev.onclick = function() {
-        if (!isAnimating) {
-            navigate(-1);
-        }
+        navigate(-1);
     }
 
     // 下一张图片
     next.onclick = function() {
-        if (!isAnimating) {
-            navigate(1);
-        }
+        navigate(1);
     }
 
-    // 导航函数
+    // 导航函数 - 移除了动画延迟
     function navigate(direction) {
-        if (isAnimating) return;
-
-        isAnimating = true;
-
-        // 添加滑动动画类
-        if (direction > 0) {
-            modalImg.classList.add('slide-right');
-        } else {
-            modalImg.classList.add('slide-left');
-        }
-
-        // 等待动画完成
-        setTimeout(() => {
-            // 更新索引和图片
-            currentIndex = (currentIndex + direction + images.length) % images.length;
-            modalImg.src = images[currentIndex].src;
-            updateCounter();
-
-            // 移除滑动类并添加活动类
-            modalImg.classList.remove('slide-left', 'slide-right');
-            modalImg.classList.add('active');
-
-            // 允许下一次动画
-            setTimeout(() => {
-                isAnimating = false;
-            }, 50);
-        }, 400);
+        // 更新索引和图片
+        currentIndex = (currentIndex + direction + images.length) % images.length;
+        modalImg.src = images[currentIndex].src;
+        updateCounter();
     }
 
-    // 更新计数器
+    // 更新计数器 - 修复计数逻辑
     function updateCounter() {
         counter.textContent = `${currentIndex + 1} / ${images.length}`;
+
+        // 根据图片数量显示/隐藏导航按钮和计数器
+        if (images.length <= 1) {
+            prev.style.display = 'none';
+            next.style.display = 'none';
+            counter.style.display = 'none';
+        } else {
+            prev.style.display = 'block';
+            next.style.display = 'block';
+            counter.style.display = 'block';
+        }
     }
 
     // 点击模态框背景关闭
@@ -301,10 +286,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     modal.style.display = 'none';
                 }, 300);
             }
-            if (event.key === 'ArrowLeft' && !isAnimating) {
+            if (event.key === 'ArrowLeft') {
                 navigate(-1);
             }
-            if (event.key === 'ArrowRight' && !isAnimating) {
+            if (event.key === 'ArrowRight') {
                 navigate(1);
             }
         }
@@ -320,8 +305,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }, false);
 
     modal.addEventListener('touchend', function() {
-        if (isAnimating) return;
-
         const diffX = startX - endX;
 
         // 如果滑动距离超过阈值，则切换图片
