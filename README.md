@@ -2,9 +2,11 @@
 个人博客
 
 [//]: # (刷新cdn)
-https://purge.jsdelivr.net/gh/whiteppure/iblog/main/docs/css/zozo.css
-https://purge.jsdelivr.net/gh/whiteppure/iblog/main/docs/css/toc.css
-https://purge.jsdelivr.net/gh/whiteppure/iblog/main/docs/css/img.css
+curl -s "https://purge.jsdelivr.net/gh/whiteppure/iblog@main/docs/css/toc.css"
+curl -s "https://purge.jsdelivr.net/gh/whiteppure/iblog@main/docs/css/img.css"
+curl -s "https://purge.jsdelivr.net/gh/whiteppure/iblog@main/docs/js/zozo.js"
+curl -s "https://purge.jsdelivr.net/gh/whiteppure/iblog@main/docs/css/zozo.css"
+
 https://purge.jsdelivr.net/gh/whiteppure/iblog/main/docs/js/zozo.js
 
 ## Hugo 常用命令 win
