@@ -792,7 +792,8 @@ a.back_to_top:hover span {
 /* 大平板 (751px - 1000px) */
 @media screen and (min-width: 751px) and (max-width: 1000px) {
   .main, .content, .list_with_title .container, .header, .nav_container {
-    width: 90%;
+    width: 100%;
+    max-width: 90%;
     margin: 0 auto;
   }
 
@@ -871,16 +872,15 @@ a.back_to_top:hover span {
 /* 小平板和大型手机 (576px - 750px) */
 @media screen and (max-width: 750px) {
   .main, .content, .list_with_title .container, .header, .nav_container {
-    width: 94%;
+    width: 100%;
     margin: 0 auto;
-    padding: 0 var(--mobile-space-md);
+    max-width: 100%;
   }
 
   .main {
     margin-top: 20px;
     box-shadow: none;
     border-radius: 0;
-    width: 100%;
   }
 
   .content .post_content {
@@ -1104,7 +1104,7 @@ a.back_to_top:hover span {
 @media screen and (max-width: 575px) {
   .main, .content, .list_with_title .container, .header, .nav_container {
     width: 100%;
-    padding: 0 var(--mobile-space-md);
+    margin: 0 auto;
   }
 
   .content .post_content {
@@ -1175,13 +1175,16 @@ a.back_to_top:hover span {
 /* 超小型手机 (≤375px) */
 @media screen and (max-width: 375px) {
   :root {
-    --mobile-space-md: 14px;
-    --mobile-space-lg: 18px;
-    --mobile-space-xl: 22px;
+    --mobile-space-sm: 8px;
+    --mobile-space-md: 12px;
+    --mobile-space-lg: 16px;
+    --mobile-space-xl: 20px;
+    --mobile-space-2xl: 24px;
   }
 
   .main, .content, .list_with_title .container, .header, .nav_container {
-    padding: 0 var(--mobile-space-sm);
+    width: 100%;
+    margin: 0 auto;
   }
 
   .content .post_content {
