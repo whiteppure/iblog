@@ -1,5 +1,5 @@
 ---
-title: "Js滑块拖拽"
+title: "JS滑块拖拽"
 date: 2018-09-08
 draft: false
 tags: ["JS", "小程序","应用"]
@@ -7,7 +7,7 @@ slug: "js-box-drag"
 ---
 
 
-## index.html
+# index.html
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -117,6 +117,5 @@ slug: "js-box-drag"
 </html>
 ```
 
-## 运行效果
-![Js滑块拖拽-01.png](/posts/annex/images/readme/Js滑块拖拽-01.png)
-
+# 运行效果
+{{<img src="/posts/annex/images/readme/Js滑块拖拽-01.png" alt="Js滑块拖拽" >}}

@@ -1,13 +1,12 @@
 ---
-title: "Js懒加载"
+title: "JS懒加载"
 date: 2018-09-21
 draft: false
 tags: ["JS", "小程序","应用"]
 slug: "js-loadding-lazy"
 ---
 
-## index.html
-
+# index.html
 ```html
 <!doctype html>
 <html lang="en">
@@ -135,7 +134,8 @@ slug: "js-loadding-lazy"
  </body>
 </html>
 ```
-## lazyload.js
+
+# lazyload.js
 ```javascript
 (function($){
     $.fn.lazyload = function(options){
@@ -244,6 +244,5 @@ slug: "js-loadding-lazy"
 })(jQuery);
 ```
 
-## 运行效果
-![Js-懒加载-01](/posts/annex/images/readme/Js-懒加载-01.png)
-
+# 运行效果
+{{<img src="/posts/annex/images/readme/Js-懒加载-01.png" alt="Js-懒加载" >}}

@@ -1,13 +1,12 @@
 ---
-title: "Js下雨特效"
+title: "JS下雨特效"
 date: 2018-12-10
 draft: false
 tags: ["JS", "小程序","应用"]
 slug: "js-rain"
 ---
 
-## index.html
-
+# index.html
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -160,6 +159,7 @@ canvas雨滴逻辑思路:
 </body>
 </html>
 ```
-## 运行效果
-![Js下雨特效-01.png](/posts/annex/images/readme/Js下雨特效-01.png)
+
+# 运行效果
+{{<img src="/posts/annex/images/readme/Js下雨特效-01.png" alt="Js下雨特效" >}}
 

@@ -1,13 +1,12 @@
 ---
-title: "Js生日礼物"
+title: "JS生日礼物"
 date: 2018-08-24
 draft: false
 tags: ["JS", "小程序","应用"]
 slug: "js-birthday-gift"
 ---
 
-## index.html
-
+# index.html
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -119,6 +118,6 @@ slug: "js-birthday-gift"
 </body>
 </html>
 ```
-## 运行效果
-![Js-生日礼物-01.png](/posts/annex/images/readme/Js-生日礼物-01.png)
 
+# 运行效果
+{{<img src="/posts/annex/images/readme/Js-生日礼物-01.png" alt="生日礼物" >}}

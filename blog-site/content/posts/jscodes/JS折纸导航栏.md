@@ -1,12 +1,12 @@
 ---
-title: "Js折纸导航栏"
+title: "JS折纸导航栏"
 date: 2018-10-25
 draft: false
 tags: ["JS", "小程序","应用"]
 slug: "js-paper-folding"
 ---
 
-## index.html
+# index.html
 
 ```html
 <!DOCTYPE html>
@@ -163,6 +163,6 @@ slug: "js-paper-folding"
 </body>
 </html>
 ```
-## 运行效果
-![Js折纸导航栏](/posts/annex/images/readme/Js折纸导航栏-01.png)
 
+# 运行效果
+{{<img src="/posts/annex/images/readme/Js折纸导航栏-01.png" alt="Js折纸导航栏" >}}

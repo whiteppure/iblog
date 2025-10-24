@@ -1,13 +1,14 @@
 ---
-title: "Js雪花飘落"
+title: "JS雪花飘落"
 date: 2018-12-25
 draft: false
 tags: ["JS", "小程序","应用"]
 slug: "js-snow"
 ---
 
-## index.html
 
+
+# index.html
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -223,13 +224,13 @@ slug: "js-snow"
 </html>
 ```
 
-## 图片素材
+# 图片素材
 {{<img src="/posts/annex/images/readme/Js雪花飘落-con-bg.png">}}
 {{<img src="/posts/annex/images/readme/Js雪花飘落-header-bg.png">}}
 {{<img src="/posts/annex/images/readme/Js雪花飘落-ice.png">}}
 {{<img src="/posts/annex/images/readme/Js雪花飘落-snow.png">}}
 {{<img src="/posts/annex/images/readme/Js雪花飘落-tree.png">}}
 
-## 运行效果
+# 运行效果
 {{<img src="/posts/annex/images/readme/Js-雪花飘落-01.png">}}
 

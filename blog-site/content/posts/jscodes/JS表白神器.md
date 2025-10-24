@@ -1,13 +1,12 @@
 ---
-title: "Js表白神器"
+title: "JS表白神器"
 date: 2018-10-14
 draft: false
 tags: ["JS", "小程序","应用"]
 slug: "js-love-heart"
 ---
 
-## index.html
-
+# index.html
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -348,6 +347,7 @@ slug: "js-love-heart"
 </body>
 </html>
 ```
-## 运行效果
-![Js表白神器-01](/posts/annex/images/readme/Js-表白神器-01.png)
+
+# 运行效果
+{{<img src="/posts/annex/images/readme/Js-表白神器-01.png" alt="Js表白神器" >}}
 

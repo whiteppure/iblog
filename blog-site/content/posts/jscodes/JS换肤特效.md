@@ -1,13 +1,12 @@
 ---
-title: "Js换肤特效"
+title: "JS换肤特效"
 date: 2018-11-14
 draft: false
 tags: ["JS", "小程序","应用"]
 slug: "js-trans-skin"
 ---
 
-## index.html
-
+# index.html
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -98,6 +97,5 @@ slug: "js-trans-skin"
 </html>
 ```
 
-## 运行效果
-![Js-换肤特效-01](/posts/annex/images/readme/Js-换肤特效-01.png)
-
+# 运行效果
+{{<img src="/posts/annex/images/readme/Js-换肤特效-01.png" alt="换肤特效" >}}

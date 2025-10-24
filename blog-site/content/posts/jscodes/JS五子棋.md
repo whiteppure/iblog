@@ -1,12 +1,12 @@
 ---
-title: "Js五子棋"
+title: "JS五子棋"
 date: 2018-09-10
 draft: false
 tags: ["JS", "小程序","应用"]
 slug: "js-gomoku"
 ---
 
-## index.html
+# index.html
 ```html
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -32,7 +32,7 @@ slug: "js-gomoku"
 
 ```
 
-## index.js
+# index.js
 ```javascript
 window.onload = function(){
     var oC = document.getElementById('c1');
@@ -276,8 +276,8 @@ window.onload = function(){
 };
 ```
 
-## 运行效果
-![Js五子棋-01](/posts/annex/images/readme/Js五子棋-01.png)
+# 运行效果
+{{<img src="/posts/annex/images/readme/Js五子棋-01.png" alt="Js五子棋" >}}
 
 
 
