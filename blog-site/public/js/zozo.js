@@ -208,6 +208,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     var currentIndex = -1;
+    var isAnimating = false; // 防止动画冲突
 
     // 触摸事件变量
     let startX = 0;
@@ -222,6 +223,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
             modalImg.src = this.src;
             currentIndex = index;
             updateCounter();
+            // 添加初始显示动画
+            modalImg.style.opacity = '0';
+            setTimeout(() => {
+                modalImg.style.opacity = '1';
+            }, 50);
         }
     });
 
@@ -243,12 +249,31 @@ document.addEventListener('DOMContentLoaded', (event) => {
         navigate(1);
     }
 
-    // 导航函数 - 移除了动画延迟
+    // 优化的导航函数 - 添加平滑动画
     function navigate(direction) {
-        // 更新索引和图片
-        currentIndex = (currentIndex + direction + images.length) % images.length;
-        modalImg.src = images[currentIndex].src;
-        updateCounter();
+        if (isAnimating) return; // 防止动画冲突
+
+        isAnimating = true;
+
+        // 淡出当前图片
+        modalImg.style.opacity = '0';
+        modalImg.style.transform = direction === 1 ? 'translateX(-20px)' : 'translateX(20px)';
+
+        setTimeout(() => {
+            // 更新索引和图片
+            currentIndex = (currentIndex + direction + images.length) % images.length;
+            modalImg.src = images[currentIndex].src;
+            updateCounter();
+
+            // 重置位置并淡入新图片
+            modalImg.style.transform = direction === 1 ? 'translateX(20px)' : 'translateX(-20px)';
+
+            setTimeout(() => {
+                modalImg.style.opacity = '1';
+                modalImg.style.transform = 'translateX(0)';
+                isAnimating = false;
+            }, 50);
+        }, 300);
     }
 
     // 更新计数器 - 修复计数逻辑
@@ -308,7 +333,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const diffX = startX - endX;
 
         // 如果滑动距离超过阈值，则切换图片
-        if (Math.abs(diffX) > swipeThreshold) {
+        if (Math.abs(diffX) > swipeThreshold && !isAnimating) {
             if (diffX > 0) {
                 // 向左滑动，下一张
                 navigate(1);
@@ -319,7 +344,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     }, false);
 });
-
 
 function hiddenNotContent(){
   const notContentObjs = getNotContent();
