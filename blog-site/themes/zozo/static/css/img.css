@@ -50,7 +50,7 @@
 }
 
 /* 导航按钮样式 */
-.close, .prev, .next {
+.img-close, .img-prev, .img-next {
     position: absolute;
     color: #f1f1f1;
     font-size: 35px;
@@ -60,7 +60,6 @@
     user-select: none;
     z-index: 1001;
     transition: all 0.2s ease;
-    background: rgba(0, 0, 0, 0.5);
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -69,23 +68,22 @@
     justify-content: center;
 }
 
-.close:hover, .prev:hover, .next:hover {
-    background: rgba(0, 0, 0, 0.8);
+.img-close:hover, .img-prev:hover, .img-next:hover {
     transform: scale(1.1);
 }
 
-.close {
+.img-close {
     top: 15px;
     right: 15px;
 }
 
-.prev {
+.img-prev {
     top: 50%;
     left: 15px;
     transform: translateY(-50%);
 }
 
-.next {
+.img-next {
     top: 50%;
     right: 15px;
     transform: translateY(-50%);
@@ -117,17 +115,17 @@
 
 /* 移动端优化 */
 @media screen and (max-width: 750px) {
-    .close, .prev, .next {
+    .img-close, .img-prev, .img-next {
         width: 44px;
         height: 44px;
         font-size: 28px;
     }
 
-    .prev {
+    .img-prev {
         left: 10px;
     }
 
-    .next {
+    .img-next {
         right: 10px;
     }
 

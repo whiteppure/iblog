@@ -181,19 +181,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // 创建关闭按钮
     var span = document.createElement('span');
-    span.setAttribute('class', 'close');
+    span.setAttribute('class', 'img-close');
     span.innerHTML = '&times;';
     modal.appendChild(span);
 
     // 创建上一张按钮
     var prev = document.createElement('span');
-    prev.setAttribute('class', 'prev');
+    prev.setAttribute('class', 'img-prev');
     prev.innerHTML = '&#10094;';
     modal.appendChild(prev);
 
     // 创建下一张按钮
     var next = document.createElement('span');
-    next.setAttribute('class', 'next');
+    next.setAttribute('class', 'img-next');
     next.innerHTML = '&#10095;';
     modal.appendChild(next);
 
