@@ -151,7 +151,7 @@
                     
                     
                     
-                    <span class="date">博客已运行 2101 天</span>
+                    <span class="date">博客已运行 2102 天</span>
                 </div>
             </div>
 
@@ -176,14 +176,37 @@
 这是优点也是缺点，不如说这事特点，我倒觉得这挺有特色的。</p>
 <p>最让我喜欢的还是这儿的自然环境。经济虽然不算发达，但山水保护得很好，绿意盎然的。比起一些北方城市，这里的空气和生态确实更胜一筹。
 想想以后，当大家越来越重视健康和生活品质时，像贵阳这样环境好的地方，应该会越来越受欢迎吧。</p>
-
 <style>
-    .img-container{
+    .img-container {
         display: flex;
         flex-wrap: wrap;
-        gap: 15px;
+        gap: 12px;
         justify-content: center;
-        margin-bottom: 15px;
+        margin: 20px 0;
+        padding: 0 10px;
+    }
+
+     
+    @media screen and (min-width: 1024px) {
+        .img-container {
+            gap: 16px;
+            padding: 0;
+        }
+    }
+
+     
+    @media screen and (max-width: 1023px) and (min-width: 768px) {
+        .img-container {
+            gap: 14px;
+        }
+    }
+
+     
+    @media screen and (max-width: 767px) {
+        .img-container {
+            gap: 12px;
+            justify-content: space-between;
+        }
     }
 </style>
 
@@ -207,31 +230,108 @@
 
 
 
-
 <style>
-    .img-item {
-        border-radius: 12px;
-        overflow: hidden;
-        flex: 1 1 200px;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        background-color: #fff;
-        grid-row-end: span 18;
-        margin: 0 3px 3px 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        max-width: 200px;
-        max-height: 200px;
-    }
-    .img-item img {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        object-fit: cover;
-    }
+        .img-item {
+                border-radius: 12px;
+                overflow: hidden;
+                flex: 1 1 calc(25% - 12px);  
+                min-width: 180px;
+                max-width: 240px;
+                box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                position: relative;
+        }
 
+        .img-item:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+        }
+
+        .img-item img {
+                width: 100%;
+                height: 180px;
+                border-radius: 8px;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+        }
+
+        .img-item:hover img {
+                transform: scale(1.03);
+        }
+
+
+         
+        @media screen and (min-width: 1440px) {
+                .img-item {
+                        flex: 1 1 calc(20% - 16px);
+                        min-width: 200px;
+                        max-width: 260px;
+                }
+
+                .img-item img {
+                        height: 200px;
+                }
+        }
+
+         
+        @media screen and (min-width: 1024px) and (max-width: 1439px) {
+                .img-item {
+                        flex: 1 1 calc(25% - 16px);
+                        min-width: 180px;
+                        max-width: 240px;
+                }
+
+                .img-item img {
+                        height: 180px;
+                }
+        }
+
+         
+        @media screen and (min-width: 768px) and (max-width: 1023px) {
+                .img-item {
+                        flex: 1 1 calc(33.333% - 14px);
+                        min-width: 160px;
+                        max-width: 220px;
+                }
+
+                .img-item img {
+                        height: 160px;
+                }
+        }
+
+         
+        @media screen and (min-width: 480px) and (max-width: 767px) {
+                .img-item {
+                        flex: 1 1 calc(50% - 12px);
+                        min-width: 140px;
+                        max-width: none;
+                }
+
+                .img-item img {
+                        height: 150px;
+                }
+        }
+
+         
+        @media screen and (max-width: 479px) {
+                .img-item {
+                        flex: 1 1 100%;
+                        min-width: 100%;
+                        max-width: 100%;
+                        margin: 0 0 12px 0;
+                }
+
+                .img-item img {
+                        height: 200px;
+                        border-radius: 10px;
+                }
+        }
 </style>
 
 <div class="img-item">
@@ -257,31 +357,108 @@
 
 
 
-
 <style>
-    .img-item {
-        border-radius: 12px;
-        overflow: hidden;
-        flex: 1 1 200px;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        background-color: #fff;
-        grid-row-end: span 18;
-        margin: 0 3px 3px 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        max-width: 200px;
-        max-height: 200px;
-    }
-    .img-item img {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        object-fit: cover;
-    }
+        .img-item {
+                border-radius: 12px;
+                overflow: hidden;
+                flex: 1 1 calc(25% - 12px);  
+                min-width: 180px;
+                max-width: 240px;
+                box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                position: relative;
+        }
 
+        .img-item:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+        }
+
+        .img-item img {
+                width: 100%;
+                height: 180px;
+                border-radius: 8px;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+        }
+
+        .img-item:hover img {
+                transform: scale(1.03);
+        }
+
+
+         
+        @media screen and (min-width: 1440px) {
+                .img-item {
+                        flex: 1 1 calc(20% - 16px);
+                        min-width: 200px;
+                        max-width: 260px;
+                }
+
+                .img-item img {
+                        height: 200px;
+                }
+        }
+
+         
+        @media screen and (min-width: 1024px) and (max-width: 1439px) {
+                .img-item {
+                        flex: 1 1 calc(25% - 16px);
+                        min-width: 180px;
+                        max-width: 240px;
+                }
+
+                .img-item img {
+                        height: 180px;
+                }
+        }
+
+         
+        @media screen and (min-width: 768px) and (max-width: 1023px) {
+                .img-item {
+                        flex: 1 1 calc(33.333% - 14px);
+                        min-width: 160px;
+                        max-width: 220px;
+                }
+
+                .img-item img {
+                        height: 160px;
+                }
+        }
+
+         
+        @media screen and (min-width: 480px) and (max-width: 767px) {
+                .img-item {
+                        flex: 1 1 calc(50% - 12px);
+                        min-width: 140px;
+                        max-width: none;
+                }
+
+                .img-item img {
+                        height: 150px;
+                }
+        }
+
+         
+        @media screen and (max-width: 479px) {
+                .img-item {
+                        flex: 1 1 100%;
+                        min-width: 100%;
+                        max-width: 100%;
+                        margin: 0 0 12px 0;
+                }
+
+                .img-item img {
+                        height: 200px;
+                        border-radius: 10px;
+                }
+        }
 </style>
 
 <div class="img-item">
@@ -307,31 +484,108 @@
 
 
 
-
 <style>
-    .img-item {
-        border-radius: 12px;
-        overflow: hidden;
-        flex: 1 1 200px;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        background-color: #fff;
-        grid-row-end: span 18;
-        margin: 0 3px 3px 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        max-width: 200px;
-        max-height: 200px;
-    }
-    .img-item img {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        object-fit: cover;
-    }
+        .img-item {
+                border-radius: 12px;
+                overflow: hidden;
+                flex: 1 1 calc(25% - 12px);  
+                min-width: 180px;
+                max-width: 240px;
+                box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                position: relative;
+        }
 
+        .img-item:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+        }
+
+        .img-item img {
+                width: 100%;
+                height: 180px;
+                border-radius: 8px;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+        }
+
+        .img-item:hover img {
+                transform: scale(1.03);
+        }
+
+
+         
+        @media screen and (min-width: 1440px) {
+                .img-item {
+                        flex: 1 1 calc(20% - 16px);
+                        min-width: 200px;
+                        max-width: 260px;
+                }
+
+                .img-item img {
+                        height: 200px;
+                }
+        }
+
+         
+        @media screen and (min-width: 1024px) and (max-width: 1439px) {
+                .img-item {
+                        flex: 1 1 calc(25% - 16px);
+                        min-width: 180px;
+                        max-width: 240px;
+                }
+
+                .img-item img {
+                        height: 180px;
+                }
+        }
+
+         
+        @media screen and (min-width: 768px) and (max-width: 1023px) {
+                .img-item {
+                        flex: 1 1 calc(33.333% - 14px);
+                        min-width: 160px;
+                        max-width: 220px;
+                }
+
+                .img-item img {
+                        height: 160px;
+                }
+        }
+
+         
+        @media screen and (min-width: 480px) and (max-width: 767px) {
+                .img-item {
+                        flex: 1 1 calc(50% - 12px);
+                        min-width: 140px;
+                        max-width: none;
+                }
+
+                .img-item img {
+                        height: 150px;
+                }
+        }
+
+         
+        @media screen and (max-width: 479px) {
+                .img-item {
+                        flex: 1 1 100%;
+                        min-width: 100%;
+                        max-width: 100%;
+                        margin: 0 0 12px 0;
+                }
+
+                .img-item img {
+                        height: 200px;
+                        border-radius: 10px;
+                }
+        }
 </style>
 
 <div class="img-item">
@@ -357,31 +611,108 @@
 
 
 
-
 <style>
-    .img-item {
-        border-radius: 12px;
-        overflow: hidden;
-        flex: 1 1 200px;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        background-color: #fff;
-        grid-row-end: span 18;
-        margin: 0 3px 3px 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        max-width: 200px;
-        max-height: 200px;
-    }
-    .img-item img {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        object-fit: cover;
-    }
+        .img-item {
+                border-radius: 12px;
+                overflow: hidden;
+                flex: 1 1 calc(25% - 12px);  
+                min-width: 180px;
+                max-width: 240px;
+                box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                position: relative;
+        }
 
+        .img-item:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+        }
+
+        .img-item img {
+                width: 100%;
+                height: 180px;
+                border-radius: 8px;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+        }
+
+        .img-item:hover img {
+                transform: scale(1.03);
+        }
+
+
+         
+        @media screen and (min-width: 1440px) {
+                .img-item {
+                        flex: 1 1 calc(20% - 16px);
+                        min-width: 200px;
+                        max-width: 260px;
+                }
+
+                .img-item img {
+                        height: 200px;
+                }
+        }
+
+         
+        @media screen and (min-width: 1024px) and (max-width: 1439px) {
+                .img-item {
+                        flex: 1 1 calc(25% - 16px);
+                        min-width: 180px;
+                        max-width: 240px;
+                }
+
+                .img-item img {
+                        height: 180px;
+                }
+        }
+
+         
+        @media screen and (min-width: 768px) and (max-width: 1023px) {
+                .img-item {
+                        flex: 1 1 calc(33.333% - 14px);
+                        min-width: 160px;
+                        max-width: 220px;
+                }
+
+                .img-item img {
+                        height: 160px;
+                }
+        }
+
+         
+        @media screen and (min-width: 480px) and (max-width: 767px) {
+                .img-item {
+                        flex: 1 1 calc(50% - 12px);
+                        min-width: 140px;
+                        max-width: none;
+                }
+
+                .img-item img {
+                        height: 150px;
+                }
+        }
+
+         
+        @media screen and (max-width: 479px) {
+                .img-item {
+                        flex: 1 1 100%;
+                        min-width: 100%;
+                        max-width: 100%;
+                        margin: 0 0 12px 0;
+                }
+
+                .img-item img {
+                        height: 200px;
+                        border-radius: 10px;
+                }
+        }
 </style>
 
 <div class="img-item">
@@ -407,31 +738,108 @@
 
 
 
-
 <style>
-    .img-item {
-        border-radius: 12px;
-        overflow: hidden;
-        flex: 1 1 200px;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        background-color: #fff;
-        grid-row-end: span 18;
-        margin: 0 3px 3px 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        max-width: 200px;
-        max-height: 200px;
-    }
-    .img-item img {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        object-fit: cover;
-    }
+        .img-item {
+                border-radius: 12px;
+                overflow: hidden;
+                flex: 1 1 calc(25% - 12px);  
+                min-width: 180px;
+                max-width: 240px;
+                box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                position: relative;
+        }
 
+        .img-item:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+        }
+
+        .img-item img {
+                width: 100%;
+                height: 180px;
+                border-radius: 8px;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+        }
+
+        .img-item:hover img {
+                transform: scale(1.03);
+        }
+
+
+         
+        @media screen and (min-width: 1440px) {
+                .img-item {
+                        flex: 1 1 calc(20% - 16px);
+                        min-width: 200px;
+                        max-width: 260px;
+                }
+
+                .img-item img {
+                        height: 200px;
+                }
+        }
+
+         
+        @media screen and (min-width: 1024px) and (max-width: 1439px) {
+                .img-item {
+                        flex: 1 1 calc(25% - 16px);
+                        min-width: 180px;
+                        max-width: 240px;
+                }
+
+                .img-item img {
+                        height: 180px;
+                }
+        }
+
+         
+        @media screen and (min-width: 768px) and (max-width: 1023px) {
+                .img-item {
+                        flex: 1 1 calc(33.333% - 14px);
+                        min-width: 160px;
+                        max-width: 220px;
+                }
+
+                .img-item img {
+                        height: 160px;
+                }
+        }
+
+         
+        @media screen and (min-width: 480px) and (max-width: 767px) {
+                .img-item {
+                        flex: 1 1 calc(50% - 12px);
+                        min-width: 140px;
+                        max-width: none;
+                }
+
+                .img-item img {
+                        height: 150px;
+                }
+        }
+
+         
+        @media screen and (max-width: 479px) {
+                .img-item {
+                        flex: 1 1 100%;
+                        min-width: 100%;
+                        max-width: 100%;
+                        margin: 0 0 12px 0;
+                }
+
+                .img-item img {
+                        height: 200px;
+                        border-radius: 10px;
+                }
+        }
 </style>
 
 <div class="img-item">
@@ -457,31 +865,108 @@
 
 
 
-
 <style>
-    .img-item {
-        border-radius: 12px;
-        overflow: hidden;
-        flex: 1 1 200px;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        background-color: #fff;
-        grid-row-end: span 18;
-        margin: 0 3px 3px 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        max-width: 200px;
-        max-height: 200px;
-    }
-    .img-item img {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        object-fit: cover;
-    }
+        .img-item {
+                border-radius: 12px;
+                overflow: hidden;
+                flex: 1 1 calc(25% - 12px);  
+                min-width: 180px;
+                max-width: 240px;
+                box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                position: relative;
+        }
 
+        .img-item:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+        }
+
+        .img-item img {
+                width: 100%;
+                height: 180px;
+                border-radius: 8px;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+        }
+
+        .img-item:hover img {
+                transform: scale(1.03);
+        }
+
+
+         
+        @media screen and (min-width: 1440px) {
+                .img-item {
+                        flex: 1 1 calc(20% - 16px);
+                        min-width: 200px;
+                        max-width: 260px;
+                }
+
+                .img-item img {
+                        height: 200px;
+                }
+        }
+
+         
+        @media screen and (min-width: 1024px) and (max-width: 1439px) {
+                .img-item {
+                        flex: 1 1 calc(25% - 16px);
+                        min-width: 180px;
+                        max-width: 240px;
+                }
+
+                .img-item img {
+                        height: 180px;
+                }
+        }
+
+         
+        @media screen and (min-width: 768px) and (max-width: 1023px) {
+                .img-item {
+                        flex: 1 1 calc(33.333% - 14px);
+                        min-width: 160px;
+                        max-width: 220px;
+                }
+
+                .img-item img {
+                        height: 160px;
+                }
+        }
+
+         
+        @media screen and (min-width: 480px) and (max-width: 767px) {
+                .img-item {
+                        flex: 1 1 calc(50% - 12px);
+                        min-width: 140px;
+                        max-width: none;
+                }
+
+                .img-item img {
+                        height: 150px;
+                }
+        }
+
+         
+        @media screen and (max-width: 479px) {
+                .img-item {
+                        flex: 1 1 100%;
+                        min-width: 100%;
+                        max-width: 100%;
+                        margin: 0 0 12px 0;
+                }
+
+                .img-item img {
+                        height: 200px;
+                        border-radius: 10px;
+                }
+        }
 </style>
 
 <div class="img-item">

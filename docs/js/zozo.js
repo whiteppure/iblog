@@ -160,191 +160,6 @@ $(document).ready((function (_this) {
 })(this))
 
 
-// 监听点击图像
-document.addEventListener('DOMContentLoaded', (event) => {
-    // 创建模态框
-    var modal = document.createElement('div');
-    modal.setAttribute('id', 'imgModal');
-    modal.setAttribute('class', 'modal');
-    document.body.appendChild(modal);
-
-    // 创建图片容器
-    var modalContentContainer = document.createElement('div');
-    modalContentContainer.setAttribute('class', 'modal-content-container');
-    modal.appendChild(modalContentContainer);
-
-    // 创建图片元素
-    var modalImg = document.createElement('img');
-    modalImg.setAttribute('class', 'modal-content active');
-    modalImg.setAttribute('id', 'img01');
-    modalContentContainer.appendChild(modalImg);
-
-    // 创建关闭按钮
-    var span = document.createElement('span');
-    span.setAttribute('class', 'img-close');
-    span.innerHTML = '&times;';
-    modal.appendChild(span);
-
-    // 创建上一张按钮
-    var prev = document.createElement('span');
-    prev.setAttribute('class', 'img-prev');
-    prev.innerHTML = '&#10094;';
-    modal.appendChild(prev);
-
-    // 创建下一张按钮
-    var next = document.createElement('span');
-    next.setAttribute('class', 'img-next');
-    next.innerHTML = '&#10095;';
-    modal.appendChild(next);
-
-    // 添加图片计数器
-    var counter = document.createElement('div');
-    counter.setAttribute('class', 'image-counter');
-    modal.appendChild(counter);
-
-    // 只选择页面中的原始图片，排除模态框内的图片
-    var images = Array.from(document.querySelectorAll('img')).filter(img => {
-        return !img.classList.contains('modal-content') && !img.classList.contains('clickable-image');
-    });
-
-    var currentIndex = -1;
-    var isAnimating = false; // 防止动画冲突
-
-    // 触摸事件变量
-    let startX = 0;
-    let endX = 0;
-    const swipeThreshold = 50; // 滑动阈值
-
-    // 添加点击事件
-    images.forEach((img, index) => {
-        img.classList.add('clickable-image');
-        img.onclick = function() {
-            modal.classList.add('show');
-            modalImg.src = this.src;
-            currentIndex = index;
-            updateCounter();
-            // 添加初始显示动画
-            modalImg.style.opacity = '0';
-            setTimeout(() => {
-                modalImg.style.opacity = '1';
-            }, 50);
-        }
-    });
-
-    // 关闭模态框
-    span.onclick = function() {
-        modal.classList.remove('show');
-        setTimeout(() => {
-            modal.style.display = 'none';
-        }, 300);
-    }
-
-    // 上一张图片
-    prev.onclick = function() {
-        navigate(-1);
-    }
-
-    // 下一张图片
-    next.onclick = function() {
-        navigate(1);
-    }
-
-    // 优化的导航函数 - 添加平滑动画
-    function navigate(direction) {
-        if (isAnimating) return; // 防止动画冲突
-
-        isAnimating = true;
-
-        // 淡出当前图片
-        modalImg.style.opacity = '0';
-        modalImg.style.transform = direction === 1 ? 'translateX(-20px)' : 'translateX(20px)';
-
-        setTimeout(() => {
-            // 更新索引和图片
-            currentIndex = (currentIndex + direction + images.length) % images.length;
-            modalImg.src = images[currentIndex].src;
-            updateCounter();
-
-            // 重置位置并淡入新图片
-            modalImg.style.transform = direction === 1 ? 'translateX(20px)' : 'translateX(-20px)';
-
-            setTimeout(() => {
-                modalImg.style.opacity = '1';
-                modalImg.style.transform = 'translateX(0)';
-                isAnimating = false;
-            }, 50);
-        }, 300);
-    }
-
-    // 更新计数器 - 修复计数逻辑
-    function updateCounter() {
-        counter.textContent = `${currentIndex + 1} / ${images.length}`;
-
-        // 根据图片数量显示/隐藏导航按钮和计数器
-        if (images.length <= 1) {
-            prev.style.display = 'none';
-            next.style.display = 'none';
-            counter.style.display = 'none';
-        } else {
-            prev.style.display = 'block';
-            next.style.display = 'block';
-            counter.style.display = 'block';
-        }
-    }
-
-    // 点击模态框背景关闭
-    modal.onclick = function(event) {
-        if (event.target === modal) {
-            modal.classList.remove('show');
-            setTimeout(() => {
-                modal.style.display = 'none';
-            }, 300);
-        }
-    }
-
-    // 键盘导航
-    document.addEventListener('keydown', function(event) {
-        if (modal.classList.contains('show')) {
-            if (event.key === 'Escape') {
-                modal.classList.remove('show');
-                setTimeout(() => {
-                    modal.style.display = 'none';
-                }, 300);
-            }
-            if (event.key === 'ArrowLeft') {
-                navigate(-1);
-            }
-            if (event.key === 'ArrowRight') {
-                navigate(1);
-            }
-        }
-    });
-
-    // 触摸事件处理 - 移动端滑动支持
-    modal.addEventListener('touchstart', function(e) {
-        startX = e.touches[0].clientX;
-    }, false);
-
-    modal.addEventListener('touchmove', function(e) {
-        endX = e.touches[0].clientX;
-    }, false);
-
-    modal.addEventListener('touchend', function() {
-        const diffX = startX - endX;
-
-        // 如果滑动距离超过阈值，则切换图片
-        if (Math.abs(diffX) > swipeThreshold && !isAnimating) {
-            if (diffX > 0) {
-                // 向左滑动，下一张
-                navigate(1);
-            } else {
-                // 向右滑动，上一张
-                navigate(-1);
-            }
-        }
-    }, false);
-});
-
 function hiddenNotContent(){
   const notContentObjs = getNotContent();
   for (const element of notContentObjs) {
@@ -407,4 +222,360 @@ function getNotContent(){
     document.getElementById('fastSearch')
   ]
 }
+
+// 预览图像
+document.addEventListener('DOMContentLoaded', (event) => {
+    // 创建模态框
+    var modal = document.createElement('div');
+    modal.setAttribute('id', 'imgModal');
+    modal.setAttribute('class', 'modal');
+    document.body.appendChild(modal);
+
+    // 创建图片容器
+    var modalContentContainer = document.createElement('div');
+    modalContentContainer.setAttribute('class', 'modal-content-container');
+    modal.appendChild(modalContentContainer);
+
+    // 创建图片元素
+    var modalImg = document.createElement('img');
+    modalImg.setAttribute('class', 'modal-content');
+    modalImg.setAttribute('id', 'img01');
+    modalContentContainer.appendChild(modalImg);
+
+    // 创建关闭按钮
+    var span = document.createElement('span');
+    span.setAttribute('class', 'img-close');
+    span.innerHTML = '&times;';
+    modal.appendChild(span);
+
+    // 创建上一张按钮
+    var prev = document.createElement('span');
+    prev.setAttribute('class', 'img-prev');
+    prev.innerHTML = '&#10094;';
+    modal.appendChild(prev);
+
+    // 创建下一张按钮
+    var next = document.createElement('span');
+    next.setAttribute('class', 'img-next');
+    next.innerHTML = '&#10095;';
+    modal.appendChild(next);
+
+    // 添加图片计数器
+    var counter = document.createElement('div');
+    counter.setAttribute('class', 'image-counter');
+    modal.appendChild(counter);
+
+    // 添加关闭提示（移动端）
+    var closeHint = document.createElement('div');
+    closeHint.setAttribute('class', 'close-hint');
+    closeHint.textContent = '';
+    modal.appendChild(closeHint);
+
+    // 只选择页面中的原始图片，排除模态框内的图片
+    var images = Array.from(document.querySelectorAll('img')).filter(img => {
+        return !img.classList.contains('modal-content') && !img.classList.contains('clickable-image');
+    });
+
+    var currentIndex = -1;
+    var isAnimating = false;
+    var scrollPosition = 0; // 保存滚动位置
+
+    // 触摸事件变量
+    let startX = 0;
+    let startY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let isSwiping = false;
+    const swipeThreshold = 30;
+    const horizontalSwipeThreshold = 50;
+
+    // 防止背景滚动函数
+    function preventBackgroundScroll(e) {
+        if (modal.classList.contains('show')) {
+            e.preventDefault();
+        }
+    }
+
+    // 重置图片样式
+    function resetImageStyles() {
+        modalImg.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        modalImg.style.transform = 'translateX(0) scale(1)';
+        modalImg.style.opacity = '1';
+    }
+
+    // 确保图片居中
+    function centerImage() {
+        modalImg.style.transform = 'translateX(0) scale(1)';
+        modalImg.style.left = '0';
+        modalImg.style.top = '0';
+    }
+
+    // 防止背景滚动但不丢失位置
+    function disableBodyScroll() {
+        // 保存当前滚动位置
+        scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+
+        // 使用更好的方法防止滚动
+        document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${scrollPosition}px`;
+        document.body.style.width = '100%';
+        document.body.style.height = '100%';
+    }
+
+    // 恢复背景滚动
+    function enableBodyScroll() {
+        // 恢复滚动相关样式
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.height = '';
+
+        // 恢复滚动位置
+        window.scrollTo(0, scrollPosition);
+    }
+
+    // 添加点击事件
+    images.forEach((img, index) => {
+        if (!img.classList.contains('clickable-image')) {
+            img.classList.add('clickable-image');
+        }
+        img.onclick = function() {
+            openModal(index);
+        }
+    });
+
+    // 打开模态框
+    function openModal(index) {
+        // 重置所有状态
+        resetImageStyles();
+        centerImage();
+        modal.style.display = 'flex';
+
+        setTimeout(() => {
+            modal.classList.add('show');
+            modalImg.src = images[index].src;
+            currentIndex = index;
+            updateCounter();
+
+            // 添加初始显示动画
+            modalImg.style.opacity = '0';
+            modalImg.style.transform = 'scale(0.9)';
+
+            setTimeout(() => {
+                modalImg.style.opacity = '1';
+                modalImg.style.transform = 'scale(1)';
+            }, 50);
+
+            // 防止背景滚动但不丢失位置
+            disableBodyScroll();
+            document.addEventListener('touchmove', preventBackgroundScroll, { passive: false });
+
+            // 3秒后隐藏关闭提示
+            setTimeout(() => {
+                closeHint.classList.add('hidden');
+            }, 3000);
+        }, 10);
+    }
+
+    // 关闭模态框
+    function closeModal() {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        modalImg.style.transform = 'translateY(80px) scale(0.9)';
+        modalImg.style.opacity = '0';
+        modal.style.opacity = '0';
+
+        setTimeout(() => {
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+
+                // 恢复背景滚动和位置
+                enableBodyScroll();
+                document.removeEventListener('touchmove', preventBackgroundScroll);
+
+                closeHint.classList.remove('hidden');
+                resetImageStyles();
+                centerImage();
+                isAnimating = false;
+                modal.style.opacity = '1';
+            }, 50);
+        }, 300);
+    }
+
+    // 关闭模态框
+    span.onclick = function() {
+        closeModal();
+    }
+
+    // 上一张图片
+    prev.onclick = function() {
+        navigate(-1);
+    }
+
+    // 下一张图片
+    next.onclick = function() {
+        navigate(1);
+    }
+
+    // 优化的导航函数 - 更流畅的切换
+    function navigate(direction) {
+        if (isAnimating || images.length <= 1) return;
+        isAnimating = true;
+
+        // 设置离开动画方向
+        const exitTranslateX = direction === 1 ? -100 : 100;
+        modalImg.style.transition = 'all 0.3s ease';
+        modalImg.style.transform = `translateX(${exitTranslateX}px) scale(0.95)`;
+        modalImg.style.opacity = '0';
+
+        setTimeout(() => {
+            // 更新索引和图片
+            currentIndex = (currentIndex + direction + images.length) % images.length;
+            modalImg.src = images[currentIndex].src;
+            updateCounter();
+
+            // 设置进入动画 - 从相反方向进入
+            const enterTranslateX = direction === 1 ? 100 : -100;
+            modalImg.style.transform = `translateX(${enterTranslateX}px) scale(0.95)`;
+            modalImg.style.opacity = '0';
+
+            // 强制重绘
+            modalImg.offsetHeight;
+
+            // 执行进入动画
+            setTimeout(() => {
+                modalImg.style.transition = 'all 0.3s ease';
+                modalImg.style.transform = 'translateX(0) scale(1)';
+                modalImg.style.opacity = '1';
+
+                setTimeout(() => {
+                    isAnimating = false;
+                }, 300);
+            }, 50);
+        }, 300);
+    }
+
+    // 更新计数器
+    function updateCounter() {
+        counter.textContent = `${currentIndex + 1} / ${images.length}`;
+
+        // 根据图片数量显示/隐藏导航按钮和计数器
+        if (images.length <= 1) {
+            prev.style.display = 'none';
+            next.style.display = 'none';
+            counter.style.display = 'none';
+        } else {
+            prev.style.display = 'flex';
+            next.style.display = 'flex';
+            counter.style.display = 'block';
+        }
+    }
+
+    // 点击模态框背景关闭
+    modal.onclick = function(event) {
+        if (event.target === modal) {
+            closeModal();
+        }
+    }
+
+    // 键盘导航
+    document.addEventListener('keydown', function(event) {
+        if (modal.classList.contains('show')) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+            if (event.key === 'ArrowLeft') {
+                navigate(-1);
+            }
+            if (event.key === 'ArrowRight') {
+                navigate(1);
+            }
+        }
+    });
+
+    // 触摸事件处理 - 优化手势支持
+    modal.addEventListener('touchstart', function(e) {
+        if (isAnimating) return;
+
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        currentX = startX;
+        currentY = startY;
+        isSwiping = false;
+
+        // 重置图片位置和过渡
+        modalImg.style.transition = 'none';
+    }, { passive: true });
+
+    modal.addEventListener('touchmove', function(e) {
+        if (isAnimating) return;
+
+        currentX = e.touches[0].clientX;
+        currentY = e.touches[0].clientY;
+
+        const diffX = currentX - startX;
+        const diffY = currentY - startY;
+
+        // 如果垂直移动超过阈值，认为是下滑关闭
+        if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > 10) {
+            isSwiping = true;
+            const scale = Math.max(0.8, 1 - Math.abs(diffY) / 400);
+            const opacity = Math.max(0.6, 1 - Math.abs(diffY) / 200);
+
+            modalImg.style.transform = `translateY(${diffY}px) scale(${scale})`;
+            modalImg.style.opacity = opacity;
+        }
+        // 如果水平移动超过阈值，认为是左右滑动
+        else if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 10) {
+            isSwiping = true;
+            // 实时跟随手指移动
+            modalImg.style.transform = `translateX(${diffX}px) scale(0.98)`;
+            // 添加一点点透明度变化增强反馈
+            modalImg.style.opacity = Math.max(0.8, 1 - Math.abs(diffX) / 500);
+        }
+    }, { passive: true });
+
+    modal.addEventListener('touchend', function() {
+        if (isAnimating) return;
+
+        const diffX = currentX - startX;
+        const diffY = currentY - startY;
+
+        // 恢复过渡效果
+        modalImg.style.transition = 'all 0.3s ease';
+
+        // 下滑关闭
+        if (Math.abs(diffY) > swipeThreshold && diffY > 0 && isSwiping) {
+            closeModal();
+            return;
+        }
+        // 左滑下一张
+        else if (Math.abs(diffX) > horizontalSwipeThreshold && diffX < 0 && isSwiping && images.length > 1) {
+            navigate(1);
+        }
+        // 右滑上一张
+        else if (Math.abs(diffX) > horizontalSwipeThreshold && diffX > 0 && isSwiping && images.length > 1) {
+            navigate(-1);
+        }
+        // 恢复原位置
+        else {
+            resetImageStyles();
+            centerImage();
+        }
+
+        isSwiping = false;
+    }, { passive: true });
+
+    // 图片加载完成后确保居中
+    modalImg.addEventListener('load', function() {
+        centerImage();
+    });
+
+    // 初始化隐藏导航元素
+    updateCounter();
+});
 

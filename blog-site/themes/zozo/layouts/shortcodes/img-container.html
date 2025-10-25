@@ -1,11 +1,34 @@
-
 <style>
-    .img-container{
+    .img-container {
         display: flex;
         flex-wrap: wrap;
-        gap: 15px;
+        gap: 12px;
         justify-content: center;
-        margin-bottom: 15px;
+        margin: 20px 0;
+        padding: 0 10px;
+    }
+
+    /* 桌面端优化 */
+    @media screen and (min-width: 1024px) {
+        .img-container {
+            gap: 16px;
+            padding: 0;
+        }
+    }
+
+    /* 平板端优化 */
+    @media screen and (max-width: 1023px) and (min-width: 768px) {
+        .img-container {
+            gap: 14px;
+        }
+    }
+
+    /* 移动端优化 */
+    @media screen and (max-width: 767px) {
+        .img-container {
+            gap: 12px;
+            justify-content: space-between;
+        }
     }
 </style>
 

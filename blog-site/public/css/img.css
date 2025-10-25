@@ -1,4 +1,3 @@
-
 .clickable-image {
     cursor: pointer;
     object-fit: cover;
@@ -11,6 +10,7 @@
     transform: scale(1.03);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
+
 /* 图片查看器模态框样式 */
 .modal {
     display: none;
@@ -23,10 +23,11 @@
     background-color: rgba(0, 0, 0, 0.9);
     opacity: 0;
     transition: opacity 0.3s ease;
+    overflow: hidden;
 }
 
 .modal.show {
-    display: block !important;
+    display: flex !important;
     opacity: 1;
 }
 
@@ -38,15 +39,17 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
+    touch-action: pan-y;
+    overflow: hidden;
 }
 
 .modal-content {
     max-width: 90%;
     max-height: 90%;
     object-fit: contain;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(0) scale(1);
 }
 
 /* 导航按钮样式 */
@@ -59,40 +62,43 @@
     padding: 10px;
     user-select: none;
     z-index: 1001;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     border-radius: 50%;
     width: 50px;
     height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
+    /*background: rgba(0, 0, 0, 0.3);*/
+    /*backdrop-filter: blur(10px);*/
 }
 
 .img-close:hover, .img-prev:hover, .img-next:hover {
     transform: scale(1.1);
+    /*background: rgba(0, 0, 0, 0.5);*/
 }
 
 .img-close {
-    top: 15px;
-    right: 15px;
+    top: 20px;
+    right: 20px;
 }
 
 .img-prev {
     top: 50%;
-    left: 15px;
+    left: 20px;
     transform: translateY(-50%);
 }
 
 .img-next {
     top: 50%;
-    right: 15px;
+    right: 20px;
     transform: translateY(-50%);
 }
 
 /* 图片计数器 */
 .image-counter {
     position: absolute;
-    bottom: 20px;
+    top: 20px;
     left: 50%;
     transform: translateX(-50%);
     color: #f1f1f1;
@@ -101,16 +107,29 @@
     padding: 8px 16px;
     border-radius: 20px;
     z-index: 1001;
+    backdrop-filter: blur(10px);
 }
 
-/* 可点击图片样式 */
-.clickable-image {
-    cursor: pointer;
-    transition: transform 0.2s ease;
+/* 关闭提示 - 移动端专用 */
+.close-hint {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #f1f1f1;
+    font-size: 14px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 8px 16px;
+    border-radius: 20px;
+    z-index: 1001;
+    backdrop-filter: blur(10px);
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
 }
 
-.clickable-image:hover {
-    transform: scale(1.02);
+.close-hint.hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 
 /* 移动端优化 */
@@ -129,7 +148,13 @@
         right: 10px;
     }
 
+    .img-close {
+        top: 15px;
+        right: 15px;
+    }
+
     .image-counter {
+        top: 15px;
         font-size: 14px;
         padding: 6px 12px;
     }
@@ -137,5 +162,17 @@
     .modal-content {
         max-width: 95%;
         max-height: 95%;
+        transition: all 0.25s ease;
+    }
+
+    .close-hint {
+        bottom: 20px;
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+    /* 在移动端隐藏导航按钮，使用手势代替 */
+    .img-prev, .img-next {
+        display: none;
     }
 }
