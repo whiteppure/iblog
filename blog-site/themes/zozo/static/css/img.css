@@ -52,7 +52,7 @@
     transform: translateX(0) scale(1);
 }
 
-/* 导航按钮样式 */
+/* 导航按钮样式 - PC端默认显示 */
 .img-close, .img-prev, .img-next {
     position: absolute;
     color: #f1f1f1;
@@ -69,13 +69,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /*background: rgba(0, 0, 0, 0.3);*/
-    /*backdrop-filter: blur(10px);*/
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
 }
 
 .img-close:hover, .img-prev:hover, .img-next:hover {
     transform: scale(1.1);
-    /*background: rgba(0, 0, 0, 0.5);*/
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .img-close {
@@ -173,6 +173,6 @@
 
     /* 在移动端隐藏导航按钮，使用手势代替 */
     .img-prev, .img-next {
-        display: none;
+        display: none !important; /* 使用 !important 确保在移动端强制隐藏 */
     }
 }

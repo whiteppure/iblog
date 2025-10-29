@@ -1,5 +1,5 @@
 ---
-title: "关于我"
+title: "关于"
 date: 2025-10-15
 draft: false
 description: "现居北京的软件工程师，记录技术心得与生活思考。擅长Java、Python开发，热爱生活，乐于分享。"
@@ -13,7 +13,7 @@ keywords:
   - "自我介绍"
 ---
 
-
+# 关于我
 ## 关于感情
 你好，很高兴以这样的方式与你认识。
 
@@ -73,10 +73,9 @@ keywords:
 
 我会不定期在我的公众号上发布一些技术文章和个人随笔，欢迎大家关注。希望这个平台能成为我们相互学习、共同成长的空间。
 
-
 {{<img src="/posts/annex/images/me/公众号二维码.jpg" alt="公众号" style="max-width: 50%; height: auto;">}}
 
-## 我的博客
+# 关于博客
 我从2020年就开始写博客了，初衷很简单，就是为了记录学习过程中的心得和体会。一开始，我在一些现成的平台上发布内容，但很快就发现这些平台不够灵活，无法完全满足我的需求。于是，我决定自己动手搭建一个博客。
 
 最初，我选择了[Halo](https://gitee.com/halo-dev/halo)并在自己的服务器上部署，但由于经济原因，最终没有续费。后来，我发现[GitHub Pages](https://docs.github.com/zh/pages/getting-started-with-github-pages)加上[Hugo](https://gohugo.io)静态站点生成器是个非常棒的选择。这个组合不仅免费，还提供了很高的灵活性。现在，我的博客使用的是[zozo](https://github.com/varkai/hugo-theme-zozo)主题。

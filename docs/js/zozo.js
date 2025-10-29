@@ -278,7 +278,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     var currentIndex = -1;
     var isAnimating = false;
-    var scrollPosition = 0; // 保存滚动位置
+    var scrollPosition = 0;
 
     // 触摸事件变量
     let startX = 0;
@@ -286,8 +286,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let currentX = 0;
     let currentY = 0;
     let isSwiping = false;
-    const swipeThreshold = 30;
-    const horizontalSwipeThreshold = 50;
+    let swipeDirection = null;
+    const swipeThreshold = 50;
+    const horizontalSwipeThreshold = 30;
+    const minSwipeDistance = 10;
+
+    // 设备检测函数
+    function isMobileDevice() {
+        return window.innerWidth <= 750 ||
+            /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
 
     // 防止背景滚动函数
     function preventBackgroundScroll(e) {
@@ -306,16 +314,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // 确保图片居中
     function centerImage() {
         modalImg.style.transform = 'translateX(0) scale(1)';
-        modalImg.style.left = '0';
-        modalImg.style.top = '0';
     }
 
     // 防止背景滚动但不丢失位置
     function disableBodyScroll() {
-        // 保存当前滚动位置
         scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-
-        // 使用更好的方法防止滚动
         document.body.style.overflow = 'hidden';
         document.body.style.position = 'fixed';
         document.body.style.top = `-${scrollPosition}px`;
@@ -325,15 +328,48 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // 恢复背景滚动
     function enableBodyScroll() {
-        // 恢复滚动相关样式
         document.body.style.overflow = '';
         document.body.style.position = '';
         document.body.style.top = '';
         document.body.style.width = '';
         document.body.style.height = '';
-
-        // 恢复滚动位置
         window.scrollTo(0, scrollPosition);
+    }
+
+    // 更新导航按钮显示状态 - 修复版本
+    function updateNavigationButtons() {
+        const isSingleImage = images.length <= 1;
+        const isMobile = isMobileDevice();
+
+        console.log('更新导航按钮:', { isMobile, isSingleImage, imagesCount: images.length });
+
+        if (isMobile) {
+            // 移动端：隐藏翻页按钮，使用手势
+            prev.style.display = 'none';
+            next.style.display = 'none';
+
+            // 更新关闭提示文字，添加滑动提示
+            closeHint.textContent = '下滑关闭 · 左右滑动切换';
+            closeHint.style.display = 'block';
+        } else {
+            // PC端：显示翻页按钮（除非只有一张图片）
+            if (isSingleImage) {
+                prev.style.display = 'none';
+                next.style.display = 'none';
+            } else {
+                prev.style.display = 'flex';
+                next.style.display = 'flex';
+            }
+            closeHint.textContent = '';
+            closeHint.style.display = 'block';
+        }
+
+        // 计数器显示逻辑
+        if (isSingleImage) {
+            counter.style.display = 'none';
+        } else {
+            counter.style.display = 'block';
+        }
     }
 
     // 添加点击事件
@@ -348,7 +384,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // 打开模态框
     function openModal(index) {
-        // 重置所有状态
         resetImageStyles();
         centerImage();
         modal.style.display = 'flex';
@@ -359,6 +394,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
             currentIndex = index;
             updateCounter();
 
+            // 重要：在打开模态框时更新按钮状态
+            updateNavigationButtons();
+
             // 添加初始显示动画
             modalImg.style.opacity = '0';
             modalImg.style.transform = 'scale(0.9)';
@@ -368,7 +406,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 modalImg.style.transform = 'scale(1)';
             }, 50);
 
-            // 防止背景滚动但不丢失位置
+            // 防止背景滚动
             disableBodyScroll();
             document.addEventListener('touchmove', preventBackgroundScroll, { passive: false });
 
@@ -393,7 +431,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             setTimeout(() => {
                 modal.style.display = 'none';
 
-                // 恢复背景滚动和位置
+                // 恢复背景滚动
                 enableBodyScroll();
                 document.removeEventListener('touchmove', preventBackgroundScroll);
 
@@ -421,7 +459,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         navigate(1);
     }
 
-    // 优化的导航函数 - 更流畅的切换
+    // 优化的导航函数
     function navigate(direction) {
         if (isAnimating || images.length <= 1) return;
         isAnimating = true;
@@ -462,17 +500,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // 更新计数器
     function updateCounter() {
         counter.textContent = `${currentIndex + 1} / ${images.length}`;
-
-        // 根据图片数量显示/隐藏导航按钮和计数器
-        if (images.length <= 1) {
-            prev.style.display = 'none';
-            next.style.display = 'none';
-            counter.style.display = 'none';
-        } else {
-            prev.style.display = 'flex';
-            next.style.display = 'flex';
-            counter.style.display = 'block';
-        }
     }
 
     // 点击模态框背景关闭
@@ -497,7 +524,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
-    // 触摸事件处理 - 优化手势支持
+    // 触摸事件处理
     modal.addEventListener('touchstart', function(e) {
         if (isAnimating) return;
 
@@ -506,6 +533,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         currentX = startX;
         currentY = startY;
         isSwiping = false;
+        swipeDirection = null;
 
         // 重置图片位置和过渡
         modalImg.style.transition = 'none';
@@ -520,8 +548,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const diffX = currentX - startX;
         const diffY = currentY - startY;
 
-        // 如果垂直移动超过阈值，认为是下滑关闭
-        if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > 10) {
+        if (!swipeDirection && (Math.abs(diffX) > minSwipeDistance || Math.abs(diffY) > minSwipeDistance)) {
+            swipeDirection = Math.abs(diffX) > Math.abs(diffY) ? 'horizontal' : 'vertical';
+        }
+
+        if (swipeDirection === 'vertical' && Math.abs(diffY) > minSwipeDistance) {
             isSwiping = true;
             const scale = Math.max(0.8, 1 - Math.abs(diffY) / 400);
             const opacity = Math.max(0.6, 1 - Math.abs(diffY) / 200);
@@ -529,12 +560,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
             modalImg.style.transform = `translateY(${diffY}px) scale(${scale})`;
             modalImg.style.opacity = opacity;
         }
-        // 如果水平移动超过阈值，认为是左右滑动
-        else if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 10) {
+        else if (swipeDirection === 'horizontal' && Math.abs(diffX) > minSwipeDistance) {
             isSwiping = true;
-            // 实时跟随手指移动
             modalImg.style.transform = `translateX(${diffX}px) scale(0.98)`;
-            // 添加一点点透明度变化增强反馈
             modalImg.style.opacity = Math.max(0.8, 1 - Math.abs(diffX) / 500);
         }
     }, { passive: true });
@@ -549,16 +577,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
         modalImg.style.transition = 'all 0.3s ease';
 
         // 下滑关闭
-        if (Math.abs(diffY) > swipeThreshold && diffY > 0 && isSwiping) {
+        if (swipeDirection === 'vertical' && Math.abs(diffY) > swipeThreshold && diffY > 0 && isSwiping) {
             closeModal();
             return;
         }
         // 左滑下一张
-        else if (Math.abs(diffX) > horizontalSwipeThreshold && diffX < 0 && isSwiping && images.length > 1) {
+        else if (swipeDirection === 'horizontal' && Math.abs(diffX) > horizontalSwipeThreshold && diffX < 0 && isSwiping && images.length > 1) {
             navigate(1);
         }
         // 右滑上一张
-        else if (Math.abs(diffX) > horizontalSwipeThreshold && diffX > 0 && isSwiping && images.length > 1) {
+        else if (swipeDirection === 'horizontal' && Math.abs(diffX) > horizontalSwipeThreshold && diffX > 0 && isSwiping && images.length > 1) {
             navigate(-1);
         }
         // 恢复原位置
@@ -568,6 +596,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
 
         isSwiping = false;
+        swipeDirection = null;
     }, { passive: true });
 
     // 图片加载完成后确保居中
@@ -575,7 +604,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
         centerImage();
     });
 
-    // 初始化隐藏导航元素
-    updateCounter();
-});
+    // 窗口大小改变时更新导航按钮状态
+    window.addEventListener('resize', function() {
+        if (modal.classList.contains('show')) {
+            updateNavigationButtons();
+        }
+    });
 
+    // 初始化：确保按钮在PC端默认显示
+    updateNavigationButtons();
+});
