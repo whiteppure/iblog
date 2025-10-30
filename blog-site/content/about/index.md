@@ -29,9 +29,6 @@ keywords:
 这个习惯还是从之前做程序员时保留下来的，直到现在也让我受益。
 习惯做总结、写点小文章，有自己的博客网站，也喜欢小猫小狗，最近养了几盆盆栽，照料它们的过程让我觉得安心。
 
-我始终相信工作和生活需要平衡。空闲时我会下厨做几个家常菜，也偶尔约朋友去唱唱歌、解解压。
-过去几年借着假期和出差的机会，也走过国内四十多个城市，不算资深的旅人，也算是个“有故事的路人甲”。
-
 {{< img-container >}}
 {{< img-item src="/posts/annex/images/me/香薰.jpg" alt="香薰" style="width: 100%; height: auto; border-radius: 8px;" >}}
 {{< img-item src="/posts/annex/images/me/日常做菜-1.jpg" alt="日常做菜" style="width: 100%; height: auto; border-radius: 8px;" >}}
@@ -42,6 +39,12 @@ keywords:
 {{< img-item src="/posts/annex/images/me/蚂蚱.jpg" alt="蚂蚱" style="width: 100%; height: auto; border-radius: 8px;" >}}
 {{< img-item src="/posts/annex/images/me/我-1.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;" >}}
 {{< img-item src="/posts/annex/images/me/我-2.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;" >}}
+{{< /img-container >}}
+
+我始终相信工作和生活需要平衡。空闲时我会下厨做几个家常菜，也偶尔约朋友去唱唱歌、解解压。
+过去几年借着假期和出差的机会，也走过国内四十多个城市，不算资深的旅人，也算是个“有故事的路人甲”。
+
+{{< img-container >}}
 {{< img-item src="/posts/annex/images/me/走过的城市.png" alt="走过的城市" style="width: 100%; height: auto; border-radius: 8px;" >}}
 {{< img-item src="/posts/annex/images/me/风景-1.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;" >}}
 {{< img-item src="/posts/annex/images/me/风景-2.jpg" alt="风景" style="width: 100%; height: auto; border-radius: 8px;" >}}
