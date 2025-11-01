@@ -653,12 +653,17 @@
     
     
     <a href="/page/10/" class="pre">
-        上一页
+        <span>上一页</span>
     </a>
     
+
+    <span class="page-current">
+         11 / 14
+    </span>
+
     
     <a href="/page/12/" class="next">
-        下一页
+        <span>下一页</span>
     </a>
     
     
@@ -793,7 +798,7 @@
 <script>
     
     document.addEventListener('DOMContentLoaded', function() {
-        var links = document.querySelectorAll('.content a');
+        var links = document.querySelectorAll('.content .post_page a');
         links.forEach(function(link) {
             link.setAttribute('target', '_blank');
         });

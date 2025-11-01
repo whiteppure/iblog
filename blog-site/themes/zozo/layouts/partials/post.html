@@ -35,12 +35,17 @@
     {{ if or ($paginator.HasPrev) ($paginator.HasNext) }}
     {{ if $paginator.HasPrev }}
     <a href="{{$paginator.Prev.URL}}" class="pre">
-        {{ i18n "prev_page" }}
+        <span>{{ i18n "prev_page" }}</span>
     </a>
     {{ end }}
+
+    <span class="page-current">
+        {{ i18n "page" }} {{ $paginator.PageNumber }} / {{ $paginator.TotalPages }}
+    </span>
+
     {{ if $paginator.HasNext }}
     <a href="{{$paginator.Next.URL}}" class="next">
-        {{ i18n "next_page" }}
+        <span>{{ i18n "next_page" }}</span>
     </a>
     {{ end }}
     {{ end }}
