@@ -222,38 +222,6 @@ function getNotContent(){
   ]
 }
 
-// 处理网站超链接
-document.addEventListener('DOMContentLoaded', function() {
-    // 获取当前网站域名
-    const currentHost = window.location.hostname;
-
-    // 选择所有需要处理的链接
-    const links = document.querySelectorAll('.content a');
-
-    links.forEach(function(link) {
-        // 跳过空链接或无效链接
-        if (!link.href) return;
-        try {
-            // 获取链接的域名
-            const linkHost = new URL(link.href, window.location.href).hostname;
-
-            // 比较域名，设置不同的打开方式
-            if (linkHost === currentHost) {
-                // 站内链接 - 移除target="_blank"
-                link.removeAttribute('target');
-                link.classList.add('internal-link');
-            } else {
-                // 站外链接 - 添加target="_blank"
-                link.setAttribute('target', '_blank');
-                link.classList.add('external-link');
-            }
-        } catch (e) {
-            // 如果URL解析失败，保守处理，不设置target="_blank"
-            console.warn('无法解析链接:', link.href);
-        }
-    });
-});
-
 // 预览图像
 document.addEventListener('DOMContentLoaded', (event) => {
     // 创建模态框
@@ -920,31 +888,4 @@ document.addEventListener('DOMContentLoaded', (event) => {
     updateNavigationButtons();
 });
 
-// 卜算子计数处理
-document.addEventListener("DOMContentLoaded", function () {
-    const uvE = document.getElementById('busuanzi_site_pv');
-    const pvE = document.getElementById('busuanzi_site_uv');
-    const uvObs = new MutationObserver((mutationsList) => {
-        for (let mutation of mutationsList) {
-            if (mutation.type === 'childList') {
-                uvObs.disconnect();
-                mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 57030;
-                break;
-            }
-        }
-    });
-    const pvObs = new MutationObserver((mutationsList) => {
-        for (let mutation of mutationsList) {
-            if (mutation.type === 'childList') {
-                pvObs.disconnect();
-                mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 203040;
-                break;
-            }
-        }
-    });
-    const config = {
-        childList: true
-    };
-    uvObs.observe(uvE, config);
-    pvObs.observe(pvE, config);
-});
+

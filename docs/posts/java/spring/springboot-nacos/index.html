@@ -3,8 +3,6 @@
 
 
 
-
-
 <html lang="zh" >
 <head>
     <meta charset="utf-8" />
@@ -30,19 +28,19 @@
 
 	
 
-    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/images/favicon.ico" />
+    <link rel="shortcut icon" href="https://blog.lijizhi.website/images/favicon.ico" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://blog.lijizhi.website/css/normalize.css" />
     
-    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/css/animate.min.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/css/zozo.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/css/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://blog.lijizhi.website/css/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://blog.lijizhi.website/css/zozo.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://blog.lijizhi.website/css/remixicon.css" />
     
-    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/css/highlight.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://blog.lijizhi.website/css/highlight.css" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/css/toc.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/css/search.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/css/img.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://blog.lijizhi.website/css/toc.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://blog.lijizhi.website/css/search.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://blog.lijizhi.website/css/img.css" />
 </head>
 
 <body>
@@ -1008,21 +1006,19 @@
 
 
 
-
-
-<script src="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/js/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/js/fancybox.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/js/darkmode.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/js/zozo.js"></script>
+<script src="https://blog.lijizhi.website/js/jquery-3.5.1.min.js"></script>
+<script src="https://blog.lijizhi.website/js/fancybox.min.js"></script>
+<script src="https://blog.lijizhi.website/js/darkmode.js"></script>
+<script src="https://blog.lijizhi.website/js/zozo.js"></script>
 
 
 <script src="//cdn.busuanzi.cc/busuanzi/3.6.9/busuanzi.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/js/html2canvas.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/js/utils.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/js/html2md.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/js/htmlexport.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/js/fastsearch.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/whiteppure/iblog@main/docs/js/fuse.js"></script>
+<script src="https://blog.lijizhi.website/js/html2canvas.js"></script>
+<script src="https://blog.lijizhi.website/js/utils.js"></script>
+<script src="https://blog.lijizhi.website/js/html2md.js"></script>
+<script src="https://blog.lijizhi.website/js/htmlexport.js"></script>
+<script src="https://blog.lijizhi.website/js/fastsearch.js"></script>
+<script src="https://blog.lijizhi.website/js/fuse.js"></script>
 
 
 <script>
@@ -1061,6 +1057,71 @@
     
 </script>
 
+
+<script>
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        const uvE = document.getElementById('busuanzi_site_pv');
+        const pvE = document.getElementById('busuanzi_site_uv');
+        const uvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    uvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 57030;
+                    break;
+                }
+            }
+        });
+        const pvObs = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    pvObs.disconnect();
+                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 203040;
+                    break;
+                }
+            }
+        });
+        const config = {
+            childList: true
+        };
+        uvObs.observe(uvE, config);
+        pvObs.observe(pvE, config);
+    });
+</script>
+
+<script>
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        const currentHost = window.location.hostname;
+
+        
+        const links = document.querySelectorAll('.content a');
+
+        links.forEach(function(link) {
+            
+            if (!link.href) return;
+            try {
+                
+                const linkHost = new URL(link.href, window.location.href).hostname;
+
+                
+                if (linkHost === currentHost) {
+                    
+                    link.removeAttribute('target');
+                    link.classList.add('internal-link');
+                } else {
+                    
+                    link.setAttribute('target', '_blank');
+                    link.classList.add('external-link');
+                }
+            } catch (e) {
+                
+                console.warn('无法解析链接:', link.href);
+            }
+        });
+    });
+</script>
 
 
 
