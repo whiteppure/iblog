@@ -6,8 +6,10 @@ tags: ["应用","设计","Java","小程序"]
 slug: "uploadfile-code"
 ---
 
-## 结构
-![整合文件上传功能](/posts/annex/images/essays/整合文件上传功能-01.jpg)
+# 项目结构
+{{<img src="/posts/annex/images/essays/整合文件上传功能-01.jpg" alt="整合文件上传功能">}}
+
+# 公共部分
 
 ## pom.xml
 `fastdfs-client-java-1.27.jar` [点击下载](/posts/annex/jar/lib/fastdfs-client-java-1.27.jar)
@@ -68,9 +70,8 @@ server:
   port: 80
 ```
 
-## 公共部分
 
-### FileManagement
+## FileManagement
 ```java
 public interface FileManagement {
 
@@ -85,7 +86,7 @@ public interface FileManagement {
 }
 ```
 
-### FileBeanManagement
+## FileBeanManagement
 ```java
 @Component
 public class FileBeanManagement {
@@ -126,7 +127,7 @@ public class FileBeanManagement {
 }
 ```
 
-### AbstractUploadManagement
+## AbstractUploadManagement
 ```java
 @Slf4j
 public abstract class AbstractUploadManagement implements FileManagement {
@@ -257,7 +258,7 @@ public abstract class AbstractUploadManagement implements FileManagement {
 }
 ```
 
-### AbstractDownloadManagement
+## AbstractDownloadManagement
 ```java
 @Slf4j
 public abstract class AbstractDownloadManagement implements FileManagement {
@@ -375,7 +376,7 @@ public abstract class AbstractDownloadManagement implements FileManagement {
 }
 ```
 
-### ArchetypeFileConfig
+## ArchetypeFileConfig
 ```java
 public interface ArchetypeFileConfig {
 
@@ -399,7 +400,7 @@ public interface ArchetypeFileConfig {
 }
 ```
 
-### ArchetypeFilePlatformType
+## ArchetypeFilePlatformType
 ```java
 @AllArgsConstructor
 public enum ArchetypeFilePlatformType {
@@ -423,7 +424,7 @@ public enum ArchetypeFilePlatformType {
 }
 ```
 
-### FileConstant
+## FileConstant
 ```java
 public interface FileConstant {
 
@@ -451,7 +452,7 @@ public interface FileConstant {
 }
 ```
 
-### FileFacade
+## FileFacade
 ```java
 public interface FileFacade {
 
@@ -536,7 +537,7 @@ public interface FileFacade {
 }
 ```
 
-### FileManagementBridge
+## FileManagementBridge
 ```java
 @Component
 public class FileManagementBridge implements FileFacade {
@@ -578,7 +579,7 @@ public class FileManagementBridge implements FileFacade {
 
 ```
 
-### DownloadFileExtensions
+## DownloadFileExtensions
 ```java
 public interface DownloadFileExtensions {
 
@@ -604,7 +605,7 @@ public interface DownloadFileExtensions {
 }
 ```
 
-### UploadFileExtensions
+## UploadFileExtensions
 ```java
 public interface UploadFileExtensions {
 
@@ -629,8 +630,9 @@ public interface UploadFileExtensions {
 }
 ```
 
-## 阿里云
-### AliyunFileConfig
+# 阿里云部分
+
+## AliyunFileConfig
 ```java
 @Slf4j
 @Data
@@ -676,7 +678,7 @@ public class AliyunFileConfig implements ArchetypeFileConfig {
 }
 ```
 
-### ArchetypeAliyunDownload
+## ArchetypeAliyunDownload
 ```java
 @Component("archetypeAliyunDownload")
 @RequiredArgsConstructor
@@ -705,7 +707,7 @@ public class ArchetypeAliyunDownload extends AbstractDownloadManagement {
 }
 ```
 
-### ArchetypeAliyunUpload
+## ArchetypeAliyunUpload
 ```java
 @Component("archetypeAliyunUpload")
 @RequiredArgsConstructor
@@ -755,8 +757,9 @@ public class ArchetypeAliyunUpload extends AbstractUploadManagement {
 }
 ```
 
-## fastdfs
-### FastDfsConfig
+# FastDFS部分
+
+## FastDfsConfig
 ```java
 @Data
 @Accessors(chain = true)
@@ -810,7 +813,7 @@ public class FastDfsConfig implements ArchetypeFileConfig {
 }
 ```
 
-### ArchetypeFastDfsDownload
+## ArchetypeFastDfsDownload
 ```java
 @Component("archetypeFastDfsDownload")
 @DependsOn({"fastDfsConfig"})
@@ -838,7 +841,7 @@ public class ArchetypeFastDfsDownload extends AbstractDownloadManagement {
 }
 ```
 
-### ArchetypeFastDfsUpload
+## ArchetypeFastDfsUpload
 ```java
 @Slf4j
 @Component("archetypeFastDfsUpload")
@@ -898,8 +901,9 @@ public class ArchetypeFastDfsUpload extends AbstractUploadManagement {
 }
 ```
 
-## 本地
-### LocalFileConfig
+# 本地上传部分
+
+## LocalFileConfig
 ```java
 @Data
 @Configuration(value = "localFileConfig")
@@ -935,7 +939,7 @@ public class LocalFileConfig implements ArchetypeFileConfig {
 }
 ```
 
-### ArchetypeLocalDownload
+## ArchetypeLocalDownload
 ```java
 @DependsOn({"localFileConfig"})
 @Component("archetypeLocalDownload")
@@ -968,7 +972,7 @@ public class ArchetypeLocalDownload extends AbstractDownloadManagement {
 }
 ```
 
-### ArchetypeLocalUpload
+## ArchetypeLocalUpload
 ```java
 @Component("archetypeLocalUpload")
 @RequiredArgsConstructor
@@ -1024,8 +1028,9 @@ public class ArchetypeLocalUpload extends AbstractUploadManagement {
 }
 ```
 
-## 调用测试
-### FileTest
+# 调用测试
+
+## FileTest
 ```java
 @Slf4j
 @RunWith(SpringRunner.class)

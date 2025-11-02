@@ -22,22 +22,22 @@
 <!-- dark mode -->
 <script>
     <!-- 手动控制夜间模式  -->
-    // new Darkmode({
-    //     right: '32px', // default: '32px'
-    //     bottom: 'unset', // default: '32px'
-    //     // left: '32px', // default: 'unset'
-    //     time: '0.15s', // default: '0.3s'
-    //     mixColor: '#f7f7f7', // default: '#fff'
-    //     backgroundColor: '#f7f7f7', // default: '#fff'
-    //     buttonColorDark: '#212121', // default: '#100f2c'
-    //     buttonColorLight: '#f7f7f7', // default: '#fff'
-    //     saveInCookies: false, // default: true,
-    //     autoMatchOsTheme: true // default: true
-    // }).showWidget();
-    //
+    new Darkmode({
+        right: '32px', // default: '32px'
+        bottom: 'unset', // default: '32px'
+        // left: '32px', // default: 'unset'
+        time: '0.15s', // default: '0.3s'
+        mixColor: '#f7f7f7', // default: '#fff'
+        backgroundColor: '#f7f7f7', // default: '#fff'
+        buttonColorDark: '#212121', // default: '#100f2c'
+        buttonColorLight: '#f7f7f7', // default: '#fff'
+        saveInCookies: false, // default: true,
+        autoMatchOsTheme: true // default: true
+    }).showWidget();
+
     // function addDarkmodeWidget(){
     //     const hours = new Date().getHours();
-    //     if (hours >= 19 || hours <= 5){
+    //     // if (hours >= 19 || hours <= 5){
     //         new Darkmode({
     //             right: '32px', // default: '32px'
     //             bottom: 'unset', // default: '32px'
@@ -50,53 +50,10 @@
     //             saveInCookies: false, // default: true,
     //             autoMatchOsTheme: true // default: true
     //         }).toggle();
-    //     }
+    //     // }
     // }
     // 自动调用夜间模式
     // addDarkmodeWidget();
-</script>
-
-<!-- busuanzi uv pv -->
-<script>
-    // 卜算子 uv pv
-    document.addEventListener("DOMContentLoaded", function () {
-        const uvE = document.getElementById('busuanzi_site_pv');
-        const pvE = document.getElementById('busuanzi_site_uv');
-        const uvObs = new MutationObserver((mutationsList) => {
-            for (let mutation of mutationsList) {
-                if (mutation.type === 'childList') {
-                    uvObs.disconnect();
-                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 57030;
-                    break;
-                }
-            }
-        });
-        const pvObs = new MutationObserver((mutationsList) => {
-            for (let mutation of mutationsList) {
-                if (mutation.type === 'childList') {
-                    pvObs.disconnect();
-                    mutation.target.innerHTML = parseInt(mutation.target.innerHTML) + 203040;
-                    break;
-                }
-            }
-        });
-        const config = {
-            childList: true
-        };
-        uvObs.observe(uvE, config);
-        pvObs.observe(pvE, config);
-    });
-</script>
-
-<!-- other script -->
-<script>
-    // 给文章内容所有超链接加上 target="_blank"
-    document.addEventListener('DOMContentLoaded', function() {
-        var links = document.querySelectorAll('.content .post_page a');
-        links.forEach(function(link) {
-            link.setAttribute('target', '_blank');
-        });
-    });
 </script>
 
 

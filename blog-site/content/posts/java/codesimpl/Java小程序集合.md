@@ -6,20 +6,20 @@ tags: ["Java", "小程序"]
 slug: "java-multi-gadget"
 ---
 
-## 写在前面
-本文中所涉及的程序均为Java开发，如果您想要直接使用这些工具需要提前配置Java环境。所涉及到的程序均提供完整代码，有兴趣可以尝试运行。
+
+在家里呆着无聊做了一些小玩意，本文中所涉及的程序均为Java开发，如果您想要直接使用这些工具需要提前配置Java环境。所涉及到的程序均提供完整代码，有兴趣可以尝试运行。
 程序使用`java -jar`命令启动，如图：
 
-![Java玩具-009](/posts/annex/images/readme/Java玩具-009.png)
+{{<img src="/posts/annex/images/readme/Java玩具-009.png" alt="Java玩具">}}
 
 某些程序功能并不是很完善，但是也可以凑合着用，写这些程序的主要目的是为了方便理解一些常用软件的实现逻辑。
 
-## 强密码生成器
+# 强密码生成器
 生成6到20位的随机强密码，可指定密码长度、密码内容。[点击下载](/posts/annex/jar/auto-pwd.jar)
 
-![Java玩具-001](/posts/annex/images/readme/Java玩具-001.png)
-### 代码
+{{<img src="/posts/annex/images/readme/Java玩具-001.png" alt="Java玩具">}}
 
+## 代码
 ```java
 /**
  * 随机生成字符抽象类
@@ -293,14 +293,13 @@ public class AutoPwdMainStarter {
 }
 ```
 
-## 截图工具
+# 截图工具
 截图小工具，支持复制到粘贴板、一次性截取多张图片。[点击下载](/posts/annex/jar/cut-screen.jar)
 
-![Java玩具-002](/posts/annex/images/readme/Java玩具-002.png)
+{{<img src="/posts/annex/images/readme/Java玩具-002.png" alt="Java玩具">}}
+{{<img src="/posts/annex/images/readme/Java玩具-003.png" alt="Java玩具">}}
 
-![Java玩具-003](/posts/annex/images/readme/Java玩具-003.png)
-
-### 代码
+## 代码
 ```java
 /**
  * 截屏小工具 参考：https://blog.csdn.net/Code__rookie/article/details/103509851 有改动
@@ -1042,12 +1041,12 @@ public class CutScreenMainStarter {
 }
 ```
 
-## 文字转二维码
+# 文字转二维码
 输入文字，生成二维码。[点击下载](/posts/annex/jar/qr-code.jar)
 
-![Java玩具-004](/posts/annex/images/readme/Java玩具-004.png)
+{{<img src="/posts/annex/images/readme/Java玩具-004.png" alt="Java玩具">}}
 
-### 代码
+## 代码
 需要依赖第三方类库，[点击下载](/posts/annex/jar/lib/qrcode.jar)
 ```java
 /**
@@ -1157,11 +1156,12 @@ public class QRCodeMainStarter {
 }
 ```
 
-## 英文翻译器
+# 英文翻译器
 将英文翻译为中文，仅支持单词、短语翻译，程序默认加载自带的英语字典，如果您想要修改字典可在源代码中进行配置或在程序运行时指定字典路径。[点击下载](/posts/annex/jar/english-translation.jar)
 
-![Java玩具-005](/posts/annex/images/readme/Java玩具-005.png)
-### 代码
+{{<img src="/posts/annex/images/readme/Java玩具-005.png" alt="Java玩具">}}
+
+## 代码
 ```java
 /**
  * 参考：https://www.jb51.net/article/163917.htm 有改动
@@ -1347,11 +1347,12 @@ china=中国
 chinese=中国人
 ```
 
-## 提色器
+# 提色器
 按住alt（macOS用户按住option）鼠标滑动即可获取当前位置颜色。[点击下载](/posts/annex/jar/english-translation.jar)
 
-![Java玩具-006](/posts/annex/images/readme/Java玩具-006.png)
-### 代码
+{{<img src="/posts/annex/images/readme/Java玩具-006.png" alt="Java玩具">}}
+
+## 代码
 ```java
 public class ExtracterFrame {
 
@@ -1464,11 +1465,12 @@ public class ExtractColorMainStarter {
 }
 ```
 
-## 图片水印生成器
+# 图片水印生成器
 加载图片，输入水印内容，在加载图片的右下会生成红色水印。[点击下载](/posts/annex/jar/img-watermarking.jar)
 
-![Java玩具-007](/posts/annex/images/readme/Java玩具-007.png)
-### 代码
+{{<img src="/posts/annex/images/readme/Java玩具-007.png" alt="Java玩具">}}
+
+## 代码
 ```java
 public class ImgWatermarking {
 
@@ -1692,11 +1694,12 @@ public class ImgWatermarkingMainStarter {
 }
 ```
 
-## huffman压缩
+# huffman压缩
 采用`huffman`算法对文件进行无损压缩，目前仅支持压缩单个文件，压缩好的文件以`.huf`后缀结尾，会与被压缩文件放在相同目录下。[点击下载](/posts/annex/jar/huffman-zip.jar)
 
-![Java玩具-008](/posts/annex/images/readme/Java玩具-008.png)
-### 代码
+{{<img src="/posts/annex/images/readme/Java玩具-008.png" alt="Java玩具">}}
+
+## 代码
 ```java
 public abstract class HuffmanCode {
 

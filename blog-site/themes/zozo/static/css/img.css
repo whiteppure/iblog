@@ -175,4 +175,107 @@
     .img-prev, .img-next {
         display: none !important; /* 使用 !important 确保在移动端强制隐藏 */
     }
+
+    .zoom-controls {
+        display: none !important;
+    }
+
+    .close-hint {
+        font-size: 14px;
+    }
+
+    .modal-content {
+        cursor: default;
+    }
+}
+
+
+/* 缩放控制按钮样式 */
+.zoom-controls {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1002;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 25px;
+    padding: 10px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.zoom-btn {
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.zoom-btn:hover {
+    background: white;
+    transform: scale(1.1);
+}
+
+.zoom-btn:active {
+    transform: scale(0.95);
+}
+
+.zoom-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.zoom-btn.active {
+    background: #4a90e2;
+    color: white;
+}
+
+/* 确保图片可拖拽时的光标样式 */
+.modal-content {
+    cursor: zoom-in;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.modal-content.zoomed {
+    cursor: grab;
+}
+
+.modal-content.zoomed:active {
+    cursor: grabbing;
+}
+
+
+/* 添加缩放提示 */
+.zoom-hint {
+    position: absolute;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #f1f1f1;
+    font-size: 14px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 8px 16px;
+    border-radius: 20px;
+    z-index: 1001;
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.zoom-hint.show {
+    opacity: 0.8;
 }

@@ -7,9 +7,9 @@ slug: "scheduled-job"
 ---
 
 
-代码结构
+**代码结构**
 
-![定时任务可视化管理-01](/posts/annex/images/essays/定时任务可视化管理-01.png)
+{{<img src="/posts/annex/images/essays/定时任务可视化管理-01.png" alt="定时任务可视化管理">}}
 
 ## pom依赖
 ```xml

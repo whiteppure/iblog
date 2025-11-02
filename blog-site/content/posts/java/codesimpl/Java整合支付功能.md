@@ -7,10 +7,13 @@ slug: "pay-code"
 ---
 
 
-## 结构
-![整合支付功能](/posts/annex/images/essays/整合支付功能-01.jpg)
+# 项目结构
+{{<img src="/posts/annex/images/essays/整合支付功能-01.jpg" alt="整合支付功能">}}
 
 完整代码：[https://gitee.com/gitee_pikaqiu/easy-archetype](https://gitee.com/gitee_pikaqiu/easy-archetype)
+
+# 公共部分
+
 ## pom.xml
 ```xml
 <dependencies>
@@ -51,6 +54,7 @@ slug: "pay-code"
 
 </dependencies>
 ```
+
 ## application.yml
 ```yaml
 server:
@@ -91,9 +95,7 @@ pay:
     gatewayUrl: "https://openapi.alipaydev.com/gateway.do"
 ```
 
-## 公共部分
-
-### PayService
+## PayService
 ```java
 public interface PayService {
 
@@ -117,31 +119,31 @@ public interface PayService {
 }
 ```
 
-### PayRefundAble
+## PayRefundAble
 ```java
 public interface PayRefundAble extends PayService{
 }
 ```
 
-### PayOrderQueryAble
+## PayOrderQueryAble
 ```java
 public interface PayOrderQueryAble extends PayService{
 }
 ```
 
-### PayOrderCloseAble
+## PayOrderCloseAble
 ```java
 public interface PayOrderCloseAble extends PayService{
 }
 ```
 
-### PaymentAble
+## PaymentAble
 ```java
 public interface PaymentAble extends PayService{
 }
 ```
 
-### AbstractPayService
+## AbstractPayService
 ```java
 @Slf4j
 public abstract class AbstractPayService<Q extends CommonPayRequest,S> implements PayService{
@@ -205,7 +207,8 @@ public abstract class AbstractPayService<Q extends CommonPayRequest,S> implement
 
 }
 ```
-### CommonPayRequest
+
+## CommonPayRequest
 ```java
 public interface CommonPayRequest {
 
@@ -219,7 +222,7 @@ public interface CommonPayRequest {
 }
 ```
 
-### PayPlatformTypeEnum
+## PayPlatformTypeEnum
 ```java
 public enum PayPlatformTypeEnum {
 
@@ -230,7 +233,7 @@ public enum PayPlatformTypeEnum {
 }
 ```
 
-### PayFacade
+## PayFacade
 ```java
 public interface PayFacade {
 
@@ -245,7 +248,7 @@ public interface PayFacade {
 }
 ```
 
-### PayFacadeImpl
+## PayFacadeImpl
 ```java
 @Slf4j
 @Component
@@ -272,7 +275,7 @@ public class PayFacadeImpl implements PayFacade {
 }
 ```
 
-### PayException
+## PayException
 ```java
 public class PayException extends RuntimeException{
 
@@ -292,9 +295,9 @@ public class PayException extends RuntimeException{
 }
 ```
 
-## 支付宝
+# 支付宝部分
 
-### AlipayRefundService
+## AlipayRefundService
 ```java
 @Service
 public class AlipayRefundService extends AbstractPayService<AlipayRefundRequest,AlipayTradeRefundResponse> implements PayRefundAble {
@@ -329,7 +332,7 @@ public class AlipayRefundService extends AbstractPayService<AlipayRefundRequest,
 }
 ```
 
-### AlipayPayOrderQueryService
+## AlipayPayOrderQueryService
 ```java
 @Slf4j
 @Service
@@ -365,7 +368,7 @@ public class AlipayPayOrderQueryService extends AbstractPayService<AlipayQueryOr
 }
 ```
 
-### AlipayPaymentService
+## AlipayPaymentService
 ```java
 @Slf4j
 @Service
@@ -407,7 +410,7 @@ public class AlipayPaymentService extends AbstractPayService<AlipayPaymentReques
 }
 ```
 
-### AlipayOrderCloseService
+## AlipayOrderCloseService
 ```java
 @Service
 public class AlipayOrderCloseService extends AbstractPayService<AlipayOrderCloseRequest,AlipayTradeCloseResponse> implements PayOrderCloseAble {
@@ -445,7 +448,7 @@ public class AlipayOrderCloseService extends AbstractPayService<AlipayOrderClose
 }
 ```
 
-### AliApp
+## AliApp
 ```java
 @Service
 public class AliApp extends AlipayPaymentService {
@@ -460,7 +463,7 @@ public class AliApp extends AlipayPaymentService {
 }
 ```
 
-### AliH5
+## AliH5
 ```java
 @Service
 public class AliH5 extends AlipayPaymentService {
@@ -475,7 +478,7 @@ public class AliH5 extends AlipayPaymentService {
 }
 ```
 
-### AliPc
+## AliPc
 ```java
 @Service
 public class AliPc extends AlipayPaymentService {
@@ -490,7 +493,7 @@ public class AliPc extends AlipayPaymentService {
 
 ```
 
-### AlipayOrderCloseRequest
+## AlipayOrderCloseRequest
 ```java
 @Data
 @Accessors(chain = true)
@@ -516,7 +519,7 @@ public class AlipayOrderCloseRequest implements CommonPayRequest {
 }
 ```
 
-### AlipayPaymentRequest
+## AlipayPaymentRequest
 ```java
 @Data
 @Accessors(chain = true)
@@ -560,7 +563,7 @@ public class AlipayPaymentRequest implements CommonPayRequest {
 }
 ```
 
-### AlipayQueryOrderRequest
+## AlipayQueryOrderRequest
 ```java
 @Data
 @Accessors(chain = true)
@@ -582,7 +585,7 @@ public class AlipayQueryOrderRequest implements CommonPayRequest {
 }
 ```
 
-### AlipayRefundRequest
+## AlipayRefundRequest
 ```java
 @Data
 @Accessors(chain = true)
@@ -617,7 +620,7 @@ public class AlipayRefundRequest implements CommonPayRequest {
 }
 ```
 
-### AlipayConfiguration
+## AlipayConfiguration
 ```java
 @Configuration
 @EnableConfigurationProperties(AlipayProperties.class)
@@ -644,7 +647,7 @@ public class AlipayConfiguration {
 }
 ```
 
-### AlipayProperties
+## AlipayProperties
 ```java
 @Data
 @ConfigurationProperties(prefix = "pay.alipay")
@@ -699,9 +702,9 @@ public class AlipayProperties {
 }
 ```
 
-## 微信
+# 微信部分
 
-### WxpayRefundService
+## WxpayRefundService
 ```java
 @Service
 public class WxpayRefundService extends AbstractPayService implements PayRefundAble {
@@ -743,7 +746,7 @@ public class WxpayRefundService extends AbstractPayService implements PayRefundA
 }
 ```
 
-### WxpayPaymentService
+## WxpayPaymentService
 ```java
 @Slf4j
 @Service
@@ -790,7 +793,7 @@ public class WxpayPaymentService extends AbstractPayService implements PaymentAb
 }
 ```
 
-### WxpayOrderQueryService
+## WxpayOrderQueryService
 ```java
 @Service
 public class WxpayOrderQueryService extends AbstractPayService implements PayOrderQueryAble {
@@ -837,7 +840,7 @@ public class WxpayOrderQueryService extends AbstractPayService implements PayOrd
 }
 ```
 
-### WxpayOrderCloseService
+## WxpayOrderCloseService
 ```java
 @Service
 public class WxpayOrderCloseService extends AbstractPayService implements PayOrderCloseAble {
@@ -869,7 +872,7 @@ public class WxpayOrderCloseService extends AbstractPayService implements PayOrd
 }
 ```
 
-### WxApp
+## WxApp
 ```java
 @Service
 public class WxApp extends WxpayPaymentService {
@@ -887,7 +890,7 @@ public class WxApp extends WxpayPaymentService {
 }
 ```
 
-### WxH5
+## WxH5
 ```java
 @Service
 public class WxH5 extends WxpayPaymentService {
@@ -906,7 +909,7 @@ public class WxH5 extends WxpayPaymentService {
 }
 ```
 
-### WxJsapi
+## WxJsapi
 ```java
 @Service
 public class WxJsapi extends WxpayPaymentService {
@@ -925,7 +928,7 @@ public class WxJsapi extends WxpayPaymentService {
 }
 ```
 
-### WxNative
+## WxNative
 ```java
 @Service
 public class WxNative extends WxpayPaymentService {
@@ -940,7 +943,7 @@ public class WxNative extends WxpayPaymentService {
 }
 ```
 
-### WxOrderQueryRequest
+## WxOrderQueryRequest
 ```java
 @Data
 @Accessors(chain = true)
@@ -968,7 +971,7 @@ public class WxOrderQueryRequest implements CommonPayRequest {
 }
 ```
 
-### WxpayOrderCloseRequest
+## WxpayOrderCloseRequest
 ```java
 @Data
 @Accessors(chain = true)
@@ -990,7 +993,7 @@ public class WxpayOrderCloseRequest implements CommonPayRequest {
 }
 ```
 
-### WxpayPaymentRequest
+## WxpayPaymentRequest
 ```java
 @Data
 @Accessors(chain = true)
@@ -1097,7 +1100,7 @@ public class WxpayPaymentRequest implements CommonPayRequest {
 }
 ```
 
-### WxRefundRequest
+## WxRefundRequest
 ```java
 @Data
 @Accessors(chain = true)
@@ -1148,7 +1151,7 @@ public class WxRefundRequest implements CommonPayRequest {
 }
 ```
 
-### WxpayConfiguration
+## WxpayConfiguration
 ```java
 @Configuration
 @ConditionalOnClass(WxPayService.class)
@@ -1178,7 +1181,7 @@ public class WxpayConfiguration {
 }
 ```
 
-### WxpayProperties
+## WxpayProperties
 ```java
 @Data
 @ConfigurationProperties(prefix = "pay.wechat")
@@ -1226,9 +1229,9 @@ public class WxpayProperties {
 }
 ```
 
-## 调用测试
+# 调用测试
 
-### AlipayExampleController
+## AlipayExampleController
 ```java
 @RestController
 @RequestMapping("/example/alipay")
@@ -1309,7 +1312,7 @@ public class AlipayExampleController {
 }
 ```
 
-### WxpayExampleController
+## WxpayExampleController
 ```java
 @RestController
 @RequestMapping("/example/wxpay")
@@ -1510,7 +1513,7 @@ public class WxpayExampleController {
 
 ```
 
-### PayTestController
+## PayTestController
 ```java
 @Slf4j
 @RestController

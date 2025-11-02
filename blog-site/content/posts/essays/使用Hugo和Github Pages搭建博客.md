@@ -1,5 +1,5 @@
 ---
-title: "Hugo和Github Pages搭建博客"
+title: "使用Hugo和Github Pages搭建博客"
 date: 2024-04-15
 draft: false
 tags: ["随笔","GitHub"]
