@@ -1,5 +1,5 @@
 ---
-title: "关于"
+title: "关于我"
 date: 2025-10-15
 draft: false
 description: "现居北京的软件工程师，记录技术心得与生活思考。擅长Java、Python开发，热爱生活，乐于分享。"
