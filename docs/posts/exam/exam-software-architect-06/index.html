@@ -62,8 +62,26 @@
 
 
 
+<button id="mobile-toc-toggle" class="mobile-toc-toggle" aria-label="打开目录">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 12h18M3 6h18M3 18h18"/>
+    </svg>
+    <span>目录</span>
+</button>
+
+
+<div id="mobile-toc-overlay" class="mobile-toc-overlay"></div>
+
+
 <div id="post_content_toc" class="toc">
-    <div class="page-header"><strong></strong></div>
+    <div class="toc-header">
+        <div class="page-header"><strong>目录</strong></div>
+        <button id="toc-close" class="toc-close" aria-label="关闭目录">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+        </button>
+    </div>
     <div id="page-scrollspy" class="toc-nav">
 
         
@@ -407,6 +425,46 @@
     </div>
 </div>
 
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toc = document.getElementById('post_content_toc');
+        const mobileToggle = document.getElementById('mobile-toc-toggle');
+        const tocClose = document.getElementById('toc-close');
+        const overlay = document.getElementById('mobile-toc-overlay');
+        const tocLinks = document.querySelectorAll('.toc-nav .nav-link');
+
+        
+        function toggleMobileToc() {
+            toc.classList.toggle('mobile-active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('toc-open');
+        }
+
+        
+        mobileToggle.addEventListener('click', toggleMobileToc);
+        tocClose.addEventListener('click', toggleMobileToc);
+        overlay.addEventListener('click', toggleMobileToc);
+
+        
+        tocLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 1450) {
+                    toggleMobileToc();
+                }
+            });
+        });
+
+        
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 1450) {
+                toc.classList.remove('mobile-active');
+                overlay.classList.remove('active');
+                document.body.classList.remove('toc-open');
+            }
+        });
+    });
+</script>
 
 
     

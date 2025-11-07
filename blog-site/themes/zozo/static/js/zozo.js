@@ -205,8 +205,6 @@ function getNotContent(){
     document.getElementById('footer_slogan'),
     // 标题日期
     document.getElementById('post_page_title_date'),
-    // 目录
-    document.getElementById('post_content_toc'),
     // 数学公式
     document.getElementById('MathJax_Message'),
     // 夜间模式切换
@@ -218,7 +216,8 @@ function getNotContent(){
     document.getElementById('top_to_back'),
     // 搜索框
     document.getElementById('search-btn'),
-    document.getElementById('fastSearch')
+    document.getElementById('fastSearch'),
+
   ]
 }
 

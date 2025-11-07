@@ -62,8 +62,26 @@
 
 
 
+<button id="mobile-toc-toggle" class="mobile-toc-toggle" aria-label="打开目录">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 12h18M3 6h18M3 18h18"/>
+    </svg>
+    <span>目录</span>
+</button>
+
+
+<div id="mobile-toc-overlay" class="mobile-toc-overlay"></div>
+
+
 <div id="post_content_toc" class="toc">
-    <div class="page-header"><strong></strong></div>
+    <div class="toc-header">
+        <div class="page-header"><strong>目录</strong></div>
+        <button id="toc-close" class="toc-close" aria-label="关闭目录">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+        </button>
+    </div>
     <div id="page-scrollspy" class="toc-nav">
 
         
@@ -151,6 +169,46 @@
     </div>
 </div>
 
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toc = document.getElementById('post_content_toc');
+        const mobileToggle = document.getElementById('mobile-toc-toggle');
+        const tocClose = document.getElementById('toc-close');
+        const overlay = document.getElementById('mobile-toc-overlay');
+        const tocLinks = document.querySelectorAll('.toc-nav .nav-link');
+
+        
+        function toggleMobileToc() {
+            toc.classList.toggle('mobile-active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('toc-open');
+        }
+
+        
+        mobileToggle.addEventListener('click', toggleMobileToc);
+        tocClose.addEventListener('click', toggleMobileToc);
+        overlay.addEventListener('click', toggleMobileToc);
+
+        
+        tocLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 1450) {
+                    toggleMobileToc();
+                }
+            });
+        });
+
+        
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 1450) {
+                toc.classList.remove('mobile-active');
+                overlay.classList.remove('active');
+                document.body.classList.remove('toc-open');
+            }
+        });
+    });
+</script>
 
 
     
@@ -2643,8 +2701,7 @@
 </div>
 <p>目前我是单身。对于感情，我向往的是那种“相处不累”的关系。我们可以彼此信任，互相支持，在一起时轻松自在，能做真实的自己。
 我觉得踏实、理解和真诚，是一段关系中特别重要的部分。</p>
-<p>因为工作圈子比较固定，认识新朋友的机会不多，如果能遇到一个频率相近、聊得来的人，那最好了。
-如果你想认识我一下，欢迎向我打招呼。</p>
+<p>因为工作圈子比较固定，认识新朋友的机会不多，如果能遇到一个频率相近、聊得来的人，那最好了，欢迎向我打招呼。</p>
 
 
 
@@ -2673,7 +2730,7 @@
 <p>截止2025年，我是一名5年经验的软件工程师，擅长使用设计模式，具备良好独立开发、排故以及一定组织能力。曾带领10人团队，完成50万用户量级电商系统架构优化，负责过银行验印、票交、账户系统开发维护等，现负责军工某控制系统的架构优化与维护。</p>
 <p>在前后端分布式微服务、框架设计、旧项目二开以及原生Android项目开发等方面拥有大量实战经验，能灵活应对各种情况。</p>
 <p>擅长Java、Python等，常用技术栈有<code>Vue</code>、<code>SpringCloud</code>、<code>Netty</code>、<code>PyQt</code>等。
-能查阅各种开发技术手册，熟练编写<code>shell</code>、<code>bat</code>脚本，具备较强的解决问题能力。</p>
+熟练查阅各种开发技术手册，熟练编写<code>shell</code>、<code>bat</code>脚本，具备较强的解决问题能力。</p>
 <p>📄<a href="/posts/java/javaemp/interview-resume-20250315/">点击查看我的求职简历</a></p>
 <p>如果您有任何问题想要交流，或需关于简历方面的建议，欢迎联系我。</p>
 
