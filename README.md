@@ -8,6 +8,7 @@ curl -s "https://purge.jsdelivr.net/gh/whiteppure/iblog@main/docs/js/zozo.js"
 curl -s "https://purge.jsdelivr.net/gh/whiteppure/iblog@main/docs/css/zozo.css"
 
 https://purge.jsdelivr.net/gh/whiteppure/iblog/main/docs/js/zozo.js
+https://purge.jsdelivr.net/gh/whiteppure/iblog/main/docs/images/*
 
 ## Hugo 常用命令 win
 1. 手动删除缓存文件
